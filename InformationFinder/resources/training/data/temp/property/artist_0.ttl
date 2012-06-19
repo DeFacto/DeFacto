@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Le_Parc_%28album%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Le Parc (album)"@en ;
+      <http://dbpedia.org/ontology/musicalArtist>
+              <http://dbpedia.org/resource/Tangerine_Dream> .
+
+<http://dbpedia.org/resource/Tangerine_Dream>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Tangerine Dream"@en .

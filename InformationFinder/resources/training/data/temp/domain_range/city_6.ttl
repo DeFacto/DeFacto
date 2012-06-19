@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Gualeguaych%C3%BA,_Entre_R%C3%ADos>
+      rdfs:label "Gualeguaychú, Entre Ríos"@en .
+
+<http://dbpedia.org/resource/Quitman,_Arkansas>
+      rdfs:label "Quitman, Arkansas"@en ;
+      dbpedia-owl:city <http://dbpedia.org/resource/Gualeguaych%C3%BA,_Entre_R%C3%ADos> .

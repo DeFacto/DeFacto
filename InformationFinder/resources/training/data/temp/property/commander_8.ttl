@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/709th_Military_Police_Battalion>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "709th Military Police Battalion"@en ;
+      <http://dbpedia.org/ontology/genre>
+              <http://dbpedia.org/resource/LTC> .
+
+<http://dbpedia.org/resource/LTC>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "LTC"@en .

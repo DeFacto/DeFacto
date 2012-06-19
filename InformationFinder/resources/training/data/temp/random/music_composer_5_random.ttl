@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Burkina_Faso>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Burkina Faso"@en .
+
+<http://dbpedia.org/resource/Olga_Bogaevskaya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Olga Bogaevskaya"@en ;
+      <http://dbpedia.org/ontology/successor>
+              <http://dbpedia.org/resource/Burkina_Faso> .

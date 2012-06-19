@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/%C3%8Ele-de-France_%28region%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Île-de-France (region)"@en .
+
+<http://dbpedia.org/resource/H%C3%A9rouville>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Hérouville"@en ;
+      <http://dbpedia.org/ontology/commander>
+              <http://dbpedia.org/resource/%C3%8Ele-de-France_%28region%29> .

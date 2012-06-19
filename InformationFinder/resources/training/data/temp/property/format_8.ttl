@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Music_download>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Music download"@en .
+
+<http://dbpedia.org/resource/I_Love_My_Bitches>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "I Love My Bitches"@en ;
+      <http://dbpedia.org/ontology/associatedBand>
+              <http://dbpedia.org/resource/Music_download> .

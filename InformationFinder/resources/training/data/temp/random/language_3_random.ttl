@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Johan_Landsberg>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Johan Landsberg"@en ;
+      <http://dbpedia.org/ontology/department>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

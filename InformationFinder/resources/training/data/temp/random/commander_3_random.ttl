@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Essex>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Essex"@en .
+
+<http://dbpedia.org/resource/Edmund_Burke>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Edmund Burke"@en ;
+      <http://dbpedia.org/ontology/location>
+              <http://dbpedia.org/resource/Essex> .

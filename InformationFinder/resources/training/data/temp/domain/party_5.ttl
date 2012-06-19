@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/United_States_Democratic_Party>
+      rdfs:label "United States Democratic Party"@en .
+
+<http://dbpedia.org/resource/William_Cameron_Townsend>
+      rdfs:label "William Cameron Townsend"@en ;
+      dbpedia-owl:party <http://dbpedia.org/resource/United_States_Democratic_Party> .

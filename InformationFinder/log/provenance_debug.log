@@ -1,0 +1,368 @@
+2012-05-16 18:55:37,769 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: artist_8_prop.ttl
+2012-05-16 18:55:37,772 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: associated_band_2_ran.ttl
+2012-05-16 18:55:37,774 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: birth_place_1_random.ttl
+2012-05-16 18:55:37,777 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: city_5_prop.ttl
+2012-05-16 18:55:37,779 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: country_7_random.ttl
+2012-05-16 18:55:37,781 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: distributor_4_random.ttl
+2012-05-16 18:55:37,783 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: format_2_prop.ttl
+2012-05-16 18:55:37,785 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: genus_7_dom.ttl
+2012-05-16 18:55:37,787 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: industry_6_ran.ttl
+2012-05-16 18:55:37,789 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: kingdom_3_prop.ttl
+2012-05-16 18:55:37,791 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: location_9_ran.ttl
+2012-05-16 18:55:37,794 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: musical_band_2_ran.ttl
+2012-05-16 18:55:37,796 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: owner_5_dom.ttl
+2012-05-16 18:55:37,798 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: previous_work_8_ran.ttl
+2012-05-16 18:55:37,800 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: product_7_random.ttl
+2012-05-16 18:55:37,804 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: recorded_in_2_dom.ttl
+2012-05-16 18:55:37,806 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: subsequent_work_0_ran.ttl
+2012-05-16 18:55:37,809 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: team_4_prop.ttl
+2012-05-16 18:55:37,812 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: writer_0_dom.ttl
+2012-05-16 18:55:37,814 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: alma_mater_5.ttl
+2012-05-16 18:55:37,817 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: artist_6.ttl
+2012-05-16 18:55:37,819 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: associated_band_5.ttl
+2012-05-16 18:55:37,822 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: associated_musical_artist_3.ttl
+2012-05-16 18:55:37,825 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: battle_8.ttl
+2012-05-16 18:55:37,828 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: birth_place_6.ttl
+2012-05-16 18:55:37,830 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: branch_5.ttl
+2012-05-16 18:55:37,832 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: city_6.ttl
+2012-05-16 18:55:37,834 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: computing_platform_6.ttl
+2012-05-16 18:55:37,836 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: country_8.ttl
+2012-05-16 18:55:37,839 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: death_place_7.ttl
+2012-05-16 18:55:37,843 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: director_5.ttl
+2012-05-16 18:55:37,846 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: district_8.ttl
+2012-05-16 18:55:37,849 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: family_8.ttl
+2012-05-16 18:55:37,853 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: format_9.ttl
+2012-05-16 18:55:37,856 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: genre_9.ttl
+2012-05-16 18:55:37,858 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: kingdom_6.ttl
+2012-05-16 18:55:37,860 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: musical_band_5.ttl
+2012-05-16 18:55:37,862 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: producer_0.ttl
+2012-05-16 18:55:37,864 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: recorded_in_1.ttl
+2012-05-16 18:55:37,866 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: state_8.ttl
+2012-05-16 18:55:37,869 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: writer_8.ttl
+2012-05-16 18:55:37,871 INFO main org.aksw.provenance.search.fact.DefaultFactSearcher - Starting to load surface forms!
+2012-05-16 18:55:54,122 INFO main org.aksw.provenance.search.fact.DefaultFactSearcher - Finished to load surface forms!
+2012-05-16 18:55:54,188 DEBUG main org.apache.commons.httpclient.HttpClient - Java version: 1.6.0_31
+2012-05-16 18:55:54,188 DEBUG main org.apache.commons.httpclient.HttpClient - Java vendor: Apple Inc.
+2012-05-16 18:55:54,188 DEBUG main org.apache.commons.httpclient.HttpClient - Java class path: /Users/gerb/Development/workspaces/java-ws/AKSWInformationFinder/InformationFinder/target/classes:/Users/gerb/.m2/repository/org/apache/lucene/lucene-analyzers/3.5.0/lucene-analyzers-3.5.0.jar:/Users/gerb/.m2/repository/com/hp/hpl/jena/jena/2.6.4/jena-2.6.4.jar:/Users/gerb/.m2/repository/com/hp/hpl/jena/iri/0.8/iri-0.8.jar:/Users/gerb/.m2/repository/com/ibm/icu/icu4j/3.4.4/icu4j-3.4.4.jar:/Users/gerb/.m2/repository/xerces/xercesImpl/2.7.1/xercesImpl-2.7.1.jar:/Users/gerb/.m2/repository/weka/weka/3.6.5/weka-3.6.5.jar:/Users/gerb/.m2/repository/org/apache/solr/solr-solrj/3.5.0/solr-solrj-3.5.0.jar:/Users/gerb/.m2/repository/commons-io/commons-io/1.4/commons-io-1.4.jar:/Users/gerb/.m2/repository/org/codehaus/woodstox/wstx-asl/3.2.7/wstx-asl-3.2.7.jar:/Users/gerb/.m2/repository/org/apache/httpcomponents/httpclient/4.1.3/httpclient-4.1.3.jar:/Users/gerb/.m2/repository/org/apache/httpcomponents/httpcore/4.1.4/httpcore-4.1.4.jar:/Users/gerb/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar:/Users/gerb/.m2/repository/commons-codec/commons-codec/1.4/commons-codec-1.4.jar:/Users/gerb/.m2/repository/com/sun/jersey/jersey-client/1.11/jersey-client-1.11.jar:/Users/gerb/.m2/repository/com/sun/jersey/jersey-core/1.11/jersey-core-1.11.jar:/Users/gerb/.m2/repository/com/h2database/h2/1.3.166/h2-1.3.166.jar:/Users/gerb/.m2/repository/org/slf4j/slf4j-api/1.5.11/slf4j-api-1.5.11.jar:/Users/gerb/.m2/repository/org/slf4j/slf4j-log4j12/1.5.11/slf4j-log4j12-1.5.11.jar:/Users/gerb/.m2/repository/org/slf4j/jcl-over-slf4j/1.5.11/jcl-over-slf4j-1.5.11.jar:/Users/gerb/.m2/repository/net/sf/gsaapi/1.0/gsaapi-1.0.jar:/Users/gerb/.m2/repository/com/google/gson/1.4/gson-1.4.jar:/Users/gerb/.m2/repository/org/jsoup/jsoup/1.6.1/jsoup-1.6.1.jar:/Users/gerb/.m2/repository/com/google/code/bing/search/bing-search-java-sdk/1.0/bing-search-java-sdk-1.0.jar:/Users/gerb/.m2/repository/net/sourceforge/htmlcleaner/htmlcleaner/2.2/htmlcleaner-2.2.jar:/Users/gerb/.m2/repository/org/jdom/jdom/1.1/jdom-1.1.jar:/Users/gerb/.m2/repository/org/apache/ant/ant/1.7.0/ant-1.7.0.jar:/Users/gerb/.m2/repository/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar:/Users/gerb/.m2/repository/info/bliki/wiki/bliki-core/3.0.17/bliki-core-3.0.17.jar:/Users/gerb/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14.jar:/Users/gerb/.m2/repository/com/vaadin/vaadin/6.7.7/vaadin-6.7.7.jar:/Users/gerb/.m2/repository/org/apache/lucene/lucene-core/3.5.0/lucene-core-3.5.0.jar:/Users/gerb/.m2/repository/com/hp/hpl/jena/arq/2.8.5/arq-2.8.5.jar:/Users/gerb/.m2/repository/com/hp/hpl/jena/jena/2.6.3/jena-2.6.3-sources.jar:/Users/gerb/.m2/repository/com/hp/hpl/jena/iri/0.8/iri-0.8-sources.jar:/Users/gerb/.m2/repository/com/hp/hpl/jena/jena/2.6.3/jena-2.6.3-test-sources.jar:/Users/gerb/.m2/repository/com/clearspring/metricCatcher/0.0.9/metricCatcher-0.0.9.jar:/Users/gerb/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.8.5/jackson-mapper-asl-1.8.5.jar:/Users/gerb/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.8.5/jackson-core-asl-1.8.5.jar:/Users/gerb/.m2/repository/com/yammer/metrics/metrics-core/2.0.0-BETA18/metrics-core-2.0.0-BETA18.jar:/Users/gerb/.m2/repository/com/yammer/metrics/metrics-graphite/2.0.0-BETA18/metrics-graphite-2.0.0-BETA18.jar:/Users/gerb/.m2/repository/com/yammer/metrics/metrics-ganglia/2.0.0-BETA18/metrics-ganglia-2.0.0-BETA18.jar:/Users/gerb/.m2/repository/com/ning/async-http-client/1.4.0/async-http-client-1.4.0.jar:/Users/gerb/.m2/repository/org/jboss/netty/netty/3.2.3.Final/netty-3.2.3.Final.jar:/Users/gerb/.m2/repository/com/dbdeploy/dbdeploy-ant/3.0M3/dbdeploy-ant-3.0M3.jar:/Users/gerb/.m2/repository/org/freemarker/freemarker/2.3.15/freemarker-2.3.15.jar:/Users/gerb/.m2/repository/com/sun/bigbrother/javanet/naivebayes-classifier/1.2/naivebayes-classifier-1.2.jar:/Users/gerb/.m2/repository/com/sun/bigbrother/ci-bayes/1.0.9-patch-1/ci-bayes-1.0.9-patch-1.jar:/Users/gerb/.m2/repository/commons-math/commons-math/1.2/commons-math-1.2.jar:/Users/gerb/.m2/repository/javax/transaction/jta/1.0.1B/jta-1.0.1B.jar:/Users/gerb/.m2/repository/org/hibernate/hibernate-entitymanager/3.3.2.GA/hibernate-entitymanager-3.3.2.GA.jar:/Users/gerb/.m2/repository/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga.jar:/Users/gerb/.m2/repository/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3.jar:/Users/gerb/.m2/repository/asm/asm-attrs/1.5.3/asm-attrs-1.5.3.jar:/Users/gerb/.m2/repository/antlr/antlr/2.7.6/antlr-2.7.6.jar:/Users/gerb/.m2/repository/cglib/cglib/2.1_3/cglib-2.1_3.jar:/Users/gerb/.m2/repository/asm/asm/1.5.3/asm-1.5.3.jar:/Users/gerb/.m2/repository/commons-collections/commons-collections/2.1.1/commons-collections-2.1.1.jar:/Users/gerb/.m2/repository/org/hibernate/hibernate-annotations/3.3.1.GA/hibernate-annotations-3.3.1.GA.jar:/Users/gerb/.m2/repository/org/hibernate/hibernate-commons-annotations/3.0.0.ga/hibernate-commons-annotations-3.0.0.ga.jar:/Users/gerb/.m2/repository/org/hibernate/ejb3-persistence/1.0.1.GA/ejb3-persistence-1.0.1.GA.jar:/Users/gerb/.m2/repository/javassist/javassist/3.4.GA/javassist-3.4.GA.jar:/Users/gerb/.m2/repository/org/javolution/javolution/5.2.6/javolution-5.2.6.jar:/Users/gerb/.m2/repository/org/springframework/spring/2.5.6/spring-2.5.6.jar:/Users/gerb/.m2/repository/org/apache/lucene/lucene-snowball/2.3.2/lucene-snowball-2.3.2.jar:/Users/gerb/.m2/repository/nekohtml/nekohtml/1.9.6.2/nekohtml-1.9.6.2.jar:/Users/gerb/.m2/repository/javanettasks/javanettasks/1.0.18/javanettasks-1.0.18.jar:/Users/gerb/.m2/repository/javanettasks/httpunit/1.5.4/httpunit-1.5.4.jar:/Users/gerb/.m2/repository/javax/servlet/servlet-api/2.3/servlet-api-2.3.jar:/Users/gerb/.m2/repository/jtidy/jtidy/4aug2000r7-dev/jtidy-4aug2000r7-dev.jar:/Users/gerb/.m2/repository/ant/ant/1.5/ant-1.5.jar:/Users/gerb/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar:/Users/gerb/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar:/Users/gerb/.m2/repository/jaxen/jaxen/1.1.1/jaxen-1.1.1.jar:/Users/gerb/.m2/repository/com/sun/bigbrother/javanet/classifier-api/1.0/classifier-api-1.0.jar:/Users/gerb/.m2/repository/org/apache/commons/commons-compress/1.0/commons-compress-1.0.jar:/Users/gerb/.m2/repository/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar:/Users/gerb/.m2/repository/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar
+2012-05-16 18:55:54,188 DEBUG main org.apache.commons.httpclient.HttpClient - Operating system name: Mac OS X
+2012-05-16 18:55:54,188 DEBUG main org.apache.commons.httpclient.HttpClient - Operating system architecture: x86_64
+2012-05-16 18:55:54,188 DEBUG main org.apache.commons.httpclient.HttpClient - Operating system version: 10.7.3
+2012-05-16 18:55:54,253 DEBUG main org.apache.commons.httpclient.HttpClient - SunPKCS11-Darwin 1.6: SunPKCS11 accessing Mac OS X SmartCardServices
+2012-05-16 18:55:54,253 DEBUG main org.apache.commons.httpclient.HttpClient - SUN 1.6: SUN (DSA key/parameter generation; DSA signing; SHA-1, MD5 digests; SecureRandom; X.509 certificates; JKS keystore; PKIX CertPathValidator; PKIX CertPathBuilder; LDAP, Collection CertStores, JavaPolicy Policy; JavaLoginConfig Configuration)
+2012-05-16 18:55:54,253 DEBUG main org.apache.commons.httpclient.HttpClient - Apple 1.0: Apple Provider (implements DES, Triple DES, AES, Blowfish, PBE, Diffie-Hellman, HMAC/MD5, HMAC/SHA1)
+2012-05-16 18:55:54,253 DEBUG main org.apache.commons.httpclient.HttpClient - SunRsaSign 1.5: Sun RSA signature provider
+2012-05-16 18:55:54,253 DEBUG main org.apache.commons.httpclient.HttpClient - SunJSSE 1.6: Sun JSSE provider(PKCS12, SunX509 key/trust factories, SSLv3, TLSv1)
+2012-05-16 18:55:54,253 DEBUG main org.apache.commons.httpclient.HttpClient - SunJCE 1.6: SunJCE Provider (implements RSA, DES, Triple DES, AES, Blowfish, ARCFOUR, RC2, PBE, Diffie-Hellman, HMAC)
+2012-05-16 18:55:54,253 DEBUG main org.apache.commons.httpclient.HttpClient - SunJGSS 1.0: Sun (Kerberos v5, SPNEGO)
+2012-05-16 18:55:54,253 DEBUG main org.apache.commons.httpclient.HttpClient - SunSASL 1.5: Sun SASL provider(implements client mechanisms for: DIGEST-MD5, GSSAPI, EXTERNAL, PLAIN, CRAM-MD5; server mechanisms for: DIGEST-MD5, GSSAPI, CRAM-MD5)
+2012-05-16 18:55:54,253 DEBUG main org.apache.commons.httpclient.HttpClient - XMLDSig 1.0: XMLDSig (DOM XMLSignatureFactory; DOM KeyInfoFactory)
+2012-05-16 18:55:54,253 DEBUG main org.apache.commons.httpclient.HttpClient - SunPCSC 1.6: Sun PC/SC provider
+2012-05-16 18:55:54,261 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.useragent = Jakarta Commons-HttpClient/3.1
+2012-05-16 18:55:54,262 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.protocol.version = HTTP/1.1
+2012-05-16 18:55:54,263 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.connection-manager.class = class org.apache.commons.httpclient.SimpleHttpConnectionManager
+2012-05-16 18:55:54,263 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.protocol.cookie-policy = default
+2012-05-16 18:55:54,263 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.protocol.element-charset = US-ASCII
+2012-05-16 18:55:54,263 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.protocol.content-charset = ISO-8859-1
+2012-05-16 18:55:54,264 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.method.retry-handler = org.apache.commons.httpclient.DefaultHttpMethodRetryHandler@7c9416f5
+2012-05-16 18:55:54,264 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.dateparser.patterns = [EEE, dd MMM yyyy HH:mm:ss zzz, EEEE, dd-MMM-yy HH:mm:ss zzz, EEE MMM d HH:mm:ss yyyy, EEE, dd-MMM-yyyy HH:mm:ss z, EEE, dd-MMM-yyyy HH-mm-ss z, EEE, dd MMM yy HH:mm:ss z, EEE dd-MMM-yyyy HH:mm:ss z, EEE dd MMM yyyy HH:mm:ss z, EEE dd-MMM-yyyy HH-mm-ss z, EEE dd-MMM-yy HH:mm:ss z, EEE dd MMM yy HH:mm:ss z, EEE,dd-MMM-yy HH:mm:ss z, EEE,dd-MMM-yyyy HH:mm:ss z, EEE, dd-MM-yyyy HH:mm:ss z]
+2012-05-16 18:55:54,269 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.method.retry-handler = org.apache.commons.httpclient.DefaultHttpMethodRetryHandler@38282baf
+2012-05-16 18:55:54,270 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.connection-manager.max-per-host = {HostConfiguration[]=32}
+2012-05-16 18:55:54,270 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.connection-manager.max-total = 128
+2012-05-16 18:55:54,349 DEBUG main org.apache.commons.httpclient.MultiThreadedHttpConnectionManager - HttpConnectionManager.getConnection:  config = HostConfiguration[host=http://dbpedia.aksw.org:8080], timeout = 0
+2012-05-16 18:55:54,349 DEBUG main org.apache.commons.httpclient.MultiThreadedHttpConnectionManager - Allocating new connection, hostConfig=HostConfiguration[host=http://dbpedia.aksw.org:8080]
+2012-05-16 18:55:54,352 DEBUG main org.apache.commons.httpclient.HttpConnection - Open connection to dbpedia.aksw.org:8080
+2012-05-16 18:55:54,395 DEBUG main httpclient.wire.header - >> "GET /solr/boa_fact_detail/select?q=uri%3A%22http%3A%2F%2Fdbpedia.org%2Fontology%2FtradeMark%22&fl=boa-score%2Cnlr-var%2Cnlr-no-var&sort=boa-score+desc&rows=20&wt=javabin&version=2 HTTP/1.1[\r][\n]"
+2012-05-16 18:55:54,395 DEBUG main org.apache.commons.httpclient.HttpMethodBase - Adding Host request header
+2012-05-16 18:55:54,404 DEBUG main httpclient.wire.header - >> "User-Agent: Solr[org.apache.solr.client.solrj.impl.CommonsHttpSolrServer] 1.0[\r][\n]"
+2012-05-16 18:55:54,404 DEBUG main httpclient.wire.header - >> "Host: dbpedia.aksw.org:8080[\r][\n]"
+2012-05-16 18:55:54,404 DEBUG main httpclient.wire.header - >> "[\r][\n]"
+2012-05-16 18:55:54,990 DEBUG main httpclient.wire.header - << "HTTP/1.1 200 OK[\r][\n]"
+2012-05-16 18:55:54,990 DEBUG main httpclient.wire.header - << "HTTP/1.1 200 OK[\r][\n]"
+2012-05-16 18:55:54,991 DEBUG main httpclient.wire.header - << "Server: Apache-Coyote/1.1[\r][\n]"
+2012-05-16 18:55:54,991 DEBUG main httpclient.wire.header - << "Last-Modified: Wed, 16 May 2012 00:59:21 GMT[\r][\n]"
+2012-05-16 18:55:54,992 DEBUG main httpclient.wire.header - << "ETag: "MmRmYmY3NjhlYzgwMDAwMFNvbHI="[\r][\n]"
+2012-05-16 18:55:54,992 DEBUG main httpclient.wire.header - << "Content-Type: application/octet-stream[\r][\n]"
+2012-05-16 18:55:54,992 DEBUG main httpclient.wire.header - << "Content-Length: 203[\r][\n]"
+2012-05-16 18:55:54,992 DEBUG main httpclient.wire.header - << "Date: Wed, 16 May 2012 16:55:54 GMT[\r][\n]"
+2012-05-16 18:55:54,992 DEBUG main httpclient.wire.header - << "[\r][\n]"
+2012-05-16 18:55:54,994 DEBUG main org.apache.commons.httpclient.HttpMethodBase - Default charset used: ISO-8859-1
+2012-05-16 18:55:54,996 DEBUG main httpclient.wire.content - << "[0x2][0xa2][0xe0].responseHeader[0xa3][0xe0]&status[0x6][0x0][0x0][0x0][0x0][0xe0]%QTime[0x6][0x0][0x0][0x0][0x0][0xe0]&params[0xa6][0xe0]"fl<boa-score,nlr-var,nlr-no-var[0xe0]$sort.boa-score desc[0xe0]!q?[0xc]uri:"http://dbpedia.org/ontology/tradeMark"[0xe0]"wt'javabin[0xe0]$rows"20[0xe0]'version!2[0xe0](response[0xc][0x83]``[0x0][0x80]"
+2012-05-16 18:55:54,998 DEBUG main org.apache.commons.httpclient.HttpMethodBase - Resorting to protocol version default close connection policy
+2012-05-16 18:55:54,998 DEBUG main org.apache.commons.httpclient.HttpMethodBase - Should NOT close connection, using HTTP/1.1
+2012-05-16 18:55:54,998 DEBUG main org.apache.commons.httpclient.HttpConnection - Releasing connection back to connection manager.
+2012-05-16 18:55:54,998 DEBUG main org.apache.commons.httpclient.MultiThreadedHttpConnectionManager - Freeing connection, hostConfig=HostConfiguration[host=http://dbpedia.aksw.org:8080]
+2012-05-16 18:55:54,998 DEBUG main org.apache.commons.httpclient.util.IdleConnectionHandler - Adding connection at: 1337187354998
+2012-05-16 18:55:54,998 DEBUG main org.apache.commons.httpclient.MultiThreadedHttpConnectionManager - Notifying no-one, there are no waiting threads
+2012-05-16 18:55:55,000 INFO main org.aksw.provenance.search.query.QueryGenerator - Generated 0 queries for fact: http://dbpedia.org/resource/Stumpy_%28album%29 @http://dbpedia.org/ontology/tradeMark http://dbpedia.org/resource/Tall_Dwarfs
+2012-05-16 18:55:55,001 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.method.retry-handler = org.apache.commons.httpclient.DefaultHttpMethodRetryHandler@1c62d0ce
+2012-05-16 18:55:55,001 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.connection-manager.max-per-host = {HostConfiguration[]=32}
+2012-05-16 18:55:55,001 DEBUG main org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.connection-manager.max-total = 128
+2012-05-16 18:55:55,002 DEBUG main org.apache.commons.httpclient.MultiThreadedHttpConnectionManager - HttpConnectionManager.getConnection:  config = HostConfiguration[host=http://dbpedia.aksw.org:8080], timeout = 0
+2012-05-16 18:55:55,002 DEBUG main org.apache.commons.httpclient.MultiThreadedHttpConnectionManager - Allocating new connection, hostConfig=HostConfiguration[host=http://dbpedia.aksw.org:8080]
+2012-05-16 18:55:55,002 DEBUG main org.apache.commons.httpclient.HttpConnection - Open connection to dbpedia.aksw.org:8080
+2012-05-16 18:55:55,034 DEBUG main httpclient.wire.header - >> "GET /solr/boa_fact_detail/select?q=uri%3A%22http%3A%2F%2Fdbpedia.org%2Fontology%2FassociatedBand%22&fl=boa-score%2Cnlr-var%2Cnlr-no-var&sort=boa-score+desc&rows=20&wt=javabin&version=2 HTTP/1.1[\r][\n]"
+2012-05-16 18:55:55,035 DEBUG main org.apache.commons.httpclient.HttpMethodBase - Adding Host request header
+2012-05-16 18:55:55,035 DEBUG main httpclient.wire.header - >> "User-Agent: Solr[org.apache.solr.client.solrj.impl.CommonsHttpSolrServer] 1.0[\r][\n]"
+2012-05-16 18:55:55,035 DEBUG main httpclient.wire.header - >> "Host: dbpedia.aksw.org:8080[\r][\n]"
+2012-05-16 18:55:55,035 DEBUG main httpclient.wire.header - >> "[\r][\n]"
+2012-05-16 18:55:55,077 DEBUG main httpclient.wire.header - << "HTTP/1.1 200 OK[\r][\n]"
+2012-05-16 18:55:55,077 DEBUG main httpclient.wire.header - << "HTTP/1.1 200 OK[\r][\n]"
+2012-05-16 18:55:55,077 DEBUG main httpclient.wire.header - << "Server: Apache-Coyote/1.1[\r][\n]"
+2012-05-16 18:55:55,077 DEBUG main httpclient.wire.header - << "Last-Modified: Wed, 16 May 2012 00:59:21 GMT[\r][\n]"
+2012-05-16 18:55:55,077 DEBUG main httpclient.wire.header - << "ETag: "MmRmYmY3NjhlYzgwMDAwMFNvbHI="[\r][\n]"
+2012-05-16 18:55:55,077 DEBUG main httpclient.wire.header - << "Content-Type: application/octet-stream[\r][\n]"
+2012-05-16 18:55:55,077 DEBUG main httpclient.wire.header - << "Content-Length: 1348[\r][\n]"
+2012-05-16 18:55:55,077 DEBUG main httpclient.wire.header - << "Date: Wed, 16 May 2012 16:55:54 GMT[\r][\n]"
+2012-05-16 18:55:55,077 DEBUG main httpclient.wire.header - << "[\r][\n]"
+2012-05-16 18:55:55,077 DEBUG main org.apache.commons.httpclient.HttpMethodBase - Default charset used: ISO-8859-1
+2012-05-16 18:55:55,078 DEBUG main httpclient.wire.content - << "[0x2][0xa2][0xe0].responseHeader[0xa3][0xe0]&status[0x6][0x0][0x0][0x0][0x0][0xe0]%QTime[0x6][0x0][0x0][0x0][0x0][0xe0]&params[0xa6][0xe0]"fl<boa-score,nlr-var,nlr-no-var[0xe0]$sort.boa-score desc[0xe0]!q?[0x11]uri:"http://dbpedia.org/ontology/associatedBand"[0xe0]"wt'javabin[0xe0]$rows"20[0xe0]'version!2[0xe0](response[0xc][0x83]v[\r]`[0x0][0x94][0xb][0xa3][0xe0]'nlr-var?[0x0]?R? before going on to form ?D?[0xe0]*nlr-no-var7before going on to form[0xe0])boa-score[0x5]?[0xef];[0x12][0xb3][0x2]PV[0xb][0xa3][0xec]8?R? 's lead singer , ?D?[0xed]0's lead singer ,[0xee][0x5]?[0xef]6'[0x83]N[0xb7][0x12][0xb][0xa3][0xec]7?R? founding member ?D?[0xed]/founding member[0xee][0x5]?[0xef][0x1]UX[0x88][0xfd][0x96][0xb][0xa3][0xec]3?R? lead singer ?D?[0xed]+lead singer[0xee][0x5]?[0xee][0xf9][0xe6][0x15][0xd5]$[0xbd][0xb][0xa3][0xec]6?R? 's lead singer ?D?[0xed].'s lead singer[0xee][0x5]?[0xee][0xe8]"Dg[0xdb]S[0xb][0xa3][0xec]7?R? song written by ?D?[0xed]/song written by[0xee][0x5]?[0xee][0xbc][0x8f][0x94]~[0x4][0xb7][0xb][0xa3][0xec]6?R? lead guitarist ?D?[0xed].lead guitarist[0xee][0x5]?[0xee][0x96][0xed]{a[0xec][0x1d][0xb][0xa3][0xec]5?D? from the band ?R?[0xed]-from the band[0xee][0x5]?[0xee][0x8e]~[0xa3][0xd5]O[0x8c][0xb][0xa3][0xec]5?R? lead vocalist ?D?[0xed]-lead vocalist[0xee][0x5]?[0xee]f[0xf9][0xbd][0xe]d[0x8f][0xb][0xa3][0xec]4?R? , written by ?D?[0xed],, written by[0xee][0x5]?[0xee]bCZ[0x1d]pD[0xb][0xa3][0xec]=?D? , one half of the duo ?R?[0xed]5, one half of the duo[0xee][0x5]?[0xee]A[0xf8][0x0][0xbc][0xc4][0xfe][0xb][0xa3][0xec]6?D? under the name ?R?[0xed].under the name[0xee][0x5]?[0xee]4[0x96]D[0xc8][0x8d][0xf5][0xb][0xa3][0xec]?[0x0]?D? ; all music composed by ?R?[0xed]7; all music composed by[0xee][0x5]?[0xed][0xf0][0xb1](\[0xd7][0x1d][0xb][0xa3][0xec]3?D? lead singer ?R?[0xed]+lead singer[0xee][0x5]?[0xed][0xee][0xe0].[0xc9]hz[0xb][0xa3][0xec]8?D? of the rock band ?R?[0xed]0of the rock band[0xee][0x5]?[0xed][0xd6][0xd7][0xcc][0xda][0xa2][0xb6][0xb][0xa3][0xec];?R? , a side project of ?D?[0xed]3, a side project of[0xee][0x5]?[0xed][0xc4][0xb8][0x86]`R[\r][0xb][0xa3][0xec]1?D? 's band , ?R?[0xed])'s band ,[0xee][0x5]?[0xed][0xb0];[0xe9]Kk[0xd7][0xb][0xa3][0xec]8?D? , lead singer of ?R?[0xed]0, lead singer of[0xee][0x5]?[0xed][0xac]Zj[-D[0xb][0xa3][0xec]>?D? , formerly of the band ?R?[0xed]6, formerly of the band[0xee][0x5]?[0xed][0xaa]3[0xe6][0xa7][0xe6][0x87][0xb][0xa3][0xec]9?D? for the rock band ?R?[0xed]1for the rock band[0xee][0x5]?[0xed][0x85]$D^p[0x8a]"
+2012-05-16 18:55:55,079 DEBUG main org.apache.commons.httpclient.HttpMethodBase - Resorting to protocol version default close connection policy
+2012-05-16 18:55:55,079 DEBUG main org.apache.commons.httpclient.HttpMethodBase - Should NOT close connection, using HTTP/1.1
+2012-05-16 18:55:55,079 DEBUG main org.apache.commons.httpclient.HttpConnection - Releasing connection back to connection manager.
+2012-05-16 18:55:55,079 DEBUG main org.apache.commons.httpclient.MultiThreadedHttpConnectionManager - Freeing connection, hostConfig=HostConfiguration[host=http://dbpedia.aksw.org:8080]
+2012-05-16 18:55:55,079 DEBUG main org.apache.commons.httpclient.util.IdleConnectionHandler - Adding connection at: 1337187355079
+2012-05-16 18:55:55,079 DEBUG main org.apache.commons.httpclient.MultiThreadedHttpConnectionManager - Notifying no-one, there are no waiting threads
+2012-05-16 18:55:55,080 INFO main org.aksw.provenance.search.query.QueryGenerator - Generated 20 queries for fact: http://dbpedia.org/resource/Dancer_%28band%29 @http://dbpedia.org/ontology/associatedBand http://dbpedia.org/resource/Inculto
+2012-05-16 18:55:55,082 INFO main org.aksw.provenance.FactChecker - Preparing queries took 0 min, 0 sec
+2012-05-16 18:55:55,567 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "lead singer of" AND "Inculto"' returned 8 results.
+2012-05-16 18:55:55,800 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "'s lead singer" AND "Inculto"' returned 3 results.
+2012-05-16 18:55:56,121 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "lead singer" AND "Inculto"' returned 10 results.
+2012-05-16 18:55:56,628 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "founding member" AND "Inculto"' returned 5 results.
+2012-05-16 18:55:57,241 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "lead vocalist" AND "Inculto"' returned 2 results.
+2012-05-16 18:55:57,549 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "song written by" AND "Inculto"' returned 4 results.
+2012-05-16 18:55:57,855 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "lead guitarist" AND "Inculto"' returned 2 results.
+2012-05-16 18:55:58,167 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "written by" AND "Inculto"' returned 10 results.
+2012-05-16 18:55:58,469 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "from the band" AND "Inculto"' returned 1 results.
+2012-05-16 18:55:58,778 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "for the rock band" AND "Inculto"' returned 0 results.
+2012-05-16 18:55:59,191 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "under the name" AND "Inculto"' returned 10 results.
+2012-05-16 18:55:59,600 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "lead singer" AND "Inculto"' returned 10 results.
+2012-05-16 18:56:00,110 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "'s lead singer" AND "Inculto"' returned 3 results.
+2012-05-16 18:56:00,523 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "'s band" AND "Inculto"' returned 10 results.
+2012-05-16 18:56:00,826 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "; all music composed by" AND "Inculto"' returned 0 results.
+2012-05-16 18:56:01,032 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "one half of the duo" AND "Inculto"' returned 0 results.
+2012-05-16 18:56:01,439 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "of the rock band" AND "Inculto"' returned 1 results.
+2012-05-16 18:56:01,747 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "formerly of the band" AND "Inculto"' returned 0 results.
+2012-05-16 18:56:01,944 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "a side project of" AND "Inculto"' returned 1 results.
+2012-05-16 18:56:02,140 DEBUG main org.aksw.provenance.search.engine.bing.BingSearchEngine - Querying Bing for query: '"Dancer" AND "before going on to form" AND "Inculto"' returned 0 results.
+2012-05-16 18:56:03,315 DEBUG pool-24-thread-7 org.aksw.provenance.util.JsoupCrawlUtil - Error crawling website: http://mercicherie.blogspot.com/2008_06_01_archive.html
+java.io.IOException: 404 error loading URL http://mercicherie.blogspot.de/2008_06_01_archive.html
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:387)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:396)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:364)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:143)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:132)
+	at org.aksw.provenance.util.JsoupCrawlUtil.readPage(JsoupCrawlUtil.java:20)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:152)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:1)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:98)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:206)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:680)
+2012-05-16 18:56:03,358 DEBUG pool-31-thread-1 org.aksw.provenance.util.JsoupCrawlUtil - Error crawling website: http://eurovisiondownunder.blogspot.com/feeds/posts/default?orderby=updated
+java.io.IOException: Unhandled content type "application/atom+xml" on URL http://eurovisiondownunder.blogspot.com/feeds/posts/default?orderby=updated. Must be text/*, application/xml, or application/xhtml+xml
+	at org.jsoup.helper.HttpConnection$Response.parse(HttpConnection.java:438)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:133)
+	at org.aksw.provenance.util.JsoupCrawlUtil.readPage(JsoupCrawlUtil.java:20)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:152)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:1)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:98)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:206)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:680)
+2012-05-16 18:56:03,643 DEBUG pool-22-thread-7 org.aksw.provenance.util.JsoupCrawlUtil - Error crawling website: http://mercicherie.blogspot.com/2008_06_01_archive.html
+java.io.IOException: 404 error loading URL http://mercicherie.blogspot.de/2008_06_01_archive.html
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:387)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:396)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:364)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:143)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:132)
+	at org.aksw.provenance.util.JsoupCrawlUtil.readPage(JsoupCrawlUtil.java:20)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:152)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:1)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:98)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:206)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:680)
+2012-05-16 18:56:03,921 DEBUG pool-25-thread-5 org.aksw.provenance.util.JsoupCrawlUtil - Error crawling website: http://www.eurovisionary.com/eurovision-news/second-semifinal-eirodziesma-2012-complete-line-known-final
+java.io.IOException: 403 error loading URL http://www.eurovisionary.com/eurovision-news/second-semifinal-eirodziesma-2012-complete-line-known-final
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:387)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:364)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:143)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:132)
+	at org.aksw.provenance.util.JsoupCrawlUtil.readPage(JsoupCrawlUtil.java:20)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:152)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:1)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:98)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:206)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:680)
+2012-05-16 18:56:13,217 DEBUG pool-26-thread-1 org.aksw.provenance.util.JsoupCrawlUtil - Error crawling website: http://www.pul.se/Men-bear-brunt-of-recession-Male-jDvmGebGNz3S
+java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(SocketInputStream.java:129)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:218)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:258)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	at sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:697)
+	at sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:640)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1195)
+	at java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:379)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:381)
+	at org.jsoup.helper.HttpConnection$Response.execute(HttpConnection.java:364)
+	at org.jsoup.helper.HttpConnection.execute(HttpConnection.java:143)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:132)
+	at org.aksw.provenance.util.JsoupCrawlUtil.readPage(JsoupCrawlUtil.java:20)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:152)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:1)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:98)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:206)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:680)
+2012-05-16 18:56:22,177 DEBUG pool-29-thread-1 org.aksw.provenance.util.JsoupCrawlUtil - Error crawling website: http://www.ginotrack.com/download/37082
+java.io.IOException: Unhandled content type "application/octet-stream" on URL http://www.ginotrack.com/download/37082. Must be text/*, application/xml, or application/xhtml+xml
+	at org.jsoup.helper.HttpConnection$Response.parse(HttpConnection.java:438)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:133)
+	at org.aksw.provenance.util.JsoupCrawlUtil.readPage(JsoupCrawlUtil.java:20)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:152)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:1)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:98)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:206)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:680)
+2012-05-16 18:56:22,403 DEBUG pool-25-thread-2 org.aksw.provenance.util.JsoupCrawlUtil - Error crawling website: http://www.ginotrack.com/download/37082
+java.io.IOException: Unhandled content type "application/octet-stream" on URL http://www.ginotrack.com/download/37082. Must be text/*, application/xml, or application/xhtml+xml
+	at org.jsoup.helper.HttpConnection$Response.parse(HttpConnection.java:438)
+	at org.jsoup.helper.HttpConnection.get(HttpConnection.java:133)
+	at org.aksw.provenance.util.JsoupCrawlUtil.readPage(JsoupCrawlUtil.java:20)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:152)
+	at org.aksw.provenance.search.concurrent.WebSiteCrawlerCallable$HtmlCrawlerCallable.call(WebSiteCrawlerCallable.java:1)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:98)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:206)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:680)
+2012-05-16 18:57:06,741 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: artist_8_prop.ttl
+2012-05-16 18:57:06,744 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: associated_band_2_ran.ttl
+2012-05-16 18:57:06,746 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: birth_place_1_random.ttl
+2012-05-16 18:57:06,749 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: city_5_prop.ttl
+2012-05-16 18:57:06,751 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: country_7_random.ttl
+2012-05-16 18:57:06,753 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: distributor_4_random.ttl
+2012-05-16 18:57:06,755 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: format_2_prop.ttl
+2012-05-16 18:57:06,757 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: genus_7_dom.ttl
+2012-05-16 18:57:06,759 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: industry_6_ran.ttl
+2012-05-16 18:57:06,761 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: kingdom_3_prop.ttl
+2012-05-16 18:57:06,763 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: location_9_ran.ttl
+2012-05-16 18:57:06,765 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: musical_band_2_ran.ttl
+2012-05-16 18:57:06,767 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: owner_5_dom.ttl
+2012-05-16 18:57:06,769 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: previous_work_8_ran.ttl
+2012-05-16 18:57:06,770 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: product_7_random.ttl
+2012-05-16 18:57:06,773 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: recorded_in_2_dom.ttl
+2012-05-16 18:57:06,775 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: subsequent_work_0_ran.ttl
+2012-05-16 18:57:06,778 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: team_4_prop.ttl
+2012-05-16 18:57:06,780 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: writer_0_dom.ttl
+2012-05-16 18:57:06,782 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: alma_mater_5.ttl
+2012-05-16 18:57:06,784 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: artist_6.ttl
+2012-05-16 18:57:06,785 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: associated_band_5.ttl
+2012-05-16 18:57:06,787 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: associated_musical_artist_3.ttl
+2012-05-16 18:57:06,789 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: battle_8.ttl
+2012-05-16 18:57:06,791 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: birth_place_6.ttl
+2012-05-16 18:57:06,793 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: branch_5.ttl
+2012-05-16 18:57:06,794 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: city_6.ttl
+2012-05-16 18:57:06,796 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: computing_platform_6.ttl
+2012-05-16 18:57:06,798 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: country_8.ttl
+2012-05-16 18:57:06,800 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: death_place_7.ttl
+2012-05-16 18:57:06,802 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: director_5.ttl
+2012-05-16 18:57:06,804 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: district_8.ttl
+2012-05-16 18:57:06,806 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: family_8.ttl
+2012-05-16 18:57:06,808 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: format_9.ttl
+2012-05-16 18:57:06,810 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: genre_9.ttl
+2012-05-16 18:57:06,812 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: kingdom_6.ttl
+2012-05-16 18:57:06,814 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: musical_band_5.ttl
+2012-05-16 18:57:06,816 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: producer_0.ttl
+2012-05-16 18:57:06,818 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: recorded_in_1.ttl
+2012-05-16 18:57:06,820 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: state_8.ttl
+2012-05-16 18:57:06,821 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: writer_8.ttl
+2012-05-16 18:57:06,823 INFO main org.aksw.provenance.search.fact.DefaultFactSearcher - Starting to load surface forms!
+2012-05-16 18:58:00,419 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: artist_8_prop.ttl
+2012-05-16 18:58:00,422 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: associated_band_2_ran.ttl
+2012-05-16 18:58:00,424 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: birth_place_1_random.ttl
+2012-05-16 18:58:00,427 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: city_5_prop.ttl
+2012-05-16 18:58:00,429 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: country_7_random.ttl
+2012-05-16 18:58:00,431 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: distributor_4_random.ttl
+2012-05-16 18:58:00,434 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: format_2_prop.ttl
+2012-05-16 18:58:00,436 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: genus_7_dom.ttl
+2012-05-16 18:58:00,438 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: industry_6_ran.ttl
+2012-05-16 18:58:00,440 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: kingdom_3_prop.ttl
+2012-05-16 18:58:00,442 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: location_9_ran.ttl
+2012-05-16 18:58:00,444 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: musical_band_2_ran.ttl
+2012-05-16 18:58:00,446 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: owner_5_dom.ttl
+2012-05-16 18:58:00,448 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: previous_work_8_ran.ttl
+2012-05-16 18:58:00,450 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: product_7_random.ttl
+2012-05-16 18:58:00,452 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: recorded_in_2_dom.ttl
+2012-05-16 18:58:00,455 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: subsequent_work_0_ran.ttl
+2012-05-16 18:58:00,457 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: team_4_prop.ttl
+2012-05-16 18:58:00,459 INFO main org.aksw.provenance.FactCheckerDemo - Loading false triple from file: writer_0_dom.ttl
+2012-05-16 18:58:00,461 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: alma_mater_5.ttl
+2012-05-16 18:58:00,463 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: artist_6.ttl
+2012-05-16 18:58:00,465 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: associated_band_5.ttl
+2012-05-16 18:58:00,467 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: associated_musical_artist_3.ttl
+2012-05-16 18:58:00,469 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: battle_8.ttl
+2012-05-16 18:58:00,471 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: birth_place_6.ttl
+2012-05-16 18:58:00,473 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: branch_5.ttl
+2012-05-16 18:58:00,475 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: city_6.ttl
+2012-05-16 18:58:00,477 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: computing_platform_6.ttl
+2012-05-16 18:58:00,479 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: country_8.ttl
+2012-05-16 18:58:00,482 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: death_place_7.ttl
+2012-05-16 18:58:00,484 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: director_5.ttl
+2012-05-16 18:58:00,486 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: district_8.ttl
+2012-05-16 18:58:00,488 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: family_8.ttl
+2012-05-16 18:58:00,490 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: format_9.ttl
+2012-05-16 18:58:00,492 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: genre_9.ttl
+2012-05-16 18:58:00,493 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: kingdom_6.ttl
+2012-05-16 18:58:00,495 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: musical_band_5.ttl
+2012-05-16 18:58:00,497 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: producer_0.ttl
+2012-05-16 18:58:00,499 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: recorded_in_1.ttl
+2012-05-16 18:58:00,501 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: state_8.ttl
+2012-05-16 18:58:00,502 INFO main org.aksw.provenance.FactCheckerDemo - Loading true triple from file: writer_8.ttl
+2012-05-16 18:58:00,504 INFO main org.aksw.provenance.search.fact.DefaultFactSearcher - Starting to load surface forms!

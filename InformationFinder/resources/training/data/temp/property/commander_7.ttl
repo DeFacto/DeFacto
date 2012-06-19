@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kobayakawa_Takakage>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kobayakawa Takakage"@en .
+
+<http://dbpedia.org/resource/Japanese_invasions_of_Korea_%281592%E2%80%931598%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Japanese invasions of Korea (1592–1598)"@en ;
+      <http://dbpedia.org/ontology/genre>
+              <http://dbpedia.org/resource/Kobayakawa_Takakage> .

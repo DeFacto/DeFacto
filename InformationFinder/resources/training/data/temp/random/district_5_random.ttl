@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .
+
+<http://dbpedia.org/resource/Krak%C3%B3w>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kraków"@en ;
+      <http://dbpedia.org/ontology/computingPlatform>
+              <http://dbpedia.org/resource/London> .

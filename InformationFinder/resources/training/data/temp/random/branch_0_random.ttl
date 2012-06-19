@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_States>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States"@en .
+
+<http://dbpedia.org/resource/Mary_Magdalene>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Mary Magdalene"@en ;
+      <http://dbpedia.org/ontology/award>
+              <http://dbpedia.org/resource/United_States> .

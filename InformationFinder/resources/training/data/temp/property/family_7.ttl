@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Verheyen%27s_Multimammate_Mouse>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Verheyen's Multimammate Mouse"@en ;
+      <http://dbpedia.org/ontology/district>
+              <http://dbpedia.org/resource/Muridae> .
+
+<http://dbpedia.org/resource/Muridae>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Muridae"@en .

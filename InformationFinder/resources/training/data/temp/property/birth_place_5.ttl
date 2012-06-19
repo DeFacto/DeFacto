@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Thilo_Leugers>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Thilo Leugers"@en ;
+      <http://dbpedia.org/ontology/timeZone>
+              <http://dbpedia.org/resource/Germany> .
+
+<http://dbpedia.org/resource/Germany>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Germany"@en .

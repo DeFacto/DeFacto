@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Chordata>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chordata"@en .
+
+<http://dbpedia.org/resource/Penang_betta>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Penang betta"@en ;
+      <http://dbpedia.org/ontology/associatedBand>
+              <http://dbpedia.org/resource/Chordata> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Pittsburgh_Pirates>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Pittsburgh Pirates"@en .
+
+<http://dbpedia.org/resource/Gene_Garber>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Gene Garber"@en ;
+      <http://dbpedia.org/ontology/hometown>
+              <http://dbpedia.org/resource/Pittsburgh_Pirates> .

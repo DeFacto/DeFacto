@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_States>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States"@en .
+
+<http://dbpedia.org/resource/Stanley_Nomad>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Stanley Nomad"@en ;
+      <http://dbpedia.org/ontology/militaryBranch>
+              <http://dbpedia.org/resource/United_States> .

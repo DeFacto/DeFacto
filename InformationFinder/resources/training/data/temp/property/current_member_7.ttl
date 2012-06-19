@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/2010%E2%80%9311_Puebla_F.C._season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "2010–11 Puebla F.C. season"@en ;
+      <http://dbpedia.org/ontology/producer>
+              <http://dbpedia.org/resource/%C3%89dgar_Adolfo_Hern%C3%A1ndez> .
+
+<http://dbpedia.org/resource/%C3%89dgar_Adolfo_Hern%C3%A1ndez>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Édgar Adolfo Hernández"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Philolochma>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Philolochma"@en ;
+      <http://dbpedia.org/ontology/publisher>
+              <http://dbpedia.org/resource/Lepidoptera> .
+
+<http://dbpedia.org/resource/Lepidoptera>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Lepidoptera"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Eurypteryx_bhaga>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Eurypteryx bhaga"@en ;
+      <http://dbpedia.org/ontology/genus>
+              <http://dbpedia.org/resource/Insect> .
+
+<http://dbpedia.org/resource/Insect>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Insect"@en .

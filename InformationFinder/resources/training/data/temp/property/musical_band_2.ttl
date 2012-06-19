@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Koi,_Hanabi>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Koi, Hanabi"@en ;
+      <http://dbpedia.org/ontology/associatedMusicalArtist>
+              <http://dbpedia.org/resource/Hatsune_Okumura> .
+
+<http://dbpedia.org/resource/Hatsune_Okumura>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Hatsune Okumura"@en .

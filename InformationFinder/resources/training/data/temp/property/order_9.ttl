@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Slate-coloured_Grosbeak>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Slate-coloured Grosbeak"@en ;
+      <http://dbpedia.org/ontology/award>
+              <http://dbpedia.org/resource/Passeriformes> .
+
+<http://dbpedia.org/resource/Passeriformes>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Passeriformes"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .
+
+<http://dbpedia.org/resource/Herbert_Kutscha>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Herbert Kutscha"@en ;
+      <http://dbpedia.org/ontology/residence>
+              <http://dbpedia.org/resource/Austria> .

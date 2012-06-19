@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Kily_%C3%81lvarez>
+      rdfs:label "Kily Álvarez"@en ;
+      dbpedia-owl:managerClub
+              <http://dbpedia.org/resource/Bohemians_1905> .
+
+<http://dbpedia.org/resource/Bohemians_1905>
+      rdfs:label "Bohemians 1905"@en .

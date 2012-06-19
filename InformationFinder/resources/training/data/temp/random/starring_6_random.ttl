@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/CBCT_%28TV%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "CBCT (TV)"@en ;
+      <http://dbpedia.org/ontology/writer>
+              <http://dbpedia.org/resource/Kenya> .

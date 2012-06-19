@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Battle_of_Mobile>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Battle of Mobile"@en .
+
+<http://dbpedia.org/resource/3rd_Arkansas_Light_Artillery>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "3rd Arkansas Light Artillery"@en ;
+      <http://dbpedia.org/ontology/militaryBranch>
+              <http://dbpedia.org/resource/Battle_of_Mobile> .

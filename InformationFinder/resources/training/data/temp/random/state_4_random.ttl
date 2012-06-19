@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Social_Democratic_Party_%28UK%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Social Democratic Party (UK)"@en ;
+      <http://dbpedia.org/ontology/computingPlatform>
+              <http://dbpedia.org/resource/Austria> .
+
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .

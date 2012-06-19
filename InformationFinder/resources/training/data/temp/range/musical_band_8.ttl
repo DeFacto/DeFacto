@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Giants_of_Science>
+      rdfs:label "Giants of Science"@en .
+
+<http://dbpedia.org/resource/Drive_%28Incubus_song%29>
+      rdfs:label "Drive (Incubus song)"@en ;
+      dbpedia-owl:musicalBand
+              <http://dbpedia.org/resource/Giants_of_Science> .

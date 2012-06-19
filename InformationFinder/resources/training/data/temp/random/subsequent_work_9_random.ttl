@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Gebr%C3%BCder_M%C3%BCller>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Gebrüder Müller"@en ;
+      <http://dbpedia.org/ontology/currentMember>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

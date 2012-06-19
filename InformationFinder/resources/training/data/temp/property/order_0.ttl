@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Lamiales>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Lamiales"@en .
+
+<http://dbpedia.org/resource/Calceolaria_semiconnata>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Calceolaria semiconnata"@en ;
+      <http://dbpedia.org/ontology/militaryBranch>
+              <http://dbpedia.org/resource/Lamiales> .

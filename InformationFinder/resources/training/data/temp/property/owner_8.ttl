@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Pensacola_News_Journal>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Pensacola News Journal"@en ;
+      <http://dbpedia.org/ontology/musicalBand>
+              <http://dbpedia.org/resource/Gannett_Company> .
+
+<http://dbpedia.org/resource/Gannett_Company>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Gannett Company"@en .

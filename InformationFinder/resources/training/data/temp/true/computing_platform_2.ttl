@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Unix>
+      rdfs:label "Unix"@en .
+
+<http://dbpedia.org/resource/Spy_Fox_in_%22Dry_Cereal%22>
+      rdfs:label "Spy Fox in \"Dry Cereal\""@en ;
+      dbpedia-owl:computingPlatform
+              <http://dbpedia.org/resource/Unix> .

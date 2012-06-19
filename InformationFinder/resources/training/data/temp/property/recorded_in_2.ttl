@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Chennai,_India>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chennai, India"@en .
+
+<http://dbpedia.org/resource/Jai_Jai_Garvi_Gujarat>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Jai Jai Garvi Gujarat"@en ;
+      <http://dbpedia.org/ontology/district>
+              <http://dbpedia.org/resource/Chennai,_India> .

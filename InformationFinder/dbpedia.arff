@@ -1,0 +1,143 @@
+@relation fact_checker
+
+@attribute name_feature string
+@attribute avg_page_rank_confirming numeric
+@attribute avg_page_rank_non_confirming numeric
+@attribute total_hit_count numeric
+@attribute avg_topic_coverage_confirming numeric
+@attribute avg_topic_coverage_non_confirming numeric
+@attribute avg_topic_majority_web_confirming numeric
+@attribute avg_topic_majority_web_non_confirming numeric
+@attribute avg_topic_majority_search_confirming numeric
+@attribute avg_topic_majority_search_non_confirming numeric
+@attribute number_of_confirming_facts numeric
+@attribute number_of_confirming_sites numeric
+@attribute number_of_possibly_confirming_facts numeric
+@attribute number_of_possibly_confirming_sites numeric
+@attribute max_number_of_possible_confirming_fact numeric
+@attribute total_evidence_score numeric
+@attribute class {true,false}
+
+@data
+false/random/alma_mater_3.ttl,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/alma_mater_5.ttl,0,0,1003,0,0.30303,0,251,0,5.757576,0,0,0,0,0,0,false
+false/random/alma_mater_6.ttl,2,0,414873,0.666667,0.540945,174400,292082,0.789474,18.067669,6,1,12,6,11,7.5,false
+false/random/artist_1.ttl,0,0,23,0,0,0,11,0,0,0,0,0,0,0,0,false
+false/random/artist_5.ttl,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/artist_7.ttl,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/associated_musical_artist_5.ttl,1.142857,0,1503321,0.732143,0.678846,284200,479181,1.678832,26.321168,1,1,10,7,3,2.5,false
+false/random/associated_musical_artist_6.ttl,0,0,139881,1,0.656566,247,2054,0.65,42.25,0,0,1,1,1,0.1,false
+false/random/associated_musical_artist_7.ttl,0,0,113916,0,0,0,104422,0,0,0,0,0,0,0,0,false
+false/random/award_3.ttl,1.5,0,78514,0.777778,0.608547,72600,72882,0.507463,15.253731,0,0,2,2,1,0.2,false
+false/random/battle_1.ttl,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/battle_7.ttl,0.333333,0,515000,0.716667,0.441176,118000,311800,0.277778,5.166667,0,0,16,3,1,1.9,false
+false/random/battle_9.ttl,0,0,17,0,0,0,17,0,0,0,0,0,0,0,0,false
+false/random/binomial_authority_4.ttl,5,0,334298,0.333333,0.485142,8,358387,0.069364,44,0,0,1,1,1,0.2,false
+false/random/birth_place_2.ttl,0,0,310833,0.75,0.48642,288,268123,0.262774,17.386861,0,0,2,2,1,0.5,false
+false/random/birth_place_5.ttl,2.384615,0,75923772,0.738095,0.620626,29541000,30491923,6.728205,73.938462,1,1,18,14,30,3.7,false
+false/random/birth_place_6.ttl,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/branch_0.ttl,3.6,0,528436,0,0,298200,364087,0,0,0,0,9,5,21,1.6,false
+false/random/branch_3.ttl,3,0,130712300,0.393939,0.197811,6409000,10428124,0.491228,4.280702,0,0,11,6,1,1.7,false
+false/random/city_0.ttl,0,0,36,0,0,0,14,0,0,0,0,0,0,0,0,false
+false/random/city_1.ttl,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/city_9.ttl,0,0,641,0,0,0,476,0,0,0,0,0,0,0,0,false
+false/random/class_8.ttl,2,0,261898,0.28125,0.138889,86000,118932,0.081818,1.663636,0,0,2,2,1,0.3,false
+false/random/computing_platform_0.ttl,4,0,517297,0.4,0.034848,672800,744790,0.125926,0.481481,0,0,5,3,1,0.8,false
+false/random/computing_platform_1.ttl,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/computing_platform_2.ttl,0,0,223048,0,0.216095,0,192,0,0.655738,0,0,0,0,0,0,false
+false/random/computing_platform_8.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/country_3.ttl,0,0,253326,0,0.099057,0,233038,0,2.584906,0,0,0,0,0,0,false
+false/random/country_9.ttl,0,0,41,0,0,0,19,0,0,0,0,0,0,0,0,false
+false/random/death_place_1.ttl,0,0,70379,0,0,0,125760,0,0,0,0,0,0,0,0,false
+false/random/death_place_8.ttl,0,0,6,0,0,0,4,0,0,0,0,0,0,0,0,false
+false/random/department_3.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/department_4.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/department_9.ttl,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/director_8.ttl,1,0,20942,0.428571,0.076786,662,817,0.084337,1.144578,0,0,4,3,2,0.7,false
+false/random/distributor_0.ttl,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/distributor_1.ttl,0,0,180817,0,0,0,172018,0,0,0,0,0,0,0,0,false
+false/random/distributor_4.ttl,3,0,192091,0,0.106452,141000,244688,0,1.552,1,1,1,1,1,1.1,false
+false/random/district_7.ttl,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/district_8.ttl,0,0,911,0,0.160714,0,593,0,1.214286,0,0,0,0,0,0,false
+false/random/family_0.ttl,0,0,13821,0,0,0,7,0,0,0,0,0,0,0,0,false
+false/random/family_3.ttl,0.692308,0,6999308,0.569231,0.320312,547000,794141,3.078014,25.460993,5,1,37,13,3,10.7,false
+false/random/family_4.ttl,0,0,440,0,0,0,439,0,0,0,0,0,0,0,0,false
+false/random/format_2.ttl,0,0,204,0,0,0,209,0,0,0,0,0,0,0,0,false
+false/random/former_team_4.ttl,0,0,497,0,0,0,474,0,0,0,0,0,0,0,0,false
+false/random/former_team_5.ttl,0,0,34,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/former_team_6.ttl,0,0,500,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/former_team_7.ttl,4,0,588638,0.357143,0.502232,62100,301239,0.03876,16.395349,0,0,1,1,1,0.1,false
+false/random/former_team_9.ttl,1.470588,0,2105906,0.823529,0.652554,3107086,3137400,7.475177,35.134752,4,4,22,17,45,7.1,false
+false/random/genre_2.ttl,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/genus_0.ttl,0,0,34,0,0,0,32,0,0,0,0,0,0,0,0,false
+false/random/genus_1.ttl,1,0,1516,0.944444,0.790298,428,1556,1.150685,28.794521,0,0,4,2,59,0.4,false
+false/random/genus_5.ttl,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/ground_1.ttl,0,0,92345,0,0,0,121822,0,0,0,0,0,0,0,0,false
+false/random/industry_2.ttl,3.466667,0,31101700,0.502941,0.291597,6541200,6541200,7.281046,15.006536,1,1,85,34,45,12.7,false
+false/random/industry_9.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/is_part_of_1.ttl,1,0,33852,0.769231,0.721965,2,19,0.130952,9.345238,0,0,1,1,1,0.1,false
+false/random/is_part_of_6.ttl,0,0,34,0,0,0,29,0,0,0,0,0,0,0,0,false
+false/random/kingdom_2.ttl,4,0,299,0,0,10,290,0,0,0,0,1,1,2,0.3,false
+false/random/language_2.ttl,0,0,26401,0,0.733333,0,1214,0,25.306667,0,0,0,0,0,0,false
+false/random/language_6.ttl,2.444444,0,1563201,0.693333,0.551818,5884744,5884918,8.214286,19.457143,0,0,102,30,132,13.2,false
+false/random/language_7.ttl,9,0,179818805,0.444444,0.298412,9770000,76187404,0.014184,40.056738,0,0,1,1,3,0.1,false
+false/random/location_3.ttl,0.857143,0,53708800,0.571429,0.441317,50310000,73774700,2.373563,48.028736,0,0,8,7,7,1.6,false
+false/random/location_6.ttl,0.333333,0,45,0.666667,0.602273,6,7,1.052632,4.947368,0,0,4,3,2,0.7,false
+false/random/location_7.ttl,0,0,307,0,0.883333,0,262,0,22.541667,0,0,0,0,0,0,false
+false/random/location_9.ttl,0,0,110341,1,0.707237,14,65578,0.871795,24.512821,0,0,6,2,1,0.5,false
+false/random/music_composer_2.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/music_composer_6.ttl,0,0,52,0,0.185714,0,41,0,0.5,0,0,0,0,0,0,false
+false/random/music_composer_8.ttl,0,0,26,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/music_composer_9.ttl,0,0,6,0,0,0,3,0,0,0,0,0,0,0,0,false
+false/random/musical_artist_2.ttl,0,0,58393,0,0,0,5,0,0,0,0,0,0,0,0,false
+false/random/musical_band_1.ttl,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/musical_band_3.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/musical_band_9.ttl,0,0,174299,0,0,0,162821,0,0,0,0,0,0,0,0,false
+false/random/nationality_6.ttl,0,0,187793,0,0.062741,0,185801,0,0.527027,0,0,0,0,0,0,false
+false/random/nationality_7.ttl,0,0,3,0,0,0,1,0,0,0,0,0,0,0,0,false
+false/random/order_0.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/order_2.ttl,0,0,21026335,0,0.224737,0,13171243,0,4.02,0,0,0,0,0,0,false
+false/random/owner_2.ttl,0,0,352596,0,0.241071,0,2032,0,13.5,0,0,0,0,0,0,false
+false/random/party_0.ttl,2.666667,0,1060557,0.671329,0.180395,1318800,1319137,5.925926,6.42963,4,3,34,22,3,8.7,false
+false/random/party_1.ttl,0,0,23182,0,0,0,31877,0,0,0,0,0,0,0,0,false
+false/random/party_6.ttl,0,0,311416,0,0,0,394716,0,0,0,0,0,0,0,0,false
+false/random/phylum_0.ttl,0,0,1219,0,0,0,30,0,0,0,0,0,0,0,0,false
+false/random/phylum_7.ttl,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/producer_0.ttl,0,0,243963,0,0,0,155895,0,0,0,0,0,0,0,0,false
+false/random/producer_2.ttl,0,0,203467,0,0,0,42,0,0,0,0,0,0,0,0,false
+false/random/producer_4.ttl,0,0,93254,0,0,0,116779,0,0,0,0,0,0,0,0,false
+false/random/product_5.ttl,0,0,13,0,0,0,3,0,0,0,0,0,0,0,0,false
+false/random/product_7.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/product_8.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/publisher_1.ttl,0,0,5,0,0,0,1,0,0,0,0,0,0,0,0,false
+false/random/publisher_4.ttl,0,0,10,0,0,0,1,0,0,0,0,0,0,0,0,false
+false/random/publisher_6.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/publisher_9.ttl,0,0,3,0,0,0,1,0,0,0,0,0,0,0,0,false
+false/random/record_label_1.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/record_label_3.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/record_label_8.ttl,2.25,0,14249900,0.475556,0.347445,6248400,6348200,3.927632,30.375,3,2,17,15,1,5.7,false
+false/random/recorded_in_0.ttl,2.444444,0,956366,0.610526,0.498083,890000,1092485,1.850932,20.447205,0,0,18,10,1,1.8,false
+false/random/region_1.ttl,0,0,26,0,0,0,1,0,0,0,0,0,0,0,0,false
+false/random/region_2.ttl,0,0,24,0,0,0,24,0,0,0,0,0,0,0,0,false
+false/random/region_5.ttl,1.222222,0,72423004,0.740741,0.554645,24527600,24681601,8.721429,47.035714,1,1,24,18,4,4.5,false
+false/random/region_8.ttl,0,0,244585,0,0,0,248497,0,0,0,0,0,0,0,0,false
+false/random/residence_1.ttl,2.117647,0,568702,0.513369,0.327869,187203,299105,3.798561,20.158273,0,0,32,17,2,4.1,false
+false/random/residence_7.ttl,0,0,289,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/residence_8.ttl,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/starring_5.ttl,0,0,63808100,0,0.406593,0,73810500,0,38.708571,0,0,0,0,0,0,false
+false/random/starring_6.ttl,0,0,132931,0,0.54127,0,7,0,12.228571,0,0,0,0,0,0,false
+false/random/starring_7.ttl,0.888889,0,1346596,0.457516,0.469371,682617,831526,1.077922,15.935065,0,0,20,9,3,2.2,false
+false/random/starring_9.ttl,0.923077,0,460496,0.75,0.511278,363800,470503,4.226027,32.363014,0,0,17,13,3,2.4,false
+false/random/state_0.ttl,1.5,0,133771,0.5,0.529915,50217,51144,0.3875,10.0375,0,0,2,2,1,0.2,false
+false/random/state_6.ttl,0,0,570,0,0,0,570,0,0,0,0,0,0,0,0,false
+false/random/subsequent_work_5.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/successor_0.ttl,0,0,27236,0,0.402174,0,34430,0,4,0,0,0,0,0,0,false
+false/random/successor_7.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/team_1.ttl,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/team_3.ttl,1.388889,0,17698163,0.702703,0.515151,29849400,29849774,17.325444,45.786982,14,4,75,37,69,24,false
+false/random/team_5.ttl,1,0,90113,0.8,0.47483,38400,78703,0.067568,46.77027,0,0,3,1,1,0.3,false
+false/random/team_9.ttl,7,0,219718,0.7,0.280172,236,94893,0.42735,28.512821,0,0,1,1,1,0.1,false
+false/random/writer_1.ttl,3,0,14695300,0.5,0.035503,4351600,4802248,0.011696,0.444444,0,0,2,2,3,0.2,false
+false/random/writer_2.ttl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,false
+false/random/writer_5.ttl,3,0,103075,0.859649,0.06439,41340,91368,0.1,0.26,0,0,8,6,3,1.5,false
+false/random/writer_9.ttl,0,0,12,0,0,0,1,0,0,0,0,0,0,0,0,false

@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/NASCAR_on_TNT>
+      rdfs:label "NASCAR on TNT"@en ;
+      dbpedia-owl:previousWork
+              <http://dbpedia.org/resource/The_Three_Stigmata_of_Palmer_Eldritch> .
+
+<http://dbpedia.org/resource/The_Three_Stigmata_of_Palmer_Eldritch>
+      rdfs:label "The Three Stigmata of Palmer Eldritch"@en .

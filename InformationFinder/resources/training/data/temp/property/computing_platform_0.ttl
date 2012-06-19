@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Cabela%27s_Big_Game_Hunter_II:_Open_Season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Cabela's Big Game Hunter II: Open Season"@en ;
+      <http://dbpedia.org/ontology/associatedMusicalArtist>
+              <http://dbpedia.org/resource/Microsoft_Windows> .
+
+<http://dbpedia.org/resource/Microsoft_Windows>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Microsoft Windows"@en .

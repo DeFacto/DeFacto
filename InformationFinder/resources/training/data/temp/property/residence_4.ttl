@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kazuyoshi_Ishii>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kazuyoshi Ishii"@en ;
+      <http://dbpedia.org/ontology/musicComposer>
+              <http://dbpedia.org/resource/Japan> .
+
+<http://dbpedia.org/resource/Japan>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Japan"@en .

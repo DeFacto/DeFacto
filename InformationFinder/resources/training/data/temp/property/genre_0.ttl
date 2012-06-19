@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Dynamic_Duo_Bash>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Dynamic Duo Bash"@en ;
+      <http://dbpedia.org/ontology/industry>
+              <http://dbpedia.org/resource/Pop_music> .
+
+<http://dbpedia.org/resource/Pop_music>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Pop music"@en .

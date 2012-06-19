@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .
+
+<http://dbpedia.org/resource/Tobias_Karlsson_%28songwriter%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Tobias Karlsson (songwriter)"@en ;
+      <http://dbpedia.org/ontology/publisher>
+              <http://dbpedia.org/resource/Austria> .

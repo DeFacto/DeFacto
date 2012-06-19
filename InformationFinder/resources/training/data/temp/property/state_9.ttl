@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Azores>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Azores"@en .
+
+<http://dbpedia.org/resource/Corvo_Island>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Corvo Island"@en ;
+      <http://dbpedia.org/ontology/industry>
+              <http://dbpedia.org/resource/Azores> .

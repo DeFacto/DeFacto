@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kto_khochet_stat%27_millionerom%3F>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kto khochet stat' millionerom?"@en ;
+      <http://dbpedia.org/ontology/computingPlatform>
+              <http://dbpedia.org/resource/Russia> .
+
+<http://dbpedia.org/resource/Russia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russia"@en .

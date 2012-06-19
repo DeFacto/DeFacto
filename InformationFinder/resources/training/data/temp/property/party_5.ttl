@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/John_F._Follett>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "John F. Follett"@en ;
+      <http://dbpedia.org/ontology/associatedMusicalArtist>
+              <http://dbpedia.org/resource/United_States_Democratic_Party> .
+
+<http://dbpedia.org/resource/United_States_Democratic_Party>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States Democratic Party"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Shane_Burton>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Shane Burton"@en ;
+      <http://dbpedia.org/ontology/family>
+              <http://dbpedia.org/resource/Chicago_Bears> .
+
+<http://dbpedia.org/resource/Chicago_Bears>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chicago Bears"@en .

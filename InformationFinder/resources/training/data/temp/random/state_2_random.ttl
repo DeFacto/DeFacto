@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Nehalem_River>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Nehalem River"@en ;
+      <http://dbpedia.org/ontology/instrument>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

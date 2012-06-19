@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Half_Pint>
+      rdfs:label "Half Pint"@en .
+
+<http://dbpedia.org/resource/To_the_Devil_a_Daughter>
+      rdfs:label "To the Devil a Daughter"@en ;
+      dbpedia-owl:musicComposer
+              <http://dbpedia.org/resource/Half_Pint> .

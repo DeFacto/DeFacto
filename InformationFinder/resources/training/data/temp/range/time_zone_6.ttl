@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/River_Oaks,_Texas>
+      rdfs:label "River Oaks, Texas"@en ;
+      dbpedia-owl:timeZone
+              <http://dbpedia.org/resource/Stockton,_Kansas> .
+
+<http://dbpedia.org/resource/Stockton,_Kansas>
+      rdfs:label "Stockton, Kansas"@en .

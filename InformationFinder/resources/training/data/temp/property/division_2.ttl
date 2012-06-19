@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Ascomycota>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ascomycota"@en .
+
+<http://dbpedia.org/resource/Kyphomyces>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kyphomyces"@en ;
+      <http://dbpedia.org/ontology/city>
+              <http://dbpedia.org/resource/Ascomycota> .

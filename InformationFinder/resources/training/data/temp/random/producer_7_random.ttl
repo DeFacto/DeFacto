@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Koti_Takar_Prem>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Koti Takar Prem"@en .
+
+<http://dbpedia.org/resource/Canada>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Canada"@en ;
+      <http://dbpedia.org/ontology/genre>
+              <http://dbpedia.org/resource/Koti_Takar_Prem> .

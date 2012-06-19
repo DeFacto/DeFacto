@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Rutaceae>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Rutaceae"@en .
+
+<http://dbpedia.org/resource/Skimmia_laureola>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Skimmia laureola"@en ;
+      <http://dbpedia.org/ontology/director>
+              <http://dbpedia.org/resource/Rutaceae> .

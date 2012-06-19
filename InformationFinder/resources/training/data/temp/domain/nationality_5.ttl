@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Joan_Burke_%28politician%29>
+      rdfs:label "Joan Burke (politician)"@en ;
+      dbpedia-owl:nationality
+              <http://dbpedia.org/resource/Greece> .
+
+<http://dbpedia.org/resource/Greece>
+      rdfs:label "Greece"@en .

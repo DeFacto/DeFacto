@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Wilmington,_Massachusetts>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Wilmington, Massachusetts"@en ;
+      <http://dbpedia.org/ontology/format>
+              <http://dbpedia.org/resource/Eastern_Standard_Time_Zone> .
+
+<http://dbpedia.org/resource/Eastern_Standard_Time_Zone>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Eastern Standard Time Zone"@en .

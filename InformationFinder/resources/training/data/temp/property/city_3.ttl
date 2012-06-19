@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Paris-Sud_11_University>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Paris-Sud 11 University"@en ;
+      <http://dbpedia.org/ontology/associatedMusicalArtist>
+              <http://dbpedia.org/resource/Orsay> .
+
+<http://dbpedia.org/resource/Orsay>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Orsay"@en .

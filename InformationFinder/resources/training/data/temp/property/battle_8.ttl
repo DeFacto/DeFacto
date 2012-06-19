@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Korean_People%27s_Air_Force>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Korean People's Air Force"@en ;
+      <http://dbpedia.org/ontology/musicComposer>
+              <http://dbpedia.org/resource/Korean_War> .
+
+<http://dbpedia.org/resource/Korean_War>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Korean War"@en .

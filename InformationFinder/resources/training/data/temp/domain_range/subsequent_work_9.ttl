@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/JPCSP>
+      rdfs:label "JPCSP"@en ;
+      dbpedia-owl:subsequentWork
+              <http://dbpedia.org/resource/Badge_%28Law_&_Order:_Criminal_Intent%29> .
+
+<http://dbpedia.org/resource/Badge_%28Law_&_Order:_Criminal_Intent%29>
+      rdfs:label "Badge (Law & Order: Criminal Intent)"@en .

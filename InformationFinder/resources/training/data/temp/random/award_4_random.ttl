@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Coleophora_mausoleae>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Coleophora mausoleae"@en ;
+      <http://dbpedia.org/ontology/almaMater>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

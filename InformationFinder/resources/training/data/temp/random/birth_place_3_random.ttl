@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Asterix_%28Super_Nintendo%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Asterix (Super Nintendo)"@en ;
+      <http://dbpedia.org/ontology/award>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

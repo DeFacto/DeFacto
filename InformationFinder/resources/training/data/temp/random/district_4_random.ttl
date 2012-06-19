@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Cottage_Grove,_Oregon>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Cottage Grove, Oregon"@en ;
+      <http://dbpedia.org/ontology/industry>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/France>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "France"@en .
+
+<http://dbpedia.org/resource/Stade_Yves-du-Manoir_%28Montpellier%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Stade Yves-du-Manoir (Montpellier)"@en ;
+      <http://dbpedia.org/ontology/district>
+              <http://dbpedia.org/resource/France> .

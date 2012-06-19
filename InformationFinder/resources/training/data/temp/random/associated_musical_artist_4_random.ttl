@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Uganda>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Uganda"@en .
+
+<http://dbpedia.org/resource/Sigmund_Freud>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Sigmund Freud"@en ;
+      <http://dbpedia.org/ontology/team>
+              <http://dbpedia.org/resource/Uganda> .

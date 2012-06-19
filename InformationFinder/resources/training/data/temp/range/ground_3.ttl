@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Polk_Theatre_%28Lakeland,_Florida%29>
+      rdfs:label "Polk Theatre (Lakeland, Florida)"@en .
+
+<http://dbpedia.org/resource/F.C._S%C3%BCdtirol-Alto_Adige>
+      rdfs:label "F.C. Südtirol-Alto Adige"@en ;
+      dbpedia-owl:ground <http://dbpedia.org/resource/Polk_Theatre_%28Lakeland,_Florida%29> .

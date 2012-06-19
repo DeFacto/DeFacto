@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Yvelines>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Yvelines"@en .
+
+<http://dbpedia.org/resource/Tessancourt-sur-Aubette>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Tessancourt-sur-Aubette"@en ;
+      <http://dbpedia.org/ontology/artist>
+              <http://dbpedia.org/resource/Yvelines> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_States>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States"@en .
+
+<http://dbpedia.org/resource/ACT_2_CAM>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "ACT 2 CAM"@en ;
+      <http://dbpedia.org/ontology/department>
+              <http://dbpedia.org/resource/United_States> .

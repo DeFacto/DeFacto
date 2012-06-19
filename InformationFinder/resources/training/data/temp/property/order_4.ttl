@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Asparagales>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Asparagales"@en .
+
+<http://dbpedia.org/resource/Bulbophyllum_ambatoavense>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Bulbophyllum ambatoavense"@en ;
+      <http://dbpedia.org/ontology/battle>
+              <http://dbpedia.org/resource/Asparagales> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Russia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russia"@en .
+
+<http://dbpedia.org/resource/TF1>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "TF1"@en ;
+      <http://dbpedia.org/ontology/language>
+              <http://dbpedia.org/resource/Russia> .

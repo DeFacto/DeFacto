@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Thevalakkara>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Thevalakkara"@en ;
+      <http://dbpedia.org/ontology/nationality>
+              <http://dbpedia.org/resource/Kollam_district> .
+
+<http://dbpedia.org/resource/Kollam_district>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kollam district"@en .

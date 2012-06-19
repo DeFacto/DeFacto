@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Bulgaria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Bulgaria"@en .
+
+<http://dbpedia.org/resource/Tsvetana_Pironkova>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Tsvetana Pironkova"@en ;
+      <http://dbpedia.org/ontology/previousWork>
+              <http://dbpedia.org/resource/Bulgaria> .

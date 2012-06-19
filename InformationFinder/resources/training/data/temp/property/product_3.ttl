@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Bags>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Bags"@en .
+
+<http://dbpedia.org/resource/Heinrich_Deichmann-Schuhe_GmbH>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Heinrich Deichmann-Schuhe GmbH"@en ;
+      <http://dbpedia.org/ontology/genus>
+              <http://dbpedia.org/resource/Bags> .

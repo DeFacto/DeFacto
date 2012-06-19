@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Ayacucho>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ayacucho"@en .
+
+<http://dbpedia.org/resource/Deportivo_Municipal_de_Huamanga>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Deportivo Municipal de Huamanga"@en ;
+      <http://dbpedia.org/ontology/award>
+              <http://dbpedia.org/resource/Ayacucho> .

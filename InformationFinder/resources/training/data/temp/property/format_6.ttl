@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/The_Spike_%28song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Spike (song)"@en ;
+      <http://dbpedia.org/ontology/artist>
+              <http://dbpedia.org/resource/Compact_disc> .
+
+<http://dbpedia.org/resource/Compact_disc>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Compact disc"@en .

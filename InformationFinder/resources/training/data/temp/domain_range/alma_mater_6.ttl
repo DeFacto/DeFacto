@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Belmont_High_School_%28Belmont,_Wisconsin%29>
+      rdfs:label "Belmont High School (Belmont, Wisconsin)"@en .
+
+<http://dbpedia.org/resource/Julio_D%C3%ADaz>
+      rdfs:label "Julio Díaz"@en ;
+      dbpedia-owl:almaMater
+              <http://dbpedia.org/resource/Belmont_High_School_%28Belmont,_Wisconsin%29> .

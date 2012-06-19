@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/David_Kahne>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "David Kahne"@en .
+
+<http://dbpedia.org/resource/New_Again>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "New Again"@en ;
+      <http://dbpedia.org/ontology/formerTeam>
+              <http://dbpedia.org/resource/David_Kahne> .

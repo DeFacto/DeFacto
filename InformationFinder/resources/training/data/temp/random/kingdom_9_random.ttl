@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Puerto_Rico>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Puerto Rico"@en ;
+      <http://dbpedia.org/ontology/class>
+              <http://dbpedia.org/resource/Kenya> .

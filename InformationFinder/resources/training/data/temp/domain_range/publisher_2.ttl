@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Forward_%28Ayla_Brown_album%29>
+      rdfs:label "Forward (Ayla Brown album)"@en ;
+      dbpedia-owl:publisher
+              <http://dbpedia.org/resource/Institute_of_Law_and_Technology> .
+
+<http://dbpedia.org/resource/Institute_of_Law_and_Technology>
+      rdfs:label "Institute of Law and Technology"@en .

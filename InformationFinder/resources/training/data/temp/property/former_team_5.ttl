@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Chuck_Sheerin>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chuck Sheerin"@en ;
+      <http://dbpedia.org/ontology/distributor>
+              <http://dbpedia.org/resource/Philadelphia_Phillies> .
+
+<http://dbpedia.org/resource/Philadelphia_Phillies>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Philadelphia Phillies"@en .

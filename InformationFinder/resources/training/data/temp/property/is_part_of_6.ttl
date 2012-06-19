@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Parczew_County>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Parczew County"@en .
+
+<http://dbpedia.org/resource/Siedliki>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Siedliki"@en ;
+      <http://dbpedia.org/ontology/binomialAuthority>
+              <http://dbpedia.org/resource/Parczew_County> .

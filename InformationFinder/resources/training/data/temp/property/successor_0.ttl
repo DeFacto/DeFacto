@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Jacqui_Dean>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Jacqui Dean"@en .
+
+<http://dbpedia.org/resource/David_Parker_%28politician%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "David Parker (politician)"@en ;
+      <http://dbpedia.org/ontology/class>
+              <http://dbpedia.org/resource/Jacqui_Dean> .

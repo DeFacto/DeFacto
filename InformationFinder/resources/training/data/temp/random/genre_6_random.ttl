@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Russia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russia"@en .
+
+<http://dbpedia.org/resource/Rome_%28album%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Rome (album)"@en ;
+      <http://dbpedia.org/ontology/distributor>
+              <http://dbpedia.org/resource/Russia> .

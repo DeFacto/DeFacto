@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .
+
+<http://dbpedia.org/resource/Nuno_Pinheiro_%28artist%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Nuno Pinheiro (artist)"@en ;
+      <http://dbpedia.org/ontology/city>
+              <http://dbpedia.org/resource/Austria> .

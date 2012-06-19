@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Lingerie>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Lingerie"@en .
+
+<http://dbpedia.org/resource/StockingsHQ>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "StockingsHQ"@en ;
+      <http://dbpedia.org/ontology/battle>
+              <http://dbpedia.org/resource/Lingerie> .

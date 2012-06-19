@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Thomas_C._Neibaur>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Thomas C. Neibaur"@en ;
+      <http://dbpedia.org/ontology/country>
+              <http://dbpedia.org/resource/WWI_Victory_Medal> .
+
+<http://dbpedia.org/resource/WWI_Victory_Medal>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "WWI Victory Medal"@en .

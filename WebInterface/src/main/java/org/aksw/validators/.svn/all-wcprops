@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/sources/!svn/ver/1257/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/validators
+END
+PageRankValidator.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/sources/!svn/ver/1257/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/validators/PageRankValidator.java
+END
+UriValidator.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/sources/!svn/ver/1257/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/validators/UriValidator.java
+END
+BoaConfidenceThresholdValidator.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/sources/!svn/ver/1257/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/validators/BoaConfidenceThresholdValidator.java
+END
+NumberOfSearchResultsValidator.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/sources/!svn/ver/1257/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/validators/NumberOfSearchResultsValidator.java
+END

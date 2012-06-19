@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Jay_Wud>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Jay Wud"@en ;
+      <http://dbpedia.org/ontology/commander>
+              <http://dbpedia.org/resource/Kenya> .

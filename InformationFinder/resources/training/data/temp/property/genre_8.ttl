@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Pop_music>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Pop music"@en .
+
+<http://dbpedia.org/resource/Another_Rainy_Day_in_New_York_City_%28Bay_City_Rollers_song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Another Rainy Day in New York City (Bay City Rollers song)"@en ;
+      <http://dbpedia.org/ontology/ground>
+              <http://dbpedia.org/resource/Pop_music> .

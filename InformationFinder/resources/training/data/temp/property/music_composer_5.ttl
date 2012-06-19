@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Paul_Dunlap>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Paul Dunlap"@en .
+
+<http://dbpedia.org/resource/The_Baron_of_Arizona>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Baron of Arizona"@en ;
+      <http://dbpedia.org/ontology/nationality>
+              <http://dbpedia.org/resource/Paul_Dunlap> .

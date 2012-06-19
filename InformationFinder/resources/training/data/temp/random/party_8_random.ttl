@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/France>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "France"@en ;
+      <http://dbpedia.org/ontology/distributor>
+              <http://dbpedia.org/resource/Austria> .
+
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .

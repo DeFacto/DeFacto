@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Insect>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Insect"@en .
+
+<http://dbpedia.org/resource/Apteromantis>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Apteromantis"@en ;
+      <http://dbpedia.org/ontology/nationality>
+              <http://dbpedia.org/resource/Insect> .

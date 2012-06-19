@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/The_Beatles>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Beatles"@en .
+
+<http://dbpedia.org/resource/Robert_Fitzpatrick>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Robert Fitzpatrick"@en ;
+      <http://dbpedia.org/ontology/team>
+              <http://dbpedia.org/resource/The_Beatles> .

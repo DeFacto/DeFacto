@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/In_the_Beginning_%28Nile_album%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "In the Beginning (Nile album)"@en .
+
+<http://dbpedia.org/resource/In_Their_Darkened_Shrines>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "In Their Darkened Shrines"@en ;
+      <http://dbpedia.org/ontology/birthPlace>
+              <http://dbpedia.org/resource/In_the_Beginning_%28Nile_album%29> .

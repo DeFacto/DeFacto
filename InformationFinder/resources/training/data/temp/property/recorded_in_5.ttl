@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Bitterblue>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Bitterblue"@en ;
+      <http://dbpedia.org/ontology/associatedMusicalArtist>
+              <http://dbpedia.org/resource/1991> .
+
+<http://dbpedia.org/resource/1991>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "1991"@en .

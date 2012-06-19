@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Csaba_P._Kovesdy>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Csaba P. Kovesdy"@en .
+
+<http://dbpedia.org/resource/Trefnant>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Trefnant"@en ;
+      <http://dbpedia.org/ontology/nationality>
+              <http://dbpedia.org/resource/Csaba_P._Kovesdy> .

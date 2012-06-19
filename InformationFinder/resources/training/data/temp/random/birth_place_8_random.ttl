@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Russia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russia"@en .
+
+<http://dbpedia.org/resource/Rodr%C3%ADguez,_Uruguay>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Rodríguez, Uruguay"@en ;
+      <http://dbpedia.org/ontology/format>
+              <http://dbpedia.org/resource/Russia> .

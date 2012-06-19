@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Unix>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Unix"@en .
+
+<http://dbpedia.org/resource/Spy_Fox_in_%22Dry_Cereal%22>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Spy Fox in \"Dry Cereal\""@en ;
+      <http://dbpedia.org/ontology/family>
+              <http://dbpedia.org/resource/Unix> .

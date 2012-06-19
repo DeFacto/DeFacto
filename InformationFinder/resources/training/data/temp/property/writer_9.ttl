@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Oscar_Hammerstein_II>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Oscar Hammerstein II"@en .
+
+<http://dbpedia.org/resource/Getting_to_Know_You_%28song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Getting to Know You (song)"@en ;
+      <http://dbpedia.org/ontology/genus>
+              <http://dbpedia.org/resource/Oscar_Hammerstein_II> .

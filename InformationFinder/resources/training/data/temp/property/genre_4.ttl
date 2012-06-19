@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Rock_music>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Rock music"@en .
+
+<http://dbpedia.org/resource/Live_at_Last_%28The_Slickee_Boys_album%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Live at Last (The Slickee Boys album)"@en ;
+      <http://dbpedia.org/ontology/battle>
+              <http://dbpedia.org/resource/Rock_music> .

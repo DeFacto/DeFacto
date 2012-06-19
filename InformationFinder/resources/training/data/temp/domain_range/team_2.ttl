@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Uwe_Schmidt>
+      rdfs:label "Uwe Schmidt"@en ;
+      dbpedia-owl:team <http://dbpedia.org/resource/Saltney_Town_FC> .
+
+<http://dbpedia.org/resource/Saltney_Town_FC>
+      rdfs:label "Saltney Town FC"@en .

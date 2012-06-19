@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Thomas_H._Collins>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Thomas H. Collins"@en ;
+      <http://dbpedia.org/ontology/country>
+              <http://dbpedia.org/resource/September_11_attacks> .
+
+<http://dbpedia.org/resource/September_11_attacks>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "September 11 attacks"@en .

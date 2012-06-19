@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/No._278_Squadron_RAF>
+      rdfs:label "No. 278 Squadron RAF"@en .
+
+<http://dbpedia.org/resource/HMM-764>
+      rdfs:label "HMM-764"@en ;
+      dbpedia-owl:militaryBranch
+              <http://dbpedia.org/resource/No._278_Squadron_RAF> .

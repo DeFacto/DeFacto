@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/480i>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "480i"@en .
+
+<http://dbpedia.org/resource/Somewhere_in_My_Heart_%28TV_series%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Somewhere in My Heart (TV series)"@en ;
+      <http://dbpedia.org/ontology/deathPlace>
+              <http://dbpedia.org/resource/480i> .

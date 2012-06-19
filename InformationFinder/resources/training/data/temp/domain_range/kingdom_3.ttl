@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Croomia>
+      rdfs:label "Croomia"@en ;
+      dbpedia-owl:kingdom <http://dbpedia.org/resource/42nd_Infantry_Division_%28United_States%29> .
+
+<http://dbpedia.org/resource/42nd_Infantry_Division_%28United_States%29>
+      rdfs:label "42nd Infantry Division (United States)"@en .

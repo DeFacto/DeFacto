@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Str%C3%A4ngn%C3%A4s_Municipality>
+      rdfs:label "Strängnäs Municipality"@en .
+
+<http://dbpedia.org/resource/Pellolessertia>
+      rdfs:label "Pellolessertia"@en ;
+      dbpedia-owl:genus <http://dbpedia.org/resource/Str%C3%A4ngn%C3%A4s_Municipality> .

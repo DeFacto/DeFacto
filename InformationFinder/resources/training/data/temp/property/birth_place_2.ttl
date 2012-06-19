@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Larry_Ressler>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Larry Ressler"@en ;
+      <http://dbpedia.org/ontology/associatedMusicalArtist>
+              <http://dbpedia.org/resource/France> .
+
+<http://dbpedia.org/resource/France>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "France"@en .

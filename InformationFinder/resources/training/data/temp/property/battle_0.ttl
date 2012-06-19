@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/4th_Assault_Amphibian_Battalion>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "4th Assault Amphibian Battalion"@en ;
+      <http://dbpedia.org/ontology/district>
+              <http://dbpedia.org/resource/Operation_Desert_Storm> .
+
+<http://dbpedia.org/resource/Operation_Desert_Storm>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Operation Desert Storm"@en .

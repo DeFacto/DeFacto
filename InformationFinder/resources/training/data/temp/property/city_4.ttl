@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Brownsville,_Tennessee>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Brownsville, Tennessee"@en .
+
+<http://dbpedia.org/resource/WTBG>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "WTBG"@en ;
+      <http://dbpedia.org/ontology/binomialAuthority>
+              <http://dbpedia.org/resource/Brownsville,_Tennessee> .

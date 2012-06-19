@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Akune,_Kagoshima>
+      rdfs:label "Akune, Kagoshima"@en .
+
+<http://dbpedia.org/resource/Jersey_Village,_Texas>
+      rdfs:label "Jersey Village, Texas"@en ;
+      dbpedia-owl:city <http://dbpedia.org/resource/Akune,_Kagoshima> .

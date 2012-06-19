@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Rightmove>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Rightmove"@en ;
+      <http://dbpedia.org/ontology/musicalArtist>
+              <http://dbpedia.org/resource/Internet> .
+
+<http://dbpedia.org/resource/Internet>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Internet"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/University_of_Warwick>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "University of Warwick"@en .
+
+<http://dbpedia.org/resource/Tim_Poston>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Tim Poston"@en ;
+      <http://dbpedia.org/ontology/binomialAuthority>
+              <http://dbpedia.org/resource/University_of_Warwick> .

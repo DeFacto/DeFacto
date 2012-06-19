@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/2005_Real_Salt_Lake_season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "2005 Real Salt Lake season"@en ;
+      <http://dbpedia.org/ontology/product>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

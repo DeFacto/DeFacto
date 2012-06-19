@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Smith_and_Jones_%28Doctor_Who%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Smith and Jones (Doctor Who)"@en .
+
+<http://dbpedia.org/resource/The_Runaway_Bride_%28Doctor_Who%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Runaway Bride (Doctor Who)"@en ;
+      <http://dbpedia.org/ontology/almaMater>
+              <http://dbpedia.org/resource/Smith_and_Jones_%28Doctor_Who%29> .

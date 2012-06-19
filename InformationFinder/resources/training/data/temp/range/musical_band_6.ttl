@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Hit_and_Run_Lover>
+      rdfs:label "Hit and Run Lover"@en ;
+      dbpedia-owl:musicalBand
+              <http://dbpedia.org/resource/The_Deep_Dark_Woods> .
+
+<http://dbpedia.org/resource/The_Deep_Dark_Woods>
+      rdfs:label "The Deep Dark Woods"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/St._Louis_Cardinals>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "St. Louis Cardinals"@en .
+
+<http://dbpedia.org/resource/Casey_Hageman>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Casey Hageman"@en ;
+      <http://dbpedia.org/ontology/order>
+              <http://dbpedia.org/resource/St._Louis_Cardinals> .

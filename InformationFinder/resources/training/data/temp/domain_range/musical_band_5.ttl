@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/I_Wish_%28Mini_Viva_song%29>
+      rdfs:label "I Wish (Mini Viva song)"@en ;
+      dbpedia-owl:musicalBand
+              <http://dbpedia.org/resource/Sons_of_All_Pussys> .
+
+<http://dbpedia.org/resource/Sons_of_All_Pussys>
+      rdfs:label "Sons of All Pussys"@en .

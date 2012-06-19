@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Jos%C3%A9_Miguel_Carrera>
+      rdfs:label "José Miguel Carrera"@en ;
+      dbpedia-owl:award <http://dbpedia.org/resource/May_Hill_Arbuthnot_Lecture> .
+
+<http://dbpedia.org/resource/May_Hill_Arbuthnot_Lecture>
+      rdfs:label "May Hill Arbuthnot Lecture"@en .

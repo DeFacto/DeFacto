@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Gurung_language>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Gurung language"@en .
+
+<http://dbpedia.org/resource/Ngain_Nghon_%28My_Fate%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ngain Nghon (My Fate)"@en ;
+      <http://dbpedia.org/ontology/formerTeam>
+              <http://dbpedia.org/resource/Gurung_language> .

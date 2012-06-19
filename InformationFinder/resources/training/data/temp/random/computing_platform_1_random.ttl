@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Norway>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Norway"@en ;
+      <http://dbpedia.org/ontology/team>
+              <http://dbpedia.org/resource/Annavru_%282003_film%29> .
+
+<http://dbpedia.org/resource/Annavru_%282003_film%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Annavru (2003 film)"@en .

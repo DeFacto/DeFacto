@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Remember_Me_with_Love>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Remember Me with Love"@en ;
+      <http://dbpedia.org/ontology/distributor>
+              <http://dbpedia.org/resource/Gloria_Estefan> .
+
+<http://dbpedia.org/resource/Gloria_Estefan>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Gloria Estefan"@en .

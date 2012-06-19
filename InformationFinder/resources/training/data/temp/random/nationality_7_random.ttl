@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .
+
+<http://dbpedia.org/resource/British_general_election,_1741>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "British general election, 1741"@en ;
+      <http://dbpedia.org/ontology/isPartOf>
+              <http://dbpedia.org/resource/Austria> .

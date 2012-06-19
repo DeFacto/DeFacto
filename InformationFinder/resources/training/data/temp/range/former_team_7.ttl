@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Tilbury_F.C.>
+      rdfs:label "Tilbury F.C."@en .
+
+<http://dbpedia.org/resource/A._J._Edds>
+      rdfs:label "A. J. Edds"@en ;
+      dbpedia-owl:formerTeam
+              <http://dbpedia.org/resource/Tilbury_F.C.> .

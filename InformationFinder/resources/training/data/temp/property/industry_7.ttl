@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Jabiru_Aircraft>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Jabiru Aircraft"@en ;
+      <http://dbpedia.org/ontology/order>
+              <http://dbpedia.org/resource/Light_aircraft> .
+
+<http://dbpedia.org/resource/Light_aircraft>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Light aircraft"@en .

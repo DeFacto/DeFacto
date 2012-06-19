@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Perth,_Western_Australia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Perth, Western Australia"@en .
+
+<http://dbpedia.org/resource/Governor_Stirling_Senior_High_School>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Governor Stirling Senior High School"@en ;
+      <http://dbpedia.org/ontology/managerClub>
+              <http://dbpedia.org/resource/Perth,_Western_Australia> .

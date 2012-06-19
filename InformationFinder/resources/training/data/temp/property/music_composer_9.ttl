@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/K._V._Mahadevan>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "K. V. Mahadevan"@en .
+
+<http://dbpedia.org/resource/Suthradharulu>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Suthradharulu"@en ;
+      <http://dbpedia.org/ontology/previousWork>
+              <http://dbpedia.org/resource/K._V._Mahadevan> .

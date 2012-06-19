@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Makoto_Kobayashi_%28physicist%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Makoto Kobayashi (physicist)"@en ;
+      <http://dbpedia.org/ontology/starring>
+              <http://dbpedia.org/resource/Nagoya_University> .
+
+<http://dbpedia.org/resource/Nagoya_University>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Nagoya University"@en .

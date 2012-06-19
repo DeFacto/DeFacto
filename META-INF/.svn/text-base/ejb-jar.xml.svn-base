@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd"
+         version="3.1">
+    <enterprise-beans>
+        <!--session>
+            <display-name>AKSW InformationFinder session</display-name>
+            <ejb-name>MainFormHandler</ejb-name>
+            <session-type>Stateful</session-type>
+            <ejb-class>org.test.MainFormBean</ejb-class>
+        </session-->
+
+        <!--session id="test_MyTestSession">
+            <display-name>My Test Session Bean</display-name>
+            <ejb-name>test/MyTestSession</ejb-name>
+            <home>test.session.MyTestSessionHome</home>
+            <remote>test.session.MyTestSession</remote>
+            <ejb-class>test.session.MyTestSessionBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session-->
+
+
+        <!--entity id="MainForm">
+            <ejb-name>MainFormHandler</ejb-name>
+            <ejb-class>MainFormHandler</ejb-class>
+            <persistence-type>Bean</persistence-type>
+            <prim-key-class></prim-key-class>
+            <reentrant></reentrant>
+
+        </entity-->
+    </enterprise-beans>
+</ejb-jar>

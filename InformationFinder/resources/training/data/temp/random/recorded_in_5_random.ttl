@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .
+
+<http://dbpedia.org/resource/Polish_language>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Polish language"@en ;
+      <http://dbpedia.org/ontology/associatedBand>
+              <http://dbpedia.org/resource/London> .

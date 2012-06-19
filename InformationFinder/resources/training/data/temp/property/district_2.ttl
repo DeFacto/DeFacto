@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Bijapur_district,_Karnataka>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Bijapur district, Karnataka"@en .
+
+<http://dbpedia.org/resource/Talikota>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Talikota"@en ;
+      <http://dbpedia.org/ontology/state>
+              <http://dbpedia.org/resource/Bijapur_district,_Karnataka> .

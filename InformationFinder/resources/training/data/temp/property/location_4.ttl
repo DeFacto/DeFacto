@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Scotland>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Scotland"@en .
+
+<http://dbpedia.org/resource/Balmoor_Stadium>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Balmoor Stadium"@en ;
+      <http://dbpedia.org/ontology/militaryBranch>
+              <http://dbpedia.org/resource/Scotland> .

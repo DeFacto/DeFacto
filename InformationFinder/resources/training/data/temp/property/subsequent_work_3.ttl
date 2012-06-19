@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/The_Letter_%28Midnight_Youth_song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Letter (Midnight Youth song)"@en ;
+      <http://dbpedia.org/ontology/state>
+              <http://dbpedia.org/resource/All_On_Our_Own> .
+
+<http://dbpedia.org/resource/All_On_Our_Own>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "All On Our Own"@en .

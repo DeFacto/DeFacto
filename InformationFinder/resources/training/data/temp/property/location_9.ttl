@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Ohio>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ohio"@en .
+
+<http://dbpedia.org/resource/Holy_Family_Catholic_Church_%28Frenchtown,_Ohio%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Holy Family Catholic Church (Frenchtown, Ohio)"@en ;
+      <http://dbpedia.org/ontology/publisher>
+              <http://dbpedia.org/resource/Ohio> .

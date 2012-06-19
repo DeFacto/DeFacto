@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Associa%C3%A7%C3%A3o_Esportiva_Recreativa_Engenheiro_Beltr%C3%A3o>
+      rdfs:label "Associação Esportiva Recreativa Engenheiro Beltrão"@en .
+
+<http://dbpedia.org/resource/John_McKenzie_%28ice_hockey%29>
+      rdfs:label "John McKenzie (ice hockey)"@en ;
+      dbpedia-owl:formerTeam
+              <http://dbpedia.org/resource/Associa%C3%A7%C3%A3o_Esportiva_Recreativa_Engenheiro_Beltr%C3%A3o> .

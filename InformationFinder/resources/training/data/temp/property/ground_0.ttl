@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/WakeMed_Soccer_Park>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "WakeMed Soccer Park"@en .
+
+<http://dbpedia.org/resource/Cary_Lady_Clarets>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Cary Lady Clarets"@en ;
+      <http://dbpedia.org/ontology/deathPlace>
+              <http://dbpedia.org/resource/WakeMed_Soccer_Park> .

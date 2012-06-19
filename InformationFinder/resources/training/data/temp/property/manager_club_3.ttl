@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Jos%C3%A9_Ufarte>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "José Ufarte"@en ;
+      <http://dbpedia.org/ontology/birthPlace>
+              <http://dbpedia.org/resource/Spain_national_under-21_football_team> .
+
+<http://dbpedia.org/resource/Spain_national_under-21_football_team>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Spain national under-21 football team"@en .

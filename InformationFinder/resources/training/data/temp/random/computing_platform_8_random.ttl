@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Joaquin_Francisco_Sanchez>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Joaquin Francisco Sanchez"@en ;
+      <http://dbpedia.org/ontology/binomialAuthority>
+              <http://dbpedia.org/resource/Austria> .
+
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .

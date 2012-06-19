@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/C%C3%B4tes-d%27Armor>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Côtes-d'Armor"@en .
+
+<http://dbpedia.org/resource/Lanloup>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Lanloup"@en ;
+      <http://dbpedia.org/ontology/distributor>
+              <http://dbpedia.org/resource/C%C3%B4tes-d%27Armor> .

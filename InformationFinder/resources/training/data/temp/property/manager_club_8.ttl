@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/David_Coles>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "David Coles"@en ;
+      <http://dbpedia.org/ontology/writer>
+              <http://dbpedia.org/resource/West_Ham_United_F.C.> .
+
+<http://dbpedia.org/resource/West_Ham_United_F.C.>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "West Ham United F.C."@en .

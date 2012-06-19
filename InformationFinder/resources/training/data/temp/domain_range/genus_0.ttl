@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Brown_Palm_Civet>
+      rdfs:label "Brown Palm Civet"@en ;
+      dbpedia-owl:genus <http://dbpedia.org/resource/William_D._Fenton_House> .
+
+<http://dbpedia.org/resource/William_D._Fenton_House>
+      rdfs:label "William D. Fenton House"@en .

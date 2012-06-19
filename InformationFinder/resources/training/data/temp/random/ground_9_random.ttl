@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .
+
+<http://dbpedia.org/resource/HK_Institute_of_Islamic_Studies>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "HK Institute of Islamic Studies"@en ;
+      <http://dbpedia.org/ontology/residence>
+              <http://dbpedia.org/resource/Austria> .

@@ -1,0 +1,31 @@
+10
+
+dir
+1431
+http://svn.aksw.org/sources/AKSWInformationFinder/WebInterface/web/VAADIN/widgetsets
+http://svn.aksw.org/sources
+
+
+
+2012-05-22T11:30:52.728765Z
+1361
+MohamedMorsey
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+fca87399-8c28-4e81-8cf3-0e7093d816ff
+
+com.invient.vaadin.InvientChartsDemoAppWidgetset
+dir
+

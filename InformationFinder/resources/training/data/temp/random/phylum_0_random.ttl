@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Mount_Vernon,_Washington>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Mount Vernon, Washington"@en ;
+      <http://dbpedia.org/ontology/subsequentWork>
+              <http://dbpedia.org/resource/Nelson,_New_Zealand> .
+
+<http://dbpedia.org/resource/Nelson,_New_Zealand>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Nelson, New Zealand"@en .

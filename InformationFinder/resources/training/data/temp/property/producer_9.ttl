@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Cypress_Hill_III:_Temples_of_Boom>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Cypress Hill III: Temples of Boom"@en ;
+      <http://dbpedia.org/ontology/district>
+              <http://dbpedia.org/resource/DJ_Muggs> .
+
+<http://dbpedia.org/resource/DJ_Muggs>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "DJ Muggs"@en .

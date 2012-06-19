@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/sources/!svn/ver/1431/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/gui
+END
+AutoCompleteSPARQLComboBox.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/sources/!svn/ver/1393/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/gui/AutoCompleteSPARQLComboBox.java
+END
+AutoCompleteSPARQLTextBox.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/sources/!svn/ver/1393/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/gui/AutoCompleteSPARQLTextBox.java
+END
+SearchResultRepeater.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/sources/!svn/ver/1431/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/gui/SearchResultRepeater.java
+END
+TextFieldTextChangeEventExample.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/sources/!svn/ver/1393/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/gui/TextFieldTextChangeEventExample.java
+END
+MyComboBox.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/sources/!svn/ver/1393/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/gui/MyComboBox.java
+END
+AutoSuggestWindow.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/sources/!svn/ver/1393/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/gui/AutoSuggestWindow.java
+END
+AutoCompleteTextField.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/sources/!svn/ver/1393/AKSWInformationFinder/WebInterface/src/main/java/org/aksw/gui/AutoCompleteTextField.java
+END

@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Suffolk_County_Historical_Society_Building>
+      rdfs:label "Suffolk County Historical Society Building"@en ;
+      dbpedia-owl:location
+              <http://dbpedia.org/resource/Inuvik> .
+
+<http://dbpedia.org/resource/Inuvik>
+      rdfs:label "Inuvik"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/The_Fire_Theft>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Fire Theft"@en .
+
+<http://dbpedia.org/resource/The_Fire_Theft_%28album%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Fire Theft (album)"@en ;
+      <http://dbpedia.org/ontology/language>
+              <http://dbpedia.org/resource/The_Fire_Theft> .

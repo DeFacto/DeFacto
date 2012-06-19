@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Alexander_Stadium>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Alexander Stadium"@en ;
+      <http://dbpedia.org/ontology/militaryBranch>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

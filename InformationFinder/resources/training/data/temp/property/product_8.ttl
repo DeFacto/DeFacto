@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Diversified_Global_Graphics_Group_%E2%80%94_DG3>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Diversified Global Graphics Group — DG3"@en ;
+      <http://dbpedia.org/ontology/industry>
+              <http://dbpedia.org/resource/Direct_mail> .
+
+<http://dbpedia.org/resource/Direct_mail>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Direct mail"@en .

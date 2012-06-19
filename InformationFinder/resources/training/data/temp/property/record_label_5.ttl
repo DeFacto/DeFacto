@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Mercury_Records>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Mercury Records"@en .
+
+<http://dbpedia.org/resource/One_Block_Radius>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "One Block Radius"@en ;
+      <http://dbpedia.org/ontology/language>
+              <http://dbpedia.org/resource/Mercury_Records> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Holy_Cross_of_San_Antonio>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Holy Cross of San Antonio"@en ;
+      <http://dbpedia.org/ontology/director>
+              <http://dbpedia.org/resource/Kenya> .

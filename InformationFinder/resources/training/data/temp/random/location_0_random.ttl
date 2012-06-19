@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Vienna>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Vienna"@en ;
+      <http://dbpedia.org/ontology/owner>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

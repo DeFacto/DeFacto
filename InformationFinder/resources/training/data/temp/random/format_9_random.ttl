@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Sre%C4%87ko_Ili%C4%87>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Srećko Ilić"@en ;
+      <http://dbpedia.org/ontology/nationality>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

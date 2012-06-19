@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Deoria_district>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Deoria district"@en .
+
+<http://dbpedia.org/resource/Katghara,_Deoria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Katghara, Deoria"@en ;
+      <http://dbpedia.org/ontology/birthPlace>
+              <http://dbpedia.org/resource/Deoria_district> .

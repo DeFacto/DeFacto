@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Heather_Knight_%28educator%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Heather Knight (educator)"@en ;
+      <http://dbpedia.org/ontology/industry>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

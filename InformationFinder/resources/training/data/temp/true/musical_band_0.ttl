@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Chad_Jackson_%28DJ%29>
+      rdfs:label "Chad Jackson (DJ)"@en .
+
+<http://dbpedia.org/resource/Hear_the_Drummer_%28Get_Wicked%29>
+      rdfs:label "Hear the Drummer (Get Wicked)"@en ;
+      dbpedia-owl:musicalBand
+              <http://dbpedia.org/resource/Chad_Jackson_%28DJ%29> .

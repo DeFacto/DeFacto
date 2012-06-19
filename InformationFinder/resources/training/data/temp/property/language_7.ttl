@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/System_Center_Essentials>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "System Center Essentials"@en ;
+      <http://dbpedia.org/ontology/successor>
+              <http://dbpedia.org/resource/Multilingualism> .
+
+<http://dbpedia.org/resource/Multilingualism>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Multilingualism"@en .

@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Large_Four-eyed_Frog>
+      rdfs:label "Large Four-eyed Frog"@en ;
+      dbpedia-owl:order <http://dbpedia.org/resource/Pembroke,_New_Hampshire> .
+
+<http://dbpedia.org/resource/Pembroke,_New_Hampshire>
+      rdfs:label "Pembroke, New Hampshire"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Russia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russia"@en .
+
+<http://dbpedia.org/resource/To_Bina_Mo_Kahani_Adha>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "To Bina Mo Kahani Adha"@en ;
+      <http://dbpedia.org/ontology/associatedBand>
+              <http://dbpedia.org/resource/Russia> .

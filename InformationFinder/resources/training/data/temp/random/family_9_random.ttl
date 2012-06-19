@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Beja_people>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Beja people"@en ;
+      <http://dbpedia.org/ontology/product>
+              <http://dbpedia.org/resource/Kenya> .

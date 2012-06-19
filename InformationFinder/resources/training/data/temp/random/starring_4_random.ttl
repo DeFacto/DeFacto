@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .
+
+<http://dbpedia.org/resource/1945%E2%80%9346_Colchester_United_F.C._season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "1945–46 Colchester United F.C. season"@en ;
+      <http://dbpedia.org/ontology/currentMember>
+              <http://dbpedia.org/resource/Austria> .
