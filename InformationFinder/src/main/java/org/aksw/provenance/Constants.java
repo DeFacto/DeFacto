@@ -16,7 +16,7 @@ public class Constants {
     /**
      * the bing api key :)
      */
-    public static final String BING_API_KEY = "08A2FCFA4D5D60D053ACE5422EE9495E1E5795DD";
+    public static final String BING_API_KEY = "Please, request a Bing key for yourself";
 
     /**
      * number of search results return be the search engine
