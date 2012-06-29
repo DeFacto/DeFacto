@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Kenya>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Kenya"@en .
-
-<http://dbpedia.org/resource/Miss_Representation>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Miss Representation"@en ;
-      <http://dbpedia.org/ontology/division>
-              <http://dbpedia.org/resource/Kenya> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Uganda>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Uganda"@en .
-
-<http://dbpedia.org/resource/Andreas_Vinciguerra>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Andreas Vinciguerra"@en ;
-      <http://dbpedia.org/ontology/team>
-              <http://dbpedia.org/resource/Uganda> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ohio>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ohio"@en .
-
-<http://dbpedia.org/resource/Jesse_Stuart>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jesse Stuart"@en ;
-      <http://dbpedia.org/ontology/award>
-              <http://dbpedia.org/resource/Ohio> .

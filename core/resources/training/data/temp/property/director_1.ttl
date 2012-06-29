@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/The_Fan_%281996_film%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "The Fan (1996 film)"@en ;
-      <http://dbpedia.org/ontology/division>
-              <http://dbpedia.org/resource/Tony_Scott> .
-
-<http://dbpedia.org/resource/Tony_Scott>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Tony Scott"@en .

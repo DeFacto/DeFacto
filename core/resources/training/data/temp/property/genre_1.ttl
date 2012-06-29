@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Pop_music>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Pop music"@en .
-
-<http://dbpedia.org/resource/Jason_Mraz%27s_Beautiful_Mess_%E2%80%93_Live_on_Earth>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jason Mraz's Beautiful Mess – Live on Earth"@en ;
-      <http://dbpedia.org/ontology/managerClub>
-              <http://dbpedia.org/resource/Pop_music> .

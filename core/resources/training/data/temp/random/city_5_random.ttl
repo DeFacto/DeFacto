@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/2011%E2%80%9312_Mersin_%C4%B0dmanyurdu_season>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "2011–12 Mersin İdmanyurdu season"@en ;
-      <http://dbpedia.org/ontology/product>
-              <http://dbpedia.org/resource/Burkina_Faso> .
-
-<http://dbpedia.org/resource/Burkina_Faso>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Burkina Faso"@en .

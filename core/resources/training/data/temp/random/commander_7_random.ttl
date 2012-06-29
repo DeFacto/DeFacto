@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Austria>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Austria"@en .
-
-<http://dbpedia.org/resource/Jokers_of_the_Scene>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jokers of the Scene"@en ;
-      <http://dbpedia.org/ontology/isPartOf>
-              <http://dbpedia.org/resource/Austria> .

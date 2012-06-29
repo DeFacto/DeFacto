@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Uganda>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Uganda"@en .
-
-<http://dbpedia.org/resource/Morden>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Morden"@en ;
-      <http://dbpedia.org/ontology/department>
-              <http://dbpedia.org/resource/Uganda> .

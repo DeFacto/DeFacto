@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Walter_Nowotny>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Walter Nowotny"@en ;
-      <http://dbpedia.org/ontology/region>
-              <http://dbpedia.org/resource/Luftwaffe> .
-
-<http://dbpedia.org/resource/Luftwaffe>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Luftwaffe"@en .

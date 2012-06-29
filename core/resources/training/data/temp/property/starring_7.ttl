@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Tom_Hardy>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Tom Hardy"@en .
-
-<http://dbpedia.org/resource/RocknRolla>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "RocknRolla"@en ;
-      <http://dbpedia.org/ontology/owner>
-              <http://dbpedia.org/resource/Tom_Hardy> .

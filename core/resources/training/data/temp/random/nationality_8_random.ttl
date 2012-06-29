@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Mon%E2%80%93Fayette_Expressway>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Mon–Fayette Expressway"@en ;
-      <http://dbpedia.org/ontology/order>
-              <http://dbpedia.org/resource/Sikorsky_S-34> .
-
-<http://dbpedia.org/resource/Sikorsky_S-34>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Sikorsky S-34"@en .

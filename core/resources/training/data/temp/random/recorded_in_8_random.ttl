@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/311_%28band%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "311 (band)"@en ;
-      <http://dbpedia.org/ontology/owner>
-              <http://dbpedia.org/resource/Uganda> .
-
-<http://dbpedia.org/resource/Uganda>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Uganda"@en .

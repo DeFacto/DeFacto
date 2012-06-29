@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Angiosperms>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Angiosperms"@en .
-
-<http://dbpedia.org/resource/Biscutella>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Biscutella"@en ;
-      <http://dbpedia.org/ontology/deathPlace>
-              <http://dbpedia.org/resource/Angiosperms> .

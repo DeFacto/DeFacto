@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Essex>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Essex"@en .
-
-<http://dbpedia.org/resource/Leeds>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Leeds"@en ;
-      <http://dbpedia.org/ontology/director>
-              <http://dbpedia.org/resource/Essex> .

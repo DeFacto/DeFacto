@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Gnosj%C3%B6_Municipality>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Gnosjö Municipality"@en ;
-      <http://dbpedia.org/ontology/genus>
-              <http://dbpedia.org/resource/Central_European_Time> .
-
-<http://dbpedia.org/resource/Central_European_Time>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Central European Time"@en .

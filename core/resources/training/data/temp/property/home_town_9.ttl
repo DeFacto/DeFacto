@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ray_Pillow>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ray Pillow"@en ;
-      <http://dbpedia.org/ontology/successor>
-              <http://dbpedia.org/resource/Lynchburg,_Virginia> .
-
-<http://dbpedia.org/resource/Lynchburg,_Virginia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Lynchburg, Virginia"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Island_Records>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Island Records"@en .
-
-<http://dbpedia.org/resource/Spiralling>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Spiralling"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/Island_Records> .

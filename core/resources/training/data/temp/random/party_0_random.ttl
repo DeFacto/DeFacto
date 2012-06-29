@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Breakaway_%282011_film%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Breakaway (2011 film)"@en ;
-      <http://dbpedia.org/ontology/writer>
-              <http://dbpedia.org/resource/Russia> .
-
-<http://dbpedia.org/resource/Russia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russia"@en .

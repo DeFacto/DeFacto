@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Armactica_columbina>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Armactica columbina"@en ;
-      <http://dbpedia.org/ontology/almaMater>
-              <http://dbpedia.org/resource/Russia> .
-
-<http://dbpedia.org/resource/Russia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russia"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/M%C5%8D_Kimi_Dake_o_Hanashitari_wa_Shinai>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Mō Kimi Dake o Hanashitari wa Shinai"@en ;
-      <http://dbpedia.org/ontology/distributor>
-              <http://dbpedia.org/resource/Japan> .
-
-<http://dbpedia.org/resource/Japan>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Japan"@en .

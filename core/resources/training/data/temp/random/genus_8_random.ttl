@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/2011_magicJack_season>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "2011 magicJack season"@en .
-
-<http://dbpedia.org/resource/Puerto_Rico>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Puerto Rico"@en ;
-      <http://dbpedia.org/ontology/currentMember>
-              <http://dbpedia.org/resource/2011_magicJack_season> .

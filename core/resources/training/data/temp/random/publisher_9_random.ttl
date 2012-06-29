@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Zane_J%C4%81kobsone>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Zane Jākobsone"@en ;
-      <http://dbpedia.org/ontology/order>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

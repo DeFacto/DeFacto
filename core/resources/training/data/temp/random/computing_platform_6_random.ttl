@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Uganda>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Uganda"@en .
-
-<http://dbpedia.org/resource/No._32_Squadron_RAAF>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "No. 32 Squadron RAAF"@en ;
-      <http://dbpedia.org/ontology/class>
-              <http://dbpedia.org/resource/Uganda> .

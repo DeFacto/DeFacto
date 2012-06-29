@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Austria>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Austria"@en .
-
-<http://dbpedia.org/resource/High_Peak_%28bus_company%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "High Peak (bus company)"@en ;
-      <http://dbpedia.org/ontology/almaMater>
-              <http://dbpedia.org/resource/Austria> .

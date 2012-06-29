@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Susana_Zabaleta>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Susana Zabaleta"@en ;
-      <http://dbpedia.org/ontology/occupation>
-              <http://dbpedia.org/resource/EMI> .
-
-<http://dbpedia.org/resource/EMI>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "EMI"@en .

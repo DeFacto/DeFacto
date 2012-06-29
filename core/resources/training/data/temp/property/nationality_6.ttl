@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Cornelius_Wallace>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Cornelius Wallace"@en ;
-      <http://dbpedia.org/ontology/state>
-              <http://dbpedia.org/resource/Australia> .
-
-<http://dbpedia.org/resource/Australia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Australia"@en .

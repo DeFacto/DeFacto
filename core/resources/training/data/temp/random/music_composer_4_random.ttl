@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .
-
-<http://dbpedia.org/resource/To_Bina_Mo_Kahani_Adha>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "To Bina Mo Kahani Adha"@en ;
-      <http://dbpedia.org/ontology/award>
-              <http://dbpedia.org/resource/London> .

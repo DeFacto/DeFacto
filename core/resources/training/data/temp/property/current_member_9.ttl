@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Antonio_P%C3%A9rez>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Antonio Pérez"@en .
-
-<http://dbpedia.org/resource/2010%E2%80%9311_Atlante_F.C._season>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "2010–11 Atlante F.C. season"@en ;
-      <http://dbpedia.org/ontology/starring>
-              <http://dbpedia.org/resource/Antonio_P%C3%A9rez> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Peter_Heppner>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Peter Heppner"@en ;
-      <http://dbpedia.org/ontology/genus>
-              <http://dbpedia.org/resource/Germany> .
-
-<http://dbpedia.org/resource/Germany>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Germany"@en .

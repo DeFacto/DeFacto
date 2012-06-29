@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/2011%E2%80%9312_Mersin_%C4%B0dmanyurdu_season>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "2011–12 Mersin İdmanyurdu season"@en ;
-      <http://dbpedia.org/ontology/language>
-              <http://dbpedia.org/resource/Nelson,_New_Zealand> .
-
-<http://dbpedia.org/resource/Nelson,_New_Zealand>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Nelson, New Zealand"@en .

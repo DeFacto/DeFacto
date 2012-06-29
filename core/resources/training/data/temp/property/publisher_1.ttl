@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Farrar,_Straus_and_Giroux>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Farrar, Straus and Giroux"@en .
-
-<http://dbpedia.org/resource/In_Sunlight,_In_a_Beautiful_Garden>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "In Sunlight, In a Beautiful Garden"@en ;
-      <http://dbpedia.org/ontology/city>
-              <http://dbpedia.org/resource/Farrar,_Straus_and_Giroux> .

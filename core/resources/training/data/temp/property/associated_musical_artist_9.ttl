@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/DJ_Bonez>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "DJ Bonez"@en .
-
-<http://dbpedia.org/resource/Def_Wish_Cast>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Def Wish Cast"@en ;
-      <http://dbpedia.org/ontology/publisher>
-              <http://dbpedia.org/resource/DJ_Bonez> .

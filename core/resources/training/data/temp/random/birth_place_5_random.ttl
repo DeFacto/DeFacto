@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Hell_%28band%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hell (band)"@en ;
-      <http://dbpedia.org/ontology/hometown>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

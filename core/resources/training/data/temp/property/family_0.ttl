@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Proteaceae>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Proteaceae"@en .
-
-<http://dbpedia.org/resource/Banksia_quercifolia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Banksia quercifolia"@en ;
-      <http://dbpedia.org/ontology/product>
-              <http://dbpedia.org/resource/Proteaceae> .

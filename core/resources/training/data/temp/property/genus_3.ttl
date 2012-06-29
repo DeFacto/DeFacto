@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Oriole_Whistler>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Oriole Whistler"@en ;
-      <http://dbpedia.org/ontology/publisher>
-              <http://dbpedia.org/resource/Pachycephala> .
-
-<http://dbpedia.org/resource/Pachycephala>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Pachycephala"@en .

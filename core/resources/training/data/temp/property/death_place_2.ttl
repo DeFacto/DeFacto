@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/The_Netherlands>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "The Netherlands"@en .
-
-<http://dbpedia.org/resource/Willem_Berkhoff>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Willem Berkhoff"@en ;
-      <http://dbpedia.org/ontology/starring>
-              <http://dbpedia.org/resource/The_Netherlands> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .
-
-<http://dbpedia.org/resource/Flux_%28software_company%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Flux (software company)"@en ;
-      <http://dbpedia.org/ontology/deathPlace>
-              <http://dbpedia.org/resource/London> .

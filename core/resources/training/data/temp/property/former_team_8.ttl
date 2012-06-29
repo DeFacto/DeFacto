@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/New_Orleans_Saints>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "New Orleans Saints"@en .
-
-<http://dbpedia.org/resource/Rocky_Schwartz>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Rocky Schwartz"@en ;
-      <http://dbpedia.org/ontology/musicComposer>
-              <http://dbpedia.org/resource/New_Orleans_Saints> .

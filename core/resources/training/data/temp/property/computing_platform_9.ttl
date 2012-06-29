@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Severity_%28video_game%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Severity (video game)"@en ;
-      <http://dbpedia.org/ontology/previousWork>
-              <http://dbpedia.org/resource/Xbox_360> .
-
-<http://dbpedia.org/resource/Xbox_360>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Xbox 360"@en .

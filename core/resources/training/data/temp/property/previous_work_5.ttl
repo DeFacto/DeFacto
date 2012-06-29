@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Survival_with_Ray_Mears>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Survival with Ray Mears"@en ;
-      <http://dbpedia.org/ontology/publisher>
-              <http://dbpedia.org/resource/Ray_Mears%27_Northern_Wilderness> .
-
-<http://dbpedia.org/resource/Ray_Mears%27_Northern_Wilderness>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ray Mears' Northern Wilderness"@en .

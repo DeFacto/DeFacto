@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Austria>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Austria"@en .
-
-<http://dbpedia.org/resource/Greater_Toronto_Marketing_Alliance>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Greater Toronto Marketing Alliance"@en ;
-      <http://dbpedia.org/ontology/distributor>
-              <http://dbpedia.org/resource/Austria> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Pionycha>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Pionycha"@en ;
-      <http://dbpedia.org/ontology/genus>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

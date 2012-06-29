@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Sony_Music_Studios>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Sony Music Studios"@en .
-
-<http://dbpedia.org/resource/Paid_My_Dues>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Paid My Dues"@en ;
-      <http://dbpedia.org/ontology/industry>
-              <http://dbpedia.org/resource/Sony_Music_Studios> .

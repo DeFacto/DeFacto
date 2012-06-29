@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Andor_L%C3%A1z%C3%A1r>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Andor Lázár"@en ;
-      <http://dbpedia.org/ontology/currentMember>
-              <http://dbpedia.org/resource/%C3%96d%C3%B6n_Mikecz> .
-
-<http://dbpedia.org/resource/%C3%96d%C3%B6n_Mikecz>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ödön Mikecz"@en .

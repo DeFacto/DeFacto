@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Zero_%28game_engine%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Zero (game engine)"@en ;
-      <http://dbpedia.org/ontology/almaMater>
-              <http://dbpedia.org/resource/PlayStation_2> .
-
-<http://dbpedia.org/resource/PlayStation_2>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "PlayStation 2"@en .

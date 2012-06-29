@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Croix_de_guerre_1939%E2%80%931945>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Croix de guerre 1939–1945"@en .
-
-<http://dbpedia.org/resource/Arthur_Tedder,_1st_Baron_Tedder>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Arthur Tedder, 1st Baron Tedder"@en ;
-      <http://dbpedia.org/ontology/phylum>
-              <http://dbpedia.org/resource/Croix_de_guerre_1939%E2%80%931945> .

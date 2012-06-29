@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Until_My_Dreams_Come_True>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Until My Dreams Come True"@en ;
-      <http://dbpedia.org/ontology/formerTeam>
-              <http://dbpedia.org/resource/Jack_Greene> .
-
-<http://dbpedia.org/resource/Jack_Greene>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jack Greene"@en .

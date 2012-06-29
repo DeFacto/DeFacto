@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Incubus_%28band%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Incubus (band)"@en .
-
-<http://dbpedia.org/resource/Drive_%28Incubus_song%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Drive (Incubus song)"@en ;
-      <http://dbpedia.org/ontology/owner>
-              <http://dbpedia.org/resource/Incubus_%28band%29> .

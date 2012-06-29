@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Brown-backed_Flowerpecker>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Brown-backed Flowerpecker"@en ;
-      <http://dbpedia.org/ontology/party>
-              <http://dbpedia.org/resource/Chordata> .
-
-<http://dbpedia.org/resource/Chordata>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Chordata"@en .

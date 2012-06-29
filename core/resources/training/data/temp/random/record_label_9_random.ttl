@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ted_Stepien>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ted Stepien"@en ;
-      <http://dbpedia.org/ontology/family>
-              <http://dbpedia.org/resource/Chile> .
-
-<http://dbpedia.org/resource/Chile>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Chile"@en .

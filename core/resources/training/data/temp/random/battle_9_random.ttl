@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Russia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russia"@en .
-
-<http://dbpedia.org/resource/Beclean>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Beclean"@en ;
-      <http://dbpedia.org/ontology/phylum>
-              <http://dbpedia.org/resource/Russia> .

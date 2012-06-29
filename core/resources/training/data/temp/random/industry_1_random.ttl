@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Radiohead>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Radiohead"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/Russia> .
-
-<http://dbpedia.org/resource/Russia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russia"@en .

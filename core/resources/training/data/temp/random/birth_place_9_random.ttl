@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Sumatra>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Sumatra"@en .
-
-<http://dbpedia.org/resource/ACT_2_CAM>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "ACT 2 CAM"@en ;
-      <http://dbpedia.org/ontology/commander>
-              <http://dbpedia.org/resource/Sumatra> .

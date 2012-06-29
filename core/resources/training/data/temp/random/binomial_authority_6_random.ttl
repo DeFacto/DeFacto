@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Russia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russia"@en .
-
-<http://dbpedia.org/resource/Armenia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Armenia"@en ;
-      <http://dbpedia.org/ontology/occupation>
-              <http://dbpedia.org/resource/Russia> .

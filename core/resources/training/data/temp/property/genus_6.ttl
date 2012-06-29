@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ilex>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ilex"@en .
-
-<http://dbpedia.org/resource/Ilex_opaca>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ilex opaca"@en ;
-      <http://dbpedia.org/ontology/managerClub>
-              <http://dbpedia.org/resource/Ilex> .

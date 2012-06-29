@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Russia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russia"@en .
-
-<http://dbpedia.org/resource/University_of_Toledo>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "University of Toledo"@en ;
-      <http://dbpedia.org/ontology/state>
-              <http://dbpedia.org/resource/Russia> .

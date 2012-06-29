@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Paul_Eggers>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Paul Eggers"@en ;
-      <http://dbpedia.org/ontology/ground>
-              <http://dbpedia.org/resource/Republican_Party_%28United_States%29> .
-
-<http://dbpedia.org/resource/Republican_Party_%28United_States%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Republican Party (United States)"@en .

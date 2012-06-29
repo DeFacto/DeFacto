@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Kenya>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Kenya"@en .
-
-<http://dbpedia.org/resource/Michael_Howard>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Michael Howard"@en ;
-      <http://dbpedia.org/ontology/family>
-              <http://dbpedia.org/resource/Kenya> .

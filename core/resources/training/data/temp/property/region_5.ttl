@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Japanese_language>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Japanese language"@en .
-
-<http://dbpedia.org/resource/Fumiko>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Fumiko"@en ;
-      <http://dbpedia.org/ontology/formerTeam>
-              <http://dbpedia.org/resource/Japanese_language> .

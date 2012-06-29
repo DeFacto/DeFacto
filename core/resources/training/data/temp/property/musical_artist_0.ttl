@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Gomez_%28band%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Gomez (band)"@en .
-
-<http://dbpedia.org/resource/See_the_World_%28Gomez_song%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "See the World (Gomez song)"@en ;
-      <http://dbpedia.org/ontology/department>
-              <http://dbpedia.org/resource/Gomez_%28band%29> .

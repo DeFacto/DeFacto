@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Andy_Dibble>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Andy Dibble"@en .
-
-<http://dbpedia.org/resource/1981%E2%80%9382_Cardiff_City_F.C._season>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "1981–82 Cardiff City F.C. season"@en ;
-      <http://dbpedia.org/ontology/residence>
-              <http://dbpedia.org/resource/Andy_Dibble> .

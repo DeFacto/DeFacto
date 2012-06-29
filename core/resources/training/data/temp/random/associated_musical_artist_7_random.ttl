@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Vientiane>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Vientiane"@en ;
-      <http://dbpedia.org/ontology/recordLabel>
-              <http://dbpedia.org/resource/Russia> .
-
-<http://dbpedia.org/resource/Russia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russia"@en .

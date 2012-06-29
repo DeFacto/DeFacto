@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Kenya>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Kenya"@en .
-
-<http://dbpedia.org/resource/Last_Night_%28Good_Charlotte_song%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Last Night (Good Charlotte song)"@en ;
-      <http://dbpedia.org/ontology/battle>
-              <http://dbpedia.org/resource/Kenya> .

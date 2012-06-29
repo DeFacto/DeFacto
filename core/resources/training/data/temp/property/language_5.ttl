@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Crimes_That_Shook_the_World>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Crimes That Shook the World"@en ;
-      <http://dbpedia.org/ontology/owner>
-              <http://dbpedia.org/resource/English_language> .
-
-<http://dbpedia.org/resource/English_language>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "English language"@en .

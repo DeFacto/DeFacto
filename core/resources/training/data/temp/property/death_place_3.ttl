@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Eleanor_Clifford,_Countess_of_Cumberland>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Eleanor Clifford, Countess of Cumberland"@en ;
-      <http://dbpedia.org/ontology/managerClub>
-              <http://dbpedia.org/resource/England> .
-
-<http://dbpedia.org/resource/England>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "England"@en .

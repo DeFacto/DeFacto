@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .
-
-<http://dbpedia.org/resource/Raymond_Domenech>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Raymond Domenech"@en ;
-      <http://dbpedia.org/ontology/product>
-              <http://dbpedia.org/resource/United_States> .

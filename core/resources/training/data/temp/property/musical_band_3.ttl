@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/All_About_Lovin%27_You>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "All About Lovin' You"@en ;
-      <http://dbpedia.org/ontology/almaMater>
-              <http://dbpedia.org/resource/Bon_Jovi> .
-
-<http://dbpedia.org/resource/Bon_Jovi>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bon Jovi"@en .

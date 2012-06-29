@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Home_appliances>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Home appliances"@en .
-
-<http://dbpedia.org/resource/LEC_Refrigeration>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "LEC Refrigeration"@en ;
-      <http://dbpedia.org/ontology/hometown>
-              <http://dbpedia.org/resource/Home_appliances> .

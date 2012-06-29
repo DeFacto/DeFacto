@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Animal>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Animal"@en .
-
-<http://dbpedia.org/resource/South_China_catshark>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "South China catshark"@en ;
-      <http://dbpedia.org/ontology/owner>
-              <http://dbpedia.org/resource/Animal> .

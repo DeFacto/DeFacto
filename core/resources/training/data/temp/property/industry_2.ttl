@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Management_Consulting>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Management Consulting"@en .
-
-<http://dbpedia.org/resource/Acando>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Acando"@en ;
-      <http://dbpedia.org/ontology/binomialAuthority>
-              <http://dbpedia.org/resource/Management_Consulting> .

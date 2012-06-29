@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Bergrivier_Local_Municipality>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bergrivier Local Municipality"@en ;
-      <http://dbpedia.org/ontology/class>
-              <http://dbpedia.org/resource/Austria> .
-
-<http://dbpedia.org/resource/Austria>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Austria"@en .

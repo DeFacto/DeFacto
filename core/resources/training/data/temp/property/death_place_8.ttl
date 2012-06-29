@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Antanas_Smetona>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Antanas Smetona"@en ;
-      <http://dbpedia.org/ontology/recordLabel>
-              <http://dbpedia.org/resource/United_States> .
-
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Satyricon_%28band%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Satyricon (band)"@en .
-
-<http://dbpedia.org/resource/Cyrus_%28metal_musician%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Cyrus (metal musician)"@en ;
-      <http://dbpedia.org/ontology/district>
-              <http://dbpedia.org/resource/Satyricon_%28band%29> .

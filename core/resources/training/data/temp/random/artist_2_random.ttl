@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Pattie_Howard>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Pattie Howard"@en ;
-      <http://dbpedia.org/ontology/hometown>
-              <http://dbpedia.org/resource/Siege_of_Inverness_%281649%29> .
-
-<http://dbpedia.org/resource/Siege_of_Inverness_%281649%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Siege of Inverness (1649)"@en .

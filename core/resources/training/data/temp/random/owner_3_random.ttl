@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Pokhara>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Pokhara"@en ;
-      <http://dbpedia.org/ontology/product>
-              <http://dbpedia.org/resource/Jakarta> .
-
-<http://dbpedia.org/resource/Jakarta>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jakarta"@en .

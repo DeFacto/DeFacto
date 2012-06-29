@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Jamaica_Inn_%28film%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jamaica Inn (film)"@en ;
-      <http://dbpedia.org/ontology/occupation>
-              <http://dbpedia.org/resource/Alfred_Hitchcock> .
-
-<http://dbpedia.org/resource/Alfred_Hitchcock>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Alfred Hitchcock"@en .

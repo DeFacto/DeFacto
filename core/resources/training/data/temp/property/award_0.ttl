@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Hector_A._Cafferata,_Jr.>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hector A. Cafferata, Jr."@en ;
-      <http://dbpedia.org/ontology/associatedMusicalArtist>
-              <http://dbpedia.org/resource/Medal_of_Honor> .
-
-<http://dbpedia.org/resource/Medal_of_Honor>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Medal of Honor"@en .

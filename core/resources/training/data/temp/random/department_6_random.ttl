@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Our_Lady_of_Kazan_Orthodox_Cathedral>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Our Lady of Kazan Orthodox Cathedral"@en ;
-      <http://dbpedia.org/ontology/family>
-              <http://dbpedia.org/resource/United_States> .
-
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .

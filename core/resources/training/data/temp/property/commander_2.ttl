@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Distinguished_Service_Cross_%28Australia%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Distinguished Service Cross (Australia)"@en .
-
-<http://dbpedia.org/resource/Australian_Army_Reserve>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Australian Army Reserve"@en ;
-      <http://dbpedia.org/ontology/managerClub>
-              <http://dbpedia.org/resource/Distinguished_Service_Cross_%28Australia%29> .

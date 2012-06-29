@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ratatat>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ratatat"@en ;
-      <http://dbpedia.org/ontology/ground>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

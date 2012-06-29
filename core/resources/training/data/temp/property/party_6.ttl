@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Australian_Labor_Party>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Australian Labor Party"@en .
-
-<http://dbpedia.org/resource/George_Gray_%28Australian_politician%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "George Gray (Australian politician)"@en ;
-      <http://dbpedia.org/ontology/associatedMusicalArtist>
-              <http://dbpedia.org/resource/Australian_Labor_Party> .

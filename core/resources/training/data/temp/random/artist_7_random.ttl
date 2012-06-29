@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Amina_Abdallah_Arraf_al_Omari>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Amina Abdallah Arraf al Omari"@en ;
-      <http://dbpedia.org/ontology/city>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

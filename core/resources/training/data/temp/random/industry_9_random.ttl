@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Minotaur_%28New-Gen%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Minotaur (New-Gen)"@en .
-
-<http://dbpedia.org/resource/Massachusetts_Route_28>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Massachusetts Route 28"@en ;
-      <http://dbpedia.org/ontology/country>
-              <http://dbpedia.org/resource/Minotaur_%28New-Gen%29> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/15th_Ohio_Infantry>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "15th Ohio Infantry"@en ;
-      <http://dbpedia.org/ontology/binomialAuthority>
-              <http://dbpedia.org/resource/Infantry> .
-
-<http://dbpedia.org/resource/Infantry>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Infantry"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Burkina_Faso>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Burkina Faso"@en .
-
-<http://dbpedia.org/resource/Paul_Adams_%28musician%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Paul Adams (musician)"@en ;
-      <http://dbpedia.org/ontology/award>
-              <http://dbpedia.org/resource/Burkina_Faso> .

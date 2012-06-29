@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Yokohama_Arena>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Yokohama Arena"@en .
-
-<http://dbpedia.org/resource/Say_Anything_%28X_Japan_song%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Say Anything (X Japan song)"@en ;
-      <http://dbpedia.org/ontology/commander>
-              <http://dbpedia.org/resource/Yokohama_Arena> .

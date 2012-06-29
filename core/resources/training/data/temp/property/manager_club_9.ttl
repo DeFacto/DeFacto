@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/C.D._%C3%81guila>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "C.D. Águila"@en .
-
-<http://dbpedia.org/resource/Antonio_Carlos_Vieira>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Antonio Carlos Vieira"@en ;
-      <http://dbpedia.org/ontology/genre>
-              <http://dbpedia.org/resource/C.D._%C3%81guila> .

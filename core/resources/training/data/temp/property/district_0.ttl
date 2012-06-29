@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/F%C4%83ge%C5%A3el_River_%28Camenca%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Făgeţel River (Camenca)"@en ;
-      <http://dbpedia.org/ontology/class>
-              <http://dbpedia.org/resource/Bac%C4%83u_County> .
-
-<http://dbpedia.org/resource/Bac%C4%83u_County>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bacău County"@en .

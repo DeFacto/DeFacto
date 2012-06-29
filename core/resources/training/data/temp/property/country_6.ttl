@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/United_Kingdom>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United Kingdom"@en .
-
-<http://dbpedia.org/resource/Kelstern>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Kelstern"@en ;
-      <http://dbpedia.org/ontology/almaMater>
-              <http://dbpedia.org/resource/United_Kingdom> .

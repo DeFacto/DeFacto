@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Peter_Quinn_%28footballer%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Peter Quinn (footballer)"@en ;
-      <http://dbpedia.org/ontology/city>
-              <http://dbpedia.org/resource/Preston_North_End_F.C.> .
-
-<http://dbpedia.org/resource/Preston_North_End_F.C.>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Preston North End F.C."@en .

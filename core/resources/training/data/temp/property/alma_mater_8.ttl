@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Rafael_Rodriguez-Ponga_y_Salamanca>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Rafael Rodriguez-Ponga y Salamanca"@en ;
-      <http://dbpedia.org/ontology/district>
-              <http://dbpedia.org/resource/Complutense_University_of_Madrid> .
-
-<http://dbpedia.org/resource/Complutense_University_of_Madrid>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Complutense University of Madrid"@en .

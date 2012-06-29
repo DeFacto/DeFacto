@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Russian_language>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russian language"@en .
-
-<http://dbpedia.org/resource/Radio_Exterior_de_Espa%C3%B1a>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Radio Exterior de España"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/Russian_language> .

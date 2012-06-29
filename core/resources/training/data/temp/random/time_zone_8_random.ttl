@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .
-
-<http://dbpedia.org/resource/BRP_General_Mariano_Alvarez_%28PS-38%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "BRP General Mariano Alvarez (PS-38)"@en ;
-      <http://dbpedia.org/ontology/distributor>
-              <http://dbpedia.org/resource/United_States> .

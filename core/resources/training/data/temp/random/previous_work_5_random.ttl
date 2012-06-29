@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/IF_Skjold_Birker%C3%B8d>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "IF Skjold Birkerød"@en ;
-      <http://dbpedia.org/ontology/producer>
-              <http://dbpedia.org/resource/Progressed_%28EP%29> .
-
-<http://dbpedia.org/resource/Progressed_%28EP%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Progressed (EP)"@en .

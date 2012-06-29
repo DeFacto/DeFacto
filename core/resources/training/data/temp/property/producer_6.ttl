@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Mike_City>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Mike City"@en .
-
-<http://dbpedia.org/resource/Believe_%28Yolanda_Adams_album%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Believe (Yolanda Adams album)"@en ;
-      <http://dbpedia.org/ontology/genre>
-              <http://dbpedia.org/resource/Mike_City> .

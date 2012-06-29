@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ovidiu_Creang%C4%83>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ovidiu Creangă"@en ;
-      <http://dbpedia.org/ontology/formerTeam>
-              <http://dbpedia.org/resource/Politehnica_University_of_Bucharest> .
-
-<http://dbpedia.org/resource/Politehnica_University_of_Bucharest>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Politehnica University of Bucharest"@en .

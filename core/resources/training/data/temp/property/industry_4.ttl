@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Automobile>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Automobile"@en .
-
-<http://dbpedia.org/resource/Talbot>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Talbot"@en ;
-      <http://dbpedia.org/ontology/order>
-              <http://dbpedia.org/resource/Automobile> .

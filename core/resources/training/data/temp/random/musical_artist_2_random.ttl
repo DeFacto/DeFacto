@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Kenya>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Kenya"@en .
-
-<http://dbpedia.org/resource/Virginia_Beach,_Virginia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Virginia Beach, Virginia"@en ;
-      <http://dbpedia.org/ontology/almaMater>
-              <http://dbpedia.org/resource/Kenya> .

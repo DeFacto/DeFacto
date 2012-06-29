@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Hikmet_%C3%87etin>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hikmet Çetin"@en .
-
-<http://dbpedia.org/resource/Safa_Giray>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Safa Giray"@en ;
-      <http://dbpedia.org/ontology/subsequentWork>
-              <http://dbpedia.org/resource/Hikmet_%C3%87etin> .

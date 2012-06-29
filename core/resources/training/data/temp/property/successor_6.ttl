@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Joseph_J._Kelly>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Joseph J. Kelly"@en .
-
-<http://dbpedia.org/resource/Thomas_L._Holling>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Thomas L. Holling"@en ;
-      <http://dbpedia.org/ontology/residence>
-              <http://dbpedia.org/resource/Joseph_J._Kelly> .

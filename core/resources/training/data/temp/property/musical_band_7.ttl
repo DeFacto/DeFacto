@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Selena>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Selena"@en .
-
-<http://dbpedia.org/resource/Si_Una_Vez>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Si Una Vez"@en ;
-      <http://dbpedia.org/ontology/division>
-              <http://dbpedia.org/resource/Selena> .

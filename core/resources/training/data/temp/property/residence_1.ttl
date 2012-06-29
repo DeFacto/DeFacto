@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Champlin,_Minnesota>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Champlin, Minnesota"@en .
-
-<http://dbpedia.org/resource/Charlie_Weaver_%28politician%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Charlie Weaver (politician)"@en ;
-      <http://dbpedia.org/ontology/ground>
-              <http://dbpedia.org/resource/Champlin,_Minnesota> .

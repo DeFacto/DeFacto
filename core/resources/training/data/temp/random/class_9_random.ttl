@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/L%C3%A1szl%C3%B3_Tisza>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "László Tisza"@en ;
-      <http://dbpedia.org/ontology/instrument>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

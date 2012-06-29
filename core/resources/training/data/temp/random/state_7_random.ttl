@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .
-
-<http://dbpedia.org/resource/Progressed_%28EP%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Progressed (EP)"@en ;
-      <http://dbpedia.org/ontology/isPartOf>
-              <http://dbpedia.org/resource/United_States> .

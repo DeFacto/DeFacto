@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Leonard_Whiting>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Leonard Whiting"@en .
-
-<http://dbpedia.org/resource/The_Dreamstone>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "The Dreamstone"@en ;
-      <http://dbpedia.org/ontology/region>
-              <http://dbpedia.org/resource/Leonard_Whiting> .

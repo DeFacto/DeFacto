@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/St._Mary%27s_College_of_Engineering_and_Technology>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "St. Mary's College of Engineering and Technology"@en ;
-      <http://dbpedia.org/ontology/writer>
-              <http://dbpedia.org/resource/Andhra_Pradesh> .
-
-<http://dbpedia.org/resource/Andhra_Pradesh>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Andhra Pradesh"@en .

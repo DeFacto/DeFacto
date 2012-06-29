@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Duke_Eugen_of_W%C3%BCrttemberg_%281758%E2%80%931822%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Duke Eugen of Württemberg (1758–1822)"@en ;
-      <http://dbpedia.org/ontology/commander>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

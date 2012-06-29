@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Noam_Chomsky>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Noam Chomsky"@en ;
-      <http://dbpedia.org/ontology/region>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

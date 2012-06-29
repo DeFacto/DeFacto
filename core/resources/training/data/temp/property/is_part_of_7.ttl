@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ohio>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ohio"@en .
-
-<http://dbpedia.org/resource/Sciotoville,_Ohio>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Sciotoville, Ohio"@en ;
-      <http://dbpedia.org/ontology/phylum>
-              <http://dbpedia.org/resource/Ohio> .

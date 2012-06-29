@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Uganda>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Uganda"@en .
-
-<http://dbpedia.org/resource/Lesser_Poland_Voivodeship>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Lesser Poland Voivodeship"@en ;
-      <http://dbpedia.org/ontology/language>
-              <http://dbpedia.org/resource/Uganda> .

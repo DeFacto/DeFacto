@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/711_Ocean_Drive>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "711 Ocean Drive"@en ;
-      <http://dbpedia.org/ontology/award>
-              <http://dbpedia.org/resource/Columbia_Pictures> .
-
-<http://dbpedia.org/resource/Columbia_Pictures>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Columbia Pictures"@en .

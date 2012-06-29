@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Charlottetown>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Charlottetown"@en .
-
-<http://dbpedia.org/resource/Sudan>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Sudan"@en ;
-      <http://dbpedia.org/ontology/owner>
-              <http://dbpedia.org/resource/Charlottetown> .

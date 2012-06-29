@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/AS_Maniema_Union>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "AS Maniema Union"@en ;
-      <http://dbpedia.org/ontology/family>
-              <http://dbpedia.org/resource/Kindu> .
-
-<http://dbpedia.org/resource/Kindu>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Kindu"@en .

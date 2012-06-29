@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Taeniorrhiza>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Taeniorrhiza"@en ;
-      <http://dbpedia.org/ontology/owner>
-              <http://dbpedia.org/resource/Angiosperms> .
-
-<http://dbpedia.org/resource/Angiosperms>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Angiosperms"@en .

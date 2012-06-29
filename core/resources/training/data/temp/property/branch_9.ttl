@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/United_States_Marine_Corps_Reserve>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States Marine Corps Reserve"@en .
-
-<http://dbpedia.org/resource/HMM-764>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "HMM-764"@en ;
-      <http://dbpedia.org/ontology/successor>
-              <http://dbpedia.org/resource/United_States_Marine_Corps_Reserve> .

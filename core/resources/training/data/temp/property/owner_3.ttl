@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/GMG_Radio>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "GMG Radio"@en .
-
-<http://dbpedia.org/resource/102.2_Smooth_FM>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "102.2 Smooth FM"@en ;
-      <http://dbpedia.org/ontology/commander>
-              <http://dbpedia.org/resource/GMG_Radio> .

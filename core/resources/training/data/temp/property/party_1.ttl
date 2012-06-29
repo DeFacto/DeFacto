@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Conservative_Party_of_Canada_%28historical%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Conservative Party of Canada (historical)"@en .
-
-<http://dbpedia.org/resource/Rufus_Henry_Pope>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Rufus Henry Pope"@en ;
-      <http://dbpedia.org/ontology/region>
-              <http://dbpedia.org/resource/Conservative_Party_of_Canada_%28historical%29> .

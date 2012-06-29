@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Fort_Worth,_Texas>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Fort Worth, Texas"@en .
-
-<http://dbpedia.org/resource/Showtime_Steppers>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Showtime Steppers"@en ;
-      <http://dbpedia.org/ontology/kingdom>
-              <http://dbpedia.org/resource/Fort_Worth,_Texas> .

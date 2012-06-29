@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Shakill%27s_II>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Shakill's II"@en ;
-      <http://dbpedia.org/ontology/award>
-              <http://dbpedia.org/resource/David_Murray_Quintet> .
-
-<http://dbpedia.org/resource/David_Murray_Quintet>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "David Murray Quintet"@en .

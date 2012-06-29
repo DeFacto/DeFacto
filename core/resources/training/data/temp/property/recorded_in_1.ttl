@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Hawaii>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hawaii"@en .
-
-<http://dbpedia.org/resource/A_Town_Called_Hypocrisy>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "A Town Called Hypocrisy"@en ;
-      <http://dbpedia.org/ontology/commander>
-              <http://dbpedia.org/resource/Hawaii> .

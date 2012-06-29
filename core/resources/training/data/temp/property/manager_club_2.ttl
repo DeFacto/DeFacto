@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Itzhak_Shum>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Itzhak Shum"@en ;
-      <http://dbpedia.org/ontology/country>
-              <http://dbpedia.org/resource/Hapoel_Tel_Aviv_F.C.> .
-
-<http://dbpedia.org/resource/Hapoel_Tel_Aviv_F.C.>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hapoel Tel Aviv F.C."@en .

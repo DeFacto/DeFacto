@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Alon_Bar>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Alon Bar"@en ;
-      <http://dbpedia.org/ontology/region>
-              <http://dbpedia.org/resource/California> .
-
-<http://dbpedia.org/resource/California>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "California"@en .

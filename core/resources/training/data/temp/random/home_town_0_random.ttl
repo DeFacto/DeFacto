@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Hans_Zomer>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hans Zomer"@en ;
-      <http://dbpedia.org/ontology/phylum>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

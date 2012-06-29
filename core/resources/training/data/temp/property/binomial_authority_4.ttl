@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/McGill.>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "McGill."@en .
-
-<http://dbpedia.org/resource/Grevillea_acacioides>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Grevillea acacioides"@en ;
-      <http://dbpedia.org/ontology/formerTeam>
-              <http://dbpedia.org/resource/McGill.> .

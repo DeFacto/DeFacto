@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Italy>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Italy"@en .
-
-<http://dbpedia.org/resource/Raffaele_La_Capria>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Raffaele La Capria"@en ;
-      <http://dbpedia.org/ontology/formerTeam>
-              <http://dbpedia.org/resource/Italy> .

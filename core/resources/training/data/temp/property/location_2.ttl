@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Dunfermline_Abbey>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Dunfermline Abbey"@en ;
-      <http://dbpedia.org/ontology/currentMember>
-              <http://dbpedia.org/resource/Scotland> .
-
-<http://dbpedia.org/resource/Scotland>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Scotland"@en .

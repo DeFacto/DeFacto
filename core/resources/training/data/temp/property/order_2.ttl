@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Cyclyrius>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Cyclyrius"@en ;
-      <http://dbpedia.org/ontology/managerClub>
-              <http://dbpedia.org/resource/Lepidoptera> .
-
-<http://dbpedia.org/resource/Lepidoptera>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Lepidoptera"@en .

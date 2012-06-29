@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Abreeza>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Abreeza"@en ;
-      <http://dbpedia.org/ontology/hometown>
-              <http://dbpedia.org/resource/Joint_venture> .
-
-<http://dbpedia.org/resource/Joint_venture>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Joint venture"@en .

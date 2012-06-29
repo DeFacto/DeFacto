@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Russian_Imperial_Army>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russian Imperial Army"@en .
-
-<http://dbpedia.org/resource/Oleksandr_Udovychenko>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Oleksandr Udovychenko"@en ;
-      <http://dbpedia.org/ontology/nationality>
-              <http://dbpedia.org/resource/Russian_Imperial_Army> .

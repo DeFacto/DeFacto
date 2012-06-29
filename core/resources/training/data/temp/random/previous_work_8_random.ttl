@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .
-
-<http://dbpedia.org/resource/Jakarta>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jakarta"@en ;
-      <http://dbpedia.org/ontology/country>
-              <http://dbpedia.org/resource/United_States> .

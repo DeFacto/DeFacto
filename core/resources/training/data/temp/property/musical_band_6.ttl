@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Hit_and_Run_Lover>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hit and Run Lover"@en ;
-      <http://dbpedia.org/ontology/battle>
-              <http://dbpedia.org/resource/Dead_or_Alive_%28band%29> .
-
-<http://dbpedia.org/resource/Dead_or_Alive_%28band%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Dead or Alive (band)"@en .

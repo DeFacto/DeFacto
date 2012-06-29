@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/N._E._Brown>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "N. E. Brown"@en .
-
-<http://dbpedia.org/resource/Stapelia_gigantea>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Stapelia gigantea"@en ;
-      <http://dbpedia.org/ontology/formerTeam>
-              <http://dbpedia.org/resource/N._E._Brown> .

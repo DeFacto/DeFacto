@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Rock_music>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Rock music"@en ;
-      <http://dbpedia.org/ontology/musicComposer>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

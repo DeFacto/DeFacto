@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Bruce_Springsteen>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bruce Springsteen"@en ;
-      <http://dbpedia.org/ontology/state>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Linnean_Medal>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Linnean Medal"@en .
-
-<http://dbpedia.org/resource/Isaac_Henry_Burkill>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Isaac Henry Burkill"@en ;
-      <http://dbpedia.org/ontology/isPartOf>
-              <http://dbpedia.org/resource/Linnean_Medal> .

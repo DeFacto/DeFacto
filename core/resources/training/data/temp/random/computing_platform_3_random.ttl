@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Canberra>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Canberra"@en ;
-      <http://dbpedia.org/ontology/class>
-              <http://dbpedia.org/resource/Rio_Grande_Valley_Ocelots_FC> .
-
-<http://dbpedia.org/resource/Rio_Grande_Valley_Ocelots_FC>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Rio Grande Valley Ocelots FC"@en .

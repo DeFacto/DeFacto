@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/PacifiCorp>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "PacifiCorp"@en ;
-      <http://dbpedia.org/ontology/publisher>
-              <http://dbpedia.org/resource/Electricity> .
-
-<http://dbpedia.org/resource/Electricity>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Electricity"@en .

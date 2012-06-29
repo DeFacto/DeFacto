@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Damon_Elliott>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Damon Elliott"@en ;
-      <http://dbpedia.org/ontology/owner>
-              <http://dbpedia.org/resource/Keyshia_Cole> .
-
-<http://dbpedia.org/resource/Keyshia_Cole>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Keyshia Cole"@en .

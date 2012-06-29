@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Venetian_Snares>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Venetian Snares"@en ;
-      <http://dbpedia.org/ontology/formerTeam>
-              <http://dbpedia.org/resource/Bong-Ra> .
-
-<http://dbpedia.org/resource/Bong-Ra>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bong-Ra"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Music_download>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Music download"@en .
-
-<http://dbpedia.org/resource/Breathe_%28Don%27t_Stop%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Breathe (Don't Stop)"@en ;
-      <http://dbpedia.org/ontology/musicalArtist>
-              <http://dbpedia.org/resource/Music_download> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Bhalobaslei_Ghor_Bandha_Jay_Na>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bhalobaslei Ghor Bandha Jay Na"@en ;
-      <http://dbpedia.org/ontology/ground>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

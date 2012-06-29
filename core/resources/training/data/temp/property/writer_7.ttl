@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Can_I_Have_It_Like_That>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Can I Have It Like That"@en ;
-      <http://dbpedia.org/ontology/director>
-              <http://dbpedia.org/resource/Pharrell_Williams> .
-
-<http://dbpedia.org/resource/Pharrell_Williams>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Pharrell Williams"@en .

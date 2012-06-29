@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Maria_Haukaas_Storeng>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Maria Haukaas Storeng"@en .
-
-<http://dbpedia.org/resource/Hold_On_Be_Strong>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hold On Be Strong"@en ;
-      <http://dbpedia.org/ontology/ground>
-              <http://dbpedia.org/resource/Maria_Haukaas_Storeng> .

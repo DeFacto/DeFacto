@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/King_Dork>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "King Dork"@en ;
-      <http://dbpedia.org/ontology/musicalArtist>
-              <http://dbpedia.org/resource/Delacorte_Press> .
-
-<http://dbpedia.org/resource/Delacorte_Press>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Delacorte Press"@en .

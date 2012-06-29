@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Bohemians_1905>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bohemians 1905"@en .
-
-<http://dbpedia.org/resource/Ji%C5%99%C3%AD_Rub%C3%A1%C5%A1>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jiří Rubáš"@en ;
-      <http://dbpedia.org/ontology/distributor>
-              <http://dbpedia.org/resource/Bohemians_1905> .

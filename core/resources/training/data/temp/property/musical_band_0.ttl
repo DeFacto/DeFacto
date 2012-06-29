@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Bruce_Channel>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bruce Channel"@en .
-
-<http://dbpedia.org/resource/Hey%21_Baby>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hey! Baby"@en ;
-      <http://dbpedia.org/ontology/region>
-              <http://dbpedia.org/resource/Bruce_Channel> .

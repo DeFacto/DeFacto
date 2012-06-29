@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Miconia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Miconia"@en .
-
-<http://dbpedia.org/resource/Miconia_hexamera>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Miconia hexamera"@en ;
-      <http://dbpedia.org/ontology/musicalBand>
-              <http://dbpedia.org/resource/Miconia> .

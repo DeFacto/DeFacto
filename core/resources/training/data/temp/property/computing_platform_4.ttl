@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Sam_&_Max:_The_Devil%27s_Playhouse>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Sam & Max: The Devil's Playhouse"@en ;
-      <http://dbpedia.org/ontology/musicComposer>
-              <http://dbpedia.org/resource/Microsoft_Windows> .
-
-<http://dbpedia.org/resource/Microsoft_Windows>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Microsoft Windows"@en .

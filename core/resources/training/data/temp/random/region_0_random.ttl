@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .
-
-<http://dbpedia.org/resource/Percolestus>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Percolestus"@en ;
-      <http://dbpedia.org/ontology/starring>
-              <http://dbpedia.org/resource/London> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Washington_State_Route_129>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Washington State Route 129"@en ;
-      <http://dbpedia.org/ontology/product>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

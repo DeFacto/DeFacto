@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Queen_of_My_Heart>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Queen of My Heart"@en ;
-      <http://dbpedia.org/ontology/deathPlace>
-              <http://dbpedia.org/resource/World_of_Our_Own_%28song%29> .
-
-<http://dbpedia.org/resource/World_of_Our_Own_%28song%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "World of Our Own (song)"@en .

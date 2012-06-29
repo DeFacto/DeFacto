@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Acalyptris_combretella>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Acalyptris combretella"@en ;
-      <http://dbpedia.org/ontology/residence>
-              <http://dbpedia.org/resource/Insect> .
-
-<http://dbpedia.org/resource/Insect>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Insect"@en .

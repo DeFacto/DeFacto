@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Product_lifecycle_management>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Product lifecycle management"@en .
-
-<http://dbpedia.org/resource/Parametric_Technology_Corporation>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Parametric Technology Corporation"@en ;
-      <http://dbpedia.org/ontology/location>
-              <http://dbpedia.org/resource/Product_lifecycle_management> .

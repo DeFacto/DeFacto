@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Napoleonic_Wars>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Napoleonic Wars"@en ;
-      <http://dbpedia.org/ontology/recordLabel>
-              <http://dbpedia.org/resource/Wikipedia> .
-
-<http://dbpedia.org/resource/Wikipedia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Wikipedia"@en .

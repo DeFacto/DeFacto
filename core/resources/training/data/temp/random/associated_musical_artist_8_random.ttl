@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .
-
-<http://dbpedia.org/resource/Poland>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Poland"@en ;
-      <http://dbpedia.org/ontology/successor>
-              <http://dbpedia.org/resource/London> .

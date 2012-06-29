@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Coleophoridae>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Coleophoridae"@en ;
-      <http://dbpedia.org/ontology/division>
-              <http://dbpedia.org/resource/Arthropod> .
-
-<http://dbpedia.org/resource/Arthropod>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Arthropod"@en .

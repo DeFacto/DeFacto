@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/2011%E2%80%9312_Oxford_United_F.C._season>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "2011–12 Oxford United F.C. season"@en ;
-      <http://dbpedia.org/ontology/timeZone>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

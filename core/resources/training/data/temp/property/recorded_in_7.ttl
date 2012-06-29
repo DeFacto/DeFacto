@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Akron,_OH>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Akron, OH"@en .
-
-<http://dbpedia.org/resource/University_of_Akron_Concert>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "University of Akron Concert"@en ;
-      <http://dbpedia.org/ontology/state>
-              <http://dbpedia.org/resource/Akron,_OH> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Possessed_%28band%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Possessed (band)"@en ;
-      <http://dbpedia.org/ontology/associatedBand>
-              <http://dbpedia.org/resource/Ministry_%28band%29> .
-
-<http://dbpedia.org/resource/Ministry_%28band%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ministry (band)"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Battle_of_Pea_Ridge>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Battle of Pea Ridge"@en .
-
-<http://dbpedia.org/resource/Martin_E._Green>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Martin E. Green"@en ;
-      <http://dbpedia.org/ontology/almaMater>
-              <http://dbpedia.org/resource/Battle_of_Pea_Ridge> .

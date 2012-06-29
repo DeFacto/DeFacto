@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Insect>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Insect"@en .
-
-<http://dbpedia.org/resource/Euprosopus>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Euprosopus"@en ;
-      <http://dbpedia.org/ontology/family>
-              <http://dbpedia.org/resource/Insect> .

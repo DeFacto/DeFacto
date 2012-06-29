@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/The_Biggest_Loser:_Pinoy_Edition_%28season_1%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "The Biggest Loser: Pinoy Edition (season 1)"@en .
-
-<http://dbpedia.org/resource/Massachusetts_Route_28>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Massachusetts Route 28"@en ;
-      <http://dbpedia.org/ontology/product>
-              <http://dbpedia.org/resource/The_Biggest_Loser:_Pinoy_Edition_%28season_1%29> .

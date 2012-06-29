@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/David_O%27Sullivan_%28hurler%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "David O'Sullivan (hurler)"@en ;
-      <http://dbpedia.org/ontology/region>
-              <http://dbpedia.org/resource/United_States> .
-
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .

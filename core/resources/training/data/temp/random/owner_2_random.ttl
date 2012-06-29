@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Kenya>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Kenya"@en .
-
-<http://dbpedia.org/resource/John_Milton>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "John Milton"@en ;
-      <http://dbpedia.org/ontology/nationality>
-              <http://dbpedia.org/resource/Kenya> .

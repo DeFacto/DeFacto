@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/John_MacAndrews>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "John MacAndrews"@en .
-
-<http://dbpedia.org/resource/Xamarin>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Xamarin"@en ;
-      <http://dbpedia.org/ontology/artist>
-              <http://dbpedia.org/resource/John_MacAndrews> .

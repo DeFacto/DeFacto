@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ural_Federal_University>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ural Federal University"@en .
-
-<http://dbpedia.org/resource/Tea>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Tea"@en ;
-      <http://dbpedia.org/ontology/musicalBand>
-              <http://dbpedia.org/resource/Ural_Federal_University> .

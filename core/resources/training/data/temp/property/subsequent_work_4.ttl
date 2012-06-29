@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Don%27t_Don>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Don't Don"@en .
-
-<http://dbpedia.org/resource/SuperJunior05_%28Twins%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "SuperJunior05 (Twins)"@en ;
-      <http://dbpedia.org/ontology/battle>
-              <http://dbpedia.org/resource/Don%27t_Don> .

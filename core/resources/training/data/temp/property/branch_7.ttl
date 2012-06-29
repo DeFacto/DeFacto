@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Benjamin_Hilliker>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Benjamin Hilliker"@en ;
-      <http://dbpedia.org/ontology/subsequentWork>
-              <http://dbpedia.org/resource/Union_Army> .
-
-<http://dbpedia.org/resource/Union_Army>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Union Army"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Detroit_Tigers>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Detroit Tigers"@en .
-
-<http://dbpedia.org/resource/Terry_Francona>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Terry Francona"@en ;
-      <http://dbpedia.org/ontology/recordLabel>
-              <http://dbpedia.org/resource/Detroit_Tigers> .

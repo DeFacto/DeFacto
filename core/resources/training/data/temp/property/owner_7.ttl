@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/SEPTA_Regional_Rail>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "SEPTA Regional Rail"@en .
-
-<http://dbpedia.org/resource/Manayunk/Norristown_Line>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Manayunk/Norristown Line"@en ;
-      <http://dbpedia.org/ontology/team>
-              <http://dbpedia.org/resource/SEPTA_Regional_Rail> .
