@@ -53,7 +53,7 @@ public class DefactoDemo {
         List<String> confirmedFilenames = null;
         try {
             
-            confirmedFilenames = FileUtils.readLines(new File("resources/training/confirmed_positives.txt"));
+            confirmedFilenames = FileUtils.readLines(new File("resources/properties/confirmed_properties.txt"));
         }
         catch (IOException e1) {
             // TODO Auto-generated catch block

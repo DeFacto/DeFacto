@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.evidence.Evidence;
@@ -151,7 +152,10 @@ public class EvidenceScorer {
             newInstance.deleteAttributeAt(1);
             newInstance.setDataset(withoutName);
 
-            evidence.setDeFactoScore(this.classifier.classifyInstance(newInstance));
+            // this gives us the probability distribution for an input triple
+            // [0.33, 0.66] means it's 33% likely to be true and 66% likely to be false
+            // we are only interested in the true value
+            evidence.setDeFactoScore(this.classifier.distributionForInstance(newInstance)[0]);
         }
         catch (Exception e) {
 

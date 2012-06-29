@@ -87,7 +87,7 @@ public class PageRank {
                 else 
                     result = 0;
 
-                Thread.sleep(Defacto.DEFACTO_CONFIG.getIntegerSetting("evidence", "GOOGLE_WAIT_TIME"));
+                Thread.sleep(Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "GOOGLE_WAIT_TIME"));
             }
             catch (Exception e) {
                 

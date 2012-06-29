@@ -34,7 +34,7 @@ OVERWRITE_FACT_TRAINING_FILE = false
 
 [evidence]
 ; LINEAR_REGRESSION_CLASSIFIER or MULTILAYER_PERCEPTRON or SMO
-EVIDENCE_CLASSIFIER_TYPE = LINEAR_REGRESSION_CLASSIFIER
+EVIDENCE_CLASSIFIER_TYPE = SMO
 ; write the training examples in this file
 EVIDENCE_TRAINING_DATA_FILENAME = resources/training/arff/evidence/defacto_evidence.arff
 ; active this flag to rewrite the training data
