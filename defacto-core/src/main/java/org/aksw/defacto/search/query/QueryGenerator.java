@@ -1,0 +1,71 @@
+package org.aksw.defacto.search.query;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.aksw.defacto.Defacto;
+import org.aksw.defacto.boa.BoaPatternSearcher;
+import org.aksw.defacto.boa.Pattern;
+import org.aksw.defacto.util.ModelUtil;
+import org.apache.log4j.Logger;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
+
+/**
+ * 
+ * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
+ *
+ */
+public class QueryGenerator {
+
+    private BoaPatternSearcher patternSearcher = new BoaPatternSearcher();
+    private Logger logger = Logger.getLogger(QueryGenerator.class);
+    private Model model;
+    
+    /**
+     * 
+     * @param model
+     */
+    public QueryGenerator(Model model) {
+        
+        this.model = model;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public Map<Pattern,MetaQuery> getSearchEngineQueries(){
+        assert(this.model.size() == 3);
+        
+        // and generate the query strings 
+        return this.generateSearchQueries(ModelUtil.getFact(model));
+    }
+    
+    /**
+     * 
+     * @param uriToLabels
+     * @param fact
+     * @return
+     */
+    private Map<Pattern,MetaQuery> generateSearchQueries(Statement fact){
+     
+        Map<Pattern,MetaQuery> queryStrings =  new HashMap<Pattern,MetaQuery>();
+        String subjectLabel = ModelUtil.getLabel(fact.getSubject().getURI(), model); 
+        String objectLabel  = ModelUtil.getLabel(fact.getObject().asResource().getURI(), model);
+        
+        // query boa index and generate the meta queries
+        for (Pattern pattern : this.patternSearcher.getNaturalLanguageRepresentations(fact.getPredicate().getURI()))
+            queryStrings.put(pattern, new MetaQuery(subjectLabel, pattern.naturalLanguageRepresentation, objectLabel, null));
+        
+        // add one query without any predicate
+        queryStrings.put(new Pattern(), new MetaQuery(subjectLabel, "??? NONE ???", objectLabel, null));        
+                
+        logger.info(String.format("Generated %s queries for fact: %s", queryStrings.size(), fact.asTriple()));        
+                
+        return queryStrings;
+    }
+}

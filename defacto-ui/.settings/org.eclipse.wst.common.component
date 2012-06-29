@@ -8,7 +8,7 @@
         <dependent-module archiveName="InformationFinder-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/InformationFinder/InformationFinder">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="WebInterface"/>
         <property name="java-output-path" value="/WebInterface/target/classes"/>
+        <property name="context-root" value="defacto-ui"/>
     </wb-module>
 </project-modules>

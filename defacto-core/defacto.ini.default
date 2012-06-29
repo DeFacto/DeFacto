@@ -1,0 +1,60 @@
+[boa]
+; how many boa patterns should be used to search: N * NUMBER_OF_BOA_PATTERNS queries and search results will be generated
+NUMBER_OF_BOA_PATTERNS = 10
+; only patterns which have a pattern score higher than this will be used to search for fact in text
+PATTERN_SCORE_THRESHOLD = 0.5
+
+
+[crawl]
+; the bing api key get your own at: 
+BING_API_KEY = Please, request a Bing key for yourself
+; number of search results return be the search engine
+NUMBER_OF_SEARCH_RESULTS = 20
+; crawl thread gets terminated after this time
+WEB_SEARCH_TIMEOUT_MILLISECONDS = 10000
+; One thread for every BOA pattern, usually the same as the number of BOA patterns 
+NUMBER_OF_SEARCH_THREADS = 10
+; the amount of time which lies between a google page rank request (in ms)
+GOOGLE_WAIT_TIME = 2000
+
+
+[extract]
+; when we search for sentence which contain two labels, this is the amount of tokens between them
+NUMBER_OF_TOKENS_BETWEEN_ENTITIES = 20
+
+
+[fact]
+; write the training examples in this file
+FACT_TRAINING_DATA_FILENAME = resources/training/arff/fact/defacto_fact.arff
+; LINEAR_REGRESSION_CLASSIFIER or MULTILAYER_PERCEPTRON or SMO
+FACT_CLASSIFIER_TYPE = LINEAR_REGRESSION_CLASSIFIER
+; do we want to write the fact confirmation weka training file
+OVERWRITE_FACT_TRAINING_FILE = false
+
+
+[evidence]
+; LINEAR_REGRESSION_CLASSIFIER or MULTILAYER_PERCEPTRON or SMO
+EVIDENCE_CLASSIFIER_TYPE = LINEAR_REGRESSION_CLASSIFIER
+; write the training examples in this file
+EVIDENCE_TRAINING_DATA_FILENAME = resources/training/arff/evidence/defacto_evidence.arff
+; active this flag to rewrite the training data
+OVERWRITE_EVIDENCE_TRAINING_FILE = true
+; see the paper Nakamura et. al. 2007 for details 
+WEBSITE_SIMILARITY_THRESHOLD = 0.8
+; onyl this much results will be returned from wikipedia topic term query: "barack obama michelle obama" returns 860 results
+MAX_WIKIPEDIA_RESULTS = 10
+; use only the n most frequent topic terms from wikipedia pages
+TOPIC_TERMS_MAX_SIZE = 10
+; one topic term needs to be in more than this pages
+TOPIC_TERM_PAGE_THRESHOLD = 1
+; set this flag if you want to override the current trained model
+OVERWRITE_EVIDENCE_MODEL = true
+; no google page rank defined yet
+UNASSIGNED_PAGE_RANK = 11
+; threshold for when a complex proof is considered to be supporting a fact
+CONFIRMATION_THRESHOLD = 0.5
+
+
+[settings]
+; this is used to get the labels of the resources from the training models
+RESOURCE_LABEL = http://www.w3.org/2000/01/rdf-schema#label

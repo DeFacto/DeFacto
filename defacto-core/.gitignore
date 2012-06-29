@@ -1,0 +1,7 @@
+defacto.ini
+.classpath
+.project
+.settings
+resources/cache/websites/defacto.h2.db
+resources/cache/websites/defacto.trace.db
+
