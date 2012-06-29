@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.aksw</groupId>
-    <artifactId>DeFacto</artifactId>
+    <artifactId>defacto</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>main</name>
 
     <modules>
-        <module>ui</module>
-        <module>core</module>
+        <module>defacto-ui</module>
+        <module>defacto-core</module>
     </modules>
     <build>
         <plugins>
