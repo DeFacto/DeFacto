@@ -21,6 +21,7 @@ import org.aksw.defacto.ml.feature.EvidenceFeatureExtractor;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
 import org.aksw.defacto.ml.feature.fact.FactFeatureExtraction;
 import org.aksw.defacto.ml.feature.fact.FactScorer;
+import org.aksw.defacto.ml.score.EvidenceScorer;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
 import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
 import org.aksw.defacto.search.query.MetaQuery;
@@ -89,11 +90,11 @@ public class Defacto {
         featureCalculator.extractFeatureForEvidence(evidence);
         logger.info("Feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFeatureExtraction));
         
-//        // 7. score the model
-//        long startScoring = System.currentTimeMillis();
-//        EvidenceScorer scorer = new EvidenceScorer();
-//        scorer.scoreEvidence(evidence);
-//        logger.info("Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
+        // 7. score the model
+        long startScoring = System.currentTimeMillis();
+        EvidenceScorer scorer = new EvidenceScorer();
+        scorer.scoreEvidence(evidence);
+        logger.info("Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
         
         // 8. Log statistics
         System.out.println("Model " + currentModel + "/" + numberOfModels + " took " + TimeUtil.formatTime(System.currentTimeMillis() - start) +

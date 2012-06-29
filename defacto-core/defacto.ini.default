@@ -38,7 +38,7 @@ EVIDENCE_CLASSIFIER_TYPE = LINEAR_REGRESSION_CLASSIFIER
 ; write the training examples in this file
 EVIDENCE_TRAINING_DATA_FILENAME = resources/training/arff/evidence/defacto_evidence.arff
 ; active this flag to rewrite the training data
-OVERWRITE_EVIDENCE_TRAINING_FILE = true
+OVERWRITE_EVIDENCE_TRAINING_FILE = false
 ; see the paper Nakamura et. al. 2007 for details 
 WEBSITE_SIMILARITY_THRESHOLD = 0.8
 ; onyl this much results will be returned from wikipedia topic term query: "barack obama michelle obama" returns 860 results
@@ -48,7 +48,7 @@ TOPIC_TERMS_MAX_SIZE = 10
 ; one topic term needs to be in more than this pages
 TOPIC_TERM_PAGE_THRESHOLD = 1
 ; set this flag if you want to override the current trained model
-OVERWRITE_EVIDENCE_MODEL = true
+OVERWRITE_EVIDENCE_MODEL = false
 ; no google page rank defined yet
 UNASSIGNED_PAGE_RANK = 11
 ; threshold for when a complex proof is considered to be supporting a fact
