@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Most_Wanted_%282011_film%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Most Wanted (2011 film)"@en ;
+      <http://dbpedia.org/ontology/computingPlatform>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

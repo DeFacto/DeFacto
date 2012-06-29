@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/2008%E2%80%9309_Club_Nacional_de_Football_season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "2008–09 Club Nacional de Football season"@en .
+
+<http://dbpedia.org/resource/Palace_of_Versailles>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Palace of Versailles"@en ;
+      <http://dbpedia.org/ontology/starring>
+              <http://dbpedia.org/resource/2008%E2%80%9309_Club_Nacional_de_Football_season> .

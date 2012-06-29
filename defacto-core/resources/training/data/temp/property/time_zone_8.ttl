@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/North_American_Central_Time_Zone>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "North American Central Time Zone"@en .
+
+<http://dbpedia.org/resource/Woods_Township,_Chippewa_County,_Minnesota>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Woods Township, Chippewa County, Minnesota"@en ;
+      <http://dbpedia.org/ontology/writer>
+              <http://dbpedia.org/resource/North_American_Central_Time_Zone> .

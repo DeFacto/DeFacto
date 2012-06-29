@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/BBC_Micro>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "BBC Micro"@en .
+
+<http://dbpedia.org/resource/Alien_8>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Alien 8"@en ;
+      <http://dbpedia.org/ontology/previousWork>
+              <http://dbpedia.org/resource/BBC_Micro> .

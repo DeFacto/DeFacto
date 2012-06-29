@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/The_Fire_Theft>
+      rdfs:label "The Fire Theft"@en .
+
+<http://dbpedia.org/resource/Dragon_Ball_Z_Hit_Song_Collection_8%C2%BD:_Special>
+      rdfs:label "Dragon Ball Z Hit Song Collection 8½: Special"@en ;
+      dbpedia-owl:artist <http://dbpedia.org/resource/The_Fire_Theft> .

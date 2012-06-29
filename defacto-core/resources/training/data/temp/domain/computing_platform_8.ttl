@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Xbox>
+      rdfs:label "Xbox"@en .
+
+<http://dbpedia.org/resource/Brothers_in_Arms_DS>
+      rdfs:label "Brothers in Arms DS"@en ;
+      dbpedia-owl:computingPlatform
+              <http://dbpedia.org/resource/Xbox> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Benny_Hinn>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Benny Hinn"@en .
+
+<http://dbpedia.org/resource/This_is_Your_Day>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "This is Your Day"@en ;
+      <http://dbpedia.org/ontology/associatedBand>
+              <http://dbpedia.org/resource/Benny_Hinn> .

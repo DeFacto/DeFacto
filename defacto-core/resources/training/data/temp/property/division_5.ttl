@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Angiosperms>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Angiosperms"@en .
+
+<http://dbpedia.org/resource/Dypsis_coursii>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Dypsis coursii"@en ;
+      <http://dbpedia.org/ontology/occupation>
+              <http://dbpedia.org/resource/Angiosperms> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Sujata_%281959_film%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Sujata (1959 film)"@en ;
+      <http://dbpedia.org/ontology/battle>
+              <http://dbpedia.org/resource/Bimal_Roy> .
+
+<http://dbpedia.org/resource/Bimal_Roy>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Bimal Roy"@en .

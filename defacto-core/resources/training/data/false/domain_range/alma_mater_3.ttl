@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Joan_Hickson>
+      rdfs:label "Joan Hickson"@en ;
+      dbpedia-owl:almaMater
+              <http://dbpedia.org/resource/Hartford_Public_Library> .
+
+<http://dbpedia.org/resource/Hartford_Public_Library>
+      rdfs:label "Hartford Public Library"@en .

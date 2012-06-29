@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Vein_%28Boris_album%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Vein (Boris album)"@en ;
+      <http://dbpedia.org/ontology/party>
+              <http://dbpedia.org/resource/Boris_%28band%29> .
+
+<http://dbpedia.org/resource/Boris_%28band%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Boris (band)"@en .

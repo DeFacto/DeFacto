@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Convoy_Hi-81>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Convoy Hi-81"@en ;
+      <http://dbpedia.org/ontology/musicalBand>
+              <http://dbpedia.org/resource/Eugene_B._Fluckey> .
+
+<http://dbpedia.org/resource/Eugene_B._Fluckey>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Eugene B. Fluckey"@en .

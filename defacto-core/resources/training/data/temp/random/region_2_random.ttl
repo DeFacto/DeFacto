@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .
+
+<http://dbpedia.org/resource/Brancaster>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Brancaster"@en ;
+      <http://dbpedia.org/ontology/recordLabel>
+              <http://dbpedia.org/resource/Austria> .

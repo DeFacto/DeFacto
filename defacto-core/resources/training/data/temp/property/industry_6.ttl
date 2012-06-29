@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Innecto_Reward_Consulting>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Innecto Reward Consulting"@en ;
+      <http://dbpedia.org/ontology/award>
+              <http://dbpedia.org/resource/Management_consulting> .
+
+<http://dbpedia.org/resource/Management_consulting>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Management consulting"@en .

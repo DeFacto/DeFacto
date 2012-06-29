@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Hyperion_%28publisher%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Hyperion (publisher)"@en .
+
+<http://dbpedia.org/resource/Dirty_Jokes_and_Beer:_Stories_of_the_Unrefined>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Dirty Jokes and Beer: Stories of the Unrefined"@en ;
+      <http://dbpedia.org/ontology/currentMember>
+              <http://dbpedia.org/resource/Hyperion_%28publisher%29> .

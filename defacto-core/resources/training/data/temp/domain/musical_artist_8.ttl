@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Sugababes>
+      rdfs:label "Sugababes"@en .
+
+<http://dbpedia.org/resource/Alexia_Radio_Promo_CDs>
+      rdfs:label "Alexia Radio Promo CDs"@en ;
+      dbpedia-owl:musicalArtist
+              <http://dbpedia.org/resource/Sugababes> .

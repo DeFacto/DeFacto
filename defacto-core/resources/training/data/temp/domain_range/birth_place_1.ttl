@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Gary_Lunn>
+      rdfs:label "Gary Lunn"@en ;
+      dbpedia-owl:birthPlace
+              <http://dbpedia.org/resource/504_King> .
+
+<http://dbpedia.org/resource/504_King>
+      rdfs:label "504 King"@en .

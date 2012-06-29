@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Wikipedia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Wikipedia"@en .
+
+<http://dbpedia.org/resource/Abdullah_the_Butcher>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Abdullah the Butcher"@en ;
+      <http://dbpedia.org/ontology/timeZone>
+              <http://dbpedia.org/resource/Wikipedia> .

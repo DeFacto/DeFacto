@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Prince_Rupert,_British_Columbia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Prince Rupert, British Columbia"@en ;
+      <http://dbpedia.org/ontology/region>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Megas_%28album%29>
+      rdfs:label "Megas (album)"@en ;
+      dbpedia-owl:recordedIn
+              <http://dbpedia.org/resource/1991> .
+
+<http://dbpedia.org/resource/1991>
+      rdfs:label "1991"@en .

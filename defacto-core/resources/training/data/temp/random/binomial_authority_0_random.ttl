@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Soviet_Union>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Soviet Union"@en ;
+      <http://dbpedia.org/ontology/award>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

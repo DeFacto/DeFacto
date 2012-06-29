@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Macrosick>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Macrosick"@en .
+
+<http://dbpedia.org/resource/Paul_Meany>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Paul Meany"@en ;
+      <http://dbpedia.org/ontology/binomialAuthority>
+              <http://dbpedia.org/resource/Macrosick> .

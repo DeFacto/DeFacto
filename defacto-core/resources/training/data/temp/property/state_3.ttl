@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Mark_West_Creek>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Mark West Creek"@en ;
+      <http://dbpedia.org/ontology/genus>
+              <http://dbpedia.org/resource/California> .
+
+<http://dbpedia.org/resource/California>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "California"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/The_Big_Broadcast_of_1938>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Big Broadcast of 1938"@en ;
+      <http://dbpedia.org/ontology/team>
+              <http://dbpedia.org/resource/Paramount_Pictures> .
+
+<http://dbpedia.org/resource/Paramount_Pictures>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Paramount Pictures"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Take_It_Away_%28Paul_McCartney_song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Take It Away (Paul McCartney song)"@en ;
+      <http://dbpedia.org/ontology/award>
+              <http://dbpedia.org/resource/EMI> .
+
+<http://dbpedia.org/resource/EMI>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "EMI"@en .

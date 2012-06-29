@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/CNBC_Europe>
+      rdfs:label "CNBC Europe"@en ;
+      dbpedia-owl:genre <http://dbpedia.org/resource/Hebron,_New_Hampshire> .
+
+<http://dbpedia.org/resource/Hebron,_New_Hampshire>
+      rdfs:label "Hebron, New Hampshire"@en .

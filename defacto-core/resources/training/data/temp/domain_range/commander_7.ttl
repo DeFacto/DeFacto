@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Ignacio_Mar%C3%ADa_Gonz%C3%A1lez>
+      rdfs:label "Ignacio María González"@en ;
+      dbpedia-owl:commander
+              <http://dbpedia.org/resource/Rebecca_St._James> .
+
+<http://dbpedia.org/resource/Rebecca_St._James>
+      rdfs:label "Rebecca St. James"@en .

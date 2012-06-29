@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Russia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russia"@en .
+
+<http://dbpedia.org/resource/American_Soldier_%28song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "American Soldier (song)"@en ;
+      <http://dbpedia.org/ontology/distributor>
+              <http://dbpedia.org/resource/Russia> .

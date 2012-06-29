@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Frogger>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Frogger"@en ;
+      <http://dbpedia.org/ontology/currentMember>
+              <http://dbpedia.org/resource/2011%E2%80%9312_Dundee_F.C._season> .
+
+<http://dbpedia.org/resource/2011%E2%80%9312_Dundee_F.C._season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "2011–12 Dundee F.C. season"@en .

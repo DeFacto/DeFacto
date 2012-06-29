@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Machi_%28video_game%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Machi (video game)"@en ;
+      <http://dbpedia.org/ontology/musicalArtist>
+              <http://dbpedia.org/resource/PlayStation_Portable> .
+
+<http://dbpedia.org/resource/PlayStation_Portable>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "PlayStation Portable"@en .

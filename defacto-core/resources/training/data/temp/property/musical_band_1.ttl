@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Goldfrapp>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Goldfrapp"@en .
+
+<http://dbpedia.org/resource/Twist_%28Goldfrapp_song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Twist (Goldfrapp song)"@en ;
+      <http://dbpedia.org/ontology/location>
+              <http://dbpedia.org/resource/Goldfrapp> .

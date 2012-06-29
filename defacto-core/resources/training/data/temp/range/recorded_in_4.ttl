@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Grundy_County,_Illinois>
+      rdfs:label "Grundy County, Illinois"@en .
+
+<http://dbpedia.org/resource/Piss_Frond>
+      rdfs:label "Piss Frond"@en ;
+      dbpedia-owl:recordedIn
+              <http://dbpedia.org/resource/Grundy_County,_Illinois> .

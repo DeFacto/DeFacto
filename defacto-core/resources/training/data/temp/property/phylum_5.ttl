@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Chordate>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chordate"@en .
+
+<http://dbpedia.org/resource/Blue_Seedeater>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Blue Seedeater"@en ;
+      <http://dbpedia.org/ontology/successor>
+              <http://dbpedia.org/resource/Chordate> .

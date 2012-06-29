@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Domodedovo_International_Airport>
+      rdfs:label "Domodedovo International Airport"@en .
+
+<http://dbpedia.org/resource/Oriole_Whistler>
+      rdfs:label "Oriole Whistler"@en ;
+      dbpedia-owl:genus <http://dbpedia.org/resource/Domodedovo_International_Airport> .

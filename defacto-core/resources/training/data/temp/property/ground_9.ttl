@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Pite%C3%A5_IF_ladies_team>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Piteå IF ladies team"@en ;
+      <http://dbpedia.org/ontology/associatedBand>
+              <http://dbpedia.org/resource/Pite%C3%A5> .
+
+<http://dbpedia.org/resource/Pite%C3%A5>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Piteå"@en .

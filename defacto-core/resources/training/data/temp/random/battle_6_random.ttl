@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Alexander_Lazarev_%28actor%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Alexander Lazarev (actor)"@en ;
+      <http://dbpedia.org/ontology/district>
+              <http://dbpedia.org/resource/Kenya> .

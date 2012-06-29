@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Gnosj%C3%B6_Municipality>
+      rdfs:label "Gnosjö Municipality"@en ;
+      dbpedia-owl:timeZone
+              <http://dbpedia.org/resource/Quedlinburg_%28district%29> .
+
+<http://dbpedia.org/resource/Quedlinburg_%28district%29>
+      rdfs:label "Quedlinburg (district)"@en .

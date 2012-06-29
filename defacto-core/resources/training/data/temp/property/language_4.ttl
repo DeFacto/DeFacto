@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Italian_language>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Italian language"@en .
+
+<http://dbpedia.org/resource/Historia_%28journal%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Historia (journal)"@en ;
+      <http://dbpedia.org/ontology/genus>
+              <http://dbpedia.org/resource/Italian_language> .

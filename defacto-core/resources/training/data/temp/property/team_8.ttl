@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Jake_Dowell>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Jake Dowell"@en ;
+      <http://dbpedia.org/ontology/kingdom>
+              <http://dbpedia.org/resource/Chicago_Blackhawks> .
+
+<http://dbpedia.org/resource/Chicago_Blackhawks>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chicago Blackhawks"@en .

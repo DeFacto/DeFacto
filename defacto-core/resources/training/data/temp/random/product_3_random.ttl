@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/MTV_Live_HD>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "MTV Live HD"@en ;
+      <http://dbpedia.org/ontology/commander>
+              <http://dbpedia.org/resource/Austria> .
+
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .

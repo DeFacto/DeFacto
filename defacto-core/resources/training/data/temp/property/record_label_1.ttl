@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Blood,_Sweat_and_Tears_%28album%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Blood, Sweat and Tears (album)"@en ;
+      <http://dbpedia.org/ontology/class>
+              <http://dbpedia.org/resource/Columbia_Records> .
+
+<http://dbpedia.org/resource/Columbia_Records>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Columbia Records"@en .

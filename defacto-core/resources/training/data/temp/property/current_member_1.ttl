@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/List_of_Slovak_football_transfers_winter_2011%E2%80%9312>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "List of Slovak football transfers winter 2011–12"@en ;
+      <http://dbpedia.org/ontology/country>
+              <http://dbpedia.org/resource/Narek_Beglaryan> .
+
+<http://dbpedia.org/resource/Narek_Beglaryan>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Narek Beglaryan"@en .

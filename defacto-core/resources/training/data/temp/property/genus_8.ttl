@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Thais_deltoidea>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Thais deltoidea"@en ;
+      <http://dbpedia.org/ontology/publisher>
+              <http://dbpedia.org/resource/Thais_%28gastropod%29> .
+
+<http://dbpedia.org/resource/Thais_%28gastropod%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Thais (gastropod)"@en .

@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/K%C3%A1roly_Olt>
+      rdfs:label "Károly Olt"@en .
+
+<http://dbpedia.org/resource/Taper_Jean_Girl>
+      rdfs:label "Taper Jean Girl"@en ;
+      dbpedia-owl:artist <http://dbpedia.org/resource/K%C3%A1roly_Olt> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_States>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States"@en .
+
+<http://dbpedia.org/resource/Man_at_the_Top_%28TV_series%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Man at the Top (TV series)"@en ;
+      <http://dbpedia.org/ontology/almaMater>
+              <http://dbpedia.org/resource/United_States> .

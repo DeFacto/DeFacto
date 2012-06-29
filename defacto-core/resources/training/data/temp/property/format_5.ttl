@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Music_download>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Music download"@en .
+
+<http://dbpedia.org/resource/Crank_Dat_Yank>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Crank Dat Yank"@en ;
+      <http://dbpedia.org/ontology/musicalArtist>
+              <http://dbpedia.org/resource/Music_download> .

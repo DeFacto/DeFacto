@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Defeater_%28band%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Defeater (band)"@en ;
+      <http://dbpedia.org/ontology/musicComposer>
+              <http://dbpedia.org/resource/Kenya> .

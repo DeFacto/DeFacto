@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/White_Plains,_New_York>
+      rdfs:label "White Plains, New York"@en ;
+      dbpedia-owl:distributor
+              <http://dbpedia.org/resource/University_of_the_Punjab> .
+
+<http://dbpedia.org/resource/University_of_the_Punjab>
+      rdfs:label "University of the Punjab"@en .

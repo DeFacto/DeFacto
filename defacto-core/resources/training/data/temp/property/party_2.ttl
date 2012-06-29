@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/J._Irving_Whalley>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "J. Irving Whalley"@en ;
+      <http://dbpedia.org/ontology/formerTeam>
+              <http://dbpedia.org/resource/Republican_Party_%28United_States%29> .
+
+<http://dbpedia.org/resource/Republican_Party_%28United_States%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Republican Party (United States)"@en .

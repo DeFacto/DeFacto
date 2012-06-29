@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Russia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russia"@en .
+
+<http://dbpedia.org/resource/2009%E2%80%9310_Al-Ahly_S.C._season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "2009–10 Al-Ahly S.C. season"@en ;
+      <http://dbpedia.org/ontology/writer>
+              <http://dbpedia.org/resource/Russia> .

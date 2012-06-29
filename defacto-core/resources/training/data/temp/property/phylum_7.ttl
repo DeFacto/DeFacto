@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Chordata>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chordata"@en .
+
+<http://dbpedia.org/resource/Flame-faced_Tanager>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Flame-faced Tanager"@en ;
+      <http://dbpedia.org/ontology/recordLabel>
+              <http://dbpedia.org/resource/Chordata> .

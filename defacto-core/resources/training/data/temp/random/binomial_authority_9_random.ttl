@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Chile>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chile"@en .
+
+<http://dbpedia.org/resource/Kip_Moore>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kip Moore"@en ;
+      <http://dbpedia.org/ontology/instrument>
+              <http://dbpedia.org/resource/Chile> .

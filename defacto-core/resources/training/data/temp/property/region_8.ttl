@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Liguria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Liguria"@en .
+
+<http://dbpedia.org/resource/Perinaldo>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Perinaldo"@en ;
+      <http://dbpedia.org/ontology/musicComposer>
+              <http://dbpedia.org/resource/Liguria> .

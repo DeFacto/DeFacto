@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Sorrowful_Angels>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Sorrowful Angels"@en .
+
+<http://dbpedia.org/resource/Hidden%4034460235>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Hidden@34460235"@en ;
+      <http://dbpedia.org/ontology/team>
+              <http://dbpedia.org/resource/Sorrowful_Angels> .

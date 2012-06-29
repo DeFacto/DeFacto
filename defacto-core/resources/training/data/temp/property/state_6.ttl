@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Gifu_Prefecture>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Gifu Prefecture"@en .
+
+<http://dbpedia.org/resource/Gifu_Pharmaceutical_University>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Gifu Pharmaceutical University"@en ;
+      <http://dbpedia.org/ontology/starring>
+              <http://dbpedia.org/resource/Gifu_Prefecture> .

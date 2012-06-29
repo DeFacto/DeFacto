@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Progressive_rock>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Progressive rock"@en .
+
+<http://dbpedia.org/resource/Gazpacho_%28band%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Gazpacho (band)"@en ;
+      <http://dbpedia.org/ontology/almaMater>
+              <http://dbpedia.org/resource/Progressive_rock> .

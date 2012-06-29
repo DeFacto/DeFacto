@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Baldur%27s_Gate_III:_The_Black_Hound>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Baldur's Gate III: The Black Hound"@en ;
+      <http://dbpedia.org/ontology/city>
+              <http://dbpedia.org/resource/Austria> .
+
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .

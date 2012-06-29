@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Barberton,_Ohio>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Barberton, Ohio"@en .
+
+<http://dbpedia.org/resource/Barberton_High_School_%28Barberton,_Ohio%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Barberton High School (Barberton, Ohio)"@en ;
+      <http://dbpedia.org/ontology/format>
+              <http://dbpedia.org/resource/Barberton,_Ohio> .

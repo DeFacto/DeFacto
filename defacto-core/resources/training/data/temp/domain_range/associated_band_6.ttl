@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Success_Will_Write_Apocalypse_Across_the_Sky>
+      rdfs:label "Success Will Write Apocalypse Across the Sky"@en .
+
+<http://dbpedia.org/resource/Bokito,_Cameroon>
+      rdfs:label "Bokito, Cameroon"@en ;
+      dbpedia-owl:associatedBand
+              <http://dbpedia.org/resource/Success_Will_Write_Apocalypse_Across_the_Sky> .

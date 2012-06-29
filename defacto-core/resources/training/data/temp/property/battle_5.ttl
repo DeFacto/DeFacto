@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Heinz-Martin_Ewert>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Heinz-Martin Ewert"@en ;
+      <http://dbpedia.org/ontology/owner>
+              <http://dbpedia.org/resource/Battle_of_Pozna%C5%84_%281945%29> .
+
+<http://dbpedia.org/resource/Battle_of_Pozna%C5%84_%281945%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Battle of Poznań (1945)"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Maine>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Maine"@en .
+
+<http://dbpedia.org/resource/Forest_City,_Maine>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Forest City, Maine"@en ;
+      <http://dbpedia.org/ontology/birthPlace>
+              <http://dbpedia.org/resource/Maine> .

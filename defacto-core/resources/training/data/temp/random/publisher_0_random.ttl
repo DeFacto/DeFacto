@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/TRR_College_of_Engineering>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "TRR College of Engineering"@en ;
+      <http://dbpedia.org/ontology/successor>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

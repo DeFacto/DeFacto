@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_States>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States"@en .
+
+<http://dbpedia.org/resource/Seth_Grahame-Smith>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Seth Grahame-Smith"@en ;
+      <http://dbpedia.org/ontology/managerClub>
+              <http://dbpedia.org/resource/United_States> .

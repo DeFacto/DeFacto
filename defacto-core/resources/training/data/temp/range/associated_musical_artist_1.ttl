@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Lil_-De>
+      rdfs:label "Lil -De"@en .
+
+<http://dbpedia.org/resource/Thelma_Aoyama>
+      rdfs:label "Thelma Aoyama"@en ;
+      dbpedia-owl:associatedMusicalArtist
+              <http://dbpedia.org/resource/Lil_-De> .

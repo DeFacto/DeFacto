@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Detroit_Lions>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Detroit Lions"@en .
+
+<http://dbpedia.org/resource/Bobby_Sippio>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Bobby Sippio"@en ;
+      <http://dbpedia.org/ontology/kingdom>
+              <http://dbpedia.org/resource/Detroit_Lions> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Mother%27s_Finest>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Mother's Finest"@en .
+
+<http://dbpedia.org/resource/Another_Mother_Further>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Another Mother Further"@en ;
+      <http://dbpedia.org/ontology/city>
+              <http://dbpedia.org/resource/Mother%27s_Finest> .

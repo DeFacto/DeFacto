@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Maria_Laina>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Maria Laina"@en ;
+      <http://dbpedia.org/ontology/almaMater>
+              <http://dbpedia.org/resource/Greece> .
+
+<http://dbpedia.org/resource/Greece>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Greece"@en .

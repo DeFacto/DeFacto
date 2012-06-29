@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Texas>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Texas"@en .
+
+<http://dbpedia.org/resource/Magnolia_West_High_School>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Magnolia West High School"@en ;
+      <http://dbpedia.org/ontology/industry>
+              <http://dbpedia.org/resource/Texas> .

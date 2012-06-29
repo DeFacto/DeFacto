@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/South_Africa>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "South Africa"@en .
+
+<http://dbpedia.org/resource/Ashley_Roestoff>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ashley Roestoff"@en ;
+      <http://dbpedia.org/ontology/starring>
+              <http://dbpedia.org/resource/South_Africa> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/She%27s_Mature>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "She's Mature"@en ;
+      <http://dbpedia.org/ontology/state>
+              <http://dbpedia.org/resource/Burkina_Faso> .
+
+<http://dbpedia.org/resource/Burkina_Faso>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Burkina Faso"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Julia_Ford>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Julia Ford"@en .
+
+<http://dbpedia.org/resource/The_Ritz_%28TV_series%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Ritz (TV series)"@en ;
+      <http://dbpedia.org/ontology/isPartOf>
+              <http://dbpedia.org/resource/Julia_Ford> .

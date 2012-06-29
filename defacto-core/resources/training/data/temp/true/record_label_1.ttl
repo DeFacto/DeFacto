@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Blood,_Sweat_and_Tears_%28album%29>
+      rdfs:label "Blood, Sweat and Tears (album)"@en ;
+      dbpedia-owl:recordLabel
+              <http://dbpedia.org/resource/Columbia_Records> .
+
+<http://dbpedia.org/resource/Columbia_Records>
+      rdfs:label "Columbia Records"@en .

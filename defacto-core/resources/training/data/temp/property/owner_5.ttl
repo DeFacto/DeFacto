@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Belle_River_Power_Plant>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Belle River Power Plant"@en ;
+      <http://dbpedia.org/ontology/product>
+              <http://dbpedia.org/resource/Detroit_Edison> .
+
+<http://dbpedia.org/resource/Detroit_Edison>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Detroit Edison"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Skank_%28band%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Skank (band)"@en ;
+      <http://dbpedia.org/ontology/region>
+              <http://dbpedia.org/resource/Belo_Horizonte> .
+
+<http://dbpedia.org/resource/Belo_Horizonte>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Belo Horizonte"@en .

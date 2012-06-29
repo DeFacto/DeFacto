@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Don%27t_Don>
+      rdfs:label "Don't Don"@en .
+
+<http://dbpedia.org/resource/SuperJunior05_%28Twins%29>
+      rdfs:label "SuperJunior05 (Twins)"@en ;
+      dbpedia-owl:subsequentWork
+              <http://dbpedia.org/resource/Don%27t_Don> .

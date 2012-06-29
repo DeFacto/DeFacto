@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/E-40>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "E-40"@en .
+
+<http://dbpedia.org/resource/Ol%27_Dirty_Bastard>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ol' Dirty Bastard"@en ;
+      <http://dbpedia.org/ontology/hometown>
+              <http://dbpedia.org/resource/E-40> .

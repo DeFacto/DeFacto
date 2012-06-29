@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Two_Too_Young>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Two Too Young"@en ;
+      <http://dbpedia.org/ontology/formerTeam>
+              <http://dbpedia.org/resource/Leroy_Shield> .
+
+<http://dbpedia.org/resource/Leroy_Shield>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Leroy Shield"@en .

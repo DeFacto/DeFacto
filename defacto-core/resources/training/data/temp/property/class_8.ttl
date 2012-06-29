@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Phyllocnistis_exiguella>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Phyllocnistis exiguella"@en ;
+      <http://dbpedia.org/ontology/party>
+              <http://dbpedia.org/resource/Insect> .
+
+<http://dbpedia.org/resource/Insect>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Insect"@en .

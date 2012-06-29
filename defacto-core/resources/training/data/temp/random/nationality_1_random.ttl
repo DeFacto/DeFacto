@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Street_Kings:_Motor_City>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Street Kings: Motor City"@en .
+
+<http://dbpedia.org/resource/Coimbra>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Coimbra"@en ;
+      <http://dbpedia.org/ontology/region>
+              <http://dbpedia.org/resource/Street_Kings:_Motor_City> .

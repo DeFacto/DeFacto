@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Heath_Evans>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Heath Evans"@en ;
+      <http://dbpedia.org/ontology/district>
+              <http://dbpedia.org/resource/Seattle_Seahawks> .
+
+<http://dbpedia.org/resource/Seattle_Seahawks>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Seattle Seahawks"@en .

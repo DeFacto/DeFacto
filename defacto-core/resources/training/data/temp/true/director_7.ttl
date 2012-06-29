@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Lee_Lik-Chi>
+      rdfs:label "Lee Lik-Chi"@en .
+
+<http://dbpedia.org/resource/King_of_Comedy_%281999_film%29>
+      rdfs:label "King of Comedy (1999 film)"@en ;
+      dbpedia-owl:director
+              <http://dbpedia.org/resource/Lee_Lik-Chi> .

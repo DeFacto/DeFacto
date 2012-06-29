@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .
+
+<http://dbpedia.org/resource/Freddy_Padilla_de_Le%C3%B3n>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Freddy Padilla de León"@en ;
+      <http://dbpedia.org/ontology/order>
+              <http://dbpedia.org/resource/Austria> .

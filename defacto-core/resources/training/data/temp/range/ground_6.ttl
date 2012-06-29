@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Lebanon_Township,_New_Jersey>
+      rdfs:label "Lebanon Township, New Jersey"@en .
+
+<http://dbpedia.org/resource/FK_Neftchi_Farg%27ona>
+      rdfs:label "FK Neftchi Farg'ona"@en ;
+      dbpedia-owl:ground <http://dbpedia.org/resource/Lebanon_Township,_New_Jersey> .

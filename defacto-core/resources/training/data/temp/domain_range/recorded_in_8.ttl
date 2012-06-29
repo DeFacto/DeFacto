@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Vilassar_de_Mar>
+      rdfs:label "Vilassar de Mar"@en .
+
+<http://dbpedia.org/resource/Move_Your_Feet>
+      rdfs:label "Move Your Feet"@en ;
+      dbpedia-owl:recordedIn
+              <http://dbpedia.org/resource/Vilassar_de_Mar> .

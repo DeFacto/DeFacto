@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Alex_Penny>
+      rdfs:label "Alex Penny"@en ;
+      dbpedia-owl:managerClub
+              <http://dbpedia.org/resource/Bristol_City_F.C.> .
+
+<http://dbpedia.org/resource/Bristol_City_F.C.>
+      rdfs:label "Bristol City F.C."@en .

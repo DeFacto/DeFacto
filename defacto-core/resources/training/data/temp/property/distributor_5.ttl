@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/New_Line_Cinema>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "New Line Cinema"@en .
+
+<http://dbpedia.org/resource/976-EVIL>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "976-EVIL"@en ;
+      <http://dbpedia.org/ontology/successor>
+              <http://dbpedia.org/resource/New_Line_Cinema> .

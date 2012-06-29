@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Russia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russia"@en .
+
+<http://dbpedia.org/resource/East_Syracuse-Minoa_Central_School_District>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "East Syracuse-Minoa Central School District"@en ;
+      <http://dbpedia.org/ontology/binomialAuthority>
+              <http://dbpedia.org/resource/Russia> .

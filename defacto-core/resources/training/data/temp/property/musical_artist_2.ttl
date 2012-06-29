@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Folding_Stars>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Folding Stars"@en ;
+      <http://dbpedia.org/ontology/managerClub>
+              <http://dbpedia.org/resource/Biffy_Clyro> .
+
+<http://dbpedia.org/resource/Biffy_Clyro>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Biffy Clyro"@en .

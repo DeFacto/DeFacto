@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/D2_%28clothing%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "D2 (clothing)"@en ;
+      <http://dbpedia.org/ontology/deathPlace>
+              <http://dbpedia.org/resource/Scotland> .
+
+<http://dbpedia.org/resource/Scotland>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Scotland"@en .

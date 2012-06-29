@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Valerie_Hobson>
+      rdfs:label "Valerie Hobson"@en ;
+      dbpedia-owl:region <http://dbpedia.org/resource/La_Bouilladisse> .
+
+<http://dbpedia.org/resource/La_Bouilladisse>
+      rdfs:label "La Bouilladisse"@en .

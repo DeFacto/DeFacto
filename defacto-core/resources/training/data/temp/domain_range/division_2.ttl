@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Go_Now_and_Live>
+      rdfs:label "Go Now and Live"@en ;
+      dbpedia-owl:division
+              <http://dbpedia.org/resource/Fredrikstad> .
+
+<http://dbpedia.org/resource/Fredrikstad>
+      rdfs:label "Fredrikstad"@en .

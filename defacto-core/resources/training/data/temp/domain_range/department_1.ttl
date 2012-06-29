@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Oswego_County,_New_York>
+      rdfs:label "Oswego County, New York"@en .
+
+<http://dbpedia.org/resource/Neukirchen_an_der_V%C3%B6ckla>
+      rdfs:label "Neukirchen an der Vöckla"@en ;
+      dbpedia-owl:department
+              <http://dbpedia.org/resource/Oswego_County,_New_York> .

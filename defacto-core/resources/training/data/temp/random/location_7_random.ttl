@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Essex>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Essex"@en .
+
+<http://dbpedia.org/resource/Picayune,_Mississippi>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Picayune, Mississippi"@en ;
+      <http://dbpedia.org/ontology/associatedBand>
+              <http://dbpedia.org/resource/Essex> .

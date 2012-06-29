@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Millennium_Scholastic_School_&_College>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Millennium Scholastic School & College"@en ;
+      <http://dbpedia.org/ontology/party>
+              <http://dbpedia.org/resource/Bogra> .
+
+<http://dbpedia.org/resource/Bogra>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Bogra"@en .

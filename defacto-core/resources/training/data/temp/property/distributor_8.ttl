@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/The_Haunting_of_Molly_Hartley>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Haunting of Molly Hartley"@en ;
+      <http://dbpedia.org/ontology/phylum>
+              <http://dbpedia.org/resource/20th_Century_Fox> .
+
+<http://dbpedia.org/resource/20th_Century_Fox>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "20th Century Fox"@en .

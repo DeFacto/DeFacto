@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Phil_Collins>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Phil Collins"@en .
+
+<http://dbpedia.org/resource/Son_of_Man_%28song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Son of Man (song)"@en ;
+      <http://dbpedia.org/ontology/binomialAuthority>
+              <http://dbpedia.org/resource/Phil_Collins> .

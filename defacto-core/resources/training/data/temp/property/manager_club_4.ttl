@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Alex_Penny>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Alex Penny"@en ;
+      <http://dbpedia.org/ontology/previousWork>
+              <http://dbpedia.org/resource/Bristol_City_F.C.> .
+
+<http://dbpedia.org/resource/Bristol_City_F.C.>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Bristol City F.C."@en .

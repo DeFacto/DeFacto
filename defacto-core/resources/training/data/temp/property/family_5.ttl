@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Carcharhinidae>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Carcharhinidae"@en .
+
+<http://dbpedia.org/resource/Whitenose_shark>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Whitenose shark"@en ;
+      <http://dbpedia.org/ontology/producer>
+              <http://dbpedia.org/resource/Carcharhinidae> .

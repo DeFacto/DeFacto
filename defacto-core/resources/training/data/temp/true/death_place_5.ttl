@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Jack_C._Walton>
+      rdfs:label "Jack C. Walton"@en ;
+      dbpedia-owl:deathPlace
+              <http://dbpedia.org/resource/Oklahoma_City> .
+
+<http://dbpedia.org/resource/Oklahoma_City>
+      rdfs:label "Oklahoma City"@en .

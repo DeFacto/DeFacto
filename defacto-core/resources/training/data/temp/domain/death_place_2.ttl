@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Gerhard_Unterluggauer>
+      rdfs:label "Gerhard Unterluggauer"@en ;
+      dbpedia-owl:deathPlace
+              <http://dbpedia.org/resource/The_Netherlands> .
+
+<http://dbpedia.org/resource/The_Netherlands>
+      rdfs:label "The Netherlands"@en .

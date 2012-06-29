@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Grammy_Award_for_Best_Rock_Performance_by_a_Duo_or_Group_with_Vocal>
+      rdfs:label "Grammy Award for Best Rock Performance by a Duo or Group with Vocal"@en .
+
+<http://dbpedia.org/resource/G%C3%BCnther_Josten>
+      rdfs:label "Günther Josten"@en ;
+      dbpedia-owl:award <http://dbpedia.org/resource/Grammy_Award_for_Best_Rock_Performance_by_a_Duo_or_Group_with_Vocal> .

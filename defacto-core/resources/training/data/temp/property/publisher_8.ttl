@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Harcourt_Trade_Publishers>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Harcourt Trade Publishers"@en .
+
+<http://dbpedia.org/resource/The_Just_and_the_Unjust>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Just and the Unjust"@en ;
+      <http://dbpedia.org/ontology/previousWork>
+              <http://dbpedia.org/resource/Harcourt_Trade_Publishers> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Mark_Castillo>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Mark Castillo"@en ;
+      <http://dbpedia.org/ontology/phylum>
+              <http://dbpedia.org/resource/Kenya> .

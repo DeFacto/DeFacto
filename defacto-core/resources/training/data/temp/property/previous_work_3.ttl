@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Rhino_Bucket_%28album%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Rhino Bucket (album)"@en .
+
+<http://dbpedia.org/resource/Get_Used_to_It_%28Rhino_Bucket_album%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Get Used to It (Rhino Bucket album)"@en ;
+      <http://dbpedia.org/ontology/musicalBand>
+              <http://dbpedia.org/resource/Rhino_Bucket_%28album%29> .

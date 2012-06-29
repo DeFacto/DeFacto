@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Gerrhosauridae>
+      rdfs:label "Gerrhosauridae"@en .
+
+<http://dbpedia.org/resource/Bell-Boeing_V-22_Osprey>
+      rdfs:label "Bell-Boeing V-22 Osprey"@en ;
+      dbpedia-owl:class <http://dbpedia.org/resource/Gerrhosauridae> .

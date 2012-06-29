@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Henry_Jarvis_Raymond>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Henry Jarvis Raymond"@en .
+
+<http://dbpedia.org/resource/Edwin_D._Morgan>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Edwin D. Morgan"@en ;
+      <http://dbpedia.org/ontology/currentMember>
+              <http://dbpedia.org/resource/Henry_Jarvis_Raymond> .

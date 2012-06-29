@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Chick_Parsons>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chick Parsons"@en ;
+      <http://dbpedia.org/ontology/musicalArtist>
+              <http://dbpedia.org/resource/Battle_of_Manila_%281945%29> .
+
+<http://dbpedia.org/resource/Battle_of_Manila_%281945%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Battle of Manila (1945)"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Silvija_Talaja>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Silvija Talaja"@en ;
+      <http://dbpedia.org/ontology/ground>
+              <http://dbpedia.org/resource/Makarska> .
+
+<http://dbpedia.org/resource/Makarska>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Makarska"@en .

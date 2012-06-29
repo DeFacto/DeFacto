@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Ken_Hirai>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ken Hirai"@en .
+
+<http://dbpedia.org/resource/Heat_Up>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Heat Up"@en ;
+      <http://dbpedia.org/ontology/successor>
+              <http://dbpedia.org/resource/Ken_Hirai> .

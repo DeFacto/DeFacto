@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .
+
+<http://dbpedia.org/resource/Pseudophoxinus_drusensis>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Pseudophoxinus drusensis"@en ;
+      <http://dbpedia.org/ontology/subsequentWork>
+              <http://dbpedia.org/resource/Austria> .

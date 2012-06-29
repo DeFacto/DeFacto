@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Emmen,_Netherlands>
+      rdfs:label "Emmen, Netherlands"@en ;
+      dbpedia-owl:owner <http://dbpedia.org/resource/Central_Japan_Railway_Company> .
+
+<http://dbpedia.org/resource/Central_Japan_Railway_Company>
+      rdfs:label "Central Japan Railway Company"@en .

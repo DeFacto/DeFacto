@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Veria_F.C.>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Veria F.C."@en .
+
+<http://dbpedia.org/resource/Makis_Katsavakis>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Makis Katsavakis"@en ;
+      <http://dbpedia.org/ontology/city>
+              <http://dbpedia.org/resource/Veria_F.C.> .

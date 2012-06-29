@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Essex>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Essex"@en .
+
+<http://dbpedia.org/resource/Clatskanie,_Oregon>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Clatskanie, Oregon"@en ;
+      <http://dbpedia.org/ontology/currentMember>
+              <http://dbpedia.org/resource/Essex> .

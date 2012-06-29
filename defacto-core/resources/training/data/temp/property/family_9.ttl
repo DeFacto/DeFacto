@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kinosternidae>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kinosternidae"@en .
+
+<http://dbpedia.org/resource/Kinosternon>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kinosternon"@en ;
+      <http://dbpedia.org/ontology/successor>
+              <http://dbpedia.org/resource/Kinosternidae> .

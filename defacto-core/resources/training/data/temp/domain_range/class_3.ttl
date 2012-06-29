@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Tatra_816>
+      rdfs:label "Tatra 816"@en ;
+      dbpedia-owl:class <http://dbpedia.org/resource/RUR-5_ASROC> .
+
+<http://dbpedia.org/resource/RUR-5_ASROC>
+      rdfs:label "RUR-5 ASROC"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Flixton,_Greater_Manchester>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Flixton, Greater Manchester"@en .
+
+<http://dbpedia.org/resource/Flixton_F.C.>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Flixton F.C."@en ;
+      <http://dbpedia.org/ontology/residence>
+              <http://dbpedia.org/resource/Flixton,_Greater_Manchester> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Massachusetts_Route_28>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Massachusetts Route 28"@en ;
+      <http://dbpedia.org/ontology/commander>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

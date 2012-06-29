@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_States>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States"@en .
+
+<http://dbpedia.org/resource/West_Yorkshire>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "West Yorkshire"@en ;
+      <http://dbpedia.org/ontology/location>
+              <http://dbpedia.org/resource/United_States> .

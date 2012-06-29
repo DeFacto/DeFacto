@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/The_Bacchae>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Bacchae"@en ;
+      <http://dbpedia.org/ontology/genre>
+              <http://dbpedia.org/resource/Cambridgeshire> .
+
+<http://dbpedia.org/resource/Cambridgeshire>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Cambridgeshire"@en .

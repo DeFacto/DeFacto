@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Dassault_Falcon_20>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Dassault Falcon 20"@en ;
+      <http://dbpedia.org/ontology/phylum>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

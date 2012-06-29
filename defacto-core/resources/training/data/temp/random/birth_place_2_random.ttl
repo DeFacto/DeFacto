@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Chile>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chile"@en .
+
+<http://dbpedia.org/resource/Regina,_Saskatchewan>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Regina, Saskatchewan"@en ;
+      <http://dbpedia.org/ontology/musicComposer>
+              <http://dbpedia.org/resource/Chile> .

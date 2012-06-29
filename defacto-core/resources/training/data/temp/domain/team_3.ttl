@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Detroit_Tigers>
+      rdfs:label "Detroit Tigers"@en .
+
+<http://dbpedia.org/resource/Yankton_County,_South_Dakota>
+      rdfs:label "Yankton County, South Dakota"@en ;
+      dbpedia-owl:team <http://dbpedia.org/resource/Detroit_Tigers> .

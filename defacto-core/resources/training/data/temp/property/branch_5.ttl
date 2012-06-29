@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/British_Indian_Army>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "British Indian Army"@en .
+
+<http://dbpedia.org/resource/John_Cook_%28VC%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "John Cook (VC)"@en ;
+      <http://dbpedia.org/ontology/class>
+              <http://dbpedia.org/resource/British_Indian_Army> .

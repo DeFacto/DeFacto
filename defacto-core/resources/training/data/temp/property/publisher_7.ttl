@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/George_Virtue>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "George Virtue"@en .
+
+<http://dbpedia.org/resource/The_Art_Journal>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Art Journal"@en ;
+      <http://dbpedia.org/ontology/militaryBranch>
+              <http://dbpedia.org/resource/George_Virtue> .

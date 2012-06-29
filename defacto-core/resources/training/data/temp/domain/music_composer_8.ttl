@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Journal_Star_%28Peoria%29>
+      rdfs:label "Journal Star (Peoria)"@en ;
+      dbpedia-owl:musicComposer
+              <http://dbpedia.org/resource/Mikl%C3%B3s_R%C3%B3zsa> .
+
+<http://dbpedia.org/resource/Mikl%C3%B3s_R%C3%B3zsa>
+      rdfs:label "Miklós Rózsa"@en .

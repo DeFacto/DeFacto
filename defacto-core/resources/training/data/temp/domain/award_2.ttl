@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Spencer_Breslin>
+      rdfs:label "Spencer Breslin"@en ;
+      dbpedia-owl:award <http://dbpedia.org/resource/L%C3%A9gion_d%27honneur> .
+
+<http://dbpedia.org/resource/L%C3%A9gion_d%27honneur>
+      rdfs:label "Légion d'honneur"@en .

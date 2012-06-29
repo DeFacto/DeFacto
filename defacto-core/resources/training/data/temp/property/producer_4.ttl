@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Sadeness_%28Part_I%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Sadeness (Part I)"@en ;
+      <http://dbpedia.org/ontology/class>
+              <http://dbpedia.org/resource/Michael_Cretu> .
+
+<http://dbpedia.org/resource/Michael_Cretu>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Michael Cretu"@en .

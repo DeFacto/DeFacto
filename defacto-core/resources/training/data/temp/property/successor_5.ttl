@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Brian_Howe_%28politician%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Brian Howe (politician)"@en ;
+      <http://dbpedia.org/ontology/musicComposer>
+              <http://dbpedia.org/resource/Martin_Ferguson> .
+
+<http://dbpedia.org/resource/Martin_Ferguson>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Martin Ferguson"@en .

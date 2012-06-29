@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Ch%C3%A2teauvillain>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Châteauvillain"@en ;
+      <http://dbpedia.org/ontology/associatedMusicalArtist>
+              <http://dbpedia.org/resource/Haute-Marne> .
+
+<http://dbpedia.org/resource/Haute-Marne>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Haute-Marne"@en .

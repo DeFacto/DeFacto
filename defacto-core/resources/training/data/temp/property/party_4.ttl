@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Baath_Party>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Baath Party"@en .
+
+<http://dbpedia.org/resource/Mahmoud_al-Abrash>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Mahmoud al-Abrash"@en ;
+      <http://dbpedia.org/ontology/residence>
+              <http://dbpedia.org/resource/Baath_Party> .

@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Mieszko_Gniezno>
+      rdfs:label "Mieszko Gniezno"@en ;
+      dbpedia-owl:ground <http://dbpedia.org/resource/Kindu> .
+
+<http://dbpedia.org/resource/Kindu>
+      rdfs:label "Kindu"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_States>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States"@en .
+
+<http://dbpedia.org/resource/Your_Personal_Touch>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Your Personal Touch"@en ;
+      <http://dbpedia.org/ontology/order>
+              <http://dbpedia.org/resource/United_States> .

@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/J._J._Henry>
+      rdfs:label "J. J. Henry"@en ;
+      dbpedia-owl:award <http://dbpedia.org/resource/Women_in_Film_Crystal_%2B_Lucy_Awards> .
+
+<http://dbpedia.org/resource/Women_in_Film_Crystal_%2B_Lucy_Awards>
+      rdfs:label "Women in Film Crystal + Lucy Awards"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Oliver_Goldsmith>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Oliver Goldsmith"@en ;
+      <http://dbpedia.org/ontology/ground>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

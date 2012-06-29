@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Essex>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Essex"@en .
+
+<http://dbpedia.org/resource/Temptation_Island_%281980_film%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Temptation Island (1980 film)"@en ;
+      <http://dbpedia.org/ontology/managerClub>
+              <http://dbpedia.org/resource/Essex> .

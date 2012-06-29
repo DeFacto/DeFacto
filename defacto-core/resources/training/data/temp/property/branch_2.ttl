@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/French_Army>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "French Army"@en .
+
+<http://dbpedia.org/resource/3rd_Mechanised_Brigade_%28France%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "3rd Mechanised Brigade (France)"@en ;
+      <http://dbpedia.org/ontology/director>
+              <http://dbpedia.org/resource/French_Army> .
