@@ -2,7 +2,9 @@ package org.aksw.gui;
 
 import com.vaadin.event.FieldEvents;
 import com.vaadin.ui.ComboBox;
+import org.apache.commons.validator.routines.UrlValidator;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,6 +16,10 @@ import java.util.Map;
  */
 public class MyComboBox extends ComboBox {
 
+    //This member is needed as the ComboBox in VAADIN has a problem, which is when an item is selected and it was added on
+    //the fly, even if the caption of the item is set different to the item itself, it will remain unchanged
+    public HashMap<String, String> itemsList;
+
     @Override
     public void changeVariables(Object source, Map<String, Object> variables) {
         if (variables.containsKey("filter")) {
@@ -22,6 +28,9 @@ public class MyComboBox extends ComboBox {
 
                 @Override
                 public String getText() {
+                    /*if(text.contains(" ")){
+                        int x = 0;
+                    }*/
                     return text;
                 }
 
@@ -43,4 +52,24 @@ public class MyComboBox extends ComboBox {
         removeListener(FieldEvents.TextChangeListener.EVENT_ID, FieldEvents.TextChangeEvent.class,
                 listener);
     }
+
+    public String getSelectedItemCaption() {
+
+        String selectedItem = this.getValue().toString().trim();
+
+        UrlValidator validator = new UrlValidator();
+
+        for(Map.Entry <String, String> item: itemsList.entrySet()){
+            if(selectedItem.compareTo(item.getValue()) == 0 ) {
+                if(validator.isValid(item.getKey()))
+                    return  item.getKey();
+                else if(validator.isValid(item.getValue()))
+                    return  item.getValue();
+            }
+
+        }
+
+        return selectedItem;
+    }
+
 }
