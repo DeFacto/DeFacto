@@ -1050,7 +1050,7 @@ public class MainForm extends Application {
             DefactoProgressIndicatorThread startingProgressIndicatorThread = new DefactoProgressIndicatorThread(0.7f);
             startingProgressIndicatorThread.start();
             try{
-                Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("/home/mohamed/LeipzigUniversity/JavaProjects/test/DeFacto/defacto-core/defacto.ini")));
+                Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto-core/defacto.ini")));
             }
             catch (Exception exp){
 
