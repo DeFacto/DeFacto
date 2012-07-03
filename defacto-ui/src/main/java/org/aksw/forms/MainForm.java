@@ -19,6 +19,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.Reindeer;
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.result.SearchResult;
@@ -30,6 +31,7 @@ import org.aksw.handlers.ComboBoxTextChangeListener;
 import org.aksw.helper.TripleComponent;
 import org.aksw.validators.UriValidator;
 import org.apache.log4j.Logger;
+import org.ini4j.Ini;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -107,7 +109,7 @@ public class MainForm extends Application {
     @Override
     public void init() {
         currentApplication = this;
-        setTheme("defacto");
+//        setTheme("defacto");
         mainWindow = new Window("DeFacto");
         //mainWindow.setWidth(1200, Sizeable.UNITS_PIXELS);
         mainWindow.setSizeUndefined();
@@ -640,7 +642,7 @@ public class MainForm extends Application {
         Link akswGroupLogo = new Link("", new ExternalResource("http://aksw.org"));
         akswGroupLogo.setTargetName("_blank");
 
-        akswGroupLogo.setIcon(new FileResource(new File("web/images/aksw_logo.svg"), this));
+        akswGroupLogo.setIcon(new FileResource(new File("defacto-ui/web/images/aksw_logo.svg"), this));
         akswGroupLogo.setSizeUndefined();
         akswGroupLogo.setStyleName(Reindeer.LABEL_H1);
         VerticalLayout akswGroupLayout = new VerticalLayout();
@@ -1007,6 +1009,7 @@ public class MainForm extends Application {
             cmbObject.setEnabled(false);
             cmbPredicate.setEnabled(false);
             btnRunExample.setEnabled(false);
+            cmbExample.setEnabled(false);
 //            btnRunExample2.setEnabled(false);
 //            btnRunExample3.setEnabled(false);
 
@@ -1043,6 +1046,13 @@ public class MainForm extends Application {
             //Timer progressTimer = new Timer("DeFacto Overall Progress");
             DefactoProgressIndicatorThread startingProgressIndicatorThread = new DefactoProgressIndicatorThread(0.7f);
             startingProgressIndicatorThread.start();
+
+            try{
+                Defacto.DEFACTO_CONFIG =new DefactoConfig(new Ini(new File("/home/mohamed/LeipzigUniversity/JavaProjects/test/DeFacto/defacto-core/defacto.ini")));
+            }
+            catch(Exception exp){
+
+            }
 
             resultingEvidence = Defacto.checkFact(inputTripleModel);
 
@@ -1093,6 +1103,7 @@ public class MainForm extends Application {
             cmbPredicate.setEnabled(true);
 
             btnRunExample.setEnabled(true);
+            cmbExample.setEnabled(true);
 //            btnRunExample2.setEnabled(true);
 //            btnRunExample3.setEnabled(true);
 
