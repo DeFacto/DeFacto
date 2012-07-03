@@ -487,7 +487,7 @@ public class SearchResultRepeater extends VerticalLayout {
                             getWindow().showNotification("Thank you, for your feedback");
                         }
                     });
-                    btnApprove.setIcon(new FileResource(new File("/home/mohamed/LeipzigUniversity/JavaProjects/test/AKSWInformationFinder/WebInterface/web/images/correct_30.png"), this.getApplication()));
+                    btnApprove.setIcon(new FileResource(new File("defcato-ui/web/images/correct_30.png"), this.getApplication()));
                     btnApprove.setWidth(40, Sizeable.UNITS_PIXELS);
                     btnApprove.setHeight(40, Sizeable.UNITS_PIXELS);
 
@@ -514,7 +514,7 @@ public class SearchResultRepeater extends VerticalLayout {
                             getWindow().showNotification("Thank you, for your feedback");
                         }
                     });
-                    btnDisapprove.setIcon(new FileResource(new File("/home/mohamed/LeipzigUniversity/JavaProjects/test/AKSWInformationFinder/WebInterface/web/images/incorrect_30.png"), this.getApplication()));
+                    btnDisapprove.setIcon(new FileResource(new File("defcato-ui/web/images/incorrect_30.png"), this.getApplication()));
                     btnDisapprove.setWidth(40, Sizeable.UNITS_PIXELS);
                     btnDisapprove.setHeight(40, Sizeable.UNITS_PIXELS);
 
