@@ -80,11 +80,12 @@ public class SearchResultRepeater extends VerticalLayout {
     private Evidence resultingEvidence = null;
     private String tripleToValidate = "";
     TripleComponent component;
-
+    private ArrayList<WebsiteItem> lstWebsiteItems;
 
     GridLayout resultsLayout = null;
 
     private int numOfResultsPerPage;
+    double maximumTopicMajorityInTheWeb = 1.0;
 
     private final ArrayList<MyButton> arrApproveDisapproveButtons = new ArrayList<MyButton>();
 
@@ -95,6 +96,7 @@ public class SearchResultRepeater extends VerticalLayout {
         resultsLayout = createCoreGridLayout(numOfResultsPerPage);
         this.addComponent(resultsLayout);
         this.setComponentAlignment(resultsLayout, Alignment.MIDDLE_CENTER);
+        sortResults(resultingEvidence);
     }
 
     public void setTripleToValidate(String tripleToValidate) {
@@ -186,7 +188,7 @@ public class SearchResultRepeater extends VerticalLayout {
         scoreLayout.setComponentAlignment(lblTitle, Alignment.MIDDLE_RIGHT);
 
 
-        JFreeChartWrapper defactoScore = createChartWithPercentage(createDataset(resultingEvidence.getDeFactoScore()), Color.GREEN);
+        JFreeChartWrapper defactoScore = createChartWithPercentage(createDataset(resultingEvidence.getDeFactoScore(), ""), Color.GREEN);
         scoreLayout.addComponent(defactoScore);
 
         scoreLayout.setComponentAlignment(defactoScore, Alignment.MIDDLE_CENTER);
@@ -225,6 +227,7 @@ public class SearchResultRepeater extends VerticalLayout {
         resultsLayout = createCoreGridLayout(numOfResultsPerPage * 2 -1); //Use double the number in order to add place for separator
         this.addComponent(resultsLayout);
         this.setComponentAlignment(resultsLayout, Alignment.MIDDLE_CENTER);
+        sortResults(resultingEvidence);
     }
 
     public SearchResultRepeater(Evidence resultingEvidence, String triple) {
@@ -253,6 +256,7 @@ public class SearchResultRepeater extends VerticalLayout {
         this.addComponent(resultsLayout);
         this.setComponentAlignment(resultsLayout, Alignment.MIDDLE_CENTER);
 
+        sortResults(resultingEvidence);
     }
 
 
@@ -298,9 +302,26 @@ public class SearchResultRepeater extends VerticalLayout {
         this.addComponent(resultsLayout);
         this.setComponentAlignment(resultsLayout, Alignment.MIDDLE_CENTER);
 
+        sortResults(resultingEvidence);
+
     }
 
+    private void sortResults(Evidence resultingEvidence) {
+        ArrayList<WebSite> lstResultingWebSites = (ArrayList<WebSite>)resultingEvidence.getAllWebSites();
+//        Collections.sort(lstResultingWebSites, new WebsiteSorterByDefactoScore());
 
+        maximumTopicMajorityInTheWeb = calculateMaximumTopicMajorityInTheWeb(lstResultingWebSites);
+
+        lstWebsiteItems = new ArrayList<WebsiteItem>();
+        //Iterate through the list, in order to construct ArrayList of WebsiteItem, as it contains the defacto score as well
+        //Then sort accordingly
+        for(WebSite website: lstResultingWebSites){
+            double defactoScoreForWebsite = calculateDefactoScore(website, maximumTopicMajorityInTheWeb);
+            lstWebsiteItems.add(new WebsiteItem(website, defactoScoreForWebsite));
+        }
+
+        Collections.sort(lstWebsiteItems);
+    }
 
 
     public Evidence getDataSource() {
@@ -343,18 +364,17 @@ public class SearchResultRepeater extends VerticalLayout {
         int renderStartIndex = currentPage * getPageLength() ;
         int remainingItemsInList = resultingEvidence.getAllWebSites().size() - renderStartIndex;
 
-        //Determines the last index at which the render stops, as the could be the remaining number of results
-        //is less than number of results per page
-        int renderStopIndex = numOfResultsPerPage < remainingItemsInList ? numOfResultsPerPage : remainingItemsInList;
+
 
         //This index indicates the row at which the next component should be inserted
         //This is useful, as we cannot use the index used for accessing the results array, because we will insert a separator as well
         int currentRowInGrid = 0;
 
-        ArrayList<WebSite> lstResultingWebSites = (ArrayList<WebSite>)resultingEvidence.getAllWebSites();
-        Collections.sort(lstResultingWebSites, new WebsiteSorterByDefactoScore());
 
-        double maximumTopicMajorityInTheWeb = calculateMaximumTopicMajorityInTheWeb(lstResultingWebSites);
+
+        //Determines the last index at which the render stops, as the could be the remaining number of results
+        //is less than number of results per page
+        int renderStopIndex = numOfResultsPerPage < remainingItemsInList ? numOfResultsPerPage : remainingItemsInList;
 
         ExecutorService chartCreatorService, thumbnailCreatorService;
         Future<JFreeChartWrapper> chartCreatorTask;
@@ -363,14 +383,14 @@ public class SearchResultRepeater extends VerticalLayout {
 
         for(int i = 0; i < renderStopIndex; i++ ){
 
-            WebSite currentWebsite = lstResultingWebSites.get(renderStartIndex + i);
+            WebsiteItem currentWebsiteItem = lstWebsiteItems.get(renderStartIndex + i);
 
             Embedded websiteThumbnail =new Embedded();
 
             //Call ChartPlotter in parallel to speed up the process of plotting charts
             try{
                 thumbnailCreatorService = Executors.newFixedThreadPool(1);
-                thumbnailCreatorTask    = thumbnailCreatorService.submit(new ThumbnailCreatorThread(currentWebsite));
+                thumbnailCreatorTask    = thumbnailCreatorService.submit(new ThumbnailCreatorThread(currentWebsiteItem.getWebsite()));
 
 
                 websiteThumbnail = new Embedded("", new FileResource(new File(thumbnailCreatorTask.get()), this.getApplication()));
@@ -378,7 +398,7 @@ public class SearchResultRepeater extends VerticalLayout {
 
             }
             catch (Exception exp){
-                logger.warn("Graph of website titled \"" + currentWebsite.getTitle() +"\" cannot be created");
+                logger.warn("Graph of website titled \"" + currentWebsiteItem.getWebsite().getTitle() +"\" cannot be created");
             }
 
             resultsLayout.addComponent(websiteThumbnail, 0, currentRowInGrid);
@@ -386,13 +406,13 @@ public class SearchResultRepeater extends VerticalLayout {
 
             //Prepare the middle part, containing the title of the webpage an excerpt from it, and its URL
             VerticalLayout layoutWebsiteContent = new VerticalLayout();
-            Link lnklTitle = new Link(currentWebsite.getTitle(), new ExternalResource(currentWebsite.getUrl()));
+            Link lnklTitle = new Link(currentWebsiteItem.getWebsite().getTitle(), new ExternalResource(currentWebsiteItem.getWebsite().getUrl()));
             lnklTitle.setTargetName("_blank");
             layoutWebsiteContent.addComponent(lnklTitle);
             layoutWebsiteContent.setComponentAlignment(lnklTitle, Alignment.TOP_LEFT);
 
             //Get the structured proofs of the website
-            ArrayList<ComplexProof> complexProofs = (ArrayList<ComplexProof>)resultingEvidence.getComplexProofs(currentWebsite);
+            ArrayList<ComplexProof> complexProofs = (ArrayList<ComplexProof>)resultingEvidence.getComplexProofs(currentWebsiteItem.getWebsite());
 
             //Remove duplicate context strings returned from the backend module
             ArrayList<String> arrDistinctContexts = new ArrayList<String>();
@@ -467,7 +487,7 @@ public class SearchResultRepeater extends VerticalLayout {
                             getWindow().showNotification("Thank you, for your feedback");
                         }
                     });
-                    btnApprove.setIcon(new FileResource(new File("web/images/correct_30.png"), this.getApplication()));
+                    btnApprove.setIcon(new FileResource(new File("/home/mohamed/LeipzigUniversity/JavaProjects/test/AKSWInformationFinder/WebInterface/web/images/correct_30.png"), this.getApplication()));
                     btnApprove.setWidth(40, Sizeable.UNITS_PIXELS);
                     btnApprove.setHeight(40, Sizeable.UNITS_PIXELS);
 
@@ -494,7 +514,7 @@ public class SearchResultRepeater extends VerticalLayout {
                             getWindow().showNotification("Thank you, for your feedback");
                         }
                     });
-                    btnDisapprove.setIcon(new FileResource(new File("web/images/incorrect_30.png"), this.getApplication()));
+                    btnDisapprove.setIcon(new FileResource(new File("/home/mohamed/LeipzigUniversity/JavaProjects/test/AKSWInformationFinder/WebInterface/web/images/incorrect_30.png"), this.getApplication()));
                     btnDisapprove.setWidth(40, Sizeable.UNITS_PIXELS);
                     btnDisapprove.setHeight(40, Sizeable.UNITS_PIXELS);
 
@@ -522,7 +542,7 @@ public class SearchResultRepeater extends VerticalLayout {
 
 
             //Get the provenance data as N-Triples
-            String provenanceRDF = ProvenanceInformationGenerator.getProvenanceInformationAsString(currentWebsite,
+            String provenanceRDF = ProvenanceInformationGenerator.getProvenanceInformationAsString(currentWebsiteItem.getWebsite(),
                     component.getSubject(), component.getPredicate(), component.getObject(), "TURTLE");
 
             //Create layout for the downloadable provenance data
@@ -531,7 +551,7 @@ public class SearchResultRepeater extends VerticalLayout {
             lblProvenanceData.setWidth(60, Sizeable.UNITS_PIXELS);
 
 
-            layoutComplexProof.addComponent(lblProvenanceData, 0, arrDistinctContexts.size()  + 1);
+            layoutComplexProof.addComponent(lblProvenanceData, 0, arrDistinctContexts.size() + 1);
 
             //Write the provenance data to a downloadable file
             Link lnkDownloadFile =new Link();
@@ -553,7 +573,7 @@ public class SearchResultRepeater extends VerticalLayout {
 
             Label lblWebsiteURL = new Label();
             VerticalLayout websiteLayout = new VerticalLayout();
-            lblWebsiteURL.setValue("<font color=\"green\">" + currentWebsite.getUrl() + "</font>");
+            lblWebsiteURL.setValue("<font color=\"green\">" + currentWebsiteItem.getWebsite().getUrl() + "</font>");
             lblWebsiteURL.setContentMode(Label.CONTENT_XHTML);
             websiteLayout.addComponent(lblWebsiteURL);
             websiteLayout.setComponentAlignment(lblWebsiteURL, Alignment.BOTTOM_LEFT);
@@ -565,7 +585,7 @@ public class SearchResultRepeater extends VerticalLayout {
             resultsLayout.setComponentAlignment(layoutWebsiteContent, Alignment.MIDDLE_LEFT);
 
             //Create the required charts of the results
-            HorizontalLayout layoutChart = new HorizontalLayout();
+            HorizontalLayout layoutAllCharts = new HorizontalLayout();
 
 //            chartGrid.setColumnExpandRatio(0, 0.3f);
 //            chartGrid.setColumnExpandRatio(1, 0.7f);
@@ -597,16 +617,20 @@ public class SearchResultRepeater extends VerticalLayout {
             lblTopicCoverage.setContentMode(Label.CONTENT_XHTML);
              */
             //Normalize PageRank, as it may return 11, or -1
-            double pageRank = currentWebsite.getPageRank();
+            double pageRank = currentWebsiteItem.getWebsite().getPageRank();
             if(pageRank <= 0)
                 pageRank = 11; //if the PageRank is -ve, then set it to 11 as it is used in the core module to represent undefined
 
             pageRank = pageRank/10;
 
-            CategoryDataset allValues = createDataset(new double[]{currentWebsite.getScore(), pageRank,
-                    currentWebsite.getTopicMajorityWebFeature() / maximumTopicMajorityInTheWeb,//Normalize topic majority in the web
-                    currentWebsite.getTopicMajoritySearchFeature(), currentWebsite.getTopicCoverageScore()});
+            CategoryDataset allValues = createDataset(new double[]{currentWebsiteItem.getWebsite().getScore(), pageRank,
+                    currentWebsiteItem.getWebsite().getTopicMajorityWebFeature() / maximumTopicMajorityInTheWeb,//Normalize topic majority in the web
+                    currentWebsiteItem.getWebsite().getTopicMajoritySearchFeature(), currentWebsiteItem.getWebsite().getTopicCoverageScore()});
 
+
+
+            JFreeChartWrapper websiteDefactoScore = createChart(createDataset(currentWebsiteItem.getDefactoScoreOfWebsite(), "  Defacto Score"),
+                    Color.GREEN);
 
             //Call ChartPlotter in parallel to speed up the process of plotting charts
             try{
@@ -614,16 +638,21 @@ public class SearchResultRepeater extends VerticalLayout {
                 chartCreatorTask    = chartCreatorService.submit(new ChartPlotter(allValues));
 
                 //            chartGrid.addComponent(createAllCharts(allValues), 1, 0);
-                layoutChart.addComponent(chartCreatorTask.get());
+                VerticalLayout layoutCharts = new VerticalLayout();
+                layoutCharts.addComponent(websiteDefactoScore);
+                layoutCharts.addComponent(chartCreatorTask.get());
+                layoutAllCharts.addComponent(layoutCharts);
+//                layoutChart.addComponent(chartCreatorTask.get());
+//                layoutChart.addComponent(websiteDefactoScore);
             }
             catch (Exception exp){
-                logger.warn("Graph of website titled \"" + currentWebsite.getTitle() +"\" cannot be created");
+                logger.warn("Graph of website titled " + currentWebsiteItem.getWebsite().getTitle() +" cannot be created");
             }
             ///////////////////////////////////////////
 
-            resultsLayout.addComponent(layoutChart, 2, currentRowInGrid++);
+            resultsLayout.addComponent(layoutAllCharts, 2, currentRowInGrid++);
 //            currentRowInGrid++;
-            resultsLayout.setComponentAlignment(layoutChart, Alignment.MIDDLE_RIGHT);
+            resultsLayout.setComponentAlignment(layoutAllCharts, Alignment.MIDDLE_RIGHT);
 
             Label lblSeparator = new Label("<hr/>", Label.CONTENT_XHTML);
             lblSeparator.setWidth(650, Sizeable.UNITS_PIXELS);
@@ -635,6 +664,31 @@ public class SearchResultRepeater extends VerticalLayout {
         }
 
         return resultsLayout;
+    }
+
+    /**
+     * Calculates the overall defacto score per website, upon which we have settled, in order to be used for sorting
+     * the results accordingly
+     * @param website   Website object with all details required for the calculation
+     * @param maximumTopicMajorityInTheWeb  The value of the maximum topic majority in the web, in order to be used in normalization
+     * @return  The overall score calculated according to the formula
+     *              (4* fact confirmation + 3 * page rank + TopicMajorityWeb + TopicMajoritySearch + TopicCoverage) / 10
+     */
+    private double calculateDefactoScore(WebSite website, double maximumTopicMajorityInTheWeb) {
+
+        double normalizedTopicMajorityInTheWeb = website.getTopicMajorityWebFeature() / maximumTopicMajorityInTheWeb;
+
+        double pageRank = website.getPageRank();
+        if(pageRank < 0 || pageRank > 10)
+            pageRank = 0;
+
+        pageRank = pageRank/10;
+
+        double defactoScore = (4 * website.getScore() + 3 * pageRank + normalizedTopicMajorityInTheWeb+
+                website.getTopicMajoritySearchFeature() + website.getTopicCoverageScore()) / 10;
+
+
+        return defactoScore;
     }
 
     /**
@@ -662,12 +716,19 @@ public class SearchResultRepeater extends VerticalLayout {
      * @param dataItem  The page rank that should be used in the chart
      * @return  Dataset containing the PageRank, but to be used in the chart
      */
-    private CategoryDataset createDataset(double dataItem) {
-        double[][] data = new double[][] {
+    private CategoryDataset createDataset(double dataItem, String datasetLabel) {
+        /*double[][] data = new double[][] {
                 {dataItem},
         };
         return DatasetUtilities.createCategoryDataset("",
-                "", data);
+                "", data);*/
+
+        DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+
+        //for(int i = 0; i < arrDefactoOutputValues.length; i++)
+        //data[i][0] = arrDefactoOutputValues[i];
+        defaultcategorydataset.addValue(dataItem, "S1", datasetLabel);
+        return defaultcategorydataset;
     }
 
     /**
@@ -722,9 +783,9 @@ public class SearchResultRepeater extends VerticalLayout {
      * @param chartColor    The color of the bar
      * @return  A panel containing the chart
      */
-    private JFreeChartWrapper createChart(CategoryDataset dataset, Color chartColor){
+    private JFreeChartWrapper createChart(CategoryDataset dataset, Color chartColor ){
 
-        JFreeChart barChart = ChartFactory.createBarChart("", // Title
+        /*JFreeChart barChart = ChartFactory.createBarChart("", // Title
                 "", // x-axis Label
                 "", // y-axis Label
                 dataset, // Dataset
@@ -743,7 +804,7 @@ public class SearchResultRepeater extends VerticalLayout {
                     0.0f, 0.0f, Color.WHITE);
         else
             gpBarColor = new GradientPaint(0.0f, 0.0f, chartColor,
-                    0.0f, 0.0f, Color.DARK_GRAY);
+                0.0f, 0.0f, Color.DARK_GRAY);
 
         JFreeChartWrapper wrapper = new JFreeChartWrapper(barChart);
 
@@ -781,7 +842,63 @@ public class SearchResultRepeater extends VerticalLayout {
         wrapper.setHeight(50, Sizeable.UNITS_PIXELS);
         wrapper.setWidth(200, Sizeable.UNITS_PIXELS);
 
+        return wrapper; */
+
+        JFreeChart barChart = ChartFactory.createBarChart("", // Title
+                "", // x-axis Label
+                "", // y-axis Label
+                dataset, // Dataset
+                PlotOrientation.HORIZONTAL, // Plot Orientation
+                false, // Show Legend
+                true, // Use tooltips
+                false // Configure chart to generate URLs?
+        );
+
+        barChart.setNotify(false);
+
+        // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
+        JFreeChartWrapper wrapper = new JFreeChartWrapper(barChart);
+
+        //This is a hollow brush to be used if the value of any factor is unavailable, so it will not be rendered, and
+        //it will be labeled with N/A
+        GradientPaint gbHollowColor = new GradientPaint(0.0f, 0.0f, Color.WHITE, 0.0f, 0.0f, Color.WHITE);
+
+        BarRenderer renderOfChart = ((BarRenderer)barChart.getCategoryPlot().getRenderer());
+
+        renderOfChart.setMaximumBarWidth(0.7);
+        renderOfChart.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.CENTER_HORIZONTAL));
+        renderOfChart.setShadowVisible(false);
+
+        StandardCategoryItemLabelGenerator standardcategoryitemlabelgenerator = new PageRankCategoryItemLabelGenerator("{2}", new DecimalFormat("0.00"));
+
+        Paint brush = new GradientPaint(0.0F, 0.0F, chartColor, 0.0F, 0.0F, Color.DARK_GRAY);
+
+//        for(int i = 0; i < dataset.getRowCount(); i++){
+        renderOfChart.setSeriesItemLabelGenerator(0, standardcategoryitemlabelgenerator);
+        renderOfChart.setSeriesItemLabelsVisible(0, true);
+        renderOfChart.setSeriesItemLabelFont(0, new Font("SansSerif", Font.PLAIN, 12));
+        ItemLabelPosition itemlabelposition = new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER);
+        renderOfChart.setSeriesPositiveItemLabelPosition(0, itemlabelposition);
+        renderOfChart.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
+        renderOfChart.setItemMargin(-2);
+        renderOfChart.setSeriesPaint(0, brush);
+
+//        }
+
+
+        barChart.getCategoryPlot().setBackgroundPaint(Color.WHITE);
+
+        barChart.getCategoryPlot().getRangeAxis(0).setRange(0d, 1d);
+        ((NumberAxis)barChart.getCategoryPlot().getRangeAxis(0)).setTickUnit(new NumberTickUnit(0.2));
+
+        barChart.getCategoryPlot().getRangeAxis().setVisible(false);
+
+        wrapper.setHeight(40, Sizeable.UNITS_PIXELS);
+        wrapper.setWidth(350, Sizeable.UNITS_PIXELS);
+
+
         return wrapper;
+
     }
 
 
@@ -791,7 +908,7 @@ public class SearchResultRepeater extends VerticalLayout {
 
         Paint apaint[] = new Paint[5];
         apaint[0] = new GradientPaint(0.0F, 0.0F, Color.RED, 0.0F, 0.0F, Color.DARK_GRAY);
-        apaint[1] = new GradientPaint(0.0F, 0.0F, Color.GREEN, 0.0F, 0.0F, Color.DARK_GRAY);
+        apaint[1] = new GradientPaint(0.0F, 0.0F, Color.LIGHT_GRAY, 0.0F, 0.0F, Color.DARK_GRAY);
         apaint[2] = new GradientPaint(0.0F, 0.0F, Color.BLUE, 0.0F, 0.0F, Color.DARK_GRAY);
         apaint[3] = new GradientPaint(0.0F, 0.0F, Color.ORANGE, 0.0F, 0.0F, Color.DARK_GRAY);
         apaint[4] = new GradientPaint(0.0F, 0.0F, Color.MAGENTA, 0.0F, 0.0F, Color.DARK_GRAY);
@@ -1181,6 +1298,33 @@ public class SearchResultRepeater extends VerticalLayout {
         }
     }
 
+    /**
+     * This class is used to sort the websites according to the overall defacto score calculated with our formula 
+     */
+    private class WebsiteItem implements Comparable<WebsiteItem>{
+
+        private WebSite website;
+        private double defactoScoreOfWebsite;
+
+        public WebSite getWebsite() {
+            return website;
+        }
+
+        public double getDefactoScoreOfWebsite() {
+            return defactoScoreOfWebsite;
+        }
+
+        public WebsiteItem(WebSite webSite, double defactoScoreOfWebsite){
+            this.website = webSite;
+            this.defactoScoreOfWebsite = defactoScoreOfWebsite;
+        }
+
+        @Override
+        public int compareTo(WebsiteItem websiteItem) {
+            return -Double.compare(this.defactoScoreOfWebsite, websiteItem.getDefactoScoreOfWebsite());
+        }
+    }
+
     private class MyButton extends NativeButton{
         final int websiteIndex;
         final int proofIndex;
@@ -1232,6 +1376,7 @@ public class SearchResultRepeater extends VerticalLayout {
             return (this.websiteIndex == searchButton.getWebsiteIndex() && this.proofIndex == searchButton.getProofIndex()
                     && this.isApprove == searchButton.getIsApprove());
         }
+
     }
 
 

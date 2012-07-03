@@ -19,7 +19,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.Reindeer;
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.result.SearchResult;
@@ -31,7 +30,6 @@ import org.aksw.handlers.ComboBoxTextChangeListener;
 import org.aksw.helper.TripleComponent;
 import org.aksw.validators.UriValidator;
 import org.apache.log4j.Logger;
-import org.ini4j.Ini;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -109,8 +107,9 @@ public class MainForm extends Application {
     @Override
     public void init() {
         currentApplication = this;
-        setTheme("reindeer");
+        setTheme("defacto");
         mainWindow = new Window("DeFacto");
+        //mainWindow.setWidth(1200, Sizeable.UNITS_PIXELS);
         mainWindow.setSizeUndefined();
 
 
@@ -332,7 +331,7 @@ public class MainForm extends Application {
         */
 
         cmbExample = new ComboBox();
-        cmbExample.setWidth(96, Sizeable.UNITS_PERCENTAGE);
+        cmbExample.setWidth(97, Sizeable.UNITS_PERCENTAGE);
         cmbExample.setNewItemsAllowed(false);
         cmbExample.setTextInputAllowed(false);
         cmbExample.setNullSelectionAllowed(false);
@@ -686,7 +685,7 @@ public class MainForm extends Application {
 //        projectLink.setStyleName();
         projectWebPageLayout.addComponent(lblProjectHomepage);
         projectWebPageLayout.setComponentAlignment(lblProjectHomepage, Alignment.MIDDLE_LEFT);
-
+        
         Label lblDummy = new Label("TEST LABEL");
         projectWebPageLayout.addComponent(lblDummy);
         projectWebPageLayout.setComponentAlignment(lblDummy, Alignment.MIDDLE_RIGHT);
@@ -875,13 +874,8 @@ public class MainForm extends Application {
 
 
 
-
         private void getData(String subject, String predicate, String object){
 
-            //////////////////////////////////////////////////////
-//            layoutGrid.removeComponent(0, 5);
-
-//            layoutGrid.removeComponent(0, 6);
             layoutGrid.removeComponent(0, 1);
             FactCheckerCaller caller = new FactCheckerCaller(subject, predicate, object);
             caller.start();
@@ -1049,12 +1043,7 @@ public class MainForm extends Application {
             //Timer progressTimer = new Timer("DeFacto Overall Progress");
             DefactoProgressIndicatorThread startingProgressIndicatorThread = new DefactoProgressIndicatorThread(0.7f);
             startingProgressIndicatorThread.start();
-            try{
-                Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto-core/defacto.ini")));
-            }
-            catch (Exception exp){
 
-            }
             resultingEvidence = Defacto.checkFact(inputTripleModel);
 
             defactoOverallProgressIndicator.setValue(0.7f);
