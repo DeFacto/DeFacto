@@ -126,7 +126,7 @@ public class SearchResultRepeater extends VerticalLayout {
             Label lblHR = new Label();
             lblHR.setValue("<hr/>");
             lblHR.setContentMode(Label.CONTENT_XHTML);
-            lblHR.setWidth(650, Sizeable.UNITS_PIXELS);
+            lblHR.setWidth(610, Sizeable.UNITS_PIXELS);
             addComponent(lblHR);
             setComponentAlignment(lblHR, Alignment.TOP_CENTER);
 
@@ -435,7 +435,7 @@ public class SearchResultRepeater extends VerticalLayout {
 
 //            layoutComplexProof.setWidth(100, Sizeable.UNITS_PERCENTAGE);
             layoutComplexProof.setHeight(100, Sizeable.UNITS_PERCENTAGE);
-            layoutComplexProof.setWidth(650, Sizeable.UNITS_PIXELS);
+            layoutComplexProof.setWidth(610, Sizeable.UNITS_PIXELS);
             layoutComplexProof.setColumnExpandRatio(0, 0.1f);
             layoutComplexProof.setColumnExpandRatio(1, 0.7f);
             layoutComplexProof.setColumnExpandRatio(2, 0.1f);
@@ -451,7 +451,7 @@ public class SearchResultRepeater extends VerticalLayout {
                 for(String proof: arrDistinctContexts){
 
                     HorizontalLayout hlProof = new HorizontalLayout();
-                    hlProof.setWidth(450, Sizeable.UNITS_PIXELS);
+                    hlProof.setWidth(430, Sizeable.UNITS_PIXELS);
                     lblStructuredPhrase = new Label();
                     //In order to highlight the subject and object we should write them in bold
                     String contextString = proof.replaceAll("(?i)" + resultingEvidence.getSubjectLabel(), "<b>" + resultingEvidence.getSubjectLabel() + "</b>");
@@ -656,7 +656,7 @@ public class SearchResultRepeater extends VerticalLayout {
             resultsLayout.setComponentAlignment(layoutAllCharts, Alignment.MIDDLE_RIGHT);
 
             Label lblSeparator = new Label("<hr/>", Label.CONTENT_XHTML);
-            lblSeparator.setWidth(650, Sizeable.UNITS_PIXELS);
+            lblSeparator.setWidth(610, Sizeable.UNITS_PIXELS);
 
             if(i< renderStopIndex-1){//We don't need a separator after the last row
                 resultsLayout.addComponent(lblSeparator, 1, currentRowInGrid++);
@@ -864,6 +864,7 @@ public class SearchResultRepeater extends VerticalLayout {
         //it will be labeled with N/A
         GradientPaint gbHollowColor = new GradientPaint(0.0f, 0.0f, Color.WHITE, 0.0f, 0.0f, Color.WHITE);
 
+
         BarRenderer renderOfChart = ((BarRenderer)barChart.getCategoryPlot().getRenderer());
 
         renderOfChart.setMaximumBarWidth(0.7);
@@ -875,6 +876,10 @@ public class SearchResultRepeater extends VerticalLayout {
         Paint brush = new GradientPaint(0.0F, 0.0F, chartColor, 0.0F, 0.0F, Color.DARK_GRAY);
 
 //        for(int i = 0; i < dataset.getRowCount(); i++){
+        Color colorSilver = new Color(230, 232, 250);
+
+        renderOfChart.setSeriesItemLabelPaint(0, colorSilver);
+
         renderOfChart.setSeriesItemLabelGenerator(0, standardcategoryitemlabelgenerator);
         renderOfChart.setSeriesItemLabelsVisible(0, true);
         renderOfChart.setSeriesItemLabelFont(0, new Font("SansSerif", Font.PLAIN, 12));
@@ -895,8 +900,7 @@ public class SearchResultRepeater extends VerticalLayout {
         barChart.getCategoryPlot().getRangeAxis().setVisible(false);
 
         wrapper.setHeight(40, Sizeable.UNITS_PIXELS);
-        wrapper.setWidth(350, Sizeable.UNITS_PIXELS);
-
+        wrapper.setWidth(340, Sizeable.UNITS_PIXELS);
 
         return wrapper;
 
@@ -908,10 +912,12 @@ public class SearchResultRepeater extends VerticalLayout {
     {
 
         Paint apaint[] = new Paint[5];
+//        apaint[0] = new GradientPaint(0.0F, 0.0F, Color.RED, 200F, 0F, Color.DARK_GRAY);
+        //The colors used are available at http://web.njit.edu/~kevin/rgb.txt.html
         apaint[0] = new GradientPaint(0.0F, 0.0F, Color.RED, 0.0F, 0.0F, Color.DARK_GRAY);
-        apaint[1] = new GradientPaint(0.0F, 0.0F, Color.LIGHT_GRAY, 0.0F, 0.0F, Color.DARK_GRAY);
+        apaint[1] = new GradientPaint(0.0F, 0.0F, new Color(204, 153, 0), 0.0F, 0.0F, Color.DARK_GRAY); //Color CSS Gold
         apaint[2] = new GradientPaint(0.0F, 0.0F, Color.BLUE, 0.0F, 0.0F, Color.DARK_GRAY);
-        apaint[3] = new GradientPaint(0.0F, 0.0F, Color.ORANGE, 0.0F, 0.0F, Color.DARK_GRAY);
+        apaint[3] = new GradientPaint(0.0F, 0.0F, new Color(184, 115, 51), 0.0F, 0.0F, Color.DARK_GRAY); //Color Copper
         apaint[4] = new GradientPaint(0.0F, 0.0F, Color.MAGENTA, 0.0F, 0.0F, Color.DARK_GRAY);
         return apaint;
     }
@@ -960,6 +966,10 @@ public class SearchResultRepeater extends VerticalLayout {
         PercentageLabelGenerator standardcategoryitemlabelgenerator = new PercentageLabelGenerator(
                 "{3}", new DecimalFormat("0.0%"),
                 new DecimalFormat("0%"));//new DecimalFormat("%")
+
+        Color colorSilver = new Color(230, 232, 250);
+
+        renderOfChart.setSeriesItemLabelPaint(0, colorSilver);
         renderOfChart.setSeriesItemLabelGenerator(0, standardcategoryitemlabelgenerator);
         renderOfChart.setSeriesItemLabelsVisible(0, true);
         renderOfChart.setSeriesItemLabelFont(0, new Font("SansSerif", 0, 12));
@@ -976,7 +986,7 @@ public class SearchResultRepeater extends VerticalLayout {
         barChart.getCategoryPlot().getRangeAxis().setVisible(false);
 
         wrapper.setHeight(60, Sizeable.UNITS_PIXELS);
-        wrapper.setWidth(350, Sizeable.UNITS_PIXELS);
+        wrapper.setWidth(340, Sizeable.UNITS_PIXELS);
 
         return wrapper;
     }
@@ -1252,6 +1262,11 @@ public class SearchResultRepeater extends VerticalLayout {
             //it will be labeled with N/A
             GradientPaint gbHollowColor = new GradientPaint(0.0f, 0.0f, Color.WHITE, 0.0f, 0.0f, Color.WHITE);
 
+//            GradientBarPainter gp = new GradientBarPainter();
+//            gp.
+            
+//            ((BarRenderer)barChart.getCategoryPlot().getRenderer()).setBarPainter(new GradientBarPainter(0.1, 0.20, 0.3));
+
             BarRenderer renderOfChart = ((BarRenderer)barChart.getCategoryPlot().getRenderer());
 
             renderOfChart.setMaximumBarWidth(0.7);
@@ -1261,21 +1276,26 @@ public class SearchResultRepeater extends VerticalLayout {
             StandardCategoryItemLabelGenerator standardcategoryitemlabelgenerator = new PageRankCategoryItemLabelGenerator("{2}", new DecimalFormat("0.00"));
 
             Paint[] brushes = createPaint();
+            Color colorSilver = new Color(230, 232, 250);
 
             for(int i = 0; i < dataset.getRowCount(); i++){
                 renderOfChart.setSeriesItemLabelGenerator(i, standardcategoryitemlabelgenerator);
                 renderOfChart.setSeriesItemLabelsVisible(i, true);
+                renderOfChart.setSeriesItemLabelPaint(i, colorSilver);
                 renderOfChart.setSeriesItemLabelFont(i, new Font("SansSerif", Font.PLAIN, 12));
                 ItemLabelPosition itemlabelposition = new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER);
                 renderOfChart.setSeriesPositiveItemLabelPosition(i, itemlabelposition);
                 renderOfChart.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
                 renderOfChart.setItemMargin(-2);
 
-                if(dataset.getValue(i, i).doubleValue() < 0 || dataset.getValue(i ,i).doubleValue() > 1)
+                if(dataset.getValue(i, i).doubleValue() < 0 || dataset.getValue(i ,i).doubleValue() > 1) {
                     renderOfChart.setSeriesPaint(i, gbHollowColor);
-                else
-                    renderOfChart.setSeriesPaint(i, brushes[i]);
+                    renderOfChart.setSeriesItemLabelPaint(i, Color.BLACK);
+                }
 
+                else{
+                    renderOfChart.setSeriesPaint(i, brushes[i]);
+                }
             }
 
 
@@ -1287,7 +1307,7 @@ public class SearchResultRepeater extends VerticalLayout {
             barChart.getCategoryPlot().getRangeAxis().setVisible(false);
 
             wrapper.setHeight(150, Sizeable.UNITS_PIXELS);
-            wrapper.setWidth(350, Sizeable.UNITS_PIXELS);
+            wrapper.setWidth(340, Sizeable.UNITS_PIXELS);
 
 
             return wrapper;

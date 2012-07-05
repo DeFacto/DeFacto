@@ -111,7 +111,8 @@ public class MainForm extends Application {
         currentApplication = this;
 //        setTheme("defacto");
         mainWindow = new Window("DeFacto");
-        //mainWindow.setWidth(1200, Sizeable.UNITS_PIXELS);
+        mainWindow.setWidth(1250, Sizeable.UNITS_PIXELS);
+//        mainWindow.setHeight(100, Sizeable.UNITS_PERCENTAGE);
         mainWindow.setSizeUndefined();
 
 
@@ -141,7 +142,8 @@ public class MainForm extends Application {
 //        mainLayout.setWidth(100, Sizeable.UNITS_PERCENTAGE);
 //        mainLayout.setWidth(1000, Sizeable.);
         mainLayout.setSizeUndefined();
-        mainLayout.setHeight(100, Sizeable.UNITS_PERCENTAGE);
+        mainLayout.setWidth(1250, Sizeable.UNITS_PIXELS);
+        mainLayout.setHeight(600, Sizeable.UNITS_PIXELS);
         Layout header = getHeader();
 
 
@@ -177,8 +179,9 @@ public class MainForm extends Application {
 
         layoutGrid.setMargin(false);
         layoutGrid.setSpacing(false);
-        layoutGrid.setWidth(100, Sizeable.UNITS_PERCENTAGE);
-        layoutGrid.setHeight(100, Sizeable.UNITS_PERCENTAGE);
+//        layoutGrid.setWidth(100, Sizeable.UNITS_PERCENTAGE);
+//        layoutGrid.setHeight(100, Sizeable.UNITS_PERCENTAGE);
+        layoutGrid.setSizeUndefined();
         layoutGrid.setColumnExpandRatio(0, 0.1f);
         layoutGrid.setColumnExpandRatio(1, 0.6f);
         layoutGrid.setColumnExpandRatio(2, 0.3f);
@@ -593,7 +596,7 @@ public class MainForm extends Application {
         header.setMargin(new Layout.MarginInfo(false, false, false, false));
 
         VerticalLayout titleLayout = new VerticalLayout();
-        titleLayout.setWidth(1200, Sizeable.UNITS_PIXELS);
+        titleLayout.setWidth(898, Sizeable.UNITS_PIXELS);
         titleLayout.setMargin(new Layout.MarginInfo(false, true, false, true));
         H1 title = new H1("DeFacto");
         titleLayout.addComponent(title);
@@ -1048,7 +1051,7 @@ public class MainForm extends Application {
             startingProgressIndicatorThread.start();
 
             try{
-                Defacto.DEFACTO_CONFIG =new DefactoConfig(new Ini(new File("defacto-core/defacto.ini")));
+                Defacto.DEFACTO_CONFIG =new DefactoConfig(new Ini(new File("/home/mohamed/LeipzigUniversity/JavaProjects/test/DeFacto/defacto-core/defacto.ini")));
             }
             catch(Exception exp){
 
