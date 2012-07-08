@@ -20,9 +20,11 @@ import org.aksw.defacto.util.RandomIntegerGenerator;
 import org.aksw.helper.TripleComponent;
 import org.apache.log4j.Logger;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.labels.CategoryToolTipGenerator;
 import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
@@ -754,7 +756,7 @@ public class SearchResultRepeater extends VerticalLayout {
         defaultcategorydataset.addValue(arrDefactoOutputValues[0], "S1", "Content Score");
         defaultcategorydataset.addValue(arrDefactoOutputValues[1], "S2", "Page Rank");
         defaultcategorydataset.addValue(arrDefactoOutputValues[2], "S3", "TM in the Web");
-        defaultcategorydataset.addValue(arrDefactoOutputValues[3], "S4", "TM in Search results");
+        defaultcategorydataset.addValue(arrDefactoOutputValues[3], "S4", "TM in Search");
         defaultcategorydataset.addValue(arrDefactoOutputValues[4], "S5", "Topic Coverage");
 
 
@@ -865,11 +867,11 @@ public class SearchResultRepeater extends VerticalLayout {
         GradientPaint gbHollowColor = new GradientPaint(0.0f, 0.0f, Color.WHITE, 0.0f, 0.0f, Color.WHITE);
 
 
-        BarRenderer renderOfChart = ((BarRenderer)barChart.getCategoryPlot().getRenderer());
+        BarRenderer rendererOfChart = ((BarRenderer)barChart.getCategoryPlot().getRenderer());
 
-        renderOfChart.setMaximumBarWidth(0.7);
-        renderOfChart.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.CENTER_HORIZONTAL));
-        renderOfChart.setShadowVisible(false);
+        rendererOfChart.setMaximumBarWidth(0.7);
+        rendererOfChart.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.CENTER_HORIZONTAL));
+        rendererOfChart.setShadowVisible(false);
 
         StandardCategoryItemLabelGenerator standardcategoryitemlabelgenerator = new PageRankCategoryItemLabelGenerator("{2}", new DecimalFormat("0.00"));
 
@@ -878,16 +880,16 @@ public class SearchResultRepeater extends VerticalLayout {
 //        for(int i = 0; i < dataset.getRowCount(); i++){
         Color colorSilver = new Color(230, 232, 250);
 
-        renderOfChart.setSeriesItemLabelPaint(0, colorSilver);
+        rendererOfChart.setSeriesItemLabelPaint(0, colorSilver);
 
-        renderOfChart.setSeriesItemLabelGenerator(0, standardcategoryitemlabelgenerator);
-        renderOfChart.setSeriesItemLabelsVisible(0, true);
-        renderOfChart.setSeriesItemLabelFont(0, new Font("SansSerif", Font.PLAIN, 12));
+        rendererOfChart.setSeriesItemLabelGenerator(0, standardcategoryitemlabelgenerator);
+        rendererOfChart.setSeriesItemLabelsVisible(0, true);
+        rendererOfChart.setSeriesItemLabelFont(0, new Font("SansSerif", Font.PLAIN, 12));
         ItemLabelPosition itemlabelposition = new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER);
-        renderOfChart.setSeriesPositiveItemLabelPosition(0, itemlabelposition);
-        renderOfChart.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
-        renderOfChart.setItemMargin(-2);
-        renderOfChart.setSeriesPaint(0, brush);
+        rendererOfChart.setSeriesPositiveItemLabelPosition(0, itemlabelposition);
+        rendererOfChart.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
+        rendererOfChart.setItemMargin(-2);
+        rendererOfChart.setSeriesPaint(0, brush);
 
 //        }
 
@@ -950,12 +952,12 @@ public class SearchResultRepeater extends VerticalLayout {
 
         JFreeChartWrapper wrapper = new JFreeChartWrapper(barChart);
 
-        BarRenderer renderOfChart = ((BarRenderer)barChart.getCategoryPlot().getRenderer());
+        BarRenderer rendererOfChart = ((BarRenderer)barChart.getCategoryPlot().getRenderer());
 
-        renderOfChart.setMaximumBarWidth(0.6);
-        renderOfChart.setSeriesPaint(0, gpBarColor);
-        renderOfChart.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.CENTER_HORIZONTAL));
-        renderOfChart.setShadowVisible(false);
+        rendererOfChart.setMaximumBarWidth(0.6);
+        rendererOfChart.setSeriesPaint(0, gpBarColor);
+        rendererOfChart.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.CENTER_HORIZONTAL));
+        rendererOfChart.setShadowVisible(false);
 
 
 
@@ -969,13 +971,13 @@ public class SearchResultRepeater extends VerticalLayout {
 
         Color colorSilver = new Color(230, 232, 250);
 
-        renderOfChart.setSeriesItemLabelPaint(0, colorSilver);
-        renderOfChart.setSeriesItemLabelGenerator(0, standardcategoryitemlabelgenerator);
-        renderOfChart.setSeriesItemLabelsVisible(0, true);
-        renderOfChart.setSeriesItemLabelFont(0, new Font("SansSerif", 0, 12));
+        rendererOfChart.setSeriesItemLabelPaint(0, colorSilver);
+        rendererOfChart.setSeriesItemLabelGenerator(0, standardcategoryitemlabelgenerator);
+        rendererOfChart.setSeriesItemLabelsVisible(0, true);
+        rendererOfChart.setSeriesItemLabelFont(0, new Font("SansSerif", 0, 12));
         ItemLabelPosition itemlabelposition = new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER);
-        renderOfChart.setSeriesPositiveItemLabelPosition(0, itemlabelposition);
-        renderOfChart.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
+        rendererOfChart.setSeriesPositiveItemLabelPosition(0, itemlabelposition);
+        rendererOfChart.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
 
         barChart.getCategoryPlot().setBackgroundPaint(Color.WHITE);
 
@@ -1257,6 +1259,7 @@ public class SearchResultRepeater extends VerticalLayout {
 
             // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
             JFreeChartWrapper wrapper = new JFreeChartWrapper(barChart);
+            ChartPanel panel;
 
             //This is a hollow brush to be used if the value of any factor is unavailable, so it will not be rendered, and
             //it will be labeled with N/A
@@ -1267,34 +1270,50 @@ public class SearchResultRepeater extends VerticalLayout {
             
 //            ((BarRenderer)barChart.getCategoryPlot().getRenderer()).setBarPainter(new GradientBarPainter(0.1, 0.20, 0.3));
 
-            BarRenderer renderOfChart = ((BarRenderer)barChart.getCategoryPlot().getRenderer());
+            BarRenderer rendererOfChart = ((BarRenderer)barChart.getCategoryPlot().getRenderer());
+//            rendererOfChart.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator(
+//                    StandardCategoryToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT_STRING, NumberFormat.getInstance()));
 
-            renderOfChart.setMaximumBarWidth(0.7);
-            renderOfChart.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.CENTER_HORIZONTAL));
-            renderOfChart.setShadowVisible(false);
+
+
+//            rendererOfChart.setBaseToolTipGenerator(new CategoryToolTipGenerator() {
+//                public String generateToolTip(CategoryDataset dataset, int row, int column) {
+//                    return "My customized tooltip";
+//                }
+//            });
+
+
+            rendererOfChart.setMaximumBarWidth(0.7);
+            rendererOfChart.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.CENTER_HORIZONTAL));
+            rendererOfChart.setShadowVisible(false);
 
             StandardCategoryItemLabelGenerator standardcategoryitemlabelgenerator = new PageRankCategoryItemLabelGenerator("{2}", new DecimalFormat("0.00"));
 
             Paint[] brushes = createPaint();
             Color colorSilver = new Color(230, 232, 250);
 
-            for(int i = 0; i < dataset.getRowCount(); i++){
-                renderOfChart.setSeriesItemLabelGenerator(i, standardcategoryitemlabelgenerator);
-                renderOfChart.setSeriesItemLabelsVisible(i, true);
-                renderOfChart.setSeriesItemLabelPaint(i, colorSilver);
-                renderOfChart.setSeriesItemLabelFont(i, new Font("SansSerif", Font.PLAIN, 12));
+            for(int i = 0; i < dataset.getRowCount(); i++) {
+                rendererOfChart.setSeriesItemLabelGenerator(i, standardcategoryitemlabelgenerator);
+                rendererOfChart.setSeriesItemLabelsVisible(i, true);
+                rendererOfChart.setSeriesItemLabelPaint(i, colorSilver);
+                rendererOfChart.setSeriesItemLabelFont(i, new Font("SansSerif", Font.PLAIN, 12));
                 ItemLabelPosition itemlabelposition = new ItemLabelPosition(ItemLabelAnchor.CENTER, TextAnchor.CENTER);
-                renderOfChart.setSeriesPositiveItemLabelPosition(i, itemlabelposition);
-                renderOfChart.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
-                renderOfChart.setItemMargin(-2);
+                rendererOfChart.setSeriesPositiveItemLabelPosition(i, itemlabelposition);
+                rendererOfChart.setPositiveItemLabelPositionFallback(new ItemLabelPosition());
+                rendererOfChart.setItemMargin(-2);
 
+                rendererOfChart.setSeriesToolTipGenerator(i, new CategoryToolTipGenerator() {
+                public String generateToolTip(CategoryDataset dataset, int row, int column) {
+                    return "My customized tooltip";
+                }
+            });
                 if(dataset.getValue(i, i).doubleValue() < 0 || dataset.getValue(i ,i).doubleValue() > 1) {
-                    renderOfChart.setSeriesPaint(i, gbHollowColor);
-                    renderOfChart.setSeriesItemLabelPaint(i, Color.BLACK);
+                    rendererOfChart.setSeriesPaint(i, gbHollowColor);
+                    rendererOfChart.setSeriesItemLabelPaint(i, Color.BLACK);
                 }
 
                 else{
-                    renderOfChart.setSeriesPaint(i, brushes[i]);
+                    rendererOfChart.setSeriesPaint(i, brushes[i]);
                 }
             }
 
@@ -1305,6 +1324,7 @@ public class SearchResultRepeater extends VerticalLayout {
             ((NumberAxis)barChart.getCategoryPlot().getRangeAxis(0)).setTickUnit(new NumberTickUnit(0.2));
 
             barChart.getCategoryPlot().getRangeAxis().setVisible(false);
+
 
             wrapper.setHeight(150, Sizeable.UNITS_PIXELS);
             wrapper.setWidth(340, Sizeable.UNITS_PIXELS);

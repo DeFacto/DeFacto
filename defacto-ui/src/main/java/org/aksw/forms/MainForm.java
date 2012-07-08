@@ -110,6 +110,7 @@ public class MainForm extends Application {
     public void init() {
         currentApplication = this;
 //        setTheme("defacto");
+        setTheme("reindeer");
         mainWindow = new Window("DeFacto");
         mainWindow.setWidth(1250, Sizeable.UNITS_PIXELS);
 //        mainWindow.setHeight(100, Sizeable.UNITS_PERCENTAGE);
@@ -143,7 +144,7 @@ public class MainForm extends Application {
 //        mainLayout.setWidth(1000, Sizeable.);
         mainLayout.setSizeUndefined();
         mainLayout.setWidth(1250, Sizeable.UNITS_PIXELS);
-        mainLayout.setHeight(600, Sizeable.UNITS_PIXELS);
+        mainLayout.setHeight(100, Sizeable.UNITS_PERCENTAGE);
         Layout header = getHeader();
 
 
@@ -187,7 +188,7 @@ public class MainForm extends Application {
         layoutGrid.setColumnExpandRatio(2, 0.3f);
 
         GridLayout layoutInputControls = new GridLayout(4, 7);
-        layoutInputControls.setWidth(1200, Sizeable.UNITS_PIXELS);
+        layoutInputControls.setWidth(1180, Sizeable.UNITS_PIXELS);
         layoutInputControls.setColumnExpandRatio(0, 0.33f);
         layoutInputControls.setColumnExpandRatio(1, 0.33f);
         layoutInputControls.setColumnExpandRatio(2, 0.33f);
@@ -1088,7 +1089,7 @@ public class MainForm extends Application {
 
 //            layoutGrid.removeComponent(0, 6);
             layoutGrid.addComponent(resultsView, 0, 1, 2, 1);
-            resultsView.setWidth(1200, Sizeable.UNITS_PIXELS);
+            resultsView.setWidth(1190, Sizeable.UNITS_PIXELS);
             layoutGrid.setComponentAlignment(resultsView, Alignment.TOP_CENTER);
 //            layoutGrid.addComponent(createHeaderTitle(resultingEvidence.getAllWebSites().size(), tripleToValidate), 0, 4, 2, 4);
             resultsView.displayResults();
