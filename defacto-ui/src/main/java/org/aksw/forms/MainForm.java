@@ -110,7 +110,7 @@ public class MainForm extends Application {
     public void init() {
         currentApplication = this;
 //        setTheme("defacto");
-        setTheme("reindeer");
+        setTheme("defacto");
         mainWindow = new Window("DeFacto");
         mainWindow.setWidth(1250, Sizeable.UNITS_PIXELS);
 //        mainWindow.setHeight(100, Sizeable.UNITS_PERCENTAGE);
@@ -463,6 +463,10 @@ public class MainForm extends Application {
         btnRunExample.setWidth(100, Sizeable.UNITS_PIXELS);
         btnRunExample.addListener(new ResultFetcher());
 
+//        btnRunExample.setStyleName("hide-buttons");
+//        layoutInputControls.addStyleName("tweet");
+
+
         Label lblSelectExample = new Label("<b>Select an example: </b>");
         lblSelectExample.setContentMode(Label.CONTENT_XHTML);
 
@@ -507,7 +511,7 @@ public class MainForm extends Application {
         btnGetResults = new Button("Get Results");
         btnGetResults.setImmediate(true);
         btnGetResults.setWidth(100, Sizeable.UNITS_PIXELS);
-        btnGetResults.addStyleName("button-container");
+//        btnGetResults.addStyleName("button-container");
         btnGetResults.addListener(new ResultFetcher());
 //        layoutGrid.addComponent(btnGetResults, 2, 3);
         layoutInputControls.addComponent(btnGetResults, 3, 2);

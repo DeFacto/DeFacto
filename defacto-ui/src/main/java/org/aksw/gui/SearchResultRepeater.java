@@ -452,8 +452,12 @@ public class SearchResultRepeater extends VerticalLayout {
             if(arrDistinctContexts.size() > 0){
                 for(String proof: arrDistinctContexts){
 
+                    HorizontalLayout hlProofWithApprovalButtons = new HorizontalLayout();
+                    hlProofWithApprovalButtons.addStyleName("tweet");
+
                     HorizontalLayout hlProof = new HorizontalLayout();
                     hlProof.setWidth(430, Sizeable.UNITS_PIXELS);
+
                     lblStructuredPhrase = new Label();
                     //In order to highlight the subject and object we should write them in bold
                     String contextString = proof.replaceAll("(?i)" + resultingEvidence.getSubjectLabel(), "<b>" + resultingEvidence.getSubjectLabel() + "</b>");
@@ -470,9 +474,10 @@ public class SearchResultRepeater extends VerticalLayout {
 
 //                    HorizontalLayout hlApproveDisapproveButtons = new HorizontalLayout();
 //                    hlApproveDisapproveButtons.setMargin(false, false, false, true);
-
+                    HorizontalLayout layoutButtonsApproval = new HorizontalLayout();
                     //Button for proof approval
                     final MyButton btnApprove = new MyButton(renderStartIndex + i, proofIndex, true);
+//                    btnApprove.addStyleName("tweet");
                     btnApprove.setCaption("");
                     btnApprove.setDescription("Accept");
                     btnApprove.addListener(new Button.ClickListener() {
@@ -481,7 +486,7 @@ public class SearchResultRepeater extends VerticalLayout {
                             logger.info("Pressed button is for website # " + btnApprove.getWebsiteIndex() + ", proof # "
                                     + btnApprove.getProofIndex());
 
-                            int requiredButtonPosition= arrApproveDisapproveButtons.indexOf(new MyButton(btnApprove.getWebsiteIndex(),
+                            int requiredButtonPosition = arrApproveDisapproveButtons.indexOf(new MyButton(btnApprove.getWebsiteIndex(),
                                     btnApprove.getProofIndex(), false));
 
                             //Change the status of the current button to disabled and enable the other button
@@ -490,13 +495,13 @@ public class SearchResultRepeater extends VerticalLayout {
                             getWindow().showNotification("Thank you, for your feedback");
                         }
                     });
-                    btnApprove.setIcon(new FileResource(new File("defacto-ui/web/images/correct_30.png"), this.getApplication()));
+                    btnApprove.setIcon(new FileResource(new File("/home/mohamed/LeipzigUniversity/JavaProjects/test/DeFacto/defacto-ui/web/images/correct_30.png"), this.getApplication()));
                     btnApprove.setWidth(40, Sizeable.UNITS_PIXELS);
                     btnApprove.setHeight(40, Sizeable.UNITS_PIXELS);
-
+                    layoutButtonsApproval.addComponent(btnApprove);
 
 //                    hlApproveDisapproveButtons.addComponent(btnApprove);
-                    layoutComplexProof.addComponent(btnApprove, 2, proofIndex);
+//                    layoutComplexProof.addComponent(btnApprove, 2, proofIndex);
 
                     //Button for proof disapproval
                     final MyButton btnDisapprove = new MyButton(renderStartIndex + i, proofIndex, false);
@@ -517,22 +522,30 @@ public class SearchResultRepeater extends VerticalLayout {
                             getWindow().showNotification("Thank you, for your feedback");
                         }
                     });
-                    btnDisapprove.setIcon(new FileResource(new File("defacto-ui/web/images/incorrect_30.png"), this.getApplication()));
+                    btnDisapprove.setIcon(new FileResource(new File("/home/mohamed/LeipzigUniversity/JavaProjects/test/DeFacto/defacto-ui/web/images/incorrect_30.png"), this.getApplication()));
                     btnDisapprove.setWidth(40, Sizeable.UNITS_PIXELS);
                     btnDisapprove.setHeight(40, Sizeable.UNITS_PIXELS);
 
 //                    hlProof.addComponent(btnDisapprove);
 //                    hlApproveDisapproveButtons.addComponent(btnDisapprove);
-                    layoutComplexProof.addComponent(btnDisapprove, 3, proofIndex);
-                    layoutComplexProof.setComponentAlignment(btnDisapprove, Alignment.MIDDLE_LEFT);
-                    layoutComplexProof.setComponentAlignment(btnApprove, Alignment.MIDDLE_LEFT);
-
+//                    layoutComplexProof.addComponent(btnDisapprove, 3, proofIndex);
+//                    layoutComplexProof.setComponentAlignment(btnDisapprove, Alignment.MIDDLE_LEFT);
+//                    layoutComplexProof.setComponentAlignment(btnApprove, Alignment.MIDDLE_LEFT);
+                    layoutButtonsApproval.addComponent(btnDisapprove);
+                    layoutButtonsApproval.addStyleName("buttons");
+//                    layoutComplexProof.addComponent(layoutButtonsApproval, 3, proofIndex);
                     //Add buttons to the array
                     arrApproveDisapproveButtons.add(btnApprove);
                     arrApproveDisapproveButtons.add(btnDisapprove);
 
+                    hlProofWithApprovalButtons.addComponent(hlProof);
+                    hlProofWithApprovalButtons.addComponent(layoutButtonsApproval);
+
+                    layoutComplexProof.addComponent(hlProofWithApprovalButtons, 1, proofIndex, 3, proofIndex);
+                    proofIndex++;
+
 //                    layoutComplexProof.addComponent(lblStructuredPhrase, 1, proofIndex++);
-                    layoutComplexProof.addComponent(hlProof, 1, proofIndex++);
+//                    layoutComplexProof.addComponent(hlProof, 1, proofIndex++);
 //                    layoutComplexProof.addComponent(hlApproveDisapproveButtons, 1, proofIndex++);
                 }
 
