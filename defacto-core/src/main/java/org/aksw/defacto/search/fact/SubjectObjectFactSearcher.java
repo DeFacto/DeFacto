@@ -15,15 +15,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
-import org.aksw.defacto.util.ModelUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-
-import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * 
@@ -68,18 +66,18 @@ public class SubjectObjectFactSearcher implements FactSearcher {
     }
     
     @Override
-    public void generateProofs(Evidence evidence, WebSite website, Model model, Pattern pattern) {
+    public void generateProofs(Evidence evidence, WebSite website, DefactoModel model, Pattern pattern) {
 
-        String subjectUri   = ModelUtil.getSubjectUri(model);
-        String objectUri    = ModelUtil.getObjectUri(model);
+        String subjectUri   = model.getSubjectUri();
+        String objectUri    = model.getObjectUri();
         String websiteText  = website.getText().toLowerCase();
         
         Set<String> subjectLabels  = urisToLabels.get(subjectUri.replace("http://dbpedia.org/resource/", ""));
         Set<String> objectLabels   = urisToLabels.get(objectUri.replace("http://dbpedia.org/resource/", ""));
         
         // fallback on the labels provided by the input, no surface forms from dbpedia
-        if ( subjectLabels == null ) subjectLabels = new HashSet<String>(Arrays.asList(ModelUtil.getLabel(subjectUri, model)));
-        if ( objectLabels == null ) objectLabels = new HashSet<String>(Arrays.asList(ModelUtil.getLabel(objectUri, model)));
+        if ( subjectLabels == null ) subjectLabels = new HashSet<String>(Arrays.asList(model.getSubjectLabel()));
+        if ( objectLabels == null ) objectLabels = new HashSet<String>(Arrays.asList(model.getObjectLabel()));
         
         for ( String subjectLabel : subjectLabels ) { subjectLabel = subjectLabel.toLowerCase(); // save some time
             for ( String objectLabel : objectLabels ) { objectLabel = objectLabel.toLowerCase(); // same here

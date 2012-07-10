@@ -54,7 +54,7 @@ public class Defacto {
      * 
      * @return
      */
-    public static Evidence checkFact(Model model) {
+    public static Evidence checkFact(DefactoModel model) {
         
         Logger logger = Logger.getLogger(Defacto.class);
 
@@ -110,21 +110,21 @@ public class Defacto {
      * @param models
      * @return
      */
-    public static void checkFacts(DefactoConfig config, List<Model> models) {
+    public static void checkFacts(DefactoConfig config, List<DefactoModel> defactoModel) {
 
         // hack to get surface forms before timing
         SubjectObjectFactSearcher.getInstance();
         startTime       = System.currentTimeMillis();
-        numberOfModels  = models.size();
+        numberOfModels  = defactoModel.size();
         currentModel    = 1;
         DEFACTO_CONFIG  = config;
         
-        for (Model model : models) {
+        for (DefactoModel model : defactoModel) {
             
             Evidence evidence = checkFact(model);
             StmtIterator iter = model.listStatements();
             while (iter.hasNext()) System.out.println(iter.nextStatement());
-            System.out.println("Defacto: " + new DecimalFormat("0.00").format(evidence.getDeFactoScore()) + " % that this fact is true\n");
+            System.out.println("Defacto: " + new DecimalFormat("0.00").format(evidence.getDeFactoScore()) + " % that this fact is true! Actual: " + model.isCorrect() +"\n");
         }
         // rewrite the fact training file after every proof
         if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) writeFactTrainingDataFile();

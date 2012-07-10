@@ -49,8 +49,8 @@ public class BingSearchEngine extends DefaultSearchEngine {
         builder.withMarket("en-us");
         builder.withAdultOption(AdultOption.OFF);
 
-        builder.withWebRequestCount(Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS").longValue());
-        builder.withWebRequestOffset(0L);
+//        builder.withWebRequestCount(Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS").longValue());
+//        builder.withWebRequestOffset(0L);
         builder.withWebRequestSearchOption(WebSearchOption.DISABLE_HOST_COLLAPSING);
         builder.withWebRequestSearchOption(WebSearchOption.DISABLE_QUERY_ALTERATIONS);
         
@@ -58,6 +58,14 @@ public class BingSearchEngine extends DefaultSearchEngine {
         logger.info("Querying Bing for query: '" + this.generateQuery(query) + "' returned " + numberOfResults + " results.");
         
         return numberOfResults;
+    }
+    
+    public static void main(String[] args) {
+        
+        MetaQuery query = new MetaQuery(String.format("%s|-|%s|-|%s", "Gloria Estefan", "??? NONE ???", "Remember Me with Love"));
+        
+        BingSearchEngine engine = new BingSearchEngine();
+        System.out.println(engine.getNumberOfResults(query));
     }
     
     @Override

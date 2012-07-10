@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
@@ -21,7 +22,6 @@ import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.query.QueryGenerator;
 import org.aksw.defacto.util.CSVWriter;
 import org.aksw.defacto.util.LabeledTriple;
-import org.aksw.defacto.util.ModelUtil;
 import org.aksw.defacto.util.SparqlUtil;
 import org.aksw.defacto.util.TimeUtil;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -56,7 +56,7 @@ public class FactSearchTester {
 
     static Logger logger = Logger.getLogger(FactSearchTester.class);
 
-    public static String check(Model model) throws IOException {
+    public static String check(DefactoModel model) throws IOException {
 
         // Logger logger = Logger.getLogger(FactSearchTester.class);
 
@@ -105,9 +105,9 @@ public class FactSearchTester {
         return proofWebsites.size() + "|" +possibleProofWebsites.size();
     }
 
-    public static String toString(Model model) {
+    public static String toString(DefactoModel model) {
 
-        LabeledTriple lt = new LabeledTriple(model, ModelUtil.getFact(model).asTriple());
+        LabeledTriple lt = new LabeledTriple(model);
 
         return  lt.getSubjectURI().replace("http://dbpedia.org/resource/", "") + " (" + lt.getSubjectLabel() + ") - " + 
                 lt.getPredicateURI().replace("http://dbpedia.org/ontology/", "") + " - " + 
@@ -125,7 +125,8 @@ public class FactSearchTester {
                 model.createLiteral(sparql.getEnLabel(subject), "en")));
         model.add(ResourceFactory.createStatement(ResourceFactory.createResource(object), ResourceFactory.createProperty("http://www.w3.org/2000/01/rdf-schema#label"),
                 model.createLiteral(sparql.getEnLabel(object), "en")));
-        return check(model);
+        
+        return check(new DefactoModel(model, "undefined", false));
     }
 
     public static void checkPositiveExamples() throws IOException {
@@ -188,9 +189,11 @@ public class FactSearchTester {
 
         Model model = ModelFactory.createDefaultModel();
         model.read(new FileReader(modelFile), "", "TTL");
-        logger.info(ModelUtil.getFact(model).toString());
-        out.write("Checking: " + ModelUtil.getFact(model).toString() + "." + "\n");
-        return check(model);
+        DefactoModel defactoModel = new DefactoModel(model, "undefined", false);
+        
+        logger.info(defactoModel.getFact().toString());
+        out.write("Checking: " + defactoModel.getFact().toString() + "." + "\n");
+        return check(defactoModel);
     }
 
     /**

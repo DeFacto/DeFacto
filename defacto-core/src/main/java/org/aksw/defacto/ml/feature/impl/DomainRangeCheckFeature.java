@@ -2,7 +2,6 @@ package org.aksw.defacto.ml.feature.impl;
 
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.AbstractFeature;
-import org.aksw.defacto.util.ModelUtil;
 import org.aksw.defacto.util.SparqlUtil;
 
 import com.hp.hpl.jena.query.ResultSet;
@@ -16,9 +15,9 @@ public class DomainRangeCheckFeature extends AbstractFeature {
 
 	@Override
 	public void extractFeature(Evidence evidence) {
-		String subjectURI = ModelUtil.getSubjectUri(evidence.getModel());
-		String propertyURI = ModelUtil.getPropertyUri(evidence.getModel());
-		String objectURI = ModelUtil.getObjectUri(evidence.getModel());
+		String subjectURI = evidence.getModel().getSubjectUri();
+		String propertyURI = evidence.getModel().getPropertyUri();
+		String objectURI = evidence.getModel().getObjectUri();
 		
 		String endpoint = "http://live.dbpedia.org/sparql";
 		String graph = "http://dbpedia.org";

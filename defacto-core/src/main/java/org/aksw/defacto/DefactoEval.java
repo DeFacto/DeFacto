@@ -52,14 +52,14 @@ public class DefactoEval {
         CacheManager.getInstance().closeConnection();
     }
 
-    private static List<Model> getTrainingData(String pathToFalseTrainingDirectory) throws IOException {
+    private static List<DefactoModel> getTrainingData(String pathToFalseTrainingDirectory) throws IOException {
 
         List<File> modelFiles = new ArrayList<File>(Arrays.asList(new File("resources/training/data/true").listFiles()));
         modelFiles.addAll(Arrays.asList(new File("resources/training/data/false/" + pathToFalseTrainingDirectory).listFiles()));
         Collections.sort(modelFiles);
         
         List<String> confirmedFilenames = FileUtils.readLines(new File("resources/training/properties/confirmed_properties.txt"));
-        List<Model> models = new ArrayList<Model>();
+        List<DefactoModel> models = new ArrayList<DefactoModel>();
         
         for (File mappingFile : modelFiles) {
 
@@ -67,20 +67,16 @@ public class DefactoEval {
             if (!mappingFile.isHidden() && confirmedFilenames.contains(mappingFile.getName())) {
                 
                 try {
-
+                    
                     Model model = ModelFactory.createDefaultModel();
                     model.read(new FileReader(mappingFile), "", "TTL");
-                    model.setNsPrefix("name", mappingFile.getParent().replace("resources/training/data/", "") + "/" + mappingFile.getName());
+                    String name = mappingFile.getParent().replace("resources/training/data/", "") + "/" + mappingFile.getName();
+                    boolean isCorrect = false;
 
-                    if (mappingFile.getAbsolutePath().contains("data/true")) {
+                    if (mappingFile.getAbsolutePath().contains("data/true")) isCorrect = true;
+                    logger.info("Loading "+isCorrect+" triple from file: " + mappingFile.getName());
 
-                        logger.info("Loading true triple from file: " + mappingFile.getName());
-                        model.setNsPrefix("correct", "http://this.uri.is.useless/just_to_mark_model_as_correct");
-                    }
-                    else
-                        logger.info("Loading false triple from file: " + mappingFile.getName());
-
-                    models.add(model);
+                    models.add(new DefactoModel(model, name, isCorrect));
                 }
                 catch (FileNotFoundException e) {
 

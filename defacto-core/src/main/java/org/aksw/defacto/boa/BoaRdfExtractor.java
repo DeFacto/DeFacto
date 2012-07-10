@@ -6,7 +6,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
 
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.util.ModelUtil;
+import org.aksw.defacto.DefactoModel;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -21,10 +21,10 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  */
 public class BoaRdfExtractor {
 
-    public static boolean checkFact(String text, Model model) {
+    public static boolean checkFact(String text, DefactoModel model) {
 
         // uri1 property uri2
-        Statement linkStatement = ModelUtil.getFact(model);
+        Statement linkStatement = model.getFact();
         
         // creates a model with all triples BOA has extracted
         Model boaModel = queryBoa(text, linkStatement.getPredicate().getURI());

@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.BoaPatternSearcher;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.Evidence;
@@ -24,10 +25,7 @@ import org.aksw.defacto.search.engine.bing.BingSearchEngine;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTermExtractor;
-import org.aksw.defacto.util.ModelUtil;
 import org.apache.log4j.Logger;
-
-import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * 
@@ -37,19 +35,17 @@ public class EvidenceCrawler {
 
     private Logger logger = Logger.getLogger(EvidenceCrawler.class);
     private Map<Pattern,MetaQuery> patternToQueries;
-    private Model model;
-    private String modelName;
+    private DefactoModel model;
     
     /**
      * 
      * @param model
      * @param patternToQueries
      */
-    public EvidenceCrawler(Model model, Map<Pattern, MetaQuery> queries) {
+    public EvidenceCrawler(DefactoModel model, Map<Pattern, MetaQuery> queries) {
 
         this.patternToQueries = queries;
         this.model            = model;
-        this.modelName        = this.model.getNsPrefixURI("name");
     }
 
     /**
@@ -89,9 +85,9 @@ public class EvidenceCrawler {
         return evidence;
     }
     
-    private void scoreSearchResults(Set<SearchResult> searchResults, Model model, Evidence evidence) {
+    private void scoreSearchResults(Set<SearchResult> searchResults, DefactoModel model, Evidence evidence) {
 
-        evidence.setBoaPatterns(new BoaPatternSearcher().getNaturalLanguageRepresentations(ModelUtil.getPropertyUri(model), 200, 0.5));
+        evidence.setBoaPatterns(new BoaPatternSearcher().getNaturalLanguageRepresentations(model.getPropertyUri(), 200, 0.5));
         
         // prepare the scoring 
         List<WebSiteScoreCallable> scoreCallables =  new ArrayList<WebSiteScoreCallable>();
@@ -138,7 +134,7 @@ public class EvidenceCrawler {
         }
     }
 
-    private void crawlAndCacheSearchResults(Set<SearchResult> searchResults, Model model, Evidence evidence) {
+    private void crawlAndCacheSearchResults(Set<SearchResult> searchResults, DefactoModel model, Evidence evidence) {
         
         // prepare the result variables
         List<HtmlCrawlerCallable> htmlCrawlers = new ArrayList<HtmlCrawlerCallable>();
