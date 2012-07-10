@@ -47,7 +47,7 @@ public class WebSiteScoreCallable implements Callable<WebSite> {
         if ( website.getPageRank() == Defacto.DEFACTO_CONFIG.getIntegerSetting("evidence", "UNASSIGNED_PAGE_RANK") ) {
             
             logger.info("Getting page rank for: " + website.getUrl());
-//            website.setPageRank(PageRank.getPageRank(website.getUrl()));
+            website.setPageRank(PageRank.getPageRank(website.getUrl()));
         }
         
         return website;
