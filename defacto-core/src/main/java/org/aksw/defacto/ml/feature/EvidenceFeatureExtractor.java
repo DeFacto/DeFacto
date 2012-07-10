@@ -33,7 +33,7 @@ public class EvidenceFeatureExtractor {
         EvidenceFeatureExtractor.features.add(new TopicMajoritySearchFeature());
         EvidenceFeatureExtractor.features.add(new ProofFeature());
         EvidenceFeatureExtractor.features.add(new NameFeature());
-        EvidenceFeatureExtractor.features.add(new PointwiseMutualInformationFeature());
+//        EvidenceFeatureExtractor.features.add(new PointwiseMutualInformationFeature());
     }
     
     /**
