@@ -40,12 +40,16 @@ public class DefactoEval {
         
         org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
         DefactoConfig config = new DefactoConfig(new Ini(new File("defacto.ini")));
+        
+        System.out.println(false == config.getBooleanSetting("evidence", "OVERWRITE_EVIDENCE_TRAINING_FILE"));
+        System.exit(1);
+        
         List<String> pathToFalseData = new ArrayList<String>(Arrays.asList("domain", "range", "domain_range", "property", "random"));
 
         for (String falseDataDir : pathToFalseData) {
             
             AbstractFeature.provenance = new Instances("defacto", AbstractFeature.attributes, 0);
-            config.setStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME", "resources/training/evidence/" + falseDataDir + "_defacto_evidence.arff"); 
+            config.setStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME", "resources/training/arff/evidence/" + falseDataDir + "_defacto_evidence.arff"); 
             Defacto.checkFacts(config, getTrainingData(falseDataDir));
         }
         
