@@ -58,7 +58,7 @@ public class DefactoEval {
         modelFiles.addAll(Arrays.asList(new File("resources/training/data/false/" + pathToFalseTrainingDirectory).listFiles()));
         Collections.sort(modelFiles);
         
-        List<String> confirmedFilenames = FileUtils.readLines(new File("resources/training/properties/confirmed_properties.txt"));
+        List<String> confirmedFilenames = FileUtils.readLines(new File("resources/training/properties/confirmed_properties_master.txt"));
         List<DefactoModel> models = new ArrayList<DefactoModel>();
         
         for (File mappingFile : modelFiles) {
