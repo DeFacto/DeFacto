@@ -41,9 +41,6 @@ public class DefactoEval {
         org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
         DefactoConfig config = new DefactoConfig(new Ini(new File("defacto.ini")));
         
-        System.out.println(false == config.getBooleanSetting("evidence", "OVERWRITE_EVIDENCE_TRAINING_FILE"));
-        System.exit(1);
-        
         List<String> pathToFalseData = new ArrayList<String>(Arrays.asList("domain", "range", "domain_range", "property", "random"));
 
         for (String falseDataDir : pathToFalseData) {
