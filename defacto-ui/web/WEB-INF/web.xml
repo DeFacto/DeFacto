@@ -16,6 +16,12 @@
             <param-value>org.aksw.forms.MainForm</param-value>
             <!--param-value>org.vaadin.sami.autocomplete.AutoCompleteSampleApplication</param-value-->
         </init-param>
+
+        <init-param>
+            <param-name>widgetset</param-name>
+            <param-value>org.aksw.DefactoWidgetset</param-value>
+        </init-param>
+
         <!--init-param>
             <param-name>widgetset</param-name>
             <param-value>com.invient.vaadin.InvientChartsDemoAppWidgetset</param-value>

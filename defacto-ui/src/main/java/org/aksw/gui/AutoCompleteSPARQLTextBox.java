@@ -6,7 +6,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
-import org.aksw.helper.SPARQL;
+import org.aksw.defacto.util.SparqlUtil;
 import org.apache.log4j.Logger;
 
 /**
@@ -30,7 +30,7 @@ public class AutoCompleteSPARQLTextBox implements FieldEvents.TextChangeListener
         if(strInputLabel.length()>2){
             String queryString  = "select ?s where {?s rdfs:label ?o. FILTER REGEX(?o, \"^"+strInputLabel+"\",\"i\") } limit 10";
 
-            SPARQL sparqlEndpointDBpediaLive = new SPARQL("http://live.dbpedia.org/sparql", "http://dbpedia.org");
+            SparqlUtil sparqlEndpointDBpediaLive = new SparqlUtil("http://live.dbpedia.org/sparql", "http://dbpedia.org");
 
             ResultSet potentialLabels = sparqlEndpointDBpediaLive.executeSelectQuery(queryString);
             while (potentialLabels.hasNext()){

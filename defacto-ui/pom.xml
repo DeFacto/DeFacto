@@ -30,7 +30,7 @@
     <dependencies>
         <dependency>
             <groupId>org.aksw</groupId>
-            <artifactId>InformationFinder</artifactId>
+            <artifactId>defacto-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -39,11 +39,11 @@
             <version>1.4.0</version>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>invient-charts</artifactId>
             <version>0.8.6</version>
-        </dependency>
+        </dependency-->
 
         <dependency>
             <groupId>org.vaadin.addon</groupId>
@@ -62,11 +62,11 @@
             <version>1.8.0</version>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>autocompletetextfield</artifactId>
             <version>0.3.1</version>
-        </dependency>
+        </dependency-->
 
         <!--dependency>
             <groupId>org.appfuse.client</groupId>
@@ -92,5 +92,59 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>compile-widgetset</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>gwt-maven-plugin</artifactId>
+                        <version>2.4.0</version>
+                        <configuration>
+                            <webappDirectory>src/main/webapp/VAADIN/widgetsets</webappDirectory>
+                            <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+                            <runTarget>vaadin-mvn-addon</runTarget>
+                            <!--soyc>false</soyc-->
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.vaadin</groupId>
+                        <artifactId>vaadin-maven-plugin</artifactId>
+                        <version>1.0.2</version>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                </configuration>
+                                <goals>
+                                    <goal>update-widgetset</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <vaadin.version>6.6.2</vaadin.version>
+        <gwt.version>2.4.0</gwt.version>
+        <gwt.plugin.version>2.4.0</gwt.plugin.version>
+        <vaadin.plugin.version>1.0.2</vaadin.plugin.version>
+        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
+    </properties>
     
 </project>
