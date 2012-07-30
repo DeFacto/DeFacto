@@ -8,3 +8,4 @@ defacto-core/log/debug.log
 defacto-core/log/*
 .idea/
 *.iml
+*.settings

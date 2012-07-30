@@ -36,7 +36,6 @@ public class AutoCompleteSPARQLTextBox implements FieldEvents.TextChangeListener
             while (potentialLabels.hasNext()){
                 logger.info(potentialLabels.next().get("s").toString());
             }
-
         }
 
         Panel popupPanel = new Panel();

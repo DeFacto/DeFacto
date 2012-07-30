@@ -17,7 +17,7 @@ import org.aksw.defacto.boa.BoaPatternSearcher;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
-import org.aksw.defacto.search.cache.SearchResultCache;
+import org.aksw.defacto.search.cache.H2DatabaseSearchResultCache;
 import org.aksw.defacto.search.concurrent.HtmlCrawlerCallable;
 import org.aksw.defacto.search.concurrent.WebSiteScoreCallable;
 import org.aksw.defacto.search.engine.SearchEngine;
@@ -166,7 +166,7 @@ public class EvidenceCrawler {
         }
                     
         // add the results of the crawl to the cache
-        SearchResultCache cache = new SearchResultCache();
+        H2DatabaseSearchResultCache cache = new H2DatabaseSearchResultCache();
         for ( SearchResult result : searchResults )
             if ( !cache.contains(result.getQuery().toString()) ) cache.add(result);
     }
@@ -188,7 +188,7 @@ public class EvidenceCrawler {
 //        Map<Pattern,List<WebSite>> results = this.executeWebSiteCrawler(evidence, executor, websiteCrawler);
 //                
 //        // add the results of the crawl to the cache
-//        SearchResultCache cache = new SearchResultCache();
+//        H2DatabaseSearchResultCache cache = new H2DatabaseSearchResultCache();
 //        for ( SearchResult result : patternToSearchResult.values() )
 //            if ( !cache.contains(result.getQuery().toString()) ) cache.add(result);
 //                
