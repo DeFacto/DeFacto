@@ -3,4 +3,5 @@ target/
 .settings
 defacto-core/resources/cache/labels/surface_forms_en.tsv
 .DS_Store
-defacto-core/log/*
+defacto-core/log/info.log
+defacto-core/log/debug.log
