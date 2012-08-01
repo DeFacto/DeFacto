@@ -91,10 +91,13 @@ public class Defacto {
         logger.info("Feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFeatureExtraction));
         
         // 7. score the model
-        long startScoring = System.currentTimeMillis();
-        EvidenceScorer scorer = new EvidenceScorer();
-        scorer.scoreEvidence(evidence);
-        logger.info("Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
+        if ( Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) {
+
+            long startScoring = System.currentTimeMillis();
+            EvidenceScorer scorer = new EvidenceScorer();
+            scorer.scoreEvidence(evidence);
+            logger.info("Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
+        }
         
         // 8. Log statistics
         System.out.println("Model " + currentModel + "/" + numberOfModels + " took " + TimeUtil.formatTime(System.currentTimeMillis() - start) +
