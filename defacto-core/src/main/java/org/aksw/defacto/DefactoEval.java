@@ -50,7 +50,7 @@ public class DefactoEval {
             Defacto.checkFacts(config, getTrainingData(falseDataDir));
         }
         
-        CacheManager.getInstance().closeConnection();
+//        CacheManager.getInstance().closeConnection();
     }
 
     private static List<DefactoModel> getTrainingData(String pathToFalseTrainingDirectory) throws IOException {
