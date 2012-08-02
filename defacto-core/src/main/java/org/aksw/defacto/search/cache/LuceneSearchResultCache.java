@@ -205,13 +205,8 @@ public class LuceneSearchResultCache implements Cache<SearchResult> {
             for ( ScoreDoc hit : hits) {
                 
                 Document doc = searcher.doc(hit.doc);
-                
-                System.out.println(doc.get("url"));
-                System.out.println(doc.get("hits"));
-                
                 metaQuery = new MetaQuery(doc.get("query"));
                 hitCount = Long.valueOf(doc.get("hits"));
-                
                 
                 if ( !doc.get("url").isEmpty() ) { // empty cache hits should not become a website
 
