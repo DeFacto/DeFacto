@@ -16,7 +16,7 @@ public class WebSite {
     private String text                     = "";
     private String title                    = "";
     private String url                      = "";
-    private int pagerank                    = Defacto.DEFACTO_CONFIG.getIntegerSetting("evidence", "UNASSIGNED_PAGE_RANK");
+    private int pagerank                    = -1;//Defacto.DEFACTO_CONFIG.getIntegerSetting("evidence", "UNASSIGNED_PAGE_RANK");
     private double score                    = 0D;
     private MetaQuery query                 = null;
     

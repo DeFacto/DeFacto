@@ -1,235 +1,244 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.aksw</groupId>
-    <artifactId>defacto</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <name>main</name>
+	<groupId>org.aksw</groupId>
+	<artifactId>defacto</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>main</name>
 
-    <modules>
-        <module>defacto-ui</module>
-        <module>defacto-core</module>
-    </modules>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<modules>
+		<module>defacto-ui</module>
+		<module>defacto-core</module>
+	</modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-    <repositories>
+	<repositories>
 
-        <repository>
-            <id>maven2-repository.dev.java.net</id>
-            <name>Java.net Repository for Maven</name>
-            <url>http://download.java.net/maven/2/</url>
-            <layout>default</layout>
-        </repository>
-        
-        <repository>
+		<repository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net Repository for Maven</name>
+			<url>http://download.java.net/maven/2/</url>
+			<layout>default</layout>
+		</repository>
+
+		<repository>
 			<id>apache-repo-releases</id>
 			<url>https://repository.apache.org/content/repositories/releases/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-        
-        <repository>
-            <id>repository.apache.org</id>
-            <name>apache Repository</name>
-            <url>http://repository.apache.org/snapshots</url>
-        </repository>
 
-        <repository>
-            <id>maven.aksw.internal</id>
-            <name>University Leipzig, AKSW Maven2 Repository</name>
-            <url>http://prod1.aksw.org:8081/archiva/repository/internal</url>
-        </repository>
+		<repository>
+			<id>repository.apache.org</id>
+			<name>apache Repository</name>
+			<url>http://repository.apache.org/snapshots</url>
+		</repository>
 
-        <repository>
-            <id>maven.aksw.snapshots</id>
-            <name>University Leipzig, AKSW Maven2 Repository</name>
-            <url>http://prod1.aksw.org:8081/archiva/repository/snapshots</url>
-        </repository>        
+		<repository>
+			<id>maven.aksw.internal</id>
+			<name>University Leipzig, AKSW Maven2 Repository</name>
+			<url>http://prod1.aksw.org:8081/archiva/repository/internal</url>
+		</repository>
 
-        <repository>
-            <id>scala-tools.org</id>
-            <name>Scala-tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-releases/</url>
-        </repository>
+		<repository>
+			<id>maven.aksw.snapshots</id>
+			<name>University Leipzig, AKSW Maven2 Repository</name>
+			<url>http://prod1.aksw.org:8081/archiva/repository/snapshots</url>
+		</repository>
 
-
-        <repository>
-            <id>tc-maven-repo</id>
-            <url>https://github.com/tc/tc-maven-repo/raw/master/releases</url>
-        </repository>
-
-        <repository>
-            <id>sameas-4j-googlecode</id>
-            <url>http://asmx-sameas4j.googlecode.com/svn/repo</url>
-        </repository>
-
-        <repository>
-            <id>info-bliki-repository</id>
-            <url>http://gwtwiki.googlecode.com/svn/maven-repository/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-
-        <repository>
-            <id>vaadin-addons</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
-        </repository>
-        
-        <repository>
-            <id>wordnet</id>
-            <url>https://dev-iesl.cs.umass.edu/nexus/content/repositories/public/</url>
-        </repository>
-    </repositories>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>net.sf</groupId>
-            <artifactId>gsaapi</artifactId>
-            <version>1.0</version>
-            <!--scope>system</scope-->
-            <!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/gsa-japi-1.10.jar</systemPath-->
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.3.166</version>
-        </dependency>
+		<repository>
+			<id>scala-tools.org</id>
+			<name>Scala-tools Maven2 Repository</name>
+			<url>http://scala-tools.org/repo-releases/</url>
+		</repository>
 
 
-        <dependency>
-            <groupId>com.google</groupId>
-            <artifactId>gson</artifactId>
-            <version>1.4</version>
-            <!--scope>system</scope-->
-            <!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/gson-1.4.jar</systemPath-->
-        </dependency>
+		<repository>
+			<id>tc-maven-repo</id>
+			<url>https://github.com/tc/tc-maven-repo/raw/master/releases</url>
+		</repository>
 
-        <dependency>
-            <!-- jsoup HTML parser library @ http://jsoup.org/ -->
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.6.2</version>
-            <!--scope>system</scope-->
-            <!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/jsoup-1.6.1.jar</systemPath-->
-        </dependency>
+		<repository>
+			<id>sameas-4j-googlecode</id>
+			<url>http://asmx-sameas4j.googlecode.com/svn/repo</url>
+		</repository>
+
+		<repository>
+			<id>info-bliki-repository</id>
+			<url>http://gwtwiki.googlecode.com/svn/maven-repository/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>vaadin-addons</id>
+			<url>http://maven.vaadin.com/vaadin-addons</url>
+		</repository>
+
+		<repository>
+			<id>wordnet</id>
+			<url>https://dev-iesl.cs.umass.edu/nexus/content/repositories/public/</url>
+		</repository>
+
+		<repository>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</releases>
+			<id>net.billylieurance</id>
+			<name>BillyLieuranceNet</name>
+			<url>http://www.billylieurance.net/maven2</url>
+			<layout>default</layout>
+		</repository>
+
+	</repositories>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>net.sf</groupId>
+			<artifactId>gsaapi</artifactId>
+			<version>1.0</version>
+			<!--scope>system</scope -->
+			<!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/gsa-japi-1.10.jar</systemPath -->
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.3.166</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.google</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.4</version>
+			<!--scope>system</scope -->
+			<!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/gson-1.4.jar</systemPath -->
+		</dependency>
+
+		<dependency>
+			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.6.2</version>
+			<!--scope>system</scope -->
+			<!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/jsoup-1.6.1.jar</systemPath -->
+		</dependency>
 
 
 
-        <dependency>
-            <!-- jsoup HTML parser library @ http://jsoup.org/ -->
-            <groupId>com.google.code.bing.search</groupId>
-            <artifactId>bing-search-java-sdk</artifactId>
-            <version>1.0</version>
-            <!--scope>system</scope-->
-            <!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/bing-search-java-sdk.jar</systemPath-->
-        </dependency>
+		<dependency>
+			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
+			<groupId>com.google.code.bing.search</groupId>
+			<artifactId>bing-search-java-sdk</artifactId>
+			<version>1.0</version>
+			<!--scope>system</scope -->
+			<!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/bing-search-java-sdk.jar</systemPath -->
+		</dependency>
 
-        <dependency>
-            <!-- jsoup HTML parser library @ http://jsoup.org/ -->
-            <groupId>net.sourceforge.htmlcleaner</groupId>
-            <artifactId>htmlcleaner</artifactId>
-            <version>2.2</version>
-            <!--scope>system</scope-->
-            <!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/htmlcleaner-2.2.jar</systemPath-->
-        </dependency>
+		<dependency>
+			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
+			<groupId>net.sourceforge.htmlcleaner</groupId>
+			<artifactId>htmlcleaner</artifactId>
+			<version>2.2</version>
+			<!--scope>system</scope -->
+			<!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/htmlcleaner-2.2.jar</systemPath -->
+		</dependency>
 
-        <dependency>
-            <groupId>info.bliki.wiki</groupId>
-            <artifactId>bliki-core</artifactId>
-            <version>3.0.17</version>
-            <exclusions>
-            	<exclusion>
-            		<artifactId>commons-lang</artifactId>
-            		<groupId>commons-lang</groupId>
-            	</exclusion>
-            </exclusions>
-        </dependency>
+		<dependency>
+			<groupId>info.bliki.wiki</groupId>
+			<artifactId>bliki-core</artifactId>
+			<version>3.0.17</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-lang</artifactId>
+					<groupId>commons-lang</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
 
-        <!--dependency>
-            <groupId>com.hp.hpl.jena</groupId>
-            <artifactId>jena</artifactId>
-            <version>2.8.5</version>
-        </dependency-->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.14</version>
-        </dependency>
+		<!--dependency> <groupId>com.hp.hpl.jena</groupId> <artifactId>jena</artifactId> 
+			<version>2.8.5</version> </dependency -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin</artifactId>
-            <version>6.7.7</version>
-        </dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin</artifactId>
+			<version>6.7.7</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-core</artifactId>
-            <version>3.6.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.clearspring</groupId>
-            <artifactId>metricCatcher</artifactId>
-            <version>0.0.9</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ning</groupId>
-            <artifactId>async-http-client</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dbdeploy</groupId>
-            <artifactId>dbdeploy-ant</artifactId>
-            <version>3.0M3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.bigbrother.javanet</groupId>
-            <artifactId>naivebayes-classifier</artifactId>
-            <version>1.2</version>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>3.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.clearspring</groupId>
+			<artifactId>metricCatcher</artifactId>
+			<version>0.0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ning</groupId>
+			<artifactId>async-http-client</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dbdeploy</groupId>
+			<artifactId>dbdeploy-ant</artifactId>
+			<version>3.0M3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.bigbrother.javanet</groupId>
+			<artifactId>naivebayes-classifier</artifactId>
+			<version>1.2</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-compress</artifactId>
-            <version>1.0</version>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>1.0</version>
+		</dependency>
 
-        <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
-        </dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
 
-    </dependencies>
-    
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+
+	</dependencies>
+
 </project>

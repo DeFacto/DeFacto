@@ -1,7 +1,16 @@
 package org.aksw.defacto.search.engine.bing;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import net.billylieurance.azuresearch.AbstractAzureSearchQuery.AZURESEARCH_API;
+import net.billylieurance.azuresearch.AzureSearchNewsResult;
+import net.billylieurance.azuresearch.AzureSearchResultSet;
+import net.billylieurance.azuresearch.AzureSearchWebQuery;
+import net.billylieurance.azuresearch.AzureSearchWebResult;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.Pattern;
@@ -31,13 +40,13 @@ import com.google.code.bing.search.schema.web.WebSearchOption;
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
  * @author Mohamed Morsey <morsey@informatik.uni-leipzig.de>
  */
-public class BingSearchEngine extends DefaultSearchEngine {
+public class AzureBingSearchEngine extends DefaultSearchEngine {
 
     private String NUMBER_OF_SEARCH_RESULTS;
     private String BING_API_KEY;
-    private static Logger logger =  Logger.getLogger(BingSearchEngine.class);
+    private static Logger logger =  Logger.getLogger(AzureBingSearchEngine.class);
     
-    public BingSearchEngine() {
+    public AzureBingSearchEngine() {
         
         if ( Defacto.DEFACTO_CONFIG != null ) {
 
@@ -46,7 +55,7 @@ public class BingSearchEngine extends DefaultSearchEngine {
         }
     }
     
-    public BingSearchEngine(String bingApiKey, String numberOfSearchResults) {
+    public AzureBingSearchEngine(String bingApiKey, String numberOfSearchResults) {
         
         BING_API_KEY = bingApiKey;
         NUMBER_OF_SEARCH_RESULTS = numberOfSearchResults;
@@ -55,23 +64,7 @@ public class BingSearchEngine extends DefaultSearchEngine {
     @Override
     public Long getNumberOfResults(MetaQuery query) {
         
-        BingSearchServiceClientFactory factory = BingSearchServiceClientFactory.newInstance();
-        BingSearchClient client = factory.createBingSearchClient();
-
-        SearchRequestBuilder builder = client.newSearchRequestBuilder();
-        builder.withAppId(BING_API_KEY);
-        builder.withQuery(this.generateQuery(query));
-        builder.withSourceType(SourceType.WEB);
-        builder.withVersion("2.0");
-        builder.withMarket("en-us");
-        builder.withAdultOption(AdultOption.OFF);
-        builder.withWebRequestSearchOption(WebSearchOption.DISABLE_HOST_COLLAPSING);
-        builder.withWebRequestSearchOption(WebSearchOption.DISABLE_QUERY_ALTERATIONS);
-        
-        Long numberOfResults = client.search(builder.getResult()).getWeb().getTotal();
-        logger.info("Querying Bing for query: '" + this.generateQuery(query) + "' returned " + numberOfResults + " results.");
-        
-        return numberOfResults;
+        return 0L;
     }
     
     public static void main(String[] args) {
@@ -80,42 +73,70 @@ public class BingSearchEngine extends DefaultSearchEngine {
         MetaQuery query1 = new MetaQuery(String.format("%s|-|%s|-|%s", "Gloria Estefan", "??? NONE ???", "Remember Me with Love"));
         MetaQuery query2 = new MetaQuery(String.format("%s|-|%s|-|%s", "Avram Hershko", "?D? is a component of ?R?", "United States Marine Corps"));
         
-        BingSearchEngine engine = new BingSearchEngine("08A2FCFA4D5D60D053ACE5422EE9495E1E5795DD", "20");
+        AzureBingSearchEngine engine = new AzureBingSearchEngine("ENTER KEY HERE", "10");
         System.out.println(engine.query(query0, null).getWebSites().size());
-        System.out.println(engine.query(query1, null).getWebSites().size());
-        System.out.println(engine.query(query2, null).getWebSites().size());
+        
+//        URI uri;
+//        try {
+//            String query = "'Obama' AND 'is president of' AND 'United States'";
+//                uri = new URI("https", "api.datamarket.azure.com", "/Data.ashx/Bing/SearchWeb/v1/Web",
+//                        "Query='"+query+"'", null );
+//                //Bing and java URI disagree about how to represent + in query parameters.  This is what we have to do instead...
+//                uri = new URI(uri.getScheme() + "://" + uri.getAuthority()  + uri.getPath() + "?" + uri.getRawQuery().replace("+", "%2b"));
+//                System.out.println(uri);
+//                
+//         //log.log(Level.WARNING, uri.toString());
+//        } catch (URISyntaxException e1) {
+//                e1.printStackTrace();
+//                return;
+//        }
+        
+        
+        
+//        System.out.println(engine.query(query1, null).getWebSites().size());
+//        System.out.println(engine.query(query2, null).getWebSites().size());
     }
+    
+    
     
     @Override
     public SearchResult query(MetaQuery query, Pattern pattern) {
 
-        BingSearchServiceClientFactory factory = BingSearchServiceClientFactory.newInstance();
-        BingSearchClient client = factory.createBingSearchClient();
-
-        SearchRequestBuilder builder = client.newSearchRequestBuilder();
-        builder.withAppId(BING_API_KEY + "2");
-        builder.withQuery(this.generateQuery(query));
-        builder.withSourceType(SourceType.WEB);
-        builder.withWebRequestCount(Long.valueOf((NUMBER_OF_SEARCH_RESULTS)));
-        builder.withWebRequestOffset(0L);
-        
-        int i = 1;
-        logger.info("Querying Bing for query: '" + this.generateQuery(query) + "'");
+//        System.out.println(URLEncoder.encode(this.generateQuery(query)));
+//        System.exit(0);
+        AzureSearchWebQuery aq = new AzureSearchWebQuery();
+        aq.setAppid(this.BING_API_KEY);
+        aq.setLatitude("47.603450");
+        aq.setLongitude("-122.329696");
+        aq.setBingApi(AZURESEARCH_API.BINGSEARCHWEBONLY);
+        aq.setMarket("en-US");
+//        aq.setQuery(URLEncoder.encode(this.generateQuery(query)));
+//        aq.setQuery("''United States'' AND '''s president of'' AND ''Obama''");
+//        aq.setQuery(this.generateQuery(query));
+        aq.setQuery("\"Obama\" AND \"is president of\" AND \"United States\"");
+        aq.setPerPage(5);
+        System.out.println(aq.getUrlQuery());
+//        System.exit(0);
+        aq.doQuery();
         
         // query bing and get only the urls and the total hit count back
         List<WebSite> results = new ArrayList<WebSite>();
-        WebResponse response = client.search(builder.getResult()).getWeb();
-        for ( WebResult result : response.getResults() ) { 
+        
+        int i = 1;
+        for (AzureSearchWebResult result : aq.getQueryResult()){
+
+            if ( i > Integer.valueOf(NUMBER_OF_SEARCH_RESULTS) ) break;;
             
             WebSite website = new WebSite(query, result.getUrl());
             website.setTitle(result.getTitle());
             website.setRank(i++);
+            System.out.println(result.getId() + ": " + website.getUrl());
             results.add(website);
         }
-            
-        logger.info("Querying Bing for query: '" + this.generateQuery(query) + "' returned " + results.size() + " results.");        
-                
-        return new DefaultSearchResult(results, response.getTotal(), query, pattern);
+        
+        System.out.println(aq.getQueryResult().getASRs().size());
+        
+        return new DefaultSearchResult(results, 0L, query, pattern);
     }
 
     @Override

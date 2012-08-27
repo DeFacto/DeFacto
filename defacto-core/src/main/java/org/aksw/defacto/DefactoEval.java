@@ -75,7 +75,7 @@ public class DefactoEval {
                     boolean isCorrect = false;
 
                     if (mappingFile.getAbsolutePath().contains("data/true")) isCorrect = true;
-                    logger.info("Loading "+isCorrect+" triple from file: " + mappingFile.getName());
+                    logger.info("Loading "+isCorrect+" triple from file: " + mappingFile.getName() + " in directory: " +pathToFalseTrainingDirectory );
 
                     models.add(new DefactoModel(model, name, isCorrect));
                 }

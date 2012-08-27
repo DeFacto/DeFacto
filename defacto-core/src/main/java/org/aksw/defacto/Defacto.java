@@ -57,6 +57,7 @@ public class Defacto {
     public static Evidence checkFact(DefactoModel model) {
         
         Logger logger = Logger.getLogger(Defacto.class);
+        logger.info("Checking fact: " + model);
 
         // 1. generate the search engine queries
         long start = System.currentTimeMillis();
@@ -101,7 +102,7 @@ public class Defacto {
         
         // 8. Log statistics
         System.out.println("Model " + currentModel + "/" + numberOfModels + " took " + TimeUtil.formatTime(System.currentTimeMillis() - start) +
-                " Average time: " + ( (System.currentTimeMillis() - startTime) / currentModel++ ) + "ms");
+                " Average time: " + ( (System.currentTimeMillis() - startTime) / currentModel ) + "ms");
         
         return evidence;
     }
@@ -124,10 +125,14 @@ public class Defacto {
         
         for (DefactoModel model : defactoModel) {
             
+            if ( currentModel++ < 80 ) continue;
+            
             Evidence evidence = checkFact(model);
-            StmtIterator iter = model.listStatements();
-            while (iter.hasNext()) System.out.println(iter.nextStatement());
-            System.out.println("Defacto: " + new DecimalFormat("0.00").format(evidence.getDeFactoScore()) + " % that this fact is true! Actual: " + model.isCorrect() +"\n");
+            System.out.println(model.getFact());
+            
+            // we want to print the score of the classifier 
+            if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) 
+                System.out.println("Defacto: " + new DecimalFormat("0.00").format(evidence.getDeFactoScore()) + " % that this fact is true! Actual: " + model.isCorrect() +"\n");
         }
         // rewrite the fact training file after every proof
         if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) writeFactTrainingDataFile();
