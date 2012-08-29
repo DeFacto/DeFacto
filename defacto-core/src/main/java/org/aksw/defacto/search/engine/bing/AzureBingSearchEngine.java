@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.billylieurance.azuresearch.AbstractAzureSearchQuery.AZURESEARCH_API;
+import net.billylieurance.azuresearch.AbstractAzureSearchQuery.AZURESEARCH_FORMAT;
+import net.billylieurance.azuresearch.AbstractAzureSearchQuery.AZURESEARCH_QUERYTYPE;
+import net.billylieurance.azuresearch.AbstractAzureSearchResult;
+import net.billylieurance.azuresearch.AzureSearchCompositeQuery;
 import net.billylieurance.azuresearch.AzureSearchNewsResult;
 import net.billylieurance.azuresearch.AzureSearchResultSet;
 import net.billylieurance.azuresearch.AzureSearchWebQuery;
@@ -73,7 +77,7 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
         MetaQuery query1 = new MetaQuery(String.format("%s|-|%s|-|%s", "Gloria Estefan", "??? NONE ???", "Remember Me with Love"));
         MetaQuery query2 = new MetaQuery(String.format("%s|-|%s|-|%s", "Avram Hershko", "?D? is a component of ?R?", "United States Marine Corps"));
         
-        AzureBingSearchEngine engine = new AzureBingSearchEngine("ENTER KEY HERE", "10");
+        AzureBingSearchEngine engine = new AzureBingSearchEngine("your key here", "10");
         System.out.println(engine.query(query0, null).getWebSites().size());
         
 //        URI uri;
@@ -102,41 +106,33 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
     @Override
     public SearchResult query(MetaQuery query, Pattern pattern) {
 
-//        System.out.println(URLEncoder.encode(this.generateQuery(query)));
-//        System.exit(0);
-        AzureSearchWebQuery aq = new AzureSearchWebQuery();
+        AzureSearchCompositeQuery aq = new AzureSearchCompositeQuery();
         aq.setAppid(this.BING_API_KEY);
         aq.setLatitude("47.603450");
         aq.setLongitude("-122.329696");
-        aq.setBingApi(AZURESEARCH_API.BINGSEARCHWEBONLY);
         aq.setMarket("en-US");
-//        aq.setQuery(URLEncoder.encode(this.generateQuery(query)));
-//        aq.setQuery("''United States'' AND '''s president of'' AND ''Obama''");
-//        aq.setQuery(this.generateQuery(query));
-        aq.setQuery("\"Obama\" AND \"is president of\" AND \"United States\"");
-        aq.setPerPage(5);
-        System.out.println(aq.getUrlQuery());
-//        System.exit(0);
+        aq.setSources(new AZURESEARCH_QUERYTYPE[] { AZURESEARCH_QUERYTYPE.WEB });
+        
+        aq.setQuery(this.generateQuery(query));
         aq.doQuery();
+        
+        AzureSearchResultSet<AbstractAzureSearchResult> ars = aq.getQueryResult();
         
         // query bing and get only the urls and the total hit count back
         List<WebSite> results = new ArrayList<WebSite>();
         
         int i = 1;
-        for (AzureSearchWebResult result : aq.getQueryResult()){
+        for (AbstractAzureSearchResult result : ars){
 
             if ( i > Integer.valueOf(NUMBER_OF_SEARCH_RESULTS) ) break;;
             
-            WebSite website = new WebSite(query, result.getUrl());
+            WebSite website = new WebSite(query, ((AzureSearchWebResult) result).getUrl());
             website.setTitle(result.getTitle());
             website.setRank(i++);
-            System.out.println(result.getId() + ": " + website.getUrl());
             results.add(website);
         }
         
-        System.out.println(aq.getQueryResult().getASRs().size());
-        
-        return new DefaultSearchResult(results, 0L, query, pattern);
+        return new DefaultSearchResult(results, ars.getWebTotal(), query, pattern);
     }
 
     @Override

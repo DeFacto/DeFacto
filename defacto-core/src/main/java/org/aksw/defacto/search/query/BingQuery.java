@@ -19,18 +19,18 @@ public class BingQuery implements Query {
             
             // since we don't get any results if we use the near operator we skip it 
             // if ( query.getPropertyLabel().equals("??? NONE ???") ) queryString = String.format("\"%s\" near:%s \"%s\"", subject, 15, object);
-            if ( query.getPropertyLabel().equals("??? NONE ???") ) queryString = String.format("''%s'' AND ''%s''", subject, object);
-            else queryString = String.format("''%s'' AND ''%s'' AND ''%s''", subject, property, object);
+            if ( query.getPropertyLabel().equals("??? NONE ???") ) queryString = String.format("\"%s\" AND \"%s\"", subject, object);
+            else queryString = String.format("\"%s\" AND \"%s\" AND \"%s\"", subject, property, object);
         }
         else {
             
             // this query is going to be exectued from the topic majority web feature
-            queryString = String.format("''%s'' AND ''%s'' AND ''%s''", subject, property, object);
+            queryString = String.format("\"%s\" AND \"%s\" AND \"%s\"", subject, property, object);
             
             // add the first 3 topic terms to the query
             for ( int i = 0 ; i < 3 && i < query.getTopicTerms().size() ; i++)
                 // use the norelax option here because bing only includes first 4 terms as must contain
-                queryString += " AND norelax:''" + query.getTopicTerms().get(i).getWord() + "''";
+                queryString += " AND norelax:\"" + query.getTopicTerms().get(i).getWord() + "\"";
         }
         return queryString;
     }
