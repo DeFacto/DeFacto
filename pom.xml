@@ -150,14 +150,14 @@
 
 
 
-		<dependency>
-			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
-			<groupId>com.google.code.bing.search</groupId>
-			<artifactId>bing-search-java-sdk</artifactId>
-			<version>1.0</version>
-			<!--scope>system</scope -->
-			<!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/bing-search-java-sdk.jar</systemPath -->
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<!-- jsoup HTML parser library @ http://jsoup.org/ --> -->
+<!-- 			<groupId>com.google.code.bing.search</groupId> -->
+<!-- 			<artifactId>bing-search-java-sdk</artifactId> -->
+<!-- 			<version>1.0</version> -->
+<!-- 			<!--scope>system</scope --> -->
+<!-- 			<!--systemPath>/home/mohamed/LeipzigUniversity/JavaProjects/AKSWInformationFinder/bing-search-java-sdk.jar</systemPath --> -->
+<!-- 		</dependency> -->
 
 		<dependency>
 			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
