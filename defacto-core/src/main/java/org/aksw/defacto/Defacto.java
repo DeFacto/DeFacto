@@ -102,7 +102,7 @@ public class Defacto {
         
         // 8. Log statistics
         System.out.println("Model " + currentModel + "/" + numberOfModels + " took " + TimeUtil.formatTime(System.currentTimeMillis() - start) +
-                " Average time: " + ( (System.currentTimeMillis() - startTime) / currentModel ) + "ms");
+                " Average time: " + ( (System.currentTimeMillis() - startTime) / currentModel++ ) + "ms");
         
         return evidence;
     }
@@ -128,7 +128,7 @@ public class Defacto {
             Evidence evidence = checkFact(model);
             
             // we want to print the score of the classifier 
-            if ( Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) 
+            if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) 
                 System.out.println("Defacto: " + new DecimalFormat("0.00").format(evidence.getDeFactoScore()) + " % that this fact is true! Actual: " + model.isCorrect() +"\n");
             
             // rewrite the training file after every checked triple
