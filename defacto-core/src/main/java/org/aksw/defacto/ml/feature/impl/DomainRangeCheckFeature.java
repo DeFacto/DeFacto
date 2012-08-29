@@ -25,7 +25,7 @@ public class DomainRangeCheckFeature extends AbstractFeature {
 		
 		boolean domainViolation = false;
 		String queryDom = "SELECT * WHERE { <"+propertyURI+"> rdfs:domain ?dom }";
-		System.out.println(queryDom);
+//		System.out.println(queryDom);
 		ResultSet rs = sparql.executeSelectQuery(queryDom);
 		// without a domain, there can be no violation, so we just need to check the case in which a domain exists
 		if(rs.hasNext()) {
