@@ -23,7 +23,7 @@ import org.aksw.defacto.search.cache.LuceneSearchResultCache;
 import org.aksw.defacto.search.concurrent.HtmlCrawlerCallable;
 import org.aksw.defacto.search.concurrent.WebSiteScoreCallable;
 import org.aksw.defacto.search.engine.SearchEngine;
-import org.aksw.defacto.search.engine.bing.BingSearchEngine;
+import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTermExtractor;
@@ -56,7 +56,7 @@ public class EvidenceCrawler {
      */
     public Evidence crawlEvidence(String subjectLabel, String objectLabel) {
 
-        SearchEngine engine = new BingSearchEngine();
+        SearchEngine engine = new AzureBingSearchEngine();
         Set<SearchResult> searchResults = new HashSet<SearchResult>();
 
         // collect the urls for a particular pattern

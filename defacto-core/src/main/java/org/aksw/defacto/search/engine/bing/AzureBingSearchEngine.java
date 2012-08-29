@@ -26,15 +26,6 @@ import org.aksw.defacto.search.result.DefaultSearchResult;
 import org.aksw.defacto.search.result.SearchResult;
 import org.apache.log4j.Logger;
 
-import com.google.code.bing.search.client.BingSearchClient;
-import com.google.code.bing.search.client.BingSearchClient.SearchRequestBuilder;
-import com.google.code.bing.search.client.BingSearchServiceClientFactory;
-import com.google.code.bing.search.schema.AdultOption;
-import com.google.code.bing.search.schema.SourceType;
-import com.google.code.bing.search.schema.web.WebResponse;
-import com.google.code.bing.search.schema.web.WebResult;
-import com.google.code.bing.search.schema.web.WebSearchOption;
-
 /**
  * Date: 2/6/12
  * Time: 7:11 PM
@@ -138,7 +129,6 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
     @Override
     public String generateQuery(MetaQuery query) {
 
-        BingQuery bingQuery = new BingQuery();
-        return bingQuery.generateQuery(query);
+        return new BingQuery().generateQuery(query);
     }
 }
