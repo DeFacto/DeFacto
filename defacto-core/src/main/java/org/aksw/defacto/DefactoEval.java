@@ -46,7 +46,8 @@ public class DefactoEval {
         for (String falseDataDir : pathToFalseData) {
             
             AbstractFeature.provenance = new Instances("defacto", AbstractFeature.attributes, 0);
-            config.setStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME", "resources/training/arff/evidence/" + falseDataDir + "_defacto_evidence.arff"); 
+            config.setStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME", "resources/training/arff/evidence/" + falseDataDir + "_defacto_evidence.arff");
+            System.out.println("Checking facts for from: " + falseDataDir);
             Defacto.checkFacts(config, getTrainingData(falseDataDir));
         }
         
