@@ -52,7 +52,7 @@ public class DefactoEval {
             AbstractFeature.provenance = new Instances("defacto", AbstractFeature.attributes, 0);
             config.setStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME", "resources/training/arff/evidence/" + falseDataDir + "_defacto_evidence.arff");
             System.out.println("Checking facts for from: " + falseDataDir);
-            writer.write("Checking facts from: " + falseDataDir + " (" + pathToFalseData.indexOf(falseDataDir) + " of " + pathToFalseData.size() + " testsets)");
+            writer.write("Checking facts from: " + falseDataDir + " (" + pathToFalseData.indexOf(falseDataDir) + " of " + pathToFalseData.size() + " testsets)\n");
             Defacto.checkFacts(config, getTrainingData(falseDataDir));
         }
         writer.close();
