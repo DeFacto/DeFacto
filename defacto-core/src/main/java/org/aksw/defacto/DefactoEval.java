@@ -3,9 +3,11 @@
  */
 package org.aksw.defacto;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +33,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 public class DefactoEval {
 
     private static Logger logger = Logger.getLogger(DefactoDemo.class);
+    public static BufferedWriter writer = null;
 
     /**
      * @param args
@@ -38,6 +41,7 @@ public class DefactoEval {
      */
     public static void main(String[] args) throws IOException {
         
+        writer = new BufferedWriter(new FileWriter("log/progess.txt"));
         org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
         DefactoConfig config = new DefactoConfig(new Ini(new File("defacto.ini")));
         
@@ -48,6 +52,7 @@ public class DefactoEval {
             AbstractFeature.provenance = new Instances("defacto", AbstractFeature.attributes, 0);
             config.setStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME", "resources/training/arff/evidence/" + falseDataDir + "_defacto_evidence.arff");
             System.out.println("Checking facts for from: " + falseDataDir);
+            writer.write("Checking facts from: " + falseDataDir + " (" + pathToFalseData.indexOf(falseDataDir) + " of " + pathToFalseData.size() + " testsets)");
             Defacto.checkFacts(config, getTrainingData(falseDataDir));
         }
         

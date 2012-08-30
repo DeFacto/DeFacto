@@ -168,8 +168,8 @@ public class LuceneSearchResultCache implements Cache<SearchResult> {
             searcher.search(new TermQuery(new Term("query", identifier)), collector);
             ScoreDoc[] hits = collector.topDocs().scoreDocs;
             
-            for ( ScoreDoc doc : hits )
-                System.out.println(searcher.doc(doc.doc).get("query"));
+//            for ( ScoreDoc doc : hits )
+//                System.out.println(searcher.doc(doc.doc).get("query"));
             
             searcher.close();
             reader.close();

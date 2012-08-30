@@ -65,11 +65,13 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
     public static void main(String[] args) {
         
         MetaQuery query0 = new MetaQuery(String.format("%s|-|%s|-|%s", "Obama", "?D? is president of ?R?", "United States"));
+        MetaQuery query  = new MetaQuery(String.format("%s|-|%s|-|%s", "Montebelluna", "?R? Wii version of `` ?D?", "Procter Gamble"));
         MetaQuery query1 = new MetaQuery(String.format("%s|-|%s|-|%s", "Gloria Estefan", "??? NONE ???", "Remember Me with Love"));
         MetaQuery query2 = new MetaQuery(String.format("%s|-|%s|-|%s", "Avram Hershko", "?D? is a component of ?R?", "United States Marine Corps"));
         
         AzureBingSearchEngine engine = new AzureBingSearchEngine("your key here", "10");
         System.out.println(engine.query(query0, null).getWebSites().size());
+        System.out.println(engine.query(query, null).getWebSites().size());
         
 //        URI uri;
 //        try {

@@ -38,7 +38,7 @@ public class BingQuery implements Query {
     @Override
     public String normalizePredicate(String propertyLabel) {
 
-        return propertyLabel.replaceAll(",", "").replace("`", "").replace(" 's", "'s").replaceAll(" +", " ").replaceAll("'[^s]", "").trim();
+        return propertyLabel.replaceAll(",", "").replace("`", "").replace(" 's", "'s").replaceAll(" +", " ").replaceAll("'[^s]", "").replaceAll("&", "and").trim();
     }
     
     public static void main(String[] args) {

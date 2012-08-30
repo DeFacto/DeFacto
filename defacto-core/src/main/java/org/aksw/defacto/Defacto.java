@@ -100,9 +100,21 @@ public class Defacto {
             logger.info("Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
         }
         
+        String output = "Model " + currentModel + "/" + numberOfModels + " took " + TimeUtil.formatTime(System.currentTimeMillis() - start) +
+                " Average time: " + ( (System.currentTimeMillis() - startTime) / currentModel++ ) + "ms";
+        
         // 8. Log statistics
-        System.out.println("Model " + currentModel + "/" + numberOfModels + " took " + TimeUtil.formatTime(System.currentTimeMillis() - start) +
-                " Average time: " + ( (System.currentTimeMillis() - startTime) / currentModel++ ) + "ms");
+        System.out.println(output);
+        
+        try {
+
+            DefactoEval.writer.write(output);
+            DefactoEval.writer.write("\n");
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
         return evidence;
     }
