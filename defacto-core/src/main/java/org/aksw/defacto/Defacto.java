@@ -110,6 +110,7 @@ public class Defacto {
 
             DefactoEval.writer.write(output);
             DefactoEval.writer.write("\n");
+            DefactoEval.writer.flush();
         }
         catch (IOException e) {
             // TODO Auto-generated catch block
