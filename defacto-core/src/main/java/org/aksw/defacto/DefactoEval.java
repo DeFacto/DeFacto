@@ -92,6 +92,7 @@ public class DefactoEval {
                 }
             }
         }
+        Collections.shuffle(models);
         return models;
     }
 
