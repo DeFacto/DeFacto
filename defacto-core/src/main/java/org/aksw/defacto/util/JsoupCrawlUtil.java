@@ -34,6 +34,7 @@ public class JsoupCrawlUtil implements CrawlUtil {
                  e.getMessage().contains("Read timed out") ||
                  e.getMessage().contains("Connection refused") ||
                  e.getMessage().contains("-1 error loading URL") ||
+                 e.getMessage().contains("401 error loading URL") ||
                  e.getMessage().contains("403 error loading URL") ||
                  e.getMessage().contains("404 error loading URL") ||
                  e.getMessage().contains("405 error loading URL") ||

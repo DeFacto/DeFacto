@@ -9,9 +9,9 @@ public class BingQuery implements Query {
     @Override
     public String generateQuery(MetaQuery query) {
 
-        String subject  = query.getSubjectLabel();
+        String subject  = query.getSubjectLabel().replace("&", "and");
         String property = normalizePredicate(query.getPropertyLabel().substring(0, query.getPropertyLabel().length() - 3).substring(3).trim());
-        String object   = query.getObjectLabel();
+        String object   = query.getObjectLabel().replace("&", "and");
         String queryString = "";
         
         // standard search engine query
