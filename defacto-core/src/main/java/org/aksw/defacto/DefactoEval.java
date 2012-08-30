@@ -55,6 +55,7 @@ public class DefactoEval {
             writer.write("Checking facts from: " + falseDataDir + " (" + pathToFalseData.indexOf(falseDataDir) + " of " + pathToFalseData.size() + " testsets)");
             Defacto.checkFacts(config, getTrainingData(falseDataDir));
         }
+        writer.close();
         
 //        CacheManager.getInstance().closeConnection();
     }
