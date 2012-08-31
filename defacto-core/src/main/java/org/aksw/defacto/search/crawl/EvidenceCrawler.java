@@ -1,5 +1,6 @@
 package org.aksw.defacto.search.crawl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -28,6 +29,9 @@ import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTermExtractor;
 import org.apache.log4j.Logger;
+import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.search.IndexSearcher;
 
 /**
  * 
@@ -166,11 +170,29 @@ public class EvidenceCrawler {
                 e.printStackTrace();
             }
         }
-                    
-        // add the results of the crawl to the cache
-        Cache<SearchResult> cache = new LuceneSearchResultCache();
-        for ( SearchResult result : searchResults )
-            if ( !cache.contains(result.getQuery().toString()) ) cache.add(result);
+        
+        try {
+            
+            IndexSearcher searcher = new IndexSearcher(IndexReader.open(LuceneSearchResultCache.index));
+            List<SearchResult> results = new ArrayList<SearchResult>();
+            // add the results of the crawl to the cache
+            Cache<SearchResult> cache = new LuceneSearchResultCache();
+            for ( SearchResult result : searchResults )
+                if ( !((LuceneSearchResultCache) cache).contains(result.getQuery().toString(), searcher) ) results.add(result);
+            
+            searcher.getIndexReader().close();
+            searcher.close();
+            
+            cache.addAll(results);
+        }
+        catch (CorruptIndexException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
 //    private Map<Pattern,List<WebSite>> getWebSites(Map<Pattern,SearchResult> patternToSearchResult, Model model, Evidence evidence) {

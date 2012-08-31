@@ -48,7 +48,7 @@ public class LuceneSearchResultCache implements Cache<SearchResult> {
     
     private final String INDEX_DIRECTORY = "resources/cache/websites";
     
-    private FSDirectory index;
+    public static FSDirectory index;
     private static IndexWriter writer;
     private final Analyzer analyzer = new LowerCaseWhitespaceAnalyzer();
 
@@ -168,11 +168,27 @@ public class LuceneSearchResultCache implements Cache<SearchResult> {
             searcher.search(new TermQuery(new Term("query", identifier)), collector);
             ScoreDoc[] hits = collector.topDocs().scoreDocs;
             
-//            for ( ScoreDoc doc : hits )
-//                System.out.println(searcher.doc(doc.doc).get("query"));
-            
             searcher.close();
             reader.close();
+            
+            if ( hits == null || hits.length == 0 ) return false;
+        }
+        catch (IOException e) {
+            
+            logger.error("Could not execute exists query for uri: " + identifier, e);
+            e.printStackTrace();
+        }
+        
+        return true;
+    }
+    
+    public boolean contains(String identifier, IndexSearcher searcher) {
+
+        try {
+
+            TopScoreDocCollector collector = TopScoreDocCollector.create(1, true);
+            searcher.search(new TermQuery(new Term("query", identifier)), collector);
+            ScoreDoc[] hits = collector.topDocs().scoreDocs;
             
             if ( hits == null || hits.length == 0 ) return false;
         }
@@ -249,7 +265,24 @@ public class LuceneSearchResultCache implements Cache<SearchResult> {
     @Override
     public List<SearchResult> addAll(List<SearchResult> listToAdd) {
 
-        for ( SearchResult result : listToAdd ) this.add(result);
+        openIndexWriter();
+        for ( SearchResult result : listToAdd ) {
+
+            try {
+                writer.addDocuments(searchResultToDocument(result));
+            }
+            catch (CorruptIndexException e) {
+
+                e.printStackTrace();
+                logger.error("Error writing articles to lucene database!", e);
+            }
+            catch (IOException e) {
+
+                e.printStackTrace();
+                logger.error("Error writing articles to lucene database!", e);
+            }
+        }
+        closeIndexWriter();
         return listToAdd;
     }
 
