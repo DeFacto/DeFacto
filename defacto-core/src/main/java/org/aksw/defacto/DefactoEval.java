@@ -45,7 +45,7 @@ public class DefactoEval {
         org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
         DefactoConfig config = new DefactoConfig(new Ini(new File("defacto.ini")));
         
-        List<String> pathToFalseData = new ArrayList<String>(Arrays.asList("domain", "range", "domain_range", "property", "random"));
+        List<String> pathToFalseData = new ArrayList<String>(Arrays.asList("domain", "range", "domain_range", "property", "random", "true"));
 
         for (String falseDataDir : pathToFalseData) {
             
@@ -62,7 +62,7 @@ public class DefactoEval {
 
     private static List<DefactoModel> getTrainingData(String pathToFalseTrainingDirectory) throws IOException {
 
-        List<File> modelFiles = new ArrayList<File>(Arrays.asList(new File("resources/training/data/true").listFiles()));
+        List<File> modelFiles = new ArrayList<File>();//Arrays.asList(new File("resources/training/data/true").listFiles()));
         modelFiles.addAll(Arrays.asList(new File("resources/training/data/false/" + pathToFalseTrainingDirectory).listFiles()));
         Collections.sort(modelFiles);
         
@@ -81,7 +81,7 @@ public class DefactoEval {
                     String name = mappingFile.getParent().replace("resources/training/data/", "") + "/" + mappingFile.getName();
                     boolean isCorrect = false;
 
-                    if (mappingFile.getAbsolutePath().contains("data/true")) isCorrect = true;
+                    if (mappingFile.getAbsolutePath().contains("false/true")) isCorrect = true;
                     logger.info("Loading "+isCorrect+" triple from file: " + mappingFile.getName() + " in directory: " +pathToFalseTrainingDirectory );
 
                     models.add(new DefactoModel(model, name, isCorrect));
