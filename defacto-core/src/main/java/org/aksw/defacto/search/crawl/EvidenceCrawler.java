@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -60,13 +61,7 @@ public class EvidenceCrawler {
      */
     public Evidence crawlEvidence(String subjectLabel, String objectLabel) {
 
-        SearchEngine engine = new AzureBingSearchEngine();
-        Set<SearchResult> searchResults = new HashSet<SearchResult>();
-
-        // collect the urls for a particular pattern
-        // could be done in parallel 
-        for ( Map.Entry<Pattern, MetaQuery> entry : this.patternToQueries.entrySet())
-            searchResults.add(engine.getSearchResults(entry.getValue(), entry.getKey()));
+        Set<SearchResult> searchResults = this.generateSearchResultsInParallel();
         
         // multiple pattern bring the same results but we dont want that
         this.filterSearchResults(searchResults);
@@ -91,6 +86,41 @@ public class EvidenceCrawler {
         return evidence;
     }
     
+    private Set<SearchResult> generateSearchResultsInParallel() {
+
+        Set<SearchResult> results = new HashSet<SearchResult>();
+        Set<SearchResultCallable> searchResultCallables = new HashSet<SearchResultCallable>();
+        
+        // collect the urls for a particular pattern
+        // could be done in parallel 
+        for ( Map.Entry<Pattern, MetaQuery> entry : this.patternToQueries.entrySet())
+            searchResultCallables.add(new SearchResultCallable(entry.getValue(), entry.getKey()));
+        
+        // wait als long as the scoring needs, and score every website in parallel        
+        ExecutorService executor = Executors.newFixedThreadPool(this.patternToQueries.size());
+        try {
+            
+            for ( Future<SearchResult> result : executor.invokeAll(searchResultCallables)) {
+
+                try {
+                    
+                    results.add(result.get());
+                }
+                catch (ExecutionException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            executor.shutdownNow();
+        }
+        catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        
+        return results;
+    }
+
     private void scoreSearchResults(Set<SearchResult> searchResults, DefactoModel model, Evidence evidence) {
 
         evidence.setBoaPatterns(new BoaPatternSearcher().getNaturalLanguageRepresentations(model.getPropertyUri(), 200, 0.5));
