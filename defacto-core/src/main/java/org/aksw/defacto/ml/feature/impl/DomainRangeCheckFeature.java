@@ -86,6 +86,7 @@ public class DomainRangeCheckFeature extends AbstractFeature {
 	    }
 	    catch ( Exception e ) {
 	        
+	        evidence.getFeatures().setValue(AbstractFeature.DOMAIN_RANGE_CHECK, 0D);
 	        e.printStackTrace();
 	    }
 	}
