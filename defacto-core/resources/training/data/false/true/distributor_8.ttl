@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/As_the_World_Turns>
+      rdfs:label "As the World Turns"@en ;
+      dbpedia-owl:distributor
+              <http://dbpedia.org/resource/Procter_&_Gamble> .
+
+<http://dbpedia.org/resource/Procter_&_Gamble>
+      rdfs:label "Procter & Gamble"@en .

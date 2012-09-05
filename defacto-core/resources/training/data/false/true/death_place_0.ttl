@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Vienna>
+      rdfs:label "Vienna"@en .
+
+<http://dbpedia.org/resource/Marc%27Antonio_Ziani>
+      rdfs:label "Marc'Antonio Ziani"@en ;
+      dbpedia-owl:deathPlace
+              <http://dbpedia.org/resource/Vienna> .

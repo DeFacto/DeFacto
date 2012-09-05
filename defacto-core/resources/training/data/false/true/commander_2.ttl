@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Kobayakawa_Takakage>
+      rdfs:label "Kobayakawa Takakage"@en .
+
+<http://dbpedia.org/resource/Japanese_invasions_of_Korea_%281592%E2%80%931598%29>
+      rdfs:label "Japanese invasions of Korea (1592–1598)"@en ;
+      dbpedia-owl:commander
+              <http://dbpedia.org/resource/Kobayakawa_Takakage> .

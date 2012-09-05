@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Scott_Davies_%28footballer_born_1987%29>
+      rdfs:label "Scott Davies (footballer born 1987)"@en .
+
+<http://dbpedia.org/resource/2011%E2%80%9312_Fleetwood_Town_F.C._season>
+      rdfs:label "2011–12 Fleetwood Town F.C. season"@en ;
+      dbpedia-owl:currentMember
+              <http://dbpedia.org/resource/Scott_Davies_%28footballer_born_1987%29> .
