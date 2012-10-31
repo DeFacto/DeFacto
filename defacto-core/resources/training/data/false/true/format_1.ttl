@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/480i>
+      rdfs:label "480i"@en .
+
+<http://dbpedia.org/resource/Somewhere_in_My_Heart_%28TV_series%29>
+      rdfs:label "Somewhere in My Heart (TV series)"@en ;
+      dbpedia-owl:format <http://dbpedia.org/resource/480i> .

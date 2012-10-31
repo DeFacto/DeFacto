@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.AbstractFeature;
 import org.aksw.defacto.topic.frequency.Word;
@@ -17,12 +18,13 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import weka.core.Instance;
 
-import com.hp.hpl.jena.rdf.model.Model;
-
-
+/**
+ * 
+ * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
+ */
 public class Evidence {
 
-    private Model model;
+    private DefactoModel model;
     private Map<Pattern,List<WebSite>> webSites         = new LinkedHashMap<Pattern,List<WebSite>>();
     private List<Word> topicTerms                       = new ArrayList<Word>();
 //    private Map<Pattern,Double[][]> similarityMatricies = new LinkedHashMap<Pattern,Double[][]>();
@@ -44,7 +46,7 @@ public class Evidence {
      * @param subjectLabel
      * @param objectLabel
      */
-    public Evidence(Model model, Long totalHitCount, String subjectLabel, String objectLabel) {
+    public Evidence(DefactoModel model, Long totalHitCount, String subjectLabel, String objectLabel) {
 
         this.model              = model;
         this.totalHitCount      = totalHitCount;
@@ -53,7 +55,7 @@ public class Evidence {
         this.complexProofs      = new HashSet<ComplexProof>();
     }
 
-    public Evidence(Model model) {
+    public Evidence(DefactoModel model) {
 
         this.model              = model;
         this.totalHitCount      = 0L;
@@ -72,7 +74,7 @@ public class Evidence {
 
             this.features = new Instance(AbstractFeature.provenance.numAttributes());
             this.features.setDataset(AbstractFeature.provenance);
-            this.features.setValue(AbstractFeature.CLASS, model.getNsPrefixURI("correct") != null ? "true" : "false");
+            this.features.setValue(AbstractFeature.CLASS, String.valueOf(model.isCorrect()));
         }
         
         return features;
@@ -267,7 +269,7 @@ public class Evidence {
     /**
      * @return the model
      */
-    public Model getModel() {
+    public DefactoModel getModel() {
     
         return model;
     }

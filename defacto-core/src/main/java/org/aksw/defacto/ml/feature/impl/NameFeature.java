@@ -12,7 +12,6 @@ public class NameFeature extends AbstractFeature {
     @Override
     public void extractFeature(Evidence evidence) {
 
-        String name = evidence.getModel().getNsPrefixURI("name");
-        evidence.getFeatures().setValue(AbstractFeature.MODEL_NAME, name);
+        evidence.getFeatures().setValue(AbstractFeature.MODEL_NAME, evidence.getModel().getName());
     }
 }

@@ -58,3 +58,5 @@ CONFIRMATION_THRESHOLD = 0.5
 [settings]
 ; this is used to get the labels of the resources from the training models
 RESOURCE_LABEL = http://www.w3.org/2000/01/rdf-schema#label
+; training mode or demo mode (training generates arff files, demo mode outputs confidence scores)
+TRAINING_MODE = true

@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/St._Mary%27s_College_of_Engineering_and_Technology>
+      rdfs:label "St. Mary's College of Engineering and Technology"@en ;
+      dbpedia-owl:state <http://dbpedia.org/resource/Andhra_Pradesh> .
+
+<http://dbpedia.org/resource/Andhra_Pradesh>
+      rdfs:label "Andhra Pradesh"@en .

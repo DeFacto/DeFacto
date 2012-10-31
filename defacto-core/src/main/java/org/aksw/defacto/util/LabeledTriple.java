@@ -1,15 +1,6 @@
 package org.aksw.defacto.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.aksw.defacto.Defacto;
-
-import com.hp.hpl.jena.graph.Triple;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.vocabulary.RDFS;
+import org.aksw.defacto.DefactoModel;
 
 /**
  * 
@@ -33,44 +24,18 @@ public class LabeledTriple implements Comparable<LabeledTriple> {
 	private String objectLabel;
 
 	/**
-	 * Convenience method, which can load a model having only a single fact as
-	 * well as labels for subject and object in this fact.
-	 * @param model
-	 */
-	public LabeledTriple(Model model) {
-        
-        StmtIterator iter = model.listStatements();
-        
-        Map<String,String> labels = new HashMap<String,String>();
-        while (iter.hasNext()) {         
-            Statement stmt = iter.nextStatement();
-            if ( stmt.getPredicate().getURI().equals(Defacto.DEFACTO_CONFIG.getStringSetting("settings", "RESOURCE_LABEL")) ) {
-            	labels.put(stmt.getSubject().asLiteral().getString(), stmt.getObject().asLiteral().getString());
-            } else {
-            	subjectURI = stmt.getSubject().toString();
-            	predicateURI = stmt.getPredicate().toString();
-            	objectURI = stmt.getObject().toString();
-            }
-        }
-        subjectLabel = labels.get(subjectURI);
-        objectLabel = labels.get(objectURI);
-        
-        throw new Error("No fact in model!");
-	}
-	
-	/**
 	 * Convenience method to read parts of a Jena model into a labeled triple.
 	 * @param model Jena model.
 	 * @param triple The considered triple.
 	 */
-	public LabeledTriple(Model model, Triple triple) {
-		subjectURI = model.getResource(triple.getSubject().toString()).getURI();
-		predicateURI = model.getResource(triple.getPredicate().toString()).getURI();
-		objectURI = model.getResource(triple.getObject().toString()).getURI();
+	public LabeledTriple(DefactoModel model) {
+		subjectURI = model.getSubjectUri();
+		predicateURI = model.getPropertyUri();
+		objectURI = model.getObjectUri();
 		
-		subjectLabel = model.getResource(subjectURI).getProperty(RDFS.label).getObject().asLiteral().toString();
+		subjectLabel = model.getSubjectLabel();
 //		model.getResource(predicateURI).getProperty(RDFS.label);
-		objectLabel = model.getResource(objectURI).getProperty(RDFS.label).getObject().asLiteral().toString();
+		objectLabel = model.getObjectLabel();
 		
 //		System.out.println(model);
 //		

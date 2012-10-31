@@ -9,15 +9,17 @@ public class BingQuery implements Query {
     @Override
     public String generateQuery(MetaQuery query) {
 
-        String subject  = query.getSubjectLabel();
+        String subject  = query.getSubjectLabel().replace("&", "and");
         String property = normalizePredicate(query.getPropertyLabel().substring(0, query.getPropertyLabel().length() - 3).substring(3).trim());
-        String object   = query.getObjectLabel();
+        String object   = query.getObjectLabel().replace("&", "and");
         String queryString = "";
         
         // standard search engine query
         if ( query.getTopicTerms().isEmpty() ) {
             
-            if ( query.getPropertyLabel().equals("??? NONE ???") ) queryString = String.format("\"%s\" near:%s \"%s\"", subject, 15, object);
+            // since we don't get any results if we use the near operator we skip it 
+            // if ( query.getPropertyLabel().equals("??? NONE ???") ) queryString = String.format("\"%s\" near:%s \"%s\"", subject, 15, object);
+            if ( query.getPropertyLabel().equals("??? NONE ???") ) queryString = String.format("\"%s\" AND \"%s\"", subject, object);
             else queryString = String.format("\"%s\" AND \"%s\" AND \"%s\"", subject, property, object);
         }
         else {
@@ -36,7 +38,7 @@ public class BingQuery implements Query {
     @Override
     public String normalizePredicate(String propertyLabel) {
 
-        return propertyLabel.replaceAll(",", "").replace("`", "").replace(" 's", "'s").replaceAll(" +", " ").replaceAll("'[^s]", "").trim();
+        return propertyLabel.replaceAll(",", "").replace("`", "").replace(" 's", "'s").replaceAll(" +", " ").replaceAll("'[^s]", "").replaceAll("&", "and").trim();
     }
     
     public static void main(String[] args) {

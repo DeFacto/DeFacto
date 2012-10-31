@@ -19,6 +19,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.Reindeer;
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
@@ -1062,7 +1063,8 @@ public class MainForm extends Application {
 
             }
 
-            resultingEvidence = Defacto.checkFact(inputTripleModel);
+            resultingEvidence = Defacto.checkFact(new DefactoModel(inputTripleModel, subject + " " + predicate + " "
+                    + object, false));
 
             defactoOverallProgressIndicator.setValue(0.7f);
             startingProgressIndicatorThread.interrupt();

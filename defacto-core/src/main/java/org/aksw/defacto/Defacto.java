@@ -54,9 +54,10 @@ public class Defacto {
      * 
      * @return
      */
-    public static Evidence checkFact(Model model) {
+    public static Evidence checkFact(DefactoModel model) {
         
         Logger logger = Logger.getLogger(Defacto.class);
+        logger.info("Checking fact: " + model);
 
         // 1. generate the search engine queries
         long start = System.currentTimeMillis();
@@ -91,14 +92,30 @@ public class Defacto {
         logger.info("Feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFeatureExtraction));
         
         // 7. score the model
-        long startScoring = System.currentTimeMillis();
-        EvidenceScorer scorer = new EvidenceScorer();
-        scorer.scoreEvidence(evidence);
-        logger.info("Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
+        if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) {
+
+            long startScoring = System.currentTimeMillis();
+            EvidenceScorer scorer = new EvidenceScorer();
+            scorer.scoreEvidence(evidence);
+            logger.info("Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
+        }
+        
+        String output = "Model " + currentModel + "/" + numberOfModels + " took " + TimeUtil.formatTime(System.currentTimeMillis() - start) +
+                " Average time: " + ( (System.currentTimeMillis() - startTime) / currentModel++ ) + "ms";
         
         // 8. Log statistics
-        System.out.println("Model " + currentModel + "/" + numberOfModels + " took " + TimeUtil.formatTime(System.currentTimeMillis() - start) +
-                " Average time: " + ( (System.currentTimeMillis() - startTime) / currentModel++ ) + "ms");
+        System.out.println(output);
+        
+        try {
+
+            DefactoEval.writer.write(output);
+            DefactoEval.writer.write("\n");
+            DefactoEval.writer.flush();
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
         return evidence;
     }
@@ -110,26 +127,28 @@ public class Defacto {
      * @param models
      * @return
      */
-    public static void checkFacts(DefactoConfig config, List<Model> models) {
+    public static void checkFacts(DefactoConfig config, List<DefactoModel> defactoModel) {
 
         // hack to get surface forms before timing
         SubjectObjectFactSearcher.getInstance();
         startTime       = System.currentTimeMillis();
-        numberOfModels  = models.size();
+        numberOfModels  = defactoModel.size();
         currentModel    = 1;
         DEFACTO_CONFIG  = config;
         
-        for (Model model : models) {
+        for (DefactoModel model : defactoModel) {
             
             Evidence evidence = checkFact(model);
-            StmtIterator iter = model.listStatements();
-            while (iter.hasNext()) System.out.println(iter.nextStatement());
-            System.out.println("Defacto: " + new DecimalFormat("0.00").format(evidence.getDeFactoScore()) + " % that this fact is true\n");
+            
+            // we want to print the score of the classifier 
+            if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) 
+                System.out.println("Defacto: " + new DecimalFormat("0.00").format(evidence.getDeFactoScore()) + " % that this fact is true! Actual: " + model.isCorrect() +"\n");
+            
+            // rewrite the training file after every checked triple
+            if ( DEFACTO_CONFIG.getBooleanSetting("evidence", "OVERWRITE_EVIDENCE_TRAINING_FILE")  ) writeEvidenceTrainingDataFile();
         }
         // rewrite the fact training file after every proof
         if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) writeFactTrainingDataFile();
-        // rewrite the training file after every check triple
-        if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_EVIDENCE_TRAINING_FILE")  ) writeEvidenceTrainingDataFile();
     }
     
     /**

@@ -21,6 +21,6 @@ public class TrueFalseTypeFeature implements FactFeature {
     @Override
     public void extractFeature(ComplexProof proof, Evidence evidence) {
 
-        proof.getFeatures().setValue(AbstractFactFeatures.TRUE_FALSE_TYPE, proof.getModel().getNsPrefixURI("name"));
+        proof.getFeatures().setValue(AbstractFactFeatures.TRUE_FALSE_TYPE, proof.getModel().getName());
     }
 }

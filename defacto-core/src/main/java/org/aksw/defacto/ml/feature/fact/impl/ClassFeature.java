@@ -21,9 +21,6 @@ public class ClassFeature implements FactFeature {
     @Override
     public void extractFeature(ComplexProof proof, Evidence evidence) {
 
-        if ( evidence.getModel().getNsPrefixURI("name").contains("true") )
-            proof.getFeatures().setValue(AbstractFactFeatures.CLASS, "true");
-        else
-            proof.getFeatures().setValue(AbstractFactFeatures.CLASS, "false");
+        proof.getFeatures().setValue(AbstractFactFeatures.CLASS, String.valueOf(evidence.getModel().isCorrect()));
     }
 }

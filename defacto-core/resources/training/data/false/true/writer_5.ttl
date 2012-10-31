@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Test_the_Store>
+      rdfs:label "Test the Store"@en ;
+      dbpedia-owl:writer <http://dbpedia.org/resource/Mindy_Kaling> .
+
+<http://dbpedia.org/resource/Mindy_Kaling>
+      rdfs:label "Mindy Kaling"@en .

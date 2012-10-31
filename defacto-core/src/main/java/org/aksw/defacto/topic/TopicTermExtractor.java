@@ -329,7 +329,7 @@ public class TopicTermExtractor {
                 topicTermsIterator.remove();
             }
         }
-        logger.info(evidence.getSubjectLabel() +" | "+ evidence.getObjectLabel() + ": " + potentialTopicTerms.size());
+        logger.info(evidence.getSubjectLabel() +" | "+ evidence.getObjectLabel() + ": " + StringUtils.join(potentialTopicTerms, ", "));
         
         return potentialTopicTerms;
     }

@@ -3,14 +3,13 @@ package org.aksw.defacto.search.concurrent;
 import java.util.concurrent.Callable;
 
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
 import org.aksw.defacto.util.PageRank;
 import org.apache.log4j.Logger;
-
-import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * 
@@ -20,7 +19,7 @@ public class WebSiteScoreCallable implements Callable<WebSite> {
 
     private Logger logger = Logger.getLogger(WebSiteScoreCallable.class);
     
-    private Model model;
+    private DefactoModel model;
     private Pattern pattern;
     private WebSite website;
     private Evidence evidence;
@@ -32,7 +31,7 @@ public class WebSiteScoreCallable implements Callable<WebSite> {
      * @param model
      * @param patterns 
      */
-    public WebSiteScoreCallable(WebSite website, Evidence evidence, Model model) {
+    public WebSiteScoreCallable(WebSite website, Evidence evidence, DefactoModel model) {
 
         this.website  = website;
         this.model    = model;

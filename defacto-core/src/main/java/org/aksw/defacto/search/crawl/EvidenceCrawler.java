@@ -1,33 +1,38 @@
 package org.aksw.defacto.search.crawl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.BoaPatternSearcher;
 import org.aksw.defacto.boa.Pattern;
+import org.aksw.defacto.cache.Cache;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
-import org.aksw.defacto.search.cache.SearchResultCache;
+import org.aksw.defacto.search.cache.H2DatabaseSearchResultCache;
+import org.aksw.defacto.search.cache.LuceneSearchResultCache;
 import org.aksw.defacto.search.concurrent.HtmlCrawlerCallable;
 import org.aksw.defacto.search.concurrent.WebSiteScoreCallable;
 import org.aksw.defacto.search.engine.SearchEngine;
-import org.aksw.defacto.search.engine.bing.BingSearchEngine;
+import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTermExtractor;
-import org.aksw.defacto.util.ModelUtil;
 import org.apache.log4j.Logger;
-
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.search.IndexSearcher;
 
 /**
  * 
@@ -37,19 +42,17 @@ public class EvidenceCrawler {
 
     private Logger logger = Logger.getLogger(EvidenceCrawler.class);
     private Map<Pattern,MetaQuery> patternToQueries;
-    private Model model;
-    private String modelName;
+    private DefactoModel model;
     
     /**
      * 
      * @param model
      * @param patternToQueries
      */
-    public EvidenceCrawler(Model model, Map<Pattern, MetaQuery> queries) {
+    public EvidenceCrawler(DefactoModel model, Map<Pattern, MetaQuery> queries) {
 
         this.patternToQueries = queries;
         this.model            = model;
-        this.modelName        = this.model.getNsPrefixURI("name");
     }
 
     /**
@@ -58,13 +61,7 @@ public class EvidenceCrawler {
      */
     public Evidence crawlEvidence(String subjectLabel, String objectLabel) {
 
-        SearchEngine engine = new BingSearchEngine();
-        Set<SearchResult> searchResults = new HashSet<SearchResult>();
-
-        // collect the urls for a particular pattern
-        // could be done in parallel 
-        for ( Map.Entry<Pattern, MetaQuery> entry : this.patternToQueries.entrySet())
-            searchResults.add(engine.getSearchResults(entry.getValue(), entry.getKey()));
+        Set<SearchResult> searchResults = this.generateSearchResultsInParallel();
         
         // multiple pattern bring the same results but we dont want that
         this.filterSearchResults(searchResults);
@@ -89,9 +86,44 @@ public class EvidenceCrawler {
         return evidence;
     }
     
-    private void scoreSearchResults(Set<SearchResult> searchResults, Model model, Evidence evidence) {
+    private Set<SearchResult> generateSearchResultsInParallel() {
 
-        evidence.setBoaPatterns(new BoaPatternSearcher().getNaturalLanguageRepresentations(ModelUtil.getPropertyUri(model), 200, 0.5));
+        Set<SearchResult> results = new HashSet<SearchResult>();
+        Set<SearchResultCallable> searchResultCallables = new HashSet<SearchResultCallable>();
+        
+        // collect the urls for a particular pattern
+        // could be done in parallel 
+        for ( Map.Entry<Pattern, MetaQuery> entry : this.patternToQueries.entrySet())
+            searchResultCallables.add(new SearchResultCallable(entry.getValue(), entry.getKey()));
+        
+        // wait als long as the scoring needs, and score every website in parallel        
+        ExecutorService executor = Executors.newFixedThreadPool(this.patternToQueries.size());
+        try {
+            
+            for ( Future<SearchResult> result : executor.invokeAll(searchResultCallables)) {
+
+                try {
+                    
+                    results.add(result.get());
+                }
+                catch (ExecutionException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            executor.shutdownNow();
+        }
+        catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        
+        return results;
+    }
+
+    private void scoreSearchResults(Set<SearchResult> searchResults, DefactoModel model, Evidence evidence) {
+
+        evidence.setBoaPatterns(new BoaPatternSearcher().getNaturalLanguageRepresentations(model.getPropertyUri(), 200, 0.5));
         
         // prepare the scoring 
         List<WebSiteScoreCallable> scoreCallables =  new ArrayList<WebSiteScoreCallable>();
@@ -138,7 +170,7 @@ public class EvidenceCrawler {
         }
     }
 
-    private void crawlAndCacheSearchResults(Set<SearchResult> searchResults, Model model, Evidence evidence) {
+    private void crawlAndCacheSearchResults(Set<SearchResult> searchResults, DefactoModel model, Evidence evidence) {
         
         // prepare the result variables
         List<HtmlCrawlerCallable> htmlCrawlers = new ArrayList<HtmlCrawlerCallable>();
@@ -168,11 +200,29 @@ public class EvidenceCrawler {
                 e.printStackTrace();
             }
         }
-                    
-        // add the results of the crawl to the cache
-        SearchResultCache cache = new SearchResultCache();
-        for ( SearchResult result : searchResults )
-            if ( !cache.contains(result.getQuery().toString()) ) cache.add(result);
+        
+        try {
+            
+            IndexSearcher searcher = new IndexSearcher(IndexReader.open(LuceneSearchResultCache.index));
+            List<SearchResult> results = new ArrayList<SearchResult>();
+            // add the results of the crawl to the cache
+            Cache<SearchResult> cache = new LuceneSearchResultCache();
+            for ( SearchResult result : searchResults )
+                if ( !((LuceneSearchResultCache) cache).contains(result.getQuery().toString(), searcher) ) results.add(result);
+            
+            searcher.getIndexReader().close();
+            searcher.close();
+            
+            cache.addAll(results);
+        }
+        catch (CorruptIndexException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
 //    private Map<Pattern,List<WebSite>> getWebSites(Map<Pattern,SearchResult> patternToSearchResult, Model model, Evidence evidence) {
@@ -192,7 +242,7 @@ public class EvidenceCrawler {
 //        Map<Pattern,List<WebSite>> results = this.executeWebSiteCrawler(evidence, executor, websiteCrawler);
 //                
 //        // add the results of the crawl to the cache
-//        SearchResultCache cache = new SearchResultCache();
+//        H2DatabaseSearchResultCache cache = new H2DatabaseSearchResultCache();
 //        for ( SearchResult result : patternToSearchResult.values() )
 //            if ( !cache.contains(result.getQuery().toString()) ) cache.add(result);
 //                

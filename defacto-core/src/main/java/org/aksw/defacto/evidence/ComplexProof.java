@@ -1,5 +1,6 @@
 package org.aksw.defacto.evidence;
 
+import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
 
@@ -17,7 +18,7 @@ public class ComplexProof {
     
     private Pattern pattern;
     private WebSite website;
-    private Model model;
+    private DefactoModel model;
 
     private String firstLabel;
     private String secondLabel;
@@ -39,7 +40,7 @@ public class ComplexProof {
      * @param site
      * @param boaPattern
      */
-    public ComplexProof(Model model, String firstLabel, String secondLabel, String occurrence, String normalizedOccurrence, WebSite site, Pattern boaPattern) {
+    public ComplexProof(DefactoModel model, String firstLabel, String secondLabel, String occurrence, String normalizedOccurrence, WebSite site, Pattern boaPattern) {
         
         this.model                    = model;
         this.firstLabel               = firstLabel;
@@ -59,7 +60,7 @@ public class ComplexProof {
      * @param normalizedOccurrence
      * @param site
      */
-    public ComplexProof(Model model, String firstLabel, String secondLabel, String occurrence, String normalizedOccurrence, WebSite site) {
+    public ComplexProof(DefactoModel model, String firstLabel, String secondLabel, String occurrence, String normalizedOccurrence, WebSite site) {
         
         this.model                    = model;
         this.firstLabel               = firstLabel;
@@ -93,7 +94,7 @@ public class ComplexProof {
         return this.pattern;
     }
 
-    public Model getModel() {
+    public DefactoModel getModel() {
 
         return this.model;
     }

@@ -39,14 +39,14 @@ public class DefactoDemo {
         Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getTrainingData());
     }
     
-    public static List<Model> getTrainingData() {
+    public static List<DefactoModel> getTrainingData() {
 
-        List<Model> models = new ArrayList<Model>();
+        List<DefactoModel> models = new ArrayList<DefactoModel>();
         List<File> modelFiles = new ArrayList<File>(Arrays.asList(new File("resources/training/data/true").listFiles()));
 //        modelFiles.addAll(Arrays.asList(new File("resources/training/data/false/domain").listFiles()));
 //        modelFiles.addAll(Arrays.asList(new File("resources/training/data/false/range").listFiles()));
 //        modelFiles.addAll(Arrays.asList(new File("resources/training/data/false/domain_range").listFiles()));
-        modelFiles.addAll(Arrays.asList(new File("resources/training/data/false/property").listFiles()));
+//        modelFiles.addAll(Arrays.asList(new File("resources/training/data/false/property").listFiles()));
 //        modelFiles.addAll(Arrays.asList(new File("resources/training/data/false/random").listFiles()));
         Collections.sort(modelFiles);
 //        Collections.shuffle(modelFiles);
@@ -69,17 +69,13 @@ public class DefactoDemo {
                     
                     Model model = ModelFactory.createDefaultModel();
                     model.read(new FileReader(mappingFile), "", "TTL");
-                    model.setNsPrefix("name", mappingFile.getParent().replace("resources/training/data/", "") + "/" +mappingFile.getName());
+                    String name = mappingFile.getParent().replace("resources/training/data/", "") + "/" +mappingFile.getName();
+                    boolean isCorrect = false;
 
-                    if ( mappingFile.getAbsolutePath().contains("data/true") ) {
+                    if ( mappingFile.getAbsolutePath().contains("data/true") ) isCorrect = true;
+                    logger.info("Loading "+isCorrect+" triple from file: " + mappingFile.getName());
                         
-                        logger.info("Loading true triple from file: " + mappingFile.getName());
-                        model.setNsPrefix("correct", "http://this.uri.is.useless/just_to_mark_model_as_correct");
-                    }
-                    else logger.info("Loading false triple from file: " + mappingFile.getName());
-                        
-
-                    models.add(model);
+                    models.add(new DefactoModel(model, name, isCorrect));
                 }
                 catch (FileNotFoundException e) {
                     
@@ -87,6 +83,7 @@ public class DefactoDemo {
                 }
             }
         }
+        Collections.shuffle(models);
         return models;
     }
 

@@ -2,17 +2,13 @@ package org.aksw.defacto.search.query;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
-import org.aksw.defacto.Defacto;
+import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.BoaPatternSearcher;
 import org.aksw.defacto.boa.Pattern;
-import org.aksw.defacto.util.ModelUtil;
 import org.apache.log4j.Logger;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 /**
  * 
@@ -23,13 +19,13 @@ public class QueryGenerator {
 
     private BoaPatternSearcher patternSearcher = new BoaPatternSearcher();
     private Logger logger = Logger.getLogger(QueryGenerator.class);
-    private Model model;
+    private DefactoModel model;
     
     /**
      * 
      * @param model
      */
-    public QueryGenerator(Model model) {
+    public QueryGenerator(DefactoModel model) {
         
         this.model = model;
     }
@@ -42,7 +38,7 @@ public class QueryGenerator {
         assert(this.model.size() == 3);
         
         // and generate the query strings 
-        return this.generateSearchQueries(ModelUtil.getFact(model));
+        return this.generateSearchQueries(model.getFact());
     }
     
     /**
@@ -54,8 +50,8 @@ public class QueryGenerator {
     private Map<Pattern,MetaQuery> generateSearchQueries(Statement fact){
      
         Map<Pattern,MetaQuery> queryStrings =  new HashMap<Pattern,MetaQuery>();
-        String subjectLabel = ModelUtil.getLabel(fact.getSubject().getURI(), model); 
-        String objectLabel  = ModelUtil.getLabel(fact.getObject().asResource().getURI(), model);
+        String subjectLabel = model.getSubjectLabel(); 
+        String objectLabel  = model.getObjectLabel();
         
         // query boa index and generate the meta queries
         for (Pattern pattern : this.patternSearcher.getNaturalLanguageRepresentations(fact.getPredicate().getURI()))
