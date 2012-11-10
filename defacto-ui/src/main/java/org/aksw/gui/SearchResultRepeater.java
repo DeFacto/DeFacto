@@ -189,9 +189,16 @@ public class SearchResultRepeater extends VerticalLayout {
         scoreLayout.addComponent(lblTitle);
         scoreLayout.setComponentAlignment(lblTitle, Alignment.MIDDLE_RIGHT);
 
+        Color overallScoreColor;
+        if(resultingEvidence.getDeFactoScore() <= 0.25)
+            overallScoreColor = Color.RED;
+        else if(resultingEvidence.getDeFactoScore() <= 0.75)
+            overallScoreColor = Color.ORANGE;
+        else
+            overallScoreColor = Color.GREEN;
 
         JFreeChartWrapper defactoScore = createChartWithPercentage(createDataset(resultingEvidence.getDeFactoScore() * 100, "")
-                , Color.GREEN);
+                , overallScoreColor);
         scoreLayout.addComponent(defactoScore);
 
         scoreLayout.setComponentAlignment(defactoScore, Alignment.MIDDLE_CENTER);
