@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.aksw.defacto.Defacto;
 import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.AbstractFeature;
@@ -288,9 +289,18 @@ public class Evidence {
     }
     
     public List<WebSite> getAllWebSites(){
-        
+        boolean returnWebsitesWithNoProof = Defacto.DEFACTO_CONFIG.getBooleanSetting("evidence", "DISPLAY_WEBSITES_WITH_NO_PROOF");
+
         List<WebSite> websites = new ArrayList<WebSite>();
-        for ( List<WebSite> websiteList : this.webSites.values() ) websites.addAll(websiteList);
+        for ( List<WebSite> websiteList : this.webSites.values() ){
+            for(WebSite website:websiteList){
+                if(this.getComplexProofs(website).size() > 0 )
+                    websites.add(website);
+                else if(returnWebsitesWithNoProof)
+                    websites.add(website);
+//            websites.addAll(websiteList);
+            }
+        }
         return websites;
     }
 
