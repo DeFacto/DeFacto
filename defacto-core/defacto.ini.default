@@ -53,6 +53,8 @@ OVERWRITE_EVIDENCE_MODEL = false
 UNASSIGNED_PAGE_RANK = 11
 ; threshold for when a complex proof is considered to be supporting a fact
 CONFIRMATION_THRESHOLD = 0.5
+;return all websites even the website has no proof
+DISPLAY_WEBSITES_WITH_NO_PROOF = false
 
 
 [settings]
