@@ -192,8 +192,10 @@ public class SearchResultRepeater extends VerticalLayout {
         Color overallScoreColor;
         if(resultingEvidence.getDeFactoScore() <= 0.25)
             overallScoreColor = Color.RED;
-        else if(resultingEvidence.getDeFactoScore() <= 0.75)
+        else if(resultingEvidence.getDeFactoScore() <= 0.5)
             overallScoreColor = Color.ORANGE;
+        else if(resultingEvidence.getDeFactoScore() <= 0.75)
+            overallScoreColor = Color.YELLOW;
         else
             overallScoreColor = Color.GREEN;
 
