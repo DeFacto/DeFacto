@@ -12,6 +12,7 @@ import org.apache.solr.common.SolrDocumentList;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -58,13 +59,13 @@ public class SolrSearcher {
 
 //    public SolrSearch() {this(Defaults.solrServerURL());}
 
-    public  HashMap<String, String> getResources(String query) {return getResources(query, LIMIT);	}
+    public LinkedHashMap<String, String> getResources(String query) {return getResources(query, LIMIT);	}
 
-    public  HashMap<String, String> getResources(String query, int limit) {return getResources(query, limit, OFFSET);}
+    public  LinkedHashMap<String, String> getResources(String query, int limit) {return getResources(query, limit, OFFSET);}
 
 
-    public HashMap<String, String> getResources(String query, int limit, int offset) {
-        HashMap<String, String> resources = new HashMap<String, String>();
+    public LinkedHashMap<String, String> getResources(String query, int limit, int offset) {
+        LinkedHashMap<String, String> resources = new LinkedHashMap<String, String>();
 
         SolrQuery q = new SolrQuery(buildQueryString(query));
         q.setRows(limit);
