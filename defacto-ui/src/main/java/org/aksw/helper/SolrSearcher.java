@@ -105,8 +105,8 @@ public class SolrSearcher {
     }
 
 
-    protected String buildQueryString(String query) {return "label:(" + query + ")";}
-    protected String buildQueryString(String query, String type){return "label:(" + query + ") AND types:\"" + type + "\"";}
+    protected String buildQueryString(String query) {return "label:\"" + query + "\"";}
+    protected String buildQueryString(String query, String type){return "label:\"" + query + "\" AND types:\"" + type + "\"";}
 
 
     public static void main(String []args){
