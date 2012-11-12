@@ -347,11 +347,11 @@ public class MainForm extends Application {
 
         String subjectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Albert_Einstein");
         String predicateLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/ontology/award");
-        String objectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Nobel_Prize_in_Physics");
+        String objectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Nobel_Prize");
 
         String tripleInLabels = subjectLabel + " - " + predicateLabel + " - " + objectLabel;//will be displayed to the user
         String tripleInURIs = "http://dbpedia.org/resource/Albert_Einstein" + " - " + "http://dbpedia.org/ontology/award"
-                + " - " + "http://dbpedia.org/resource/Nobel_Prize_in_Physics";//will be execute the query itself
+                + " - " + "http://dbpedia.org/resource/Nobel_Prize";//will be execute the query itself
 
         cmbExample.addItem(tripleInURIs);
         cmbExample.setItemCaption(tripleInURIs, tripleInLabels);
