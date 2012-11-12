@@ -19,6 +19,7 @@ import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.util.ProvenanceInformationGenerator;
 import org.aksw.defacto.util.RandomIntegerGenerator;
 import org.aksw.helper.TripleComponent;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -320,17 +321,36 @@ public class SearchResultRepeater extends VerticalLayout {
     }
 
     private void sortResults(Evidence resultingEvidence) {
-        ArrayList<WebSite> lstResultingWebSites = (ArrayList<WebSite>)resultingEvidence.getAllWebSites();
-//        Collections.sort(lstResultingWebSites, new WebsiteSorterByDefactoScore());
+
+        ArrayList<WebSite> lstResultingWebSites = (ArrayList<WebSite>) resultingEvidence.getAllWebSites();
+        // Collections.sort(lstResultingWebSites, new
+        // WebsiteSorterByDefactoScore());
 
         maximumTopicMajorityInTheWeb = calculateMaximumTopicMajorityInTheWeb(lstResultingWebSites);
 
         lstWebsiteItems = new ArrayList<WebsiteItem>();
-        //Iterate through the list, in order to construct ArrayList of WebsiteItem, as it contains the defacto score as well
-        //Then sort accordingly
-        for(WebSite website: lstResultingWebSites){
-            double defactoScoreForWebsite = calculateDefactoScore(website, maximumTopicMajorityInTheWeb);
-            lstWebsiteItems.add(new WebsiteItem(website, defactoScoreForWebsite));
+        // Iterate through the list, in order to construct ArrayList of
+        // WebsiteItem, as it contains the defacto score as well
+        // Then sort accordingly
+        for (WebSite website : lstResultingWebSites) {
+
+            int score = 0;
+            ArrayList<ComplexProof> proofs = (ArrayList<ComplexProof>) resultingEvidence.getComplexProofs(website);
+
+            for (ComplexProof proof : proofs) {
+
+                for (org.aksw.defacto.boa.Pattern pattern : resultingEvidence.getBoaPatterns()) {
+                    if (StringUtils.containsIgnoreCase(proof.getProofPhrase(), pattern.naturalLanguageRepresentationNormalized.trim())) {
+
+                        score++;
+                    }
+                }
+            }
+            // double defactoScoreForWebsite = calculateDefactoScore(website,
+            // maximumTopicMajorityInTheWeb);
+            // lstWebsiteItems.add(new WebsiteItem(website,
+            // defactoScoreForWebsite));
+            lstWebsiteItems.add(new WebsiteItem(website, score));
         }
 
         Collections.sort(lstWebsiteItems);
