@@ -358,7 +358,7 @@ public class MainForm extends Application {
         cmbExample.setValue(tripleInURIs);
 
         subjectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Quentin_Tarantino");
-        predicateLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/ontology/artist");
+        predicateLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/ontology/director");
         objectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Pulp_Fiction");
 
         tripleInLabels = subjectLabel + " - " + predicateLabel + " - " + objectLabel;//will be displayed to the user
@@ -1057,7 +1057,7 @@ public class MainForm extends Application {
             startingProgressIndicatorThread.start();
 
             try{
-                Defacto.DEFACTO_CONFIG =new DefactoConfig(new Ini(new File("defacto-core/defacto.ini")));
+                Defacto.DEFACTO_CONFIG =new DefactoConfig(new Ini(new File("/home/mohamed/LeipzigUniversity/JavaProjects/test/FixedDefacto/DeFacto/defacto-core/defacto.ini")));
             }
             catch(Exception exp){
 
