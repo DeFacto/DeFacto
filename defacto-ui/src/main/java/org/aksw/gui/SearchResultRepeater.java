@@ -12,6 +12,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.BaseTheme;
+import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
@@ -362,6 +363,12 @@ public class SearchResultRepeater extends VerticalLayout {
 
     private GridLayout renderResults(){
 
+        //Get the list of all NL representations to highlight them in the output
+        ArrayList<String> nlPatterns = new ArrayList<String>();
+        for(Pattern boaPattern:resultingEvidence.getBoaPatterns())
+            if(boaPattern.naturalLanguageRepresentationNormalized.trim().compareTo("") != 0)
+                nlPatterns.add(boaPattern.naturalLanguageRepresentationNormalized.trim());
+
 //        this.setWidth(100, Sizeable.UNITS_PERCENTAGE);
         //If there is no data in the array, then just do nothing
         if((resultingEvidence == null) || (resultingEvidence.getAllWebSites().size() == 0))
@@ -472,6 +479,13 @@ public class SearchResultRepeater extends VerticalLayout {
                     String contextString = proof.replaceAll("(?i)" + resultingEvidence.getSubjectLabel(), "<b>" + resultingEvidence.getSubjectLabel() + "</b>");
                     contextString = contextString.replaceAll("(?i)" + resultingEvidence.getObjectLabel(), "<b>" + resultingEvidence.getObjectLabel() + "</b>");
 
+                    //Boldface all patterns as well
+                    for(String pattern:nlPatterns){
+                        if(contextString.toLowerCase().contains(pattern.toLowerCase())){
+                            contextString = contextString.replaceAll("(?i)" + pattern, "<b>" + pattern + "</b>");
+                            break;
+                        }
+                    }
                     lblStructuredPhrase.setValue(contextString +"&nbsp;&nbsp;</br>");
                     lblStructuredPhrase.setContentMode(Label.CONTENT_XHTML);
                     lblStructuredPhrase.setSizeFull();
