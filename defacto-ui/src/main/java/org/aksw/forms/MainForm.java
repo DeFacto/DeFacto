@@ -345,37 +345,37 @@ public class MainForm extends Application {
 
         SparqlUtil sparqlEndpointDBpediaLive = new SparqlUtil("http://live.dbpedia.org/sparql", "http://dbpedia.org");
 
-        String subjectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Hector_A._Cafferata,_Jr.");
+        String subjectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Albert_Einstein");
         String predicateLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/ontology/award");
-        String objectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Medal_of_Honor");
+        String objectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Nobel_Prize_in_Physics");
 
         String tripleInLabels = subjectLabel + " - " + predicateLabel + " - " + objectLabel;//will be displayed to the user
-        String tripleInURIs = "http://dbpedia.org/resource/Hector_A._Cafferata,_Jr." + " - " + "http://dbpedia.org/ontology/award"
-                + " - " + "http://dbpedia.org/resource/Medal_of_Honor";//will be execute the query itself
+        String tripleInURIs = "http://dbpedia.org/resource/Albert_Einstein" + " - " + "http://dbpedia.org/ontology/award"
+                + " - " + "http://dbpedia.org/resource/Nobel_Prize_in_Physics";//will be execute the query itself
 
         cmbExample.addItem(tripleInURIs);
         cmbExample.setItemCaption(tripleInURIs, tripleInLabels);
         cmbExample.setValue(tripleInURIs);
 
-        subjectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Coliseum_Rock");
+        subjectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Quentin_Tarantino");
         predicateLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/ontology/artist");
-        objectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Starz_%28band%29");
+        objectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Pulp_Fiction");
 
         tripleInLabels = subjectLabel + " - " + predicateLabel + " - " + objectLabel;//will be displayed to the user
-        tripleInURIs = "http://dbpedia.org/resource/Coliseum_Rock" + " - " + "http://dbpedia.org/ontology/artist"
-                + " - " + "http://dbpedia.org/resource/Starz_%28band%29";//will be execute the query itself
+        tripleInURIs = "http://dbpedia.org/resource/Quentin_Tarantino" + " - " + "http://dbpedia.org/ontology/director"
+                + " - " + "http://dbpedia.org/resource/Pulp_Fiction";//will be execute the query itself
 
         cmbExample.addItem(tripleInURIs);
         cmbExample.setItemCaption(tripleInURIs, tripleInLabels);
         cmbExample.setValue(tripleInURIs);
 
-        subjectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Paul_Meany");
-        predicateLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/ontology/associatedBand");
-        objectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Macrosick");
+        subjectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/The_Godfather");
+        predicateLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/ontology/starring");
+        objectLabel = sparqlEndpointDBpediaLive.getEnLabel("http://dbpedia.org/resource/Al_Pacino");
 
         tripleInLabels = subjectLabel + " - " + predicateLabel + " - " + objectLabel;//will be displayed to the user
-        tripleInURIs = "http://dbpedia.org/resource/Paul_Meany" + " - " + "http://dbpedia.org/ontology/associatedBand"
-                + " - " + "http://dbpedia.org/resource/Macrosick";//will be execute the query itself
+        tripleInURIs = "http://dbpedia.org/resource/The_Godfather" + " - " + "http://dbpedia.org/ontology/starring"
+                + " - " + "http://dbpedia.org/resource/Al_Pacino";//will be execute the query itself
 
         cmbExample.addItem(tripleInURIs);
         cmbExample.setItemCaption(tripleInURIs, tripleInLabels);
