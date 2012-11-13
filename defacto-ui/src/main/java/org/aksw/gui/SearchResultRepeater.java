@@ -21,6 +21,7 @@ import org.aksw.defacto.util.RandomIntegerGenerator;
 import org.aksw.helper.TripleComponent;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.log4j.chainsaw.Main;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -48,6 +49,7 @@ import java.io.StringWriter;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.Callable;
@@ -334,27 +336,36 @@ public class SearchResultRepeater extends VerticalLayout {
         // Then sort accordingly
         for (WebSite website : lstResultingWebSites) {
 
-            int orderingScore = 0;
-            ArrayList<ComplexProof> proofs = (ArrayList<ComplexProof>) resultingEvidence.getComplexProofs(website);
-
-            for (ComplexProof proof : proofs) {
-
-                for (org.aksw.defacto.boa.Pattern pattern : resultingEvidence.getBoaPatterns()) {
-                    if (StringUtils.containsIgnoreCase(proof.getProofPhrase(), pattern.naturalLanguageRepresentationNormalized.trim())) {
-
-                        orderingScore++;
-                    }
-                }
-            }
+//            int orderingScore = 0;
+//            ArrayList<ComplexProof> proofs = (ArrayList<ComplexProof>) resultingEvidence.getComplexProofs(website);
+//
+//            for (ComplexProof proof : proofs) {
+//
+//                for (org.aksw.defacto.boa.Pattern pattern : resultingEvidence.getBoaPatterns()) {
+//                    if (StringUtils.containsIgnoreCase(proof.getProofPhrase(), pattern.naturalLanguageRepresentationNormalized.trim())) {
+//
+//                        orderingScore++;
+//                    }
+//                }
+//            }
             // double defactoScoreForWebsite = calculateDefactoScore(website,
             // maximumTopicMajorityInTheWeb);
             // lstWebsiteItems.add(new WebsiteItem(website,
             // defactoScoreForWebsite));
-            lstWebsiteItems.add(new WebsiteItem(website, orderingScore, website.getScore()));
+//            lstWebsiteItems.add(new WebsiteItem(website, orderingScore, website.getScore()));
+            lstWebsiteItems.add(new WebsiteItem(website, website.getScore(), website.getScore()));
         }
 
         Collections.sort(lstWebsiteItems);
         Collections.reverse(lstWebsiteItems);
+    }
+    
+    public static void main(String[] args) {
+
+        ArrayList<Double> asd = new ArrayList<Double>(Arrays.asList(0.23, 0.54, 0.1));
+        Collections.sort(asd);
+                
+        System.out.println(asd);
     }
 
 
