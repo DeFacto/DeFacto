@@ -354,6 +354,7 @@ public class SearchResultRepeater extends VerticalLayout {
         }
 
         Collections.sort(lstWebsiteItems);
+        Collections.reverse(lstWebsiteItems);
     }
 
 
