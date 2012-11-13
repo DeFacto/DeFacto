@@ -1,6 +1,7 @@
 package org.aksw.defacto.util;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -23,8 +24,6 @@ public class PropertiesReader {
     public static HashMap<String, String> getPropertiesList(){
         try{
 
-            SparqlUtil sparqlEndpointDBpediaLive = new SparqlUtil("http://live.dbpedia.org/sparql", "http://dbpedia.org");
-
             List<String> propertyList = FileUtils.readLines(new File(PROPERTIES_FINLENAME));
 
             //Occupation is supported at the moment
@@ -32,7 +31,7 @@ public class PropertiesReader {
 
             HashMap<String, String> hmPropertyWithLabelList = new HashMap<String, String>();
             for(String property : propertyList)
-                hmPropertyWithLabelList.put(property, sparqlEndpointDBpediaLive.getEnLabel(property));
+                hmPropertyWithLabelList.put(property, StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(property.replace("http://dbpedia.org/ontology/", "")), " "));
             return hmPropertyWithLabelList;
         }
         catch (IOException exp){
