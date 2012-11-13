@@ -334,7 +334,7 @@ public class SearchResultRepeater extends VerticalLayout {
         // Then sort accordingly
         for (WebSite website : lstResultingWebSites) {
 
-            int score = 0;
+            int orderingScore = 0;
             ArrayList<ComplexProof> proofs = (ArrayList<ComplexProof>) resultingEvidence.getComplexProofs(website);
 
             for (ComplexProof proof : proofs) {
@@ -342,7 +342,7 @@ public class SearchResultRepeater extends VerticalLayout {
                 for (org.aksw.defacto.boa.Pattern pattern : resultingEvidence.getBoaPatterns()) {
                     if (StringUtils.containsIgnoreCase(proof.getProofPhrase(), pattern.naturalLanguageRepresentationNormalized.trim())) {
 
-                        score++;
+                        orderingScore++;
                     }
                 }
             }
@@ -350,7 +350,7 @@ public class SearchResultRepeater extends VerticalLayout {
             // maximumTopicMajorityInTheWeb);
             // lstWebsiteItems.add(new WebsiteItem(website,
             // defactoScoreForWebsite));
-            lstWebsiteItems.add(new WebsiteItem(website, score));
+            lstWebsiteItems.add(new WebsiteItem(website, orderingScore, website.getScore()));
         }
 
         Collections.sort(lstWebsiteItems);
@@ -688,7 +688,7 @@ public class SearchResultRepeater extends VerticalLayout {
 
 
 
-            JFreeChartWrapper websiteDefactoScore = createChart(createDataset(currentWebsiteItem.getDefactoScoreOfWebsite(), "  Defacto Score"),
+            JFreeChartWrapper websiteDefactoScore = createChart(createDataset(currentWebsiteItem.getDefactoScore(), "  Defacto Score"),
                     Color.GREEN);
 
             //Call ChartPlotter in parallel to speed up the process of plotting charts
@@ -1401,24 +1401,42 @@ public class SearchResultRepeater extends VerticalLayout {
     private class WebsiteItem implements Comparable<WebsiteItem>{
 
         private WebSite website;
-        private double defactoScoreOfWebsite;
+        private double orderScore;
+        private double defactoScore;
 
         public WebSite getWebsite() {
             return website;
         }
 
         public double getDefactoScoreOfWebsite() {
-            return defactoScoreOfWebsite;
+            return orderScore;
         }
 
-        public WebsiteItem(WebSite webSite, double defactoScoreOfWebsite){
+        public WebsiteItem(WebSite webSite, double orderScore, double defactoScore){
             this.website = webSite;
-            this.defactoScoreOfWebsite = defactoScoreOfWebsite;
+            this.orderScore = orderScore;
+            this.setDefactoScore(defactoScore);
         }
 
         @Override
         public int compareTo(WebsiteItem websiteItem) {
-            return -Double.compare(this.defactoScoreOfWebsite, websiteItem.getDefactoScoreOfWebsite());
+            return -Double.compare(this.orderScore, websiteItem.getDefactoScoreOfWebsite());
+        }
+
+        /**
+         * @return the defactoScore
+         */
+        public double getDefactoScore() {
+
+            return defactoScore;
+        }
+
+        /**
+         * @param defactoScore the defactoScore to set
+         */
+        public void setDefactoScore(double defactoScore) {
+
+            this.defactoScore = defactoScore;
         }
     }
 
