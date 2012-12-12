@@ -36,7 +36,8 @@ public class DefactoDemo {
     public static void main(String[] args) throws InvalidFileFormatException, IOException {
 
         org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
-        Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getTrainingData());
+        Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getSampleData());
+//        Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getTrainingData());
     }
     
     public static List<DefactoModel> getTrainingData() {
@@ -90,7 +91,7 @@ public class DefactoDemo {
     /**
      * @return a set of two models which contain each a fact and the appropriate labels for the resources
      */
-    private static List<Model> getSampleData(){
+    private static List<DefactoModel> getSampleData(){
         
         Model model1 = ModelFactory.createDefaultModel();
         
@@ -108,9 +109,9 @@ public class DefactoDemo {
         deathProof.addProperty(RDFS.label, "Death Proof");
         deathProof.addProperty(model2.createProperty("http://dbpedia.org/ontology/director"), quentin);
         
-        List<Model> models = new ArrayList<Model>();
-        models.add(model1);
-        models.add(model2);
+        List<DefactoModel> models = new ArrayList<DefactoModel>();
+//        models.add(new DefactoModel(model1, "albert", true));
+        models.add(new DefactoModel(model2, "quentin", true));
         
         return models;
     }

@@ -3,6 +3,8 @@ package org.aksw.defacto.util;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.chainsaw.Main;
+
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
@@ -85,9 +87,16 @@ public class SparqlUtil {
 	 */
 	public String getEnLabel(String resource) {
 		String query = "SELECT ?label { <" + resource + "> rdfs:label ?label . FILTER ( lang(?label) = \"en\" ) } LIMIT 1";
-//		System.out.println(query);
+		System.out.println(query);
 		return executeSelectQuery(query).next().getLiteral("label").getLexicalForm();
 	}	
+	
+	
+	public static void main(String[] args) {
+
+        SparqlUtil util = new SparqlUtil("http://live.dbpedia.org/sparql", "http://dbpedia.org");
+        System.out.println(util.getEnLabel("http://dbpedia.org/resource/Medal_of_Honor"));
+    }
 	
 	/**
 	 * 

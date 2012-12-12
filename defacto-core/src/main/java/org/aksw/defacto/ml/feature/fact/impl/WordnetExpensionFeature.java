@@ -9,6 +9,7 @@ import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
 import org.aksw.defacto.ml.feature.fact.FactFeature;
 import org.aksw.defacto.wordnet.WordNetExpansion;
+import org.apache.log4j.chainsaw.Main;
 
 
 /**
@@ -42,5 +43,10 @@ public class WordnetExpensionFeature implements FactFeature {
         
         if ( Double.isInfinite(similarity) || Double.isNaN(similarity) ) proof.getFeatures().setValue(AbstractFactFeatures.WORDNET_EXPANSION, 0D);
         else proof.getFeatures().setValue(AbstractFactFeatures.WORDNET_EXPANSION, similarity);
+    }
+    
+    public static void main(String[] args) {
+
+        System.out.println(new WordNetExpansion("resources/wordnet/dict").getExpandedJaccardSimilarity(", the director of", "the director of"));
     }
 }

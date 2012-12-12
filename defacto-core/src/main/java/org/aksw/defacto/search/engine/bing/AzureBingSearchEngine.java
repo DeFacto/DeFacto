@@ -69,9 +69,9 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
         MetaQuery query1 = new MetaQuery(String.format("%s|-|%s|-|%s", "Gloria Estefan", "??? NONE ???", "Remember Me with Love"));
         MetaQuery query2 = new MetaQuery(String.format("%s|-|%s|-|%s", "Avram Hershko", "?D? is a component of ?R?", "United States Marine Corps"));
         
-        AzureBingSearchEngine engine = new AzureBingSearchEngine("vm=", "10");
-//        System.out.println(engine.query(query0, null).getWebSites().size());
-        System.out.println(engine.query(query, null).getWebSites().size());
+        AzureBingSearchEngine engine = new AzureBingSearchEngine("uyUYNF9pOFmkL7TjNgNuTSltfrUnJIkBkrAaRW6J4DA=", "10");
+        System.out.println(engine.query(query0, null).getWebSites().size());
+//        System.out.println(engine.query(query, null).getWebSites().size());
         
 //        URI uri;
 //        try {
@@ -112,7 +112,6 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
             aq.doQuery();
             
             AzureSearchResultSet<AbstractAzureSearchResult> ars = aq.getQueryResult();
-            
             // query bing and get only the urls and the total hit count back
             List<WebSite> results = new ArrayList<WebSite>();
             
