@@ -1,14 +1,12 @@
 package org.aksw.defacto.search.cache;
 
-import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.LowerCaseFilter;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.WhitespaceTokenizer;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.Tokenizer;
+import org.apache.lucene.analysis.core.LowerCaseFilter;
+import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.util.Version;
 
 /**
@@ -21,23 +19,18 @@ import org.apache.lucene.util.Version;
  */
 public final class LowerCaseWhitespaceAnalyzer extends Analyzer {
 
-	@Override
-	public TokenStream tokenStream(String string, Reader reader) {
-
-		return new LowerCaseFilter(Version.LUCENE_34, new WhitespaceTokenizer(Version.LUCENE_34, reader)); 
-	}
+	private Version version;
 	
-	public static void main(String[] args) throws IOException {
+	public LowerCaseWhitespaceAnalyzer(Version version) {
+		
+		this.version = version;
+	}
 
-		String str = "An easy way to write an analyzer for tokens bi-gram (or even tokens n-grams) with lucene";
-		Analyzer analyzer = new LowerCaseWhitespaceAnalyzer();
-
-		TokenStream stream = analyzer.tokenStream("content", new StringReader(str));
-		CharTermAttribute termAttribute = stream.getAttribute(CharTermAttribute.class);
-
-		System.out.print("Token: ");
-		while (stream.incrementToken()) {
-		    System.out.print(termAttribute.toString() + " | ");
-		}
+	@Override
+	protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
+		
+		Tokenizer source = new WhitespaceTokenizer(version, reader);
+	    TokenStream filter = new LowerCaseFilter(version, source);
+		return new TokenStreamComponents(source, filter);
 	}
 }

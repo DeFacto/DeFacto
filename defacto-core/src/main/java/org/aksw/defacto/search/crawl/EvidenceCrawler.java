@@ -21,7 +21,7 @@ import org.aksw.defacto.cache.Cache;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.cache.H2DatabaseSearchResultCache;
-import org.aksw.defacto.search.cache.LuceneSearchResultCache;
+import org.aksw.defacto.search.cache.solr.Solr4SearchResultCache;
 import org.aksw.defacto.search.concurrent.HtmlCrawlerCallable;
 import org.aksw.defacto.search.concurrent.WebSiteScoreCallable;
 import org.aksw.defacto.search.engine.SearchEngine;
@@ -201,91 +201,14 @@ public class EvidenceCrawler {
             }
         }
         
-        try {
-            
-            IndexSearcher searcher = new IndexSearcher(IndexReader.open(LuceneSearchResultCache.index));
-            List<SearchResult> results = new ArrayList<SearchResult>();
-            // add the results of the crawl to the cache
-            Cache<SearchResult> cache = new LuceneSearchResultCache();
-            for ( SearchResult result : searchResults )
-                if ( !((LuceneSearchResultCache) cache).contains(result.getQuery().toString(), searcher) ) results.add(result);
-            
-            searcher.getIndexReader().close();
-            searcher.close();
-            
-            cache.addAll(results);
-        }
-        catch (CorruptIndexException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        List<SearchResult> results = new ArrayList<SearchResult>();
+        // add the results of the crawl to the cache
+        Cache<SearchResult> cache = new Solr4SearchResultCache();
+        // this filters out links which are in the result of multiple search engine quries
+        for ( SearchResult result : searchResults ) 
+        	if ( !cache.contains(result.getQuery().toString()) ) 
+        		results.add(result);
+        
+        cache.addAll(results);
     }
-    
-//    private Map<Pattern,List<WebSite>> getWebSites(Map<Pattern,SearchResult> patternToSearchResult, Model model, Evidence evidence) {
-//        
-//        // get the text from the urls
-//        ExecutorService executor = Executors.newFixedThreadPool(Constants.NUMBER_OF_SEARCH_THREADS);
-//        this.logger.info(String.format("Creating thread pool for %s html crawlers!", Constants.NUMBER_OF_SEARCH_THREADS));
-//        
-//        // prepare the result variables
-//        List<WebSiteScoreCallable> websiteCrawler = new ArrayList<WebSiteScoreCallable>();
-//        
-//        // prepare the crawlers for simultanous execution
-//        for ( Map.Entry<Pattern,SearchResult> entry : patternToSearchResult.entrySet())
-//            websiteCrawler.add(new WebSiteScoreCallable(evidence, entry.getKey(), entry.getValue(), model));
-//
-//        // execute the threads and wait for their termination for max 10 seconds
-//        Map<Pattern,List<WebSite>> results = this.executeWebSiteCrawler(evidence, executor, websiteCrawler);
-//                
-//        // add the results of the crawl to the cache
-//        H2DatabaseSearchResultCache cache = new H2DatabaseSearchResultCache();
-//        for ( SearchResult result : patternToSearchResult.values() )
-//            if ( !cache.contains(result.getQuery().toString()) ) cache.add(result);
-//                
-//        return results;        
-//    }
-    
-
-    /**
-     * 
-     * @param executor
-     * @param websiteCrawler
-     * @return
-     */
-//    private Map<Pattern,List<WebSite>> executeWebSiteCrawler(Evidence evidence, ExecutorService executor, List<WebSiteScoreCallable> websiteCrawler) {
-//
-//        Map<Pattern,List<WebSite>> patternToWebSites = new LinkedHashMap<Pattern,List<WebSite>>();
-//        int numberOfWebSites = 0;
-//        
-//        try {
-//            
-//            for ( Future<Map<Pattern,List<WebSite>>> future : executor.invokeAll(websiteCrawler)) 
-//                for (Map.Entry<Pattern, List<WebSite>> entry : future.get().entrySet() ) {
-//                    
-//                    for ( WebSite site : entry.getValue() )
-//                        site.setScore(this.scoreSite(evidence, site));
-//                    
-//                    patternToWebSites.put(entry.getKey(),entry.getValue());
-//                    numberOfWebSites++;
-//                }
-//            logger.info(String.format("Found %s websites for model %s", numberOfWebSites, this.modelName));        
-//        }
-//        catch (InterruptedException e) {
-//
-//            logger.warn("Websites crawling was canceled because of: ", e);
-//        }
-//        catch (ExecutionException e) {
-//
-//            logger.warn("Websites crawling was canceled because of: ", e);
-//        }
-//        
-//        executor.shutdown();
-//        executor.shutdownNow();
-//        
-//        return patternToWebSites;
-//    }
 }

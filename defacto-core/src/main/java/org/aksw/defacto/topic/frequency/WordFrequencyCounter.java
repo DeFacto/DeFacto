@@ -1,11 +1,13 @@
 package org.aksw.defacto.topic.frequency;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.TokenStream;
@@ -43,12 +45,13 @@ public class WordFrequencyCounter {
      */
     public static ArrayList<Word> getKeywordsSortedByFrequency(String inputWords){
 
-        PatternAnalyzer keywordAnalyzer     = PatternAnalyzer.EXTENDED_ANALYZER;
-        TokenStream pageTokens              = keywordAnalyzer.tokenStream("", inputWords);
-        CharTermAttribute charTermAttribute = pageTokens.getAttribute(CharTermAttribute.class);
-        ArrayList<String> tokens            = new ArrayList<String>(1000);
-
+    	ArrayList<String> tokens = new ArrayList<String>(1000);
+    	
         try{
+        	
+        	PatternAnalyzer keywordAnalyzer     = PatternAnalyzer.EXTENDED_ANALYZER;
+            TokenStream pageTokens              = keywordAnalyzer.tokenStream("", new StringReader(inputWords));
+            CharTermAttribute charTermAttribute = pageTokens.getAttribute(CharTermAttribute.class);
             
             while (pageTokens.incrementToken()) {
                 
@@ -62,7 +65,7 @@ public class WordFrequencyCounter {
             logger.error("Cannot get a token from the stream, due to " + exp.getMessage());
         }
 
-        HashMap<String,Word> map = new HashMap<String,Word>();
+        Map<String,Word> map = new HashMap<String,Word>();
         for(String token : tokens){
             
             Word word = map.get(token);

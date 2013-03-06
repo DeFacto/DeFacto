@@ -12,7 +12,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.BinaryRequestWriter;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -23,20 +23,13 @@ import org.apache.solr.common.SolrDocumentList;
  */
 public class BoaPatternSearcher {
 
-    private static CommonsHttpSolrServer server;
+    private static HttpSolrServer server;
     private static final String SOLR_INDEX = "boa_fact_detail";
 
     public BoaPatternSearcher(){
-
-        try {
-
-            server = new CommonsHttpSolrServer("http://dbpedia.aksw.org:8080/solr/" + SOLR_INDEX);
-            server.setRequestWriter(new BinaryRequestWriter());
-        }
-        catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    	
+        server = new HttpSolrServer("http://dbpedia.aksw.org:8080/solr/" + SOLR_INDEX);
+        server.setRequestWriter(new BinaryRequestWriter());
     }
     
     /**

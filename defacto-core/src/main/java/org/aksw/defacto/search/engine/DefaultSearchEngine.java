@@ -5,8 +5,7 @@ package org.aksw.defacto.search.engine;
 
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.cache.Cache;
-import org.aksw.defacto.search.cache.H2DatabaseSearchResultCache;
-import org.aksw.defacto.search.cache.LuceneSearchResultCache;
+import org.aksw.defacto.search.cache.solr.Solr4SearchResultCache;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
 import org.apache.log4j.Logger;
@@ -19,8 +18,7 @@ import org.apache.log4j.Logger;
 public abstract class DefaultSearchEngine implements SearchEngine {
 
     private Logger logger = Logger.getLogger(DefaultSearchEngine.class);
-//    protected Cache<SearchResult> searchResultsCache = new H2DatabaseSearchResultCache();
-    protected Cache<SearchResult> searchResultsCache = new LuceneSearchResultCache();
+    protected Cache<SearchResult> searchResultsCache = new Solr4SearchResultCache();
 
     /* (non-Javadoc)
      * @see org.aksw.defacto.search.engine.SearchEngine#getSearchResults(org.aksw.defacto.search.query.MetaQuery)
