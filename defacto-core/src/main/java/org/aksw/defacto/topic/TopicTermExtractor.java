@@ -24,14 +24,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.search.cache.solr.TopicTermSolr4Cache;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.wikipedia.WikipediaPageCrawler;
 import org.aksw.defacto.wikipedia.WikipediaSearchResult;
 import org.aksw.defacto.wikipedia.WikipediaSearcher;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.ini4j.Ini;
+import org.ini4j.InvalidFileFormatException;
 
 /**
  * 
@@ -42,73 +46,12 @@ public class TopicTermExtractor {
 
     private static Logger logger = Logger.getLogger(TopicTermExtractor.class);
     
-    private static Map<String,List<Word>> topicTermsCache = new HashMap<String,List<Word>>();
+    private static TopicTermSolr4Cache cache = new TopicTermSolr4Cache();
     
-    static {
+    public static void main(String[] args) throws InvalidFileFormatException, IOException {
 
-        try {
-            
-            // if it's not there create it and read an empty file
-            if ( !new File("resources/cache/topics/cache.txt").exists() ) new File("resources/cache/topics/cache.txt").createNewFile();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("resources/cache/topics/cache.txt"))));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                
-                if ( !line.trim().isEmpty() ) {
-                    
-                    String[] parts = line.split("---");
-                    String wikiPage = parts[0];
-                    List<Word> topicTerms = new ArrayList<Word>();
-                    
-                    for (int i = 1 ; i < parts.length ; i++ ) {
-                        
-                        String topic = parts[i].split(";")[0];
-                        String occurrence = parts[i].split(";")[1];
-                        topicTerms.add(new Word(topic, Integer.valueOf(occurrence)));
-                    }
-                    
-                    topicTermsCache.put(wikiPage, topicTerms);
-                }
-            }
-            reader.close();
-        }
-        catch (Exception e) {
-
-            e.printStackTrace();
-        }
-    }
-    
-    public static void main(String[] args) {
-
-        System.out.println(getPotentialTopicTerms("Mehdi Hashemi Rafsanjani", "Islamic Azad University"));
-        System.out.println(getPotentialTopicTerms("Mingus at the Bohemia", "Charles Mingus"));
-    }
-    
-    /**
-     * Write the url and the pagerank to the file and updates the cache object
-     * 
-     * @param domain
-     * @param result
-     */
-    private static void udpateCache(String wikipediaPage, List<Word> topicTerms) {
-
-        try {
-            
-            topicTermsCache.put(wikipediaPage, topicTerms);
-            
-            BufferedWriter bufferWritter = new BufferedWriter( new FileWriter( new File("resources/cache/topics/cache.txt"), true));
-
-            List<String> words = new ArrayList<String>();
-            for ( Word word : topicTerms)
-                words.add(word.getWord()+";"+word.getFrequency());
-            
-            bufferWritter.write(wikipediaPage + "---" + StringUtils.join(words, "---") + "\n");
-            bufferWritter.close();
-        }
-        catch (IOException e) {
-
-            e.printStackTrace();
-        }
+    	Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto.ini")));
+        System.out.println(getPotentialTopicTerms("Barack Obama", "Washington D.C."));
     }
     
     /**
@@ -121,21 +64,28 @@ public class TopicTermExtractor {
 
         List<Word> potentialTopicTerms = new ArrayList<Word>();
         
-        if ( topicTermsCache.containsKey(subjectLabel) ) potentialTopicTerms.addAll(topicTermsCache.get(subjectLabel));
-        else {
-            
-            List<Word> topics = queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipedia(subjectLabel));
+        // go query for the subject in cache if it's no in there put it in
+        if ( !cache.contains(subjectLabel) ) {
+        	
+        	List<Word> topics = queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipedia(subjectLabel));
+        	
+        	System.out.println("SubjectTopics" + topics);
+        	cache.add(new TopicTerm(subjectLabel, topics));
             potentialTopicTerms.addAll(topics);
-            udpateCache(subjectLabel,topics);
         }
+        potentialTopicTerms.addAll(cache.getEntry(subjectLabel).relatedTopics);
+        System.exit(0);
         
-        if ( topicTermsCache.containsKey(objectLabel) ) potentialTopicTerms.addAll(topicTermsCache.get(objectLabel));
-        else {
-            
-            List<Word> topics = queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipedia(objectLabel));
+        // go query for the object in cache if it's no in there put it in
+        if ( !cache.contains(objectLabel) ) {
+        	
+        	List<Word> topics = queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipedia(objectLabel));
+        	
+        	System.out.println("ObjectTopics" + topics);
+        	cache.add(new TopicTerm(objectLabel, topics));
             potentialTopicTerms.addAll(topics);
-            udpateCache(objectLabel,topics);
         }
+        potentialTopicTerms.addAll(cache.getEntry(objectLabel).relatedTopics);
         
         // now potentialTopicTerms contains all terms with high frequency in Wikipedia
         // we need sort them with the term, so that the repeated words are placed next to each other
@@ -180,11 +130,11 @@ public class TopicTermExtractor {
         long start = System.currentTimeMillis();
         List<Word> potentialTopicTerms = new ArrayList<Word>();
         if ( wikiSearchResults.isEmpty() ) return potentialTopicTerms;
-        ExecutorService executorService = Executors.newFixedThreadPool(wikiSearchResults.size());
+        ExecutorService executorService = Executors.newFixedThreadPool(1);//wikiSearchResults.size());
         List<WikipediaPageCrawler> wikipageCrawler = new ArrayList<WikipediaPageCrawler>();
         
-        for ( WikipediaSearchResult result : wikiSearchResults ) 
-            wikipageCrawler.add(new WikipediaPageCrawler(result));
+        for ( WikipediaSearchResult result : wikiSearchResults )
+        	wikipageCrawler.add(new WikipediaPageCrawler(result));
                 
         try {
             
@@ -193,14 +143,17 @@ public class TopicTermExtractor {
         }
         catch (CancellationException ce) {
             
+        	ce.printStackTrace();
             logger.warn("Single website crawling was canceled because of: ", ce);
         }
         catch (ExecutionException e) {
             
+        	e.printStackTrace();
             logger.warn("Single website crawling was canceled because of: ", e);
         }
         catch (InterruptedException e) {
             
+        	e.printStackTrace();
             logger.warn("Single website crawling was canceled because of: ", e);
         }
         logger.info("It took " + (System.currentTimeMillis() - start) +  "ms to crawl wikipedia pages and extract " + potentialTopicTerms.size() + " topic terms!");

@@ -37,16 +37,12 @@ import org.apache.solr.common.SolrInputField;
  */
 public class Solr4SearchResultCache implements Cache<SearchResult> {
 	
-	private SolrInputField uriField = new SolrInputField("uri");
-	private SolrInputField labelField = new SolrInputField("label");
-	private SolrInputField commentField = new SolrInputField("comment");
-	
 	private SolrInputDocument doc;
 	private HttpSolrServer server;
 	
 	public Solr4SearchResultCache(){
 
-		server = new HttpSolrServer("http://[2001:638:902:2010:0:168:35:138]:8080/solr/searchresults");
+		server = new HttpSolrServer("http://[2001:638:902:2010:0:168:35:138]:8080/solr/en_searchresults");
 		server.setRequestWriter(new BinaryRequestWriter());
 	}
 	
@@ -131,7 +127,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return entry;
 	}
 	
 	private List<SolrInputDocument> searchResultToDocument(SearchResult entry) {

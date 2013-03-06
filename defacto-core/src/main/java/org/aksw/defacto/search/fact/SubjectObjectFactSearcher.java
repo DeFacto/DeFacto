@@ -190,12 +190,10 @@ public class SubjectObjectFactSearcher implements FactSearcher {
         
         try {
             
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("resources/cache/labels/surface_forms_en.tsv"))));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
+            		new File(SubjectObjectFactSearcher.class.getResource("/en_surface_forms.tsv").getFile()))));
             String line;
             while ((line = reader.readLine()) != null) {
-                
-                // TODO remove only for debugging!!
-//                if( !line.startsWith("Mother%27s_Finest") || !line.startsWith("Another_Mother_Further") ) continue;
                 
                 String[] lineParts = line.split("\t");
                 Set<String> surfaceForms = new HashSet<String>();

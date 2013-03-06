@@ -83,6 +83,9 @@ public class WikipediaSearcher {
             
             e.printStackTrace();
         }
+        
+        System.out.println("Number of found urls: " + searchResults.size());
+        
         return searchResults;
     }
     

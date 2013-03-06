@@ -36,6 +36,7 @@ public class DefactoDemo {
     public static void main(String[] args) throws InvalidFileFormatException, IOException {
 
         org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
+        DefactoConfig config = new DefactoConfig(new Ini(new File("defacto.ini")));
         Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getSampleData());
 //        Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getTrainingData());
     }

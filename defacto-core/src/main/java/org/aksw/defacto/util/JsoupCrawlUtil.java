@@ -20,8 +20,6 @@ public class JsoupCrawlUtil implements CrawlUtil {
     @Override
     public String readPage(String url, int timeout) {
 
-//        throw new RuntimeException("no need to query if we have a cache");
-        
         try {
             
             return Jsoup.connect(url).timeout(timeout).get().text();
@@ -50,6 +48,8 @@ public class JsoupCrawlUtil implements CrawlUtil {
                 logger.debug(String.format("Error crawling website: %s", url));
             }
             else logger.error(String.format("Error crawling website: %s", url), e);
+            
+            e.printStackTrace();
         }
         
         return "";
