@@ -37,7 +37,6 @@ import org.apache.solr.common.SolrInputField;
  */
 public class Solr4SearchResultCache implements Cache<SearchResult> {
 	
-	private SolrInputDocument doc;
 	private HttpSolrServer server;
 	
 	public Solr4SearchResultCache(){
@@ -137,6 +136,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
         if ( entry.getWebSites().isEmpty() ) {
             
         	SolrInputDocument solrDocument = new SolrInputDocument();
+        	solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_ID_FIELD, String.valueOf(entry.getQuery().toString().hashCode()));
             solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_HIT_COUNT_FIELD, entry.getTotalHitCount());
             solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_RANK_FIELD, -1);
             solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_PAGE_RANK_FIELD, -1);
@@ -152,6 +152,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
             for ( WebSite site : entry.getWebSites() ) {
             	
             	SolrInputDocument solrDocument = new SolrInputDocument();
+            	solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_ID_FIELD, String.valueOf((entry.getQuery().toString() + "\t" + site.getUrl()).hashCode()));
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_HIT_COUNT_FIELD, entry.getTotalHitCount());
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_RANK_FIELD, site.getSearchRank());
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_PAGE_RANK_FIELD, site.getPageRank());

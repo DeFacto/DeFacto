@@ -42,14 +42,6 @@ public class WebSiteScoreCallable implements Callable<WebSite> {
     public WebSite call() {
         
         SubjectObjectFactSearcher.getInstance().generateProofs(evidence, website, model, pattern);
-        
-        // every web site is spawned with a page rank of 11
-        if ( website.getPageRank() == Defacto.DEFACTO_CONFIG.getIntegerSetting("evidence", "UNASSIGNED_PAGE_RANK") ) {
-            
-            logger.info("Getting page rank for: " + website.getUrl());
-            website.setPageRank(PageRank.getPageRank(website.getUrl()));
-        }
-        
         return website;
     }
 }

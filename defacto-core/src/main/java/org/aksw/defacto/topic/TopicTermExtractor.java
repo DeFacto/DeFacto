@@ -1,16 +1,10 @@
 package org.aksw.defacto.topic;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -51,7 +45,7 @@ public class TopicTermExtractor {
     public static void main(String[] args) throws InvalidFileFormatException, IOException {
 
     	Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto.ini")));
-        System.out.println(getPotentialTopicTerms("Barack Obama", "Washington D.C."));
+        for ( Word w : getPotentialTopicTerms("Barack Obama", "Washington D.C."))  System.out.println(w + " " + w.getFrequency());;
     }
     
     /**
@@ -61,46 +55,27 @@ public class TopicTermExtractor {
      * @return
      */
     private static List<Word> getPotentialTopicTerms(String subjectLabel, String objectLabel) {
-
-        List<Word> potentialTopicTerms = new ArrayList<Word>();
-        
-        // go query for the subject in cache if it's no in there put it in
-        if ( !cache.contains(subjectLabel) ) {
-        	
-        	List<Word> topics = queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipedia(subjectLabel));
-        	
-        	System.out.println("SubjectTopics" + topics);
-        	cache.add(new TopicTerm(subjectLabel, topics));
-            potentialTopicTerms.addAll(topics);
-        }
-        potentialTopicTerms.addAll(cache.getEntry(subjectLabel).relatedTopics);
-        System.exit(0);
-        
-        // go query for the object in cache if it's no in there put it in
-        if ( !cache.contains(objectLabel) ) {
-        	
-        	List<Word> topics = queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipedia(objectLabel));
-        	
-        	System.out.println("ObjectTopics" + topics);
-        	cache.add(new TopicTerm(objectLabel, topics));
-            potentialTopicTerms.addAll(topics);
-        }
-        potentialTopicTerms.addAll(cache.getEntry(objectLabel).relatedTopics);
-        
-        // now potentialTopicTerms contains all terms with high frequency in Wikipedia
-        // we need sort them with the term, so that the repeated words are placed next to each other
-        Collections.sort(potentialTopicTerms, new WordComparator());
-                
-        // the term that appears more than once is very likely to be a potential topic
-        // so we should remove the other terms which are not repeated 
-        Map<String, Word> topicTermsInPages = new LinkedHashMap<String, Word>();
+    	
+    	List<Word> topics = getPotentialTopicTermsFor(subjectLabel);
+    	topics.addAll(getPotentialTopicTermsFor(objectLabel));
+    	return new ArrayList<Word>(mergeTopicTerms(topics).values());
+    }
+    
+    /**
+     * 
+     * @param potentialTopicTerms
+     * @return
+     */
+    private static Map<String, Word> mergeTopicTerms(List<Word> potentialTopicTerms) {
+		
+    	Map<String, Word> topicTermsInPages = new LinkedHashMap<String, Word>();
 
         for ( Word word: potentialTopicTerms ) {
             
             // if the word is not in the HashMap, then we should add it and initialize its number of repetitions to 1
             if( !topicTermsInPages.containsKey(word.getWord()) )
                 
-                topicTermsInPages.put(word.getWord(), new Word(word.getWord(), word.getFrequency()));
+                topicTermsInPages.put(word.getWord(), word);
             else {
                 
                 // it is already there, then we should just increase its repetitions
@@ -108,34 +83,47 @@ public class TopicTermExtractor {
                 newWord.setFrequency(word.getFrequency() + newWord.getFrequency());
             }
         }
+        
+        return topicTermsInPages;
+	}
 
-        List<Word> topicTerms = new ArrayList<Word>();
+    /**
+     * 
+     * @param label
+     * @return
+     */
+	private static List<Word> getPotentialTopicTermsFor(String label) {
+
+		// go query for the subject in cache if it's no in there put it in
+        if ( cache.contains(label) ) return cache.getEntry(label).relatedTopics;
+		
+    	List<Word> potentialTopicTerms = new ArrayList<Word>();
+        potentialTopicTerms.addAll(queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipedia(label)));
         
-        // if the word is repeated only n-times, then we should remove it from the final list of terms
-        for(Map.Entry<String, Word> entry : topicTermsInPages.entrySet()){
-            
-            if ( entry.getValue().getFrequency() > Defacto.DEFACTO_CONFIG.getIntegerSetting("evidence", "TOPIC_TERM_PAGE_THRESHOLD") )
-                topicTerms.add(entry.getValue());
-        }
-        // this is probably not necessary but it does not cost too much
+        // the term that appears more than once is very likely to be a potential topic
+        // so we should remove the other terms which are not repeated 
+        Map<String, Word> topicTermsInPages = mergeTopicTerms(potentialTopicTerms);
+        
+        // get the top 20
+        List<Word> topicTerms = new ArrayList<Word>(topicTermsInPages.values());
         Collections.sort(topicTerms, new WordFrequencyComparator());
+        topicTerms = topicTerms.size() >= 20 ? topicTerms.subList(0, 20) : topicTerms;
         
-        // debugging
-        // logger.info("Found potential topic terms: " + topicTerms);
-        return topicTerms.size() >= 20 ? topicTerms.subList(0, 20) : topicTerms;
-    }
-    
-    private static List<Word> queryWikipediaPageAndGetTopicTerms(List<WikipediaSearchResult> wikiSearchResults) {
+        // add it to the cache and return only the related topics
+        return cache.add(new TopicTerm(label, topicTerms)).relatedTopics;
+	}
+
+	private static List<Word> queryWikipediaPageAndGetTopicTerms(List<WikipediaSearchResult> wikiSearchResults) {
         
         long start = System.currentTimeMillis();
         List<Word> potentialTopicTerms = new ArrayList<Word>();
         if ( wikiSearchResults.isEmpty() ) return potentialTopicTerms;
-        ExecutorService executorService = Executors.newFixedThreadPool(1);//wikiSearchResults.size());
+        ExecutorService executorService = Executors.newFixedThreadPool(wikiSearchResults.size());
         List<WikipediaPageCrawler> wikipageCrawler = new ArrayList<WikipediaPageCrawler>();
         
         for ( WikipediaSearchResult result : wikiSearchResults )
         	wikipageCrawler.add(new WikipediaPageCrawler(result));
-                
+        
         try {
             
             for ( Future<List<Word>> future : executorService.invokeAll(wikipageCrawler))

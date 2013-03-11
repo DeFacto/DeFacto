@@ -24,43 +24,11 @@ public class PageRank {
     private static Map<String,Integer> pageRankCache = new HashMap<String,Integer>();
     
     /**
-     * 
-     */
-    private static void warmCache() {
-        
-        if ( pageRankCache.isEmpty() ) {
-            
-            try {
-                
-                File cache = new File("resources/cache/pagerank/cache.txt");
-                
-                // if it's not there create it and read an empty file
-                if ( !cache.exists() ) cache.createNewFile();
-                BufferedReader reader = new BufferedReader(new FileReader(cache));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    if ( !line.trim().isEmpty() ) {
-                        
-                        String[] parts = line.split("[ \\t]+");
-                        pageRankCache.put(parts[0], Integer.valueOf(parts[1]));
-                    }
-                }
-                reader.close();
-            }
-            catch (Exception e) {
-
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    /**
      * Must receive a domain in form of: "http://www.domain.com"
      * @param domain - (String)
      * @return PR rating (int) or -1 if unavailable or internal error happened.
      */
     public static synchronized int getPageRank(String domain) {
-        warmCache();
 
         if ( pageRankCache.containsKey(domain.trim()) ) return pageRankCache.get(domain);
         else {
@@ -94,31 +62,7 @@ public class PageRank {
                 Logger.getLogger(PageRank.class).warn("Could not get PageRank for: " + domain, e);
             }
             
-            updateCache(domain, result);
-
             return result;
-        }
-    }
-
-    /**
-     * Write the url and the pagerank to the file and updates the cache object
-     * 
-     * @param domain
-     * @param result
-     */
-    private static void updateCache(String domain, int result) {
-
-        try {
-            
-            BufferedWriter bufferWritter = new BufferedWriter( new FileWriter( new File("resources/cache/pagerank/cache.txt"), true));
-            bufferWritter.write(domain + "\t" + result + "\n");
-            bufferWritter.close();
-            
-            pageRankCache.put(domain, result);
-        }
-        catch (IOException e) {
-
-            e.printStackTrace();
         }
     }
 

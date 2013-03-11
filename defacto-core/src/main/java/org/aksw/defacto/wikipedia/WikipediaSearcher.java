@@ -42,7 +42,8 @@ public class WikipediaSearcher {
         User user = new User("", "", "http://en.wikipedia.org/w/api.php");
         user.login();
 
-        String[] queryParams = { "list", "search", "srsearch", searchQuery, "sroffset", "0", "srlimit", "10" };
+        String[] queryParams = { "list", "search", "srsearch", searchQuery, "sroffset", "0", 
+        		"srlimit", Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "MAX_WIKIPEDIA_RESULTS") };
 
         Connector connector = new Connector();
         XMLSearchParser parser;
@@ -83,8 +84,6 @@ public class WikipediaSearcher {
             
             e.printStackTrace();
         }
-        
-        System.out.println("Number of found urls: " + searchResults.size());
         
         return searchResults;
     }

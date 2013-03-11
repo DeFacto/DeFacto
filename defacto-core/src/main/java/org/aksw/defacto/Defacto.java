@@ -106,16 +106,16 @@ public class Defacto {
         // 8. Log statistics
         System.out.println(output);
         
-        try {
-
-            DefactoEval.writer.write(output);
-            DefactoEval.writer.write("\n");
-            DefactoEval.writer.flush();
-        }
-        catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+//        try {
+//
+//            DefactoEval.writer.write(output);
+//            DefactoEval.writer.write("\n");
+//            DefactoEval.writer.flush();
+//        }
+//        catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
         
         return evidence;
     }
