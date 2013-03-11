@@ -42,6 +42,7 @@ public class WebSiteScoreCallable implements Callable<WebSite> {
     public WebSite call() {
         
         SubjectObjectFactSearcher.getInstance().generateProofs(evidence, website, model, pattern);
+        
         return website;
     }
 }

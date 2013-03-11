@@ -20,15 +20,21 @@ import org.apache.log4j.Logger;
  * google page rank retrieved
  */
 public class PageRank {
-
+	
+	private static final PageRank INSTANCE = new PageRank();
     private static Map<String,Integer> pageRankCache = new HashMap<String,Integer>();
+    
+    public static PageRank getInstance() {
+    	
+    	return INSTANCE;
+    }
     
     /**
      * Must receive a domain in form of: "http://www.domain.com"
      * @param domain - (String)
      * @return PR rating (int) or -1 if unavailable or internal error happened.
      */
-    public static synchronized int getPageRank(String domain) {
+    public synchronized int getPageRank(String domain) {
 
         if ( pageRankCache.containsKey(domain.trim()) ) return pageRankCache.get(domain);
         else {
@@ -38,7 +44,7 @@ public class PageRank {
             String googlePrResult = "";
 
             String query = "http://toolbarqueries.google.com/tbr?client=navclient-auto&ie=UTF-8&oe=UTF-8&"+
-                    "ch=6"+new JenkinsHash().hash(("info:" + domain).getBytes())+"&factFeatures=Rank&q=info:" + domain;
+                    "ch=6"+new JenkinsHash().hash(("info:" + domain).getBytes())+"&features=Rank&q=info:" + domain;
 
             try {
                 

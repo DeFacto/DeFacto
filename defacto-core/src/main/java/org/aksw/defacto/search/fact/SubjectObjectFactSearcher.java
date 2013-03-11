@@ -47,7 +47,7 @@ public class SubjectObjectFactSearcher implements FactSearcher {
     private SubjectObjectFactSearcher() {
 
         logger.info("Starting to load surface forms!");
-//        initializeSurfaceForms();
+        initializeSurfaceForms();
         logger.info("Finished to load surface forms!");
     }
     
@@ -122,8 +122,6 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                 
                 ComplexProof proof = null;
                 String normalizedOccurrence = this.normalizeOccurrence(occurrence, surfaceForms);
-                
-                System.out.println("Occurrence: " + normalizedOccurrence);
                 
                 // first we check if we can find a boa pattern inside the mathing string
                 for (Pattern boaPattern : evidence.getBoaPatterns()) { // go through all patterns and look if a non empty normalized pattern string is inside the match
