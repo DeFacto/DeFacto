@@ -20,38 +20,13 @@ import org.apache.log4j.Logger;
  * google page rank retrieved
  */
 public class PageRank {
-
+	
+	private static final PageRank INSTANCE = new PageRank();
     private static Map<String,Integer> pageRankCache = new HashMap<String,Integer>();
     
-    /**
-     * 
-     */
-    private static void warmCache() {
-        
-        if ( pageRankCache.isEmpty() ) {
-            
-            try {
-                
-                File cache = new File("resources/cache/pagerank/cache.txt");
-                
-                // if it's not there create it and read an empty file
-                if ( !cache.exists() ) cache.createNewFile();
-                BufferedReader reader = new BufferedReader(new FileReader(cache));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    if ( !line.trim().isEmpty() ) {
-                        
-                        String[] parts = line.split("[ \\t]+");
-                        pageRankCache.put(parts[0], Integer.valueOf(parts[1]));
-                    }
-                }
-                reader.close();
-            }
-            catch (Exception e) {
-
-                e.printStackTrace();
-            }
-        }
+    public static PageRank getInstance() {
+    	
+    	return INSTANCE;
     }
     
     /**
@@ -59,8 +34,7 @@ public class PageRank {
      * @param domain - (String)
      * @return PR rating (int) or -1 if unavailable or internal error happened.
      */
-    public static synchronized int getPageRank(String domain) {
-        warmCache();
+    public synchronized int getPageRank(String domain) {
 
         if ( pageRankCache.containsKey(domain.trim()) ) return pageRankCache.get(domain);
         else {
@@ -70,7 +44,7 @@ public class PageRank {
             String googlePrResult = "";
 
             String query = "http://toolbarqueries.google.com/tbr?client=navclient-auto&ie=UTF-8&oe=UTF-8&"+
-                    "ch=6"+new JenkinsHash().hash(("info:" + domain).getBytes())+"&factFeatures=Rank&q=info:" + domain;
+                    "ch=6"+new JenkinsHash().hash(("info:" + domain).getBytes())+"&features=Rank&q=info:" + domain;
 
             try {
                 
@@ -94,13 +68,12 @@ public class PageRank {
                 Logger.getLogger(PageRank.class).warn("Could not get PageRank for: " + domain, e);
             }
             
-            updateCache(domain, result);
-
             return result;
         }
     }
 
     /**
+<<<<<<< HEAD
      * Write the url and the pagerank to the file and updates the cache object
      * 
      * @param domain
@@ -123,6 +96,8 @@ public class PageRank {
     }
 
     /**
+=======
+>>>>>>> 02dfde8710a270f04b04f63d3dc2cdb0d3001ca6
      * <b>This is a Bob Jenkins hashing algorithm implementation</b>
      * <br> 
      * These are functions for producing 32-bit hashes for hash table lookup.

@@ -9,6 +9,7 @@ package org.aksw.defacto;
  */
 public class Constants {
 
+	public static final String LUCENE_SEARCH_RESULT_ID_FIELD = "id";
 	public static final String LUCENE_SEARCH_RESULT_QUERY_FIELD = "query";
 	public static final String LUCENE_SEARCH_RESULT_HIT_COUNT_FIELD = "hits";
 	public static final String LUCENE_SEARCH_RESULT_URL_FIELD = "url";
@@ -20,4 +21,10 @@ public class Constants {
 	public static final String LUCENE_TOPIC_TERM_LABEL = "label";
 	public static final String LUCENE_TOPIC_TERM_RELATED_TERM = "related";
 	public static final String TOPIC_TERM_SEPARATOR = "\t";
+	
+	public enum LANGUAGE {
+		
+		en,
+		de
+	}
 }

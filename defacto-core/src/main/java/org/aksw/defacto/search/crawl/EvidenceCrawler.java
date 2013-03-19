@@ -188,10 +188,12 @@ public class EvidenceCrawler {
                         
             try {
                 
+            	// debugging only
                 // this sets the text of all web-sites and cancels each task if it's not finished
-                for ( Future<WebSite> future : executor.invokeAll(htmlCrawlers, Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "WEB_SEARCH_TIMEOUT_MILLISECONDS"), TimeUnit.MILLISECONDS) )
-                    logger.debug(String.format("\tDone [%s] - Canceled [%s]", future.isDone() ? "yes" : "no", future.isCancelled() ? "yes" : "no" ));
+                // for ( Future<WebSite> future : executor.invokeAll(htmlCrawlers, 1000, TimeUnit.SECONDS) )
+                //    logger.debug(String.format("\tDone [%s] - Canceled [%s]", future.isDone() ? "yes" : "no", future.isCancelled() ? "yes" : "no" ));
                 
+                executor.invokeAll(htmlCrawlers);
                 executor.shutdownNow();
             }
             catch (InterruptedException e) {

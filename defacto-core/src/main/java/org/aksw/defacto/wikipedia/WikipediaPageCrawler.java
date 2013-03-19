@@ -21,8 +21,7 @@ import org.aksw.defacto.util.JsoupCrawlUtil;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.en.EnglishAnalyzer;
-import org.apache.lucene.analysis.standard.ClassicAnalyzer;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
 
@@ -37,16 +36,25 @@ public class WikipediaPageCrawler implements Callable<List<Word>> {
     
     private static Logger logger = Logger.getLogger(WordFrequencyCounter.class.getName());
     
-    public  static List<String> stopwords = new ArrayList<String>();
+    public static List<String> stopwords = new ArrayList<String>();
     static {
         
         stopwords.addAll(Arrays.asList("disambiguation", "http", "retrieved", "com", 
                         "www", "html", "wikipedia", "link", "links", "isbn", "en", "jp",
                         "edit", "article", "world", "articles", "history", "free", "contact",
                         "changes", "pages", "news", "january", "february", "march", "april",
-                        "may", "june", "july", "august", "september", "october", "november",
-                        "december", "org", "categories", "sources", "st", "one", "page", "new", 
+                        "may", "june", "july", "august", "september", "october", "november", "original",
+                        "december", "org", "categories", "sources", "st", "one", "page", "new", "archived",
                         "create", "main", "encyclopedia", "navigation", "title", "references", "edu", "index"));
+    	stopwords.addAll(Arrays.asList(":", " ", "``", "''", ",", "'", "'s", "-LRB-", "-RRB-", ".", "-", "--", "i", "a", "about", "an", "and", "are", "as", "at", "be", "but", "by", "com", "for", "from", 
+		        "how", "in", "is", "it", "of", "on", "or", "that", "the", "The", "was", "were", "him", "his", "her", "she", "into", "they",
+				"this", "to", "what", "when", "where", "who", "will", "with", "the", "www", "before", ",", "after", ";", "like", "and", "such", "-LRB-", "-RRB-", "-lrb-", "-rrb-", "aber", "als",
+				"am", "an", "auch", "auf", "aus", "bei", "bin", "bis", "bist", "da", "dadurch", "daher", "darum", "das", "daß", "dass", "dein", "deine", "dem", "den", "der", "des", "dessen",
+				"deshalb", "die", "dies", "dieser", "dieses", "doch", "dort", "du", "durch", "ein", "eine", "einem", "einen", "einer", "eines", "er", "es", "euer", "eure", "für", "hatte", "hatten",
+				"hattest", "hattet", "hier", "hinter", "ich", "ihr", "ihre", "im", "in", "ist", "ja", "jede", "jedem", "jeden", "jeder", "jedes", "jener", "jenes", "jetzt", "kann", "kannst",
+				"können", "könnt", "machen", "mein", "meine", "mit", "muß", "mußt", "musst", "müssen", "müßt", "nach", "nachdem", "nein", "nicht", "nun", "oder", "seid", "sein", "seine", "sich",
+				"sie", "sind", "soll", "sollen", "sollst", "sollt", "sonst", "soweit", "sowie", "und", "unser unsere", "unter", "vom", "von", "vor", "wann", "warum", "weiter", "weitere", "wenn",
+				"wer", "werde", "werden", "werdet", "weshalb", "wie", "wieder", "wieso", "wir", "wird", "wirst", "wo", "woher", "wohin", "zu", "zum", "zur", "über"));
     }
 
     /**
@@ -74,14 +82,9 @@ public class WikipediaPageCrawler implements Callable<List<Word>> {
      */
     private List<Word> getMostFrequentWordsInWikipediaArticle(String url, int topicTermsMaxSize) {
 
-    	System.out.println(url);
-    	
-    	String text = this.crawlUtil.readPage(url, Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "WEB_SEARCH_TIMEOUT_MILLISECONDS"));
-    	
-      System.out.println("Crwaling done: " +  text.length());
-    	
         // crawl the text from wikipedia, remove the html markup and count the words
-        List<Word> words = getKeywordsSortedByFrequency(text);
+        List<Word> words = getKeywordsSortedByFrequency(
+        		this.crawlUtil.readPage(url, Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "WEB_SEARCH_TIMEOUT_MILLISECONDS")));
                 
         // and return only max values
         return words.size() >= topicTermsMaxSize ? words.subList(0, topicTermsMaxSize) : words;
@@ -93,19 +96,18 @@ public class WikipediaPageCrawler implements Callable<List<Word>> {
     	
         try{
         	
-        	Analyzer analyzer	= new EnglishAnalyzer(Version.LUCENE_41);
+        	Analyzer analyzer	= new SimpleAnalyzer(Version.LUCENE_41);
         	Reader reader		= new StringReader(inputWords);
             TokenStream stream  = analyzer.tokenStream("", reader);
             stream.reset();
+            
             while (stream.incrementToken()) {
                 
                 // we need to filter these stop words, mostly references in wikipedia
                 String token = stream.getAttribute(CharTermAttribute.class).toString();
-                
-//                System.out.println(token);
                 if ( token.length() > 2 && !stopwords.contains(token) ) tokens.add(token.trim());
             }
-            System.out.println("finished!");
+            
             reader.close();
             analyzer.close();
         }
@@ -115,8 +117,6 @@ public class WikipediaPageCrawler implements Callable<List<Word>> {
             logger.error("Cannot get a token from the stream, due to " + exp.getMessage());
         }
         
-        System.exit(0);
-
         Map<String,Word> map = new HashMap<String,Word>();
         for(String token : tokens){
             

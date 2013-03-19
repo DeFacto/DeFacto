@@ -41,6 +41,8 @@ public class AbstractFactFeatures {
 
     public static final Attribute NUMBER_OF_NON_ALPHA_NUMERIC_CHARACTERS = new Attribute("number_of_non_alpha_numeric_characters");
 
+	public static final Attribute POSSESSIVE_FEATURE				= new Attribute("possessive_feature");
+
     public static Attribute CLASS                                   = new Attribute("clazz");
     
     static {
@@ -53,6 +55,7 @@ public class AbstractFactFeatures {
         attributes.addElement(END_OF_SENTENCE_QUESTION_MARK);
         attributes.addElement(END_OF_SENTENCE_EXCLAMATION_MARK);
 //        attributes.addElement(NUMBER_OF_NON_ALPHA_NUMERIC_CHARACTERS);
+//        attributes.addElement(POSSESSIVE_FEATURE);
         attributes.addElement(TOKEN_DISTANCE);
         attributes.addElement(TOTAL_OCCURRENCE);
         attributes.addElement(WORDNET_EXPANSION);

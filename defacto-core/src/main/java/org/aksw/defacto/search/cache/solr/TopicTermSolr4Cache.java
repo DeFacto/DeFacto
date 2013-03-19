@@ -1,23 +1,16 @@
 /**
  * 
  */
-package org.aksw.defacto.search.cache.solr;
+package org.aksw.defacto
+
+.search.cache.solr;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.aksw.defacto.Constants;
 import org.aksw.defacto.cache.Cache;
-import org.aksw.defacto.evidence.WebSite;
-import org.aksw.defacto.search.query.MetaQuery;
-import org.aksw.defacto.search.result.DefaultSearchResult;
-import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTerm;
 import org.aksw.defacto.topic.frequency.Word;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -25,6 +18,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.BinaryRequestWriter;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
@@ -35,10 +29,7 @@ import org.apache.solr.common.SolrInputDocument;
  */
 public class TopicTermSolr4Cache implements Cache<TopicTerm> {
 
-	private SolrInputDocument doc;
 	private HttpSolrServer server;
-	
-	private Map<String,TopicTerm> topicTermsCache = new HashMap<String,TopicTerm>();
 	
 	public TopicTermSolr4Cache(){
 
@@ -49,8 +40,6 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
 	@Override
 	public boolean contains(String identifier) {
 		
-		if ( this.topicTermsCache.containsKey(identifier) ) return true;
-		
 		SolrQuery query = new SolrQuery(Constants.LUCENE_TOPIC_TERM_LABEL + ":\"" + identifier + "\"").setRows(1);
         QueryResponse response = this.querySolrServer(query);
         SolrDocumentList docList = response.getResults();
@@ -60,8 +49,6 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
 	@Override
 	public TopicTerm getEntry(String identifier) {
 		
-		if ( this.topicTermsCache.containsKey(identifier) ) return this.topicTermsCache.get(identifier);
-		
 		TopicTerm term = new TopicTerm(identifier);
         
     	SolrQuery query = new SolrQuery(Constants.LUCENE_TOPIC_TERM_LABEL + ":\"" + identifier + "\"").setRows(1);
@@ -69,7 +56,7 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
         QueryResponse response = this.querySolrServer(query);
         List<Word> relatedWords = new ArrayList<Word>();
         for ( SolrDocument doc : response.getResults()) {
-        	for ( String token : (Set<String>) doc.get(Constants.LUCENE_TOPIC_TERM_RELATED_TERM) ) {
+        	for ( String token : (List<String>) doc.get(Constants.LUCENE_TOPIC_TERM_RELATED_TERM) ) {
         		// mega hack to encode the occurrence of the same word for a given topic term
         		String[] split = token.split(Constants.TOPIC_TERM_SEPARATOR);
         		relatedWords.add(new Word(split[0], Integer.valueOf(split[1])));
@@ -77,7 +64,6 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
         }
         
         term.relatedTopics = relatedWords;
-        this.topicTermsCache.put(identifier, term);
         
         return term;
 	}
@@ -103,21 +89,20 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
 
 	@Override
 	public TopicTerm add(TopicTerm entry) {
-		if ( !this.topicTermsCache.containsKey(entry.label) ) this.topicTermsCache.put(entry.label, entry);
-//		try {
-//			
-//			
-//			
-////			this.server.add(topicTermToDocument(entry));
-//		} 
-//		catch (SolrServerException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} 
-//		catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			
+			UpdateResponse res = this.server.add(topicTermToDocument(entry));
+			this.server.commit();
+			System.out.println(res.getResponseHeader());
+		} 
+		catch (SolrServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return entry;
 	}
