@@ -67,7 +67,6 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
     	SolrQuery query = new SolrQuery(Constants.LUCENE_TOPIC_TERM_LABEL + ":\"" + identifier + "\"").setRows(1);
     	query.addField(Constants.LUCENE_TOPIC_TERM_RELATED_TERM);
         QueryResponse response = this.querySolrServer(query);
-        
         List<Word> relatedWords = new ArrayList<Word>();
         for ( SolrDocument doc : response.getResults()) {
         	for ( String token : (Set<String>) doc.get(Constants.LUCENE_TOPIC_TERM_RELATED_TERM) ) {
@@ -104,21 +103,21 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
 
 	@Override
 	public TopicTerm add(TopicTerm entry) {
-
-		try {
-			
-			if ( !this.topicTermsCache.containsKey(entry.label) ) this.topicTermsCache.put(entry.label, entry);
-			
-			this.server.add(topicTermToDocument(entry));
-		} 
-		catch (SolrServerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if ( !this.topicTermsCache.containsKey(entry.label) ) this.topicTermsCache.put(entry.label, entry);
+//		try {
+//			
+//			
+//			
+////			this.server.add(topicTermToDocument(entry));
+//		} 
+//		catch (SolrServerException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
+//		catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		return entry;
 	}

@@ -109,7 +109,7 @@ public class PageRank {
     private static void updateCache(String domain, int result) {
 
         try {
-            
+        	new File("resources/cache/pagerank/").mkdirs();
             BufferedWriter bufferWritter = new BufferedWriter( new FileWriter( new File("resources/cache/pagerank/cache.txt"), true));
             bufferWritter.write(domain + "\t" + result + "\n");
             bufferWritter.close();

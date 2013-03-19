@@ -134,7 +134,8 @@ public class TopicTermExtractor {
         List<WikipediaPageCrawler> wikipageCrawler = new ArrayList<WikipediaPageCrawler>();
         
         for ( WikipediaSearchResult result : wikiSearchResults )
-        	wikipageCrawler.add(new WikipediaPageCrawler(result));
+        	if(result.getPageURL().equals("http://en.wikipedia.org/wiki/First_inauguration_of_Barack_Obama"))
+        		wikipageCrawler.add(new WikipediaPageCrawler(result));
                 
         try {
             

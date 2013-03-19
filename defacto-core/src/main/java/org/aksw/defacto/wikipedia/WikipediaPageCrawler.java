@@ -96,6 +96,7 @@ public class WikipediaPageCrawler implements Callable<List<Word>> {
         	Analyzer analyzer	= new EnglishAnalyzer(Version.LUCENE_41);
         	Reader reader		= new StringReader(inputWords);
             TokenStream stream  = analyzer.tokenStream("", reader);
+            stream.reset();
             while (stream.incrementToken()) {
                 
                 // we need to filter these stop words, mostly references in wikipedia

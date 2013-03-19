@@ -1,19 +1,18 @@
 package org.aksw.helper;
 
-import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.BinaryRequestWriter;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrDocumentList;
-
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.BinaryRequestWriter;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,28 +32,18 @@ public class SolrSearcher {
 
     //protected static final String SOLR_DBPEDIA_CLASSES = "http://dbpedia.aksw.org:8080/solr/dbpedia_classes";
 
-    protected CommonsHttpSolrServer server;
+    protected HttpSolrServer server;
 
     public SolrSearcher(String serverURL)
     {
-        try {
-            server = new CommonsHttpSolrServer(serverURL);
-            server.setRequestWriter(new BinaryRequestWriter());
-        }
-        catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+    	server = new HttpSolrServer(serverURL);
+        server.setRequestWriter(new BinaryRequestWriter());
     }
 
     public SolrSearcher()
     {
-        try {
-            server = new CommonsHttpSolrServer(SOLR_SERVER_ADDRESS);
-            server.setRequestWriter(new BinaryRequestWriter());
-        }
-        catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+    	server = new HttpSolrServer(SOLR_SERVER_ADDRESS);
+        server.setRequestWriter(new BinaryRequestWriter());
     }
 
 //    public SolrSearch() {this(Defaults.solrServerURL());}
