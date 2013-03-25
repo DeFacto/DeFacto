@@ -112,6 +112,11 @@
 			<url>http://www.billylieurance.net/maven2</url>
 			<layout>default</layout>
 		</repository>
+		
+		<repository>
+			<id>gerb_snapshots</id>
+			<url>https://raw.github.com/gerbsen/maven-repo/master/snapshots/</url>
+		</repository>
 
 	</repositories>
 

@@ -26,7 +26,8 @@ public class WebSite {
     private Double topicMajorityWeb = 0D;
     private Double topicMajoritySearch = 0D;
     private Double pageRankScore = 0D;
-    private Double topicCoverageScore = 0D; 
+    private Double topicCoverageScore = 0D;
+	private String annotatedSentences; 
     
     /**
      * 
@@ -267,4 +268,14 @@ public class WebSite {
 
         return this.topicCoverageScore;
     }
+
+    public String getTaggedText() {
+		
+		return this.annotatedSentences;
+	}
+    
+	public void setTaggedText(String annotatedSentences) {
+		
+		this.annotatedSentences = annotatedSentences;
+	}
 }

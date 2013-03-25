@@ -2,11 +2,14 @@ package org.aksw.defacto.search.crawl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,16 +25,22 @@ import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.cache.solr.Solr4SearchResultCache;
 import org.aksw.defacto.search.concurrent.HtmlCrawlerCallable;
+import org.aksw.defacto.search.concurrent.ParseCallable;
 import org.aksw.defacto.search.concurrent.WebSiteScoreCallable;
 import org.aksw.defacto.search.engine.SearchEngine;
 import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTermExtractor;
+import org.aksw.defacto.util.ListUtil;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.IndexSearcher;
+
+import com.github.gerbsen.math.Frequency;
+
+import edu.stanford.nlp.util.StringUtils;
 
 /**
  * 
@@ -173,34 +182,32 @@ public class EvidenceCrawler {
         
         // prepare the result variables
         List<HtmlCrawlerCallable> htmlCrawlers = new ArrayList<HtmlCrawlerCallable>();
+        List<ParseCallable> parsers = new ArrayList<ParseCallable>();
+        List<WebSite> websites = new ArrayList<WebSite>();
         
         // prepare the crawlers for simultanous execution
         for ( SearchResult searchResult : searchResults)
-            for ( WebSite site : searchResult.getWebSites() ) 
-                htmlCrawlers.add(new HtmlCrawlerCallable(site));
-                    
+            for ( WebSite site : searchResult.getWebSites() ) {
+            	
+            	websites.add(site);
+            	htmlCrawlers.add(new HtmlCrawlerCallable(site));
+            }
+                
         // nothing found. nothing to crawl
         if ( !htmlCrawlers.isEmpty() ) {
 
             // get the text from the urls
-            ExecutorService executor = Executors.newFixedThreadPool(htmlCrawlers.size());
-            this.logger.info(String.format("Creating thread pool for %s html crawlers!", htmlCrawlers.size()));
-                        
-            try {
-                
-            	// debugging only
-                // this sets the text of all web-sites and cancels each task if it's not finished
-                // for ( Future<WebSite> future : executor.invokeAll(htmlCrawlers, 1000, TimeUnit.SECONDS) )
-                //    logger.debug(String.format("\tDone [%s] - Canceled [%s]", future.isDone() ? "yes" : "no", future.isCancelled() ? "yes" : "no" ));
-                
-                executor.invokeAll(htmlCrawlers);
-                executor.shutdownNow();
-            }
-            catch (InterruptedException e) {
-
-                e.printStackTrace();
-            }
+        	this.logger.info(String.format("Creating thread pool for %s html crawlers!", htmlCrawlers.size()));
+            executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(htmlCrawlers.size()), htmlCrawlers);
         }
+
+        // create |CPU|/2 parsers for n websites and split them to the parsers
+        for ( List<WebSite> websiteSublist : ListUtil.split(websites, (websites.size() / (Runtime.getRuntime().availableProcessors() / 2)) + 1)) 
+        	parsers.add(new ParseCallable(websiteSublist));
+        
+        this.logger.info(String.format("Creating thread pool for %s html crawlers!", htmlCrawlers.size()));
+        executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(parsers.size()), parsers);
+        this.extractDates(websites, evidence);
         
         List<SearchResult> results = new ArrayList<SearchResult>();
         // add the results of the crawl to the cache
@@ -210,6 +217,72 @@ public class EvidenceCrawler {
         	if ( !cache.contains(result.getQuery().toString()) ) 
         		results.add(result);
         
+        for ( Map.Entry<String, Long> entry : evidence.yearOccurrences.entrySet()) {
+        	
+        	System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        
         cache.addAll(results);
+    }
+    
+    /**
+     * 
+     * @param websites
+     * @param evidence
+     */
+    private void extractDates(List<WebSite> websites, Evidence evidence) {
+    	
+    	Frequency frequency = new Frequency();
+    	
+    	for ( WebSite site : websites ) {
+    		
+    		if ( site.getTaggedText().isEmpty() ) continue;
+    		for (String date : getEntities(StringUtils.split(site.getTaggedText(), "-=-"))) {
+    			frequency.addValue(date);
+    		}
+    	}
+    	
+    	for ( Map.Entry<Comparable<?>, Long> entry : frequency.sortByValue()) 
+    		evidence.yearOccurrences.put((String) entry.getKey(), entry.getValue());
+    }
+
+    /**
+     * 
+     * @param mergedTaggedSentence
+     * @return
+     */
+	private List<String> getEntities(List<String> mergedTaggedSentence) {
+
+		List<String> entities = new ArrayList<String>();
+		for (String entity : mergedTaggedSentence) {
+
+			if (entity.endsWith("_DATE"))
+				entities.add(entity.replace("_DATE", ""));
+		}
+		
+		return entities;
+	}
+
+	/**
+     * 
+     * @param executor
+     * @param callables
+     * @return
+     */
+    private <T> List<Future<T>> executeAndWaitAndShutdownCallables(ExecutorService executor, List<? extends Callable<T>> callables) {
+    	
+    	List<Future<T>> results = null;
+    	
+    	try {
+            
+            results = executor.invokeAll(callables);
+            executor.shutdownNow();
+        }
+        catch (InterruptedException e) {
+
+            e.printStackTrace();
+        }
+    	
+    	return results;
     }
 }

@@ -69,6 +69,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
     	query.addField(Constants.LUCENE_SEARCH_RESULT_PAGE_RANK_FIELD);
     	query.addField(Constants.LUCENE_SEARCH_RESULT_CONTENT_FIELD);
     	query.addField(Constants.LUCENE_SEARCH_RESULT_TITLE_FIELD);
+    	query.addField(Constants.LUCENE_SEARCH_RESULT_TAGGED_FIELD);
         QueryResponse response = this.querySolrServer(query);
         
         for ( SolrDocument doc : response.getResults()) {
@@ -83,6 +84,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
                 site.setPageRank((Integer) doc.get(Constants.LUCENE_SEARCH_RESULT_PAGE_RANK_FIELD));
                 site.setText((String) doc.get(Constants.LUCENE_SEARCH_RESULT_CONTENT_FIELD));
                 site.setTitle((String) doc.get(Constants.LUCENE_SEARCH_RESULT_TITLE_FIELD));
+                site.setTaggedText((String) doc.get(Constants.LUCENE_SEARCH_RESULT_TAGGED_FIELD));
                 site.setCached(true);
                 websites.add(site);
             }
@@ -144,6 +146,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
             solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_URL_FIELD, "");
             solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_TITLE_FIELD, "");
             solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_CONTENT_FIELD, "");
+            solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_TAGGED_FIELD, "");
             solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD, entry.getQuery().toString());
             documents.add(solrDocument);
         }
@@ -160,6 +163,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_URL_FIELD, site.getUrl());
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_TITLE_FIELD, site.getTitle());
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_CONTENT_FIELD, site.getText());
+                solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_TAGGED_FIELD, site.getTaggedText());
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD, entry.getQuery().toString());
                 documents.add(solrDocument);
             }

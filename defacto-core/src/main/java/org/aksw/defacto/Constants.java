@@ -21,6 +21,7 @@ public class Constants {
 	public static final String LUCENE_TOPIC_TERM_LABEL = "label";
 	public static final String LUCENE_TOPIC_TERM_RELATED_TERM = "related";
 	public static final String TOPIC_TERM_SEPARATOR = "\t";
+	public static final String LUCENE_SEARCH_RESULT_TAGGED_FIELD = "tagged";
 	
 	public enum LANGUAGE {
 		

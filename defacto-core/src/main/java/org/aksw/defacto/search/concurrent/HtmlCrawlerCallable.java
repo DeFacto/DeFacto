@@ -4,6 +4,7 @@ import java.util.concurrent.Callable;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.nlp.ner.StanfordNLPNamedEntityRecognition;
 import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
 import org.aksw.defacto.util.CrawlUtil;
 import org.aksw.defacto.util.JsoupCrawlUtil;
@@ -44,6 +45,7 @@ public class HtmlCrawlerCallable implements Callable<WebSite> {
             logger.info("Getting page rank for: " + website.getUrl());
             website.setPageRank(PageRank.getInstance().getPageRank(website.getUrl()));
         }
+        
         return this.website;
     }
 }

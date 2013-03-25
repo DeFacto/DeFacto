@@ -1,0 +1,45 @@
+http://www.freebase.com/query
+
+Spouses with from and to
+
+[{
+  "/people/person/spouse_s": [{
+    "from": null,
+    "to": null,
+    "spouse": [{
+      "name": null
+    }]
+  }]
+}]
+
+Office holders of countries
+[{
+  "id": null,
+  "/government/government_office_or_title/office_holders": [{
+    "office_holder": {
+      "name": null
+    },
+    "from": null,
+    "to": null,
+    "jurisdiction_of_office": {
+      "name": null,
+      "type": "/location/country"
+    }
+  }]
+}]
+
+Football players and their current team affiliation
+
+[{
+  "id": null,
+  "/soccer/football_player/current_team": [{
+    "team": {
+      "name": null
+    },
+    "player": {
+      "name": null
+    },
+    "from": null,
+    "to": null
+  }]
+}]

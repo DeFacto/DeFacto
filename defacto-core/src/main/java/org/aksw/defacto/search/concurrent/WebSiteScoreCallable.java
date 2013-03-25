@@ -1,5 +1,8 @@
 package org.aksw.defacto.search.concurrent;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.aksw.defacto.Defacto;
@@ -10,6 +13,10 @@ import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
 import org.aksw.defacto.util.PageRank;
 import org.apache.log4j.Logger;
+
+import com.github.gerbsen.math.Frequency;
+
+import edu.stanford.nlp.util.StringUtils;
 
 /**
  * 
@@ -42,7 +49,6 @@ public class WebSiteScoreCallable implements Callable<WebSite> {
     public WebSite call() {
         
         SubjectObjectFactSearcher.getInstance().generateProofs(evidence, website, model, pattern);
-        
         return website;
     }
 }

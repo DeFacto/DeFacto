@@ -2,6 +2,7 @@ package org.aksw.defacto.evidence;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -30,6 +31,7 @@ public class Evidence {
     private List<Word> topicTerms                       = new ArrayList<Word>();
 //    private Map<Pattern,Double[][]> similarityMatricies = new LinkedHashMap<Pattern,Double[][]>();
     private Double[][] similarityMatrix                 = null;
+    public Map<String,Long> yearOccurrences = new LinkedHashMap<String, Long>();
     
     private Instance features;
     private Long totalHitCount;
