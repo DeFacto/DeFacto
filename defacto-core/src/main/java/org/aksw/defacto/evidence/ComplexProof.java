@@ -26,9 +26,13 @@ public class ComplexProof {
     private String proofPhrase;
     private String normalizedProofPhrase;
 
-    private String context;
+    private String shortContext;
 
     private double score = 0D;
+
+	private String longContext = "";
+
+	private String taggedLongContext;
 
     /**
      * boa pattern found
@@ -114,18 +118,18 @@ public class ComplexProof {
         return this.secondLabel;
     }
 
-    public void setContext(String leftAndRightContext) {
+    public void setShortContext(String leftAndRightContext) {
         
-        this.context = leftAndRightContext;
+        this.shortContext = leftAndRightContext;
     }
 
     
     /**
      * @return the context
      */
-    public String getContext() {
+    public String getShortContext() {
     
-        return context;
+        return shortContext;
     }
 
     public void setScore(double score) {
@@ -137,4 +141,28 @@ public class ComplexProof {
 
         return this.score;
     }
+
+	public void setLongContext(String longContext) {
+		
+		this.longContext  = longContext;
+	}
+	
+	public String getLongContext() {
+		
+		return this.longContext;
+	}
+
+	/**
+	 * 
+	 * @param merged
+	 */
+	public void setTaggedLongContext(String merged) {
+		
+		this.taggedLongContext = merged;
+	}
+	
+	public String getTaggedLongContext() {
+		
+		return this.taggedLongContext;
+	}
 }

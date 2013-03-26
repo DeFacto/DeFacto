@@ -61,7 +61,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
         MetaQuery metaQuery = null;
         Long hitCount = 0L;
         
-    	SolrQuery query = new SolrQuery(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD + ":\"" + identifier + "\"").setRows(1);
+    	SolrQuery query = new SolrQuery(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD + ":\"" + identifier + "\"").setRows(200);
     	query.addField(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD);
     	query.addField(Constants.LUCENE_SEARCH_RESULT_HIT_COUNT_FIELD);
     	query.addField(Constants.LUCENE_SEARCH_RESULT_URL_FIELD);

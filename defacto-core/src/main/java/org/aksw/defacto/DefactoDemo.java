@@ -110,9 +110,18 @@ public class DefactoDemo {
         deathProof.addProperty(RDFS.label, "Death Proof");
         deathProof.addProperty(model2.createProperty("http://dbpedia.org/ontology/director"), quentin);
         
+        Model model3 = ModelFactory.createDefaultModel();
+        
+        Resource germany = model3.createResource("http://dbpedia.org/resource/Germany");
+        germany.addProperty(RDFS.label, "Germany");
+        Resource berlin = model3.createResource("http://dbpedia.org/resource/Bonn");
+        berlin.addProperty(RDFS.label, "Bonn");
+        berlin.addProperty(model3.createProperty("http://dbpedia.org/ontology/capital"), germany);
+        
         List<DefactoModel> models = new ArrayList<DefactoModel>();
-//        models.add(new DefactoModel(model1, "albert", true));
+        models.add(new DefactoModel(model1, "albert", true));
         models.add(new DefactoModel(model2, "quentin", true));
+        models.add(new DefactoModel(model3, "bonn", true));
         
         return models;
     }

@@ -40,7 +40,7 @@ public class HtmlCrawlerCallable implements Callable<WebSite> {
             website.setText(this.crawlUtil.readPage(website.getUrl(), Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "WEB_SEARCH_TIMEOUT_MILLISECONDS")));
      
         // every web site is spawned with a page rank of 11
-        if ( website.getPageRank() == Defacto.DEFACTO_CONFIG.getIntegerSetting("evidence", "UNASSIGNED_PAGE_RANK") ) {
+        if ( website.getPageRank() == Defacto.DEFACTO_CONFIG.getIntegerSetting("evidence", "UNASSIGNED_PAGE_RANK") && !this.website.isCached() ) {
             
             logger.info("Getting page rank for: " + website.getUrl());
             website.setPageRank(PageRank.getInstance().getPageRank(website.getUrl()));

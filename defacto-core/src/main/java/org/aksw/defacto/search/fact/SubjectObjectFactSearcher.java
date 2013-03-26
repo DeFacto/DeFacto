@@ -47,7 +47,7 @@ public class SubjectObjectFactSearcher implements FactSearcher {
     private SubjectObjectFactSearcher() {
 
         logger.info("Starting to load surface forms!");
-//        initializeSurfaceForms();
+        initializeSurfaceForms();
         logger.info("Finished to load surface forms!");
     }
     
@@ -134,7 +134,8 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                 // no boa pattern was found
                 if ( proof == null ) proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, normalizedOccurrence, site);
                 // we need to do this for both proofs
-                proof.setContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel));
+                proof.setShortContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 30));
+                proof.setLongContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 150));
                 
                 evidence.addComplexProof(proof);
             }
@@ -213,17 +214,25 @@ public class SubjectObjectFactSearcher implements FactSearcher {
         }
     }
     
-    private String getLeftAndRightContext(String normalCase, String lowerCase, String match) {
+    /**
+     * 
+     * @param normalCase
+     * @param lowerCase
+     * @param match
+     * @param contextLength
+     * @return
+     */
+    private String getLeftAndRightContext(String normalCase, String lowerCase, String match, int contextLength) {
         
         int leftIndex = lowerCase.indexOf(match);
         int rightIndex = leftIndex + match.length();
         
         // avoid index out of bounds
-        if ( leftIndex - 30 >= 0 ) leftIndex -= 30;
+        if ( leftIndex - contextLength >= 0 ) leftIndex -= contextLength;
         else leftIndex = 0;
         
-        if ( rightIndex + 30 > lowerCase.length() ) rightIndex = lowerCase.length() - 1;
-        else rightIndex += 30;
+        if ( rightIndex + contextLength > lowerCase.length() ) rightIndex = lowerCase.length() - 1;
+        else rightIndex += contextLength;
         
         return normalCase.substring(leftIndex, rightIndex);
     }

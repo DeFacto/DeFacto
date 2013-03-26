@@ -50,8 +50,6 @@ public class JsoupCrawlUtil implements CrawlUtil {
                 logger.debug(String.format("Error crawling website: %s", url));
             }
             else logger.error(String.format("Error crawling website: %s", url), e);
-            
-            e.printStackTrace();
         }
         
         return "";
