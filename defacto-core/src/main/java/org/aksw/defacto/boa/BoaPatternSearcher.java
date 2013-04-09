@@ -24,11 +24,11 @@ import org.apache.solr.common.SolrDocumentList;
 public class BoaPatternSearcher {
 
     private static HttpSolrServer server;
-    private static final String SOLR_INDEX = "boa_fact_detail";
+    private static final String SOLR_INDEX = "en_boa_detailed";
 
     public BoaPatternSearcher(){
     	
-        server = new HttpSolrServer("http://dbpedia.aksw.org:8080/solr/" + SOLR_INDEX);
+        server = new HttpSolrServer("http://[2001:638:902:2010:0:168:35:138]:8080/solr/" + SOLR_INDEX);
         server.setRequestWriter(new BinaryRequestWriter());
     }
     
@@ -103,6 +103,8 @@ public class BoaPatternSearcher {
                 pattern.naturalLanguageRepresentationWithoutVariables = (String) d.get("nlr-no-var");
                 pattern.posTags = (String) d.get("pos");
                 pattern.boaScore = (Double) d.get("boa-score");
+                
+                System.out.println(pattern.naturalLanguageRepresentation);
                 
                 if ( pattern.boaScore > scoreThreshold ) patterns.add(pattern);
             }

@@ -41,7 +41,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
 	
 	public Solr4SearchResultCache(){
 
-		server = new HttpSolrServer("http://[2001:638:902:2010:0:168:35:138]:8080/solr/en_searchresults");
+		server = new HttpSolrServer("http://[2001:638:902:2010:0:168:35:138]:8080/solr/en_defacto_searchresults");
 		server.setRequestWriter(new BinaryRequestWriter());
 	}
 	

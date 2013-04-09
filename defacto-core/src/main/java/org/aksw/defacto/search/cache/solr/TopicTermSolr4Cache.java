@@ -33,7 +33,7 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
 	
 	public TopicTermSolr4Cache(){
 
-		server = new HttpSolrServer("http://[2001:638:902:2010:0:168:35:138]:8080/solr/en_topicterms");
+		server = new HttpSolrServer("http://[2001:638:902:2010:0:168:35:138]:8080/solr/en_defacto_topicterms");
 		server.setRequestWriter(new BinaryRequestWriter());
 	}
 	
