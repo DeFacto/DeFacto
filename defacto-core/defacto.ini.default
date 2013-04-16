@@ -42,7 +42,7 @@ OVERWRITE_EVIDENCE_TRAINING_FILE = false
 ; see the paper Nakamura et. al. 2007 for details 
 WEBSITE_SIMILARITY_THRESHOLD = 0.8
 ; onyl this much results will be returned from wikipedia topic term query: "barack obama michelle obama" returns 860 results
-MAX_WIKIPEDIA_RESULTS = 5
+MAX_WIKIPEDIA_RESULTS = 10
 ; use only the n most frequent topic terms from wikipedia pages
 TOPIC_TERMS_MAX_SIZE = 10
 ; one topic term needs to be in more than this pages
