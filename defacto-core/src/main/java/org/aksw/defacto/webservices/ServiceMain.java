@@ -45,7 +45,7 @@ public class ServiceMain {
 
     public static void main(String[] args) throws IOException {
         try {
-            FileHandler fh = new FileHandler("Verbalizer.log");
+            FileHandler fh = new FileHandler("DeFacto.log");
             log.addHandler(fh);
             //logger.setLevel(Level.ALL);  
             SimpleFormatter formatter = new SimpleFormatter();

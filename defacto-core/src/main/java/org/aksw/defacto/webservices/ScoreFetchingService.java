@@ -7,6 +7,7 @@ package org.aksw.defacto.webservices;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.vocabulary.RDFS;
 import java.util.logging.Level;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -25,15 +26,18 @@ public class ScoreFetchingService {
 
     @GET
     @Produces("application/json")
-    public Response getJson(@QueryParam("s") String subject, @QueryParam("p") String property, @QueryParam("o") String object) {
+    public Response getJson(@QueryParam("s") String subject, @QueryParam("slabel") String slabel, 
+    @QueryParam("p") String property, @QueryParam("o") String object, @QueryParam("olabel") String olabel) {
         ServiceMain.log.log(Level.INFO, "Processing <" + subject + ", " + property + "," + object + ">");
         try {
             Model model = ModelFactory.createDefaultModel();
-
             Resource subj = model.createResource(subject);
+            subj.addProperty(RDFS.label, slabel);
             Resource obj = model.createResource(property);
+            obj.addProperty(RDFS.label, olabel);
             obj.addProperty(model.createProperty(property), subj);
-            double score = Defacto.checkFact(new DefactoModel(model, "subj", true)).getDeFactoScore();
+            subj.addProperty(RDFS.label, slabel);
+            double score = Defacto.checkFact(new DefactoModel(model, subject+" "+property+" "+object, true)).getDeFactoScore();
             return Response.ok(score).build();
         } catch (Exception e) {
             ServiceMain.log.log(Level.WARNING, "Error while processing <" + subject + ", " + property + "," + object + ">");
@@ -42,4 +46,5 @@ public class ScoreFetchingService {
         }
         return Response.serverError().build();
     }
+       
 }
