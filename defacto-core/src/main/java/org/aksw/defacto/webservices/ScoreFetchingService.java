@@ -45,7 +45,8 @@ public class ScoreFetchingService {
             double score = Defacto.checkFact(new DefactoModel(model, subject + " " + property + " " + object, true)).getDeFactoScore();
             return Response.ok(score).build();
         } catch (Exception e) {
-            ServiceMain.log.log(Level.WARNING, "Error while processing <" + subject + "," + property + "," + object + ">");
+
+        	ServiceMain.log.log(Level.WARNING, "Error while processing <" + subject + ": \""+slabel+"\", " + property + ", " + object + ": \""+olabel+"\">");
             ServiceMain.log.log(Level.WARNING, e.getMessage());
             e.printStackTrace();
         }

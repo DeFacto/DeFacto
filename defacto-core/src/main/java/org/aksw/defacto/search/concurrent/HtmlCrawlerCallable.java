@@ -43,7 +43,8 @@ public class HtmlCrawlerCallable implements Callable<WebSite> {
         if ( website.getPageRank() == Defacto.DEFACTO_CONFIG.getIntegerSetting("evidence", "UNASSIGNED_PAGE_RANK") && !this.website.isCached() ) {
             
             logger.info("Getting page rank for: " + website.getUrl());
-            website.setPageRank(PageRank.getInstance().getPageRank(website.getUrl()));
+            if ( Defacto.DEFACTO_CONFIG.getBooleanSetting("crawl", "getPageRank") )
+            	website.setPageRank(PageRank.getInstance().getPageRank(website.getUrl()));
         }
         
         return this.website;

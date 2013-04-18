@@ -16,6 +16,8 @@ WEB_SEARCH_TIMEOUT_MILLISECONDS = 10000
 NUMBER_OF_SEARCH_THREADS = 10
 ; the amount of time which lies between a google page rank request (in ms)
 GOOGLE_WAIT_TIME = 2000
+; get the page rank or not
+getPageRank = true
 
 
 [extract]

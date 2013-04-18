@@ -73,31 +73,6 @@ public class PageRank {
     }
 
     /**
-<<<<<<< HEAD
-     * Write the url and the pagerank to the file and updates the cache object
-     * 
-     * @param domain
-     * @param result
-     */
-    private static void updateCache(String domain, int result) {
-
-        try {
-        	new File("resources/cache/pagerank/").mkdirs();
-            BufferedWriter bufferWritter = new BufferedWriter( new FileWriter( new File("resources/cache/pagerank/cache.txt"), true));
-            bufferWritter.write(domain + "\t" + result + "\n");
-            bufferWritter.close();
-            
-            pageRankCache.put(domain, result);
-        }
-        catch (IOException e) {
-
-            e.printStackTrace();
-        }
-    }
-
-    /**
-=======
->>>>>>> 02dfde8710a270f04b04f63d3dc2cdb0d3001ca6
      * <b>This is a Bob Jenkins hashing algorithm implementation</b>
      * <br> 
      * These are functions for producing 32-bit hashes for hash table lookup.
