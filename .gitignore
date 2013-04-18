@@ -20,3 +20,5 @@ defacto-core/resources/training/arff/evidence/random_defacto_evidence.arff
 defacto-core/resources/training/arff/evidence/range_defacto_evidence copy.arff
 defacto-core/resources/cache/pagerank/cache.txt
 defacto-core/resources/cache/topics/cache.txt
+defacto-core/DeFacto.log.lck
+defacto-core/DeFacto.log

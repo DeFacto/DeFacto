@@ -85,12 +85,17 @@ public class BoaPatternSearcher {
         List<Pattern> patterns = new ArrayList<Pattern>();
 
         try {
-
+        	
+        	// hardcode this for now since it's the only property we want to handle in 
+        	// temporal defacto
+        	propertyUri = "http://dbpedia.org/ontology/team";
+        	
             SolrQuery query = new SolrQuery("uri:\"" + propertyUri + "\"");
             query.addField("boa-score");
             query.addField("nlr-var");
             query.addField("nlr-no-var");
-            query.addSortField("boa-score", ORDER.desc);
+            query.addSortField("learnedfrom", ORDER.desc);
+            //query.addSortField("boa-score", ORDER.desc);
             if ( numberOfBoaPatterns > 0 ) query.setRows(numberOfBoaPatterns);
             QueryResponse response = server.query(query);
             SolrDocumentList docList = response.getResults();
@@ -104,7 +109,7 @@ public class BoaPatternSearcher {
                 pattern.posTags = (String) d.get("pos");
                 pattern.boaScore = (Double) d.get("boa-score");
                 
-                System.out.println(pattern.naturalLanguageRepresentation);
+//                System.out.println(pattern.naturalLanguageRepresentation);
                 
                 if ( pattern.boaScore > scoreThreshold ) patterns.add(pattern);
             }
