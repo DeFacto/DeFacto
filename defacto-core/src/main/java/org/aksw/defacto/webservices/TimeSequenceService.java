@@ -9,6 +9,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDFS;
 import java.io.File;
+import java.util.Map;
 import java.util.logging.Level;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.Response;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.config.DefactoConfig;
+import org.aksw.defacto.evidence.Evidence;
 import org.ini4j.Ini;
 
 /**
@@ -42,8 +44,16 @@ public class TimeSequenceService {
             Resource obj = model.createResource(property);
             obj.addProperty(RDFS.label, olabel);
             obj.addProperty(model.createProperty(property), subj);
-            double score = Defacto.checkFact(new DefactoModel(model, subject + " " + property + " " + object, true)).getDeFactoScore();
-            return Response.ok(score).build();
+            Evidence ev = Defacto.checkFact(new DefactoModel(model, subject + " " + property + " " + object, true));
+            Map<String, Long> times = ev.yearOccurrences;
+            String result = "{";
+            for(String key: times.keySet())
+            {
+                result = result + "\""+key+"\" : \""+ times.get(key) +"\" , ";
+            }
+            result = result.substring(0, result.length() - 2)+"}";
+            result ="{ \"score\" : \""+ev.getDeFactoScore()+"\" , \"time\" : "+result+" }";
+            return Response.ok(result).build();
         } catch (Exception e) {
             ServiceMain.log.log(Level.WARNING, "Error while processing <" + subject + "," + property + "," + object + ">");
             ServiceMain.log.log(Level.WARNING, e.getMessage());
