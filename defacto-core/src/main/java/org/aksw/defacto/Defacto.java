@@ -22,6 +22,7 @@ import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
 import org.aksw.defacto.ml.feature.fact.FactFeatureExtraction;
 import org.aksw.defacto.ml.feature.fact.FactScorer;
 import org.aksw.defacto.ml.score.EvidenceScorer;
+import org.aksw.defacto.search.concurrent.NlpModelManager;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
 import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
 import org.aksw.defacto.search.query.MetaQuery;
@@ -58,6 +59,7 @@ public class Defacto {
     	
     	// hack to get surface forms before timing
         SubjectObjectFactSearcher.getInstance();
+        NlpModelManager.getInstance();
         
         Logger logger = Logger.getLogger(Defacto.class);
         logger.info("Checking fact: " + model);

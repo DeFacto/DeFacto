@@ -14,6 +14,7 @@ import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.DefaultSearchResult;
 import org.aksw.defacto.search.result.SearchResult;
+import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -38,6 +39,7 @@ import org.apache.solr.common.SolrInputField;
 public class Solr4SearchResultCache implements Cache<SearchResult> {
 	
 	private HttpSolrServer server;
+	private Logger logger = Logger.getLogger(Solr4SearchResultCache.class);
 	
 	public Solr4SearchResultCache(){
 
@@ -51,6 +53,8 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
 		SolrQuery query = new SolrQuery(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD + ":\"" + identifier + "\"").setRows(1);
         QueryResponse response = this.querySolrServer(query);
         SolrDocumentList docList = response.getResults();
+        System.out.println("HALLO");
+        for (SolrDocument doc : docList) System.out.println("HERHERHEHR");
 		return docList == null ? false : docList.size() > 0 ? true : false;
 	}
 
@@ -108,16 +112,29 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
 	@Override
 	public List<SearchResult> addAll(List<SearchResult> listToAdd) {
         
-		for ( SearchResult result : listToAdd ) this.add(result); 
+		for ( SearchResult result : listToAdd ) this.add(result);
+		try {
+			this.server.commit();
+		} catch (SolrServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return listToAdd;
 	}
 
 	@Override
+	/**
+	 * does not commit changes!
+	 */
 	public SearchResult add(SearchResult entry) {
 		
 		try {
 			
 			this.server.add(searchResultToDocument(entry));
+			this.logger.info("Added " + entry.getQuery().toString() + " to cache!");
 		} 
 		catch (SolrServerException e) {
 			// TODO Auto-generated catch block

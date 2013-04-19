@@ -84,25 +84,30 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
 	public List<TopicTerm> addAll(List<TopicTerm> listToAdd) {
 		
 		for ( TopicTerm result : listToAdd ) this.add(result); 
+		try {
+			this.server.commit();
+		} catch (SolrServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return listToAdd;
 	}
 
 	@Override
 	public TopicTerm add(TopicTerm entry) {
-		try {
 			
-			UpdateResponse res = this.server.add(topicTermToDocument(entry));
-			this.server.commit();
-			System.out.println(res.getResponseHeader());
-		} 
-		catch (SolrServerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				this.server.add(topicTermToDocument(entry));
+			} catch (SolrServerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		return entry;
 	}

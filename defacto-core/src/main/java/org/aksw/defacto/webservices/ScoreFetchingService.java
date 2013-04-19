@@ -27,11 +27,14 @@ import org.ini4j.Ini;
 @Path("/getdefactoscore")
 public class ScoreFetchingService {
 
+	// example: http://localhost:9998/getdefactoscore?s=http%3A%2F%2Fdbpedia.org%2Fresource%2FMichael_Ballack&p=http%3A%2F%2Fdbpedia.org%2Fontology%2Fteam&o=http%3A%2F%2Fdbpedia.org%2Fresource%2FChelsea_F.C.&slabel=Michael%20Ballack&olabel=Chelsea%20F.C.
+	
+	
     @GET
     @Produces("application/json")
     public Response getJson(@QueryParam("s") String subject, @QueryParam("slabel") String slabel,
             @QueryParam("p") String property, @QueryParam("o") String object, @QueryParam("olabel") String olabel) {
-        ServiceMain.log.log(Level.INFO, "Processing <" + subject + ", " + property + "," + object + ">");
+        ServiceMain.log.log(Level.INFO, "Processing <" + subject + ", " + property + ", " + object + ">");
         try {
 
             org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");

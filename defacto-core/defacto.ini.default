@@ -23,7 +23,8 @@ getPageRank = true
 [extract]
 ; when we search for sentence which contain two labels, this is the amount of tokens between them
 NUMBER_OF_TOKENS_BETWEEN_ENTITIES = 20
-
+; the number of stanford models which get loaded on system start
+NUMBER_NLP_STANFORD_MODELS = 2
 
 [fact]
 ; write the training examples in this file
