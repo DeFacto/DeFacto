@@ -24,7 +24,8 @@ import org.apache.solr.common.SolrDocumentList;
 public class BoaPatternSearcher {
 
     private static HttpSolrServer server;
-    private static final String SOLR_INDEX = "en_boa_detailed";
+//    private static final String SOLR_INDEX = "en_boa_detailed";
+    private static final String SOLR_INDEX = "en_boa_defacto_temporal";
 
     public BoaPatternSearcher(){
     	
