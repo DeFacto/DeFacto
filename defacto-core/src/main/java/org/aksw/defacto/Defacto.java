@@ -55,6 +55,9 @@ public class Defacto {
      * @return
      */
     public static Evidence checkFact(DefactoModel model) {
+    	
+    	// hack to get surface forms before timing
+        SubjectObjectFactSearcher.getInstance();
         
         Logger logger = Logger.getLogger(Defacto.class);
         logger.info("Checking fact: " + model);
@@ -129,8 +132,6 @@ public class Defacto {
      */
     public static void checkFacts(DefactoConfig config, List<DefactoModel> defactoModel) {
 
-        // hack to get surface forms before timing
-        SubjectObjectFactSearcher.getInstance();
         startTime       = System.currentTimeMillis();
         numberOfModels  = defactoModel.size();
         currentModel    = 1;

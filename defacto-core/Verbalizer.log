@@ -1,8 +1,0 @@
-Apr 16, 2013 11:42:44 AM org.aksw.defacto.webservices.ServiceMain main
-Information: Service started
-Apr 16, 2013 11:42:48 AM org.aksw.defacto.webservices.ScoreFetchingService getJson
-Information: Processing <a, b,c>
-Apr 16, 2013 11:42:48 AM org.aksw.defacto.webservices.ScoreFetchingService getJson
-Warnung: Error while processing <a, b,c>
-Apr 16, 2013 11:42:48 AM org.aksw.defacto.webservices.ScoreFetchingService getJson
-Warnung: null

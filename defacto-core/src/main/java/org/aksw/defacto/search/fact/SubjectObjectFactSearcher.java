@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
  */
 public class SubjectObjectFactSearcher implements FactSearcher {
 
-    private Map<String, Set<String>> urisToLabels = new HashMap<String,Set<String>>(); 
+    private static final Map<String, Set<String>> urisToLabels = new HashMap<String,Set<String>>(); 
     private Logger logger = Logger.getLogger(SubjectObjectFactSearcher.class);
     private static final Set<String> stopwords = new HashSet<String>(Arrays.asList("the", "of", "and"));
     
@@ -199,7 +199,7 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                 String[] lineParts = line.split("\t");
                 Set<String> surfaceForms = new HashSet<String>();
                 for ( String label : Arrays.asList(Arrays.copyOfRange(lineParts, 1, lineParts.length)) ) if ( label.length() > 3 ) surfaceForms.add(label);
-                this.urisToLabels.put(lineParts[0], surfaceForms);
+                urisToLabels.put(lineParts[0], surfaceForms);
             }
             reader.close();
         }

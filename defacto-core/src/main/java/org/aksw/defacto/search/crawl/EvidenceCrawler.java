@@ -175,6 +175,8 @@ public class EvidenceCrawler {
         for ( List<ComplexProof> proofsSublist : ListUtil.split(proofs, (proofs.size() / (Runtime.getRuntime().availableProcessors() / 2)) + 1)) 
         	parsers.add(new ParseCallable(proofsSublist)); // TODO inject the named entity tagger here, otherwise we create it with every triple
         
+        System.out.println(parsers.size());
+        
         this.logger.info(String.format("Creating thread pool for %s parsers!", parsers.size()));
         executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(parsers.size()), parsers);
         this.extractDates(evidence);
