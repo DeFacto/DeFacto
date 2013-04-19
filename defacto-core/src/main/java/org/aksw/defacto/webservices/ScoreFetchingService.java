@@ -33,7 +33,7 @@ public class ScoreFetchingService {
             @QueryParam("p") String property, @QueryParam("o") String object, @QueryParam("olabel") String olabel) {
         ServiceMain.log.log(Level.INFO, "Processing <" + subject + ", " + property + "," + object + ">");
         try {
-            
+
             org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
             Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto.ini")));
             Model model = ModelFactory.createDefaultModel();
@@ -43,7 +43,7 @@ public class ScoreFetchingService {
             obj.addProperty(RDFS.label, olabel);
             obj.addProperty(model.createProperty(property), subj);
             double score = Defacto.checkFact(new DefactoModel(model, subject + " " + property + " " + object, true)).getDeFactoScore();
-            return Response.ok(score).build();            
+            return Response.ok(score).build();
         } catch (Exception e) {
 
         	ServiceMain.log.log(Level.WARNING, "Error while processing <" + subject + ": \""+slabel+"\", " + property + ", " + object + ": \""+olabel+"\">");
