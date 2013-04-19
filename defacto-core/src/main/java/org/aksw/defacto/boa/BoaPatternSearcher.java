@@ -95,7 +95,7 @@ public class BoaPatternSearcher {
             query.addField("boa-score");
             query.addField("nlr-var");
             query.addField("nlr-no-var");
-            query.addSortField("learnedfrom", ORDER.desc);
+            query.addSortField("SUPPORT_NUMBER_OF_PAIRS_LEARNED_FROM", ORDER.desc);
             //query.addSortField("boa-score", ORDER.desc);
             if ( numberOfBoaPatterns > 0 ) query.setRows(numberOfBoaPatterns);
             QueryResponse response = server.query(query);
