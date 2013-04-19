@@ -8,6 +8,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.search.crawl.EvidenceCrawler;
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -26,6 +28,7 @@ public class BoaPatternSearcher {
     private static HttpSolrServer server;
 //    private static final String SOLR_INDEX = "en_boa_detailed";
     private static final String SOLR_INDEX = "en_boa_defacto_temporal";
+    private Logger logger = Logger.getLogger(BoaPatternSearcher.class);
 
     public BoaPatternSearcher(){
     	
@@ -110,9 +113,10 @@ public class BoaPatternSearcher {
                 pattern.posTags = (String) d.get("pos");
                 pattern.boaScore = (Double) d.get("boa-score");
                 
-//                System.out.println(pattern.naturalLanguageRepresentation);
+                this.logger.debug("Found pattern: " + pattern.naturalLanguageRepresentation); 
                 
-                if ( pattern.boaScore > scoreThreshold ) patterns.add(pattern);
+//                if ( pattern.boaScore > scoreThreshold ) 
+                	patterns.add(pattern);
             }
         }
         catch (SolrServerException e) {

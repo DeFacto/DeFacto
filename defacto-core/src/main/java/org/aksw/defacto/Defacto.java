@@ -103,11 +103,11 @@ public class Defacto {
             logger.info("Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
         }
         
-        String output = "Model " + currentModel + "/" + numberOfModels + " took " + TimeUtil.formatTime(System.currentTimeMillis() - start) +
-                " Average time: " + ( (System.currentTimeMillis() - startTime) / currentModel++ ) + "ms";
+//        String output = "Model " + currentModel + "/" + numberOfModels + " took " + TimeUtil.formatTime(System.currentTimeMillis() - start) +
+//                " Average time: " + ( (System.currentTimeMillis() - startTime) / currentModel++ ) + "ms";
         
         // 8. Log statistics
-        System.out.println(output);
+//        System.out.println(output);
         
 //        try {
 //
