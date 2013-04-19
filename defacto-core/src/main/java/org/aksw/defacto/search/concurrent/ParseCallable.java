@@ -35,8 +35,6 @@ public class ParseCallable implements Callable<List<ComplexProof>> {
 		
 		for ( ComplexProof proof : this.proofs ) {
 			
-			logger.info("Proof: " + proof.getShortContext());
-			
 			String merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(proof.getLongContext())), "-=-");
 			proof.setTaggedLongContext(merged);
 		}

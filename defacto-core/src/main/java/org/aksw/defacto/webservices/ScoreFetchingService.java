@@ -45,8 +45,8 @@ public class ScoreFetchingService {
             Resource obj = model.createResource(property);
             obj.addProperty(RDFS.label, olabel);
             obj.addProperty(model.createProperty(property), subj);
-            double score = Defacto.checkFact(new DefactoModel(model, subject + " " + property + " " + object, true)).getDeFactoScore();
-            return Response.ok(score).build();
+            Double score = Defacto.checkFact(new DefactoModel(model, subject + " " + property + " " + object, true)).getDeFactoScore();
+            return Response.ok("{\"defactoScore\": "+score+"}").build();
         } catch (Exception e) {
 
         	ServiceMain.log.log(Level.WARNING, "Error while processing <" + subject + ": \""+slabel+"\", " + property + ", " + object + ": \""+olabel+"\">");

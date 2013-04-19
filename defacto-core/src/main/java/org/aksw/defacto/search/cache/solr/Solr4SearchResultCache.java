@@ -53,8 +53,6 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
 		SolrQuery query = new SolrQuery(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD + ":\"" + identifier + "\"").setRows(1);
         QueryResponse response = this.querySolrServer(query);
         SolrDocumentList docList = response.getResults();
-        System.out.println("HALLO");
-        for (SolrDocument doc : docList) System.out.println("HERHERHEHR");
 		return docList == null ? false : docList.size() > 0 ? true : false;
 	}
 
