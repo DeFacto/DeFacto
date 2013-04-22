@@ -19,6 +19,10 @@ GOOGLE_WAIT_TIME = 2000
 ; get the page rank or not
 getPageRank = true
 
+[server]
+ip = http://139.18.2.164/
+port = 1234
+
 
 [extract]
 ; when we search for sentence which contain two labels, this is the amount of tokens between them

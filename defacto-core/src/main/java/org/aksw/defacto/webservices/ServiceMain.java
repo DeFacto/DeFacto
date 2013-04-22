@@ -15,7 +15,14 @@ package org.aksw.defacto.webservices;
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
 import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
+
+import org.aksw.defacto.Defacto;
+import org.aksw.defacto.config.DefactoConfig;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.ini4j.Ini;
+import org.ini4j.InvalidFileFormatException;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.logging.FileHandler;
@@ -30,10 +37,22 @@ import javax.ws.rs.core.UriBuilder;
 public class ServiceMain {
 
     static Logger log = Logger.getLogger(ServiceMain.class.toString());
+    
 
     private static URI getBaseURI() {
-//        return UriBuilder.fromUri("http://139.18.2.164/").port(9998).build();
-        return UriBuilder.fromUri("http://localhost/").port(9998).build();
+    	
+    	try {
+			Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto.ini")));
+		} catch (InvalidFileFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+        return UriBuilder.fromUri(Defacto.DEFACTO_CONFIG.getStringSetting("server", "ip")).
+        		port(Defacto.DEFACTO_CONFIG.getIntegerSetting("server", "port")).build();
     }
     public static final URI BASE_URI = getBaseURI();
 
@@ -45,6 +64,7 @@ public class ServiceMain {
 
     public static void main(String[] args) throws IOException {
         try {
+        	
             FileHandler fh = new FileHandler("DeFacto.log");
             log.addHandler(fh);
             //logger.setLevel(Level.ALL);  
