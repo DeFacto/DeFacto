@@ -29,6 +29,8 @@ import org.ini4j.Ini;
 @Path("/getdefactotimes")
 public class TimeSequenceService {
 
+	// http://localhost:9998/getdefactotimes?s=http%3A%2F%2Fdbpedia.org%2Fresource%2FMichael_Ballack&p=http%3A%2F%2Fdbpedia.org%2Fontology%2Fteam&o=http%3A%2F%2Fdbpedia.org%2Fresource%2FChelsea_F.C.&slabel=Michael%20Ballack&olabel=Chelsea%20F.C.
+	
     @GET
     @Produces("application/json")
     public Response getJson(@QueryParam("s") String subject, @QueryParam("slabel") String slabel,
