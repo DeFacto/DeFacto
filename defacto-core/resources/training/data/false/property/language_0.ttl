@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/English_language>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "English language"@en .
-
-<http://dbpedia.org/resource/Salt_of_the_Earth:_Palestinian_Christians_in_the_Northern_West_Bank>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Salt of the Earth: Palestinian Christians in the Northern West Bank"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/English_language> .

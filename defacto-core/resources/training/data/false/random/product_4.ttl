@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Shirani_Bandaranayake>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Shirani Bandaranayake"@en ;
-      <http://dbpedia.org/ontology/district>
-              <http://dbpedia.org/resource/Jakarta> .
-
-<http://dbpedia.org/resource/Jakarta>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jakarta"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Willie_McGee>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Willie McGee"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/St._Louis_Cardinals> .
-
-<http://dbpedia.org/resource/St._Louis_Cardinals>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "St. Louis Cardinals"@en .

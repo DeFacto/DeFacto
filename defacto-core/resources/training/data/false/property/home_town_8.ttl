@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .
-
-<http://dbpedia.org/resource/Melvyn_%22Deacon%22_Jones>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Melvyn \"Deacon\" Jones"@en ;
-      <http://dbpedia.org/ontology/nationality>
-              <http://dbpedia.org/resource/United_States> .

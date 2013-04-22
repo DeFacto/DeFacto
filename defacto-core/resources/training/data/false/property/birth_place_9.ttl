@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Prince_Peter_of_Greece_and_Denmark>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Prince Peter of Greece and Denmark"@en ;
-      <http://dbpedia.org/ontology/deathPlace>
-              <http://dbpedia.org/resource/France> .
-
-<http://dbpedia.org/resource/France>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "France"@en .

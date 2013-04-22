@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .
-
-<http://dbpedia.org/resource/Via.com>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Via.com"@en ;
-      <http://dbpedia.org/ontology/birthPlace>
-              <http://dbpedia.org/resource/United_States> .

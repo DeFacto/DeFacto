@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Lokman_Slim>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Lokman Slim"@en ;
-      <http://dbpedia.org/ontology/isPartOf>
-              <http://dbpedia.org/resource/Beirut> .
-
-<http://dbpedia.org/resource/Beirut>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Beirut"@en .

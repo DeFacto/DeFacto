@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/City_Stars_%28FC_Kuusysi%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "City Stars (FC Kuusysi)"@en ;
-      <http://dbpedia.org/ontology/formerTeam>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

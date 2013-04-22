@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Rock_Band_3>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Rock Band 3"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/Burkina_Faso> .
-
-<http://dbpedia.org/resource/Burkina_Faso>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Burkina Faso"@en .

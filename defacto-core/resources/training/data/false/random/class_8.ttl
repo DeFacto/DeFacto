@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Pencaitland>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Pencaitland"@en ;
-      <http://dbpedia.org/ontology/previousWork>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

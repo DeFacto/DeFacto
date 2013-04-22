@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Nikoloz_Gilauri>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Nikoloz Gilauri"@en ;
-      <http://dbpedia.org/ontology/nationality>
-              <http://dbpedia.org/resource/University_of_Limerick> .
-
-<http://dbpedia.org/resource/University_of_Limerick>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "University of Limerick"@en .

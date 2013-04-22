@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Food_and_Health_Bureau>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Food and Health Bureau"@en ;
-      <http://dbpedia.org/ontology/department>
-              <http://dbpedia.org/resource/Jakarta> .
-
-<http://dbpedia.org/resource/Jakarta>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jakarta"@en .

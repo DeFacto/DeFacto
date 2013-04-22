@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Joseph_Zito>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Joseph Zito"@en .
-
-<http://dbpedia.org/resource/Friday_the_13th:_The_Final_Chapter>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Friday the 13th: The Final Chapter"@en ;
-      <http://dbpedia.org/ontology/musicComposer>
-              <http://dbpedia.org/resource/Joseph_Zito> .

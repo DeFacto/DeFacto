@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Angiosperms>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Angiosperms"@en .
-
-<http://dbpedia.org/resource/Shorea_polysperma>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Shorea polysperma"@en ;
-      <http://dbpedia.org/ontology/associatedBand>
-              <http://dbpedia.org/resource/Angiosperms> .

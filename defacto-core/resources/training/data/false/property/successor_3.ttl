@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Bob_Wise>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bob Wise"@en ;
-      <http://dbpedia.org/ontology/timeZone>
-              <http://dbpedia.org/resource/Shelley_Moore_Capito> .
-
-<http://dbpedia.org/resource/Shelley_Moore_Capito>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Shelley Moore Capito"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Boris_Bunjak>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Boris Bunjak"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/Al_Oruba_Sur> .
-
-<http://dbpedia.org/resource/Al_Oruba_Sur>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Al Oruba Sur"@en .

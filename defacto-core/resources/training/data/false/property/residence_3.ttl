@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Dave_Pine>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Dave Pine"@en ;
-      <http://dbpedia.org/ontology/almaMater>
-              <http://dbpedia.org/resource/California> .
-
-<http://dbpedia.org/resource/California>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "California"@en .

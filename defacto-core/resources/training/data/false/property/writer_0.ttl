@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Skye_Sweetnam>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Skye Sweetnam"@en .
-
-<http://dbpedia.org/resource/Human_%28Skye_Sweetnam_song%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Human (Skye Sweetnam song)"@en ;
-      <http://dbpedia.org/ontology/recordedIn>
-              <http://dbpedia.org/resource/Skye_Sweetnam> .

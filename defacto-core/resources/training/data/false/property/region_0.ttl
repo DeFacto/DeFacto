@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Picardy>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Picardy"@en .
-
-<http://dbpedia.org/resource/Paars>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Paars"@en ;
-      <http://dbpedia.org/ontology/artist>
-              <http://dbpedia.org/resource/Picardy> .

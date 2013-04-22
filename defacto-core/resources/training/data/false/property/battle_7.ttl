@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Cold_War>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Cold War"@en .
-
-<http://dbpedia.org/resource/Vang_Sue>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Vang Sue"@en ;
-      <http://dbpedia.org/ontology/musicalBand>
-              <http://dbpedia.org/resource/Cold_War> .

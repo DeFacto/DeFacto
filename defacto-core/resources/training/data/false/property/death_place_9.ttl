@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Jack_C._Walton>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jack C. Walton"@en ;
-      <http://dbpedia.org/ontology/battle>
-              <http://dbpedia.org/resource/Oklahoma_City> .
-
-<http://dbpedia.org/resource/Oklahoma_City>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Oklahoma City"@en .

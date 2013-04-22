@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Doc_Gessler>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Doc Gessler"@en ;
-      <http://dbpedia.org/ontology/division>
-              <http://dbpedia.org/resource/Minnesota_Twins> .
-
-<http://dbpedia.org/resource/Minnesota_Twins>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Minnesota Twins"@en .

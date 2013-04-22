@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ytre_Arna>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ytre Arna"@en .
-
-<http://dbpedia.org/resource/Arna-Bj%C3%B8rnar>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Arna-Bjørnar"@en ;
-      <http://dbpedia.org/ontology/department>
-              <http://dbpedia.org/resource/Ytre_Arna> .

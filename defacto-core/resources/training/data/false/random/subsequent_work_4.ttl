@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .
-
-<http://dbpedia.org/resource/Electronical_Suicide>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Electronical Suicide"@en ;
-      <http://dbpedia.org/ontology/party>
-              <http://dbpedia.org/resource/United_States> .

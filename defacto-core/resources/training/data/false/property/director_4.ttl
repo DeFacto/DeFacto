@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Lee_Lik-Chi>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Lee Lik-Chi"@en .
-
-<http://dbpedia.org/resource/King_of_Comedy_%281999_film%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "King of Comedy (1999 film)"@en ;
-      <http://dbpedia.org/ontology/binomialAuthority>
-              <http://dbpedia.org/resource/Lee_Lik-Chi> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Acelera_A%C3%AA_%28Noite_do_Bem%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Acelera Aê (Noite do Bem)"@en ;
-      <http://dbpedia.org/ontology/party>
-              <http://dbpedia.org/resource/Chile> .
-
-<http://dbpedia.org/resource/Chile>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Chile"@en .

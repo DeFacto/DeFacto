@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Kenya>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Kenya"@en .
-
-<http://dbpedia.org/resource/Cosmos_%28operating_system%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Cosmos (operating system)"@en ;
-      <http://dbpedia.org/ontology/producer>
-              <http://dbpedia.org/resource/Kenya> .

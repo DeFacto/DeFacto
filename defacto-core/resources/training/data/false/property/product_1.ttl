@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Scratches_%28video_game%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Scratches (video game)"@en .
-
-<http://dbpedia.org/resource/Nucleosys>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Nucleosys"@en ;
-      <http://dbpedia.org/ontology/recordLabel>
-              <http://dbpedia.org/resource/Scratches_%28video_game%29> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Changchun_Film_Festival>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Changchun Film Festival"@en .
-
-<http://dbpedia.org/resource/Jacklyn_Wu>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jacklyn Wu"@en ;
-      <http://dbpedia.org/ontology/instrument>
-              <http://dbpedia.org/resource/Changchun_Film_Festival> .

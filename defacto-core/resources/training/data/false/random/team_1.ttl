@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Kassie_Tyers_%28Album%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Kassie Tyers (Album)"@en ;
-      <http://dbpedia.org/ontology/deathPlace>
-              <http://dbpedia.org/resource/United_States> .
-
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .

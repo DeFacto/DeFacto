@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Prineville,_Oregon>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Prineville, Oregon"@en ;
-      <http://dbpedia.org/ontology/starring>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

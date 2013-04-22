@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/R%C3%A5dmansgatan_metro_station>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Rådmansgatan metro station"@en ;
-      <http://dbpedia.org/ontology/almaMater>
-              <http://dbpedia.org/resource/Storstockholms_Lokaltrafik> .
-
-<http://dbpedia.org/resource/Storstockholms_Lokaltrafik>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Storstockholms Lokaltrafik"@en .

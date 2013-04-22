@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Spectrum-X>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Spectrum-X"@en ;
-      <http://dbpedia.org/ontology/product>
-              <http://dbpedia.org/resource/United_States> .
-
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .

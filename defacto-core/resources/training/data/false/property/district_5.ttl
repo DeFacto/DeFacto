@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Fenland>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Fenland"@en .
-
-<http://dbpedia.org/resource/Chatteris>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Chatteris"@en ;
-      <http://dbpedia.org/ontology/starring>
-              <http://dbpedia.org/resource/Fenland> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Burkina_Faso>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Burkina Faso"@en .
-
-<http://dbpedia.org/resource/Nathan_%22Ned%22_Miller>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Nathan \"Ned\" Miller"@en ;
-      <http://dbpedia.org/ontology/region>
-              <http://dbpedia.org/resource/Burkina_Faso> .

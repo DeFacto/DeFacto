@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Burkina_Faso>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Burkina Faso"@en .
-
-<http://dbpedia.org/resource/H._P._Lovecraft>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "H. P. Lovecraft"@en ;
-      <http://dbpedia.org/ontology/party>
-              <http://dbpedia.org/resource/Burkina_Faso> .

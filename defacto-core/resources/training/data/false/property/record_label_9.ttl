@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/EMI>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "EMI"@en .
-
-<http://dbpedia.org/resource/Poor_Rich_Ones>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Poor Rich Ones"@en ;
-      <http://dbpedia.org/ontology/militaryBranch>
-              <http://dbpedia.org/resource/EMI> .

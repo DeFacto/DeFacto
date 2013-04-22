@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Battle_of_Wilson%27s_Creek>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Battle of Wilson's Creek"@en .
-
-<http://dbpedia.org/resource/4th_Regiment,_Arkansas_State_Troops>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "4th Regiment, Arkansas State Troops"@en ;
-      <http://dbpedia.org/ontology/team>
-              <http://dbpedia.org/resource/Battle_of_Wilson%27s_Creek> .

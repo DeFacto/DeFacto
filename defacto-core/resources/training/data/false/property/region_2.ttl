@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Nitra_Region>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Nitra Region"@en .
-
-<http://dbpedia.org/resource/Tes%C3%A1rske_Mly%C5%88any>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Tesárske Mlyňany"@en ;
-      <http://dbpedia.org/ontology/producer>
-              <http://dbpedia.org/resource/Nitra_Region> .

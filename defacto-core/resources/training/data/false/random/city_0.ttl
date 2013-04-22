@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Russia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russia"@en .
-
-<http://dbpedia.org/resource/Johnny_Crash_%28band%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Johnny Crash (band)"@en ;
-      <http://dbpedia.org/ontology/battle>
-              <http://dbpedia.org/resource/Russia> .

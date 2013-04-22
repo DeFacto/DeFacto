@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Tom_Quinlan>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Tom Quinlan"@en ;
-      <http://dbpedia.org/ontology/binomialAuthority>
-              <http://dbpedia.org/resource/Korean_Series> .
-
-<http://dbpedia.org/resource/Korean_Series>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Korean Series"@en .

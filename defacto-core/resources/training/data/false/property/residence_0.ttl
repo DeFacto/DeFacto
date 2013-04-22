@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Oleg_Nikolaenko>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Oleg Nikolaenko"@en ;
-      <http://dbpedia.org/ontology/department>
-              <http://dbpedia.org/resource/Moscow_Oblast> .
-
-<http://dbpedia.org/resource/Moscow_Oblast>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Moscow Oblast"@en .

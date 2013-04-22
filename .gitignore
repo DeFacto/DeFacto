@@ -22,3 +22,4 @@ defacto-core/resources/cache/pagerank/cache.txt
 defacto-core/resources/cache/topics/cache.txt
 defacto-core/DeFacto.log.lck
 defacto-core/DeFacto.log
+DeFacto.log*

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Cornaceae>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Cornaceae"@en .
-
-<http://dbpedia.org/resource/Cornus_glabrata>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Cornus glabrata"@en ;
-      <http://dbpedia.org/ontology/industry>
-              <http://dbpedia.org/resource/Cornaceae> .

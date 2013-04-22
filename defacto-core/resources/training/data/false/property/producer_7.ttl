@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Brian_Blade>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Brian Blade"@en .
-
-<http://dbpedia.org/resource/Salt_%28Lizz_Wright_album%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Salt (Lizz Wright album)"@en ;
-      <http://dbpedia.org/ontology/team>
-              <http://dbpedia.org/resource/Brian_Blade> .

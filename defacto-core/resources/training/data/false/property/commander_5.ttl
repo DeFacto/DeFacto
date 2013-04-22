@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Battle_of_Toppenish_Creek>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Battle of Toppenish Creek"@en ;
-      <http://dbpedia.org/ontology/instrument>
-              <http://dbpedia.org/resource/Granville_O._Haller> .
-
-<http://dbpedia.org/resource/Granville_O._Haller>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Granville O. Haller"@en .

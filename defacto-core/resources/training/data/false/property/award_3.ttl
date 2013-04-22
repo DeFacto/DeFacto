@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Helmut_Haugk>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Helmut Haugk"@en ;
-      <http://dbpedia.org/ontology/phylum>
-              <http://dbpedia.org/resource/Knight%27s_Cross_of_the_Iron_Cross> .
-
-<http://dbpedia.org/resource/Knight%27s_Cross_of_the_Iron_Cross>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Knight's Cross of the Iron Cross"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Caja_del_Rio>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Caja del Rio"@en ;
-      <http://dbpedia.org/ontology/almaMater>
-              <http://dbpedia.org/resource/Santa_Fe_County,_New_Mexico> .
-
-<http://dbpedia.org/resource/Santa_Fe_County,_New_Mexico>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Santa Fe County, New Mexico"@en .

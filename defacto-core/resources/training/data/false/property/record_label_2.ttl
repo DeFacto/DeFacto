@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Para_Siempre_%28song%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Para Siempre (song)"@en ;
-      <http://dbpedia.org/ontology/associatedBand>
-              <http://dbpedia.org/resource/Sony_BMG> .
-
-<http://dbpedia.org/resource/Sony_BMG>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Sony BMG"@en .

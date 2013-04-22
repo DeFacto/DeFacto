@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ruth_Prawer_Jhabvala>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ruth Prawer Jhabvala"@en .
-
-<http://dbpedia.org/resource/Shakespeare_Wallah>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Shakespeare Wallah"@en ;
-      <http://dbpedia.org/ontology/associatedMusicalArtist>
-              <http://dbpedia.org/resource/Ruth_Prawer_Jhabvala> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/The_Daytona_Beach_News-Journal>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "The Daytona Beach News-Journal"@en ;
-      <http://dbpedia.org/ontology/commander>
-              <http://dbpedia.org/resource/Lumerians> .
-
-<http://dbpedia.org/resource/Lumerians>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Lumerians"@en .

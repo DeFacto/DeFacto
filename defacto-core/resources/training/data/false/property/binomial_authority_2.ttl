@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Brephulopsis_cylindrica>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Brephulopsis cylindrica"@en ;
-      <http://dbpedia.org/ontology/residence>
-              <http://dbpedia.org/resource/Karl_Theodor_Menke> .
-
-<http://dbpedia.org/resource/Karl_Theodor_Menke>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Karl Theodor Menke"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Game_Party>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Game Party"@en ;
-      <http://dbpedia.org/ontology/department>
-              <http://dbpedia.org/resource/Midway_Games> .
-
-<http://dbpedia.org/resource/Midway_Games>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Midway Games"@en .

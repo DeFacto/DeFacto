@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/FK_Neftchi_Farg%27ona>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "FK Neftchi Farg'ona"@en ;
-      <http://dbpedia.org/ontology/subsequentWork>
-              <http://dbpedia.org/resource/Uzbekistan> .
-
-<http://dbpedia.org/resource/Uzbekistan>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Uzbekistan"@en .

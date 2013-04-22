@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/John_Francis_Dillon_%28director%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "John Francis Dillon (director)"@en .
-
-<http://dbpedia.org/resource/The_Sea_Tiger>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "The Sea Tiger"@en ;
-      <http://dbpedia.org/ontology/state>
-              <http://dbpedia.org/resource/John_Francis_Dillon_%28director%29> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Women_of_Ireland_%28Mike_Oldfield_instrumental%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Women of Ireland (Mike Oldfield instrumental)"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/Mike_Oldfield> .
-
-<http://dbpedia.org/resource/Mike_Oldfield>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Mike Oldfield"@en .

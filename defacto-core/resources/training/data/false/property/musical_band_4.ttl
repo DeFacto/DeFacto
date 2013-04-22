@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Chad_Jackson_%28DJ%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Chad Jackson (DJ)"@en .
-
-<http://dbpedia.org/resource/Hear_the_Drummer_%28Get_Wicked%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hear the Drummer (Get Wicked)"@en ;
-      <http://dbpedia.org/ontology/subsequentWork>
-              <http://dbpedia.org/resource/Chad_Jackson_%28DJ%29> .

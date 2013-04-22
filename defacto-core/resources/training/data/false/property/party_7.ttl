@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Zimbabwe_African_National_Union>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Zimbabwe African National Union"@en .
-
-<http://dbpedia.org/resource/Morgan_Tsvangirai>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Morgan Tsvangirai"@en ;
-      <http://dbpedia.org/ontology/militaryBranch>
-              <http://dbpedia.org/resource/Zimbabwe_African_National_Union> .

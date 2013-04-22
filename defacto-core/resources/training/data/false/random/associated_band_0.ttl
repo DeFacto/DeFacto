@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Austria>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Austria"@en .
-
-<http://dbpedia.org/resource/Hutto,_Texas>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hutto, Texas"@en ;
-      <http://dbpedia.org/ontology/subsequentWork>
-              <http://dbpedia.org/resource/Austria> .

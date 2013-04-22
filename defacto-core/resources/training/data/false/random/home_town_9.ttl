@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Charlottetown>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Charlottetown"@en .
-
-<http://dbpedia.org/resource/Braunschweig>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Braunschweig"@en ;
-      <http://dbpedia.org/ontology/battle>
-              <http://dbpedia.org/resource/Charlottetown> .

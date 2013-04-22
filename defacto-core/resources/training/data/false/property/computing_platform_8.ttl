@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Bloody_Roar:_Primal_Fury>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bloody Roar: Primal Fury"@en ;
-      <http://dbpedia.org/ontology/language>
-              <http://dbpedia.org/resource/Xbox> .
-
-<http://dbpedia.org/resource/Xbox>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Xbox"@en .

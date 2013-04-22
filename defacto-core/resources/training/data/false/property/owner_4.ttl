@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Network_Rail>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Network Rail"@en .
-
-<http://dbpedia.org/resource/Bishops_Waltham_branch>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bishops Waltham branch"@en ;
-      <http://dbpedia.org/ontology/producer>
-              <http://dbpedia.org/resource/Network_Rail> .

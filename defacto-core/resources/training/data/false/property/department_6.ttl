@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Terrebasse>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Terrebasse"@en ;
-      <http://dbpedia.org/ontology/binomialAuthority>
-              <http://dbpedia.org/resource/Haute-Garonne> .
-
-<http://dbpedia.org/resource/Haute-Garonne>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Haute-Garonne"@en .

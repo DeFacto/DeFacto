@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Angus_Cunninghame_Graham>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Angus Cunninghame Graham"@en ;
-      <http://dbpedia.org/ontology/managerClub>
-              <http://dbpedia.org/resource/Jakarta> .
-
-<http://dbpedia.org/resource/Jakarta>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jakarta"@en .

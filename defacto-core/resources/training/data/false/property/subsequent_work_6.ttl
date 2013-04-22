@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/A_Night_in_Vienna>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "A Night in Vienna"@en .
-
-<http://dbpedia.org/resource/Trail_of_Dreams:_A_Canadian_Suite>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Trail of Dreams: A Canadian Suite"@en ;
-      <http://dbpedia.org/ontology/recordedIn>
-              <http://dbpedia.org/resource/A_Night_in_Vienna> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Tim_Hunter_%28ice_hockey%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Tim Hunter (ice hockey)"@en ;
-      <http://dbpedia.org/ontology/almaMater>
-              <http://dbpedia.org/resource/Canada> .
-
-<http://dbpedia.org/resource/Canada>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Canada"@en .

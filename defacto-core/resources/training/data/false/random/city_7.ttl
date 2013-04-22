@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/The_Illuminatus%21_Trilogy>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "The Illuminatus! Trilogy"@en ;
-      <http://dbpedia.org/ontology/recordedIn>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

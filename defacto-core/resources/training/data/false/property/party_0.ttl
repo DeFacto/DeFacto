@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Republican_Party_%28Michigan%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Republican Party (Michigan)"@en .
-
-<http://dbpedia.org/resource/Clark_Durant>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Clark Durant"@en ;
-      <http://dbpedia.org/ontology/district>
-              <http://dbpedia.org/resource/Republican_Party_%28Michigan%29> .

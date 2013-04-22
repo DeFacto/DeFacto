@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Joaquin_Francisco_Sanchez>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Joaquin Francisco Sanchez"@en ;
-      <http://dbpedia.org/ontology/deathPlace>
-              <http://dbpedia.org/resource/Uganda> .
-
-<http://dbpedia.org/resource/Uganda>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Uganda"@en .

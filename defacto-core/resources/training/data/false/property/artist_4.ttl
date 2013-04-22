@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/M.O.P.>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "M.O.P."@en .
-
-<http://dbpedia.org/resource/Warriorz>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Warriorz"@en ;
-      <http://dbpedia.org/ontology/nationality>
-              <http://dbpedia.org/resource/M.O.P.> .

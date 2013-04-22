@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Citrovita>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Citrovita"@en ;
-      <http://dbpedia.org/ontology/director>
-              <http://dbpedia.org/resource/Brazil> .
-
-<http://dbpedia.org/resource/Brazil>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Brazil"@en .

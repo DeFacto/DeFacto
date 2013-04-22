@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/The_Scions_of_Shannara>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "The Scions of Shannara"@en .
-
-<http://dbpedia.org/resource/The_Druid_of_Shannara>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "The Druid of Shannara"@en ;
-      <http://dbpedia.org/ontology/product>
-              <http://dbpedia.org/resource/The_Scions_of_Shannara> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Russia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russia"@en .
-
-<http://dbpedia.org/resource/Affiance_%28band%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Affiance (band)"@en ;
-      <http://dbpedia.org/ontology/family>
-              <http://dbpedia.org/resource/Russia> .

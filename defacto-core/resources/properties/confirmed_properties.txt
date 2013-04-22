@@ -1,1 +1,0 @@
-writer_1.ttl

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Essex>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Essex"@en .
-
-<http://dbpedia.org/resource/Braxton_Family_Values>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Braxton Family Values"@en ;
-      <http://dbpedia.org/ontology/genus>
-              <http://dbpedia.org/resource/Essex> .

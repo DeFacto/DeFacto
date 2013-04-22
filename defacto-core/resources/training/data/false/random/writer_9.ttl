@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Burkina_Faso>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Burkina Faso"@en .
-
-<http://dbpedia.org/resource/Tobias_Karlsson_%28songwriter%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Tobias Karlsson (songwriter)"@en ;
-      <http://dbpedia.org/ontology/residence>
-              <http://dbpedia.org/resource/Burkina_Faso> .

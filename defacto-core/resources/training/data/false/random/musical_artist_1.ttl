@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ifrane>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ifrane"@en ;
-      <http://dbpedia.org/ontology/department>
-              <http://dbpedia.org/resource/Chile> .
-
-<http://dbpedia.org/resource/Chile>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Chile"@en .

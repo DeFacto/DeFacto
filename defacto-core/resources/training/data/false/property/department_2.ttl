@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ars-sur-Formans>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ars-sur-Formans"@en ;
-      <http://dbpedia.org/ontology/genus>
-              <http://dbpedia.org/resource/Ain> .
-
-<http://dbpedia.org/resource/Ain>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ain"@en .

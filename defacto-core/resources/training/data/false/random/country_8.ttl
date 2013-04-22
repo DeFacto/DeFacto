@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Uganda>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Uganda"@en .
-
-<http://dbpedia.org/resource/A_class_destroyer>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "A class destroyer"@en ;
-      <http://dbpedia.org/ontology/musicalArtist>
-              <http://dbpedia.org/resource/Uganda> .

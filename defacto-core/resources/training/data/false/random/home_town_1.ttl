@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Pflugerville,_Texas>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Pflugerville, Texas"@en ;
-      <http://dbpedia.org/ontology/location>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

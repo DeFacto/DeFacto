@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Joseph_J._Lilley>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Joseph J. Lilley"@en .
-
-<http://dbpedia.org/resource/Fun_in_Acapulco>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Fun in Acapulco"@en ;
-      <http://dbpedia.org/ontology/occupation>
-              <http://dbpedia.org/resource/Joseph_J._Lilley> .

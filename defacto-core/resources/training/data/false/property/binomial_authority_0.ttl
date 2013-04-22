@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Anton_Reichenow>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Anton Reichenow"@en .
-
-<http://dbpedia.org/resource/White-bearded_Bulbul>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "White-bearded Bulbul"@en ;
-      <http://dbpedia.org/ontology/currentMember>
-              <http://dbpedia.org/resource/Anton_Reichenow> .

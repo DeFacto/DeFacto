@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Norman_Douglas_Holbrook>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Norman Douglas Holbrook"@en ;
-      <http://dbpedia.org/ontology/currentMember>
-              <http://dbpedia.org/resource/L%C3%A9gion_d%27honneur> .
-
-<http://dbpedia.org/resource/L%C3%A9gion_d%27honneur>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Légion d'honneur"@en .

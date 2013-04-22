@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Italy>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Italy"@en .
-
-<http://dbpedia.org/resource/F.C._S%C3%BCdtirol-Alto_Adige>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "F.C. Südtirol-Alto Adige"@en ;
-      <http://dbpedia.org/ontology/district>
-              <http://dbpedia.org/resource/Italy> .

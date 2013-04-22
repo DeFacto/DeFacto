@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/North_American_Eastern_Time_Zone>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "North American Eastern Time Zone"@en .
-
-<http://dbpedia.org/resource/Conyngham,_Pennsylvania>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Conyngham, Pennsylvania"@en ;
-      <http://dbpedia.org/ontology/ground>
-              <http://dbpedia.org/resource/North_American_Eastern_Time_Zone> .

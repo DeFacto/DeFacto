@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Martin_the_Warrior>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Martin the Warrior"@en ;
-      <http://dbpedia.org/ontology/family>
-              <http://dbpedia.org/resource/Hutchinson_%28publisher%29> .
-
-<http://dbpedia.org/resource/Hutchinson_%28publisher%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hutchinson (publisher)"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Harmatitis>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Harmatitis"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/Insect> .
-
-<http://dbpedia.org/resource/Insect>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Insect"@en .

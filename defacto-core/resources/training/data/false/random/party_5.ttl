@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/The_Earl_Scruggs_Revue>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "The Earl Scruggs Revue"@en ;
-      <http://dbpedia.org/ontology/city>
-              <http://dbpedia.org/resource/Chile> .
-
-<http://dbpedia.org/resource/Chile>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Chile"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Gramophone_record>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Gramophone record"@en .
-
-<http://dbpedia.org/resource/Supernatural_Superserious>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Supernatural Superserious"@en ;
-      <http://dbpedia.org/ontology/division>
-              <http://dbpedia.org/resource/Gramophone_record> .

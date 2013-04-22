@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Ocellated_Woodcreeper>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ocellated Woodcreeper"@en ;
-      <http://dbpedia.org/ontology/family>
-              <http://dbpedia.org/resource/Johann_Baptist_von_Spix> .
-
-<http://dbpedia.org/resource/Johann_Baptist_von_Spix>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Johann Baptist von Spix"@en .

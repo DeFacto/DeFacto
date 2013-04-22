@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Charleston,_South_Carolina>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Charleston, South Carolina"@en .
-
-<http://dbpedia.org/resource/Medical_University_of_South_Carolina>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Medical University of South Carolina"@en ;
-      <http://dbpedia.org/ontology/starring>
-              <http://dbpedia.org/resource/Charleston,_South_Carolina> .

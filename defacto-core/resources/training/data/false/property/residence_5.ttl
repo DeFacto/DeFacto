@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Moorhead,_Minnesota>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Moorhead, Minnesota"@en .
-
-<http://dbpedia.org/resource/Morrie_Lanning>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Morrie Lanning"@en ;
-      <http://dbpedia.org/ontology/location>
-              <http://dbpedia.org/resource/Moorhead,_Minnesota> .

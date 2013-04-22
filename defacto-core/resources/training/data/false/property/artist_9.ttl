@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Acoustic_%28EP%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Acoustic (EP)"@en ;
-      <http://dbpedia.org/ontology/language>
-              <http://dbpedia.org/resource/Coldplay> .
-
-<http://dbpedia.org/resource/Coldplay>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Coldplay"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Bulbophyllum_pandanetorum>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bulbophyllum pandanetorum"@en ;
-      <http://dbpedia.org/ontology/timeZone>
-              <http://dbpedia.org/resource/Angiosperms> .
-
-<http://dbpedia.org/resource/Angiosperms>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Angiosperms"@en .

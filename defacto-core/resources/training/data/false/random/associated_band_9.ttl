@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/U.S._Route_58>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "U.S. Route 58"@en ;
-      <http://dbpedia.org/ontology/battle>
-              <http://dbpedia.org/resource/Emrys_Hughes_%28rugby%29> .
-
-<http://dbpedia.org/resource/Emrys_Hughes_%28rugby%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Emrys Hughes (rugby)"@en .

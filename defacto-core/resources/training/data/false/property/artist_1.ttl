@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Front_242>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Front 242"@en .
-
-<http://dbpedia.org/resource/05:22:09:12_Off>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "05:22:09:12 Off"@en ;
-      <http://dbpedia.org/ontology/distributor>
-              <http://dbpedia.org/resource/Front_242> .

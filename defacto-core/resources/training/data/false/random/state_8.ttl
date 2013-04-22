@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Northern_Ireland_Assembly_election,_1973>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Northern Ireland Assembly election, 1973"@en ;
-      <http://dbpedia.org/ontology/instrument>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

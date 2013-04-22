@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Toulouse>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Toulouse"@en ;
-      <http://dbpedia.org/ontology/occupation>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

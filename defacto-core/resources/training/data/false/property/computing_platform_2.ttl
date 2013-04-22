@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Snooker_%28video_game%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Snooker (video game)"@en ;
-      <http://dbpedia.org/ontology/format>
-              <http://dbpedia.org/resource/Commodore_VIC-20> .
-
-<http://dbpedia.org/resource/Commodore_VIC-20>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Commodore VIC-20"@en .

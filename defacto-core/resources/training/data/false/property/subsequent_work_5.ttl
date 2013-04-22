@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Roll_Away_the_Stone_%28album%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Roll Away the Stone (album)"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/Shine_Eyed_Mister_Zen> .
-
-<http://dbpedia.org/resource/Shine_Eyed_Mister_Zen>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Shine Eyed Mister Zen"@en .

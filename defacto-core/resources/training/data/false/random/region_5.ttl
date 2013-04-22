@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Smile_%28graphic_novel%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Smile (graphic novel)"@en ;
-      <http://dbpedia.org/ontology/publisher>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

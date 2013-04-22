@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Down_Here>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Down Here"@en .
-
-<http://dbpedia.org/resource/Blink_the_Brightest>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Blink the Brightest"@en ;
-      <http://dbpedia.org/ontology/militaryBranch>
-              <http://dbpedia.org/resource/Down_Here> .

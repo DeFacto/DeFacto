@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Central_European_Time>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Central European Time"@en .
-
-<http://dbpedia.org/resource/Somogyd%C3%B6r%C3%B6cske>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Somogydöröcske"@en ;
-      <http://dbpedia.org/ontology/hometown>
-              <http://dbpedia.org/resource/Central_European_Time> .

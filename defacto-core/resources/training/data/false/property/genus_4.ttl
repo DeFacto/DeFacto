@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Rorippa_curvisiliqua>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Rorippa curvisiliqua"@en ;
-      <http://dbpedia.org/ontology/associatedBand>
-              <http://dbpedia.org/resource/Rorippa> .
-
-<http://dbpedia.org/resource/Rorippa>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Rorippa"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Immigration_Department_%28Hong_Kong%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Immigration Department (Hong Kong)"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

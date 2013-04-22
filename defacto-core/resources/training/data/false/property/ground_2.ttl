@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Limassol>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Limassol"@en .
-
-<http://dbpedia.org/resource/Apollon_Limassol_%28women%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Apollon Limassol (women)"@en ;
-      <http://dbpedia.org/ontology/writer>
-              <http://dbpedia.org/resource/Limassol> .

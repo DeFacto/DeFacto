@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Original_Me>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Original Me"@en .
-
-<http://dbpedia.org/resource/Armenia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Armenia"@en ;
-      <http://dbpedia.org/ontology/hometown>
-              <http://dbpedia.org/resource/Original_Me> .

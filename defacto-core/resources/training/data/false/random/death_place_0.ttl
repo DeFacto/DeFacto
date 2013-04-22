@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Estuary,_Saskatchewan>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Estuary, Saskatchewan"@en ;
-      <http://dbpedia.org/ontology/recordLabel>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

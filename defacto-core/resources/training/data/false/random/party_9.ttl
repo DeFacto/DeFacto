@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Austria>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Austria"@en .
-
-<http://dbpedia.org/resource/Carpomys>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Carpomys"@en ;
-      <http://dbpedia.org/ontology/birthPlace>
-              <http://dbpedia.org/resource/Austria> .

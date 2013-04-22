@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Marine_Wing_Liaison_Kadena>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Marine Wing Liaison Kadena"@en ;
-      <http://dbpedia.org/ontology/language>
-              <http://dbpedia.org/resource/United_States_Marine_Corps> .
-
-<http://dbpedia.org/resource/United_States_Marine_Corps>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States Marine Corps"@en .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Arthropod>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Arthropod"@en .
-
-<http://dbpedia.org/resource/Australian_cockroach>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Australian cockroach"@en ;
-      <http://dbpedia.org/ontology/kingdom>
-              <http://dbpedia.org/resource/Arthropod> .

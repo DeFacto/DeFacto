@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/West_Bengal>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "West Bengal"@en .
-
-<http://dbpedia.org/resource/Centre_for_Studies_in_Social_Sciences>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Centre for Studies in Social Sciences"@en ;
-      <http://dbpedia.org/ontology/district>
-              <http://dbpedia.org/resource/West_Bengal> .

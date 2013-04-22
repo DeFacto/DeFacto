@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Rock_music>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Rock music"@en .
-
-<http://dbpedia.org/resource/El_Sue%C3%B1o_de_Morfeo>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "El Sueño de Morfeo"@en ;
-      <http://dbpedia.org/ontology/award>
-              <http://dbpedia.org/resource/Rock_music> .

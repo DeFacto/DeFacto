@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Anura>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Anura"@en .
-
-<http://dbpedia.org/resource/Eleutherodactylus_taciturnus>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Eleutherodactylus taciturnus"@en ;
-      <http://dbpedia.org/ontology/product>
-              <http://dbpedia.org/resource/Anura> .

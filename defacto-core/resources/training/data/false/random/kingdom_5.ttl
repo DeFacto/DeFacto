@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Austria>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Austria"@en .
-
-<http://dbpedia.org/resource/Limerick>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Limerick"@en ;
-      <http://dbpedia.org/ontology/deathPlace>
-              <http://dbpedia.org/resource/Austria> .

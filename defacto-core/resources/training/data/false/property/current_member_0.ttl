@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/2010%E2%80%9311_Deportivo_Toluca_F.C._season>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "2010–11 Deportivo Toluca F.C. season"@en ;
-      <http://dbpedia.org/ontology/birthPlace>
-              <http://dbpedia.org/resource/Alfredo_Talavera> .
-
-<http://dbpedia.org/resource/Alfredo_Talavera>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Alfredo Talavera"@en .

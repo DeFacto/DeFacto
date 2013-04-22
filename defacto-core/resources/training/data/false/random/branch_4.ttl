@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Richard_Graves_MacDonnell>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Richard Graves MacDonnell"@en ;
-      <http://dbpedia.org/ontology/writer>
-              <http://dbpedia.org/resource/1980%E2%80%9381_Tennis_Borussia_Berlin_season> .
-
-<http://dbpedia.org/resource/1980%E2%80%9381_Tennis_Borussia_Berlin_season>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "1980–81 Tennis Borussia Berlin season"@en .

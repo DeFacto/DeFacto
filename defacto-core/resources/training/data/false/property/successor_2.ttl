@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Philip_Travis>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Philip Travis"@en ;
-      <http://dbpedia.org/ontology/industry>
-              <http://dbpedia.org/resource/Steven_D%27Amico> .
-
-<http://dbpedia.org/resource/Steven_D%27Amico>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Steven D'Amico"@en .

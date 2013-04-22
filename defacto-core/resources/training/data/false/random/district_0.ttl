@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .
-
-<http://dbpedia.org/resource/Hacz%C3%B3w>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Haczów"@en ;
-      <http://dbpedia.org/ontology/birthPlace>
-              <http://dbpedia.org/resource/London> .

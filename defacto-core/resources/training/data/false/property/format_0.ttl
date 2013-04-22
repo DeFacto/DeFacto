@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Cross_My_Broken_Heart>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Cross My Broken Heart"@en ;
-      <http://dbpedia.org/ontology/department>
-              <http://dbpedia.org/resource/Gramophone_record> .
-
-<http://dbpedia.org/resource/Gramophone_record>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Gramophone record"@en .

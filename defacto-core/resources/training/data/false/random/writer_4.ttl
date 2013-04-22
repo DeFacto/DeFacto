@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Who_We_Are_%28Hope_Partlow_album%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Who We Are (Hope Partlow album)"@en ;
-      <http://dbpedia.org/ontology/recordedIn>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

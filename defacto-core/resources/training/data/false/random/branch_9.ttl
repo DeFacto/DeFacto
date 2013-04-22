@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .
-
-<http://dbpedia.org/resource/Prince_Kirill_Romanovsky-Iskander>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Prince Kirill Romanovsky-Iskander"@en ;
-      <http://dbpedia.org/ontology/language>
-              <http://dbpedia.org/resource/United_States> .

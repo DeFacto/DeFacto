@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Peter_Watts_%28road_manager%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Peter Watts (road manager)"@en ;
-      <http://dbpedia.org/ontology/team>
-              <http://dbpedia.org/resource/England> .
-
-<http://dbpedia.org/resource/England>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "England"@en .

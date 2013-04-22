@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Russia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Russia"@en .
-
-<http://dbpedia.org/resource/George_Beadle_%28rugby_league%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "George Beadle (rugby league)"@en ;
-      <http://dbpedia.org/ontology/genus>
-              <http://dbpedia.org/resource/Russia> .

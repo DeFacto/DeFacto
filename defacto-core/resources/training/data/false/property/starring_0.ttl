@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Bring_It_On:_All_or_Nothing>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bring It On: All or Nothing"@en ;
-      <http://dbpedia.org/ontology/birthPlace>
-              <http://dbpedia.org/resource/Giovonnie_Samuels> .
-
-<http://dbpedia.org/resource/Giovonnie_Samuels>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Giovonnie Samuels"@en .

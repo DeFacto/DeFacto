@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Dallolmoia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Dallolmoia"@en ;
-      <http://dbpedia.org/ontology/timeZone>
-              <http://dbpedia.org/resource/Animal> .
-
-<http://dbpedia.org/resource/Animal>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Animal"@en .

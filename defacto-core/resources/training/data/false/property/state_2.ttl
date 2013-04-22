@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/North_Carolina_Central_University_School_of_Law>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "North Carolina Central University School of Law"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/North_Carolina> .
-
-<http://dbpedia.org/resource/North_Carolina>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "North Carolina"@en .

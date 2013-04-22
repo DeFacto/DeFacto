@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Francisco_Rovira_Beleta>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Francisco Rovira Beleta"@en .
-
-<http://dbpedia.org/resource/El_amor_brujo_%281967_film%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "El amor brujo (1967 film)"@en ;
-      <http://dbpedia.org/ontology/residence>
-              <http://dbpedia.org/resource/Francisco_Rovira_Beleta> .

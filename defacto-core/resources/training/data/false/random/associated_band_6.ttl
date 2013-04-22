@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/ChristmasLightsEtc.com>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "ChristmasLightsEtc.com"@en ;
-      <http://dbpedia.org/ontology/commander>
-              <http://dbpedia.org/resource/T%C3%A9l%C3%A9vision_de_Radio-Canada> .
-
-<http://dbpedia.org/resource/T%C3%A9l%C3%A9vision_de_Radio-Canada>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Télévision de Radio-Canada"@en .

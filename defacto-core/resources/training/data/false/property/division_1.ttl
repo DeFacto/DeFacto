@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Prosartes_hookeri>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Prosartes hookeri"@en ;
-      <http://dbpedia.org/ontology/industry>
-              <http://dbpedia.org/resource/Angiosperms> .
-
-<http://dbpedia.org/resource/Angiosperms>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Angiosperms"@en .

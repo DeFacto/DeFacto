@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Anura>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Anura"@en .
-
-<http://dbpedia.org/resource/Bufo_asper>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bufo asper"@en ;
-      <http://dbpedia.org/ontology/award>
-              <http://dbpedia.org/resource/Anura> .

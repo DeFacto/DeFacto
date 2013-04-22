@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Nova_Scotia>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Nova Scotia"@en .
-
-<http://dbpedia.org/resource/Ross_Farm_Museum>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Ross Farm Museum"@en ;
-      <http://dbpedia.org/ontology/product>
-              <http://dbpedia.org/resource/Nova_Scotia> .

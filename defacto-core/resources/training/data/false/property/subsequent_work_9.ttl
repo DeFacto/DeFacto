@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Time_%28David_Bowie_song%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Time (David Bowie song)"@en .
-
-<http://dbpedia.org/resource/Drive-In_Saturday>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Drive-In Saturday"@en ;
-      <http://dbpedia.org/ontology/battle>
-              <http://dbpedia.org/resource/Time_%28David_Bowie_song%29> .

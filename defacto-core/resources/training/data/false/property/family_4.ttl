@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Asteraceae>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Asteraceae"@en .
-
-<http://dbpedia.org/resource/Liatris_punctata>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Liatris punctata"@en ;
-      <http://dbpedia.org/ontology/recordLabel>
-              <http://dbpedia.org/resource/Asteraceae> .

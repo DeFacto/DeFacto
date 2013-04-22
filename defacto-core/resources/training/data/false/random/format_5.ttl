@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/George_Sutherland-Leveson-Gower,_5th_Duke_of_Sutherland>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "George Sutherland-Leveson-Gower, 5th Duke of Sutherland"@en ;
-      <http://dbpedia.org/ontology/writer>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

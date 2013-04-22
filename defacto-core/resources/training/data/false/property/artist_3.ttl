@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Redman_%28rapper%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Redman (rapper)"@en .
-
-<http://dbpedia.org/resource/Muddy_Waters_%28album%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Muddy Waters (album)"@en ;
-      <http://dbpedia.org/ontology/militaryBranch>
-              <http://dbpedia.org/resource/Redman_%28rapper%29> .

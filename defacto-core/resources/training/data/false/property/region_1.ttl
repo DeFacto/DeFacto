@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Pays_de_la_Loire>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Pays de la Loire"@en .
-
-<http://dbpedia.org/resource/Maisoncelles,_Sarthe>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Maisoncelles, Sarthe"@en ;
-      <http://dbpedia.org/ontology/writer>
-              <http://dbpedia.org/resource/Pays_de_la_Loire> .

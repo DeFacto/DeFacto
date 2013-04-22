@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Central_European_Summer_Time>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Central European Summer Time"@en .
-
-<http://dbpedia.org/resource/Hajd%C3%BAdorog>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hajdúdorog"@en ;
-      <http://dbpedia.org/ontology/deathPlace>
-              <http://dbpedia.org/resource/Central_European_Summer_Time> .

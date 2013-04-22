@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/First_Battle_of_Fort_Wagner>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "First Battle of Fort Wagner"@en ;
-      <http://dbpedia.org/ontology/occupation>
-              <http://dbpedia.org/resource/P.G.T._Beauregard> .
-
-<http://dbpedia.org/resource/P.G.T._Beauregard>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "P.G.T. Beauregard"@en .

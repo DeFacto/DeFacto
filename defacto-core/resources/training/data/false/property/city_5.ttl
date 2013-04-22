@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Cambridge,_Massachusetts>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Cambridge, Massachusetts"@en .
-
-<http://dbpedia.org/resource/Harvard_School_of_Engineering_and_Applied_Sciences>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Harvard School of Engineering and Applied Sciences"@en ;
-      <http://dbpedia.org/ontology/militaryBranch>
-              <http://dbpedia.org/resource/Cambridge,_Massachusetts> .

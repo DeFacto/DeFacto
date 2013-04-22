@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/United_States>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "United States"@en .
-
-<http://dbpedia.org/resource/Battle_of_Dunbar_%281650%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Battle of Dunbar (1650)"@en ;
-      <http://dbpedia.org/ontology/genre>
-              <http://dbpedia.org/resource/United_States> .

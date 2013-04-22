@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Livingston_County,_Illinois>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Livingston County, Illinois"@en .
-
-<http://dbpedia.org/resource/Saunemin,_Illinois>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Saunemin, Illinois"@en ;
-      <http://dbpedia.org/ontology/computingPlatform>
-              <http://dbpedia.org/resource/Livingston_County,_Illinois> .

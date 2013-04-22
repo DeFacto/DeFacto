@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Perfect_Timing_%28Boo_&_Gotti_album%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Perfect Timing (Boo & Gotti album)"@en ;
-      <http://dbpedia.org/ontology/musicalArtist>
-              <http://dbpedia.org/resource/Universal_Records> .
-
-<http://dbpedia.org/resource/Universal_Records>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Universal Records"@en .

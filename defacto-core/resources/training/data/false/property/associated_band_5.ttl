@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Bob_Wills>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Bob Wills"@en .
-
-<http://dbpedia.org/resource/Jeff_Chapman_%28singer%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Jeff Chapman (singer)"@en ;
-      <http://dbpedia.org/ontology/department>
-              <http://dbpedia.org/resource/Bob_Wills> .

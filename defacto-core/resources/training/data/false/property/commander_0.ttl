@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Abboud_Qanbar>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Abboud Qanbar"@en .
-
-<http://dbpedia.org/resource/Operation_Leyte_Gulf>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Operation Leyte Gulf"@en ;
-      <http://dbpedia.org/ontology/language>
-              <http://dbpedia.org/resource/Abboud_Qanbar> .

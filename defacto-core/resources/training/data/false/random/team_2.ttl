@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Burkina_Faso>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Burkina Faso"@en .
-
-<http://dbpedia.org/resource/Niger>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Niger"@en ;
-      <http://dbpedia.org/ontology/writer>
-              <http://dbpedia.org/resource/Burkina_Faso> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Xi%27an_Jiaotong_University>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Xi'an Jiaotong University"@en .
-
-<http://dbpedia.org/resource/Yuwen_Zhang>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Yuwen Zhang"@en ;
-      <http://dbpedia.org/ontology/format>
-              <http://dbpedia.org/resource/Xi%27an_Jiaotong_University> .

@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Verso_Books>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Verso Books"@en .
-
-<http://dbpedia.org/resource/The_Holocaust_Industry>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "The Holocaust Industry"@en ;
-      <http://dbpedia.org/ontology/producer>
-              <http://dbpedia.org/resource/Verso_Books> .

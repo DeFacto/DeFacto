@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/New_Hampshire>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "New Hampshire"@en .
-
-<http://dbpedia.org/resource/Wentworth,_New_Hampshire>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Wentworth, New Hampshire"@en ;
-      <http://dbpedia.org/ontology/recordLabel>
-              <http://dbpedia.org/resource/New_Hampshire> .

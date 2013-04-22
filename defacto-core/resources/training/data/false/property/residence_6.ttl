@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Patrick_Manson>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Patrick Manson"@en ;
-      <http://dbpedia.org/ontology/recordLabel>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

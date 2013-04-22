@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Thelma_Aoyama>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Thelma Aoyama"@en ;
-      <http://dbpedia.org/ontology/currentMember>
-              <http://dbpedia.org/resource/SoulJa> .
-
-<http://dbpedia.org/resource/SoulJa>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "SoulJa"@en .

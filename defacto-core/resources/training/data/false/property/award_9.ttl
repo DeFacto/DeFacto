@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Param_Vir_Chakra>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Param Vir Chakra"@en .
-
-<http://dbpedia.org/resource/Rama_Raghoba_Rane>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Rama Raghoba Rane"@en ;
-      <http://dbpedia.org/ontology/associatedMusicalArtist>
-              <http://dbpedia.org/resource/Param_Vir_Chakra> .

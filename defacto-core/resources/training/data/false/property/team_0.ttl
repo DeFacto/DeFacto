@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Birmingham_City_F.C.>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Birmingham City F.C."@en .
-
-<http://dbpedia.org/resource/Howard_Gayle>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Howard Gayle"@en ;
-      <http://dbpedia.org/ontology/associatedMusicalArtist>
-              <http://dbpedia.org/resource/Birmingham_City_F.C.> .

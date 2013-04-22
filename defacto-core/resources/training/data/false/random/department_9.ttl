@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Agri%C5%9F_River_%28%C5%9Eieu%29>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Agriş River (Şieu)"@en ;
-      <http://dbpedia.org/ontology/product>
-              <http://dbpedia.org/resource/London> .
-
-<http://dbpedia.org/resource/London>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "London"@en .

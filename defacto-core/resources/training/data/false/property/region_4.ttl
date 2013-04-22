@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Turkey_Creek,_Louisiana>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Turkey Creek, Louisiana"@en ;
-      <http://dbpedia.org/ontology/state>
-              <http://dbpedia.org/resource/Evangeline_Parish,_Louisiana> .
-
-<http://dbpedia.org/resource/Evangeline_Parish,_Louisiana>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Evangeline Parish, Louisiana"@en .

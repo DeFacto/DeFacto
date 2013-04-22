@@ -1,9 +1,0 @@
-<http://dbpedia.org/resource/Felton_Perry>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Felton Perry"@en .
-
-<http://dbpedia.org/resource/Hooperman>
-      <http://www.w3.org/2000/01/rdf-schema#label>
-              "Hooperman"@en ;
-      <http://dbpedia.org/ontology/class>
-              <http://dbpedia.org/resource/Felton_Perry> .
