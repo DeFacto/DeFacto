@@ -47,7 +47,7 @@ public class SubjectObjectFactSearcher implements FactSearcher {
     private SubjectObjectFactSearcher() {
 
         logger.info("Starting to load surface forms!");
-//        initializeSurfaceForms();
+        initializeSurfaceForms();
         logger.info("Finished to load surface forms!");
     }
     
