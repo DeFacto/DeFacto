@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Moore_Automobile_Company>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Moore Automobile Company"@en ;
+      <http://dbpedia.org/ontology/managerClub>
+              <http://dbpedia.org/resource/Automotive_parts> .
+
+<http://dbpedia.org/resource/Automotive_parts>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Automotive parts"@en .

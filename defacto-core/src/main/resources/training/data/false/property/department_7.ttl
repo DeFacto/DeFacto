@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Meuse_%28d%C3%A9partement%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Meuse (département)"@en .
+
+<http://dbpedia.org/resource/K%C5%93ur-la-Grande>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kœur-la-Grande"@en ;
+      <http://dbpedia.org/ontology/instrument>
+              <http://dbpedia.org/resource/Meuse_%28d%C3%A9partement%29> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Cher_%28department%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Cher (department)"@en .
+
+<http://dbpedia.org/resource/Trouy>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Trouy"@en ;
+      <http://dbpedia.org/ontology/producer>
+              <http://dbpedia.org/resource/Cher_%28department%29> .

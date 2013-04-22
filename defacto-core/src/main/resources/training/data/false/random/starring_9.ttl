@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Interpol_%28band%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Interpol (band)"@en ;
+      <http://dbpedia.org/ontology/format>
+              <http://dbpedia.org/resource/Jakarta> .
+
+<http://dbpedia.org/resource/Jakarta>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Jakarta"@en .

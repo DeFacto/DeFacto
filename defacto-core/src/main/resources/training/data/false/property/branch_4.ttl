@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_States_Marine_Corps>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States Marine Corps"@en .
+
+<http://dbpedia.org/resource/Michael_K._Sheridan>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Michael K. Sheridan"@en ;
+      <http://dbpedia.org/ontology/previousWork>
+              <http://dbpedia.org/resource/United_States_Marine_Corps> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .
+
+<http://dbpedia.org/resource/Langford,_British_Columbia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Langford, British Columbia"@en ;
+      <http://dbpedia.org/ontology/party>
+              <http://dbpedia.org/resource/Austria> .

@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Lakshman_Marasinghe>
+      rdfs:label "Lakshman Marasinghe"@en .
+
+<http://dbpedia.org/resource/Women_of_Ireland_%28Mike_Oldfield_instrumental%29>
+      rdfs:label "Women of Ireland (Mike Oldfield instrumental)"@en ;
+      dbpedia-owl:writer <http://dbpedia.org/resource/Lakshman_Marasinghe> .

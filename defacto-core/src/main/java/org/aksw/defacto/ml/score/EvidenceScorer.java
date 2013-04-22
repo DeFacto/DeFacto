@@ -10,9 +10,13 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.AbstractFeature;
+import org.aksw.defacto.ml.feature.fact.FactScorer;
 import org.apache.log4j.Logger;
+import org.ini4j.Ini;
+import org.ini4j.InvalidFileFormatException;
 
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayes;
@@ -32,9 +36,9 @@ public class EvidenceScorer {
 
     private Logger logger = Logger.getLogger(EvidenceScorer.class);
     
-    private String pathToClassifier     = "resources/classifier/evidence/" + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE") + ".model";
-    private String pathToEvaluation     = "resources/classifier/evidence/" + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE") + ".eval.model";
-    private String pathToTrainingData   = Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME");
+    private String pathToClassifier     = new File(FactScorer.class.getResource("/classifier/evidence/" + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE") + ".model").getFile()).getAbsolutePath();
+//    private String pathToEvaluation     = "resources/classifier/evidence/" + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE") + ".eval.model";
+//    private String pathToTrainingData   = Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME");
     
     private Classifier classifier;
     
@@ -49,75 +53,77 @@ public class EvidenceScorer {
             this.classifier = this.loadClassifier();
         }
         else {
-            
-            logger.info("Train classifier: " + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE"));
-            this.classifier = this.trainClassifier();
+        	
+        	throw new RuntimeException("No classifier at: " + pathToClassifier);
+//            
+//            logger.info("Train classifier: " + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE"));
+//            this.classifier = this.trainClassifier();
         }
     }
     
-    /**
-     * 
-     * @return
-     */
-    private Classifier trainClassifier() {
-
-        String errorMessage = "Could not train classifier: " + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE") + " from: " + pathToClassifier + " with the training file: " + this.pathToTrainingData;
-        
-        try {
-
-            Classifier classifier;
-            if ( Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE").equals("LINEAR_REGRESSION_CLASSIFIER") ) 
-                classifier = new LinearRegression();
-            else if ( Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE").equals("MULTILAYER_PERCEPTRON") )
-                classifier = new MultilayerPerceptron();
-            else if ( Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE").equals("SMO") ) {
-                
-                classifier = new SMO();
-                ((SMO) classifier).setBuildLogisticModels(true);
-            }
-            else
-                classifier = new NaiveBayes(); // fallback
-
-            // train
-            Instances inst = new Instances(new BufferedReader(new FileReader(pathToTrainingData)));
-            Remove remove = new Remove();                         // new instance of filter to remove model name  (SMO cant handle strings)
-            remove.setOptions(new String[] {"-R","1"});           // set options, remove first attribute
-            remove.setInputFormat(inst);                          // inform filter about dataset **AFTER** setting options
-            Instances filteredInst = Filter.useFilter(inst, remove);                // appply filter
-            filteredInst.setClassIndex(filteredInst.numAttributes() - 1);         // class index is the last on in the list
-            classifier.buildClassifier(filteredInst);
-
-            // eval
-//            Evaluation evaluation = new Evaluation(inst);
-//            evaluation.crossValidateModel(classifier, inst, 2, new Random(1));
-            
-            // write eval
-            FileOutputStream fos = new FileOutputStream(pathToEvaluation);
-//            fos.write(evaluation.toSummaryString().getBytes());
-            fos.flush();
-            fos.close();
-            
-            // serialize model
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(pathToClassifier));
-            oos.writeObject(classifier);
-            oos.flush();
-            oos.close();
-            
-            return classifier;
-        }
-        catch (FileNotFoundException e) {
-            
-            throw new RuntimeException(errorMessage, e);
-        }
-        catch (IOException e) {
-            
-            throw new RuntimeException(errorMessage, e);
-        }
-        catch (Exception e) {
-            
-            throw new RuntimeException(errorMessage, e);
-        }
-    }
+//    /**
+//     * 
+//     * @return
+//     */
+//    private Classifier trainClassifier() {
+//
+//        String errorMessage = "Could not train classifier: " + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE") + " from: " + pathToClassifier + " with the training file: " + this.pathToTrainingData;
+//        
+//        try {
+//
+//            Classifier classifier;
+//            if ( Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE").equals("LINEAR_REGRESSION_CLASSIFIER") ) 
+//                classifier = new LinearRegression();
+//            else if ( Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE").equals("MULTILAYER_PERCEPTRON") )
+//                classifier = new MultilayerPerceptron();
+//            else if ( Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE").equals("SMO") ) {
+//                
+//                classifier = new SMO();
+//                ((SMO) classifier).setBuildLogisticModels(true);
+//            }
+//            else
+//                classifier = new NaiveBayes(); // fallback
+//
+//            // train
+//            Instances inst = new Instances(new BufferedReader(new FileReader(pathToTrainingData)));
+//            Remove remove = new Remove();                         // new instance of filter to remove model name  (SMO cant handle strings)
+//            remove.setOptions(new String[] {"-R","1"});           // set options, remove first attribute
+//            remove.setInputFormat(inst);                          // inform filter about dataset **AFTER** setting options
+//            Instances filteredInst = Filter.useFilter(inst, remove);                // appply filter
+//            filteredInst.setClassIndex(filteredInst.numAttributes() - 1);         // class index is the last on in the list
+//            classifier.buildClassifier(filteredInst);
+//
+//            // eval
+////            Evaluation evaluation = new Evaluation(inst);
+////            evaluation.crossValidateModel(classifier, inst, 2, new Random(1));
+//            
+//            // write eval
+//            FileOutputStream fos = new FileOutputStream(pathToEvaluation);
+////            fos.write(evaluation.toSummaryString().getBytes());
+//            fos.flush();
+//            fos.close();
+//            
+//            // serialize model
+//            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(pathToClassifier));
+//            oos.writeObject(classifier);
+//            oos.flush();
+//            oos.close();
+//            
+//            return classifier;
+//        }
+//        catch (FileNotFoundException e) {
+//            
+//            throw new RuntimeException(errorMessage, e);
+//        }
+//        catch (IOException e) {
+//            
+//            throw new RuntimeException(errorMessage, e);
+//        }
+//        catch (Exception e) {
+//            
+//            throw new RuntimeException(errorMessage, e);
+//        }
+//    }
 
     /**
      * 

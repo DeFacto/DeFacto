@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Stanford_University>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Stanford University"@en .
+
+<http://dbpedia.org/resource/Tantek_%C3%87elik>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Tantek Çelik"@en ;
+      <http://dbpedia.org/ontology/associatedBand>
+              <http://dbpedia.org/resource/Stanford_University> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/17_RE>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "17 RE"@en ;
+      <http://dbpedia.org/ontology/owner>
+              <http://dbpedia.org/resource/Rock_music> .
+
+<http://dbpedia.org/resource/Rock_music>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Rock music"@en .

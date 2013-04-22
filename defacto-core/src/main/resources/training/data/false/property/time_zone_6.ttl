@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/River_Oaks,_Texas>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "River Oaks, Texas"@en ;
+      <http://dbpedia.org/ontology/associatedBand>
+              <http://dbpedia.org/resource/Central_Time_Zone_%28North_America%29> .
+
+<http://dbpedia.org/resource/Central_Time_Zone_%28North_America%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Central Time Zone (North America)"@en .

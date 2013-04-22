@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Soviet_war_in_Afghanistan>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Soviet war in Afghanistan"@en .
+
+<http://dbpedia.org/resource/Colonel_Imam>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Colonel Imam"@en ;
+      <http://dbpedia.org/ontology/party>
+              <http://dbpedia.org/resource/Soviet_war_in_Afghanistan> .

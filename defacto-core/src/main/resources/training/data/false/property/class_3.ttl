@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Macroglossum_gyrans>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Macroglossum gyrans"@en ;
+      <http://dbpedia.org/ontology/timeZone>
+              <http://dbpedia.org/resource/Insect> .
+
+<http://dbpedia.org/resource/Insect>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Insect"@en .

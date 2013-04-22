@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Food_and_Health_Bureau>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Food and Health Bureau"@en ;
+      <http://dbpedia.org/ontology/industry>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

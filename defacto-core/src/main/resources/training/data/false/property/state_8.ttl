@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Pend_Oreille_River>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Pend Oreille River"@en ;
+      <http://dbpedia.org/ontology/managerClub>
+              <http://dbpedia.org/resource/Idaho> .
+
+<http://dbpedia.org/resource/Idaho>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Idaho"@en .

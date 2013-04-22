@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Cambridgeshire>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Cambridgeshire"@en .
+
+<http://dbpedia.org/resource/Oklahoma_City>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Oklahoma City"@en ;
+      <http://dbpedia.org/ontology/previousWork>
+              <http://dbpedia.org/resource/Cambridgeshire> .

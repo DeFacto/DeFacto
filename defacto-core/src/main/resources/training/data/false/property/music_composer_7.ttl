@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Jesus_%281999_film%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Jesus (1999 film)"@en ;
+      <http://dbpedia.org/ontology/writer>
+              <http://dbpedia.org/resource/Patrick_Williams_%28composer%29> .
+
+<http://dbpedia.org/resource/Patrick_Williams_%28composer%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Patrick Williams (composer)"@en .

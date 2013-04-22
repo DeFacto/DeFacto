@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/23rd_Independent_Battery_New_York_Light_Artillery>
+      rdfs:label "23rd Independent Battery New York Light Artillery"@en .
+
+<http://dbpedia.org/resource/Michael_K._Sheridan>
+      rdfs:label "Michael K. Sheridan"@en ;
+      dbpedia-owl:militaryBranch
+              <http://dbpedia.org/resource/23rd_Independent_Battery_New_York_Light_Artillery> .

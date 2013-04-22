@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Interstate_195_%28Virginia%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Interstate 195 (Virginia)"@en ;
+      <http://dbpedia.org/ontology/musicalArtist>
+              <http://dbpedia.org/resource/2005_Real_Salt_Lake_season> .
+
+<http://dbpedia.org/resource/2005_Real_Salt_Lake_season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "2005 Real Salt Lake season"@en .

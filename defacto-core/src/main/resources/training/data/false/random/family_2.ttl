@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Uganda>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Uganda"@en .
+
+<http://dbpedia.org/resource/Goldsmiths,_University_of_London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Goldsmiths, University of London"@en ;
+      <http://dbpedia.org/ontology/subsequentWork>
+              <http://dbpedia.org/resource/Uganda> .

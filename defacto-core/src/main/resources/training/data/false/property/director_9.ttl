@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Robert_M._Young_%28film_director%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Robert M. Young (film director)"@en .
+
+<http://dbpedia.org/resource/Rich_Kids_%28film%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Rich Kids (film)"@en ;
+      <http://dbpedia.org/ontology/battle>
+              <http://dbpedia.org/resource/Robert_M._Young_%28film_director%29> .

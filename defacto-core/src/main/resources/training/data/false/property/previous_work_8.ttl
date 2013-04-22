@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Untitled_%28The_Smashing_Pumpkins_song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Untitled (The Smashing Pumpkins song)"@en ;
+      <http://dbpedia.org/ontology/associatedBand>
+              <http://dbpedia.org/resource/Try,_Try,_Try> .
+
+<http://dbpedia.org/resource/Try,_Try,_Try>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Try, Try, Try"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_States>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States"@en .
+
+<http://dbpedia.org/resource/Boeing_747>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Boeing 747"@en ;
+      <http://dbpedia.org/ontology/starring>
+              <http://dbpedia.org/resource/United_States> .

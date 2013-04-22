@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Montgomery,_Alabama>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Montgomery, Alabama"@en .
+
+<http://dbpedia.org/resource/Trinity_Presbyterian_School>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Trinity Presbyterian School"@en ;
+      <http://dbpedia.org/ontology/currentMember>
+              <http://dbpedia.org/resource/Montgomery,_Alabama> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/A._J._Edds>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "A. J. Edds"@en ;
+      <http://dbpedia.org/ontology/publisher>
+              <http://dbpedia.org/resource/New_England_Patriots> .
+
+<http://dbpedia.org/resource/New_England_Patriots>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "New England Patriots"@en .

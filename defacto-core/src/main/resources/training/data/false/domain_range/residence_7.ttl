@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Seymour,_Eau_Claire_County,_Wisconsin>
+      rdfs:label "Seymour, Eau Claire County, Wisconsin"@en .
+
+<http://dbpedia.org/resource/Scott_Christie_%28footballer%29>
+      rdfs:label "Scott Christie (footballer)"@en ;
+      dbpedia-owl:residence
+              <http://dbpedia.org/resource/Seymour,_Eau_Claire_County,_Wisconsin> .

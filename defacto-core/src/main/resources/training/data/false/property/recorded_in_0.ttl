@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/The_Fray_%28album%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Fray (album)"@en ;
+      <http://dbpedia.org/ontology/managerClub>
+              <http://dbpedia.org/resource/Denver,_Colorado> .
+
+<http://dbpedia.org/resource/Denver,_Colorado>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Denver, Colorado"@en .

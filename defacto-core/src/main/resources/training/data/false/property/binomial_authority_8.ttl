@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Aspidogyne_mendoncae>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Aspidogyne mendoncae"@en ;
+      <http://dbpedia.org/ontology/almaMater>
+              <http://dbpedia.org/resource/Alexander_Curt_Brade> .
+
+<http://dbpedia.org/resource/Alexander_Curt_Brade>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Alexander Curt Brade"@en .

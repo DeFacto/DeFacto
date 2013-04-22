@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Expeditie_Robinson_2009>
+      rdfs:label "Expeditie Robinson 2009"@en .
+
+<http://dbpedia.org/resource/SuperJunior05_%28Twins%29>
+      rdfs:label "SuperJunior05 (Twins)"@en ;
+      dbpedia-owl:subsequentWork
+              <http://dbpedia.org/resource/Expeditie_Robinson_2009> .

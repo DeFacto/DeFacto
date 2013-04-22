@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/France>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "France"@en .
+
+<http://dbpedia.org/resource/Jacques_Burtin>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Jacques Burtin"@en ;
+      <http://dbpedia.org/ontology/genre>
+              <http://dbpedia.org/resource/France> .

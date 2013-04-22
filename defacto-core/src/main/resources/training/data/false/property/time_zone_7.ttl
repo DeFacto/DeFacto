@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Center_Moriches,_New_York>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Center Moriches, New York"@en ;
+      <http://dbpedia.org/ontology/commander>
+              <http://dbpedia.org/resource/North_American_Eastern_Time_Zone> .
+
+<http://dbpedia.org/resource/North_American_Eastern_Time_Zone>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "North American Eastern Time Zone"@en .

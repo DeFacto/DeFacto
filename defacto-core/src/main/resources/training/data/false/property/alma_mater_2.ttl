@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/University_of_Pennsylvania>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "University of Pennsylvania"@en .
+
+<http://dbpedia.org/resource/Russell_L._Ackoff>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russell L. Ackoff"@en ;
+      <http://dbpedia.org/ontology/team>
+              <http://dbpedia.org/resource/University_of_Pennsylvania> .

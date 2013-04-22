@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Alliance_Girls_High_School>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Alliance Girls High School"@en ;
+      <http://dbpedia.org/ontology/almaMater>
+              <http://dbpedia.org/resource/Kenya> .
+
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .

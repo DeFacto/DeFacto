@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/The_Hampdenshire_Wonder>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Hampdenshire Wonder"@en ;
+      <http://dbpedia.org/ontology/subsequentWork>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

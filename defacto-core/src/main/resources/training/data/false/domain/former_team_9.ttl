@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Kimmo_Koskenkorva>
+      rdfs:label "Kimmo Koskenkorva"@en ;
+      dbpedia-owl:formerTeam
+              <http://dbpedia.org/resource/Pittsburgh_Pirates> .
+
+<http://dbpedia.org/resource/Pittsburgh_Pirates>
+      rdfs:label "Pittsburgh Pirates"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_Kingdom_general_election,_2001>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United Kingdom general election, 2001"@en ;
+      <http://dbpedia.org/ontology/director>
+              <http://dbpedia.org/resource/Austria> .
+
+<http://dbpedia.org/resource/Austria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Austria"@en .

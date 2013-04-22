@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Sporting_Clube_de_Portugal_Youth_Sector>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Sporting Clube de Portugal Youth Sector"@en .
+
+<http://dbpedia.org/resource/Generator_Rex:_Agent_of_Providence>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Generator Rex: Agent of Providence"@en ;
+      <http://dbpedia.org/ontology/distributor>
+              <http://dbpedia.org/resource/Sporting_Clube_de_Portugal_Youth_Sector> .

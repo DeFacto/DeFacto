@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Lansing_Charter_Township,_Michigan>
+      rdfs:label "Lansing Charter Township, Michigan"@en ;
+      dbpedia-owl:producer
+              <http://dbpedia.org/resource/Gregory_Peck> .
+
+<http://dbpedia.org/resource/Gregory_Peck>
+      rdfs:label "Gregory Peck"@en .

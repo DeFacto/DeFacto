@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Pink_Floyd>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Pink Floyd"@en .
+
+<http://dbpedia.org/resource/Yet_Another_Movie>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Yet Another Movie"@en ;
+      <http://dbpedia.org/ontology/district>
+              <http://dbpedia.org/resource/Pink_Floyd> .

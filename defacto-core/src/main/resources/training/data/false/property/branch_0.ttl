@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/VMGR-252>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "VMGR-252"@en ;
+      <http://dbpedia.org/ontology/managerClub>
+              <http://dbpedia.org/resource/United_States_Marine_Corps> .
+
+<http://dbpedia.org/resource/United_States_Marine_Corps>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States Marine Corps"@en .

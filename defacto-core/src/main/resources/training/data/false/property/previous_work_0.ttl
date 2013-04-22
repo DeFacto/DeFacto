@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/The_Only_Exception>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Only Exception"@en .
+
+<http://dbpedia.org/resource/Careful_%28Paramore_song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Careful (Paramore song)"@en ;
+      <http://dbpedia.org/ontology/location>
+              <http://dbpedia.org/resource/The_Only_Exception> .

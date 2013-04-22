@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Ehretia_acuminata>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ehretia acuminata"@en ;
+      <http://dbpedia.org/ontology/almaMater>
+              <http://dbpedia.org/resource/Robert_Brown_%28botanist%29> .
+
+<http://dbpedia.org/resource/Robert_Brown_%28botanist%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Robert Brown (botanist)"@en .

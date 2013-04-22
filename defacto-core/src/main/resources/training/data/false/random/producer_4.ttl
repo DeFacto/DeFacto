@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Impact_Wrestling>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Impact Wrestling"@en ;
+      <http://dbpedia.org/ontology/nationality>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

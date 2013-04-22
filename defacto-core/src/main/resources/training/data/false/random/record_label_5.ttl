@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Chile>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chile"@en .
+
+<http://dbpedia.org/resource/Michael_Hayden_%28general%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Michael Hayden (general)"@en ;
+      <http://dbpedia.org/ontology/team>
+              <http://dbpedia.org/resource/Chile> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Saldanha_Bay_Local_Municipality>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Saldanha Bay Local Municipality"@en ;
+      <http://dbpedia.org/ontology/timeZone>
+              <http://dbpedia.org/resource/Essex> .
+
+<http://dbpedia.org/resource/Essex>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Essex"@en .

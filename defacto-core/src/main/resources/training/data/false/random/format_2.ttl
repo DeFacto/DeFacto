@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Chile>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chile"@en .
+
+<http://dbpedia.org/resource/Margate_F.C.>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Margate F.C."@en ;
+      <http://dbpedia.org/ontology/distributor>
+              <http://dbpedia.org/resource/Chile> .

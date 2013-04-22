@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Tomotaka_Okamoto_%28footballer%29>
+      rdfs:label "Tomotaka Okamoto (footballer)"@en ;
+      dbpedia-owl:managerClub
+              <http://dbpedia.org/resource/Khaleej_Sirte_S.C.> .
+
+<http://dbpedia.org/resource/Khaleej_Sirte_S.C.>
+      rdfs:label "Khaleej Sirte S.C."@en .

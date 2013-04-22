@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Richard_Wilson_%28Scottish_actor%29>
+      rdfs:label "Richard Wilson (Scottish actor)"@en .
+
+<http://dbpedia.org/resource/Georges_Gilles_de_la_Tourette>
+      rdfs:label "Georges Gilles de la Tourette"@en ;
+      dbpedia-owl:genre <http://dbpedia.org/resource/Richard_Wilson_%28Scottish_actor%29> .

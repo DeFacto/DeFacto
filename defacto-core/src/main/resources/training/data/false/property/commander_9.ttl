@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Operation_Corridor>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Operation Corridor"@en ;
+      <http://dbpedia.org/ontology/state>
+              <http://dbpedia.org/resource/Momir_Tali%C4%87> .
+
+<http://dbpedia.org/resource/Momir_Tali%C4%87>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Momir Talić"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Prairie_City,_Iowa>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Prairie City, Iowa"@en ;
+      <http://dbpedia.org/ontology/instrument>
+              <http://dbpedia.org/resource/Iowa> .
+
+<http://dbpedia.org/resource/Iowa>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Iowa"@en .

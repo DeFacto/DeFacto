@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Instituto_Superior_Aut%C3%B3nomo_de_Estudos_Polit%C3%A9cnicos>
+      rdfs:label "Instituto Superior Autónomo de Estudos Politécnicos"@en .
+
+<http://dbpedia.org/resource/Ovidiu_Creang%C4%83>
+      rdfs:label "Ovidiu Creangă"@en ;
+      dbpedia-owl:almaMater
+              <http://dbpedia.org/resource/Instituto_Superior_Aut%C3%B3nomo_de_Estudos_Polit%C3%A9cnicos> .

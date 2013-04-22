@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Mayumi_Azuma>
+      rdfs:label "Mayumi Azuma"@en ;
+      dbpedia-owl:award <http://dbpedia.org/resource/Academy_Award_for_Best_Visual_Effects> .
+
+<http://dbpedia.org/resource/Academy_Award_for_Best_Visual_Effects>
+      rdfs:label "Academy Award for Best Visual Effects"@en .

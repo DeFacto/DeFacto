@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Heart_Don%27t_Lie>
+      rdfs:label "Heart Don't Lie"@en ;
+      dbpedia-owl:recordLabel
+              <http://dbpedia.org/resource/Polymorph_Records> .
+
+<http://dbpedia.org/resource/Polymorph_Records>
+      rdfs:label "Polymorph Records"@en .

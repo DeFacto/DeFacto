@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Viva%21_La_Woman>
+      rdfs:label "Viva! La Woman"@en ;
+      dbpedia-owl:recordedIn
+              <http://dbpedia.org/resource/Township_6,_Harper_County,_Kansas> .
+
+<http://dbpedia.org/resource/Township_6,_Harper_County,_Kansas>
+      rdfs:label "Township 6, Harper County, Kansas"@en .

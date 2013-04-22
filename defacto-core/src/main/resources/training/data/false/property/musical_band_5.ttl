@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Don%27t_Go_Down_That_Street>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Don't Go Down That Street"@en ;
+      <http://dbpedia.org/ontology/previousWork>
+              <http://dbpedia.org/resource/Culture_Club> .
+
+<http://dbpedia.org/resource/Culture_Club>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Culture Club"@en .

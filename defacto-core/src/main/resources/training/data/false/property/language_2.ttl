@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Our_Feature_Presentation>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Our Feature Presentation"@en ;
+      <http://dbpedia.org/ontology/binomialAuthority>
+              <http://dbpedia.org/resource/English_language> .
+
+<http://dbpedia.org/resource/English_language>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "English language"@en .

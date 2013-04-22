@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Johannesburg>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Johannesburg"@en .
+
+<http://dbpedia.org/resource/R25_road_%28South_Africa%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "R25 road (South Africa)"@en ;
+      <http://dbpedia.org/ontology/successor>
+              <http://dbpedia.org/resource/Johannesburg> .

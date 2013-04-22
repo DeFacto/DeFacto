@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Wormley,_Surrey>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Wormley, Surrey"@en ;
+      <http://dbpedia.org/ontology/kingdom>
+              <http://dbpedia.org/resource/Waverley,_Surrey> .
+
+<http://dbpedia.org/resource/Waverley,_Surrey>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Waverley, Surrey"@en .

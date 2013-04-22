@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Alphabeat>
+      rdfs:label "Alphabeat"@en .
+
+<http://dbpedia.org/resource/You_Shook_Me_All_Night_Long>
+      rdfs:label "You Shook Me All Night Long"@en ;
+      dbpedia-owl:musicalArtist
+              <http://dbpedia.org/resource/Alphabeat> .

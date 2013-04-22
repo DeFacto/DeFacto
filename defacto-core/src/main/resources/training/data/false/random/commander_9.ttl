@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Eden_District_Municipality>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Eden District Municipality"@en ;
+      <http://dbpedia.org/ontology/party>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

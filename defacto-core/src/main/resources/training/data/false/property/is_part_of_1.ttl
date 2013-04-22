@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Ardabil_Province>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ardabil Province"@en .
+
+<http://dbpedia.org/resource/Jalaliyeh>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Jalaliyeh"@en ;
+      <http://dbpedia.org/ontology/militaryBranch>
+              <http://dbpedia.org/resource/Ardabil_Province> .

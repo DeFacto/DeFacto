@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Gregory_Cochran>
+      rdfs:label "Gregory Cochran"@en .
+
+<http://dbpedia.org/resource/Marion_Street_Bridge>
+      rdfs:label "Marion Street Bridge"@en ;
+      dbpedia-owl:commander
+              <http://dbpedia.org/resource/Gregory_Cochran> .

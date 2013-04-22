@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Cobosesta>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Cobosesta"@en ;
+      <http://dbpedia.org/ontology/birthPlace>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

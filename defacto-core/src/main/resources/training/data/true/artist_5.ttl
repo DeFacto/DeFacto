@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Redman_%28rapper%29>
+      rdfs:label "Redman (rapper)"@en .
+
+<http://dbpedia.org/resource/Muddy_Waters_%28album%29>
+      rdfs:label "Muddy Waters (album)"@en ;
+      dbpedia-owl:artist <http://dbpedia.org/resource/Redman_%28rapper%29> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Javier_Navarrete>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Javier Navarrete"@en .
+
+<http://dbpedia.org/resource/Wrath_of_the_Titans>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Wrath of the Titans"@en ;
+      <http://dbpedia.org/ontology/previousWork>
+              <http://dbpedia.org/resource/Javier_Navarrete> .

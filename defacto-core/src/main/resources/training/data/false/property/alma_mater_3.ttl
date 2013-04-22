@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Stanford_University>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Stanford University"@en .
+
+<http://dbpedia.org/resource/Nick_Herbert_%28physicist%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Nick Herbert (physicist)"@en ;
+      <http://dbpedia.org/ontology/commander>
+              <http://dbpedia.org/resource/Stanford_University> .

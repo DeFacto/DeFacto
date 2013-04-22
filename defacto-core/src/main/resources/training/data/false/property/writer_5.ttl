@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Test_the_Store>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Test the Store"@en ;
+      <http://dbpedia.org/ontology/artist>
+              <http://dbpedia.org/resource/Mindy_Kaling> .
+
+<http://dbpedia.org/resource/Mindy_Kaling>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Mindy Kaling"@en .

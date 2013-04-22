@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Russia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russia"@en .
+
+<http://dbpedia.org/resource/Wood_Newton>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Wood Newton"@en ;
+      <http://dbpedia.org/ontology/musicalArtist>
+              <http://dbpedia.org/resource/Russia> .

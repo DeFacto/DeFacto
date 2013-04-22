@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Charles_I_of_England>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Charles I of England"@en ;
+      <http://dbpedia.org/ontology/phylum>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Chile>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Chile"@en .
+
+<http://dbpedia.org/resource/Marrakech>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Marrakech"@en ;
+      <http://dbpedia.org/ontology/product>
+              <http://dbpedia.org/resource/Chile> .

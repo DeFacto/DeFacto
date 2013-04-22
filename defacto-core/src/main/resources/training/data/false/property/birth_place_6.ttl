@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_States>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States"@en .
+
+<http://dbpedia.org/resource/Ray_Luzier>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ray Luzier"@en ;
+      <http://dbpedia.org/ontology/region>
+              <http://dbpedia.org/resource/United_States> .

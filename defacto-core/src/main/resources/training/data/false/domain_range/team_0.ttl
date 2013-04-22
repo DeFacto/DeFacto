@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/SpVgg_ASCO_K%C3%B6nigsberg>
+      rdfs:label "SpVgg ASCO Königsberg"@en .
+
+<http://dbpedia.org/resource/Anton%C3%ADn_Z%C3%A1potock%C3%BD>
+      rdfs:label "Antonín Zápotocký"@en ;
+      dbpedia-owl:team <http://dbpedia.org/resource/SpVgg_ASCO_K%C3%B6nigsberg> .

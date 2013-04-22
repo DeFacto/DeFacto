@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Hvelreki>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Hvelreki"@en ;
+      <http://dbpedia.org/ontology/owner>
+              <http://dbpedia.org/resource/Martin_Glover> .
+
+<http://dbpedia.org/resource/Martin_Glover>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Martin Glover"@en .

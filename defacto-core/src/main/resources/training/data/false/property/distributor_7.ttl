@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Paramount_Pictures>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Paramount Pictures"@en .
+
+<http://dbpedia.org/resource/Evil_Dead_II>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Evil Dead II"@en ;
+      <http://dbpedia.org/ontology/successor>
+              <http://dbpedia.org/resource/Paramount_Pictures> .

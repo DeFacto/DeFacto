@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Strapping_Young_Lad>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Strapping Young Lad"@en .
+
+<http://dbpedia.org/resource/Zimmers_Hole>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Zimmers Hole"@en ;
+      <http://dbpedia.org/ontology/format>
+              <http://dbpedia.org/resource/Strapping_Young_Lad> .

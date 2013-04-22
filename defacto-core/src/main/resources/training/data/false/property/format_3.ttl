@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Music_download>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Music download"@en .
+
+<http://dbpedia.org/resource/Cheetah_Sisters>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Cheetah Sisters"@en ;
+      <http://dbpedia.org/ontology/owner>
+              <http://dbpedia.org/resource/Music_download> .

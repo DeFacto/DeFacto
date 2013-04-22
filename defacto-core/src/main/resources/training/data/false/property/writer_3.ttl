@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Out_of_the_Blue_%28Delta_Goodrem_song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Out of the Blue (Delta Goodrem song)"@en ;
+      <http://dbpedia.org/ontology/genus>
+              <http://dbpedia.org/resource/Delta_Goodrem> .
+
+<http://dbpedia.org/resource/Delta_Goodrem>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Delta Goodrem"@en .

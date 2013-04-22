@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Angiosperms>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Angiosperms"@en .
+
+<http://dbpedia.org/resource/Scaevola_ramosissima>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Scaevola ramosissima"@en ;
+      <http://dbpedia.org/ontology/genus>
+              <http://dbpedia.org/resource/Angiosperms> .

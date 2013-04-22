@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Friedrich_Nietzsche>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Friedrich Nietzsche"@en ;
+      <http://dbpedia.org/ontology/instrument>
+              <http://dbpedia.org/resource/Deportes_Magallanes> .
+
+<http://dbpedia.org/resource/Deportes_Magallanes>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Deportes Magallanes"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Donovan_Ricketts>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Donovan Ricketts"@en .
+
+<http://dbpedia.org/resource/2011_Los_Angeles_Galaxy_season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "2011 Los Angeles Galaxy season"@en ;
+      <http://dbpedia.org/ontology/format>
+              <http://dbpedia.org/resource/Donovan_Ricketts> .

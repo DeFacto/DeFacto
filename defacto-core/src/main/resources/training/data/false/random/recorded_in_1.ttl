@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Burkina_Faso>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Burkina Faso"@en .
+
+<http://dbpedia.org/resource/William_F._Raynolds>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "William F. Raynolds"@en ;
+      <http://dbpedia.org/ontology/industry>
+              <http://dbpedia.org/resource/Burkina_Faso> .

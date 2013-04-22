@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Green_Party_of_England_and_Wales>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Green Party of England and Wales"@en .
+
+<http://dbpedia.org/resource/James_Harrison_%28author_and_academic%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "James Harrison (author and academic)"@en ;
+      <http://dbpedia.org/ontology/publisher>
+              <http://dbpedia.org/resource/Green_Party_of_England_and_Wales> .

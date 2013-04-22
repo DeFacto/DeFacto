@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Seattle_Mariners>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Seattle Mariners"@en .
+
+<http://dbpedia.org/resource/Manny_Mart%C3%ADnez_%28baseball%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Manny Martínez (baseball)"@en ;
+      <http://dbpedia.org/ontology/party>
+              <http://dbpedia.org/resource/Seattle_Mariners> .

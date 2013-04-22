@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Calgary>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Calgary"@en .
+
+<http://dbpedia.org/resource/Leo_Burke>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Leo Burke"@en ;
+      <http://dbpedia.org/ontology/musicalArtist>
+              <http://dbpedia.org/resource/Calgary> .

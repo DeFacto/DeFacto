@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/The_Unbelievable>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Unbelievable"@en ;
+      <http://dbpedia.org/ontology/family>
+              <http://dbpedia.org/resource/Yue_Chinese> .
+
+<http://dbpedia.org/resource/Yue_Chinese>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Yue Chinese"@en .

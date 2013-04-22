@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/2011_magicJack_season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "2011 magicJack season"@en .
+
+<http://dbpedia.org/resource/Gary_Freeman_%28rugby_league%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Gary Freeman (rugby league)"@en ;
+      <http://dbpedia.org/ontology/residence>
+              <http://dbpedia.org/resource/2011_magicJack_season> .

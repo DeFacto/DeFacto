@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kingdom_of_Great_Britain>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kingdom of Great Britain"@en ;
+      <http://dbpedia.org/ontology/musicalArtist>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

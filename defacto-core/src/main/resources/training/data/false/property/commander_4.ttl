@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Egyptian_Revolution_of_1952>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Egyptian Revolution of 1952"@en ;
+      <http://dbpedia.org/ontology/state>
+              <http://dbpedia.org/resource/Muhammad_Naguib> .
+
+<http://dbpedia.org/resource/Muhammad_Naguib>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Muhammad Naguib"@en .

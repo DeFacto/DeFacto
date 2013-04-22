@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Mother%27s_Finest>
+      rdfs:label "Mother's Finest"@en .
+
+<http://dbpedia.org/resource/Why_Does_It_Hurt_So_Bad>
+      rdfs:label "Why Does It Hurt So Bad"@en ;
+      dbpedia-owl:artist <http://dbpedia.org/resource/Mother%27s_Finest> .

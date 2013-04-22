@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Ready_2_Go>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ready 2 Go"@en ;
+      <http://dbpedia.org/ontology/timeZone>
+              <http://dbpedia.org/resource/Kenya> .

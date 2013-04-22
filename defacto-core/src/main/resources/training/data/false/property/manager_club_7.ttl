@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Jahn_Regensburg>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Jahn Regensburg"@en .
+
+<http://dbpedia.org/resource/Dariusz_Pasieka>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Dariusz Pasieka"@en ;
+      <http://dbpedia.org/ontology/genus>
+              <http://dbpedia.org/resource/Jahn_Regensburg> .

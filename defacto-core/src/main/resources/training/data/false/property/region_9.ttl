@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Ishikari_Subprefecture>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Ishikari Subprefecture"@en .
+
+<http://dbpedia.org/resource/Kabato_Mountains>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kabato Mountains"@en ;
+      <http://dbpedia.org/ontology/ground>
+              <http://dbpedia.org/resource/Ishikari_Subprefecture> .

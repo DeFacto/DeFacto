@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/France>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "France"@en .
+
+<http://dbpedia.org/resource/Nicolas_Benezet>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Nicolas Benezet"@en ;
+      <http://dbpedia.org/ontology/musicalBand>
+              <http://dbpedia.org/resource/France> .

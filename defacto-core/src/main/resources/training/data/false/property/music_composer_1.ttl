@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/To_the_Devil_a_Daughter>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "To the Devil a Daughter"@en ;
+      <http://dbpedia.org/ontology/party>
+              <http://dbpedia.org/resource/Paul_Glass> .
+
+<http://dbpedia.org/resource/Paul_Glass>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Paul Glass"@en .

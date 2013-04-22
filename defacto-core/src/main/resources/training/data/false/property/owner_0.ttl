@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Lelystad_Airport>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Lelystad Airport"@en ;
+      <http://dbpedia.org/ontology/order>
+              <http://dbpedia.org/resource/Schiphol_Group> .
+
+<http://dbpedia.org/resource/Schiphol_Group>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Schiphol Group"@en .

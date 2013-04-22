@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Lloyd_deMause>
+      rdfs:label "Lloyd deMause"@en ;
+      dbpedia-owl:successor
+              <http://dbpedia.org/resource/Cross_Plains,_Texas> .
+
+<http://dbpedia.org/resource/Cross_Plains,_Texas>
+      rdfs:label "Cross Plains, Texas"@en .

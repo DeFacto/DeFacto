@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/2011_Los_Angeles_Galaxy_season>
+      rdfs:label "2011 Los Angeles Galaxy season"@en ;
+      dbpedia-owl:currentMember
+              <http://dbpedia.org/resource/William_Robinson_%28gardener%29> .
+
+<http://dbpedia.org/resource/William_Robinson_%28gardener%29>
+      rdfs:label "William Robinson (gardener)"@en .

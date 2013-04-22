@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Edward_Pellew>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Edward Pellew"@en .
+
+<http://dbpedia.org/resource/Action_of_23_April_1794>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Action of 23 April 1794"@en ;
+      <http://dbpedia.org/ontology/recordedIn>
+              <http://dbpedia.org/resource/Edward_Pellew> .

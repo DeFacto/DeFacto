@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/The_Scions_of_Shannara>
+      rdfs:label "The Scions of Shannara"@en .
+
+<http://dbpedia.org/resource/The_Druid_of_Shannara>
+      rdfs:label "The Druid of Shannara"@en ;
+      dbpedia-owl:previousWork
+              <http://dbpedia.org/resource/The_Scions_of_Shannara> .

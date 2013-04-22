@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/University_of_Applied_Sciences_Biberach>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "University of Applied Sciences Biberach"@en ;
+      <http://dbpedia.org/ontology/publisher>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

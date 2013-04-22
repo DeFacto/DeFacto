@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Jubbulpuria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Jubbulpuria"@en ;
+      <http://dbpedia.org/ontology/previousWork>
+              <http://dbpedia.org/resource/Friedrich_von_Huene> .
+
+<http://dbpedia.org/resource/Friedrich_von_Huene>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Friedrich von Huene"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Pop_music>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Pop music"@en .
+
+<http://dbpedia.org/resource/Message_Understood>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Message Understood"@en ;
+      <http://dbpedia.org/ontology/musicalBand>
+              <http://dbpedia.org/resource/Pop_music> .

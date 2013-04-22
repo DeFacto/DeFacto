@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Hamilton_Academical_F.C.>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Hamilton Academical F.C."@en .
+
+<http://dbpedia.org/resource/John_Lowe_%28footballer%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "John Lowe (footballer)"@en ;
+      <http://dbpedia.org/ontology/battle>
+              <http://dbpedia.org/resource/Hamilton_Academical_F.C.> .

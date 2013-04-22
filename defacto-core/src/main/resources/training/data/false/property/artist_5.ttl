@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Starz_%28band%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Starz (band)"@en .
+
+<http://dbpedia.org/resource/Coliseum_Rock>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Coliseum Rock"@en ;
+      <http://dbpedia.org/ontology/format>
+              <http://dbpedia.org/resource/Starz_%28band%29> .

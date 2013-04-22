@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Out_of_the_Blue_%28Delta_Goodrem_song%29>
+      rdfs:label "Out of the Blue (Delta Goodrem song)"@en ;
+      dbpedia-owl:writer <http://dbpedia.org/resource/Matt_Skelton> .
+
+<http://dbpedia.org/resource/Matt_Skelton>
+      rdfs:label "Matt Skelton"@en .

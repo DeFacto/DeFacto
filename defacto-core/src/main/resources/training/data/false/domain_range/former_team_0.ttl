@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Carolina_Hurricanes>
+      rdfs:label "Carolina Hurricanes"@en .
+
+<http://dbpedia.org/resource/Andriy_Kikot>
+      rdfs:label "Andriy Kikot"@en ;
+      dbpedia-owl:formerTeam
+              <http://dbpedia.org/resource/Carolina_Hurricanes> .

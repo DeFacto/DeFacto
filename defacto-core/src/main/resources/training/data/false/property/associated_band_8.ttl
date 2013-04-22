@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Fates_Warning>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Fates Warning"@en ;
+      <http://dbpedia.org/ontology/instrument>
+              <http://dbpedia.org/resource/OSI_%28band%29> .
+
+<http://dbpedia.org/resource/OSI_%28band%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "OSI (band)"@en .

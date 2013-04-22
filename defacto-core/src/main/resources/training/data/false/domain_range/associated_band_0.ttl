@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/The_K.G.B.>
+      rdfs:label "The K.G.B."@en .
+
+<http://dbpedia.org/resource/Take_It_Back_%28Toddla_T_song%29>
+      rdfs:label "Take It Back (Toddla T song)"@en ;
+      dbpedia-owl:associatedBand
+              <http://dbpedia.org/resource/The_K.G.B.> .

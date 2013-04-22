@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Bac%C4%83u_County>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Bacău County"@en .
+
+<http://dbpedia.org/resource/R%C4%83c%C4%83ciuni_River>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Răcăciuni River"@en ;
+      <http://dbpedia.org/ontology/state>
+              <http://dbpedia.org/resource/Bac%C4%83u_County> .

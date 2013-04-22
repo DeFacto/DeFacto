@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/General_Services_Administration>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "General Services Administration"@en ;
+      <http://dbpedia.org/ontology/state>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

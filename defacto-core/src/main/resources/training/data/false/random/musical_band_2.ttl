@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Burkina_Faso>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Burkina Faso"@en .
+
+<http://dbpedia.org/resource/HMAS_Perth_%28D_38%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "HMAS Perth (D 38)"@en ;
+      <http://dbpedia.org/ontology/division>
+              <http://dbpedia.org/resource/Burkina_Faso> .

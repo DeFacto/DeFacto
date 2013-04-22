@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/An_Otter_Study>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "An Otter Study"@en ;
+      <http://dbpedia.org/ontology/battle>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

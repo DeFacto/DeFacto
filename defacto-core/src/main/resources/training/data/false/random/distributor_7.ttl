@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Florida>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Florida"@en ;
+      <http://dbpedia.org/ontology/department>
+              <http://dbpedia.org/resource/Russia> .
+
+<http://dbpedia.org/resource/Russia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russia"@en .

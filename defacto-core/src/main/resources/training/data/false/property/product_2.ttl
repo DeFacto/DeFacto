@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/In_Old_Santa_Fe>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "In Old Santa Fe"@en .
+
+<http://dbpedia.org/resource/Mascot_Pictures>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Mascot Pictures"@en ;
+      <http://dbpedia.org/ontology/subsequentWork>
+              <http://dbpedia.org/resource/In_Old_Santa_Fe> .

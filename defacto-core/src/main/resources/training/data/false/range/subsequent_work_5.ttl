@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/A_Portrait_of_the_Artist_as_a_Young_Man>
+      rdfs:label "A Portrait of the Artist as a Young Man"@en .
+
+<http://dbpedia.org/resource/Roll_Away_the_Stone_%28album%29>
+      rdfs:label "Roll Away the Stone (album)"@en ;
+      dbpedia-owl:subsequentWork
+              <http://dbpedia.org/resource/A_Portrait_of_the_Artist_as_a_Young_Man> .

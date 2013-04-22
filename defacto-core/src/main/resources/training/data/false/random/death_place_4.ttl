@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Essex>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Essex"@en .
+
+<http://dbpedia.org/resource/2008_Portland_Timbers_season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "2008 Portland Timbers season"@en ;
+      <http://dbpedia.org/ontology/kingdom>
+              <http://dbpedia.org/resource/Essex> .

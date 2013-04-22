@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Tritonia_%28gastropod%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Tritonia (gastropod)"@en .
+
+<http://dbpedia.org/resource/Tritonia_clavigera>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Tritonia clavigera"@en ;
+      <http://dbpedia.org/ontology/genre>
+              <http://dbpedia.org/resource/Tritonia_%28gastropod%29> .

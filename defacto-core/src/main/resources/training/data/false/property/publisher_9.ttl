@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/NRC_Research_Press>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "NRC Research Press"@en .
+
+<http://dbpedia.org/resource/Biochemistry_and_Cell_Biology>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Biochemistry and Cell Biology"@en ;
+      <http://dbpedia.org/ontology/computingPlatform>
+              <http://dbpedia.org/resource/NRC_Research_Press> .

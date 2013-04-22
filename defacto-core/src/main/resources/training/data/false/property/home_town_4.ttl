@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Dies_Irae_%28band%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Dies Irae (band)"@en ;
+      <http://dbpedia.org/ontology/nationality>
+              <http://dbpedia.org/resource/Olsztyn> .
+
+<http://dbpedia.org/resource/Olsztyn>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Olsztyn"@en .

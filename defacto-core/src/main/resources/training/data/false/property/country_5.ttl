@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Hatton,_Lincolnshire>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Hatton, Lincolnshire"@en ;
+      <http://dbpedia.org/ontology/recordedIn>
+              <http://dbpedia.org/resource/United_Kingdom> .
+
+<http://dbpedia.org/resource/United_Kingdom>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United Kingdom"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/BBC_Local_Radio>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "BBC Local Radio"@en .
+
+<http://dbpedia.org/resource/BBC_Somerset>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "BBC Somerset"@en ;
+      <http://dbpedia.org/ontology/previousWork>
+              <http://dbpedia.org/resource/BBC_Local_Radio> .

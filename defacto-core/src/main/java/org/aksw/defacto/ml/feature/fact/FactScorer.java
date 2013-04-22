@@ -4,6 +4,7 @@
 package org.aksw.defacto.ml.feature.fact;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.ml.feature.fact.impl.WordnetExpensionFeature;
 
 import weka.classifiers.Classifier;
 import weka.core.Instance;
@@ -34,7 +36,7 @@ public class FactScorer {
         this.classifier = loadClassifier();
         try {
             
-            this.trainingInstances = new Instances(new BufferedReader(new FileReader("resources/training/arff/fact/defacto_fact_word.arff")));
+            this.trainingInstances = new Instances(new BufferedReader(new FileReader(loadFileName("/training/arff/fact/defacto_fact_word.arff"))));
         }
         catch (FileNotFoundException e) {
 
@@ -105,11 +107,21 @@ public class FactScorer {
 
         try {
             
-            return (Classifier) weka.core.SerializationHelper.read("resources/classifier/fact/fact.model");
+            return (Classifier) weka.core.SerializationHelper.read(loadFileName("/classifier/fact/fact.model"));
         }
         catch (Exception e) {
 
-            throw new RuntimeException("Could not load classifier from: " + "resources/classifier/fact/fact.model", e);
+            throw new RuntimeException("Could not load classifier from: " + "classifier/fact/fact.model", e);
         }
     }
+    
+    public String loadFileName(String name){
+    	
+    	return new File(FactScorer.class.getResource(name).getFile()).getAbsolutePath(); 
+    }
+    
+    public static void main(String[] args) {
+		
+    	
+	}
 }

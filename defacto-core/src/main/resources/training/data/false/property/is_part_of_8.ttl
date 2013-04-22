@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Sai_Kung_District>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Sai Kung District"@en ;
+      <http://dbpedia.org/ontology/occupation>
+              <http://dbpedia.org/resource/Hong_Kong> .
+
+<http://dbpedia.org/resource/Hong_Kong>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Hong Kong"@en .

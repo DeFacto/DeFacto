@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Robert_E._Taylor_Stadium>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Robert E. Taylor Stadium"@en ;
+      <http://dbpedia.org/ontology/subsequentWork>
+              <http://dbpedia.org/resource/Russia> .
+
+<http://dbpedia.org/resource/Russia>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Russia"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Sinn_F%C3%A9in>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Sinn Féin"@en ;
+      <http://dbpedia.org/ontology/binomialAuthority>
+              <http://dbpedia.org/resource/Kenya> .

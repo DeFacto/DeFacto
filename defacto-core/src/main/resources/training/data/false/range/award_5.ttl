@@ -1,0 +1,10 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Academy_Award_for_Best_Foreign_Language_Film>
+      rdfs:label "Academy Award for Best Foreign Language Film"@en .
+
+<http://dbpedia.org/resource/Jacklyn_Wu>
+      rdfs:label "Jacklyn Wu"@en ;
+      dbpedia-owl:award <http://dbpedia.org/resource/Academy_Award_for_Best_Foreign_Language_Film> .

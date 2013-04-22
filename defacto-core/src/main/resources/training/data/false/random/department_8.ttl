@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Paul_Brown>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Paul Brown"@en ;
+      <http://dbpedia.org/ontology/family>
+              <http://dbpedia.org/resource/Kenya> .

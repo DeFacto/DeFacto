@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Tears_of_the_Black_Tiger>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Tears of the Black Tiger"@en ;
+      <http://dbpedia.org/ontology/isPartOf>
+              <http://dbpedia.org/resource/Stella_Malucchi> .
+
+<http://dbpedia.org/resource/Stella_Malucchi>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Stella Malucchi"@en .

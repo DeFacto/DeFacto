@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Cornelis_sjunger_Victor_Jara>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Cornelis sjunger Victor Jara"@en ;
+      <http://dbpedia.org/ontology/industry>
+              <http://dbpedia.org/resource/Movitz%21_Movitz%21> .
+
+<http://dbpedia.org/resource/Movitz%21_Movitz%21>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Movitz! Movitz!"@en .

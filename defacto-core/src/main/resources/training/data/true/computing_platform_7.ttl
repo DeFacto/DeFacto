@@ -1,0 +1,11 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpedia-owl:  <http://dbpedia.org/ontology/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<http://dbpedia.org/resource/Zero_%28game_engine%29>
+      rdfs:label "Zero (game engine)"@en ;
+      dbpedia-owl:computingPlatform
+              <http://dbpedia.org/resource/PlayStation_2> .
+
+<http://dbpedia.org/resource/PlayStation_2>
+      rdfs:label "PlayStation 2"@en .

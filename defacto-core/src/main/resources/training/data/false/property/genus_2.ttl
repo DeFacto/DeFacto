@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Krameria>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Krameria"@en .
+
+<http://dbpedia.org/resource/Krameria_lappacea>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Krameria lappacea"@en ;
+      <http://dbpedia.org/ontology/starring>
+              <http://dbpedia.org/resource/Krameria> .

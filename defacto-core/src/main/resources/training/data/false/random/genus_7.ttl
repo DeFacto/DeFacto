@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Matzikama_Local_Municipality>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Matzikama Local Municipality"@en ;
+      <http://dbpedia.org/ontology/ground>
+              <http://dbpedia.org/resource/1945%E2%80%9346_Colchester_United_F.C._season> .
+
+<http://dbpedia.org/resource/1945%E2%80%9346_Colchester_United_F.C._season>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "1945–46 Colchester United F.C. season"@en .

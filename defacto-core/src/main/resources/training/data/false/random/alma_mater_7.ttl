@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Gold_Hill,_Oregon>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Gold Hill, Oregon"@en ;
+      <http://dbpedia.org/ontology/language>
+              <http://dbpedia.org/resource/Kenya> .

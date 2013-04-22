@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Poropuntius_carinatus>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Poropuntius carinatus"@en ;
+      <http://dbpedia.org/ontology/recordedIn>
+              <http://dbpedia.org/resource/Rasmus_Refer> .
+
+<http://dbpedia.org/resource/Rasmus_Refer>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Rasmus Refer"@en .

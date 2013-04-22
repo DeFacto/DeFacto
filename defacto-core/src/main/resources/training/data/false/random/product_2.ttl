@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/James_Bond>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "James Bond"@en ;
+      <http://dbpedia.org/ontology/division>
+              <http://dbpedia.org/resource/London> .
+
+<http://dbpedia.org/resource/London>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "London"@en .

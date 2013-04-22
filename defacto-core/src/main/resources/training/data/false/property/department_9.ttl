@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Indre>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Indre"@en .
+
+<http://dbpedia.org/resource/Cond%C3%A9,_Indre>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Condé, Indre"@en ;
+      <http://dbpedia.org/ontology/instrument>
+              <http://dbpedia.org/resource/Indre> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/United_States>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "United States"@en .
+
+<http://dbpedia.org/resource/Wolfmother>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Wolfmother"@en ;
+      <http://dbpedia.org/ontology/genus>
+              <http://dbpedia.org/resource/United_States> .

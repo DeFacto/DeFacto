@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Heart_to_Heart_%28song%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Heart to Heart (song)"@en .
+
+<http://dbpedia.org/resource/Charles_Stewart_Parnell>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Charles Stewart Parnell"@en ;
+      <http://dbpedia.org/ontology/language>
+              <http://dbpedia.org/resource/Heart_to_Heart_%28song%29> .

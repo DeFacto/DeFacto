@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Iida_Line>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Iida Line"@en ;
+      <http://dbpedia.org/ontology/birthPlace>
+              <http://dbpedia.org/resource/Central_Japan_Railway_Company> .
+
+<http://dbpedia.org/resource/Central_Japan_Railway_Company>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Central Japan Railway Company"@en .

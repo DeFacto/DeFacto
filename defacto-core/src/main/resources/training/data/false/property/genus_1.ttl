@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Calochortus_excavatus>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Calochortus excavatus"@en ;
+      <http://dbpedia.org/ontology/occupation>
+              <http://dbpedia.org/resource/Calochortus> .
+
+<http://dbpedia.org/resource/Calochortus>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Calochortus"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Mory,_Pas-de-Calais>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Mory, Pas-de-Calais"@en ;
+      <http://dbpedia.org/ontology/almaMater>
+              <http://dbpedia.org/resource/Nord-Pas-de-Calais> .
+
+<http://dbpedia.org/resource/Nord-Pas-de-Calais>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Nord-Pas-de-Calais"@en .

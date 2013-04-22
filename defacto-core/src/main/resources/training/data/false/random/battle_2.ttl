@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kenya>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kenya"@en .
+
+<http://dbpedia.org/resource/Voi_Airport>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Voi Airport"@en ;
+      <http://dbpedia.org/ontology/format>
+              <http://dbpedia.org/resource/Kenya> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Dennis_McCarthy>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Dennis McCarthy"@en .
+
+<http://dbpedia.org/resource/The_Quickening_%28Star_Trek:_Deep_Space_Nine%29>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "The Quickening (Star Trek: Deep Space Nine)"@en ;
+      <http://dbpedia.org/ontology/currentMember>
+              <http://dbpedia.org/resource/Dennis_McCarthy> .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Stacy_Jones>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Stacy Jones"@en ;
+      <http://dbpedia.org/ontology/residence>
+              <http://dbpedia.org/resource/American_Hi-Fi> .
+
+<http://dbpedia.org/resource/American_Hi-Fi>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "American Hi-Fi"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Benelux_Film_Distributors>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Benelux Film Distributors"@en ;
+      <http://dbpedia.org/ontology/ground>
+              <http://dbpedia.org/resource/Film_industry> .
+
+<http://dbpedia.org/resource/Film_industry>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Film industry"@en .

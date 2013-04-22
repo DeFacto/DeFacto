@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Kirk%27s_Dik-dik>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Kirk's Dik-dik"@en ;
+      <http://dbpedia.org/ontology/product>
+              <http://dbpedia.org/resource/Albert_G%C3%BCnther> .
+
+<http://dbpedia.org/resource/Albert_G%C3%BCnther>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Albert Günther"@en .

@@ -1,0 +1,9 @@
+<http://dbpedia.org/resource/Billy_Joel>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "Billy Joel"@en .
+
+<http://dbpedia.org/resource/And_So_It_Goes>
+      <http://www.w3.org/2000/01/rdf-schema#label>
+              "And So It Goes"@en ;
+      <http://dbpedia.org/ontology/successor>
+              <http://dbpedia.org/resource/Billy_Joel> .
