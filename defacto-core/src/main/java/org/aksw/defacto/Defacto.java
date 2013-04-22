@@ -43,7 +43,12 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
  */
 public class Defacto {
 
-    private static int numberOfModels;
+    public enum TIME_DISTRIBUTION_ONLY{
+    	
+    	YES,
+    	NO;
+    }
+	private static int numberOfModels;
     private static int currentModel;
     private static long startTime;
     public static DefactoConfig DEFACTO_CONFIG;
@@ -55,7 +60,7 @@ public class Defacto {
      * 
      * @return
      */
-    public static Evidence checkFact(DefactoModel model) {
+    public static Evidence checkFact(DefactoModel model, TIME_DISTRIBUTION_ONLY onlyTimes) {
     	
     	// hack to get surface forms before timing
         SubjectObjectFactSearcher.getInstance();
@@ -77,6 +82,9 @@ public class Defacto {
         MetaQuery query = queries.values().iterator().next(); // every metaquery has the 
         Evidence evidence = crawler.crawlEvidence(query.getSubjectLabel(), query.getObjectLabel());
         logger.info("Crawling evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
+        
+        // short cut to avoid 
+        if ( onlyTimes.equals(TIME_DISTRIBUTION_ONLY.YES) ) return evidence;
         
         // 3. confirm the facts
         long startFactConfirmation = System.currentTimeMillis();
@@ -141,7 +149,7 @@ public class Defacto {
         
         for (DefactoModel model : defactoModel) {
             
-            Evidence evidence = checkFact(model);
+            Evidence evidence = checkFact(model, TIME_DISTRIBUTION_ONLY.NO);
             
             // we want to print the score of the classifier 
             if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) 

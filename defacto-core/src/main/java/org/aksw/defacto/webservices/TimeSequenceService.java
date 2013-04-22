@@ -4,11 +4,15 @@
  */
 package org.aksw.defacto.webservices;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDFS;
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.ws.rs.GET;
@@ -46,15 +50,18 @@ public class TimeSequenceService {
             Resource obj = model.createResource(property);
             obj.addProperty(RDFS.label, olabel);
             obj.addProperty(model.createProperty(property), subj);
-            Evidence ev = Defacto.checkFact(new DefactoModel(model, subject + " " + property + " " + object, true));
-            Map<String, Long> times = ev.yearOccurrences;
-            String result = "{";
-            for(String key: times.keySet())
-            {
-                result = result + "\""+key+"\" : \""+ times.get(key) +"\" , ";
+            Evidence ev = Defacto.checkFact(new DefactoModel(model, subject + " " + property + " " + object, true), Defacto.TIME_DISTRIBUTION_ONLY.YES);
+            String result = "{\n";
+            result += String.format("\t\"subject\":\t\"%s\"", subject) + ",\n" ;
+            result += String.format("\t\"predicate\":\t\"%s\"", property) + ",\n" ;
+            result += String.format("\t\"object\":\t\"%s\"", object) + ",\n" ;
+            result += "\t\"time\":\t {\n";
+            int i = 1;
+            for ( Map.Entry<String,Long> times : ev.yearOccurrences.entrySet()) {
+            	
+            	result += "\t\t\""+times.getKey()+"\":\t" + times.getValue() + (i++ < ev.yearOccurrences.size() ? ",\n" : "\n");
             }
-            result = result.substring(0, result.length() - 2)+"}";
-            result ="{ \"score\" : \""+ev.getDeFactoScore()+"\" , \"time\" : "+result+" }";
+            result += "\t}\n}";
             return Response.ok(result).build();
         } catch (Exception e) {
             ServiceMain.log.log(Level.WARNING, "Error while processing <" + subject + "," + property + "," + object + ">");

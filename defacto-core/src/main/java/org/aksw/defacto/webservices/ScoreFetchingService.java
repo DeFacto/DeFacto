@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.config.DefactoConfig;
 import org.ini4j.Ini;
@@ -45,7 +46,7 @@ public class ScoreFetchingService {
             Resource obj = model.createResource(property);
             obj.addProperty(RDFS.label, olabel);
             obj.addProperty(model.createProperty(property), subj);
-            Double score = Defacto.checkFact(new DefactoModel(model, subject + " " + property + " " + object, true)).getDeFactoScore();
+            Double score = Defacto.checkFact(new DefactoModel(model, subject + " " + property + " " + object, true), TIME_DISTRIBUTION_ONLY.NO).getDeFactoScore();
             return Response.ok("{\"defactoScore\": "+score+"}").build();
         } catch (Exception e) {
 
