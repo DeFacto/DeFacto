@@ -53,8 +53,10 @@ public class TimeSequenceService {
             Evidence ev = Defacto.checkFact(new DefactoModel(model, subject + " " + property + " " + object, true), Defacto.TIME_DISTRIBUTION_ONLY.YES);
             String result = "{\n";
             result += String.format("\t\"subject\":\t\"%s\"", subject) + ",\n" ;
+            result += String.format("\t\"slabel\":\t\"%s\"", slabel) + ",\n" ;
             result += String.format("\t\"predicate\":\t\"%s\"", property) + ",\n" ;
             result += String.format("\t\"object\":\t\"%s\"", object) + ",\n" ;
+            result += String.format("\t\"olabel\":\t\"%s\"", olabel) + ",\n" ;
             result += "\t\"time\":\t {\n";
             int i = 1;
             for ( Map.Entry<String,Long> times : ev.yearOccurrences.entrySet()) {
