@@ -31,7 +31,10 @@ public class Evidence {
     private List<Word> topicTerms                       = new ArrayList<Word>();
 //    private Map<Pattern,Double[][]> similarityMatricies = new LinkedHashMap<Pattern,Double[][]>();
     private Double[][] similarityMatrix                 = null;
-    public Map<String,Long> yearOccurrences = new LinkedHashMap<String, Long>();
+    
+    public Map<String,Long> smallContextYearOccurrences = new LinkedHashMap<String, Long>();
+    public Map<String,Long> mediumContextYearOccurrences = new LinkedHashMap<String, Long>();
+    public Map<String,Long> largeContextYearOccurrences = new LinkedHashMap<String, Long>();
     
     private Instance features;
     private Long totalHitCount;
@@ -41,6 +44,7 @@ public class Evidence {
     
     private Set<ComplexProof> complexProofs;
     private List<Pattern> boaPatterns;
+	public List<Match> dates = new ArrayList<Match>();
     
     /**
      * 
@@ -319,4 +323,9 @@ public class Evidence {
     
         return boaPatterns;
     }
+
+	public void addDate(String match, int distance) {
+		
+		this.dates.add(new Match(match, distance));
+	}
 }

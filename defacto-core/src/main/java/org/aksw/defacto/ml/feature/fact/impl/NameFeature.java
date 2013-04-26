@@ -24,6 +24,6 @@ public class NameFeature implements FactFeature {
         proof.getFeatures().setValue(AbstractFactFeatures.SUBJECT, proof.getSubject());
         proof.getFeatures().setValue(AbstractFactFeatures.PHRASE, proof.getProofPhrase().replaceAll("\\n", ""));
         proof.getFeatures().setValue(AbstractFactFeatures.OBJECT, proof.getObject());
-        proof.getFeatures().setValue(AbstractFactFeatures.CONTEXT, proof.getShortContext().replaceAll("\\n", ""));
+        proof.getFeatures().setValue(AbstractFactFeatures.CONTEXT, proof.getSmallContext().replaceAll("\\n", ""));
     }
 }

@@ -26,7 +26,7 @@ public class DomainRangeCheckFeature extends AbstractFeature {
 	        String propertyURI = evidence.getModel().getPropertyUri();
 	        String objectURI = evidence.getModel().getObjectUri();
 	        
-	        String endpoint = "http://live.dbpedia.org/sparql";
+	        String endpoint = "http://dbpedia.org/sparql";
 	        String graph = "http://dbpedia.org";
 	        SparqlUtil sparql = new SparqlUtil(endpoint, graph);
 	        

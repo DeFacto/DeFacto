@@ -118,10 +118,28 @@ public class DefactoDemo {
         berlin.addProperty(RDFS.label, "Bonn");
         berlin.addProperty(model3.createProperty("http://dbpedia.org/ontology/capital"), germany);
         
+        Model model4 = ModelFactory.createDefaultModel();
+        
+        Resource ballack = model4.createResource("http://dbpedia.org/resource/Michael_Ballack");
+        ballack.addProperty(RDFS.label, "Ballack");
+        Resource chelsea = model4.createResource("http://dbpedia.org/resource/Chelsea_F.C.");
+        chelsea.addProperty(RDFS.label, "Chelsea");
+        chelsea.addProperty(model4.createProperty("http://dbpedia.org/ontology/team"), ballack);
+        
+        Model model5 = ModelFactory.createDefaultModel();
+        
+        Resource ronaldo = model5.createResource("http://dbpedia.org/resource/Cristiano_Ronaldo");
+        ronaldo.addProperty(RDFS.label, "Cristiano Ronaldo");
+        Resource manu = model5.createResource("http://dbpedia.org/resource/Manchester_United_F.C.");
+        manu.addProperty(RDFS.label, "United");
+        manu.addProperty(model5.createProperty("http://dbpedia.org/ontology/team"), ronaldo);
+        
         List<DefactoModel> models = new ArrayList<DefactoModel>();
-        models.add(new DefactoModel(model1, "albert", true));
-        models.add(new DefactoModel(model2, "quentin", true));
-        models.add(new DefactoModel(model3, "bonn", true));
+//        models.add(new DefactoModel(model1, "albert", true));
+//        models.add(new DefactoModel(model2, "quentin", true));
+//        models.add(new DefactoModel(model3, "bonn", true));
+        models.add(new DefactoModel(model4, "ballack", true));
+//        models.add(new DefactoModel(model5, "ronaldo", true));
         
         return models;
     }

@@ -33,7 +33,7 @@ import org.ini4j.Ini;
 @Path("/getdefactotimes")
 public class TimeSequenceService {
 
-	// http://localhost:9998/getdefactotimes?s=http%3A%2F%2Fdbpedia.org%2Fresource%2FMichael_Ballack&p=http%3A%2F%2Fdbpedia.org%2Fontology%2Fteam&o=http%3A%2F%2Fdbpedia.org%2Fresource%2FChelsea_F.C.&slabel=Michael%20Ballack&olabel=Chelsea%20F.C.
+	// http://localhost:1234/getdefactotimes?s=http%3A%2F%2Fdbpedia.org%2Fresource%2FBallack&p=http%3A%2F%2Fdbpedia.org%2Fontology%2Fteam&o=http%3A%2F%2Fdbpedia.org%2Fresource%2FChelsea_F.C.&slabel=Michael%20Ballack&olabel=Chelsea
 	
     @GET
     @Produces("application/json")
@@ -57,13 +57,9 @@ public class TimeSequenceService {
             result += String.format("\t\"predicate\":\t\"%s\"", property) + ",\n" ;
             result += String.format("\t\"object\":\t\"%s\"", object) + ",\n" ;
             result += String.format("\t\"olabel\":\t\"%s\"", olabel) + ",\n" ;
-            result += "\t\"time\":\t {\n";
-            int i = 1;
-            for ( Map.Entry<String,Long> times : ev.yearOccurrences.entrySet()) {
-            	
-            	result += "\t\t\""+times.getKey()+"\":\t" + times.getValue() + (i++ < ev.yearOccurrences.size() ? ",\n" : "\n");
-            }
-            result += "\t}\n}";
+            result += buildYearOccurrences(ev);
+            
+        	result += "}";
             return Response.ok(result).build();
         } catch (Exception e) {
             ServiceMain.log.log(Level.WARNING, "Error while processing <" + subject + "," + property + "," + object + ">");
@@ -72,4 +68,31 @@ public class TimeSequenceService {
         }
         return Response.serverError().build();
     }
+
+	private String buildYearOccurrences(Evidence ev) {
+		
+		String result = "\t\"small\":\t {\n";
+        int i = 1;
+        for ( Map.Entry<String,Long> times : ev.smallContextYearOccurrences.entrySet()) {
+        	
+        	result += "\t\t\""+times.getKey()+"\":\t" + times.getValue() + (i++ < ev.smallContextYearOccurrences.size() ? ",\n" : "\n");
+        }
+        result += "\t}\n";
+        result += "\t\"medium\":\t {\n";
+        i = 1;
+        for ( Map.Entry<String,Long> times : ev.mediumContextYearOccurrences.entrySet()) {
+        	
+        	result += "\t\t\""+times.getKey()+"\":\t" + times.getValue() + (i++ < ev.mediumContextYearOccurrences.size() ? ",\n" : "\n");
+        }
+        result += "\t}\n";
+        result += "\t\"large\":\t {\n";
+        i = 1;
+        for ( Map.Entry<String,Long> times : ev.largeContextYearOccurrences.entrySet()) {
+        	
+        	result += "\t\t\""+times.getKey()+"\":\t" + times.getValue() + (i++ < ev.largeContextYearOccurrences.size() ? ",\n" : "\n");
+        }
+        result += "\t}\n";
+        
+        return result;
+	}
 }

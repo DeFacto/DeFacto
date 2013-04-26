@@ -26,13 +26,16 @@ public class ComplexProof {
     private String proofPhrase;
     private String normalizedProofPhrase;
 
-    private String shortContext;
-
     private double score = 0D;
 
-	private String longContext = "";
+	private String smallContext;
+	private String taggedSmallContext;
 
-	private String taggedLongContext;
+	private String mediumContext;
+	private String taggedMediumContext;
+
+	private String largeContext;
+	private String taggedLargeContext;
 
     /**
      * boa pattern found
@@ -118,20 +121,6 @@ public class ComplexProof {
         return this.secondLabel;
     }
 
-    public void setShortContext(String leftAndRightContext) {
-        
-        this.shortContext = leftAndRightContext;
-    }
-
-    
-    /**
-     * @return the context
-     */
-    public String getShortContext() {
-    
-        return shortContext;
-    }
-
     public void setScore(double score) {
 
         this.score = score;
@@ -142,27 +131,81 @@ public class ComplexProof {
         return this.score;
     }
 
-	public void setLongContext(String longContext) {
+	public void setSmallContext(String smallContext) {
 		
-		this.longContext  = longContext;
+		this.smallContext = smallContext; 
 	}
-	
-	public String getLongContext() {
+
+	public void setMediumContext(String mediumCntext) {
 		
-		return this.longContext;
+		this.mediumContext = mediumCntext;
+	}
+
+	public void setLargeContext(String largeContext) {
+
+		this.largeContext = largeContext;
 	}
 
 	/**
-	 * 
-	 * @param merged
+	 * @return the taggedSmallContext
 	 */
-	public void setTaggedLongContext(String merged) {
-		
-		this.taggedLongContext = merged;
+	public String getTaggedSmallContext() {
+		return taggedSmallContext;
 	}
-	
-	public String getTaggedLongContext() {
-		
-		return this.taggedLongContext;
+
+	/**
+	 * @param taggedSmallContext the taggedSmallContext to set
+	 */
+	public void setTaggedSmallContext(String taggedSmallContext) {
+		this.taggedSmallContext = taggedSmallContext;
+	}
+
+	/**
+	 * @return the taggedMediumContext
+	 */
+	public String getTaggedMediumContext() {
+		return taggedMediumContext;
+	}
+
+	/**
+	 * @param taggedMediumContext the taggedMediumContext to set
+	 */
+	public void setTaggedMediumContext(String taggedMediumContext) {
+		this.taggedMediumContext = taggedMediumContext;
+	}
+
+	/**
+	 * @return the taggedLargeContext
+	 */
+	public String getTaggedLargeContext() {
+		return taggedLargeContext;
+	}
+
+	/**
+	 * @param taggedLargeContext the taggedLargeContext to set
+	 */
+	public void setTaggedLargeContext(String taggedLargeContext) {
+		this.taggedLargeContext = taggedLargeContext;
+	}
+
+	/**
+	 * @return the smallContext
+	 */
+	public String getSmallContext() {
+		return smallContext;
+	}
+
+	/**
+	 * @return the mediumContext
+	 */
+	public String getMediumContext() {
+		return mediumContext;
+	}
+
+	/**
+	 * @return the largeContext
+	 */
+	public String getLargeContext() {
+		return largeContext;
 	}
 }

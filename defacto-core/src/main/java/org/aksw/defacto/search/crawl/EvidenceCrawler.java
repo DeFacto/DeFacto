@@ -24,6 +24,7 @@ import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.cache.Cache;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
+import org.aksw.defacto.evidence.Match;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.cache.solr.Solr4SearchResultCache;
 import org.aksw.defacto.search.concurrent.HtmlCrawlerCallable;
@@ -52,6 +53,7 @@ import edu.stanford.nlp.util.StringUtils;
 public class EvidenceCrawler {
 
     private Logger logger = Logger.getLogger(EvidenceCrawler.class);
+    java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("[0-9]{4}");
     private Map<Pattern,MetaQuery> patternToQueries;
     private DefactoModel model;
     
@@ -180,7 +182,23 @@ public class EvidenceCrawler {
         		Defacto.DEFACTO_CONFIG.getIntegerSetting("extract", "NUMBER_NLP_STANFORD_MODELS")), parsers);
         this.extractDates(evidence);
         
-        for ( Map.Entry<String, Long> entry : evidence.yearOccurrences.entrySet()) {
+        System.out.println("SMALL");
+        
+        for ( Map.Entry<String, Long> entry : evidence.smallContextYearOccurrences.entrySet()) {
+        	
+        	System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        
+        System.out.println("MEDIUM");
+        
+        for ( Map.Entry<String, Long> entry : evidence.mediumContextYearOccurrences.entrySet()) {
+        	
+        	System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        
+        System.out.println("LARGE");
+        
+        for ( Map.Entry<String, Long> entry : evidence.largeContextYearOccurrences.entrySet()) {
         	
         	System.out.println(entry.getKey() + ": " + entry.getValue());
         }
@@ -235,23 +253,54 @@ public class EvidenceCrawler {
      */
     private void extractDates(Evidence evidence) {
     	
-    	Frequency frequency = new Frequency();
-    	java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("[0-9]{4}");
+    	Frequency smallContextFrequency = new Frequency();
+    	Frequency mediumContextFrequency = new Frequency();
+    	Frequency largeContextFrequency = new Frequency();
     	
     	for ( ComplexProof proof : evidence.getComplexProofs() ) {
     		
-    		String taggedContext = proof.getTaggedLongContext();
-			if ( taggedContext.isEmpty() ) continue;
-    		
-			for (String date : NlpUtil.getDateEntities(StringUtils.split(taggedContext, "-=-"))) {
-
-				Matcher matcher = pattern.matcher(date);
-			    while (matcher.find()) frequency.addValue(matcher.group());
-    		}
+    		addFrequency(proof.getSmallContext(), proof.getTaggedSmallContext(), proof, smallContextFrequency, evidence);
+    		addFrequency(proof.getMediumContext(), proof.getTaggedMediumContext(), proof, mediumContextFrequency, evidence);
+    		addFrequency(proof.getLargeContext(), proof.getTaggedLargeContext(), proof, largeContextFrequency, evidence);
     	}
     	
-    	for ( Map.Entry<Comparable<?>, Long> entry : frequency.sortByValue()) 
-    		evidence.yearOccurrences.put((String) entry.getKey(), entry.getValue());
+    	for ( Map.Entry<Comparable<?>, Long> entry : smallContextFrequency.sortByValue()) 
+    		evidence.smallContextYearOccurrences.put((String) entry.getKey(), entry.getValue());
+    	for ( Map.Entry<Comparable<?>, Long> entry : mediumContextFrequency.sortByValue()) 
+    		evidence.mediumContextYearOccurrences.put((String) entry.getKey(), entry.getValue());
+    	for ( Map.Entry<Comparable<?>, Long> entry : largeContextFrequency.sortByValue()) 
+    		evidence.largeContextYearOccurrences.put((String) entry.getKey(), entry.getValue());
+    }
+    
+    private void addFrequency(String context, String taggedContext, ComplexProof proof, Frequency frequency, Evidence evidence) {
+    	
+    	if ( taggedContext == null ) return;
+    	
+		String fact = proof.getSubject().trim() + " " + proof.getProofPhrase().trim() + " " + proof.getObject().trim();
+		int firstIndex	= context.indexOf(fact);
+		int mediumIndex	= firstIndex + (fact.length() / 2);
+		
+		for (String entity : StringUtils.split(taggedContext, "-=-")) {
+
+			if (entity.endsWith("_DATE")) {
+				
+				String date = entity.replace("_DATE", "");
+				Matcher matcher = pattern.matcher(date);
+			    while (matcher.find()) {
+			    	
+			    	String match = matcher.group();
+			    	
+			    	int indexOfDate = context.indexOf(match);
+			    	int distance = Integer.MAX_VALUE;
+			    	
+					if ( indexOfDate > mediumIndex ) distance  = indexOfDate - mediumIndex;
+			    	else distance = mediumIndex - indexOfDate;
+					
+					evidence.addDate(match, distance);
+			    	frequency.addValue(match);
+			    }
+			}
+		}
     }
 
 	/**
