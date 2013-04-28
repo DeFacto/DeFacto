@@ -77,14 +77,14 @@ public class TimeSequenceService {
         	
         	result += "\t\t\""+times.getKey()+"\":\t" + times.getValue() + (i++ < ev.smallContextYearOccurrences.size() ? ",\n" : "\n");
         }
-        result += "\t}\n";
+        result += "\t},\n";
         result += "\t\"medium\":\t {\n";
         i = 1;
         for ( Map.Entry<String,Long> times : ev.mediumContextYearOccurrences.entrySet()) {
         	
         	result += "\t\t\""+times.getKey()+"\":\t" + times.getValue() + (i++ < ev.mediumContextYearOccurrences.size() ? ",\n" : "\n");
         }
-        result += "\t}\n";
+        result += "\t},\n";
         result += "\t\"large\":\t {\n";
         i = 1;
         for ( Map.Entry<String,Long> times : ev.largeContextYearOccurrences.entrySet()) {
