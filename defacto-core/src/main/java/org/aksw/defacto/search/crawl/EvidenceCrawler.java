@@ -96,7 +96,7 @@ public class EvidenceCrawler {
             evidence.addWebSites(result.getPattern(), result.getWebSites());
         
         // save all the time we can get
-        if ( Defacto.onlyTimes.equals(TIME_DISTRIBUTION_ONLY.YES) ) {
+        if ( Defacto.onlyTimes.equals(TIME_DISTRIBUTION_ONLY.NO) ) {
 
         	evidence.setTopicTerms(TopicTermExtractor.getTopicTerms(evidence));
             evidence.setTopicTermVectorForWebsites();
