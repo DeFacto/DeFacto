@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.BoaPatternSearcher;
 import org.aksw.defacto.boa.Pattern;
@@ -84,7 +85,7 @@ public class EvidenceCrawler {
                 
         Evidence evidence = new Evidence(model, totalHitCount, subjectLabel, objectLabel);
         // basically downloads all websites in parallel
-        crawlAndCacheSearchResults(searchResults, model, evidence);
+        crawlSearchResults(searchResults, model, evidence);
         // tries to find proofs and possible proofs and scores those
         scoreSearchResults(searchResults, model, evidence);
         // put it in solr cache
@@ -94,9 +95,13 @@ public class EvidenceCrawler {
         for ( SearchResult result : searchResults ) 
             evidence.addWebSites(result.getPattern(), result.getWebSites());
         
-        evidence.setTopicTerms(TopicTermExtractor.getTopicTerms(evidence));
-        evidence.setTopicTermVectorForWebsites();
-        evidence.calculateSimilarityMatrix();
+        // save all the time we can get
+        if ( Defacto.onlyTimes.equals(TIME_DISTRIBUTION_ONLY.YES) ) {
+
+        	evidence.setTopicTerms(TopicTermExtractor.getTopicTerms(evidence));
+            evidence.setTopicTermVectorForWebsites();
+            evidence.calculateSimilarityMatrix();
+        }
         
         return evidence;
     }
@@ -227,7 +232,7 @@ public class EvidenceCrawler {
         }
     }
 
-    private void crawlAndCacheSearchResults(Set<SearchResult> searchResults, DefactoModel model, Evidence evidence) {
+    private void crawlSearchResults(Set<SearchResult> searchResults, DefactoModel model, Evidence evidence) {
         
         // prepare the result variables
         List<HtmlCrawlerCallable> htmlCrawlers = new ArrayList<HtmlCrawlerCallable>();

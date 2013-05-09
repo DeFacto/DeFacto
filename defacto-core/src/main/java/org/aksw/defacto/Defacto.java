@@ -52,6 +52,7 @@ public class Defacto {
     private static int currentModel;
     private static long startTime;
     public static DefactoConfig DEFACTO_CONFIG;
+    public static TIME_DISTRIBUTION_ONLY onlyTimes;
     
     /**
      * @param model the model to check. this model may only contain the link between two resources
@@ -61,6 +62,8 @@ public class Defacto {
      * @return
      */
     public static Evidence checkFact(DefactoModel model, TIME_DISTRIBUTION_ONLY onlyTimes) {
+    	
+    	Defacto.onlyTimes = onlyTimes;
     	
     	// hack to get surface forms before timing
         SubjectObjectFactSearcher.getInstance();
