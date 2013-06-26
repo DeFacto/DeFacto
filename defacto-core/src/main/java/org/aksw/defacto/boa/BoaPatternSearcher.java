@@ -26,8 +26,8 @@ import org.apache.solr.common.SolrDocumentList;
 public class BoaPatternSearcher {
 
     private static HttpSolrServer server;
-//    private static final String SOLR_INDEX = "en_boa_detailed";
-    private static final String SOLR_INDEX = "en_boa_defacto_temporal";
+    private static final String SOLR_INDEX = "en_boa_detailed";
+//    private static final String SOLR_INDEX = "en_boa_defacto_temporal";
     private Logger logger = Logger.getLogger(BoaPatternSearcher.class);
 
     public BoaPatternSearcher(){
@@ -92,7 +92,7 @@ public class BoaPatternSearcher {
         	
         	// hardcode this for now since it's the only property we want to handle in 
         	// temporal defacto
-        	propertyUri = "http://dbpedia.org/ontology/team";
+        	propertyUri = "http://dbpedia.org/ontology/spouse";
         	
             SolrQuery query = new SolrQuery("uri:\"" + propertyUri + "\"");
             query.addField("boa-score");

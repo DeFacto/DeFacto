@@ -240,7 +240,7 @@ public class EvidenceCrawler {
         // prepare the crawlers for simultanous execution
         for ( SearchResult searchResult : searchResults)
             for ( WebSite site : searchResult.getWebSites() )
-            	htmlCrawlers.add(new HtmlCrawlerCallable(site));
+//            	htmlCrawlers.add(new HtmlCrawlerCallable(site));
 
         // nothing found. nothing to crawl
         if ( !htmlCrawlers.isEmpty() ) {

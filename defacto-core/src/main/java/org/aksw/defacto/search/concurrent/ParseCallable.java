@@ -35,14 +35,14 @@ public class ParseCallable implements Callable<List<ComplexProof>> {
 		
 		for ( ComplexProof proof : this.proofs ) {
 			
-			String merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(proof.getLargeContext())), "-=-");
-			proof.setTaggedLargeContext(merged);
-			
-			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(proof.getMediumContext())), "-=-");
-			proof.setTaggedMediumContext(merged);
-			
-			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(proof.getSmallContext())), "-=-");
-			proof.setTaggedSmallContext(merged);
+//			String merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(proof.getLargeContext())), "-=-");
+//			proof.setTaggedLargeContext(merged);
+//			
+//			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(proof.getMediumContext())), "-=-");
+//			proof.setTaggedMediumContext(merged);
+//			
+//			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(proof.getSmallContext())), "-=-");
+//			proof.setTaggedSmallContext(merged);
 		}
 		
 		NlpModelManager.getInstance().releaseModel(this.nerTagger);

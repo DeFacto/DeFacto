@@ -2,20 +2,25 @@ package org.aksw.defacto;
 
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
+import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.ml.feature.AbstractFeature;
 import org.aksw.defacto.ml.feature.EvidenceFeatureExtractor;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
@@ -31,11 +36,18 @@ import org.aksw.defacto.util.TimeUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
+import org.ini4j.Ini;
 
 import weka.core.Instance;
 
+import com.github.gerbsen.math.Frequency;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
+import com.hp.hpl.jena.vocabulary.RDFS;
 
 /**
  * 
@@ -266,5 +278,58 @@ public class Defacto {
 
             e.printStackTrace();
         }        
+    }
+    
+public static void main(String[] args) throws Exception {
+	org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
+    	Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto.ini")));
+		ResultSet rs = new QueryEngineHTTP("http://dbpedia.org/sparql", 
+				"SELECT  * WHERE {?s <http://dbpedia.org/ontology/spouse> ?o. ?s rdfs:label ?s_l. " +
+				"?o rdfs:label ?o_l. filter(lang(?s_l)='en' && lang(?o_l)='en')} order by desc(<LONG::IRI_RANK> (?s)) limit 100").execSelect();
+		List<DefactoModel> models = new ArrayList<DefactoModel>();
+		Map<String,Set<String>> sites = new HashMap<String, Set<String>>();
+		while(rs.hasNext()){
+			Model model = ModelFactory.createDefaultModel();
+			QuerySolution qs = rs.next();
+			String s = qs.getResource("s").getURI();
+			String o = qs.getResource("o").getURI();
+			String s_l = qs.getLiteral("s_l").getLexicalForm();
+			String o_l = qs.getLiteral("o_l").getLexicalForm();
+			String p = "http://dbpedia.org/ontology/spouse";
+			
+			Resource quentin = model.createResource(s);
+	        quentin.addProperty(RDFS.label, s_l);
+	        Resource deathProof = model.createResource(o);
+	        deathProof.addProperty(RDFS.label, o_l);
+	        deathProof.addProperty(model.createProperty(p), quentin);
+	        String triple = s + " " + p + " " + o;
+	        
+	        System.out.println(triple);
+	        Evidence ev = checkFact(new DefactoModel(model, "quentin", true), TIME_DISTRIBUTION_ONLY.YES);
+	        Set<String> urls = new HashSet<String>();
+	        for (WebSite ws : ev.getAllWebSites()) {
+				urls.add(ws.getUrl());
+			}
+	        sites.put(triple, urls);
+		}
+		
+		Frequency f = new Frequency();
+		
+		for (Entry<String, Set<String>> entry : sites.entrySet()) {
+			String key = entry.getKey();
+			Set<String> value = entry.getValue();
+			for (String v : value) {
+				try {
+					f.addValue(new URL(v).getHost());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		List<Entry<Comparable<?>, Long>> value = f.sortByValue();
+		for (Entry<Comparable<?>, Long> entry : value) {
+			System.out.println(entry.getKey() + ": " + entry.getValue());
+		}
+        
     }
 }
