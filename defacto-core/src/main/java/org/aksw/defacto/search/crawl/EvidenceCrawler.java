@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
-import org.aksw.defacto.DefactoModel;
+import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.boa.BoaPatternSearcher;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.cache.Cache;
@@ -27,9 +27,11 @@ import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.Match;
 import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.search.cache.solr.Solr4SearchResultCache;
 import org.aksw.defacto.search.concurrent.HtmlCrawlerCallable;
-import org.aksw.defacto.search.concurrent.ParseCallable;
+import org.aksw.defacto.search.concurrent.RegexParseCallable;
+import org.aksw.defacto.search.concurrent.StanfordParseCallable;
 import org.aksw.defacto.search.concurrent.WebSiteScoreCallable;
 import org.aksw.defacto.search.engine.SearchEngine;
 import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
@@ -73,7 +75,7 @@ public class EvidenceCrawler {
      * 
      * @return
      */
-    public Evidence crawlEvidence(String subjectLabel, String objectLabel) {
+    public Evidence crawlEvidence() {
 
         Set<SearchResult> searchResults = this.generateSearchResultsInParallel();
         
@@ -83,7 +85,7 @@ public class EvidenceCrawler {
         Long totalHitCount = 0L; // sum over the n*m query results        
         for ( SearchResult result : searchResults ) totalHitCount += result.getTotalHitCount();  
                 
-        Evidence evidence = new Evidence(model, totalHitCount, subjectLabel, objectLabel);
+        Evidence evidence = new Evidence(model, totalHitCount);
         // basically downloads all websites in parallel
         crawlSearchResults(searchResults, model, evidence);
         // tries to find proofs and possible proofs and scores those
@@ -135,14 +137,7 @@ public class EvidenceCrawler {
             
             for ( Future<SearchResult> result : executor.invokeAll(searchResultCallables)) {
 
-                try {
-                    
-                    results.add(result.get());
-                }
-                catch (ExecutionException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                results.add(result.get());
             }
             executor.shutdownNow();
         }
@@ -158,7 +153,10 @@ public class EvidenceCrawler {
 
     	// ########################################
     	// 1. Get the BOA patterns
-        evidence.setBoaPatterns(new BoaPatternSearcher().getNaturalLanguageRepresentations(model.getPropertyUri(), 200, 0.5));
+//        evidence.setBoaPatterns(new BoaPatternSearcher().getNaturalLanguageRepresentations(model.getPropertyUri(), 200, 0.5, language));
+        evidence.setBoaPatterns("en", new ArrayList<Pattern>());
+        evidence.setBoaPatterns("de", new ArrayList<Pattern>());
+        evidence.setBoaPatterns("fr", new ArrayList<Pattern>());
         
         // ########################################
     	// 2. Score the websites 
@@ -175,38 +173,17 @@ public class EvidenceCrawler {
         
         // ########################################
     	// 3. parse the pages to look for dates
-        List<ParseCallable> parsers = new ArrayList<ParseCallable>();
+        List<RegexParseCallable> parsers = new ArrayList<RegexParseCallable>();
         List<ComplexProof> proofs = new ArrayList<ComplexProof>(evidence.getComplexProofs());
         
         // create |CPU|/2 parsers for n websites and split them to the parsers
         for ( List<ComplexProof> proofsSublist : ListUtil.split(proofs, (proofs.size() / (Runtime.getRuntime().availableProcessors() / 2)) + 1)) 
-        	parsers.add(new ParseCallable(proofsSublist)); // TODO inject the named entity tagger here, otherwise we create it with every triple
+        	parsers.add(new RegexParseCallable(proofsSublist)); // TODO inject the named entity tagger here, otherwise we create it with every triple
         
         this.logger.info(String.format("Creating thread pool for %s parsers!", parsers.size()));
         executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(
         		Defacto.DEFACTO_CONFIG.getIntegerSetting("extract", "NUMBER_NLP_STANFORD_MODELS")), parsers);
         this.extractDates(evidence);
-        
-        System.out.println("SMALL");
-        
-        for ( Map.Entry<String, Long> entry : evidence.smallContextYearOccurrences.entrySet()) {
-        	
-        	System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
-        
-        System.out.println("MEDIUM");
-        
-        for ( Map.Entry<String, Long> entry : evidence.mediumContextYearOccurrences.entrySet()) {
-        	
-        	System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
-        
-        System.out.println("LARGE");
-        
-        for ( Map.Entry<String, Long> entry : evidence.largeContextYearOccurrences.entrySet()) {
-        	
-        	System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
     }
 
     /**
@@ -258,17 +235,21 @@ public class EvidenceCrawler {
      */
     private void extractDates(Evidence evidence) {
     	
+    	Frequency tinyContextFrequency = new Frequency();
     	Frequency smallContextFrequency = new Frequency();
     	Frequency mediumContextFrequency = new Frequency();
     	Frequency largeContextFrequency = new Frequency();
     	
     	for ( ComplexProof proof : evidence.getComplexProofs() ) {
-    		
+
+    		addFrequency(proof.getTinyContext(), proof.getTaggedTinyContext(), proof, tinyContextFrequency, evidence);
     		addFrequency(proof.getSmallContext(), proof.getTaggedSmallContext(), proof, smallContextFrequency, evidence);
     		addFrequency(proof.getMediumContext(), proof.getTaggedMediumContext(), proof, mediumContextFrequency, evidence);
     		addFrequency(proof.getLargeContext(), proof.getTaggedLargeContext(), proof, largeContextFrequency, evidence);
     	}
     	
+    	for ( Map.Entry<Comparable<?>, Long> entry : tinyContextFrequency.sortByValue()) 
+    		evidence.tinyContextYearOccurrences.put((String) entry.getKey(), entry.getValue());
     	for ( Map.Entry<Comparable<?>, Long> entry : smallContextFrequency.sortByValue()) 
     		evidence.smallContextYearOccurrences.put((String) entry.getKey(), entry.getValue());
     	for ( Map.Entry<Comparable<?>, Long> entry : mediumContextFrequency.sortByValue()) 

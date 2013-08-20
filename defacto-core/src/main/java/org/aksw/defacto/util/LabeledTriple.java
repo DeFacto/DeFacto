@@ -1,6 +1,7 @@
 package org.aksw.defacto.util;
 
-import org.aksw.defacto.DefactoModel;
+import org.aksw.defacto.OldDefactoModel;
+import org.aksw.defacto.model.DefactoModel;
 
 /**
  * 
@@ -33,9 +34,9 @@ public class LabeledTriple implements Comparable<LabeledTriple> {
 		predicateURI = model.getPropertyUri();
 		objectURI = model.getObjectUri();
 		
-		subjectLabel = model.getSubjectLabel();
+		subjectLabel = model.getSubjectLabel("en");
 //		model.getResource(predicateURI).getProperty(RDFS.label);
-		objectLabel = model.getObjectLabel();
+		objectLabel = model.getObjectLabel("en");
 		
 //		System.out.println(model);
 //		

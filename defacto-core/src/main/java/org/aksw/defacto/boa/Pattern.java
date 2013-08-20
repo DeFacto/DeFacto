@@ -12,11 +12,22 @@ public class Pattern {
     public String naturalLanguageRepresentationNormalized = "";
     public String naturalLanguageRepresentationWithoutVariables = "";
     public String naturalLanguageRepresentation = "";
+    public String language = "";
     public Double boaScore = 0D;
     public Double naturalLanguageScore = 0D;
     public String posTags = "";
     
-    /* (non-Javadoc)
+    public Pattern(String naturalLanguageRepresentation, String language) {
+    	
+    	this.naturalLanguageRepresentation = naturalLanguageRepresentation;
+    	this.language = language;
+	}
+
+	public Pattern() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
@@ -62,39 +73,41 @@ public class Pattern {
     }
     
     /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((naturalLanguageRepresentation == null) ? 0 : naturalLanguageRepresentation.hashCode());
-        return result;
-    }
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((language == null) ? 0 : language.hashCode());
+		result = prime * result + ((naturalLanguageRepresentation == null) ? 0 : naturalLanguageRepresentation.hashCode());
+		return result;
+	}
 
     /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Pattern other = (Pattern) obj;
-        if (naturalLanguageRepresentation == null) {
-            if (other.naturalLanguageRepresentation != null)
-                return false;
-        }
-        else
-            if (!naturalLanguageRepresentation.equals(other.naturalLanguageRepresentation))
-                return false;
-        return true;
-    }
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pattern other = (Pattern) obj;
+		if (language == null) {
+			if (other.language != null)
+				return false;
+		} else if (!language.equals(other.language))
+			return false;
+		if (naturalLanguageRepresentation == null) {
+			if (other.naturalLanguageRepresentation != null)
+				return false;
+		} else if (!naturalLanguageRepresentation.equals(other.naturalLanguageRepresentation))
+			return false;
+		return true;
+	}
     
     /**
      * @return true if the pattern starts with ?D?

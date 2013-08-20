@@ -3,6 +3,12 @@
  */
 package org.aksw.defacto;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.semanticweb.yars.nx.namespace.RDFS;
+import org.semanticweb.yars.nx.namespace.SKOS;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
@@ -12,7 +18,7 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
  *
  */
-public class DefactoModel {
+public class OldDefactoModel {
 
     private Model model;
     private String name;
@@ -28,7 +34,7 @@ public class DefactoModel {
      * @param name - the name of the file we got the model from
      * @param correct is the fact contained in this model correct?
      */
-    public DefactoModel(Model model, String name, boolean isCorrect) {
+    public OldDefactoModel(Model model, String name, boolean isCorrect) {
         
         this.model      = model;
         this.name       = name;
@@ -44,11 +50,12 @@ public class DefactoModel {
     }
     
     /**
+     * @param language 
      * @return the label of the subject of the fact
      */
-    public String getSubjectLabel() {
+    public String getSubjectLabel(String language) {
         
-        return this.getLabel(this.getSubjectUri());
+        return this.getLabel(this.getSubjectUri(), language);
     }
     
     /**
@@ -68,31 +75,42 @@ public class DefactoModel {
     }
     
     /**
+     * @param language 
      * @return label of the object of the fact
      */
-    public String getObjectLabel() {
+    public String getObjectLabel(String language) {
         
-        return this.getLabel(this.getObjectUri());
+        return this.getLabel(this.getObjectUri(), language);
     }
     
     /**
      * @param uri of the resource the labels want to be resolved for
+     * @param language 
      * @return the label of the given uri, also if the label contains text between "(" and ")" this is stripped and trimed
      */
-    private String getLabel(String uri) {
+    private String getLabel(String uri, String language) {
         
-        String label = "";
+        String label = "", backup = "";
         
         StmtIterator iter = this.model.listStatements();
         while (iter.hasNext()) {
             
             Statement stmt = iter.nextStatement();
             // adds the labels into the map
-            if ( stmt.getPredicate().getURI().equals(Defacto.DEFACTO_CONFIG.getStringSetting("settings", "RESOURCE_LABEL")) && stmt.getSubject().getURI().equals(uri) )
-                label = stmt.getObject().asLiteral().getLexicalForm().replaceAll("\\(.+?\\)", "").trim();
+            if ( stmt.getPredicate().getURI().equals(Defacto.DEFACTO_CONFIG.getStringSetting("settings", "RESOURCE_LABEL")) && stmt.getSubject().getURI().equals(uri) ) {
+            	
+            	if ( stmt.getObject().asLiteral().getLanguage().equals(language) ) {
+            		
+            		label = stmt.getObject().asLiteral().getLexicalForm().replaceAll("\\(.+?\\)", "").trim();
+            	}
+            	if ( stmt.getObject().asLiteral().getLanguage().equals("en") ) {
+            		
+            		backup = stmt.getObject().asLiteral().getLexicalForm().replaceAll("\\(.+?\\)", "").trim();
+            	}
+            }
         }
         
-        return label;
+        return label != null && !label.isEmpty() ? label : backup;
     }
     
     /**
@@ -179,4 +197,57 @@ public class DefactoModel {
 
         return this.getFact().toString();
     }
+
+    /**
+     * 
+     * @param subjectUri
+     * @param language
+     * @return
+     */
+	public Set<String> getSubjectLabels(String subjectUri, String language) {
+		return this.getLabels(subjectUri, language);
+	}
+	
+	public Set<String> getSubjectLabels(String subjectUri){
+		
+		Set<String> labels =  new HashSet<String>();
+		labels.addAll(this.getLabels(subjectUri, "en"));
+		labels.addAll(this.getLabels(subjectUri, "de"));
+		labels.addAll(this.getLabels(subjectUri, "fr"));
+		
+		return labels;
+	}
+
+	private Set<String> getLabels(String subjectUri, String language) {
+		
+		StmtIterator iter = this.model.listStatements();
+		Set<String> labels = new HashSet<String>();
+        
+        while (iter.hasNext()) {
+            
+            Statement stmt = iter.nextStatement();
+            // adds the labels into the map
+            if ( stmt.getPredicate().getURI().equals(RDFS.LABEL) || stmt.getPredicate().getURI().equals(SKOS.NS + "altLabel")) {
+                
+                if ( stmt.getObject().asLiteral().getLanguage().equals(language) ) labels.add(stmt.getObject().asLiteral().getLexicalForm()); 
+            }
+                
+        }
+		return labels;
+	}
+
+	/**
+	 * 
+	 * @param objectUri
+	 * @param language
+	 * @return
+	 */
+	public Set<String> getObjectLabels(String objectUri) {
+		Set<String> labels =  new HashSet<String>();
+		labels.addAll(this.getLabels(objectUri, "en"));
+		labels.addAll(this.getLabels(objectUri, "de"));
+		labels.addAll(this.getLabels(objectUri, "fr"));
+		
+		return labels;
+	}
 }

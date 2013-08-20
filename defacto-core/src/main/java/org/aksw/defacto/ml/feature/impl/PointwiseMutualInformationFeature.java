@@ -34,20 +34,20 @@ public class PointwiseMutualInformationFeature extends AbstractFeature {
         DefaultSearchEngine engine = new AzureBingSearchEngine();
         BoaPatternSearcher searcher = new BoaPatternSearcher();
         
-        String subjectLabel = evidence.getModel().getSubjectLabel();
-        String propertyUri  = evidence.getModel().getPropertyUri();
-        String objectLabel  = evidence.getModel().getObjectLabel();
-
-        MetaQuery queryWithoutPattern   = new MetaQuery(String.format("%s|-|%s|-|%s", subjectLabel, "??? NONE ???", objectLabel));
-        Long without = engine.getNumberOfResults(queryWithoutPattern);
-        
-        for ( Pattern pattern : searcher.getNaturalLanguageRepresentations(propertyUri)) {
-            
-            MetaQuery queryWithPattern      = new MetaQuery(String.format("%s|-|%s|-|%s", subjectLabel, pattern.naturalLanguageRepresentation, objectLabel));
-            Long with = engine.getNumberOfResults(queryWithPattern);
-            
-            System.out.println(String.format("With: %s - Without:%s Ratio: %s", with, without, (double) with / (double) without));
-        }
+//        String subjectLabel = evidence.getModel().getSubjectLabel();
+//        String propertyUri  = evidence.getModel().getPropertyUri();
+//        String objectLabel  = evidence.getModel().getObjectLabel();
+//
+//        MetaQuery queryWithoutPattern   = new MetaQuery(String.format("%s|-|%s|-|%s", subjectLabel, "??? NONE ???", objectLabel));
+//        Long without = engine.getNumberOfResults(queryWithoutPattern);
+//        
+//        for ( Pattern pattern : searcher.getNaturalLanguageRepresentations(propertyUri)) {
+//            
+//            MetaQuery queryWithPattern      = new MetaQuery(String.format("%s|-|%s|-|%s", subjectLabel, pattern.naturalLanguageRepresentation, objectLabel));
+//            Long with = engine.getNumberOfResults(queryWithPattern);
+//            
+//            System.out.println(String.format("With: %s - Without:%s Ratio: %s", with, without, (double) with / (double) without));
+//        }
     }
     
 //    public static void main(String[] args) {

@@ -54,10 +54,12 @@ public class TopicTermExtractor {
      * @param objectLabel
      * @return
      */
-    private static List<Word> getPotentialTopicTerms(String subjectLabel, String objectLabel) {
+    private static List<Word> getPotentialTopicTerms(String... labels) {
     	
-    	List<Word> topics = getPotentialTopicTermsFor(subjectLabel);
-    	topics.addAll(getPotentialTopicTermsFor(objectLabel));
+    	List<Word> topics = new ArrayList<Word>();
+    	for ( String label : labels ) 
+    		topics.addAll(getPotentialTopicTermsFor(label));
+    	
     	return new ArrayList<Word>(mergeTopicTerms(topics).values());
     }
     
@@ -246,13 +248,16 @@ public class TopicTermExtractor {
     }
 
     /**
+     * TODO uncomment
+     * 
      * 
      * @param evidence
      * @return
      */
     public static List<Word> getTopicTerms(Evidence evidence) {
         
-        List<Word> potentialTopicTerms = getPotentialTopicTerms(evidence.getSubjectLabel(), evidence.getObjectLabel());
+        List<Word> potentialTopicTerms = new ArrayList<Word>();
+        //getPotentialTopicTerms(evidence.getModel().getSubjectLabels(subjectUri).getSubjectLabel(), evidence.getObjectLabel());
         
         Set<WebSite> websites = new HashSet<WebSite>();
         for ( List<WebSite> sites : evidence.getWebSites().values() ) websites.addAll(sites);
@@ -260,17 +265,17 @@ public class TopicTermExtractor {
         Iterator<Word> topicTermsIterator = potentialTopicTerms.iterator();
         while ( topicTermsIterator.hasNext() ) {
             
-            Word topicTerm = topicTermsIterator.next();
-            boolean isTopicTerm = TopicTermExtractor.isTopicTerm(websites, evidence.getSubjectLabel(), evidence.getObjectLabel(), topicTerm);
-            
-            // TODO if we leave it like this a topic term would then be only a topic term if it's a topic term for ALL website results
-            if ( !isTopicTerm ) {
-                
-                logger.debug("Removing topic term: " + topicTerm.getWord());
-                topicTermsIterator.remove();
-            }
+//            Word topicTerm = topicTermsIterator.next();
+//            boolean isTopicTerm = TopicTermExtractor.isTopicTerm(websites, evidence.getSubjectLabel(), evidence.getObjectLabel(), topicTerm);
+//            
+//            // TODO if we leave it like this a topic term would then be only a topic term if it's a topic term for ALL website results
+//            if ( !isTopicTerm ) {
+//                
+//                logger.debug("Removing topic term: " + topicTerm.getWord());
+//                topicTermsIterator.remove();
+//            }
         }
-        logger.info(evidence.getSubjectLabel() +" | "+ evidence.getObjectLabel() + ": " + StringUtils.join(potentialTopicTerms, ", "));
+//        logger.info(evidence.getSubjectLabel() +" | "+ evidence.getObjectLabel() + ": " + StringUtils.join(potentialTopicTerms, ", "));
         
         return potentialTopicTerms;
     }

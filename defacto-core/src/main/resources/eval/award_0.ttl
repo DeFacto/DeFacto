@@ -1,0 +1,25 @@
+@prefix fbase:   <http://rdf.freebase.com/ns> .
+@prefix dbr:     <http://dbpedia.org/resource/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:     <http://dbpedia.org/ontology/> .
+@prefix fr-dbr:  <http://fr.dbpedia.org/resource/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix de-dbr:  <http://de.dbpedia.org/resource/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.05f3q>
+      rdfs:label "Prix Nobel de la paix"@fr , "Friedensnobelpreis"@de , "Nobel Peace Prize"@en ;
+      owl:sameAs fr-dbr:Nobel_Peace_Prize , dbr:Nobel_Peace_Prize , de-dbr:Nobel_Peace_Prize ;
+      skos:altLabel "Prix nobel de la Paix"@fr , "Nobel de la paix"@fr , "2012 Nobel Peace Prize"@fr , "2012 Nobel Peace Prize"@de , "2012 Nobel Peace Prize"@en , "Friedensnobelpreis"@de , "2001 Nobel Peace Prize"@de , "2001 Nobel Peace Prize"@fr , "2001 Nobel Peace Prize"@en , "Nobel Peace Laureate"@en , "Nobel Peace Laureate"@fr , "Nobel Peace Laureate"@de , "Prix Nobel de la Paix"@fr , "Nobel Prize for Peace"@en , "Nobel Prize for Peace"@fr , "Nobel Prize for Peace"@de , "Nobel Peace"@de , "Nobel Peace"@fr , "Nobel Peace"@en , "Nobel Peace Prize Winner"@fr , "Nobel Peace Prize Winner"@de , "Nobel Peace Prize Winner"@en , "Peace Nobel"@en , "Peace Nobel"@fr , "Peace Nobel"@de , "Nobelpreis für Frieden"@de , "Nobel prize peace"@en , "Nobel prize peace"@fr , "Nobel prize peace"@de , "Nobel Peace Price"@en , "Nobel Peace Price"@fr , "Nobel Peace Price"@de , "PeacE"@de , "PeacE"@fr , "PeacE"@en , "Nobel Prize in Peace"@de , "Nobel Prize in Peace"@en , "Nobel Prize in Peace"@fr , "Nobel Prize in peace"@de , "Nobel Prize in peace"@fr , "Nobel Prize in peace"@en , "Nobel peace laureate"@de , "Nobel peace laureate"@en , "Nobel peace laureate"@fr , "Peace Award"@de , "Peace Award"@fr , "Peace Award"@en , "Prix nobel de la paix"@fr , "Nobel Peace Prize"@de , "Nobel Peace Prize"@fr , "Nobel Peace Prize"@en , "Prix Nobel de la paix"@fr , "Peace"@de , "Peace"@fr , "Peace"@en , "Friedens-Nobelpreis"@de , "Nobel Peace prize"@en , "Nobel Peace prize"@fr , "Nobel Peace prize"@de , "Noble Peace Prize"@en , "Noble Peace Prize"@fr , "Noble Peace Prize"@de , "Nobel Peace Prixe"@fr , "Nobel Peace Prixe"@de , "Nobel Peace Prixe"@en , "Nobel peace prize"@en , "Nobel peace prize"@de , "Nobel peace prize"@fr , "Nobel peace"@fr , "Nobel peace"@en , "Nobel peace"@de , "Nobelpreis fur Frieden"@de , "Peace Prize"@de , "Peace Prize"@fr , "Peace Prize"@en .
+
+<http://rdf.freebase.com/ns/m.0966l>
+      rdfs:label "Henry Dunant"@en , "Henry Dunant"@de , "Henri Dunant"@fr ;
+      dbo:recievedAward <http://rdf.freebase.com/ns/m.0966l_0> ;
+      owl:sameAs fr-dbr:Henry_Dunant , de-dbr:Henry_Dunant , dbr:Henry_Dunant ;
+      skos:altLabel "Jean-Henri Dunant"@de , "Jean-Henri Dunant"@fr , "Jean-Henri Dunant"@en , "Henri Dunant"@de , "Henri Dunant"@fr , "Henri Dunant"@en , "Grave of Henry Dunant"@en , "Grave of Henry Dunant"@fr , "Grave of Henry Dunant"@de , "Jean H. Dunant"@fr , "Jean H. Dunant"@en , "Jean H. Dunant"@de , "Jean Dunant"@en , "Jean Dunant"@fr , "Jean Dunant"@de , "Jean-Henri"@de , "Jean-Henri"@fr , "Jean-Henri"@en , "Henry Dunant"@fr , "Henry Dunant"@en , "Henry Dunant"@de , "Jean Henri Dunant"@fr , "Jean Henri Dunant"@en , "Jean Henri Dunant"@de , "Dunant"@en , "Dunant"@fr , "Dunant"@de .
+
+<http://rdf.freebase.com/ns/m.0966l_0>
+      dbo:award <http://rdf.freebase.com/ns/m.05f3q> ;
+      dbo:from "1901"^^xsd:gYear ;
+      dbo:to  "1901"^^xsd:gYear .

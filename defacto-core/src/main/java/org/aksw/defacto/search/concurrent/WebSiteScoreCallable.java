@@ -6,10 +6,11 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.DefactoModel;
+import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
 import org.aksw.defacto.util.PageRank;
 import org.apache.log4j.Logger;

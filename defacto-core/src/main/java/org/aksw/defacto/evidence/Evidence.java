@@ -11,9 +11,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.DefactoModel;
+import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.AbstractFeature;
+import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.VectorUtil;
 import org.apache.commons.lang3.ArrayUtils;
@@ -32,19 +33,19 @@ public class Evidence {
 //    private Map<Pattern,Double[][]> similarityMatricies = new LinkedHashMap<Pattern,Double[][]>();
     private Double[][] similarityMatrix                 = null;
     
+    public Map<String,Long> tinyContextYearOccurrences = new LinkedHashMap<String, Long>();
     public Map<String,Long> smallContextYearOccurrences = new LinkedHashMap<String, Long>();
     public Map<String,Long> mediumContextYearOccurrences = new LinkedHashMap<String, Long>();
     public Map<String,Long> largeContextYearOccurrences = new LinkedHashMap<String, Long>();
     
     private Instance features;
     private Long totalHitCount;
-    private String subjectLabel;
-    private String objectLabel;
     private double deFactoScore;
     
     private Set<ComplexProof> complexProofs;
-    private List<Pattern> boaPatterns;
+    private Map<String,List<Pattern>> boaPatterns = new HashMap<String,List<Pattern>>();
 	public List<Match> dates = new ArrayList<Match>();
+	
     
     /**
      * 
@@ -53,12 +54,10 @@ public class Evidence {
      * @param subjectLabel
      * @param objectLabel
      */
-    public Evidence(DefactoModel model, Long totalHitCount, String subjectLabel, String objectLabel) {
+    public Evidence(DefactoModel model, Long totalHitCount) {
 
         this.model              = model;
         this.totalHitCount      = totalHitCount;
-        this.subjectLabel       = subjectLabel;
-        this.objectLabel        = objectLabel;
         this.complexProofs      = new HashSet<ComplexProof>();
     }
 
@@ -179,24 +178,6 @@ public class Evidence {
 
     /**
      * 
-     * @return
-     */
-    public String getSubjectLabel() {
-
-        return this.subjectLabel;
-    }
-
-    /**
-     * 
-     * @return
-     */
-    public String getObjectLabel() {
-
-        return this.objectLabel;
-    }
-
-    /**
-     * 
      */
     public void setTopicTermVectorForWebsites() {
 
@@ -310,9 +291,9 @@ public class Evidence {
         return websites;
     }
 
-    public void setBoaPatterns(List<Pattern> naturalLanguageRepresentations) {
+    public void setBoaPatterns(String language, List<Pattern> naturalLanguageRepresentations) {
 
-        this.boaPatterns = naturalLanguageRepresentations;
+        this.boaPatterns.put(language,naturalLanguageRepresentations);
     }
 
     
@@ -321,7 +302,11 @@ public class Evidence {
      */
     public List<Pattern> getBoaPatterns() {
     
-        return boaPatterns;
+    	List<Pattern> patterns = new ArrayList<Pattern>();
+    	if ( this.boaPatterns.get("en") != null ) patterns.addAll(this.boaPatterns.get("en") );
+    	if ( this.boaPatterns.get("de") != null ) patterns.addAll(this.boaPatterns.get("de") );
+    	if ( this.boaPatterns.get("fr") != null ) patterns.addAll(this.boaPatterns.get("fr") );
+        return patterns;
     }
 
 	public void addDate(String match, int distance) {

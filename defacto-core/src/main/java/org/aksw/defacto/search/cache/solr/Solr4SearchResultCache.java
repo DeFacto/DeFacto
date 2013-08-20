@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.aksw.defacto.Constants;
+import org.aksw.defacto.Defacto;
 import org.aksw.defacto.cache.Cache;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.query.MetaQuery;
@@ -43,7 +44,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
 	
 	public Solr4SearchResultCache(){
 
-		server = new HttpSolrServer("http://[2001:638:902:2010:0:168:35:138]:8080/solr/en_defacto_searchresults");
+		server = new HttpSolrServer(Defacto.DEFACTO_CONFIG.getStringSetting("crawl", "solr_searchresults"));
 		server.setRequestWriter(new BinaryRequestWriter());
 	}
 	
@@ -53,7 +54,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
 		SolrQuery query = new SolrQuery(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD + ":\"" + identifier + "\"").setRows(1);
         QueryResponse response = this.querySolrServer(query);
         SolrDocumentList docList = response.getResults();
-		return docList == null ? false : docList.size() > 0 ? true : false;
+        return docList == null ? false : docList.size() > 0 ? true : false;
 	}
 
 	@Override
@@ -72,6 +73,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
     	query.addField(Constants.LUCENE_SEARCH_RESULT_CONTENT_FIELD);
     	query.addField(Constants.LUCENE_SEARCH_RESULT_TITLE_FIELD);
     	query.addField(Constants.LUCENE_SEARCH_RESULT_TAGGED_FIELD);
+    	query.addField(Constants.LUCENE_SEARCH_RESULT_LANGUAGE);
         QueryResponse response = this.querySolrServer(query);
         
         for ( SolrDocument doc : response.getResults()) {
@@ -87,6 +89,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
                 site.setText((String) doc.get(Constants.LUCENE_SEARCH_RESULT_CONTENT_FIELD));
                 site.setTitle((String) doc.get(Constants.LUCENE_SEARCH_RESULT_TITLE_FIELD));
                 site.setTaggedText((String) doc.get(Constants.LUCENE_SEARCH_RESULT_TAGGED_FIELD));
+                site.setLanguage((String) doc.get(Constants.LUCENE_SEARCH_RESULT_LANGUAGE));
                 site.setCached(true);
                 websites.add(site);
             }
@@ -163,6 +166,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
             solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_CONTENT_FIELD, "");
             solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_TAGGED_FIELD, "");
             solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD, entry.getQuery().toString());
+            solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_LANGUAGE, entry.getQuery().getLanguage());
             documents.add(solrDocument);
         }
         else {
@@ -180,6 +184,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_CONTENT_FIELD, site.getText());
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_TAGGED_FIELD, site.getTaggedText());
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD, entry.getQuery().toString());
+                solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_LANGUAGE, entry.getQuery().getLanguage());
                 documents.add(solrDocument);
             }
         }

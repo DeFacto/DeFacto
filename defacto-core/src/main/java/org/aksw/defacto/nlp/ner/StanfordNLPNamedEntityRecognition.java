@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.aksw.defacto.Constants;
 import org.aksw.defacto.nlp.sbd.StanfordNLPSentenceBoundaryDisambiguation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -24,7 +25,6 @@ import edu.stanford.nlp.ling.CoreLabel;
  */
 public class StanfordNLPNamedEntityRecognition {
 
-	private static final String NAMED_ENTITY_TAG_DELIMITER = "_";
     private final Logger logger	= Logger.getLogger(StanfordNLPNamedEntityRecognition.class);
 	private final String classifierPath	= "edu/stanford/nlp/models/ner/english.muc.7class.distsim.crf.ser.gz";
 	
@@ -83,7 +83,7 @@ public class StanfordNLPNamedEntityRecognition {
 				
 				String normalizedTag = NamedEntityTagNormalizer.NAMED_ENTITY_TAG_MAPPINGS.get(word.get(AnswerAnnotation.class));
 				if ( normalizedTag == null ) System.out.println(word.word() + " for tag: " + word.get(AnswerAnnotation.class));
-				sentenceTokens.add(word.word() + NAMED_ENTITY_TAG_DELIMITER + normalizedTag);
+				sentenceTokens.add(word.word() + Constants.NAMED_ENTITY_TAG_DELIMITER + normalizedTag);
 			}
 		}
 		return StringUtils.join(sentenceTokens, " ");

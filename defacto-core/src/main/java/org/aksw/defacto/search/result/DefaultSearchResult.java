@@ -37,6 +37,11 @@ public class DefaultSearchResult implements SearchResult {
 
         return this.totalHitCount;
     }
+    
+    public String getLanguage() {
+    	
+    	return this.query.getLanguage();
+    }
 
     @Override
     public List<WebSite> getWebSites() {

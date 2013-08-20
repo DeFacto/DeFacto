@@ -27,7 +27,8 @@ public class WebSite {
     private Double topicMajoritySearch = 0D;
     private Double pageRankScore = 0D;
     private Double topicCoverageScore = 0D;
-	private String annotatedSentences; 
+	private String annotatedSentences;
+	private String language =""; 
     
     /**
      * 
@@ -277,5 +278,14 @@ public class WebSite {
 	public void setTaggedText(String annotatedSentences) {
 		
 		this.annotatedSentences = annotatedSentences;
+	}
+
+	public void setLanguage(String language) {
+		
+		this.language  = language;
+	}
+
+	public String getLanguage() {
+		return this.language;
 	}
 }

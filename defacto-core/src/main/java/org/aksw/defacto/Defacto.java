@@ -2,6 +2,7 @@ package org.aksw.defacto;
 
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -22,6 +23,7 @@ import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
 import org.aksw.defacto.ml.feature.fact.FactFeatureExtraction;
 import org.aksw.defacto.ml.feature.fact.FactScorer;
 import org.aksw.defacto.ml.score.EvidenceScorer;
+import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.search.concurrent.NlpModelManager;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
 import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
@@ -31,6 +33,8 @@ import org.aksw.defacto.util.TimeUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
+import org.ini4j.Ini;
+import org.ini4j.InvalidFileFormatException;
 
 import weka.core.Instance;
 
@@ -63,6 +67,7 @@ public class Defacto {
      */
     public static Evidence checkFact(DefactoModel model, TIME_DISTRIBUTION_ONLY onlyTimes) {
     	
+    	init();
     	Defacto.onlyTimes = onlyTimes;
     	
     	// hack to get surface forms before timing
@@ -75,15 +80,17 @@ public class Defacto {
         // 1. generate the search engine queries
         long start = System.currentTimeMillis();
         QueryGenerator queryGenerator = new QueryGenerator(model);
-        Map<Pattern,MetaQuery> queries = queryGenerator.getSearchEngineQueries();
+        Map<Pattern,MetaQuery> queries = new HashMap<Pattern,MetaQuery>();
+        for ( String language : model.getLanguages() )
+          queries.putAll(queryGenerator.getSearchEngineQueries(language));
+          
         if ( queries.size() <= 0 ) return new Evidence(model); 
         logger.info("Preparing queries took " + TimeUtil.formatTime(System.currentTimeMillis() - start));
         
         // 2. download the search results in parallel
         long startCrawl = System.currentTimeMillis();
         EvidenceCrawler crawler = new EvidenceCrawler(model, queries);
-        MetaQuery query = queries.values().iterator().next(); // every metaquery has the 
-        Evidence evidence = crawler.crawlEvidence(query.getSubjectLabel(), query.getObjectLabel());
+        Evidence evidence = crawler.crawlEvidence();
         logger.info("Crawling evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
         
         // short cut to avoid 
@@ -136,6 +143,19 @@ public class Defacto {
         return evidence;
     }
     
+    public static void init(){
+    	
+    	try {
+    		
+			Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto.ini")));
+		} catch (InvalidFileFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     
 
     /**
@@ -143,12 +163,12 @@ public class Defacto {
      * @param models
      * @return
      */
-    public static void checkFacts(DefactoConfig config, List<DefactoModel> defactoModel) {
+    public static void checkFacts(List<DefactoModel> defactoModel) {
 
+    	init();
         startTime       = System.currentTimeMillis();
         numberOfModels  = defactoModel.size();
         currentModel    = 1;
-        DEFACTO_CONFIG  = config;
         
         for (DefactoModel model : defactoModel) {
             

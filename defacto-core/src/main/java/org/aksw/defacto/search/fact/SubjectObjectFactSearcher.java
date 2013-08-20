@@ -15,11 +15,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.DefactoModel;
+import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.model.DefactoModel;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -30,7 +31,6 @@ import org.apache.log4j.Logger;
  */
 public class SubjectObjectFactSearcher implements FactSearcher {
 
-    private static final Map<String, Set<String>> urisToLabels = new HashMap<String,Set<String>>(); 
     private Logger logger = Logger.getLogger(SubjectObjectFactSearcher.class);
     private static final Set<String> stopwords = new HashSet<String>(Arrays.asList("the", "of", "and"));
     
@@ -45,10 +45,6 @@ public class SubjectObjectFactSearcher implements FactSearcher {
      * 
      */
     private SubjectObjectFactSearcher() {
-
-        logger.info("Starting to load surface forms!");
-        initializeSurfaceForms();
-        logger.info("Finished to load surface forms!");
     }
     
     /**
@@ -68,16 +64,19 @@ public class SubjectObjectFactSearcher implements FactSearcher {
     @Override
     public void generateProofs(Evidence evidence, WebSite website, DefactoModel model, Pattern pattern) {
 
-        String subjectUri   = model.getSubjectUri();
-        String objectUri    = model.getObjectUri();
         String websiteText  = website.getText().toLowerCase();
         
-        Set<String> subjectLabels  = urisToLabels.get(subjectUri.replace("http://dbpedia.org/resource/", ""));
-        Set<String> objectLabels   = urisToLabels.get(objectUri.replace("http://dbpedia.org/resource/", ""));
+        Set<String> subjectLabels = new HashSet<String>();
+        Set<String> objectLabels = new HashSet<String>();
         
-        // fallback on the labels provided by the input, no surface forms from dbpedia
-        if ( subjectLabels == null ) subjectLabels = new HashSet<String>(Arrays.asList(model.getSubjectLabel()));
-        if ( objectLabels == null ) objectLabels = new HashSet<String>(Arrays.asList(model.getObjectLabel()));
+        for ( String language : model.getLanguages() ) {
+        	
+        	subjectLabels.add(model.getSubjectLabelNoFallBack(language));
+        	subjectLabels.addAll(model.getSubjectAltLabels(language));
+        	
+        	objectLabels.add(model.getSubjectLabelNoFallBack(language));
+        	objectLabels.addAll(model.getObjectAltLabels());
+        }
         
         for ( String subjectLabel : subjectLabels ) { subjectLabel = subjectLabel.toLowerCase(); // save some time
             for ( String objectLabel : objectLabels ) { objectLabel = objectLabel.toLowerCase(); // same here
@@ -101,6 +100,8 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                 createProofsForEvidence(evidence, objectSubjectOccurrences, objectLabel, subjectLabel, websiteText, website, surfaceForms);
             }
         }
+        
+        System.out.println("#sLabels: "+  subjectLabels.size() + " #oLabels:" + objectLabels.size() + " #Proofs: " + evidence.getComplexProofs().size() + " #lang: " + model.getLanguages().size());
     }
     
     
@@ -134,6 +135,7 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                 // no boa pattern was found
                 if ( proof == null ) proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, normalizedOccurrence, site);
                 // we need to do this for both proofs
+                proof.setTinyContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25));
                 proof.setSmallContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 50));
                 proof.setMediumContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 100));
                 proof.setLargeContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 150));
@@ -185,36 +187,6 @@ public class SubjectObjectFactSearcher implements FactSearcher {
         return normalizedOccurrence.trim();
     }
 
-    /**
-     * 
-     */
-    private void initializeSurfaceForms() {
-        
-        try {
-            
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
-            		new File(SubjectObjectFactSearcher.class.getResource("/en_surface_forms.tsv").getFile()))));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                
-                String[] lineParts = line.split("\t");
-                Set<String> surfaceForms = new HashSet<String>();
-                for ( String label : Arrays.asList(Arrays.copyOfRange(lineParts, 1, lineParts.length)) ) if ( label.length() > 3 ) surfaceForms.add(label);
-                urisToLabels.put(lineParts[0], surfaceForms);
-            }
-            reader.close();
-        }
-        catch (FileNotFoundException e) {
-            
-            System.out.println("Install the surface form file to resources/cache/labels/en_uri_surface_form.tsv!");
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-
-            e.printStackTrace();
-        }
-    }
-    
     /**
      * 
      * @param normalCase

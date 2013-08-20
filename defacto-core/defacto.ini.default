@@ -1,3 +1,6 @@
+[eval]
+data-directory = /Users/gerb/Development/workspaces/experimental/defacto/mltemp/
+
 [boa]
 ; how many boa patterns should be used to search: N * NUMBER_OF_BOA_PATTERNS queries and search results will be generated
 NUMBER_OF_BOA_PATTERNS = 10
@@ -18,6 +21,12 @@ NUMBER_OF_SEARCH_THREADS = 10
 GOOGLE_WAIT_TIME = 2000
 ; get the page rank or not
 getPageRank = true
+solr_searchresults = http://localhost:8983/solr/mltemp_defacto
+solr_topicterms = http://localhost:8983/solr/topic_terms
+solr_boa_fr = http://localhost:8983/solr/fr_boa_detailed
+solr_boa_de = http://localhost:8983/solr/de_boa_detailed
+solr_boa_en = http://localhost:8983/solr/en_boa_detailed
+
 
 [server]
 ip = http://139.18.2.164/

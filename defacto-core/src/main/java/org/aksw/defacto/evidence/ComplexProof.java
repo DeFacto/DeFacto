@@ -1,8 +1,9 @@
 package org.aksw.defacto.evidence;
 
-import org.aksw.defacto.DefactoModel;
+import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
+import org.aksw.defacto.model.DefactoModel;
 
 import weka.core.Instance;
 
@@ -36,6 +37,9 @@ public class ComplexProof {
 
 	private String largeContext;
 	private String taggedLargeContext;
+
+	private String tinyContext;
+	private String taggedTinyContext;
 
     /**
      * boa pattern found
@@ -77,6 +81,11 @@ public class ComplexProof {
         this.website                  = site;
     }
 
+    public String getLanguage(){
+    	
+    	return this.website.getLanguage();
+    }
+    
     /**
      * 
      * @return
@@ -207,5 +216,29 @@ public class ComplexProof {
 	 */
 	public String getLargeContext() {
 		return largeContext;
+	}
+
+	public void setTinyContext(String tinyContext) {
+		
+		this.tinyContext = tinyContext;
+	}
+	
+	public String getTinyContext() {
+		
+		return this.tinyContext;
+	}
+
+	/**
+	 * @return the taggedTinyContext
+	 */
+	public String getTaggedTinyContext() {
+		return taggedTinyContext;
+	}
+
+	/**
+	 * @param taggedTinyContext the taggedTinyContext to set
+	 */
+	public void setTaggedTinyContext(String taggedTinyContext) {
+		this.taggedTinyContext = taggedTinyContext;
 	}
 }

@@ -12,10 +12,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.aksw.defacto.DefactoModel;
+import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.model.DefactoModel;
 import org.apache.log4j.Logger;
 
 /**
@@ -63,8 +64,8 @@ public class DefaultFactSearcher implements FactSearcher {
         Set<String> objectLabels   = urisToLabels.get(objectUri.replace("http://dbpedia.org/resource/", ""));
         
         // fallback on the labels provided by the input, no surface forms from dbpedia
-        if ( subjectLabels == null ) subjectLabels = new HashSet<String>(Arrays.asList(model.getSubjectLabel()));
-        if ( objectLabels == null ) objectLabels = new HashSet<String>(Arrays.asList(model.getObjectLabel()));
+        if ( subjectLabels == null ) subjectLabels = new HashSet<String>(Arrays.asList(model.getSubjectLabel(website.getLanguage())));
+        if ( objectLabels == null ) objectLabels = new HashSet<String>(Arrays.asList(model.getObjectLabel(website.getLanguage())));
         
         // this walks threw all occurrences of the nlr of the pattern in the text
         for ( int index = website.getText().indexOf(pattern.naturalLanguageRepresentationWithoutVariables) ; 

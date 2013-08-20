@@ -1,0 +1,25 @@
+@prefix fbase:   <http://rdf.freebase.com/ns> .
+@prefix dbr:     <http://dbpedia.org/resource/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:     <http://dbpedia.org/ontology/> .
+@prefix fr-dbr:  <http://fr.dbpedia.org/resource/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix de-dbr:  <http://de.dbpedia.org/resource/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0dvld>
+      rdfs:label "Kate Winslet"@fr , "Kate Winslet"@en , "Kate Winslet"@de ;
+      dbo:marriage <http://rdf.freebase.com/ns/m.0dvld_0> ;
+      owl:sameAs fr-dbr:Kate_Winslet , de-dbr:Kate_Winslet , dbr:Kate_Winslet ;
+      skos:altLabel "Winslet"@de , "Winslet"@fr , "Winslet"@en , "Kate"@fr , "Kate winslet"@fr , "Kate winslet"@en , "Kate winslet"@de , "Kate Winslet"@en , "Kate Winslet"@de , "Kate Winslet"@fr , "English Rose"@fr , "English Rose"@en , "List of Kate Winslet awards and nominations"@en , "List of Kate Winslet awards and nominations"@fr , "List of Kate Winslet awards and nominations"@de , "Corset Kate"@fr , "Corset Kate"@en , "Kate Winslett"@de , "Kate Winslett"@en , "Kate Winslett"@fr , "Kate Elizabeth Winslet, CBE"@en , "Kate Elizabeth Winslet, CBE"@fr , "Kate Elizabeth Winslet"@en , "Kate Elizabeth Winslet"@fr , "Roger Winslet"@de , "Roger Winslet"@fr , "Roger Winslet"@en .
+
+<http://rdf.freebase.com/ns/m.01j2xj>
+      rdfs:label "Sam Mendes"@fr , "Sam Mendes"@de , "Sam Mendes"@en ;
+      owl:sameAs de-dbr:Sam_Mendes , dbr:Sam_Mendes , fr-dbr:Sam_Mendes ;
+      skos:altLabel "Samuel Alexander Mendes"@en , "Samuel Alexander Mendes"@de , "Samuel Alexander Mendes"@fr , "Sam Mendès"@fr , "Samuel Alexander \"Sam\" Mendes"@en , "Mendes"@de , "Midas Mendes"@en , "Sam Mendes"@de , "Sam Mendes"@fr , "Sam Mendes"@en .
+
+<http://rdf.freebase.com/ns/m.0dvld_0>
+      dbo:from "2003-05-24"^^xsd:date ;
+      dbo:spouse <http://rdf.freebase.com/ns/m.01j2xj> ;
+      dbo:to  "2010"^^xsd:gYear .

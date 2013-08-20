@@ -1,9 +1,10 @@
 package org.aksw.defacto.search.fact;
 
-import org.aksw.defacto.DefactoModel;
+import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.model.DefactoModel;
 
 /**
  * 

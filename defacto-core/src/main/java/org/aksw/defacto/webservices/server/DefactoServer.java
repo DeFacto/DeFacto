@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.aksw.defacto.webservices;
+package org.aksw.defacto.webservices.server;
 
 /**
  *
@@ -12,7 +12,6 @@ package org.aksw.defacto.webservices;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
 import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 
@@ -26,22 +25,24 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+
 import javax.ws.rs.core.UriBuilder;
 
 /**
  *
  * @author ngonga
  */
-public class ServiceMain {
+public class DefactoServer {
 
-    static Logger log = Logger.getLogger(ServiceMain.class.toString());
+    public static Logger log = Logger.getLogger(DefactoServer.class.toString());
     
-
     private static URI getBaseURI() {
     	
     	try {
+    		Defacto.init();
 			Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto.ini")));
 		} catch (InvalidFileFormatException e) {
 			// TODO Auto-generated catch block
@@ -57,9 +58,14 @@ public class ServiceMain {
     public static final URI BASE_URI = getBaseURI();
 
     protected static HttpServer startServer() throws IOException {
-        System.out.println("Starting grizzly...");
-        ResourceConfig rc = new PackagesResourceConfig("org.aksw.defacto.webservices");
-        return GrizzlyServerFactory.createHttpServer(BASE_URI, rc);
+
+    	ResourceConfig rc = new PackagesResourceConfig("org.aksw.defacto.webservices");
+    	HttpServer httpServer = GrizzlyServerFactory.createHttpServer(BASE_URI, rc);
+        httpServer.getListener("grizzly").setMaxHttpHeaderSize(Integer.MAX_VALUE);
+
+        // don't forget to start the server explicitly
+        httpServer.start();
+        return httpServer;
     }
 
     public static void main(String[] args) throws IOException {
@@ -67,6 +73,11 @@ public class ServiceMain {
         	
             FileHandler fh = new FileHandler("DeFacto.log");
             log.addHandler(fh);
+            Logger l = Logger.getLogger("org.apache.solr.client.solrj.impl.HttpClientUtil");
+            l.setLevel(Level.WARNING);
+            Logger g = Logger.getLogger("edu.stanford.nlp.process.PTBLexer");
+            g.setLevel(Level.SEVERE);
+            
             //logger.setLevel(Level.ALL);  
             SimpleFormatter formatter = new SimpleFormatter();
             fh.setFormatter(formatter);

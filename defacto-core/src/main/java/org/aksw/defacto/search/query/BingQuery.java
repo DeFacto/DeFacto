@@ -48,8 +48,8 @@ public class BingQuery implements Query {
         MetaQuery query3 = new MetaQuery("Mount Eccles National Park|-|?D? 's is a , ,, , '' stupid ?R?|-|Texas");
         
         BingQuery bq = new BingQuery();
-        bq.generateQuery(query1);
-        bq.generateQuery(query2);
-        bq.generateQuery(query3);
+        System.out.println(bq.generateQuery(query1));
+        System.out.println(bq.generateQuery(query2));
+        System.out.println(bq.generateQuery(query3));
     }
 }

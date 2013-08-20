@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.aksw.defacto.Constants;
+import org.aksw.defacto.Defacto;
 import org.aksw.defacto.cache.Cache;
 import org.aksw.defacto.topic.TopicTerm;
 import org.aksw.defacto.topic.frequency.Word;
@@ -33,7 +34,7 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
 	
 	public TopicTermSolr4Cache(){
 
-		server = new HttpSolrServer("http://[2001:638:902:2010:0:168:35:138]:8080/solr/en_defacto_topicterms");
+		server = new HttpSolrServer(Defacto.DEFACTO_CONFIG.getStringSetting("crawl", "solr_topicterms"));
 		server.setRequestWriter(new BinaryRequestWriter());
 	}
 	

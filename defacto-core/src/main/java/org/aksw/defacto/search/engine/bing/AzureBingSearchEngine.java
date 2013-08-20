@@ -18,6 +18,7 @@ import net.billylieurance.azuresearch.AzureSearchWebResult;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.Pattern;
+import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.engine.DefaultSearchEngine;
 import org.aksw.defacto.search.query.BingQuery;
@@ -50,12 +51,6 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
         }
     }
     
-    public AzureBingSearchEngine(String bingApiKey, String numberOfSearchResults) {
-        
-        BING_API_KEY = bingApiKey;
-        NUMBER_OF_SEARCH_RESULTS = numberOfSearchResults;
-    }
-    
     @Override
     public Long getNumberOfResults(MetaQuery query) {
         
@@ -64,13 +59,15 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
     
     public static void main(String[] args) {
         
-        MetaQuery query0 = new MetaQuery(String.format("%s|-|%s|-|%s", "Obama", "?D? is president of ?R?", "United States"));
-        MetaQuery query  = new MetaQuery(String.format("%s|-|%s|-|%s", "Montebelluna", "?R? Wii version of `` ?D?", "Procter & Gamble"));
-        MetaQuery query1 = new MetaQuery(String.format("%s|-|%s|-|%s", "Gloria Estefan", "??? NONE ???", "Remember Me with Love"));
-        MetaQuery query2 = new MetaQuery(String.format("%s|-|%s|-|%s", "Avram Hershko", "?D? is a component of ?R?", "United States Marine Corps"));
+        MetaQuery query0 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Obama", "?D? is president of ?R?", "United States", "en"));
+        MetaQuery query  = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Montebelluna", "?R? Wii version of `` ?D?", "Procter & Gamble", "en"));
+        MetaQuery query1 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Gloria Estefan", "??? NONE ???", "Remember Me with Love", "en"));
+        MetaQuery query2 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Avram Hershko", "?D? is a component of ?R?", "United States Marine Corps", "en"));
         
-        AzureBingSearchEngine engine = new AzureBingSearchEngine("uyUYNF9pOFmkL7TjNgNuTSltfrUnJIkBkrAaRW6J4DA=", "10");
-        System.out.println(engine.query(query0, null).getWebSites().size());
+        Defacto.init();
+        
+        AzureBingSearchEngine engine = new AzureBingSearchEngine();
+        System.out.println(engine.query(query0, null).getTotalHitCount());
 //        System.out.println(engine.query(query, null).getWebSites().size());
         
 //        URI uri;
@@ -105,7 +102,10 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
             aq.setAppid(this.BING_API_KEY);
             aq.setLatitude("47.603450");
             aq.setLongitude("-122.329696");
-            aq.setMarket("en-US");
+            if ( query.getLanguage().equals("en") ) aq.setMarket("en-US");
+            else if ( query.getLanguage().equals("de") )aq.setMarket("de-DE");
+            else aq.setMarket("fr-FR");
+            
             aq.setSources(new AZURESEARCH_QUERYTYPE[] { AZURESEARCH_QUERYTYPE.WEB });
             
             aq.setQuery(this.generateQuery(query));
@@ -123,6 +123,7 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
                 WebSite website = new WebSite(query, ((AzureSearchWebResult) result).getUrl());
                 website.setTitle(result.getTitle());
                 website.setRank(i++);
+                website.setLanguage(query.getLanguage());
                 results.add(website);
             }
             
