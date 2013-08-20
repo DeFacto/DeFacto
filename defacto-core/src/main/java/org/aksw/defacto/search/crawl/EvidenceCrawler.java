@@ -1,49 +1,34 @@
 package org.aksw.defacto.search.crawl;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
-import org.aksw.defacto.OldDefactoModel;
-import org.aksw.defacto.boa.BoaPatternSearcher;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.cache.Cache;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
-import org.aksw.defacto.evidence.Match;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.search.cache.solr.Solr4SearchResultCache;
 import org.aksw.defacto.search.concurrent.HtmlCrawlerCallable;
 import org.aksw.defacto.search.concurrent.RegexParseCallable;
-import org.aksw.defacto.search.concurrent.StanfordParseCallable;
 import org.aksw.defacto.search.concurrent.WebSiteScoreCallable;
-import org.aksw.defacto.search.engine.SearchEngine;
-import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTermExtractor;
 import org.aksw.defacto.util.ListUtil;
-import org.aksw.defacto.util.NlpUtil;
 import org.apache.log4j.Logger;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.search.IndexSearcher;
 
 import com.github.gerbsen.math.Frequency;
 
@@ -103,6 +88,7 @@ public class EvidenceCrawler {
         	evidence.setTopicTerms(TopicTermExtractor.getTopicTerms(evidence));
             evidence.setTopicTermVectorForWebsites();
             evidence.calculateSimilarityMatrix();
+            evidence.calculateDefactoTimePeriod();
         }
         
         return evidence;

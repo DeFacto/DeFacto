@@ -1,32 +1,16 @@
 package org.aksw.defacto.ml.score;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.Arrays;
 
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.AbstractFeature;
 import org.aksw.defacto.ml.feature.fact.FactScorer;
 import org.apache.log4j.Logger;
-import org.ini4j.Ini;
-import org.ini4j.InvalidFileFormatException;
 
 import weka.classifiers.Classifier;
-import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.functions.LinearRegression;
-import weka.classifiers.functions.MultilayerPerceptron;
-import weka.classifiers.functions.SMO;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.filters.Filter;
-import weka.filters.unsupervised.attribute.Remove;
 
 /**
  * 

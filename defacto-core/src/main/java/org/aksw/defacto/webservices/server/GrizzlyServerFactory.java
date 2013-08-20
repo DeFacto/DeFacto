@@ -39,17 +39,18 @@
  */
 package org.aksw.defacto.webservices.server;
 
-import com.sun.jersey.api.container.ContainerFactory;
-import com.sun.jersey.api.core.ResourceConfig;
-import com.sun.jersey.core.spi.component.ioc.IoCComponentProviderFactory;
+import java.io.IOException;
+import java.net.URI;
+
 import org.glassfish.grizzly.http.server.HttpHandler;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.ServerConfiguration;
 import org.glassfish.grizzly.ssl.SSLEngineConfigurator;
 
-import java.io.IOException;
-import java.net.URI;
+import com.sun.jersey.api.container.ContainerFactory;
+import com.sun.jersey.api.core.ResourceConfig;
+import com.sun.jersey.core.spi.component.ioc.IoCComponentProviderFactory;
 
 /**
  * Factory for creating Grizzly 2 {@link HttpServer} instances.

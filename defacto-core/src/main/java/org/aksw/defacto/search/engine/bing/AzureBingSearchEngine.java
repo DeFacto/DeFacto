@@ -1,24 +1,16 @@
 package org.aksw.defacto.search.engine.bing;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.billylieurance.azuresearch.AbstractAzureSearchQuery.AZURESEARCH_API;
-import net.billylieurance.azuresearch.AbstractAzureSearchQuery.AZURESEARCH_FORMAT;
 import net.billylieurance.azuresearch.AbstractAzureSearchQuery.AZURESEARCH_QUERYTYPE;
 import net.billylieurance.azuresearch.AbstractAzureSearchResult;
 import net.billylieurance.azuresearch.AzureSearchCompositeQuery;
-import net.billylieurance.azuresearch.AzureSearchNewsResult;
 import net.billylieurance.azuresearch.AzureSearchResultSet;
-import net.billylieurance.azuresearch.AzureSearchWebQuery;
 import net.billylieurance.azuresearch.AzureSearchWebResult;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.Pattern;
-import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.engine.DefaultSearchEngine;
 import org.aksw.defacto.search.query.BingQuery;

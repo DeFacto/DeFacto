@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.util.SparqlUtil;
 import org.apache.commons.io.FileUtils;

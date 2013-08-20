@@ -26,7 +26,6 @@ import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.wikipedia.WikipediaPageCrawler;
 import org.aksw.defacto.wikipedia.WikipediaSearchResult;
 import org.aksw.defacto.wikipedia.WikipediaSearcher;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;

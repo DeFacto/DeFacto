@@ -12,7 +12,7 @@
 		<module>defacto-ui</module>
 		<module>defacto-core</module>
 		<module>defacto-gui</module>
-    <module>defacto-evaluation</module>
+    	<module>defacto-evaluation</module>
   </modules>
 	<build>
 		<plugins>

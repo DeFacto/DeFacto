@@ -12,15 +12,6 @@ package org.aksw.defacto.webservices.server;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.sun.jersey.api.core.PackagesResourceConfig;
-import com.sun.jersey.api.core.ResourceConfig;
-
-import org.aksw.defacto.Defacto;
-import org.aksw.defacto.config.DefactoConfig;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.ini4j.Ini;
-import org.ini4j.InvalidFileFormatException;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -30,6 +21,15 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import javax.ws.rs.core.UriBuilder;
+
+import org.aksw.defacto.Defacto;
+import org.aksw.defacto.config.DefactoConfig;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.ini4j.Ini;
+import org.ini4j.InvalidFileFormatException;
+
+import com.sun.jersey.api.core.PackagesResourceConfig;
+import com.sun.jersey.api.core.ResourceConfig;
 
 /**
  *

@@ -38,9 +38,6 @@ import org.ini4j.InvalidFileFormatException;
 
 import weka.core.Instance;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-
 /**
  * 
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>

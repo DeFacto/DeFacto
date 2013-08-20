@@ -1,6 +1,5 @@
 package org.aksw.defacto.ml.feature.impl;
 
-import org.aksw.defacto.Defacto;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.AbstractFeature;
 import org.aksw.defacto.util.SparqlUtil;

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.aksw.defacto.Constants;
-import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.boa.BoaPatternSearcher;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.model.DefactoModel;

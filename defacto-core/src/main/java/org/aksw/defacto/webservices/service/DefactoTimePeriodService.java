@@ -4,26 +4,11 @@
  */
 package org.aksw.defacto.webservices.service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.vocabulary.RDFS;
-import com.hp.hpl.jena.vocabulary.XSD;
-
-import edu.stanford.nlp.util.StringUtils;
-
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -32,18 +17,21 @@ import javax.ws.rs.core.Response;
 
 import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.webservices.server.DefactoServer;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.ListUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.ini4j.Ini;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.semanticweb.yars.nx.dt.datetime.XSDGYear;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.vocabulary.RDFS;
+
+import edu.stanford.nlp.util.StringUtils;
 
 /**
  *

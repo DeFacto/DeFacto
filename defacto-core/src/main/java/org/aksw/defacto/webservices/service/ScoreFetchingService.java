@@ -4,26 +4,11 @@
  */
 package org.aksw.defacto.webservices.service;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.vocabulary.RDFS;
-
-import java.io.File;
-import java.util.logging.Level;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-
-import org.aksw.defacto.Defacto;
-import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
-import org.aksw.defacto.OldDefactoModel;
-import org.aksw.defacto.config.DefactoConfig;
-import org.aksw.defacto.model.DefactoModel;
-import org.ini4j.Ini;
 
 /**
  *

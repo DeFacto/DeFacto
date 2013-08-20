@@ -1,6 +1,5 @@
 package org.aksw.defacto.util;
 
-import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.model.DefactoModel;
 
 /**

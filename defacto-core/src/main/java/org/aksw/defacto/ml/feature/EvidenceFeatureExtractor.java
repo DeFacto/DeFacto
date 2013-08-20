@@ -8,7 +8,6 @@ import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.impl.DomainRangeCheckFeature;
 import org.aksw.defacto.ml.feature.impl.NameFeature;
 import org.aksw.defacto.ml.feature.impl.PageRankFeature;
-import org.aksw.defacto.ml.feature.impl.PointwiseMutualInformationFeature;
 import org.aksw.defacto.ml.feature.impl.ProofFeature;
 import org.aksw.defacto.ml.feature.impl.TopicCoverageFeature;
 import org.aksw.defacto.ml.feature.impl.TopicMajoritySearchFeature;

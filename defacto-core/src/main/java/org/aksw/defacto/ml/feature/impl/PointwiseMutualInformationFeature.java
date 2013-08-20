@@ -3,23 +3,11 @@
  */
 package org.aksw.defacto.ml.feature.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.BoaPatternSearcher;
-import org.aksw.defacto.boa.Pattern;
-import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.AbstractFeature;
 import org.aksw.defacto.search.engine.DefaultSearchEngine;
 import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
-import org.aksw.defacto.search.query.MetaQuery;
-import org.ini4j.Ini;
-import org.ini4j.InvalidFileFormatException;
 
 
 /**

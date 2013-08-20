@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;

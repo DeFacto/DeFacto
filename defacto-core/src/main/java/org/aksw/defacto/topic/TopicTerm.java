@@ -4,7 +4,6 @@
 package org.aksw.defacto.topic;
 
 import java.util.List;
-import java.util.Set;
 
 import org.aksw.defacto.topic.frequency.Word;
 

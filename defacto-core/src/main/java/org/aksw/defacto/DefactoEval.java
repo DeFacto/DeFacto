@@ -14,13 +14,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.aksw.defacto.cache.CacheManager;
-import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.ml.feature.AbstractFeature;
 import org.aksw.defacto.model.DefactoModel;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.ini4j.Ini;
 
 import weka.core.Instances;
 

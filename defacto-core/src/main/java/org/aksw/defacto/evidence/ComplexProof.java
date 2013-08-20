@@ -1,13 +1,10 @@
 package org.aksw.defacto.evidence;
 
-import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
 import org.aksw.defacto.model.DefactoModel;
 
 import weka.core.Instance;
-
-import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * 

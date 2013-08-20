@@ -11,9 +11,6 @@ import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
 import org.aksw.defacto.ml.feature.fact.FactFeature;
 import org.aksw.defacto.wordnet.WordNetExpansion;
-import org.apache.log4j.chainsaw.Main;
-
-import com.github.gerbsen.maven.MavenUtil;
 
 
 /**

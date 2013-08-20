@@ -4,8 +4,6 @@ import java.util.concurrent.Callable;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.evidence.WebSite;
-import org.aksw.defacto.nlp.ner.StanfordNLPNamedEntityRecognition;
-import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
 import org.aksw.defacto.util.CrawlUtil;
 import org.aksw.defacto.util.JsoupCrawlUtil;
 import org.aksw.defacto.util.PageRank;

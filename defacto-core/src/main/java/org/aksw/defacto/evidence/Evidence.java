@@ -8,13 +8,14 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.OldDefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.AbstractFeature;
 import org.aksw.defacto.model.DefactoModel;
+import org.aksw.defacto.model.DefactoTimePeriod;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.VectorUtil;
 import org.apache.commons.lang3.ArrayUtils;
@@ -45,6 +46,7 @@ public class Evidence {
     private Set<ComplexProof> complexProofs;
     private Map<String,List<Pattern>> boaPatterns = new HashMap<String,List<Pattern>>();
 	public List<Match> dates = new ArrayList<Match>();
+	public DefactoTimePeriod defactoTimePeriod;
 	
     
     /**
@@ -312,5 +314,34 @@ public class Evidence {
 	public void addDate(String match, int distance) {
 		
 		this.dates.add(new Match(match, distance));
+	}
+
+	/**
+	 * 
+	 */
+	public void calculateDefactoTimePeriod() {
+		
+		// from and to are equal
+		if ( this.model.getTimePeriod().isTimePoint() ) {
+			
+			Long occurrences = Long.MIN_VALUE;
+			String occurrence = "";
+			
+			for ( Entry<String, Long> entry : this.tinyContextYearOccurrences.entrySet()) {
+
+				if ( entry.getValue() > occurrences ) {
+					
+					occurrences = entry.getValue();
+					occurrence = entry.getKey();
+				}
+			}
+			this.defactoTimePeriod = new DefactoTimePeriod(occurrence, occurrence);
+		}
+		// time periods spans multiple years
+		else {
+			
+			// this needs to be implemented
+			this.defactoTimePeriod = new DefactoTimePeriod("", "");
+		}
 	}
 }

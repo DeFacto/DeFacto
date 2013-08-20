@@ -1,6 +1,5 @@
 package org.aksw.defacto.boa;
 
-import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.search.crawl.EvidenceCrawler;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
@@ -103,7 +101,12 @@ public class BoaPatternSearcher {
             query.addSortField("SUPPORT_NUMBER_OF_PAIRS_LEARNED_FROM", ORDER.desc);
             //query.addSortField("boa-score", ORDER.desc);
             if ( numberOfBoaPatterns > 0 ) query.setRows(numberOfBoaPatterns);
-            QueryResponse response = enIndex.query(query);
+            
+            QueryResponse response = null;
+            if ( language.equals("en") ) response = enIndex.query(query);
+            else if ( language.equals("de") ) response = deIndex.query(query);
+            else if ( language.equals("fr") ) response = frIndex.query(query);
+            
             SolrDocumentList docList = response.getResults();
             
             // return the first list of types

@@ -8,7 +8,6 @@ import java.util.concurrent.Callable;
 
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.nlp.ner.RegexTagger;
-import org.aksw.defacto.nlp.ner.StanfordNLPNamedEntityRecognition;
 import org.aksw.defacto.util.NlpUtil;
 import org.apache.log4j.Logger;
 

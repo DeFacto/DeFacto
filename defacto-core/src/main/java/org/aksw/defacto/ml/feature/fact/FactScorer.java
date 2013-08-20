@@ -12,7 +12,6 @@ import java.io.IOException;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
-import org.aksw.defacto.ml.feature.fact.impl.WordnetExpensionFeature;
 
 import weka.classifiers.Classifier;
 import weka.core.Instance;
