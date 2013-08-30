@@ -25,9 +25,9 @@ public class DefactoResource {
 
 	private Resource resource;
 	private Model model;
-	private Map<String,String> labels = new HashMap<String,String>();
-	private Map<String,Set<String>> altLabels = new HashMap<String,Set<String>>();
-	private List<Resource> owlSameAs = new ArrayList<Resource>();
+	public Map<String,String> labels = new HashMap<String,String>();
+	public Map<String,Set<String>> altLabels = new HashMap<String,Set<String>>();
+	public List<Resource> owlSameAs = new ArrayList<Resource>();
 
 	public DefactoResource(Resource resource, Model model) {
 		
@@ -134,5 +134,9 @@ public class DefactoResource {
 
 	public Resource getResource() {
 		return this.resource;
+	}
+
+	public Map<String,String> getAllLabels() {
+		return this.labels;
 	}
 }

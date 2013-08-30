@@ -76,8 +76,23 @@ public class BenchmarkDataGeneration {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws JSONException, IOException {
+		
 		Defacto.init();
-		loadNBAPlayers();
+		BenchmarkPrerequisiteGeneration pre = new BenchmarkPrerequisiteGeneration();
+		
+		System.out.print("Start generating temporal facts ... ");
+		BenchmarkDataGeneration.dropEvalDirectory();
+		BenchmarkDataGeneration.loadSpouse();
+		BenchmarkDataGeneration.loadFoundationPlace();
+		BenchmarkDataGeneration.loadPublishDates();
+		BenchmarkDataGeneration.loadAwards();
+		BenchmarkDataGeneration.loadNBAPlayers();
+		BenchmarkDataGeneration.loadPoliticians();
+		BenchmarkDataGeneration.loadBirth();
+		BenchmarkDataGeneration.loadDeath();
+		BenchmarkDataGeneration.loadStarring();
+		BenchmarkDataGeneration.loadSubsidiary(); 
+		System.out.println("DONE!");
 	}
 
 	public static void loadSubsidiary() throws JSONException, IOException {
@@ -380,8 +395,6 @@ public class BenchmarkDataGeneration {
 		
 		ResultSet result = QueryExecutionFactory.create(query, dbpedia).execSelect();
 
-		ResultSetFormatter.out(System.out, result);
-		
 		while ( result.hasNext() ) {
 			
 			QuerySolution solution = result.next();

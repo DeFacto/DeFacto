@@ -3,16 +3,28 @@
  */
 package org.aksw.defacto.model;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.aksw.defacto.Constants;
+import org.aksw.defacto.Defacto;
+import org.semanticweb.yars.nx.namespace.SKOS;
+import org.semanticweb.yars.nx.namespace.XSD;
 
+import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.vocabulary.OWL;
+import com.hp.hpl.jena.vocabulary.RDFS;
 
 /**
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
@@ -23,9 +35,8 @@ public class DefactoModel {
     private Model model;
     private String name;
     private boolean correct;
-    
     private DefactoResource subject;
-    private Property predicate;
+	private Property predicate;
 	private DefactoResource object;
 	private DefactoTimePeriod timePeriod = new DefactoTimePeriod("", "");
 	private List<String> languages = new ArrayList<String>();
@@ -261,5 +272,86 @@ public class DefactoModel {
 	public List<String> getLanguages() {
 		// TODO Auto-generated method stub
 		return this.languages;
+	}
+	
+	/**
+	 * @return the subject
+	 */
+	public DefactoResource getSubject() {
+		return subject;
+	}
+
+	/**
+	 * @return the predicate
+	 */
+	public Property getPredicate() {
+		return predicate;
+	}
+
+	/**
+	 * @return the object
+	 */
+	public DefactoResource getObject() {
+		return object;
+	}
+
+	public void write(String path, String name) throws IOException {
+	
+		Model model = ModelFactory.createDefaultModel();
+		model.setNsPrefix("fbase", Constants.FREEBASE_RESOURCE_NAMESPACE);
+		model.setNsPrefix("dbo", Constants.DBPEDIA_ONTOLOGY_NAMESPACE);
+		model.setNsPrefix("owl", OWL.NS);
+		model.setNsPrefix("rdfs", RDFS.getURI());
+		model.setNsPrefix("xsd", XSD.NS);
+		model.setNsPrefix("skos", SKOS.NS);
+		
+		// create all the necessary nodes
+		Resource subject		= model.createResource(this.subject.getUri());
+        Property bnodeProperty	= model.createProperty("http://defacto.aksw.org/bnode/property");
+        Resource bnode			= model.createResource(this.subject.getUri() + "__1");
+        Property property		= model.createProperty(this.predicate.getURI());
+        Resource object			= model.createResource(this.object.getUri());
+		
+        // add them to the model
+        model.add(subject, bnodeProperty, bnode);
+        model.add(bnode, property, object);
+        model.add(bnode, Constants.DEFACTO_FROM, this.timePeriod.getFrom() + "", XSDDatatype.XSDinteger);
+        model.add(bnode, Constants.DEFACTO_TO, this.timePeriod.getTo() + "", XSDDatatype.XSDinteger);
+        
+        
+        for ( Map.Entry<String, String> langToLabel : this.subject.labels.entrySet() ) {
+        	
+        	model.add(subject, RDFS.label, langToLabel.getValue(), langToLabel.getKey());
+        }
+        
+        for ( Map.Entry<String, String> langToLabel : this.object.labels.entrySet() ) {
+        	
+        	model.add(object, RDFS.label, langToLabel.getValue(), langToLabel.getKey());
+        }
+        
+        for ( Map.Entry<String, Set<String>> langToLabel : this.subject.altLabels.entrySet() )
+        	for ( String label : langToLabel.getValue())
+        		model.add(subject, Constants.SKOS_ALT_LABEL, label, langToLabel.getKey());
+        
+        for ( Map.Entry<String, Set<String>> langToLabel : this.object.altLabels.entrySet() )
+        	for ( String label : langToLabel.getValue())
+        		model.add(object, Constants.SKOS_ALT_LABEL, label, langToLabel.getKey());
+
+        for ( Resource res : this.subject.owlSameAs) model.add(subject, OWL.sameAs, res);
+        for ( Resource res : this.object.owlSameAs) model.add(object, OWL.sameAs, res);
+        
+        new File(path).mkdirs();
+		// write them to the file
+        model.write(new FileWriter(new File(path + name)), "TTL");
+	}
+	
+	public void setObject(DefactoResource object) {
+		
+		this.object = object;
+	}
+	
+	public void setSubject(DefactoResource subject) {
+		
+		this.subject = subject;
 	}
 }

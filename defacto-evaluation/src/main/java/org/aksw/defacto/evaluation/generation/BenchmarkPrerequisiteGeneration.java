@@ -71,20 +71,6 @@ public class BenchmarkPrerequisiteGeneration {
 		System.out.print("Start loading interlanguage links ... ");
 		loadDbpediaInterlanguageLinks();
 		System.out.println("DONE!");
-		
-		System.out.print("Start generating temporal facts ... ");
-		BenchmarkDataGeneration.dropEvalDirectory();
-		BenchmarkDataGeneration.loadSpouse();
-		BenchmarkDataGeneration.loadFoundationPlace();
-		BenchmarkDataGeneration.loadPublishDates();
-		BenchmarkDataGeneration.loadAwards();
-		BenchmarkDataGeneration.loadNBAPlayers();
-		BenchmarkDataGeneration.loadPoliticians();
-		BenchmarkDataGeneration.loadBirth();
-		BenchmarkDataGeneration.loadDeath();
-		BenchmarkDataGeneration.loadStarring();
-		BenchmarkDataGeneration.loadSubsidiary(); 
-		System.out.println("DONE!");
 	}
 	
 	public static void main(String[] args) throws JSONException, IOException {
@@ -100,14 +86,14 @@ public class BenchmarkPrerequisiteGeneration {
 	public static void setPrefixes(Model model) {
 		
 		model.setNsPrefix("fbase", Constants.FREEBASE_RESOURCE_NAMESPACE);
-		model.setNsPrefix("dbr", Constants.DBPEDIA_RESOURCE_NAMESPACE);
+//		model.setNsPrefix("dbr", Constants.DBPEDIA_RESOURCE_NAMESPACE);
 		model.setNsPrefix("dbo", Constants.DBPEDIA_ONTOLOGY_NAMESPACE);
 		model.setNsPrefix("owl", OWL.NS);
 		model.setNsPrefix("rdfs", RDFS.getURI());
 		model.setNsPrefix("xsd", XSD.NS);
 		model.setNsPrefix("skos", SKOS.NS);
-		model.setNsPrefix("de-dbr", "http://de.dbpedia.org/resource/");
-		model.setNsPrefix("fr-dbr", "http://fr.dbpedia.org/resource/");		
+//		model.setNsPrefix("de-dbr", "http://de.dbpedia.org/resource/");
+//		model.setNsPrefix("fr-dbr", "http://fr.dbpedia.org/resource/");		
 	}
 	
 	/**
@@ -374,10 +360,11 @@ public class BenchmarkPrerequisiteGeneration {
 	private void loadDbpediaInterlanguageLinks() throws FileNotFoundException {
 
 		NxParser nxp = new NxParser(new FileInputStream(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "dbpedia/interlanguage_links_en.ttl"));
-		System.out.println();
         while (nxp.hasNext()) {
         	
         	Node[] next = nxp.next();
+        	
+//        	if ( i++ % 10000 == 0 ) System.out.println("Line " + i);
         	
         	String enUriWithoutPrefix	= next[0].toString().replace(Constants.DBPEDIA_RESOURCE_NAMESPACE, "");
         	String langUriWithPrefix	= next[2].toString();

@@ -47,11 +47,6 @@
 			<artifactId>json</artifactId>
 			<version>20090211</version>
 		</dependency>
-		<dependency>
-			<groupId>com.github.gerbsen</groupId>
-			<artifactId>utk</artifactId>
-			<version>1.0.5</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.aksw</groupId>

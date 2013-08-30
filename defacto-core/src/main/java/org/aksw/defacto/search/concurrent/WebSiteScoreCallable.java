@@ -15,8 +15,6 @@ import org.apache.log4j.Logger;
  */
 public class WebSiteScoreCallable implements Callable<WebSite> {
 
-    private Logger logger = Logger.getLogger(WebSiteScoreCallable.class);
-    
     private DefactoModel model;
     private Pattern pattern;
     private WebSite website;

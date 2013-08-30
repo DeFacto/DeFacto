@@ -244,8 +244,6 @@ public class EvidenceCrawler {
     	Frequency mediumContextFrequency = new Frequency();
     	Frequency largeContextFrequency = new Frequency();
     	
-    	System.out.println("|Complex proofs|: " + evidence.getComplexProofs());
-    	
     	for ( ComplexProof proof : evidence.getComplexProofs() ) {
 
     		addFrequency(proof.getTinyContext(), proof.getTaggedTinyContext(), proof, tinyContextFrequency, evidence);
