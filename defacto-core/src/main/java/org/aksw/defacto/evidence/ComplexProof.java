@@ -238,4 +238,41 @@ public class ComplexProof {
 	public void setTaggedTinyContext(String taggedTinyContext) {
 		this.taggedTinyContext = taggedTinyContext;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((tinyContext == null) ? 0 : tinyContext.hashCode());
+		result = prime * result + ((website == null) ? 0 : website.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ComplexProof other = (ComplexProof) obj;
+		if (tinyContext == null) {
+			if (other.tinyContext != null)
+				return false;
+		} else if (!tinyContext.equals(other.tinyContext))
+			return false;
+		if (website == null) {
+			if (other.website != null)
+				return false;
+		} else if (!website.equals(other.website))
+			return false;
+		return true;
+	}
 }

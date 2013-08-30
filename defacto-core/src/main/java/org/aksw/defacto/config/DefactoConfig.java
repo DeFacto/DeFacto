@@ -3,6 +3,10 @@
  */
 package org.aksw.defacto.config;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.ini4j.Ini;
 
 
@@ -12,11 +16,16 @@ import org.ini4j.Ini;
  */
 public class DefactoConfig {
 
-    private Ini defactoConfig;
+    public static List<String> LANGUAGES = null;
+	private Ini defactoConfig;
+    
+    public static String DEFACTO_DATA_DIR;
 
     public DefactoConfig(Ini config) {
         
         this.defactoConfig =  config;
+        DEFACTO_DATA_DIR = this.defactoConfig.get("eval", "data-directory");
+        LANGUAGES = new ArrayList<String>(Arrays.asList(this.defactoConfig.get("boa", "languages").split(",")));
     }
     
     /**

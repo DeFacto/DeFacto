@@ -1,6 +1,7 @@
 package org.aksw.defacto.evidence;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class WebSite {
      * 
      * @param topicTermsOccurrences
      */
-    public void setTopicTerms(List<Word> topicTerms) {
+    public void setTopicTerms(String language, Collection<Word> topicTerms) {
         
         for ( Word topicTerm : topicTerms )
             this.topicTermsOccurrences.put(topicTerm, StringUtils.countMatches(this.text.toLowerCase(), topicTerm.getWord().toLowerCase()));

@@ -8,6 +8,8 @@ import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
 import org.aksw.defacto.ml.feature.fact.FactFeature;
 
+import weka.core.Utils;
+
 
 /**
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
@@ -21,9 +23,9 @@ public class NameFeature implements FactFeature {
     @Override
     public void extractFeature(ComplexProof proof, Evidence evidence) {
 
-        proof.getFeatures().setValue(AbstractFactFeatures.SUBJECT, proof.getSubject());
-        proof.getFeatures().setValue(AbstractFactFeatures.PHRASE, proof.getProofPhrase().replaceAll("\\n", ""));
-        proof.getFeatures().setValue(AbstractFactFeatures.OBJECT, proof.getObject());
-        proof.getFeatures().setValue(AbstractFactFeatures.CONTEXT, proof.getSmallContext().replaceAll("\\n", ""));
+        proof.getFeatures().setValue(AbstractFactFeatures.SUBJECT, Utils.quote(proof.getSubject()));
+        proof.getFeatures().setValue(AbstractFactFeatures.PHRASE, Utils.quote(proof.getProofPhrase()));
+        proof.getFeatures().setValue(AbstractFactFeatures.OBJECT, Utils.quote(proof.getObject()));
+        proof.getFeatures().setValue(AbstractFactFeatures.CONTEXT, Utils.quote(proof.getTinyContext()));
     }
 }

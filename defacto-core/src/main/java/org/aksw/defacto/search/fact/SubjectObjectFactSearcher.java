@@ -2,10 +2,12 @@ package org.aksw.defacto.search.fact;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.ComplexProof;
@@ -13,7 +15,10 @@ import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.model.DefactoModel;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWaterman;
 
 /**
  * 
@@ -22,7 +27,7 @@ import org.apache.log4j.Logger;
  */
 public class SubjectObjectFactSearcher implements FactSearcher {
 
-    private Logger logger = Logger.getLogger(SubjectObjectFactSearcher.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SubjectObjectFactSearcher.class);
     private static final Set<String> stopwords = new HashSet<String>(Arrays.asList("the", "of", "and"));
     
     private static SubjectObjectFactSearcher INSTANCE;
@@ -65,12 +70,22 @@ public class SubjectObjectFactSearcher implements FactSearcher {
         	subjectLabels.add(model.getSubjectLabelNoFallBack(language));
         	subjectLabels.addAll(model.getSubjectAltLabels(language));
         	
-        	objectLabels.add(model.getSubjectLabelNoFallBack(language));
+        	objectLabels.add(model.getObjectLabelNoFallBack(language));
         	objectLabels.addAll(model.getObjectAltLabels());
         }
+        subjectLabels.removeAll(Collections.singleton(Constants.NO_LABEL));
+        objectLabels.removeAll(Collections.singleton(Constants.NO_LABEL));
+        
+        System.out.println("SLABELS: " + subjectLabels);
+        System.out.println("OLABELS: " + objectLabels);
+        System.out.println("MODEL_LANGUAGE: " + model.getLanguages());
         
         for ( String subjectLabel : subjectLabels ) { subjectLabel = subjectLabel.toLowerCase(); // save some time
             for ( String objectLabel : objectLabels ) { objectLabel = objectLabel.toLowerCase(); // same here
+            
+            	LOGGER.debug("Search proof for: '" + subjectLabel + "' and '" + objectLabel + "'.");
+            
+            	if ( subjectLabel.equals(objectLabel) ) continue;
 
                 String[] subjectObjectMatches = StringUtils.substringsBetween(websiteText, " " + subjectLabel, objectLabel + " ");
                 String[] objectSubjectMatches = StringUtils.substringsBetween(websiteText, " " + objectLabel, subjectLabel + " ");
@@ -92,7 +107,7 @@ public class SubjectObjectFactSearcher implements FactSearcher {
             }
         }
         
-        System.out.println("#sLabels: "+  subjectLabels.size() + " #oLabels:" + objectLabels.size() + " #Proofs: " + evidence.getComplexProofs().size() + " #lang: " + model.getLanguages().size());
+        LOGGER.debug("#sLabels: "+  subjectLabels.size() + " #oLabels:" + objectLabels.size() + " #Proofs: " + evidence.getComplexProofs().size() + " #lang: " + model.getLanguages().size());
     }
     
     
@@ -112,26 +127,22 @@ public class SubjectObjectFactSearcher implements FactSearcher {
             // it makes no sense to look at longer strings 
             if ( occurrence.split(" ").length < Defacto.DEFACTO_CONFIG.getIntegerSetting("extract", "NUMBER_OF_TOKENS_BETWEEN_ENTITIES") ) {
                 
-                ComplexProof proof = null;
-                String normalizedOccurrence = this.normalizeOccurrence(occurrence, surfaceForms);
+                String tinyContext = this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25);
                 
                 // first we check if we can find a boa pattern inside the mathing string
                 for (Pattern boaPattern : evidence.getBoaPatterns()) { // go through all patterns and look if a non empty normalized pattern string is inside the match
-                    if ( occurrence.contains(boaPattern.normalize()) && !boaPattern.normalize().trim().isEmpty() ) {
-                        
-                        proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, normalizedOccurrence, site, boaPattern);
-                        break;
-                    }
+                	
+                	// this can only be if the patterns contains only garbage
+                	if ( boaPattern.normalize().isEmpty() ) continue;
+                	
+                	ComplexProof proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, tinyContext, site, boaPattern);
+                    proof.setTinyContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25));
+                    proof.setSmallContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 50));
+                    proof.setMediumContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 100));
+                    proof.setLargeContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 150));
+                    
+                    evidence.addComplexProof(proof);
                 }
-                // no boa pattern was found
-                if ( proof == null ) proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, normalizedOccurrence, site);
-                // we need to do this for both proofs
-                proof.setTinyContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25));
-                proof.setSmallContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 50));
-                proof.setMediumContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 100));
-                proof.setLargeContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 150));
-                
-                evidence.addComplexProof(proof);
             }
         }
     }
@@ -164,12 +175,12 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                     if (normalizedOccurrence.startsWith(part)) {
                         
                         normalizedOccurrence = StringUtils.replaceOnce(part, normalizedOccurrence, "");
-                        logger.debug("Removed: ^" + part);
+                        LOGGER.debug("Removed: ^" + part);
                     }
                     if (normalizedOccurrence.endsWith(part)) {
                         
                         normalizedOccurrence = normalizedOccurrence.replaceAll(part + "$", "");
-                        logger.debug("Removed: " + part + "$");
+                        LOGGER.debug("Removed: " + part + "$");
                     }
                 }
             }

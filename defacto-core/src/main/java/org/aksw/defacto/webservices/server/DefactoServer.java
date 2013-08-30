@@ -41,16 +41,7 @@ public class DefactoServer {
     
     private static URI getBaseURI() {
     	
-    	try {
-    		Defacto.init();
-			Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto.ini")));
-		} catch (InvalidFileFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Defacto.init();
     	
         return UriBuilder.fromUri(Defacto.DEFACTO_CONFIG.getStringSetting("server", "ip")).
         		port(Defacto.DEFACTO_CONFIG.getIntegerSetting("server", "port")).build();

@@ -1,12 +1,14 @@
 [eval]
 data-directory = /Users/gerb/Development/workspaces/experimental/defacto/mltemp/
+train-directory = eval/train
+test-directory = eval/test
 
 [boa]
 ; how many boa patterns should be used to search: N * NUMBER_OF_BOA_PATTERNS queries and search results will be generated
 NUMBER_OF_BOA_PATTERNS = 10
 ; only patterns which have a pattern score higher than this will be used to search for fact in text
 PATTERN_SCORE_THRESHOLD = 0.5
-
+languages = de,en,fr
 
 [crawl]
 ; the bing api key get your own at: 

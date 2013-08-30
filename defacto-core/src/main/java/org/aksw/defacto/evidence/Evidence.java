@@ -30,7 +30,7 @@ public class Evidence {
 
     private DefactoModel model;
     private Map<Pattern,List<WebSite>> webSites         = new LinkedHashMap<Pattern,List<WebSite>>();
-    private List<Word> topicTerms                       = new ArrayList<Word>();
+    private Map<String,List<Word>> topicTerms           = new HashMap<String,List<Word>>();
 //    private Map<Pattern,Double[][]> similarityMatricies = new LinkedHashMap<Pattern,Double[][]>();
     private Double[][] similarityMatrix                 = null;
     
@@ -53,14 +53,21 @@ public class Evidence {
      * 
      * @param model
      * @param totalHitCount
+     * @param set 
      * @param subjectLabel
      * @param objectLabel
      */
-    public Evidence(DefactoModel model, Long totalHitCount) {
+    public Evidence(DefactoModel model, Long totalHitCount, Set<Pattern> set) {
 
         this.model              = model;
         this.totalHitCount      = totalHitCount;
         this.complexProofs      = new HashSet<ComplexProof>();
+        
+        boaPatterns.put("de", new ArrayList<Pattern>());
+        boaPatterns.put("fr", new ArrayList<Pattern>());
+        boaPatterns.put("en", new ArrayList<Pattern>());
+        
+        for ( Pattern p : set) boaPatterns.get(p.language).add(p);
     }
 
     public Evidence(DefactoModel model) {
@@ -68,9 +75,6 @@ public class Evidence {
         this.model              = model;
         this.totalHitCount      = 0L;
         this.complexProofs      = new HashSet<ComplexProof>();
-        
-        // TODO
-        // get the label of subject and object from the model
     }
     
     /**
@@ -119,7 +123,7 @@ public class Evidence {
     /**
      * @return the topicTerms
      */
-    public List<Word> getTopicTerms() {
+    public Map<String,List<Word>> getTopicTerms() {
 
         return topicTerms;
     }
@@ -127,9 +131,9 @@ public class Evidence {
     /**
      * @param topicTerms the topicTerms to set
      */
-    public void setTopicTerms(List<Word> topicTerms) {
+    public void setTopicTerms(String language, List<Word> topicTerms) {
 
-        this.topicTerms = topicTerms;
+        this.topicTerms.put(language, topicTerms);
     }
     
     /**
@@ -181,11 +185,11 @@ public class Evidence {
     /**
      * 
      */
-    public void setTopicTermVectorForWebsites() {
+    public void setTopicTermVectorForWebsites(String language) {
 
         for ( List<WebSite> websitesForPattern : this.webSites.values() )
             for ( WebSite website : websitesForPattern ) 
-                website.setTopicTerms(this.topicTerms);
+                website.setTopicTerms(language, this.topicTerms.get(language));
     }
 
     

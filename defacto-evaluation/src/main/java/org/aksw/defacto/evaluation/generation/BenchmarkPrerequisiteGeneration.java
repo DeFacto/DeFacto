@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.aksw.defacto.evaluation;
+package org.aksw.defacto.evaluation.generation;
 
 import java.io.File;
 import java.io.FileInputStream;

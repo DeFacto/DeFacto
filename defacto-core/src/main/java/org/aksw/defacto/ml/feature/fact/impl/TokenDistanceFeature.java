@@ -22,5 +22,7 @@ public class TokenDistanceFeature implements FactFeature {
     public void extractFeature(ComplexProof complexProof, Evidence evidence) {
 
         complexProof.getFeatures().setValue(AbstractFactFeatures.TOKEN_DISTANCE, complexProof.getProofPhrase().split(" ").length);
+        complexProof.getFeatures().setValue(AbstractFactFeatures.NUMBER_OF_NON_ALPHA_NUMERIC_CHARACTERS, 
+        		complexProof.getProofPhrase().replaceAll("\\p{Alnum}", "").length());
     }
 }

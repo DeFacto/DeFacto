@@ -29,7 +29,7 @@ public class TopicCoverageFeature extends AbstractFeature {
         for ( List<WebSite> websites : evidence.getWebSites().values() ) {
             for ( WebSite website : websites) {
 
-                List<Word> topicTermsInWebSite = new ArrayList<Word>(evidence.getTopicTerms());
+                List<Word> topicTermsInWebSite = new ArrayList<Word>(evidence.getTopicTerms().get(website.getLanguage()));
                 topicTermsInWebSite.retainAll(website.getOccurringTopicTerms());
 
                 website.setTopicCoverageScore(website.getScore() * ((float) topicTermsInWebSite.size() / (float) evidence.getTopicTerms().size()));

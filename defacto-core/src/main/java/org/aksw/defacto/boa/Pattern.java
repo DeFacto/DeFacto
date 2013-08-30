@@ -1,7 +1,13 @@
 package org.aksw.defacto.boa;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
+import org.aksw.defacto.Constants;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Only used inside this class to encapsulate the Solr query results.
@@ -69,7 +75,10 @@ public class Pattern {
                 
         }
         
-        return this.naturalLanguageRepresentationNormalized;
+        Set<String> naturalLanguageRepresentationChunks = new HashSet<String>(Arrays.asList(naturalLanguageRepresentationNormalized.toLowerCase().trim().split(" ")));
+        naturalLanguageRepresentationChunks.removeAll(Constants.STOP_WORDS);
+        
+        return StringUtils.join(naturalLanguageRepresentationChunks, " ");
     }
     
     /* (non-Javadoc)

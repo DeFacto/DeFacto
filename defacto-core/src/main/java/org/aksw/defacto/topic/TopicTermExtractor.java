@@ -38,13 +38,14 @@ import org.ini4j.InvalidFileFormatException;
 public class TopicTermExtractor {
 
     private static Logger logger = Logger.getLogger(TopicTermExtractor.class);
-    
+
     private static TopicTermSolr4Cache cache = new TopicTermSolr4Cache();
     
     public static void main(String[] args) throws InvalidFileFormatException, IOException {
-
-    	Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto.ini")));
-        for ( Word w : getPotentialTopicTerms("Barack Obama", "Washington D.C."))  System.out.println(w + " " + w.getFrequency());;
+    	
+    	Defacto.init();
+    	cache = new TopicTermSolr4Cache();
+        for ( Word w : getPotentialTopicTerms("Amazon", "Jeff Bezos"))  System.out.println(w + " " + w.getFrequency());;
     }
     
     /**
@@ -253,16 +254,16 @@ public class TopicTermExtractor {
      * @param evidence
      * @return
      */
-    public static List<Word> getTopicTerms(Evidence evidence) {
+    public static List<Word> getTopicTerms(String subjectLabel, String objectLabel, String language) {
         
         List<Word> potentialTopicTerms = new ArrayList<Word>();
-        //getPotentialTopicTerms(evidence.getModel().getSubjectLabels(subjectUri).getSubjectLabel(), evidence.getObjectLabel());
+        getPotentialTopicTerms(subjectLabel, objectLabel);
         
-        Set<WebSite> websites = new HashSet<WebSite>();
-        for ( List<WebSite> sites : evidence.getWebSites().values() ) websites.addAll(sites);
-            
-        Iterator<Word> topicTermsIterator = potentialTopicTerms.iterator();
-        while ( topicTermsIterator.hasNext() ) {
+//        Set<WebSite> websites = new HashSet<WebSite>();
+//        for ( List<WebSite> sites : evidence.getWebSites().values() ) websites.addAll(sites);
+//            
+//        Iterator<Word> topicTermsIterator = potentialTopicTerms.iterator();
+//        while ( topicTermsIterator.hasNext() ) {
             
 //            Word topicTerm = topicTermsIterator.next();
 //            boolean isTopicTerm = TopicTermExtractor.isTopicTerm(websites, evidence.getSubjectLabel(), evidence.getObjectLabel(), topicTerm);
@@ -273,7 +274,7 @@ public class TopicTermExtractor {
 //                logger.debug("Removing topic term: " + topicTerm.getWord());
 //                topicTermsIterator.remove();
 //            }
-        }
+//        }
 //        logger.info(evidence.getSubjectLabel() +" | "+ evidence.getObjectLabel() + ": " + StringUtils.join(potentialTopicTerms, ", "));
         
         return potentialTopicTerms;

@@ -37,7 +37,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
 	public Solr4SearchResultCache(){
 
 		server = new HttpSolrServer(Defacto.DEFACTO_CONFIG.getStringSetting("crawl", "solr_searchresults"));
-		server.setRequestWriter(new BinaryRequestWriter());
+//		server.setRequestWriter(new BinaryRequestWriter());
 	}
 	
 	@Override
@@ -174,7 +174,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_URL_FIELD, site.getUrl());
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_TITLE_FIELD, site.getTitle());
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_CONTENT_FIELD, site.getText());
-                solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_TAGGED_FIELD, site.getTaggedText());
+                solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_TAGGED_FIELD, site.getTaggedText() == null ? "" : site.getTaggedText());
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD, entry.getQuery().toString());
                 solrDocument.addField(Constants.LUCENE_SEARCH_RESULT_LANGUAGE, entry.getQuery().getLanguage());
                 documents.add(solrDocument);

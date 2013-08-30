@@ -90,6 +90,9 @@ public class BoaPatternSearcher {
      */
     private List<Pattern> querySolrIndex(String propertyUri, int numberOfBoaPatterns, double scoreThreshold, String language) {
 
+    	
+    	 this.logger.debug("Querying solr index for uri: " + propertyUri + " and language " + language + "."); 
+    	
         List<Pattern> patterns = new ArrayList<Pattern>();
 
         try {

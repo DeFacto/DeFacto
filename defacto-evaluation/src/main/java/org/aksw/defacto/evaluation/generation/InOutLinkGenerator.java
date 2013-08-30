@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.aksw.defacto.evaluation;
+package org.aksw.defacto.evaluation.generation;
 
 import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;

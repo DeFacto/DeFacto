@@ -6,7 +6,8 @@ import org.aksw.defacto.Defacto;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.AbstractFeature;
 import org.aksw.defacto.ml.feature.fact.FactScorer;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import weka.classifiers.Classifier;
 import weka.core.Instance;
@@ -18,7 +19,7 @@ import weka.core.Instances;
  */
 public class EvidenceScorer {
 
-    private Logger logger = Logger.getLogger(EvidenceScorer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(EvidenceScorer.class);
     
     private String pathToClassifier     = new File(FactScorer.class.getResource("/classifier/evidence/" + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE") + ".model").getFile()).getAbsolutePath();
 //    private String pathToEvaluation     = "resources/classifier/evidence/" + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE") + ".eval.model";
@@ -31,9 +32,9 @@ public class EvidenceScorer {
      */
     public EvidenceScorer() {
         
-        if ( new File(pathToClassifier).exists() && !Defacto.DEFACTO_CONFIG.getBooleanSetting("evidence", "OVERWRITE_EVIDENCE_TRAINING_FILE") ) {
+        if ( new File(pathToClassifier).exists() ) {
             
-            logger.info("Loading machine learning model: " + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE"));
+        	LOGGER.info("Loading machine learning model: " + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE"));
             this.classifier = this.loadClassifier();
         }
         else {

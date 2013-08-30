@@ -43,7 +43,6 @@ public class RegexParseCallable implements Callable<List<ComplexProof>>, ParseCa
 			proof.setTaggedSmallContext(merged);
 			
 			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(dateTagger.getAnnotatedSentences(proof.getTinyContext())), "-=-");
-			System.out.println(proof.getTinyContext());
 			proof.setTaggedTinyContext(merged);
 		}
 		

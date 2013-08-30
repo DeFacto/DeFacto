@@ -59,7 +59,7 @@ public class DefactoTimePeriodService {
         try {
         	
             org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
-            Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto.ini")));
+            Defacto.init();
             Model model = ModelFactory.createDefaultModel();
             
             // subj

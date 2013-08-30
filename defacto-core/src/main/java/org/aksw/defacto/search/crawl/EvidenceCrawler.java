@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 
+import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.boa.Pattern;
@@ -27,8 +28,10 @@ import org.aksw.defacto.search.concurrent.WebSiteScoreCallable;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTermExtractor;
+import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.ListUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.gerbsen.math.Frequency;
 
@@ -40,7 +43,7 @@ import edu.stanford.nlp.util.StringUtils;
  */
 public class EvidenceCrawler {
 
-    private Logger logger = Logger.getLogger(EvidenceCrawler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(EvidenceCrawler.class);
     java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("[0-9]{4}");
     private Map<Pattern,MetaQuery> patternToQueries;
     private DefactoModel model;
@@ -70,7 +73,7 @@ public class EvidenceCrawler {
         Long totalHitCount = 0L; // sum over the n*m query results        
         for ( SearchResult result : searchResults ) totalHitCount += result.getTotalHitCount();  
                 
-        Evidence evidence = new Evidence(model, totalHitCount);
+        Evidence evidence = new Evidence(model, totalHitCount, patternToQueries.keySet());
         // basically downloads all websites in parallel
         crawlSearchResults(searchResults, model, evidence);
         // tries to find proofs and possible proofs and scores those
@@ -85,15 +88,33 @@ public class EvidenceCrawler {
         // save all the time we can get
         if ( Defacto.onlyTimes.equals(TIME_DISTRIBUTION_ONLY.NO) ) {
 
-        	evidence.setTopicTerms(TopicTermExtractor.getTopicTerms(evidence));
-            evidence.setTopicTermVectorForWebsites();
-            evidence.calculateSimilarityMatrix();
-            evidence.calculateDefactoTimePeriod();
+        	List<String> languages = model.getLanguages();
+        	for ( String language : languages ) {
+        		
+        		String subjectLabel = evidence.getModel().getSubjectLabelNoFallBack(language);
+        		String objectLabel = evidence.getModel().getObjectLabelNoFallBack(language);
+        		
+        		if ( !subjectLabel.equals(Constants.NO_LABEL) && !objectLabel.equals(Constants.NO_LABEL) ) {
+
+        			List<Word> topicTerms = TopicTermExtractor.getTopicTerms(subjectLabel, objectLabel, language);
+        			System.out.println(String.format("Subject: %s\tObject: %s\tLanguage: %s\tTopics: %s", subjectLabel, objectLabel, language, topicTerms.toString()));
+        			
+        			evidence.setTopicTerms(language, topicTerms);
+            		evidence.setTopicTermVectorForWebsites(language);
+        		}
+        	}
+        		
+//            evidence.calculateSimilarityMatrix();
+//            evidence.calculateDefactoTimePeriod();
         }
         
         return evidence;
     }
     
+    /**
+     * 
+     * @param searchResults
+     */
     private void cacheSearchResults(Set<SearchResult> searchResults) {
     	
     	List<SearchResult> results = new ArrayList<SearchResult>();
@@ -107,6 +128,10 @@ public class EvidenceCrawler {
         cache.addAll(results);
 	}
 
+    /**
+     * 
+     * @return
+     */
 	private Set<SearchResult> generateSearchResultsInParallel() {
 
         Set<SearchResult> results = new HashSet<SearchResult>();
@@ -137,15 +162,8 @@ public class EvidenceCrawler {
 
     private void scoreSearchResults(Set<SearchResult> searchResults, DefactoModel model, Evidence evidence) {
 
-    	// ########################################
-    	// 1. Get the BOA patterns
-//        evidence.setBoaPatterns(new BoaPatternSearcher().getNaturalLanguageRepresentations(model.getPropertyUri(), 200, 0.5, language));
-        evidence.setBoaPatterns("en", new ArrayList<Pattern>());
-        evidence.setBoaPatterns("de", new ArrayList<Pattern>());
-        evidence.setBoaPatterns("fr", new ArrayList<Pattern>());
-        
         // ########################################
-    	// 2. Score the websites 
+    	// 1. Score the websites 
         List<WebSiteScoreCallable> scoreCallables =  new ArrayList<WebSiteScoreCallable>();
         for ( SearchResult result : searchResults ) 
             for (WebSite site : result.getWebSites() )
@@ -158,7 +176,7 @@ public class EvidenceCrawler {
         this.executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(scoreCallables.size()), scoreCallables);
         
         // ########################################
-    	// 3. parse the pages to look for dates
+    	// 2. parse the pages to look for dates
         List<RegexParseCallable> parsers = new ArrayList<RegexParseCallable>();
         List<ComplexProof> proofs = new ArrayList<ComplexProof>(evidence.getComplexProofs());
         
@@ -166,7 +184,7 @@ public class EvidenceCrawler {
         for ( List<ComplexProof> proofsSublist : ListUtil.split(proofs, (proofs.size() / (Runtime.getRuntime().availableProcessors() / 2)) + 1)) 
         	parsers.add(new RegexParseCallable(proofsSublist)); // TODO inject the named entity tagger here, otherwise we create it with every triple
         
-        this.logger.info(String.format("Creating thread pool for %s parsers!", parsers.size()));
+        LOGGER.info(String.format("Creating thread pool for %s parsers!", parsers.size()));
         executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(
         		Defacto.DEFACTO_CONFIG.getIntegerSetting("extract", "NUMBER_NLP_STANFORD_MODELS")), parsers);
         this.extractDates(evidence);
@@ -209,7 +227,7 @@ public class EvidenceCrawler {
         if ( !htmlCrawlers.isEmpty() ) {
 
             // get the text from the urls
-        	this.logger.info(String.format("Creating thread pool for %s html crawlers!", htmlCrawlers.size()));
+        	LOGGER.info(String.format("Creating thread pool for %s html crawlers!", htmlCrawlers.size()));
             executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(htmlCrawlers.size()), htmlCrawlers);
         }
     }
@@ -225,6 +243,8 @@ public class EvidenceCrawler {
     	Frequency smallContextFrequency = new Frequency();
     	Frequency mediumContextFrequency = new Frequency();
     	Frequency largeContextFrequency = new Frequency();
+    	
+    	System.out.println("|Complex proofs|: " + evidence.getComplexProofs());
     	
     	for ( ComplexProof proof : evidence.getComplexProofs() ) {
 

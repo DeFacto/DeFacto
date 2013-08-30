@@ -3,7 +3,8 @@ package org.aksw.defacto.ml.feature.impl;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.AbstractFeature;
 import org.aksw.defacto.util.SparqlUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.hp.hpl.jena.query.ResultSet;
 
@@ -14,12 +15,12 @@ import com.hp.hpl.jena.query.ResultSet;
  */
 public class DomainRangeCheckFeature extends AbstractFeature {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(DomainRangeCheckFeature.class);
+	
 	@Override
 	public void extractFeature(Evidence evidence) {
 	    
 	    try {
-	        
-	        Logger logger = Logger.getLogger(DomainRangeCheckFeature.class);
 	        
 	        String subjectURI = evidence.getModel().getSubjectUri();
 	        String propertyURI = evidence.getModel().getPropertyUri();
@@ -31,7 +32,7 @@ public class DomainRangeCheckFeature extends AbstractFeature {
 	        
 	        boolean domainViolation = false;
 	        String queryDom = "SELECT * WHERE { <"+propertyURI+"> rdfs:domain ?dom }";
-	        logger.info("DR-Feature DOMAIN: " + queryDom);
+	        LOGGER.debug("DR-Feature DOMAIN: " + queryDom);
 	        ResultSet rs = sparql.executeSelectQuery(queryDom);
 	        // without a domain, there can be no violation, so we just need to check the case in which a domain exists
 	        if(rs.hasNext()) {
@@ -53,7 +54,7 @@ public class DomainRangeCheckFeature extends AbstractFeature {
 	        
 	        boolean rangeViolation = false;
 	        String queryRan = "SELECT * WHERE { <"+propertyURI+"> rdfs:range ?ran }";
-	        logger.info("DR-Feature DOMAIN: " + queryRan);
+	        LOGGER.debug("DR-Feature DOMAIN: " + queryRan);
 	        rs = sparql.executeSelectQuery(queryRan);
 	        // without a range, there can be no violation, so we just need to check the case in which a range exists
 	        if(rs.hasNext()) {

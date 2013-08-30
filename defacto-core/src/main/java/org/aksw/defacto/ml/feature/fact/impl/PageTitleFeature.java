@@ -12,6 +12,7 @@ import org.aksw.defacto.ml.feature.fact.FactFeature;
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.QGramsDistance;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWaterman;
 
 /**
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
@@ -19,7 +20,7 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.QGramsDistance;
  */
 public class PageTitleFeature implements FactFeature {
 
-    AbstractStringMetric metric = new QGramsDistance();
+    AbstractStringMetric metric = new SmithWaterman();
 
     /* (non-Javadoc)
      * @see org.aksw.defacto.ml.feature.fact.FactFeature#extractFeature(org.aksw.defacto.evidence.ComplexProof)
