@@ -25,3 +25,4 @@ defacto-core/DeFacto.log
 DeFacto.log*
 freebase_links.nt
 logs
+log4j.properties
