@@ -5,8 +5,8 @@ import java.util.regex.Pattern;
 
 public class DefactoTimePeriod {
 
-	private Integer from;
-	private Integer to;
+	public Integer from;
+	public Integer to;
 	private Pattern pattern = Pattern.compile("[0-9]{4}");
 	
 	public DefactoTimePeriod(String from, String to) {
@@ -19,6 +19,12 @@ public class DefactoTimePeriod {
 	    while (matcher.find()) {
 	    	this.to = Integer.valueOf(matcher.group());
 	    }
+	}
+
+	public DefactoTimePeriod(int from, int to) {
+		
+		this.from = from;
+		this.to = to;
 	}
 
 	public Integer getFrom() {

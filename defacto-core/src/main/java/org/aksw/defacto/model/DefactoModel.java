@@ -32,14 +32,14 @@ import com.hp.hpl.jena.vocabulary.RDFS;
  */
 public class DefactoModel {
 
-    private Model model;
-    private String name;
-    private boolean correct;
-    private DefactoResource subject;
-	private Property predicate;
-	private DefactoResource object;
-	private DefactoTimePeriod timePeriod = new DefactoTimePeriod("", "");
-	private List<String> languages = new ArrayList<String>();
+    public Model model;
+    public String name;
+    public boolean correct;
+    public DefactoResource subject;
+    public Property predicate;
+    public DefactoResource object;
+    public DefactoTimePeriod timePeriod = new DefactoTimePeriod("", "");
+    public List<String> languages = new ArrayList<String>();
     
     /**
      * Creates a new Defacto Model. This is a wrapper around a jena model. But with
@@ -315,9 +315,8 @@ public class DefactoModel {
         // add them to the model
         model.add(subject, bnodeProperty, bnode);
         model.add(bnode, property, object);
-        model.add(bnode, Constants.DEFACTO_FROM, this.timePeriod.getFrom() + "", XSDDatatype.XSDinteger);
-        model.add(bnode, Constants.DEFACTO_TO, this.timePeriod.getTo() + "", XSDDatatype.XSDinteger);
-        
+        model.add(bnode, Constants.DEFACTO_FROM, this.timePeriod.getFrom() + "", XSDDatatype.XSDgYear);
+        model.add(bnode, Constants.DEFACTO_TO, this.timePeriod.getTo() + "", XSDDatatype.XSDgYear);
         
         for ( Map.Entry<String, String> langToLabel : this.subject.labels.entrySet() ) {
         	
@@ -353,5 +352,10 @@ public class DefactoModel {
 	public void setSubject(DefactoResource subject) {
 		
 		this.subject = subject;
+	}
+
+	public void setProperty(Property property) {
+		
+		this.predicate = property;
 	}
 }
