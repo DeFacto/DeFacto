@@ -1,3 +1,3 @@
-export MAVEN_OPTS="-Xmx10000m"
+export MAVEN_OPTS="-mx2G"
 mvn -o compile
-mvn -o exec:java -Dexec.mainClass="org.aksw.defacto.webservices.ServiceMain"
+mvn -o exec:java -Dexec.mainClass="org.aksw.defacto.webservices.server.DefactoServer"
