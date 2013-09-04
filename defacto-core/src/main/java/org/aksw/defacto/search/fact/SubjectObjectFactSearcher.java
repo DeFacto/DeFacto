@@ -76,10 +76,6 @@ public class SubjectObjectFactSearcher implements FactSearcher {
         subjectLabels.removeAll(Collections.singleton(Constants.NO_LABEL));
         objectLabels.removeAll(Collections.singleton(Constants.NO_LABEL));
         
-        System.out.println("SLABELS: " + subjectLabels);
-        System.out.println("OLABELS: " + objectLabels);
-        System.out.println("MODEL_LANGUAGE: " + model.getLanguages());
-        
         for ( String subjectLabel : subjectLabels ) { subjectLabel = subjectLabel.toLowerCase(); // save some time
             for ( String objectLabel : objectLabels ) { objectLabel = objectLabel.toLowerCase(); // same here
             

@@ -18,7 +18,7 @@ public class DefactoYearsClient {
 
 		Client client = Client.create(); // should be reused since it expensive to create
 //		WebResource webResource = client.resource("http://localhost:1234/getdefactotimes");
-		WebResource webResource = client.resource("http://139.18.2.164:1234/getdefactoscore");
+		WebResource webResource = client.resource("http://titan.scms.eu:1234/getdefactotimes");
 		
 		String subjectUri	= "http://dbpedia.org/resource/Barack_Obama";
 		String subjectLabel = "Barack Obama@en";

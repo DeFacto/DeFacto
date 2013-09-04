@@ -35,6 +35,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 public class TestAndTrainSetCreator {
 
 	private static Map<String, List<DefactoResource>> subjectsForRelation = new HashMap<String, List<DefactoResource>>();
+	private static Map<String, List<DefactoResource>> objectsForRelation = new HashMap<String, List<DefactoResource>>();
+	private static Map<String, List<String>> relationToFact = new HashMap<String,List<String>>();
 	private static List<String> properties = new ArrayList<String>();
 	static {
 
@@ -50,10 +52,10 @@ public class TestAndTrainSetCreator {
 		properties.add("http://dbpedia.org/ontology/office");
 	}
 	
-	
-	private static Map<String, List<DefactoResource>> objectsForRelation = new HashMap<String, List<DefactoResource>>();
-	
-	private static Map<String,List<String>> relationToFact = new HashMap<String,List<String>>();
+	private static String FACT_BENCH_PATH = null;
+	private static List<DefactoResource> objects = new ArrayList<DefactoResource>();
+	private static List<DefactoResource> subjects = new ArrayList<DefactoResource>();
+	private static List<String> facts;
 	
 	/**
 	 * @param args
@@ -62,41 +64,43 @@ public class TestAndTrainSetCreator {
 	public static void main(String[] args) throws IOException {
 		
 		Defacto.init();
+		FACT_BENCH_PATH = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "factbench/v1/";
+		
 		List<String> relations = Arrays.asList("birth", "death", "spouse", "foundationPlace", "award", "publicationDate", "nbateam", "leader", "subsidiary", "starring");
 		
-//		for ( String relation : relations) {
-//			
-//			// first we need to generate postitive examples
-//			generatePositiveExample(relation);
-//			
-//			// create wrong domain set
-//			createDomainSet("train", relation);
-//			createDomainSet("test", relation);
-//			
-//			// create wrong range set
-//			createRangeSet("train", relation);
-//			createRangeSet("test", relation);
-//			
-//			// create wrong domain/range set
-//			createDomainRangeSet("train", relation);
-//			createDomainRangeSet("test", relation);
-//					
-//			// create wrong property set
-//			createPropertySet("train", relation);
-//			createPropertySet("test", relation);
-//			
-//			// create wrong random set
-//			createRandomSet("train", relation);
-//			createRandomSet("test", relation);
-//			
-//			// create wrong date set
-//			createDateSet("train", relation);
-//			createDateSet("test", relation);
-//		}
+		for ( String relation : relations) {
+			
+			// first we need to generate postitive examples
+			generatePositiveExample(relation);
+			
+			// create wrong domain set
+			createDomainSet("train", relation);
+			createDomainSet("test", relation);
+			
+			// create wrong range set
+			createRangeSet("train", relation);
+			createRangeSet("test", relation);
+			
+			// create wrong domain/range set
+			createDomainRangeSet("train", relation);
+			createDomainRangeSet("test", relation);
+					
+			// create wrong property set
+			createPropertySet("train", relation);
+			createPropertySet("test", relation);
+			
+			// create wrong random set
+			createRandomSet("train", relation);
+			createRandomSet("test", relation);
+			
+			// create wrong date set
+			createDateSet("train", relation);
+			createDateSet("test", relation);
+		}
 		
+		// this can only be done if the other sets are finished
 		for ( String relation : relations ) {
 			
-			System.out.println(relation);
 			// create wrong datae set
 			createMixSet("train", relation);
 			createMixSet("test", relation);
@@ -105,29 +109,19 @@ public class TestAndTrainSetCreator {
 
 	private static void createMixSet(String testOrTrain, String relation) throws IOException {
 
-		System.out.println("\t" + testOrTrain);
-		
 		List<String> wrongCases = Arrays.asList("domain", "range", "domainrange", "random", "property", "date");
 		
 		for ( String wrongCase : wrongCases ) {
 			
-			System.out.println("\t\t" + wrongCase);
-
-			List<DefactoModel> models = DefactoModelReader.readModels(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-					"benchmark/" + testOrTrain + "/wrong/" + wrongCase + "/" + relation + "/");
+			List<DefactoModel> models = DefactoModelReader.readModels(FACT_BENCH_PATH + testOrTrain + "/wrong/" + wrongCase + "/" + relation + "/");
 			
 			Collections.shuffle(models);
 			
 			models = models.subList(0, 13);
-			int i = 0 ;
 			for ( DefactoModel model : models ) {
 				
-//				System.out.println(i++);
-			
-				String path = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-						"benchmark/" + testOrTrain + "/wrong/mix/" + wrongCase +"/" + relation + "/";
+				String path = FACT_BENCH_PATH + testOrTrain + "/wrong/mix/" + wrongCase +"/" + relation + "/";
 				
-//				System.out.println(path + model.getName());
 				model.write(path, model.getName());
 			}
 		}
@@ -141,15 +135,13 @@ public class TestAndTrainSetCreator {
 	 */
 	private static void createDomainSet(String testOrTrain, String relation) throws IOException {
 
-		List<DefactoModel> models = DefactoModelReader.readModels(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-										"benchmark/" + testOrTrain + "/correct/" + relation + "/");
+		List<DefactoModel> models = DefactoModelReader.readModels(FACT_BENCH_PATH + testOrTrain + "/correct/" + relation + "/");
 
 		for ( DefactoModel model : models ) {
 			
 			model.setSubject(getRandomSubject(relation, model));
 			
-			String path = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-					"benchmark/" + testOrTrain + "/wrong/domain/" + relation + "/";
+			String path = FACT_BENCH_PATH + testOrTrain + "/wrong/domain/" + relation + "/";
 			
 			model.write(path, model.getName());
 		}
@@ -163,15 +155,13 @@ public class TestAndTrainSetCreator {
 	 */
 	private static void createRangeSet(String testOrTrain, String relation) throws IOException {
 		
-		List<DefactoModel> models = DefactoModelReader.readModels(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-				"benchmark/" + testOrTrain + "/correct/" + relation + "/");
+		List<DefactoModel> models = DefactoModelReader.readModels(FACT_BENCH_PATH + testOrTrain + "/correct/" + relation + "/");
 
 		for ( DefactoModel model : models ) {
 		
 			model.setObject(getRandomObject(relation, model));
 			
-			String path = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-					"benchmark/" + testOrTrain + "/wrong/range/" + relation + "/";
+			String path = FACT_BENCH_PATH + testOrTrain + "/wrong/range/" + relation + "/";
 			
 			model.write(path, model.getName());
 		}
@@ -179,16 +169,14 @@ public class TestAndTrainSetCreator {
 
 	private static void createDomainRangeSet(String testOrTrain, String relation) throws IOException {
 		
-		List<DefactoModel> models = DefactoModelReader.readModels(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-				"benchmark/" + testOrTrain + "/correct/" + relation + "/");
+		List<DefactoModel> models = DefactoModelReader.readModels(FACT_BENCH_PATH + testOrTrain + "/correct/" + relation + "/");
 
 		for ( DefactoModel model : models ) {
 		
 			model.setSubject(getRandomSubject(relation, model));
 			model.setObject(getRandomObject(relation, model));
 			
-			String path = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-					"benchmark/" + testOrTrain + "/wrong/domainrange/" + relation + "/";
+			String path = FACT_BENCH_PATH + testOrTrain + "/wrong/domainrange/" + relation + "/";
 			
 			model.write(path, model.getName());
 		}
@@ -196,15 +184,13 @@ public class TestAndTrainSetCreator {
 
 	private static void createPropertySet(String testOrTrain, String relation) throws IOException {
 		
-		List<DefactoModel> models = DefactoModelReader.readModels(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-				"benchmark/" + testOrTrain + "/correct/" + relation + "/");
+		List<DefactoModel> models = DefactoModelReader.readModels(FACT_BENCH_PATH + testOrTrain + "/correct/" + relation + "/");
 
 		for ( DefactoModel model : models ) {
 			
 			model.setProperty(getRandomProperty(relation, model));
 			
-			String path = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-					"benchmark/" + testOrTrain + "/wrong/property/" + relation + "/";
+			String path = FACT_BENCH_PATH + testOrTrain + "/wrong/property/" + relation + "/";
 			
 			model.write(path, model.getName());
 		}
@@ -212,17 +198,15 @@ public class TestAndTrainSetCreator {
 
 	private static void createRandomSet(String testOrTrain, String relation) throws IOException {
 		
-		List<DefactoModel> models = DefactoModelReader.readModels(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-				"benchmark/" + testOrTrain + "/correct/" + relation + "/");
+		List<DefactoModel> models = DefactoModelReader.readModels(FACT_BENCH_PATH + testOrTrain + "/correct/" + relation + "/");
 
 		for ( DefactoModel model : models ) {
 			
-			model.setSubject(getRandomSubject(relation, model));
-			model.setObject(getRandomObject(relation, model));
+			model.setSubject(getRandomSubject(model));
+			model.setObject(getRandomObject(model));
 			model.setProperty(getRandomProperty(relation, model));
 			
-			String path = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-					"benchmark/" + testOrTrain + "/wrong/random/" + relation + "/";
+			String path = FACT_BENCH_PATH + testOrTrain + "/wrong/random/" + relation + "/";
 			
 			model.write(path, model.getName());
 		}
@@ -230,8 +214,7 @@ public class TestAndTrainSetCreator {
 
 	private static void createDateSet(String testOrTrain, String relation) throws IOException {
 		
-		List<DefactoModel> models = DefactoModelReader.readModels(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-				"benchmark/" + testOrTrain + "/correct/" + relation + "/");
+		List<DefactoModel> models = DefactoModelReader.readModels(FACT_BENCH_PATH + testOrTrain + "/correct/" + relation + "/");
 
 		for ( DefactoModel model : models ) {
 			
@@ -246,8 +229,7 @@ public class TestAndTrainSetCreator {
 				model.timePeriod = new DefactoTimePeriod(newInterval[0], newInterval[1]);
 			}
 			
-			String path = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-					"benchmark/" + testOrTrain + "/wrong/date/" + relation + "/";
+			String path = FACT_BENCH_PATH + testOrTrain + "/wrong/date/" + relation + "/";
 			
 			model.write(path, model.getName());
 		}
@@ -321,6 +303,29 @@ public class TestAndTrainSetCreator {
 		return model.model.createProperty(newPropertyUri);
 	}
 	
+	private static DefactoResource getRandomObject(DefactoModel model) {
+		DefactoResource newObject = objects.get(new Random().nextInt(objects.size()));
+		while ( facts.contains(model.getSubjectUri() + " " + model.getPropertyUri() + " " + newObject.getUri()) ) {
+			
+			newObject = objects.get(new Random().nextInt(objects.size()));
+			System.out.println("Picked already contained object");
+		}
+		
+		return newObject;
+	}
+
+	private static DefactoResource getRandomSubject(DefactoModel model) {
+		
+		DefactoResource newSubject = subjects.get(new Random().nextInt(subjects.size()));
+		while ( facts.contains(newSubject.getUri() + " " + model.getPropertyUri() + " " + model.getObjectUri()) ) {
+			
+			newSubject = subjects.get(new Random().nextInt(subjects.size()));
+			System.out.println("Picked already contained subject");
+		}
+		
+		return newSubject;
+	}
+	
 	/**
 	 * Returns a random object from the set of all objects
 	 * of a given relation.
@@ -382,15 +387,13 @@ public class TestAndTrainSetCreator {
 				// train
 				if ( train < 75 && number % 2 == 0 ) {
 					
-					FileUtils.copyFile(file, new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-							"benchmark/train/correct/"+relation+"/" + file.getName()));
+					FileUtils.copyFile(file, new File(FACT_BENCH_PATH + "/train/correct/"+relation+"/" + file.getName()));
 					train++;
 				}
 				// test
 				else if ( test < 75 && number % 2 == 1 ) {
 					
-					FileUtils.copyFile(file, new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-							"benchmark/test/correct/"+relation+"/" + file.getName()));
+					FileUtils.copyFile(file, new File(FACT_BENCH_PATH + "/test/correct/"+relation+"/" + file.getName()));
 					test++;
 				}
 			}
@@ -400,19 +403,21 @@ public class TestAndTrainSetCreator {
 		objectsForRelation.put(relation, new ArrayList<DefactoResource>());
 		
 		// let's load all the facts
-		for ( DefactoModel model : DefactoModelReader.readModels(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-				"benchmark/test/correct/" + relation + "/")) {
+		for ( DefactoModel model : DefactoModelReader.readModels(FACT_BENCH_PATH + "/test/correct/" + relation + "/")) {
 			
 			relationToFact.get(relation).add(model.getSubjectUri() + " " + model.getPropertyUri() + " " + model.getObjectUri());
 			subjectsForRelation.get(relation).add(model.getSubject());
 			objectsForRelation.get(relation).add(model.getObject());
+			objects.add(model.object);
+			subjects.add(model.subject);
 		}
-		for ( DefactoModel model : DefactoModelReader.readModels(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
-				"benchmark/train/correct/" + relation + "/")) {
+		for ( DefactoModel model : DefactoModelReader.readModels(FACT_BENCH_PATH + "/train/correct/" + relation + "/")) {
 			
 			relationToFact.get(relation).add(model.getSubjectUri() + " " + model.getPropertyUri() + " " + model.getObjectUri());
 			subjectsForRelation.get(relation).add(model.getSubject());
 			objectsForRelation.get(relation).add(model.getObject());
+			objects.add(model.object);
+			subjects.add(model.subject);
 		}
 	}
 }
