@@ -115,7 +115,7 @@ public class DefactoTimePeriodService {
             result.put("to", to == null ? "" : to);
             buildYearOccurrences(result, ev);
         	
-            return Response.ok(result.toString()).build();
+            return Response.ok(result.toString()).header("Access-Control-Allow-Origin", "*").build();
         }
         catch (Exception e) {
         

@@ -17,7 +17,8 @@ public class DefactoYearsClient {
 	public static void main(String[] args) throws IOException, JSONException {
 
 		Client client = Client.create(); // should be reused since it expensive to create
-		WebResource webResource = client.resource("http://localhost:1234/getdefactotimes");
+//		WebResource webResource = client.resource("http://localhost:1234/getdefactotimes");
+		WebResource webResource = client.resource("http://139.18.2.164:1234/getdefactoscore");
 		
 		String subjectUri	= "http://dbpedia.org/resource/Barack_Obama";
 		String subjectLabel = "Barack Obama@en";
