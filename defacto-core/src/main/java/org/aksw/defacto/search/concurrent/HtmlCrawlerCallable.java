@@ -33,12 +33,17 @@ public class HtmlCrawlerCallable implements Callable<WebSite> {
     @Override
     public WebSite call() throws Exception {
         
+//    	System.out.println("URL " + this.website.getUrl());
+    	
         // we do only want to start the crawling if we haven't it done already
         if ( this.website.getText().isEmpty() && !this.website.isCached() )
             website.setText(this.crawlUtil.readPage(website.getUrl(), Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "WEB_SEARCH_TIMEOUT_MILLISECONDS")));
      
+//        System.out.println("URL " + this.website.getUrl() + " DONE");
+        
         // every web site is spawned with a page rank of 11
-        if ( Defacto.DEFACTO_CONFIG.getBooleanSetting("crawl", "getPageRank") && website.getPageRank() == Defacto.DEFACTO_CONFIG.getIntegerSetting("evidence", "UNASSIGNED_PAGE_RANK") && !this.website.isCached() ) {
+        if ( Defacto.DEFACTO_CONFIG.getBooleanSetting("crawl", "getPageRank") && 
+        		website.getPageRank() == Defacto.DEFACTO_CONFIG.getIntegerSetting("evidence", "UNASSIGNED_PAGE_RANK") && !this.website.isCached() ) {
             
             logger.info("Getting page rank for: " + website.getUrl());
             website.setPageRank(PageRank.getInstance().getPageRank(website.getUrl()));

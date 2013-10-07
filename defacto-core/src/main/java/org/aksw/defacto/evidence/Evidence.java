@@ -13,12 +13,15 @@ import java.util.Set;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.Pattern;
-import org.aksw.defacto.ml.feature.AbstractFeature;
+import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.model.DefactoTimePeriod;
+import org.aksw.defacto.search.time.TimePeriodSearcher;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.VectorUtil;
 import org.apache.commons.lang3.ArrayUtils;
+
+import com.github.gerbsen.math.Frequency;
 
 import weka.core.Instance;
 
@@ -32,7 +35,7 @@ public class Evidence {
     private Map<Pattern,List<WebSite>> webSites         = new LinkedHashMap<Pattern,List<WebSite>>();
     private Map<String,List<Word>> topicTerms           = new HashMap<String,List<Word>>();
 //    private Map<Pattern,Double[][]> similarityMatricies = new LinkedHashMap<Pattern,Double[][]>();
-    private Double[][] similarityMatrix                 = null;
+    public Double[][] similarityMatrix                 = null;
     
     public Map<String,Long> tinyContextYearOccurrences = new LinkedHashMap<String, Long>();
     public Map<String,Long> smallContextYearOccurrences = new LinkedHashMap<String, Long>();
@@ -47,6 +50,7 @@ public class Evidence {
     private Map<String,List<Pattern>> boaPatterns = new HashMap<String,List<Pattern>>();
 	public List<Match> dates = new ArrayList<Match>();
 	public DefactoTimePeriod defactoTimePeriod;
+	public TimePeriodSearcher tsSearcher = new TimePeriodSearcher();
 	
     
     /**
@@ -84,9 +88,9 @@ public class Evidence {
     
         if ( features == null ) {
 
-            this.features = new Instance(AbstractFeature.provenance.numAttributes());
-            this.features.setDataset(AbstractFeature.provenance);
-            this.features.setValue(AbstractFeature.CLASS, String.valueOf(model.isCorrect()));
+            this.features = new Instance(AbstractEvidenceFeature.provenance.numAttributes());
+            this.features.setDataset(AbstractEvidenceFeature.provenance);
+            this.features.setValue(AbstractEvidenceFeature.CLASS, String.valueOf(model.isCorrect()));
         }
         
         return features;
@@ -250,15 +254,15 @@ public class Evidence {
 	 * @param pattern
 	 * @return
 	 */
-	public List<ComplexProof> getComplexProofs(WebSite website, Pattern pattern) {
-		List<ComplexProof> proofs = new LinkedList<ComplexProof>();
-		for(ComplexProof proof : complexProofs) {
-			if ( proof.getPattern().equals(pattern) && proof.getWebSite().equals(website) ) {
-				proofs.add(proof);
-			}
-		}
-		return proofs;
-	}
+//	public List<ComplexProof> getComplexProofs(WebSite website, Pattern pattern) {
+//		List<ComplexProof> proofs = new LinkedList<ComplexProof>();
+//		for(ComplexProof proof : complexProofs) {
+//			if ( proof.getPattern().equals(pattern) && proof.getWebSite().equals(website) ) {
+//				proofs.add(proof);
+//			}
+//		}
+//		return proofs;
+//	}
 
     /**
      * @return the model
@@ -331,7 +335,7 @@ public class Evidence {
 			Long occurrences = Long.MIN_VALUE;
 			String occurrence = "";
 			
-			for ( Entry<String, Long> entry : this.tinyContextYearOccurrences.entrySet()) {
+			for ( Entry<String, Long> entry : this.smallContextYearOccurrences.entrySet()) {
 
 				if ( entry.getValue() > occurrences ) {
 					
@@ -345,7 +349,36 @@ public class Evidence {
 		else {
 			
 			// this needs to be implemented
-			this.defactoTimePeriod = new DefactoTimePeriod("", "");
+			this.defactoTimePeriod = TimePeriodSearcher.findTimePeriod(this);
+			if ( this.defactoTimePeriod == null ) {
+				
+				Frequency freq = new Frequency();
+				
+				for ( Entry<String, Long> entry : this.mediumContextYearOccurrences.entrySet()) {
+					for (int i = 0; i < entry.getValue(); i++ ) {
+						freq.addValue(entry.getKey());
+					}
+				}
+				
+				int first = 0;
+				int second = 0;
+				for ( Entry<Comparable<?>, Long> entry : freq.sortByValue() ) {
+					
+					if (first == 0) {
+						first = Integer.valueOf((String)entry.getKey());
+						continue;
+					}
+					if (second == 0) {
+						second = Integer.valueOf((String)entry.getKey());
+						break;
+					}
+				}
+				this.defactoTimePeriod = new DefactoTimePeriod(Math.min(first, second), Math.max(first, second));
+			}
+				
+			if ( this.defactoTimePeriod == null ) this.defactoTimePeriod = new DefactoTimePeriod(0,0);
 		}
+		
+//		return new DefactoTimePeriod("0","0");
 	}
 }

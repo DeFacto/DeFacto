@@ -29,17 +29,15 @@ public class WikipediaSearcher {
 
     private static Logger logger =  Logger.getLogger(WikipediaSearcher.class);
 
-    private static final String MEDIA_WIKI_API_URL = "http://en.wikipedia.org/wiki/";
-
     /**
      * Searches Wikipedia for the passed
      * @param searchQuery   The query to search Wikipedia with
      * @return A list of results obtained from Wikipedia
      */
-    public static ArrayList<WikipediaSearchResult> queryWikipedia(String searchQuery) {
+    public static ArrayList<WikipediaSearchResult> queryWikipedia(String searchQuery, String language) {
 
         ArrayList<WikipediaSearchResult> searchResults = new ArrayList<WikipediaSearchResult>();
-        User user = new User("", "", "http://en.wikipedia.org/w/api.php");
+        User user = new User("", "", "http://"+language+".wikipedia.org/w/api.php");
         user.login();
 
         String[] queryParams = { "list", "search", "srsearch", searchQuery, "sroffset", "0", 
@@ -50,7 +48,7 @@ public class WikipediaSearcher {
         
         try {
 
-            logger.info("Querying wikipedia for topic terms: \"" + searchQuery + "\"");
+            logger.debug("Querying wikipedia for topic terms: \"" + searchQuery + "\" ("+language+")");
             
             String responseBody = connector.queryXML(user, queryParams);
             while (responseBody != null) {
@@ -61,7 +59,7 @@ public class WikipediaSearcher {
                 for (SearchResult searchResult : parser.getSearchResultList())
                     searchResults.add(new WikipediaSearchResult(
                                            searchResult.getTitle(), 
-                                           getWikipediaPageFullURL(searchResult.getTitle()),
+                                           getWikipediaPageFullURL(searchResult.getTitle(), language),
                                            searchResult.getSnippet()));
                 
                 // there are more results available change the offset 
@@ -85,6 +83,8 @@ public class WikipediaSearcher {
             e.printStackTrace();
         }
         
+        logger.debug("Results: " + searchResults.size() + " for:  " + searchQuery + " ("+language+")");
+        
         return searchResults;
     }
     
@@ -93,11 +93,11 @@ public class WikipediaSearcher {
      * @param pageTitle
      * @return
      */
-    private static String getWikipediaPageFullURL(String pageTitle){
+    private static String getWikipediaPageFullURL(String pageTitle, String language){
 
         try{
             
-            return WikipediaSearcher.MEDIA_WIKI_API_URL + URLEncoder.encode(pageTitle.replace(" ", "_"), "UTF-8");
+            return "http://"+language+".wikipedia.org/wiki/" + URLEncoder.encode(pageTitle.replace(" ", "_"), "UTF-8");
         }
         catch (UnsupportedEncodingException exp){
             

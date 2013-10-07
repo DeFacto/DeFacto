@@ -15,7 +15,6 @@ import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.DefaultSearchResult;
 import org.aksw.defacto.search.result.SearchResult;
-import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.BinaryRequestWriter;
@@ -23,7 +22,10 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.SolrException;
 import org.apache.solr.common.SolrInputDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author gerb
@@ -32,7 +34,7 @@ import org.apache.solr.common.SolrInputDocument;
 public class Solr4SearchResultCache implements Cache<SearchResult> {
 	
 	private HttpSolrServer server;
-	private Logger logger = Logger.getLogger(Solr4SearchResultCache.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Solr4SearchResultCache.class);
 	
 	public Solr4SearchResultCache(){
 
@@ -56,7 +58,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
         MetaQuery metaQuery = null;
         Long hitCount = 0L;
         
-    	SolrQuery query = new SolrQuery(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD + ":\"" + identifier + "\"").setRows(200);
+    	SolrQuery query = new SolrQuery(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD + ":\"" + identifier + "\"").setRows(50);
     	query.addField(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD);
     	query.addField(Constants.LUCENE_SEARCH_RESULT_HIT_COUNT_FIELD);
     	query.addField(Constants.LUCENE_SEARCH_RESULT_URL_FIELD);
@@ -87,7 +89,7 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
             }
         }
         
-        return new DefaultSearchResult(websites, hitCount, metaQuery);
+        return new DefaultSearchResult(websites, hitCount, metaQuery, true);
 	}
 
 	@Override
@@ -108,7 +110,12 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
 		for ( SearchResult result : listToAdd ) this.add(result);
 		try {
 			this.server.commit();
-		} catch (SolrServerException e) {
+		} 
+		catch (java.io.CharConversionException e ) {
+			
+			e.printStackTrace();
+		}
+		catch (SolrServerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -126,9 +133,19 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
 		
 		try {
 			
-			this.server.add(searchResultToDocument(entry));
-			this.logger.info("Added " + entry.getQuery().toString() + " to cache!");
-		} 
+			if ( !entry.isCached() ) {
+			
+				this.server.add(searchResultToDocument(entry));
+				LOGGER.info(String.format("Query: '%s' was not found in the cache, starting to query!", entry.getQuery().toString()));
+			}
+		}
+		catch (SolrException e ) {
+			e.printStackTrace();
+		}
+		catch (java.io.CharConversionException e ) {
+			
+			e.printStackTrace();
+		}
 		catch (SolrServerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

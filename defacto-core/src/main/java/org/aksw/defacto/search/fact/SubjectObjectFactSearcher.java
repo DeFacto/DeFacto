@@ -40,7 +40,7 @@ public class SubjectObjectFactSearcher implements FactSearcher {
     /**
      * 
      */
-    private SubjectObjectFactSearcher() {
+    public SubjectObjectFactSearcher() {
     }
     
     /**
@@ -49,13 +49,13 @@ public class SubjectObjectFactSearcher implements FactSearcher {
      * 
      * @return
      */
-    public static synchronized SubjectObjectFactSearcher getInstance() {
-        
-        if ( SubjectObjectFactSearcher.INSTANCE == null )
-            SubjectObjectFactSearcher.INSTANCE = new SubjectObjectFactSearcher();
-        
-        return SubjectObjectFactSearcher.INSTANCE;
-    }
+//    public static synchronized SubjectObjectFactSearcher getInstance() {
+//        
+//        if ( SubjectObjectFactSearcher.INSTANCE == null )
+//            SubjectObjectFactSearcher.INSTANCE = new SubjectObjectFactSearcher();
+//        
+//        return SubjectObjectFactSearcher.INSTANCE;
+//    }
     
     @Override
     public void generateProofs(Evidence evidence, WebSite website, DefactoModel model, Pattern pattern) {
@@ -75,26 +75,36 @@ public class SubjectObjectFactSearcher implements FactSearcher {
         }
         subjectLabels.removeAll(Collections.singleton(Constants.NO_LABEL));
         objectLabels.removeAll(Collections.singleton(Constants.NO_LABEL));
+
+        toLowerCase(subjectLabels);
+        toLowerCase(objectLabels);
         
-        for ( String subjectLabel : subjectLabels ) { subjectLabel = subjectLabel.toLowerCase(); // save some time
-            for ( String objectLabel : objectLabels ) { objectLabel = objectLabel.toLowerCase(); // same here
-            
+        // combine the list to make processing a little easier
+        Set<String> surfaceForms = new HashSet<String>(subjectLabels);
+        surfaceForms.addAll(objectLabels);
+        
+        for ( String subjectLabel : subjectLabels ) { 
+        	
+        	// save some time
+        	if ( !websiteText.contains(subjectLabel) ) continue;
+        	
+            for ( String objectLabel : objectLabels ) { 
+            	
+            	if ( !websiteText.contains(objectLabel) ) continue;
+            	
             	LOGGER.debug("Search proof for: '" + subjectLabel + "' and '" + objectLabel + "'.");
             
             	if ( subjectLabel.equals(objectLabel) ) continue;
-
+            	
                 String[] subjectObjectMatches = StringUtils.substringsBetween(websiteText, " " + subjectLabel, objectLabel + " ");
                 String[] objectSubjectMatches = StringUtils.substringsBetween(websiteText, " " + objectLabel, subjectLabel + " ");
                 
                 // we need to check for both directions
                 List<String> subjectObjectOccurrences = new ArrayList<String>();
-                if (subjectObjectMatches != null) subjectObjectOccurrences.addAll(Arrays.asList(subjectObjectMatches));
+                if (subjectObjectMatches != null) for ( String s : subjectObjectMatches ) subjectObjectOccurrences.add(s);
+                // asdjklajsd
                 List<String> objectSubjectOccurrences = new ArrayList<String>();
-                if (objectSubjectMatches != null) objectSubjectOccurrences.addAll(Arrays.asList(objectSubjectMatches));
-                
-                // combine the list to make processing a little easier
-                Set<String> surfaceForms = new HashSet<String>(subjectLabels);
-                surfaceForms.addAll(objectLabels);
+                if (objectSubjectMatches != null) for ( String s : objectSubjectMatches) objectSubjectOccurrences.add(s);
                 
                 // direction: subject property object
                 createProofsForEvidence(evidence, subjectObjectOccurrences, subjectLabel, objectLabel, websiteText, website, surfaceForms);
@@ -102,8 +112,17 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                 createProofsForEvidence(evidence, objectSubjectOccurrences, objectLabel, subjectLabel, websiteText, website, surfaceForms);
             }
         }
-        
         LOGGER.debug("#sLabels: "+  subjectLabels.size() + " #oLabels:" + objectLabels.size() + " #Proofs: " + evidence.getComplexProofs().size() + " #lang: " + model.getLanguages().size());
+    }
+    
+    public static void toLowerCase(Set<String> strings)
+    {
+        String[] stringsArray = strings.toArray(new String[0]);
+        for (int i=0; i< stringsArray.length; ++i) {
+            stringsArray[i] = stringsArray[i].toLowerCase();
+        }
+        strings.clear();
+        strings.addAll(Arrays.asList(stringsArray));
     }
     
     
@@ -126,19 +145,19 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                 String tinyContext = this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25);
                 
                 // first we check if we can find a boa pattern inside the mathing string
-                for (Pattern boaPattern : evidence.getBoaPatterns()) { // go through all patterns and look if a non empty normalized pattern string is inside the match
+//                for (Pattern boaPattern : evidence.getBoaPatterns()) { // go through all patterns and look if a non empty normalized pattern string is inside the match
                 	
                 	// this can only be if the patterns contains only garbage
-                	if ( boaPattern.normalize().isEmpty() ) continue;
+//                	if ( boaPattern.normalize().isEmpty() ) continue;
                 	
-                	ComplexProof proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, tinyContext, site, boaPattern);
+                	ComplexProof proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, tinyContext, site);
                     proof.setTinyContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25));
                     proof.setSmallContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 50));
                     proof.setMediumContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 100));
                     proof.setLargeContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 150));
                     
                     evidence.addComplexProof(proof);
-                }
+//                }
             }
         }
     }

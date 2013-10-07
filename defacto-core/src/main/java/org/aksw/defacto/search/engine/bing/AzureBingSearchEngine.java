@@ -110,7 +110,10 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
             int i = 1;
             for (AbstractAzureSearchResult result : ars){
 
-                if ( i > Integer.valueOf(NUMBER_OF_SEARCH_RESULTS) ) break;;
+                if ( i > Integer.valueOf(NUMBER_OF_SEARCH_RESULTS) ) break;
+                
+                if ( ((AzureSearchWebResult) result).getUrl().startsWith("http://images.webgiftr.com/") 
+                		|| ((AzureSearchWebResult) result).getUrl().startsWith("http://www.calza.com/")) continue;
                 
                 WebSite website = new WebSite(query, ((AzureSearchWebResult) result).getUrl());
                 website.setTitle(result.getTitle());
@@ -119,11 +122,11 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
                 results.add(website);
             }
             
-            return new DefaultSearchResult(results, ars.getWebTotal(), query, pattern);
+            return new DefaultSearchResult(results, ars.getWebTotal(), query, pattern, false);
         }
         catch (Exception e) {
             
-            return new DefaultSearchResult(new ArrayList<WebSite>(), 0L, query, pattern);
+            return new DefaultSearchResult(new ArrayList<WebSite>(), 0L, query, pattern, false);
         }
     }
 

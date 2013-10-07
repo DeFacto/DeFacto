@@ -40,9 +40,9 @@ public class WikipediaPageCrawler implements Callable<List<Word>> {
     static {
         
         stopwords.addAll(Arrays.asList("disambiguation", "http", "retrieved", "com", 
-                        "www", "html", "wikipedia", "link", "links", "isbn", "en", "jp",
-                        "edit", "article", "world", "articles", "history", "free", "contact",
-                        "changes", "pages", "news", "january", "february", "march", "april",
+                        "xml" , "www", "html", "wikipedia", "link", "links", "isbn", "en", "jp",
+                        "edit", "article", "world", "articles", "history", "free", "contact", "bearbeiten",
+                        "changes", "pages", "news", "january", "february", "march", "april", "wurden",
                         "may", "june", "july", "august", "september", "october", "november", "original",
                         "december", "org", "categories", "sources", "st", "one", "page", "new", "archived",
                         "create", "main", "encyclopedia", "navigation", "title", "references", "edu", "index"));
@@ -54,7 +54,14 @@ public class WikipediaPageCrawler implements Callable<List<Word>> {
 				"hattest", "hattet", "hier", "hinter", "ich", "ihr", "ihre", "im", "in", "ist", "ja", "jede", "jedem", "jeden", "jeder", "jedes", "jener", "jenes", "jetzt", "kann", "kannst",
 				"können", "könnt", "machen", "mein", "meine", "mit", "muß", "mußt", "musst", "müssen", "müßt", "nach", "nachdem", "nein", "nicht", "nun", "oder", "seid", "sein", "seine", "sich",
 				"sie", "sind", "soll", "sollen", "sollst", "sollt", "sonst", "soweit", "sowie", "und", "unser unsere", "unter", "vom", "von", "vor", "wann", "warum", "weiter", "weitere", "wenn",
-				"wer", "werde", "werden", "werdet", "weshalb", "wie", "wieder", "wieso", "wir", "wird", "wirst", "wo", "woher", "wohin", "zu", "zum", "zur", "über"));
+				"wer", "werde", "werden", "werdet", "weshalb", "wie", "wieder", "wieso", "wir", "wird", "wirst", "wo", "woher", "wohin", "zu", "zum", "zur", "über", "wurde", "est", "svg"));
+    	stopwords.addAll(Arrays.asList("alors", "au", "aucuns", "aussi", "autre", "avant", "avec", "avoir", "bon", "car", "ce", "cela", "ces", "ceux", "chaque", "ci", "comme", "comment", "dans", 
+										"des", "du", "dedans", "dehors", "depuis", "deux", "devrait", "doit", "donc", "dos", "droite", "début", "elle", "elles", "en", "encore", "essai", "est", 
+										"et", "eu", "fait", "faites", "fois", "font", "force", "haut", "hors", "ici", "il", "ils", "je  juste", "la", "le", "les", "leur", "là", "ma", "maintenant", 
+										"mais", "mes", "mine", "moins", "mon", "mot", "même", "ni", "nommés", "notre", "nous", "nouveaux", "ou", "où", "par", "parce", "parole", "pas", "personnes", 
+										"peut", "peu", "pièce", "plupart", "pour", "pourquoi", "quand", "que", "quel", "quelle", "quelles", "quels", "qui", "sa", "sans", "ses", "seulement", "si", 
+										"sien", "son", "sont", "sous", "soyez   sujet", "sur", "ta", "tandis", "tellement", "tels", "tes", "ton", "tous", "tout", "trop", "très", "tu", "valeur", 
+										"voie", "voient", "vont", "votre", "vous", "vu", "ça", "étaient", "état", "étions", "été", "être"));
     }
 
     /**
@@ -131,6 +138,7 @@ public class WikipediaPageCrawler implements Callable<List<Word>> {
         // sort the values by there frequency and return them
         ArrayList<Word> sortedKeywordList = new ArrayList<Word>(map.values());
         Collections.sort(sortedKeywordList);
+        
         return sortedKeywordList;
     }
 }

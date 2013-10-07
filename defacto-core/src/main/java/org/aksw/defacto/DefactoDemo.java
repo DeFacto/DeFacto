@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.model.DefactoModel;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -35,7 +36,7 @@ public class DefactoDemo {
     public static void main(String[] args) throws InvalidFileFormatException, IOException {
 
         org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
-        Defacto.checkFacts(getSampleData());
+        Defacto.checkFacts(getSampleData(), TIME_DISTRIBUTION_ONLY.NO);
 //        Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getTrainingData());
     }
     

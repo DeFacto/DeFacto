@@ -30,13 +30,11 @@ public abstract class DefaultSearchEngine implements SearchEngine {
         if ( searchResultsCache.contains(query.toString()) ) {
             
             // search results will be identified by the string we used to search in search engine
-        	LOGGER.info(String.format("Query: '%s' cached! Starting to get from cache!", query.toString()));
+        	LOGGER.debug(String.format("Query: '%s' cached! Starting to get from cache!", query.toString()));
             SearchResult result = searchResultsCache.getEntry(query.toString());
             result.setPattern(pattern);
             return result;
         }
-        LOGGER.info(String.format("Query: '%s' was not found in the cache, starting to query!", query.toString()));
-        
         return query(query, pattern);
     }
 }

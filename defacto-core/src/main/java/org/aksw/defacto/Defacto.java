@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -17,12 +18,12 @@ import java.util.Set;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
-import org.aksw.defacto.ml.feature.AbstractFeature;
-import org.aksw.defacto.ml.feature.EvidenceFeatureExtractor;
+import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
+import org.aksw.defacto.ml.feature.evidence.EvidenceFeatureExtractor;
+import org.aksw.defacto.ml.feature.evidence.EvidenceScorer;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
 import org.aksw.defacto.ml.feature.fact.FactFeatureExtraction;
 import org.aksw.defacto.ml.feature.fact.FactScorer;
-import org.aksw.defacto.ml.score.EvidenceScorer;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.search.concurrent.NlpModelManager;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
@@ -30,7 +31,7 @@ import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.query.QueryGenerator;
 import org.aksw.defacto.util.TimeUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Level;
 import org.ini4j.Ini;
@@ -113,9 +114,9 @@ public class Defacto {
         long startFeatureExtraction = System.currentTimeMillis();
         EvidenceFeatureExtractor featureCalculator = new EvidenceFeatureExtractor();
         featureCalculator.extractFeatureForEvidence(evidence);
-        LOGGER.info("Feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFeatureExtraction));
+        LOGGER.info("Evidence feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFeatureExtraction));
         
-        // 7. score the model
+        // 6. score the model
         if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) {
 
             long startScoring = System.currentTimeMillis();
@@ -124,31 +125,27 @@ public class Defacto {
             LOGGER.info("Evidence Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
         }
         
-//        String output = "Model " + currentModel + "/" + numberOfModels + " took " + TimeUtil.formatTime(System.currentTimeMillis() - start) +
-//                " Average time: " + ( (System.currentTimeMillis() - startTime) / currentModel++ ) + "ms";
-        
-        // 8. Log statistics
-//        System.out.println(output);
-        
-//        try {
-//
-//            DefactoEval.writer.write(output);
-//            DefactoEval.writer.write("\n");
-//            DefactoEval.writer.flush();
-//        }
-//        catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
+        LOGGER.info("Overall time for fact: " +  TimeUtil.formatTime(System.currentTimeMillis() - start));
         
         return evidence;
+    }
+    
+    public static void writeTrainingFiles() {
+    	
+    	// rewrite the training file after every checked triple
+        if ( DEFACTO_CONFIG.getBooleanSetting("evidence", "OVERWRITE_EVIDENCE_TRAINING_FILE")  ) writeEvidenceTrainingDataFile();
+        
+        // rewrite the fact training file after every proof
+        if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) writeFactTrainingDataFile();
     }
     
     public static void init(){
     	
     	try {
     		
-			Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File(Defacto.class.getResource("/defacto.ini").getFile())));
+    		if ( Defacto.DEFACTO_CONFIG  == null )
+    			Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File(Defacto.class.getResource("/defacto.ini").getFile())));
+    		
 		} catch (InvalidFileFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -164,7 +161,7 @@ public class Defacto {
      * @param models
      * @return
      */
-    public static Map<DefactoModel,Evidence> checkFacts(List<DefactoModel> defactoModel) {
+    public static Map<DefactoModel,Evidence> checkFacts(List<DefactoModel> defactoModel, TIME_DISTRIBUTION_ONLY onlyTimeDistribution) {
 
     	init();
         startTime       = System.currentTimeMillis();
@@ -174,8 +171,15 @@ public class Defacto {
         Map<DefactoModel,Evidence> evidences = new HashMap<DefactoModel, Evidence>();
         
         for (DefactoModel model : defactoModel) {
-            
-            Evidence evidence = checkFact(model, TIME_DISTRIBUTION_ONLY.NO);
+        	
+//        	if ( !model.getName().contains("spouse") && !model.getName().contains("starring")
+//        			&& !model.getName().contains("subsidiary") && !model.getName().contains("leader") ) continue;
+//        	
+//        	if ( model.getName().contains("spouse") && Integer.valueOf(model.getName().replace("spouse_","").replace(".ttl","")) < 110) continue;
+        	
+//        	if (!model.getName().equals("birth_00052.ttl") ) continue;
+        	
+            Evidence evidence = checkFact(model, onlyTimeDistribution);
             evidences.put(model, evidence);
             
             // we want to print the score of the classifier 
@@ -192,7 +196,12 @@ public class Defacto {
         return evidences;
     }
     
-    /**
+    private static void writeFactTrainingDataFile() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
      * 
      */
     private static void writeEvidenceTrainingDataFile() {
@@ -200,7 +209,7 @@ public class Defacto {
         try {
             
             BufferedWriter writer = new BufferedWriter(new FileWriter(DefactoConfig.DEFACTO_DATA_DIR + DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") ));
-            writer.write(AbstractFeature.provenance.toString());
+            writer.write(AbstractEvidenceFeature.provenance.toString());
             writer.flush();
             writer.close();
         }
@@ -213,7 +222,7 @@ public class Defacto {
     /**
      * this tries to write an arff file which is also compatible with google docs spreadsheets
      */
-    private static void writeFactTrainingDataFile() {
+    private static void writeFactaTrainingDataFile() {
 
         try {
             
@@ -259,10 +268,13 @@ public class Defacto {
                     }
                 }
             }
-            Collections.shuffle(pickedInstances);
+//            Collections.shuffle(pickedInstances);
             
-            for (Instance instance : pickedInstances) {
-                
+            Enumeration<Instance> enumerateInstances = AbstractFactFeatures.factFeatures.enumerateInstances();
+//            for (Instance instance : pickedInstances) {
+            while ( enumerateInstances.hasMoreElements() ) {
+            	Instance instance = enumerateInstances.nextElement();
+//			}
 //                List<String> lines = new ArrayList<String>();
 //                for ( int i = 0; i < instance.numAttributes() ; i++ ) {
 //                    

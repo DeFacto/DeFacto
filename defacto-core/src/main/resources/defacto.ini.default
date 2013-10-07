@@ -15,6 +15,8 @@ languages = de,en,fr
 BING_API_KEY = Please, request a Bing key for yourself
 ; number of search results return be the search engine
 NUMBER_OF_SEARCH_RESULTS = 20
+; thredas
+NUMBER_OF_SEARCH_RESULTS_THREADS = 40
 ; crawl thread gets terminated after this time
 WEB_SEARCH_TIMEOUT_MILLISECONDS = 10000
 ; One thread for every BOA pattern, usually the same as the number of BOA patterns 

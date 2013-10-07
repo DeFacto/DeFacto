@@ -23,4 +23,6 @@ public interface SearchResult {
     public Pattern getPattern();
     
     public String getLanguage();
+
+	public boolean isCached();
 }

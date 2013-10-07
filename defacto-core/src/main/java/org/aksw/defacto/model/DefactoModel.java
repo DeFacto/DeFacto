@@ -248,7 +248,7 @@ public class DefactoModel {
     @Override
     public String toString() {
 
-        return String.format("<%s> <%s> <%s> [%s-%s]", this.subject.getUri(), this.predicate.getURI(), this.object.getUri(), this.timePeriod.getFrom(), this.timePeriod.getTo()); 
+        return String.format("'%s' <%s> <%s> <%s> [%s-%s]", this.name, this.subject.getLabel("en"), this.predicate.getURI(), this.object.getLabel("en"), this.timePeriod.getFrom(), this.timePeriod.getTo()); 
     }
 
 	public Statement getFact() {
@@ -357,5 +357,21 @@ public class DefactoModel {
 	public void setProperty(Property property) {
 		
 		this.predicate = property;
+	}
+
+	public String getDBpediaSubjectUri() {
+		
+		for ( Resource res : this.subject.owlSameAs) 
+			if ( res.getURI().startsWith("http://dbpedia.org/resource/") ) return res.getURI();
+		
+		return null;
+	}
+
+	public String getDBpediaObjectUri() {
+		
+		for ( Resource res : this.object.owlSameAs) 
+			if ( res.getURI().startsWith("http://dbpedia.org/resource/") ) return res.getURI();
+		
+		return null;
 	}
 }

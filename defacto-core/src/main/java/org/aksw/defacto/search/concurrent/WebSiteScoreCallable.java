@@ -19,6 +19,7 @@ public class WebSiteScoreCallable implements Callable<WebSite> {
     private Pattern pattern;
     private WebSite website;
     private Evidence evidence;
+    SubjectObjectFactSearcher searcher = new SubjectObjectFactSearcher();
     
     /**
      * 
@@ -37,7 +38,7 @@ public class WebSiteScoreCallable implements Callable<WebSite> {
     @Override
     public WebSite call() {
         
-        SubjectObjectFactSearcher.getInstance().generateProofs(evidence, website, model, pattern);
+    	searcher.generateProofs(evidence, website, model, pattern);
         return website;
     }
 }

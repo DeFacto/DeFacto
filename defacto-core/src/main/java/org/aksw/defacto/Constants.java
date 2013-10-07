@@ -52,8 +52,8 @@ public class Constants {
 	public static final Set<String> STOP_WORDS = new HashSet<String>();
 	static {
 		Collections.addAll(STOP_WORDS, ":", " ", "``", "`", "_NE_", "''", ",", "'", "'s", "-LRB-", "-RRB-", ".", "-", "--", "i", "a", "about", "an", "and", "are", "as", "at", "be", "but", "by", "com", "for", "from", 
-		        "how", "in", "is", "it", "of", "on", "or", "that", "the", "The", "was", "were", 
-				"this", "to", "what", "when", "where", "who", "will", "with", "the", "www", "before", ",", "after", ";", "like", "and", "such", "-LRB-", "-RRB-", "-lrb-", "-rrb-", "aber", "als",
+		        "how", "in", "is", "it", "of", "on", "or", "that", "the", "The", "was", "were", "à",
+				"under", "this", "to", "what", "when", "where", "who", "will", "with", "the", "www", "before", ",", "after", ";", "like", "and", "such", "-LRB-", "-RRB-", "-lrb-", "-rrb-", "aber", "als",
 				"am", "an", "auch", "auf", "aus", "bei", "bin", "bis", "bist", "da", "dadurch", "daher", "darum", "das", "daß", "dass", "dein", "deine", "dem", "den", "der", "des", "dessen",
 				"deshalb", "die", "dies", "dieser", "dieses", "doch", "dort", "du", "durch", "ein", "eine", "einem", "einen", "einer", "eines", "er", "es", "euer", "eure", "für", "hatte", "hatten",
 				"hattest", "hattet", "hier", "hinter", "ich", "ihr", "ihre", "im", "in", "ist", "ja", "jede", "jedem", "jeden", "jeder", "jedes", "jener", "jenes", "jetzt", "kann", "kannst",

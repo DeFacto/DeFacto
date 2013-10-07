@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.aksw.defacto.model.DefactoModel;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -69,7 +71,10 @@ public class DefactoModelReader {
 		Model model = ModelFactory.createDefaultModel();
         model.read(new FileReader(pathToModel), "", "TTL");
 		
-		return new DefactoModel(model, new File(pathToModel).getName(), isCorrect, languages);
+        String absolutePath = new File(pathToModel).getAbsolutePath();
+        absolutePath = absolutePath.replace("/Users/gerb/Development/workspaces/experimental/defacto/mltemp/FactBench/v1/", "");
+        
+		return new DefactoModel(model, absolutePath, isCorrect, languages);
 	}
 	
 	/**
@@ -133,13 +138,17 @@ public class DefactoModelReader {
 
 		List<DefactoModel> models = new ArrayList<DefactoModel>();
 		
-		for ( File file : new File(pathToModels).listFiles()) {
-			
+		for ( File file : FileUtils.listFiles(new File(pathToModels), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
 			if ( file.getName().endsWith(".ttl") ) {
 				
 				models.add(readModel(file.getAbsolutePath(), isCorrect, languages));
 			}
 		}
+		
+//		for ( File file : new File(pathToModels).listFiles()) {
+//			
+//			
+//		}
 		
 		return models;
 	}

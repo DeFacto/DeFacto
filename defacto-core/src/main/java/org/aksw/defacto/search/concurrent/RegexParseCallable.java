@@ -17,21 +17,21 @@ import edu.stanford.nlp.util.StringUtils;
  * @author gerb
  *
  */
-public class RegexParseCallable implements Callable<List<ComplexProof>>, ParseCallable {
+public class RegexParseCallable implements Callable<ComplexProof>, ParseCallable {
 
-	private List<ComplexProof> proofs;
+	private ComplexProof proof;
 	private Logger logger = Logger.getLogger(RegexParseCallable.class);
 	private RegexTagger dateTagger = new RegexTagger();
 
-	public RegexParseCallable(List<ComplexProof> proofsSublist) {
+	public RegexParseCallable(ComplexProof proofsSublist) {
 
-		this.proofs = proofsSublist;
+		this.proof = proofsSublist;
 	}
 
 	@Override
-	public List<ComplexProof> call() throws Exception {
+	public ComplexProof call() throws Exception {
 		
-		for ( ComplexProof proof : this.proofs ) {
+//		for ( ComplexProof proof : this.proofs ) {
 			
 			String merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(dateTagger.getAnnotatedSentences(proof.getLargeContext())), "-=-");
 			proof.setTaggedLargeContext(merged);
@@ -44,8 +44,8 @@ public class RegexParseCallable implements Callable<List<ComplexProof>>, ParseCa
 			
 			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(dateTagger.getAnnotatedSentences(proof.getTinyContext())), "-=-");
 			proof.setTaggedTinyContext(merged);
-		}
+//		}
 		
-		return this.proofs;
+		return this.proof;
 	}
 }

@@ -30,6 +30,7 @@ import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTermExtractor;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.ListUtil;
+import org.aksw.defacto.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,14 +65,19 @@ public class EvidenceCrawler {
      * @return
      */
     public Evidence crawlEvidence() {
-
+    	
+    	long start = System.currentTimeMillis();
+    	LOGGER.info("Start getting search results");
         Set<SearchResult> searchResults = this.generateSearchResultsInParallel();
+        LOGGER.info("Finished getting search results in " + (System.currentTimeMillis() - start));
         
         // multiple pattern bring the same results but we dont want that
         this.filterSearchResults(searchResults);
 
         Long totalHitCount = 0L; // sum over the n*m query results        
-        for ( SearchResult result : searchResults ) totalHitCount += result.getTotalHitCount();  
+        for ( SearchResult result : searchResults ) {
+        	totalHitCount += result.getTotalHitCount();  
+        }
                 
         Evidence evidence = new Evidence(model, totalHitCount, patternToQueries.keySet());
         // basically downloads all websites in parallel
@@ -85,28 +91,28 @@ public class EvidenceCrawler {
         for ( SearchResult result : searchResults ) 
             evidence.addWebSites(result.getPattern(), result.getWebSites());
         
+        // get the time frame
+        evidence.calculateDefactoTimePeriod();
+        
+        start = System.currentTimeMillis();
         // save all the time we can get
         if ( Defacto.onlyTimes.equals(TIME_DISTRIBUTION_ONLY.NO) ) {
 
-        	List<String> languages = model.getLanguages();
-        	for ( String language : languages ) {
+        	for ( String language : model.getLanguages() ) {
         		
-        		String subjectLabel = evidence.getModel().getSubjectLabelNoFallBack(language);
-        		String objectLabel = evidence.getModel().getObjectLabelNoFallBack(language);
+        		String subjectLabel = evidence.getModel().getSubjectLabel(language);
+        		String objectLabel = evidence.getModel().getObjectLabel(language);
         		
         		if ( !subjectLabel.equals(Constants.NO_LABEL) && !objectLabel.equals(Constants.NO_LABEL) ) {
 
-        			List<Word> topicTerms = TopicTermExtractor.getTopicTerms(subjectLabel, objectLabel, language);
-        			System.out.println(String.format("Subject: %s\tObject: %s\tLanguage: %s\tTopics: %s", subjectLabel, objectLabel, language, topicTerms.toString()));
-        			
+        			List<Word> topicTerms = TopicTermExtractor.getTopicTerms(subjectLabel, objectLabel, language, evidence);
         			evidence.setTopicTerms(language, topicTerms);
             		evidence.setTopicTermVectorForWebsites(language);
         		}
         	}
-        		
-//            evidence.calculateSimilarityMatrix();
-//            evidence.calculateDefactoTimePeriod();
+            evidence.calculateSimilarityMatrix();
         }
+        LOGGER.info(String.format("Extraction of topic terms took %s", TimeUtil.formatTime(System.currentTimeMillis() - start)));
         
         return evidence;
     }
@@ -117,6 +123,7 @@ public class EvidenceCrawler {
      */
     private void cacheSearchResults(Set<SearchResult> searchResults) {
     	
+    	long start = System.currentTimeMillis();
     	List<SearchResult> results = new ArrayList<SearchResult>();
         // add the results of the crawl to the cache
         Cache<SearchResult> cache = new Solr4SearchResultCache();
@@ -126,6 +133,7 @@ public class EvidenceCrawler {
         		results.add(result);
         
         cache.addAll(results);
+        LOGGER.debug(String.format("Caching took %sms", System.currentTimeMillis()-start));
 	}
 
     /**
@@ -142,8 +150,14 @@ public class EvidenceCrawler {
         for ( Map.Entry<Pattern, MetaQuery> entry : this.patternToQueries.entrySet())
             searchResultCallables.add(new SearchResultCallable(entry.getValue(), entry.getKey()));
         
+        LOGGER.info("Starting to crawl/get from cache " + searchResultCallables.size() + " search results with " +
+        		Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS") + " threads.");
+        
         // wait als long as the scoring needs, and score every website in parallel        
-        ExecutorService executor = Executors.newFixedThreadPool(this.patternToQueries.size());
+//        ExecutorService executor = Executors.newFixedThreadPool(this.patternToQueries.size());
+        
+//        System.out.println("NUMBER_OF_SEARCH_RESULTS_THREADS: " + Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS"));
+        ExecutorService executor = Executors.newFixedThreadPool(Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS"));
         try {
             
             for ( Future<SearchResult> result : executor.invokeAll(searchResultCallables)) {
@@ -172,21 +186,25 @@ public class EvidenceCrawler {
         // nothing found, nothing to score
         if ( scoreCallables.isEmpty() ) return;
                     
+        long start = System.currentTimeMillis();
         // wait als long as the scoring needs, and score every website in parallel
-        this.executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(scoreCallables.size()), scoreCallables);
+        this.executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(50), scoreCallables);
         
         // ########################################
     	// 2. parse the pages to look for dates
         List<RegexParseCallable> parsers = new ArrayList<RegexParseCallable>();
         List<ComplexProof> proofs = new ArrayList<ComplexProof>(evidence.getComplexProofs());
         
-        // create |CPU|/2 parsers for n websites and split them to the parsers
-        for ( List<ComplexProof> proofsSublist : ListUtil.split(proofs, (proofs.size() / (Runtime.getRuntime().availableProcessors() / 2)) + 1)) 
-        	parsers.add(new RegexParseCallable(proofsSublist)); // TODO inject the named entity tagger here, otherwise we create it with every triple
+        // create |CPU| parsers for n websites and split them to the parsers
+        for ( ComplexProof proofsSublist : proofs)
+        	parsers.add(new RegexParseCallable(proofsSublist));
         
-        LOGGER.info(String.format("Creating thread pool for %s parsers!", parsers.size()));
+        start = System.currentTimeMillis();
+        LOGGER.debug(String.format("Proof parsing %s websites per parser, %s at a time!", parsers.size(), Defacto.DEFACTO_CONFIG.getIntegerSetting("extract", "NUMBER_NLP_STANFORD_MODELS")));
         executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(
         		Defacto.DEFACTO_CONFIG.getIntegerSetting("extract", "NUMBER_NLP_STANFORD_MODELS")), parsers);
+        LOGGER.debug(String.format("Proof parsing finished in %sms!", (System.currentTimeMillis() - start)));
+        
         this.extractDates(evidence);
     }
 
@@ -225,10 +243,14 @@ public class EvidenceCrawler {
 
         // nothing found. nothing to crawl
         if ( !htmlCrawlers.isEmpty() ) {
-
+        	
+        	int threads = 10;
+        	
+        	long start = System.currentTimeMillis();
             // get the text from the urls
-        	LOGGER.info(String.format("Creating thread pool for %s html crawlers!", htmlCrawlers.size()));
-            executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(htmlCrawlers.size()), htmlCrawlers);
+        	LOGGER.debug(String.format("Creating thread pool for %s html crawlers, with %s threads!", htmlCrawlers.size(), threads));
+            executeAndWaitAndShutdownCallables(Executors.newFixedThreadPool(threads), htmlCrawlers);
+            LOGGER.debug(String.format("Html crawling took %sms", (System.currentTimeMillis() - start)));
         }
     }
     

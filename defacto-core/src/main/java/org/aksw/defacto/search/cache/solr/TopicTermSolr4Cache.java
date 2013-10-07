@@ -56,10 +56,14 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
         QueryResponse response = this.querySolrServer(query);
         List<Word> relatedWords = new ArrayList<Word>();
         for ( SolrDocument doc : response.getResults()) {
-        	for ( String token : (List<String>) doc.get(Constants.LUCENE_TOPIC_TERM_RELATED_TERM) ) {
-        		// mega hack to encode the occurrence of the same word for a given topic term
-        		String[] split = token.split(Constants.TOPIC_TERM_SEPARATOR);
-        		relatedWords.add(new Word(split[0], Integer.valueOf(split[1])));
+        	
+        	if ( doc.containsKey(Constants.LUCENE_TOPIC_TERM_RELATED_TERM)) {
+        		
+        		for ( String token :  (List<String>) doc.get(Constants.LUCENE_TOPIC_TERM_RELATED_TERM)) {
+            		// mega hack to encode the occurrence of the same word for a given topic term
+            		String[] split = token.split(Constants.TOPIC_TERM_SEPARATOR);
+            		relatedWords.add(new Word(split[0], Integer.valueOf(split[1])));
+            	}
         	}
         }
         

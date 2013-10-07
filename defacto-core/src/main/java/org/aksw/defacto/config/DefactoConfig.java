@@ -60,7 +60,7 @@ public class DefactoConfig {
      */
     public void setStringSetting(String section, String key, String value) {
 
-        this.defactoConfig.add(section, key, value);
+        this.defactoConfig.put(section, key, value);
     }
 
     /**

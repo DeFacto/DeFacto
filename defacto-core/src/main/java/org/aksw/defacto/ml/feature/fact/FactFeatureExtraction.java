@@ -9,6 +9,7 @@ import java.util.Set;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
+import org.aksw.defacto.ml.feature.evidence.impl.GoodnessFeature;
 import org.aksw.defacto.ml.feature.fact.impl.BoaFeature;
 import org.aksw.defacto.ml.feature.fact.impl.ClassFeature;
 import org.aksw.defacto.ml.feature.fact.impl.EndOfSentenceCharacterFeature;

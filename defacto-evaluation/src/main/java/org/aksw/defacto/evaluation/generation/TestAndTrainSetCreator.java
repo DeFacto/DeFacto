@@ -55,7 +55,7 @@ public class TestAndTrainSetCreator {
 	private static String FACT_BENCH_PATH = null;
 	private static List<DefactoResource> objects = new ArrayList<DefactoResource>();
 	private static List<DefactoResource> subjects = new ArrayList<DefactoResource>();
-	private static List<String> facts;
+	private static List<String> facts = new ArrayList<String>();
 	
 	/**
 	 * @param args
@@ -406,6 +406,7 @@ public class TestAndTrainSetCreator {
 		for ( DefactoModel model : DefactoModelReader.readModels(FACT_BENCH_PATH + "/test/correct/" + relation + "/")) {
 			
 			relationToFact.get(relation).add(model.getSubjectUri() + " " + model.getPropertyUri() + " " + model.getObjectUri());
+			facts.add(model.getSubjectUri() + " " + model.getPropertyUri() + " " + model.getObjectUri());
 			subjectsForRelation.get(relation).add(model.getSubject());
 			objectsForRelation.get(relation).add(model.getObject());
 			objects.add(model.object);
@@ -414,6 +415,7 @@ public class TestAndTrainSetCreator {
 		for ( DefactoModel model : DefactoModelReader.readModels(FACT_BENCH_PATH + "/train/correct/" + relation + "/")) {
 			
 			relationToFact.get(relation).add(model.getSubjectUri() + " " + model.getPropertyUri() + " " + model.getObjectUri());
+			facts.add(model.getSubjectUri() + " " + model.getPropertyUri() + " " + model.getObjectUri());
 			subjectsForRelation.get(relation).add(model.getSubject());
 			objectsForRelation.get(relation).add(model.getObject());
 			objects.add(model.object);

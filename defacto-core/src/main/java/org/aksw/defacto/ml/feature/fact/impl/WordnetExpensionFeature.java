@@ -49,7 +49,6 @@ public class WordnetExpensionFeature implements FactFeature {
     public static void main(String[] args) {
 
     	System.out.println(new File(WordnetExpensionFeature.class.getResource("/wordnet/dict").getFile()).getAbsolutePath());
-    	
         System.out.println(new WordNetExpansion(new File(WordnetExpensionFeature.class.getResource("/wordnet/dict").getFile()).getAbsolutePath()).getExpandedJaccardSimilarity(", the director of", "the director of"));
     }
 }

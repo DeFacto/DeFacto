@@ -22,6 +22,7 @@ public class Pattern {
     public Double boaScore = 0D;
     public Double naturalLanguageScore = 0D;
     public String posTags = "";
+	private String normalizedPattern = null;
     
     public Pattern(String naturalLanguageRepresentation, String language) {
     	
@@ -60,25 +61,30 @@ public class Pattern {
      */
     public String normalize() {
         
-        if ( this.naturalLanguageRepresentationNormalized.isEmpty() ) {
-            
-            this.naturalLanguageRepresentationNormalized = 
-                        naturalLanguageRepresentationWithoutVariables.
-                        replaceAll(",", "").replace("`", "").replace(" 's", "'s").replaceAll("  ", " ").replaceAll("'[^s]", "").
-                        replaceAll("-LRB-", "").replaceAll("-RRB-", "").trim();
-            // ensure that we match the pattern and nothing more
-            
-            if ( this.naturalLanguageRepresentationNormalized.equals("'s") )
-                this.naturalLanguageRepresentationNormalized = this.naturalLanguageRepresentationNormalized + " ";
-            else
-                this.naturalLanguageRepresentationNormalized = " " + this.naturalLanguageRepresentationNormalized + " ";
+    	if ( this.normalizedPattern == null ) {
+    		
+    		if ( this.naturalLanguageRepresentationNormalized.isEmpty() ) {
                 
-        }
-        
-        Set<String> naturalLanguageRepresentationChunks = new HashSet<String>(Arrays.asList(naturalLanguageRepresentationNormalized.toLowerCase().trim().split(" ")));
-        naturalLanguageRepresentationChunks.removeAll(Constants.STOP_WORDS);
-        
-        return StringUtils.join(naturalLanguageRepresentationChunks, " ");
+                this.naturalLanguageRepresentationNormalized = 
+                            naturalLanguageRepresentationWithoutVariables.
+                            replaceAll(",", "").replace("`", "").replace(" 's", "'s").replaceAll("  ", " ").replaceAll("'[^s]", "").
+                            replaceAll("-LRB-", "").replaceAll("-RRB-", "").trim();
+                // ensure that we match the pattern and nothing more
+                
+                if ( this.naturalLanguageRepresentationNormalized.equals("'s") )
+                    this.naturalLanguageRepresentationNormalized = this.naturalLanguageRepresentationNormalized + " ";
+                else
+                    this.naturalLanguageRepresentationNormalized = " " + this.naturalLanguageRepresentationNormalized + " ";
+                    
+            }
+            
+            Set<String> naturalLanguageRepresentationChunks = new HashSet<String>(Arrays.asList(naturalLanguageRepresentationNormalized.toLowerCase().trim().split(" ")));
+            naturalLanguageRepresentationChunks.removeAll(Constants.STOP_WORDS);
+            
+            this.normalizedPattern  =  " " + StringUtils.join(naturalLanguageRepresentationChunks, " ") + " ";
+    	}
+    	
+        return this.normalizedPattern;
     }
     
     /* (non-Javadoc)

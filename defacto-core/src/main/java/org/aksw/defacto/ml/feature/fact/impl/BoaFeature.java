@@ -6,6 +6,8 @@ package org.aksw.defacto.ml.feature.fact.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import org.aksw.defacto.boa.BoaPatternSearcher;
+import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
@@ -29,22 +31,82 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWaterman;
  *
  */
 public class BoaFeature implements FactFeature {
+	
+	SmithWaterman smithWaterman = new SmithWaterman();
+    QGramsDistance qgrams		= new QGramsDistance();
+    Levenshtein lev		= new Levenshtein();
+    BoaPatternSearcher searcher = new BoaPatternSearcher();
 
     @Override
     public void extractFeature(ComplexProof proof, Evidence evidence) {
 
         // we set this to 0 and over write it if we find a pattern
-        proof.getFeatures().setValue(AbstractFactFeatures.BOA_BOOLEAN, 0);
-        proof.getFeatures().setValue(AbstractFactFeatures.BOA_SCORE, 0);
-
-        float similarity = new SmithWaterman().getSimilarity(proof.getPattern().normalize(), proof.getProofPhrase());
-        proof.getFeatures().setValue(AbstractFactFeatures.SMITH_WATERMAN, similarity);
+        proof.getFeatures().setValue(AbstractFactFeatures.SMITH_WATERMAN_BOA_SCORE, 0);
+        proof.getFeatures().setValue(AbstractFactFeatures.SMITH_WATERMAN, 0);
         
-        if ( similarity >= 0.5 ) {
-            
-            proof.getFeatures().setValue(AbstractFactFeatures.BOA_BOOLEAN, 1);
-            proof.getFeatures().setValue(AbstractFactFeatures.BOA_SCORE, proof.getPattern().boaScore);
+        proof.getFeatures().setValue(AbstractFactFeatures.QGRAMS_BOA_SCORE, 0);
+        proof.getFeatures().setValue(AbstractFactFeatures.QGRAMS, 0);
+        
+        proof.getFeatures().setValue(AbstractFactFeatures.LEVENSHTEIN_BOA_SCORE, 0);
+        proof.getFeatures().setValue(AbstractFactFeatures.LEVENSHTEIN, 0);
+        
+        if ( proof.getProofPhrase().trim().isEmpty() ) return; 
+        
+        List<Pattern> patterns = searcher.querySolrIndex(evidence.getModel().getPropertyUri(), 20, 0, proof.getLanguage());
+        
+        float smithWatermanSimilarity = 0f;
+        float qgramsSimilarity = 0f;
+        float levSimilarity = 0f;
+        int swCounter = 0;
+        int qgramCounter = 0;
+        int levCounter = 0;
+        Pattern swPattern = null;
+        Pattern qgramPattern = null;
+        Pattern levPattern = null;
+        
+        for ( Pattern p : patterns ) {
+        	
+        	if ( p.normalize().trim().isEmpty() ) continue;
+        	
+        	float swSim = smithWaterman.getSimilarity(p.normalize(), proof.getProofPhrase());
+			if ( swSim > smithWatermanSimilarity ) {
+				
+				smithWatermanSimilarity = swSim;
+				swPattern = p;
+			}
+			
+			float qgramsSim = qgrams.getSimilarity(p.normalize(), proof.getProofPhrase());
+			if ( qgramsSim > qgramsSimilarity ) {
+				
+				qgramsSimilarity = qgramsSim; 
+				qgramPattern = p;
+			}
+			
+			float levSim = lev.getSimilarity(p.normalize(), proof.getProofPhrase());
+			if ( levSim > levSimilarity ) {
+				
+				levSimilarity = levSim; 
+				levPattern = p;
+			}
         }
+        	
+        if ( levPattern != null ) {
+        	
+        	proof.getFeatures().setValue(AbstractFactFeatures.LEVENSHTEIN, levSimilarity);
+            proof.getFeatures().setValue(AbstractFactFeatures.LEVENSHTEIN_BOA_SCORE, levPattern.boaScore);
+        }
+        	
+    	if ( qgramPattern != null ) {
+    		
+    		proof.getFeatures().setValue(AbstractFactFeatures.QGRAMS, qgramsSimilarity);
+            proof.getFeatures().setValue(AbstractFactFeatures.QGRAMS_BOA_SCORE, qgramPattern.boaScore);
+    	}
+    		
+    	if ( swPattern != null ) {
+    		
+    		proof.getFeatures().setValue(AbstractFactFeatures.SMITH_WATERMAN, smithWatermanSimilarity);
+        	proof.getFeatures().setValue(AbstractFactFeatures.SMITH_WATERMAN_BOA_SCORE, swPattern.boaScore);
+    	}
     }
     
     
@@ -55,12 +117,16 @@ public class BoaFeature implements FactFeature {
     	String pattern = "acquires";
     	
     	List<? extends AbstractStringMetric> metrics = Arrays.asList(
-    			new Levenshtein(), new QGramsDistance(), new BlockDistance(), new OverlapCoefficient(), new DiceSimilarity(),
-    			new JaccardSimilarity(), new EuclideanDistance(), new Jaro(), new JaroWinkler(), new SmithWaterman(), new NeedlemanWunch());
+//    			new Levenshtein(),  new BlockDistance(), new OverlapCoefficient(), new DiceSimilarity(),
+//    			new JaccardSimilarity(), new EuclideanDistance(), new Jaro(), new JaroWinkler(), 
+    			new SmithWaterman(),
+    			new Levenshtein(),
+    			new QGramsDistance());
+    			//, new NeedlemanWunch());
     	
     	for ( AbstractStringMetric metric : metrics) {
     		
-    		System.out.println(metric.getShortDescriptionString() + ":\t" + metric.getSimilarity(longTest, pattern));
+    		System.out.println(metric.getShortDescriptionString() + ":\t" + metric.getSimilarity("a b c d", "b c d e"));
     	}
 	}
 }
