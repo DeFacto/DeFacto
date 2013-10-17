@@ -20,6 +20,7 @@ import org.aksw.defacto.search.time.TimePeriodSearcher;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.VectorUtil;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
 import com.github.gerbsen.math.Frequency;
 
@@ -362,7 +363,13 @@ public class Evidence {
 				
 				int first = 0;
 				int second = 0;
+				
+				System.out.println(this.model.getTimePeriod());
+				DescriptiveStatistics stats = new DescriptiveStatistics();
 				for ( Entry<Comparable<?>, Long> entry : freq.sortByValue() ) {
+					
+//					for (int i = 0; i < entry.getValue(); i++) stats.addValue(Integer.valueOf((String)entry.getKey()));
+//					System.out.println(entry.getKey() + ": " + entry.getValue());
 					
 					if (first == 0) {
 						first = Integer.valueOf((String)entry.getKey());
@@ -373,6 +380,9 @@ public class Evidence {
 						break;
 					}
 				}
+//				System.out.println(stats);
+//				first = (int) stats.getPercentile(50);
+//				second =  (int) stats.getPercentile(50);
 				this.defactoTimePeriod = new DefactoTimePeriod(Math.min(first, second), Math.max(first, second));
 			}
 				

@@ -39,7 +39,8 @@ public class DefactoClient {
 		String type = "nbateam";
 		
 		Client client = Client.create();
-		WebResource webResource = client.resource("http://localhost:1234/getdefactotimes");
+//		WebResource webResource = client.resource("http://localhost:1234/getdefactotimes");
+		WebResource webResource = client.resource("http://http://139.18.2.164:1234/getdefactotimes");
 
 		List<File> modelFiles = new ArrayList<File>();
         modelFiles.addAll(Arrays.asList(new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "eval/correct/"+type+"/").listFiles()));

@@ -1,6 +1,7 @@
 package org.aksw.defacto.search.crawl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -49,6 +50,8 @@ public class EvidenceCrawler {
     private Map<Pattern,MetaQuery> patternToQueries;
     private DefactoModel model;
     
+    public static Map<DefactoModel,Evidence> evidenceCache = new HashMap<DefactoModel,Evidence>();
+    
     /**
      * 
      * @param model
@@ -66,35 +69,43 @@ public class EvidenceCrawler {
      */
     public Evidence crawlEvidence() {
     	
-    	long start = System.currentTimeMillis();
-    	LOGGER.info("Start getting search results");
-        Set<SearchResult> searchResults = this.generateSearchResultsInParallel();
-        LOGGER.info("Finished getting search results in " + (System.currentTimeMillis() - start));
-        
-        // multiple pattern bring the same results but we dont want that
-        this.filterSearchResults(searchResults);
+    	Evidence evidence = null;
+    	
+//    	if ( !evidenceCache.containsKey(this.model) ) {
+    		
+    		long start = System.currentTimeMillis();
+        	LOGGER.info("Start getting search results");
+            Set<SearchResult> searchResults = this.generateSearchResultsInParallel();
+            LOGGER.info("Finished getting search results in " + (System.currentTimeMillis() - start));
+            
+            // multiple pattern bring the same results but we dont want that
+            this.filterSearchResults(searchResults);
 
-        Long totalHitCount = 0L; // sum over the n*m query results        
-        for ( SearchResult result : searchResults ) {
-        	totalHitCount += result.getTotalHitCount();  
-        }
-                
-        Evidence evidence = new Evidence(model, totalHitCount, patternToQueries.keySet());
-        // basically downloads all websites in parallel
-        crawlSearchResults(searchResults, model, evidence);
-        // tries to find proofs and possible proofs and scores those
-        scoreSearchResults(searchResults, model, evidence);
-        // put it in solr cache
-        cacheSearchResults(searchResults);
-                
-        // start multiple threads to download the text of the websites simultaneously
-        for ( SearchResult result : searchResults ) 
-            evidence.addWebSites(result.getPattern(), result.getWebSites());
-        
-        // get the time frame
+            Long totalHitCount = 0L; // sum over the n*m query results        
+            for ( SearchResult result : searchResults ) {
+            	totalHitCount += result.getTotalHitCount();  
+            }
+                    
+            evidence = new Evidence(model, totalHitCount, patternToQueries.keySet());
+            // basically downloads all websites in parallel
+            crawlSearchResults(searchResults, model, evidence);
+            // tries to find proofs and possible proofs and scores those
+            scoreSearchResults(searchResults, model, evidence);
+            // put it in solr cache
+            cacheSearchResults(searchResults);
+                    
+            // start multiple threads to download the text of the websites simultaneously
+            for ( SearchResult result : searchResults ) 
+                evidence.addWebSites(result.getPattern(), result.getWebSites());
+            
+//            evidenceCache.put(model, evidence);
+//    	}
+//    	evidence = evidenceCache.get(model);
+    	
+        // get the time frame or point
         evidence.calculateDefactoTimePeriod();
         
-        start = System.currentTimeMillis();
+//        long start = System.currentTimeMillis();
         // save all the time we can get
         if ( Defacto.onlyTimes.equals(TIME_DISTRIBUTION_ONLY.NO) ) {
 

@@ -21,7 +21,7 @@ public abstract class AbstractEvidenceFeature implements EvidenceFeature {
     public static final Attribute TOPIC_MAJORITY_WEB_MAX                       = new Attribute("topic_majority_web_max");
     public static final Attribute TOPIC_MAJORITY_SEARCH_RESULT_SUM             = new Attribute("topic_majority_search_sum");
     public static final Attribute TOPIC_MAJORITY_SEARCH_RESULT_MAX             = new Attribute("topic_majority_search_max");
-    public static final Attribute NUMBER_OF_PROOFS                             = new Attribute("number_of_confirming_facts");
+    public static final Attribute NUMBER_OF_PROOFS                             = new Attribute("number_of_proofs");
     public static final Attribute NUMBER_OF_CONFIRMING_PROOFS                  = new Attribute("number_of_confirming_sites");
 //    public static final Attribute NUMBER_OF_POSSIBLY_CONFIRMING_FACTS          = new Attribute("number_of_possibly_confirming_facts");
 //    public static final Attribute NUMBER_OF_POSSIBLY_CONFIRMING_SITES          = new Attribute("number_of_possibly_confirming_sites");

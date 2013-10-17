@@ -44,6 +44,9 @@ public class AbstractFactFeatures {
     public static final Attribute END_OF_SENTENCE_EXCLAMATION_MARK  		= new Attribute("end_of_sentence_exclamation_mark");
     public static final Attribute NUMBER_OF_NON_ALPHA_NUMERIC_CHARACTERS 	= new Attribute("number_of_non_alpha_numeric_characters");
 
+	public static final Attribute SUBJECT_SIMILARITY 						= new Attribute("subject_similarity");
+	public static final Attribute OBJECT_SIMILARITY 						= new Attribute("object_similarity");
+
 
     public static Attribute CLASS                                   		= new Attribute("clazz");
     public static Attribute LANGUAGE                   						= new Attribute("language");
@@ -57,6 +60,9 @@ public class AbstractFactFeatures {
         attributes.addElement(SMITH_WATERMAN);
         attributes.addElement(LEVENSHTEIN);
         attributes.addElement(LEVENSHTEIN_BOA_SCORE);
+        
+        attributes.addElement(OBJECT_SIMILARITY);
+        attributes.addElement(SUBJECT_SIMILARITY);
 
         attributes.addElement(COMMA_COUNT);
     	attributes.addElement(DIGIT_COUNT);

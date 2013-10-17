@@ -5,8 +5,10 @@ import java.util.regex.Pattern;
 
 public class DefactoTimePeriod {
 
-	public Integer from;
-	public Integer to;
+	public static final DefactoTimePeriod EMPTY_DEFACTO_TIME_PERIOD = new DefactoTimePeriod(0, 0);
+	
+	public Integer from = 0;
+	public Integer to = 0;
 	private Pattern pattern = Pattern.compile("[0-9]{4}");
 	
 	public DefactoTimePeriod(String from, String to) {

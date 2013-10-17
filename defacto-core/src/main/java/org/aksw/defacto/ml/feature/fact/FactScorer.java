@@ -53,11 +53,13 @@ public class FactScorer {
      */
     public void scoreEvidence(Evidence evidence) {
 
-        for ( ComplexProof proof : evidence.getComplexProofs() )
+        for ( ComplexProof proof : evidence.getComplexProofs() ) {
             try {
                 
-                Instances withoutStrings = new Instances(trainingInstances);
-                withoutStrings.setClassIndex(11);
+                Instances instancesWithStringVector = new Instances(trainingInstances);
+//                System.out.println(withoutStrings);
+                
+                instancesWithStringVector.setClassIndex(11);
                 
                 // create new instance and delete debugging features
                 Instance newInstance = new Instance(proof.getFeatures());
@@ -67,23 +69,27 @@ public class FactScorer {
                 newInstance.deleteAttributeAt(12);
                 
                 // insert all the words which occur
-                for ( int i = newInstance.numAttributes() ; i < withoutStrings.numAttributes(); i++) {
+                for ( int i = newInstance.numAttributes() ; i < instancesWithStringVector.numAttributes(); i++) {
                     
-                    String name = withoutStrings.attribute(i).name();
+                    String name = instancesWithStringVector.attribute(i).name();
                     newInstance.insertAttributeAt(i);
-                    newInstance.setValue(withoutStrings.attribute(i), proof.getProofPhrase().contains(name) ? 1D : 0D);
+                    newInstance.setValue(instancesWithStringVector.attribute(i), proof.getProofPhrase().contains(name) ? 1D : 0D);
                 }
                 
-                newInstance.setDataset(withoutStrings);
-                withoutStrings.add(newInstance);
+                newInstance.setDataset(instancesWithStringVector);
+                instancesWithStringVector.add(newInstance);
+                
+//                System.out.println(newInstance);
                 
                 proof.setScore(this.classifier.classifyInstance(newInstance));
+//                System.out.println(proof.getScore());
             }
             catch (Exception e) {
 
                 e.printStackTrace();
                 System.exit(0);
             }
+        }
         
         // set for each website the score by multiplying the proofs found on this site
         for ( WebSite website : evidence.getAllWebSites() ) {

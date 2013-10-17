@@ -16,9 +16,9 @@ import org.aksw.defacto.ml.feature.fact.impl.EndOfSentenceCharacterFeature;
 import org.aksw.defacto.ml.feature.fact.impl.NameFeature;
 import org.aksw.defacto.ml.feature.fact.impl.PageTitleFeature;
 import org.aksw.defacto.ml.feature.fact.impl.PropertyFeature;
+import org.aksw.defacto.ml.feature.fact.impl.SubjectObjectSimilarityFeature;
 import org.aksw.defacto.ml.feature.fact.impl.TokenDistanceFeature;
 import org.aksw.defacto.ml.feature.fact.impl.TotalOccurrenceFeature;
-import org.aksw.defacto.ml.feature.fact.impl.FileNameFeature;
 import org.aksw.defacto.ml.feature.fact.impl.WordnetExpensionFeature;
 
 /**
@@ -34,12 +34,12 @@ public class FactFeatureExtraction {
         FactFeatureExtraction.factFeatures.add(new BoaFeature());
         FactFeatureExtraction.factFeatures.add(new EndOfSentenceCharacterFeature());
         FactFeatureExtraction.factFeatures.add(new PageTitleFeature());
+        FactFeatureExtraction.factFeatures.add(new SubjectObjectSimilarityFeature());
         FactFeatureExtraction.factFeatures.add(new TokenDistanceFeature());
         FactFeatureExtraction.factFeatures.add(new TotalOccurrenceFeature());
         FactFeatureExtraction.factFeatures.add(new WordnetExpensionFeature());
         FactFeatureExtraction.factFeatures.add(new NameFeature());
         FactFeatureExtraction.factFeatures.add(new PropertyFeature());
-        FactFeatureExtraction.factFeatures.add(new FileNameFeature());
         FactFeatureExtraction.factFeatures.add(new ClassFeature());
     }
     

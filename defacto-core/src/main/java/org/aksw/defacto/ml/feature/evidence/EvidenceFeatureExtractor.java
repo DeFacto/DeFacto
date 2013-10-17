@@ -26,8 +26,8 @@ public class EvidenceFeatureExtractor {
     
     static {
 
-//    	EvidenceFeatureExtractor.features.add(new DomainRangeCheckFeature());
-//    	EvidenceFeatureExtractor.features.add(new GoodnessFeature());
+    	EvidenceFeatureExtractor.features.add(new DomainRangeCheckFeature());
+    	EvidenceFeatureExtractor.features.add(new GoodnessFeature());
         EvidenceFeatureExtractor.features.add(new PageRankFeature());
         EvidenceFeatureExtractor.features.add(new TotalHitCountFeature());
         EvidenceFeatureExtractor.features.add(new TopicCoverageFeature());
@@ -35,7 +35,6 @@ public class EvidenceFeatureExtractor {
         EvidenceFeatureExtractor.features.add(new TopicMajoritySearchFeature());
         EvidenceFeatureExtractor.features.add(new ProofFeature());
         EvidenceFeatureExtractor.features.add(new NameFeature());
-//        EvidenceFeatureExtractor.features.add(new PointwiseMutualInformationFeature());
     }
     
     /**

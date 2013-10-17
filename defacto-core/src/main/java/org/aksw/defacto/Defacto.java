@@ -196,11 +196,6 @@ public class Defacto {
         return evidences;
     }
     
-    private static void writeFactTrainingDataFile() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	/**
      * 
      */
@@ -222,7 +217,7 @@ public class Defacto {
     /**
      * this tries to write an arff file which is also compatible with google docs spreadsheets
      */
-    private static void writeFactaTrainingDataFile() {
+    private static void writeFactTrainingDataFile() {
 
         try {
             
@@ -240,65 +235,75 @@ public class Defacto {
             Set<Integer> randoms = new HashSet<Integer>();
             Map<String,Integer> modelsToProofsSize = new HashMap<String,Integer>();
             
-            int numberOfProofsPerRelation = Integer.MAX_VALUE;
+            int numberOfProofsPerRelation = 50;//Integer.MAX_VALUE;
             int maxNumberOfFacts = Integer.MAX_VALUE;
             
-            while ( pickedInstances.size() <= maxNumberOfFacts && pickedInstances.size() < AbstractFactFeatures.factFeatures.numInstances()) {
-
-                Integer random = new Integer((int)((AbstractFactFeatures.factFeatures.numInstances()) * Math.random()));
-                Instance instance = AbstractFactFeatures.factFeatures.instance(random);
-                
-                if ( !randoms.contains(random) ) {
+            for ( Instance instance : instances ) {
+            	
+            	String type = instance.stringValue(AbstractFactFeatures.FILE_NAME).substring(0, instance.stringValue(AbstractFactFeatures.FILE_NAME).lastIndexOf("/"));
+            	type = type.replace("property/", "");
+            	type = type.replace("domainrange/", "");
+            	type = type.replace("domain/", "");
+            	type = type.replace("range/", "");
+            	type = type.replace("random/", "");
+            	
+            	if ( modelsToProofsSize.containsKey(type) ) {
                     
-                    randoms.add(random);
-                    String type = instance.stringValue(AbstractFactFeatures.FILE_NAME).substring(0, instance.stringValue(AbstractFactFeatures.FILE_NAME).lastIndexOf("_"));
-                    
-                    if ( modelsToProofsSize.containsKey(type) ) {
-                        
-                        if ( modelsToProofsSize.get(type) < numberOfProofsPerRelation ) {
-                            
-                            pickedInstances.add(instance);
-                            modelsToProofsSize.put(type, modelsToProofsSize.get(type) + 1);
-                        }
-                    }
-                    else {
+                    if ( modelsToProofsSize.get(type) < numberOfProofsPerRelation ) {
                         
                         pickedInstances.add(instance);
-                        modelsToProofsSize.put(type, 1);
+                        modelsToProofsSize.put(type, modelsToProofsSize.get(type) + 1);
                     }
                 }
+                else {
+                    
+                    pickedInstances.add(instance);
+                    modelsToProofsSize.put(type, 1);
+                }
             }
-//            Collections.shuffle(pickedInstances);
             
-            Enumeration<Instance> enumerateInstances = AbstractFactFeatures.factFeatures.enumerateInstances();
-//            for (Instance instance : pickedInstances) {
-            while ( enumerateInstances.hasMoreElements() ) {
-            	Instance instance = enumerateInstances.nextElement();
-//			}
-//                List<String> lines = new ArrayList<String>();
-//                for ( int i = 0; i < instance.numAttributes() ; i++ ) {
+            System.out.println("\n----------");
+            System.out.println(modelsToProofsSize.size());
+            for ( Map.Entry<String, Integer> entry : modelsToProofsSize.entrySet()) {
+            	
+            	System.out.println(entry.getKey() + ": " + entry.getValue());
+            }
+            
+            System.out.println("----------\n");
+            
+//            while ( pickedInstances.size() <= maxNumberOfFacts && pickedInstances.size() < AbstractFactFeatures.factFeatures.numInstances()) {
+//
+//                Integer random = new Integer((int)((AbstractFactFeatures.factFeatures.numInstances()) * Math.random()));
+//                Instance instance = AbstractFactFeatures.factFeatures.instance(random);
+//                
+//                if ( !randoms.contains(random) ) {
 //                    
-//                    if ( instance.attribute(i).isString() ) {
+//                    randoms.add(random);
+//                    String type = instance.stringValue(AbstractFactFeatures.FILE_NAME).substring(0, instance.stringValue(AbstractFactFeatures.FILE_NAME).lastIndexOf("_"));
+//                    type += String.valueOf(instance.stringValue(AbstractFactFeatures.factFeatures.attribute("class")));
+//                    
+//                    if ( modelsToProofsSize.containsKey(type) ) {
 //                        
-//                        String field = StringEscapeUtils.escapeCsv(instance.stringValue(instance.attribute(i)).replaceAll("\\n", ""));
-//                        field = field.replace("\"\"\"", "'");
-//                        field = field.replace("\"\"", "'");
-//                        field = field.replace("\"", "'");
-//                        if ( !field.startsWith("\"") ) field = "\"" + field;
-//                        if ( !field.endsWith("\"")) field = field + "\"";
-//                        lines.add(field);
+//                        if ( modelsToProofsSize.get(type) < numberOfProofsPerRelation ) {
+//                            
+//                            pickedInstances.add(instance);
+//                            modelsToProofsSize.put(type, modelsToProofsSize.get(type) + 1);
+//                        }
 //                    }
 //                    else {
 //                        
-//                        if ( instance.attribute(i).isNumeric() )
-//                            lines.add(StringEscapeUtils.escapeCsv(instance.value(instance.attribute(i))+ ""));
-//                        else
-//                            lines.add(instance.stringValue(instance.attribute(i)) + "");
+//                        pickedInstances.add(instance);
+//                        modelsToProofsSize.put(type, 1);
 //                    }
 //                }
-//                
-//                writer.write(StringUtils.join(lines, ",") + "\n");
+//            }
+            Collections.shuffle(pickedInstances);
+            
+//            Enumeration<Instance> enumerateInstances = AbstractFactFeatures.factFeatures.enumerateInstances();
+            for (Instance instance : pickedInstances) {
+//            while ( enumerateInstances.hasMoreElements() ) {
             	writer.write(instance.toString() + "\n");
+//            	writer.write(enumerateInstances.nextElement().toString() + "\n");
             }
             
             writer.flush();
