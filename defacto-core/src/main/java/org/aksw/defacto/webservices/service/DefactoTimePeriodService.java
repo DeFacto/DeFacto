@@ -54,8 +54,6 @@ public class DefactoTimePeriodService {
             @QueryParam("language") List<String> languages
             ) {
     	
-        DefactoServer.log.log(Level.INFO, "Processing <" + subject + ">, <" + property + ">, <" + object + ">");
-        
         try {
         	
             org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
@@ -101,6 +99,8 @@ public class DefactoTimePeriodService {
             bnode.addProperty(model.createProperty(property), obj);
             bnode.addProperty(Constants.DEFACTO_FROM, from == null ? "" : from);
             bnode.addProperty(Constants.DEFACTO_TO, to == null ? "" : to);
+            
+            DefactoServer.log.log(Level.INFO, "Processing " + model);
             
             Evidence ev = Defacto.checkFact(new DefactoModel(model, 
             		subject + " " + property + " " + object, true, languages), Defacto.TIME_DISTRIBUTION_ONLY.YES);

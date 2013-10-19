@@ -36,14 +36,15 @@ public class DefactoClient {
 
 		Defacto.init();
 		
-		String type = "nbateam";
+		String type = "award";
 		
 		Client client = Client.create();
 //		WebResource webResource = client.resource("http://localhost:1234/getdefactotimes");
-		WebResource webResource = client.resource("http://http://139.18.2.164:1234/getdefactotimes");
+		WebResource webResource = client.resource("http://139.18.2.164:1234/getdefactotimes");
 
 		List<File> modelFiles = new ArrayList<File>();
-        modelFiles.addAll(Arrays.asList(new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "eval/correct/"+type+"/").listFiles()));
+        modelFiles.addAll(Arrays.asList(new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + 
+        		Defacto.DEFACTO_CONFIG.getStringSetting("eval", "train-directory") + "correct/"+type+"/").listFiles()));
         Collections.sort(modelFiles);
         
         List<List<String>> languages = Arrays.asList(Arrays.asList("en", "fr", "de"), Arrays.asList("en", "fr"), Arrays.asList("en", "de"), Arrays.asList("de", "fr"), Arrays.asList("en"), Arrays.asList("de"), Arrays.asList("fr"));
@@ -61,7 +62,8 @@ public class DefactoClient {
              int i = 0;
      		for ( File modelFile : modelFiles ) {
      			
-     			if ( i++ == 1) break;
+     			System.out.println(modelFile.getName());
+     			if ( !modelFile.getName().contains("award_00002") ) continue;
      			
      			Model model = ModelFactory.createDefaultModel();
 				model.read(new FileReader(modelFile), "", "TTL");
@@ -117,10 +119,11 @@ public class DefactoClient {
      			JSONObject medium = s.getJSONObject("medium");
      			JSONObject large = s.getJSONObject("large");
      			
-     			csv.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s", 
+     			String output = String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s", 
      					dm.getName(), dm.getSubjectUri(), dm.getPropertyUri(), dm.getObjectUri(), 
      					dm.getTimePeriod().getFrom(), dm.getTimePeriod().getTo(), 
-     					getMostFrequentYear(tiny), getMostFrequentYear(small), getMostFrequentYear(medium), getMostFrequentYear(large)));
+     					getMostFrequentYear(tiny), getMostFrequentYear(small), getMostFrequentYear(medium), getMostFrequentYear(large));
+     			csv.write(output);
      			csv.flush();
      			
      			results.put(s);
