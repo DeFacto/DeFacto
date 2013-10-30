@@ -147,10 +147,15 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                 // first we check if we can find a boa pattern inside the mathing string
 //                for (Pattern boaPattern : evidence.getBoaPatterns()) { // go through all patterns and look if a non empty normalized pattern string is inside the match
                 	
+//                	if ( !tinyContext.contains(boaPattern.normalize()) ) continue;
+                	
+//                	System.out.println(boaPattern.normalize());
+//                	System.out.println(tinyContext);
+//                	
                 	// this can only be if the patterns contains only garbage
 //                	if ( boaPattern.normalize().isEmpty() ) continue;
                 	
-                	ComplexProof proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, tinyContext, site);
+                	ComplexProof proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, normalizeOccurrence(tinyContext,surfaceForms), site);
                     proof.setTinyContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25));
                     proof.setSmallContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 50));
                     proof.setMediumContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 100));

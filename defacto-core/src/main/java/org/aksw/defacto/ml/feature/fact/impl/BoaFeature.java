@@ -57,9 +57,7 @@ public class BoaFeature implements FactFeature {
         float smithWatermanSimilarity = 0f;
         float qgramsSimilarity = 0f;
         float levSimilarity = 0f;
-        int swCounter = 0;
-        int qgramCounter = 0;
-        int levCounter = 0;
+        int patternCounter = 0, patternNormalizedCounter = 0;
         Pattern swPattern = null;
         Pattern qgramPattern = null;
         Pattern levPattern = null;
@@ -67,6 +65,7 @@ public class BoaFeature implements FactFeature {
         for ( Pattern p : patterns ) {
         	
         	if ( p.normalize().trim().isEmpty() ) continue;
+//        	if ( !proof.getProofPhrase().contains(p.normalize()) ) continue;
         	
         	float swSim = smithWaterman.getSimilarity(p.normalize(), proof.getProofPhrase());
 			if ( swSim > smithWatermanSimilarity ) {
@@ -88,8 +87,14 @@ public class BoaFeature implements FactFeature {
 				levSimilarity = levSim; 
 				levPattern = p;
 			}
+			
+			if ( proof.getProofPhrase().contains(p.normalize()) ) patternCounter++; 
+			if ( proof.getNormalizedProofPhrase().contains(p.normalize()) ) patternNormalizedCounter++; 
         }
-        	
+        
+        proof.getFeatures().setValue(AbstractFactFeatures.BOA_PATTERN_COUNT, patternCounter);
+        proof.getFeatures().setValue(AbstractFactFeatures.BOA_PATTERN_NORMALIZED_COUNT, patternNormalizedCounter);
+        
         if ( levPattern != null ) {
         	
         	proof.getFeatures().setValue(AbstractFactFeatures.LEVENSHTEIN, levSimilarity);

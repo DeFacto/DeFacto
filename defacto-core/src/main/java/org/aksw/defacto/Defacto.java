@@ -185,12 +185,12 @@ public class Defacto {
             // we want to print the score of the classifier 
             if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) 
                 System.out.println("Defacto: " + new DecimalFormat("0.00").format(evidence.getDeFactoScore()) + " % that this fact is true! Actual: " + model.isCorrect() +"\n");
+
+            // rewrite the fact training file after every proof
+            if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) writeFactTrainingDataFile();
             
             // rewrite the training file after every checked triple
             if ( DEFACTO_CONFIG.getBooleanSetting("evidence", "OVERWRITE_EVIDENCE_TRAINING_FILE")  ) writeEvidenceTrainingDataFile();
-            
-            // rewrite the fact training file after every proof
-            if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) writeFactTrainingDataFile();
         }
         
         return evidences;
@@ -235,7 +235,8 @@ public class Defacto {
             Set<Integer> randoms = new HashSet<Integer>();
             Map<String,Integer> modelsToProofsSize = new HashMap<String,Integer>();
             
-            int numberOfProofsPerRelation = 50;//Integer.MAX_VALUE;
+//            int numberOfProofsPerRelation = Integer.MAX_VALUE;
+            int numberOfProofsPerRelation = 50;
             int maxNumberOfFacts = Integer.MAX_VALUE;
             
             for ( Instance instance : instances ) {

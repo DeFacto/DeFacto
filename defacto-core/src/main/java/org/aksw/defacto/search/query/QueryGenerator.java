@@ -63,8 +63,12 @@ public class QueryGenerator {
         
         // TODO
         // query boa index and generate the meta queries
-        for (Pattern pattern : this.patternSearcher.getNaturalLanguageRepresentations(fact.getPredicate().getURI(), language))
-            queryStrings.put(pattern, new MetaQuery(subjectLabel, pattern.naturalLanguageRepresentation, objectLabel, language, null));
+        for (Pattern pattern : this.patternSearcher.getNaturalLanguageRepresentations(fact.getPredicate().getURI(), language)) {
+        	
+        	queryStrings.put(pattern, new MetaQuery(subjectLabel, pattern.naturalLanguageRepresentation, objectLabel, language, null));
+//        	System.out.println(pattern.naturalLanguageRepresentation);
+        }
+            
         
         // add one query without any predicate
         queryStrings.put(new Pattern("??? NONE ???", language), new MetaQuery(subjectLabel, "??? NONE ???", objectLabel, language, null));        

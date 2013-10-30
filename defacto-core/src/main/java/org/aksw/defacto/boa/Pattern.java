@@ -23,6 +23,7 @@ public class Pattern {
     public Double naturalLanguageScore = 0D;
     public String posTags = "";
 	private String normalizedPattern = null;
+	public String generalized ="";
     
     public Pattern(String naturalLanguageRepresentation, String language) {
     	
@@ -68,7 +69,7 @@ public class Pattern {
                 this.naturalLanguageRepresentationNormalized = 
                             naturalLanguageRepresentationWithoutVariables.
                             replaceAll(",", "").replace("`", "").replace(" 's", "'s").replaceAll("  ", " ").replaceAll("'[^s]", "").
-                            replaceAll("-LRB-", "").replaceAll("-RRB-", "").trim();
+                            replaceAll("-LRB-", "").replaceAll("-RRB-", "").replaceAll("[0-9]{4}", "").trim();
                 // ensure that we match the pattern and nothing more
                 
                 if ( this.naturalLanguageRepresentationNormalized.equals("'s") )

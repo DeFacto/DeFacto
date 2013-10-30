@@ -16,7 +16,12 @@ import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.model.DefactoTimePeriod;
+import org.aksw.defacto.search.time.DefactoTimePeriodSearcher;
+import org.aksw.defacto.search.time.DomainSpecificTimePeriodSearcher;
+import org.aksw.defacto.search.time.GlobalTimePeriodSearcher;
+import org.aksw.defacto.search.time.OccurrenceTimePeriodSearcher;
 import org.aksw.defacto.search.time.TimePeriodSearcher;
+import org.aksw.defacto.search.time.TimeUtil;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.VectorUtil;
 import org.apache.commons.lang3.ArrayUtils;
@@ -329,22 +334,25 @@ public class Evidence {
 	 * 
 	 */
 	public void calculateDefactoTimePeriod() {
+
+		DefactoTimePeriodSearcher searcher = null;
+		if ( Defacto.DEFACTO_CONFIG.getStringSetting("settings", "TIME_PERIOD_SEARCHER").equals("domain") ) searcher = new DomainSpecificTimePeriodSearcher();
+		else if  ( Defacto.DEFACTO_CONFIG.getStringSetting("settings", "TIME_PERIOD_SEARCHER").equals("global") ) searcher = new GlobalTimePeriodSearcher();
+		else if ( Defacto.DEFACTO_CONFIG.getStringSetting("settings", "TIME_PERIOD_SEARCHER").equals("occurrence") ) searcher = new OccurrenceTimePeriodSearcher();
+		else throw new RuntimeException("Not supported time period searcher: " + Defacto.DEFACTO_CONFIG.getStringSetting("settings", "global"));
 		
 		// from and to are equal
 		if ( this.model.getTimePeriod().isTimePoint() ) {
-			
-			Long occurrences = Long.MIN_VALUE;
-			String occurrence = "";
-			
-			for ( Entry<String, Long> entry : this.smallContextYearOccurrences.entrySet()) {
 
-				if ( entry.getValue() > occurrences ) {
-					
-					occurrences = entry.getValue();
-					occurrence = entry.getKey();
+			this.defactoTimePeriod = searcher.getTimePoint(this);
+			
+			// only to collect data for normalization
+			for ( Entry<String, Long> e : this.smallContextYearOccurrences.entrySet()) {
+				for (int i = 0; i < e.getValue(); i++ ) {
+					TimeUtil.allYears.addValue(e.getKey());
+					TimeUtil.allYearsAndTimePeriod.addValue(e.getKey());
 				}
 			}
-			this.defactoTimePeriod = new DefactoTimePeriod(occurrence, occurrence);
 		}
 		// time periods spans multiple years
 		else {
@@ -358,13 +366,14 @@ public class Evidence {
 				for ( Entry<String, Long> entry : this.mediumContextYearOccurrences.entrySet()) {
 					for (int i = 0; i < entry.getValue(); i++ ) {
 						freq.addValue(entry.getKey());
+						TimeUtil.allYearsAndTimePeriod.addValue(entry.getKey());
 					}
 				}
 				
 				int first = 0;
 				int second = 0;
 				
-				System.out.println(this.model.getTimePeriod());
+//				System.out.println(this.model.getTimePeriod());
 				DescriptiveStatistics stats = new DescriptiveStatistics();
 				for ( Entry<Comparable<?>, Long> entry : freq.sortByValue() ) {
 					
@@ -385,10 +394,8 @@ public class Evidence {
 //				second =  (int) stats.getPercentile(50);
 				this.defactoTimePeriod = new DefactoTimePeriod(Math.min(first, second), Math.max(first, second));
 			}
-				
-			if ( this.defactoTimePeriod == null ) this.defactoTimePeriod = new DefactoTimePeriod(0,0);
 		}
 		
-//		return new DefactoTimePeriod("0","0");
+		if ( this.defactoTimePeriod == null ) this.defactoTimePeriod = new DefactoTimePeriod(0,0);
 	}
 }

@@ -104,6 +104,7 @@ public class BoaPatternSearcher {
             SolrQuery query = new SolrQuery("uri:\"" + propertyUri + "\"");
             query.addField("boa-score");
             query.addField("nlr-var");
+            query.addField("nlr-gen");
             query.addField("nlr-no-var");
             query.addField("SUPPORT_NUMBER_OF_PAIRS_LEARNED_FROM");
             query.addSortField("SUPPORT_NUMBER_OF_PAIRS_LEARNED_FROM", ORDER.desc);
@@ -121,6 +122,7 @@ public class BoaPatternSearcher {
 
             	Pattern pattern = new Pattern();
                 pattern.naturalLanguageRepresentation = (String) d.get("nlr-var");
+                pattern.generalized = (String) d.get("nlr-gen");
                 pattern.naturalLanguageRepresentationWithoutVariables = (String) d.get("nlr-no-var");
                 pattern.posTags = (String) d.get("pos");
                 pattern.boaScore = (Double) d.get("SUPPORT_NUMBER_OF_PAIRS_LEARNED_FROM");

@@ -92,9 +92,7 @@ public class DefactoEvaluation {
 //			}
 			
 			// this takes pretty long 
-//			if ( i % 5 == 0 ) System.exit(0);
-//			if ( i % 10 == 0 ) 
-				Defacto.writeTrainingFiles();
+			if ( i % 5 == 0 ) Defacto.writeTrainingFiles();
 		}
 //		for ( Entry<Comparable<?>, Long> sortByValue : TimePeriodSearcher.patFreq.sortByValue()) {
 //			

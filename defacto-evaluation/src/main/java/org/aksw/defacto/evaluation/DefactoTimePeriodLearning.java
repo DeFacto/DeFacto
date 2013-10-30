@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.aksw.defacto.Defacto;
@@ -102,48 +103,65 @@ public class DefactoTimePeriodLearning {
 		
 		Defacto.init();
 		
-		List<String> languages = Arrays.asList("de", "fr", "en");
-		String trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
-				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", "train-directory");
+		List<String> languages 		= Arrays.asList("de", "fr", "en");
+		List<DefactoModel> models	= new ArrayList<>();
+		String trainDirectory		= Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
+										+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", "train-directory");
+		// TIME POINTS
+		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/award", true, languages));
+		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/birth", true, languages));
+		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/death", true, languages));
+		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/foundationPlace", true, languages));
+		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/publicationDate", true, languages));
+		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/starring", true, languages));
+		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/subsidiary", true, languages));
 		
-		for ( String relation : Arrays.asList(/*"award", "birth","death","foundationPlace","publicationDate","starring","subsidiary",*/"spouse","nbateam","leader") ) {
-			
-			List<DefactoModel> models = new ArrayList<>();
-			models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/" + relation, true, languages));
-			
-			int precisionCounter = 0;
-			
-			Double macroPrecision	= 0D;
-			Double macroRecall		= 0D;
-			Double macroFmeasure	= 0D;
-			
-			long start = System.currentTimeMillis();
-			
-			for (int i = 0; i < models.size(); i++) {
+		// TIME PERIODS
+//		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/spouse", true, languages));
+//		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/nbateam", true, languages));
+//		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/leader", true, languages));
+		
+		learn(models);
+		
+//		System.out.println();
+//		for ( Entry<Comparable<?>, Long> sortByValue : org.aksw.defacto.search.time.TimeUtil.allYearsAndTimePeriod.sortByValue()) {
+//			
+//			System.out.println(sortByValue.getKey()+  ": " + sortByValue.getValue());
+//		}
+//		
+//		System.out.println();
+//		for ( Entry<Comparable<?>, Long> sortByValue : org.aksw.defacto.search.time.TimeUtil.allYears.sortByValue()) {
+//			
+//			System.out.println(sortByValue.getKey()+  ": " + sortByValue.getValue());
+//		}
+	}
+	
+	public static void learn(List<DefactoModel> models){
+		
+		int precisionCounter = 0;
+		
+		Double macroPrecision	= 0D;
+		Double macroRecall		= 0D;
+		Double macroFmeasure	= 0D;
+		
+		for (int i = 0; i < models.size(); i++) {
 
-				DefactoModel model = models.get(i); 
-				DefactoTimePeriod defactoTimePeriod = Defacto.checkFact(model, TIME_DISTRIBUTION_ONLY.YES).defactoTimePeriod;
-				
-				PrecisionRecallFMeasure results = getResults(defactoTimePeriod, model);
-				
-				if ( !results.precision.isNaN() ) { 
-					
-					macroPrecision += results.precision;
-					precisionCounter++;
-				}
-				macroRecall += results.recall;
-				macroFmeasure = getFmeasure(macroPrecision / precisionCounter, macroRecall / (i+1));
-				
-				System.out.println(String.format(Locale.ENGLISH, "total --> P: %.5f, R: %.5f, F: %.5f", 
-						macroPrecision / (precisionCounter), macroRecall / (i + 1), macroFmeasure) + 
-						" current --> " + results);
-			}
+			DefactoModel model = models.get(i); 
+			DefactoTimePeriod defactoTimePeriod = Defacto.checkFact(model, TIME_DISTRIBUTION_ONLY.YES).defactoTimePeriod;
 			
-			System.out.println("Time:     " + TimeUtil.convertMilliSeconds(System.currentTimeMillis() - start));
-			System.out.println("Relation: " + relation );
-			System.out.println("Precsion: " + ( macroPrecision / precisionCounter));
-			System.out.println("Recall:   " + ( macroRecall / models.size()));
-			System.out.println("F1:       " + ( macroFmeasure));
+			PrecisionRecallFMeasure results = getResults(defactoTimePeriod, model);
+			
+			if ( !results.precision.isNaN() ) { 
+				
+				macroPrecision += results.precision;
+				precisionCounter++;
+			}
+			macroRecall += results.recall;
+			macroFmeasure = getFmeasure(macroPrecision / precisionCounter, macroRecall / (i+1));
+			
+			System.out.println(String.format(Locale.ENGLISH, "total --> P: %.5f, R: %.5f, F: %.5f", 
+					macroPrecision / (precisionCounter), macroRecall / (i + 1), macroFmeasure) + 
+					" current --> " + results);
 		}
 	}
 	

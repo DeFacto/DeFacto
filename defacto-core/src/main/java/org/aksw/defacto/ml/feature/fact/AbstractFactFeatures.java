@@ -47,6 +47,8 @@ public class AbstractFactFeatures {
 	public static final Attribute SUBJECT_SIMILARITY 						= new Attribute("subject_similarity");
 	public static final Attribute OBJECT_SIMILARITY 						= new Attribute("object_similarity");
 
+	public static final Attribute BOA_PATTERN_COUNT 						= new Attribute("boa_pattern_count");
+	public static final Attribute BOA_PATTERN_NORMALIZED_COUNT 				= new Attribute("boa_pattern_norm_count");
 
     public static Attribute CLASS                                   		= new Attribute("clazz");
     public static Attribute LANGUAGE                   						= new Attribute("language");
@@ -54,6 +56,8 @@ public class AbstractFactFeatures {
     
     static {
 
+    	attributes.addElement(BOA_PATTERN_NORMALIZED_COUNT);
+    	attributes.addElement(BOA_PATTERN_COUNT);
     	attributes.addElement(QGRAMS);
     	attributes.addElement(QGRAMS_BOA_SCORE);
     	attributes.addElement(SMITH_WATERMAN_BOA_SCORE);

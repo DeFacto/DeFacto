@@ -63,7 +63,7 @@ public class DefactoClient {
      		for ( File modelFile : modelFiles ) {
      			
      			System.out.println(modelFile.getName());
-     			if ( !modelFile.getName().contains("award_00002") ) continue;
+     			if ( !modelFile.getName().contains("award_00004") ) continue;
      			
      			Model model = ModelFactory.createDefaultModel();
 				model.read(new FileReader(modelFile), "", "TTL");
