@@ -43,13 +43,13 @@ public class BingQuery implements Query {
     
     public static void main(String[] args) {
 
-        MetaQuery query1 = new MetaQuery("Mount Eccles National Park|-|??? NONE ???|-|Texas");
-        MetaQuery query2 = new MetaQuery("Mount Eccles National Park|-|?D? is a stupid ?R?|-|Texas");
-        MetaQuery query3 = new MetaQuery("Mount Eccles National Park|-|?D? 's is a , ,, , '' stupid ?R?|-|Texas");
+        MetaQuery query1 = new MetaQuery("Mount Eccles National Park|-|??? NONE ???|-|Texas|-|de");
+        MetaQuery query2 = new MetaQuery("Mount Eccles National Park|-|?D? is a stupid ?R?|-|Texas|-|en");
+        MetaQuery query3 = new MetaQuery("Mount Eccles National Park|-|?D? 's is a , ,, , '' stupid ?R?|-|Texas|-|fr");
         
         BingQuery bq = new BingQuery();
-        bq.generateQuery(query1);
-        bq.generateQuery(query2);
-        bq.generateQuery(query3);
+        System.out.println(bq.generateQuery(query1));
+        System.out.println(bq.generateQuery(query2));
+        System.out.println(bq.generateQuery(query3));
     }
 }

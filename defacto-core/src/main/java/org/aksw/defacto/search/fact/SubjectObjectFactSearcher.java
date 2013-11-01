@@ -1,27 +1,24 @@
 package org.aksw.defacto.search.fact;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
+import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.model.DefactoModel;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWaterman;
 
 /**
  * 
@@ -30,8 +27,7 @@ import org.apache.log4j.Logger;
  */
 public class SubjectObjectFactSearcher implements FactSearcher {
 
-    private static final Map<String, Set<String>> urisToLabels = new HashMap<String,Set<String>>(); 
-    private Logger logger = Logger.getLogger(SubjectObjectFactSearcher.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SubjectObjectFactSearcher.class);
     private static final Set<String> stopwords = new HashSet<String>(Arrays.asList("the", "of", "and"));
     
     private static SubjectObjectFactSearcher INSTANCE;
@@ -44,11 +40,7 @@ public class SubjectObjectFactSearcher implements FactSearcher {
     /**
      * 
      */
-    private SubjectObjectFactSearcher() {
-
-        logger.info("Starting to load surface forms!");
-//        initializeSurfaceForms();
-        logger.info("Finished to load surface forms!");
+    public SubjectObjectFactSearcher() {
     }
     
     /**
@@ -57,43 +49,62 @@ public class SubjectObjectFactSearcher implements FactSearcher {
      * 
      * @return
      */
-    public static synchronized SubjectObjectFactSearcher getInstance() {
-        
-        if ( SubjectObjectFactSearcher.INSTANCE == null )
-            SubjectObjectFactSearcher.INSTANCE = new SubjectObjectFactSearcher();
-        
-        return SubjectObjectFactSearcher.INSTANCE;
-    }
+//    public static synchronized SubjectObjectFactSearcher getInstance() {
+//        
+//        if ( SubjectObjectFactSearcher.INSTANCE == null )
+//            SubjectObjectFactSearcher.INSTANCE = new SubjectObjectFactSearcher();
+//        
+//        return SubjectObjectFactSearcher.INSTANCE;
+//    }
     
     @Override
     public void generateProofs(Evidence evidence, WebSite website, DefactoModel model, Pattern pattern) {
 
-        String subjectUri   = model.getSubjectUri();
-        String objectUri    = model.getObjectUri();
         String websiteText  = website.getText().toLowerCase();
         
-        Set<String> subjectLabels  = urisToLabels.get(subjectUri.replace("http://dbpedia.org/resource/", ""));
-        Set<String> objectLabels   = urisToLabels.get(objectUri.replace("http://dbpedia.org/resource/", ""));
+        Set<String> subjectLabels = new HashSet<String>();
+        Set<String> objectLabels = new HashSet<String>();
         
-        // fallback on the labels provided by the input, no surface forms from dbpedia
-        if ( subjectLabels == null ) subjectLabels = new HashSet<String>(Arrays.asList(model.getSubjectLabel()));
-        if ( objectLabels == null ) objectLabels = new HashSet<String>(Arrays.asList(model.getObjectLabel()));
-        
-        for ( String subjectLabel : subjectLabels ) { subjectLabel = subjectLabel.toLowerCase(); // save some time
-            for ( String objectLabel : objectLabels ) { objectLabel = objectLabel.toLowerCase(); // same here
+        for ( String language : model.getLanguages() ) {
+        	
+        	subjectLabels.add(model.getSubjectLabelNoFallBack(language));
+        	subjectLabels.addAll(model.getSubjectAltLabels(language));
+        	
+        	objectLabels.add(model.getObjectLabelNoFallBack(language));
+        	objectLabels.addAll(model.getObjectAltLabels());
+        }
+        subjectLabels.removeAll(Collections.singleton(Constants.NO_LABEL));
+        objectLabels.removeAll(Collections.singleton(Constants.NO_LABEL));
 
+        toLowerCase(subjectLabels);
+        toLowerCase(objectLabels);
+        
+        // combine the list to make processing a little easier
+        Set<String> surfaceForms = new HashSet<String>(subjectLabels);
+        surfaceForms.addAll(objectLabels);
+        
+        for ( String subjectLabel : subjectLabels ) { 
+        	
+        	// save some time
+        	if ( !websiteText.contains(subjectLabel) ) continue;
+        	
+            for ( String objectLabel : objectLabels ) { 
+            	
+            	if ( !websiteText.contains(objectLabel) ) continue;
+            	
+            	LOGGER.debug("Search proof for: '" + subjectLabel + "' and '" + objectLabel + "'.");
+            
+            	if ( subjectLabel.equals(objectLabel) ) continue;
+            	
                 String[] subjectObjectMatches = StringUtils.substringsBetween(websiteText, " " + subjectLabel, objectLabel + " ");
                 String[] objectSubjectMatches = StringUtils.substringsBetween(websiteText, " " + objectLabel, subjectLabel + " ");
                 
                 // we need to check for both directions
                 List<String> subjectObjectOccurrences = new ArrayList<String>();
-                if (subjectObjectMatches != null) subjectObjectOccurrences.addAll(Arrays.asList(subjectObjectMatches));
+                if (subjectObjectMatches != null) for ( String s : subjectObjectMatches ) subjectObjectOccurrences.add(s);
+                // asdjklajsd
                 List<String> objectSubjectOccurrences = new ArrayList<String>();
-                if (objectSubjectMatches != null) objectSubjectOccurrences.addAll(Arrays.asList(objectSubjectMatches));
-                
-                // combine the list to make processing a little easier
-                Set<String> surfaceForms = new HashSet<String>(subjectLabels);
-                surfaceForms.addAll(objectLabels);
+                if (objectSubjectMatches != null) for ( String s : objectSubjectMatches) objectSubjectOccurrences.add(s);
                 
                 // direction: subject property object
                 createProofsForEvidence(evidence, subjectObjectOccurrences, subjectLabel, objectLabel, websiteText, website, surfaceForms);
@@ -101,6 +112,17 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                 createProofsForEvidence(evidence, objectSubjectOccurrences, objectLabel, subjectLabel, websiteText, website, surfaceForms);
             }
         }
+        LOGGER.debug("#sLabels: "+  subjectLabels.size() + " #oLabels:" + objectLabels.size() + " #Proofs: " + evidence.getComplexProofs().size() + " #lang: " + model.getLanguages().size());
+    }
+    
+    public static void toLowerCase(Set<String> strings)
+    {
+        String[] stringsArray = strings.toArray(new String[0]);
+        for (int i=0; i< stringsArray.length; ++i) {
+            stringsArray[i] = stringsArray[i].toLowerCase();
+        }
+        strings.clear();
+        strings.addAll(Arrays.asList(stringsArray));
     }
     
     
@@ -120,25 +142,27 @@ public class SubjectObjectFactSearcher implements FactSearcher {
             // it makes no sense to look at longer strings 
             if ( occurrence.split(" ").length < Defacto.DEFACTO_CONFIG.getIntegerSetting("extract", "NUMBER_OF_TOKENS_BETWEEN_ENTITIES") ) {
                 
-                ComplexProof proof = null;
-                String normalizedOccurrence = this.normalizeOccurrence(occurrence, surfaceForms);
+                String tinyContext = this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25);
                 
                 // first we check if we can find a boa pattern inside the mathing string
-                for (Pattern boaPattern : evidence.getBoaPatterns()) { // go through all patterns and look if a non empty normalized pattern string is inside the match
-                    if ( occurrence.contains(boaPattern.normalize()) && !boaPattern.normalize().trim().isEmpty() ) {
-                        
-                        proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, normalizedOccurrence, site, boaPattern);
-                        break;
-                    }
-                }
-                // no boa pattern was found
-                if ( proof == null ) proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, normalizedOccurrence, site);
-                // we need to do this for both proofs
-                proof.setSmallContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 50));
-                proof.setMediumContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 100));
-                proof.setLargeContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 150));
-                
-                evidence.addComplexProof(proof);
+//                for (Pattern boaPattern : evidence.getBoaPatterns()) { // go through all patterns and look if a non empty normalized pattern string is inside the match
+                	
+//                	if ( !tinyContext.contains(boaPattern.normalize()) ) continue;
+                	
+//                	System.out.println(boaPattern.normalize());
+//                	System.out.println(tinyContext);
+//                	
+                	// this can only be if the patterns contains only garbage
+//                	if ( boaPattern.normalize().isEmpty() ) continue;
+                	
+                	ComplexProof proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, normalizeOccurrence(tinyContext,surfaceForms), site);
+                    proof.setTinyContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25));
+                    proof.setSmallContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 50));
+                    proof.setMediumContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 100));
+                    proof.setLargeContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 150));
+                    
+                    evidence.addComplexProof(proof);
+//                }
             }
         }
     }
@@ -171,12 +195,12 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                     if (normalizedOccurrence.startsWith(part)) {
                         
                         normalizedOccurrence = StringUtils.replaceOnce(part, normalizedOccurrence, "");
-                        logger.debug("Removed: ^" + part);
+                        LOGGER.debug("Removed: ^" + part);
                     }
                     if (normalizedOccurrence.endsWith(part)) {
                         
                         normalizedOccurrence = normalizedOccurrence.replaceAll(part + "$", "");
-                        logger.debug("Removed: " + part + "$");
+                        LOGGER.debug("Removed: " + part + "$");
                     }
                 }
             }
@@ -185,36 +209,6 @@ public class SubjectObjectFactSearcher implements FactSearcher {
         return normalizedOccurrence.trim();
     }
 
-    /**
-     * 
-     */
-    private void initializeSurfaceForms() {
-        
-        try {
-            
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
-            		new File(SubjectObjectFactSearcher.class.getResource("/en_surface_forms.tsv").getFile()))));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                
-                String[] lineParts = line.split("\t");
-                Set<String> surfaceForms = new HashSet<String>();
-                for ( String label : Arrays.asList(Arrays.copyOfRange(lineParts, 1, lineParts.length)) ) if ( label.length() > 3 ) surfaceForms.add(label);
-                urisToLabels.put(lineParts[0], surfaceForms);
-            }
-            reader.close();
-        }
-        catch (FileNotFoundException e) {
-            
-            System.out.println("Install the surface form file to resources/cache/labels/en_uri_surface_form.tsv!");
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-
-            e.printStackTrace();
-        }
-    }
-    
     /**
      * 
      * @param normalCase

@@ -9,10 +9,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.aksw.defacto.config.DefactoConfig;
+import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
+import org.aksw.defacto.model.DefactoModel;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -36,8 +36,7 @@ public class DefactoDemo {
     public static void main(String[] args) throws InvalidFileFormatException, IOException {
 
         org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
-        DefactoConfig config = new DefactoConfig(new Ini(new File("defacto.ini")));
-        Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getSampleData());
+        Defacto.checkFacts(getSampleData(), TIME_DISTRIBUTION_ONLY.NO);
 //        Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getTrainingData());
     }
     
@@ -77,7 +76,7 @@ public class DefactoDemo {
                     if ( mappingFile.getAbsolutePath().contains("data/true") ) isCorrect = true;
                     logger.info("Loading "+isCorrect+" triple from file: " + mappingFile.getName());
                         
-                    models.add(new DefactoModel(model, name, isCorrect));
+                    models.add(new DefactoModel(model, name, isCorrect, Arrays.asList("en")));
                 }
                 catch (FileNotFoundException e) {
                     
@@ -138,7 +137,7 @@ public class DefactoDemo {
 //        models.add(new DefactoModel(model1, "albert", true));
 //        models.add(new DefactoModel(model2, "quentin", true));
 //        models.add(new DefactoModel(model3, "bonn", true));
-        models.add(new DefactoModel(model4, "ballack", true));
+        models.add(new DefactoModel(model4, "ballack", true, Arrays.asList("en")));
 //        models.add(new DefactoModel(model5, "ronaldo", true));
         
         return models;

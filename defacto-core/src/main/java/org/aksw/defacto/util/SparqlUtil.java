@@ -3,8 +3,6 @@ package org.aksw.defacto.util;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.log4j.chainsaw.Main;
-
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;

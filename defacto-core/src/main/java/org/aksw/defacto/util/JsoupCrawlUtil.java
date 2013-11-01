@@ -2,12 +2,16 @@ package org.aksw.defacto.util;
 
 
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.nio.charset.IllegalCharsetNameException;
 
 import javax.net.ssl.SSLHandshakeException;
 
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 /**
  * 
@@ -22,9 +26,16 @@ public class JsoupCrawlUtil implements CrawlUtil {
 
         try {
             
-            return Jsoup.connect(url).
-            		userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.120 Safari/535.2")
-            		.timeout(timeout).get().text();
+        	Document doc = Jsoup.connect(url).
+    		userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.120 Safari/535.2")
+    		.timeout(timeout).get();
+        	
+//        	for (Element meta : doc.select("meta")) {
+//        	    System.out.println("Name: " + meta.attr("name") + " - Content: " + meta.attr("content"));
+//        	}
+        	
+        	
+            return doc.text();
         }
         catch (Throwable e) {
             
@@ -45,7 +56,9 @@ public class JsoupCrawlUtil implements CrawlUtil {
                  e.getMessage().contains("503 error loading URL") ||
                  e instanceof UnknownHostException  ||  
                  e instanceof SSLHandshakeException ||
-                 e instanceof SocketException ) {
+                 e instanceof SocketException || 
+                 e instanceof SocketTimeoutException ||
+                 e instanceof IllegalCharsetNameException ) {
                 
                 logger.debug(String.format("Error crawling website: %s", url));
             }

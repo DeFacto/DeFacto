@@ -17,6 +17,6 @@ public class PossessiveFeature implements FactFeature {
     @Override
     public void extractFeature(ComplexProof proof, Evidence evidence) {
 
-    	proof.getFeatures().setValue(AbstractFactFeatures.POSSESSIVE_FEATURE, proof.getNormalizedProofPhrase().contains("'s") ? 1 : 0);
+    	proof.getFeatures().setValue(AbstractFactFeatures.POSSESSIVE_FEATURE, proof.getTinyContext().contains("'s") ? 1 : 0);
     }
 }

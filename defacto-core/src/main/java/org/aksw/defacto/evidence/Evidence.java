@@ -8,15 +8,26 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.Pattern;
-import org.aksw.defacto.ml.feature.AbstractFeature;
+import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
+import org.aksw.defacto.model.DefactoModel;
+import org.aksw.defacto.model.DefactoTimePeriod;
+import org.aksw.defacto.search.time.DefactoTimePeriodSearcher;
+import org.aksw.defacto.search.time.DomainSpecificTimePeriodSearcher;
+import org.aksw.defacto.search.time.GlobalTimePeriodSearcher;
+import org.aksw.defacto.search.time.OccurrenceTimePeriodSearcher;
+import org.aksw.defacto.search.time.TimePeriodSearcher;
+import org.aksw.defacto.search.time.TimeUtil;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.VectorUtil;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
+
+import com.github.gerbsen.math.Frequency;
 
 import weka.core.Instance;
 
@@ -28,38 +39,45 @@ public class Evidence {
 
     private DefactoModel model;
     private Map<Pattern,List<WebSite>> webSites         = new LinkedHashMap<Pattern,List<WebSite>>();
-    private List<Word> topicTerms                       = new ArrayList<Word>();
+    private Map<String,List<Word>> topicTerms           = new HashMap<String,List<Word>>();
 //    private Map<Pattern,Double[][]> similarityMatricies = new LinkedHashMap<Pattern,Double[][]>();
-    private Double[][] similarityMatrix                 = null;
+    public Double[][] similarityMatrix                 = null;
     
+    public Map<String,Long> tinyContextYearOccurrences = new LinkedHashMap<String, Long>();
     public Map<String,Long> smallContextYearOccurrences = new LinkedHashMap<String, Long>();
     public Map<String,Long> mediumContextYearOccurrences = new LinkedHashMap<String, Long>();
     public Map<String,Long> largeContextYearOccurrences = new LinkedHashMap<String, Long>();
     
     private Instance features;
     private Long totalHitCount;
-    private String subjectLabel;
-    private String objectLabel;
     private double deFactoScore;
     
     private Set<ComplexProof> complexProofs;
-    private List<Pattern> boaPatterns;
+    private Map<String,List<Pattern>> boaPatterns = new HashMap<String,List<Pattern>>();
 	public List<Match> dates = new ArrayList<Match>();
+	public DefactoTimePeriod defactoTimePeriod;
+	public TimePeriodSearcher tsSearcher = new TimePeriodSearcher();
+	
     
     /**
      * 
      * @param model
      * @param totalHitCount
+     * @param set 
      * @param subjectLabel
      * @param objectLabel
      */
-    public Evidence(DefactoModel model, Long totalHitCount, String subjectLabel, String objectLabel) {
+    public Evidence(DefactoModel model, Long totalHitCount, Set<Pattern> set) {
 
         this.model              = model;
         this.totalHitCount      = totalHitCount;
-        this.subjectLabel       = subjectLabel;
-        this.objectLabel        = objectLabel;
         this.complexProofs      = new HashSet<ComplexProof>();
+        
+        boaPatterns.put("de", new ArrayList<Pattern>());
+        boaPatterns.put("fr", new ArrayList<Pattern>());
+        boaPatterns.put("en", new ArrayList<Pattern>());
+        
+        for ( Pattern p : set) boaPatterns.get(p.language).add(p);
     }
 
     public Evidence(DefactoModel model) {
@@ -67,9 +85,6 @@ public class Evidence {
         this.model              = model;
         this.totalHitCount      = 0L;
         this.complexProofs      = new HashSet<ComplexProof>();
-        
-        // TODO
-        // get the label of subject and object from the model
     }
     
     /**
@@ -79,9 +94,9 @@ public class Evidence {
     
         if ( features == null ) {
 
-            this.features = new Instance(AbstractFeature.provenance.numAttributes());
-            this.features.setDataset(AbstractFeature.provenance);
-            this.features.setValue(AbstractFeature.CLASS, String.valueOf(model.isCorrect()));
+            this.features = new Instance(AbstractEvidenceFeature.provenance.numAttributes());
+            this.features.setDataset(AbstractEvidenceFeature.provenance);
+            this.features.setValue(AbstractEvidenceFeature.CLASS, String.valueOf(model.isCorrect()));
         }
         
         return features;
@@ -118,7 +133,7 @@ public class Evidence {
     /**
      * @return the topicTerms
      */
-    public List<Word> getTopicTerms() {
+    public Map<String,List<Word>> getTopicTerms() {
 
         return topicTerms;
     }
@@ -126,9 +141,9 @@ public class Evidence {
     /**
      * @param topicTerms the topicTerms to set
      */
-    public void setTopicTerms(List<Word> topicTerms) {
+    public void setTopicTerms(String language, List<Word> topicTerms) {
 
-        this.topicTerms = topicTerms;
+        this.topicTerms.put(language, topicTerms);
     }
     
     /**
@@ -179,30 +194,12 @@ public class Evidence {
 
     /**
      * 
-     * @return
      */
-    public String getSubjectLabel() {
-
-        return this.subjectLabel;
-    }
-
-    /**
-     * 
-     * @return
-     */
-    public String getObjectLabel() {
-
-        return this.objectLabel;
-    }
-
-    /**
-     * 
-     */
-    public void setTopicTermVectorForWebsites() {
+    public void setTopicTermVectorForWebsites(String language) {
 
         for ( List<WebSite> websitesForPattern : this.webSites.values() )
             for ( WebSite website : websitesForPattern ) 
-                website.setTopicTerms(this.topicTerms);
+                website.setTopicTerms(language, this.topicTerms.get(language));
     }
 
     
@@ -263,15 +260,15 @@ public class Evidence {
 	 * @param pattern
 	 * @return
 	 */
-	public List<ComplexProof> getComplexProofs(WebSite website, Pattern pattern) {
-		List<ComplexProof> proofs = new LinkedList<ComplexProof>();
-		for(ComplexProof proof : complexProofs) {
-			if ( proof.getPattern().equals(pattern) && proof.getWebSite().equals(website) ) {
-				proofs.add(proof);
-			}
-		}
-		return proofs;
-	}
+//	public List<ComplexProof> getComplexProofs(WebSite website, Pattern pattern) {
+//		List<ComplexProof> proofs = new LinkedList<ComplexProof>();
+//		for(ComplexProof proof : complexProofs) {
+//			if ( proof.getPattern().equals(pattern) && proof.getWebSite().equals(website) ) {
+//				proofs.add(proof);
+//			}
+//		}
+//		return proofs;
+//	}
 
     /**
      * @return the model
@@ -310,9 +307,9 @@ public class Evidence {
         return websites;
     }
 
-    public void setBoaPatterns(List<Pattern> naturalLanguageRepresentations) {
+    public void setBoaPatterns(String language, List<Pattern> naturalLanguageRepresentations) {
 
-        this.boaPatterns = naturalLanguageRepresentations;
+        this.boaPatterns.put(language,naturalLanguageRepresentations);
     }
 
     
@@ -321,11 +318,84 @@ public class Evidence {
      */
     public List<Pattern> getBoaPatterns() {
     
-        return boaPatterns;
+    	List<Pattern> patterns = new ArrayList<Pattern>();
+    	if ( this.boaPatterns.get("en") != null ) patterns.addAll(this.boaPatterns.get("en") );
+    	if ( this.boaPatterns.get("de") != null ) patterns.addAll(this.boaPatterns.get("de") );
+    	if ( this.boaPatterns.get("fr") != null ) patterns.addAll(this.boaPatterns.get("fr") );
+        return patterns;
     }
 
 	public void addDate(String match, int distance) {
 		
 		this.dates.add(new Match(match, distance));
+	}
+
+	/**
+	 * 
+	 */
+	public void calculateDefactoTimePeriod() {
+
+		DefactoTimePeriodSearcher searcher = null;
+		if ( Defacto.DEFACTO_CONFIG.getStringSetting("settings", "TIME_PERIOD_SEARCHER").equals("domain") ) searcher = new DomainSpecificTimePeriodSearcher();
+		else if  ( Defacto.DEFACTO_CONFIG.getStringSetting("settings", "TIME_PERIOD_SEARCHER").equals("global") ) searcher = new GlobalTimePeriodSearcher();
+		else if ( Defacto.DEFACTO_CONFIG.getStringSetting("settings", "TIME_PERIOD_SEARCHER").equals("occurrence") ) searcher = new OccurrenceTimePeriodSearcher();
+		else throw new RuntimeException("Not supported time period searcher: " + Defacto.DEFACTO_CONFIG.getStringSetting("settings", "global"));
+		
+		// from and to are equal
+		if ( this.model.getTimePeriod().isTimePoint() ) {
+
+			this.defactoTimePeriod = searcher.getTimePoint(this);
+			
+			// only to collect data for normalization
+			for ( Entry<String, Long> e : this.smallContextYearOccurrences.entrySet()) {
+				for (int i = 0; i < e.getValue(); i++ ) {
+					TimeUtil.allYears.addValue(e.getKey());
+					TimeUtil.allYearsAndTimePeriod.addValue(e.getKey());
+				}
+			}
+		}
+		// time periods spans multiple years
+		else {
+			
+			// this needs to be implemented
+			this.defactoTimePeriod = TimePeriodSearcher.findTimePeriod(this);
+			if ( this.defactoTimePeriod == null ) {
+				
+				Frequency freq = new Frequency();
+				
+				for ( Entry<String, Long> entry : this.mediumContextYearOccurrences.entrySet()) {
+					for (int i = 0; i < entry.getValue(); i++ ) {
+						freq.addValue(entry.getKey());
+						TimeUtil.allYearsAndTimePeriod.addValue(entry.getKey());
+					}
+				}
+				
+				int first = 0;
+				int second = 0;
+				
+//				System.out.println(this.model.getTimePeriod());
+				DescriptiveStatistics stats = new DescriptiveStatistics();
+				for ( Entry<Comparable<?>, Long> entry : freq.sortByValue() ) {
+					
+//					for (int i = 0; i < entry.getValue(); i++) stats.addValue(Integer.valueOf((String)entry.getKey()));
+//					System.out.println(entry.getKey() + ": " + entry.getValue());
+					
+					if (first == 0) {
+						first = Integer.valueOf((String)entry.getKey());
+						continue;
+					}
+					if (second == 0) {
+						second = Integer.valueOf((String)entry.getKey());
+						break;
+					}
+				}
+//				System.out.println(stats);
+//				first = (int) stats.getPercentile(50);
+//				second =  (int) stats.getPercentile(50);
+				this.defactoTimePeriod = new DefactoTimePeriod(Math.min(first, second), Math.max(first, second));
+			}
+		}
+		
+		if ( this.defactoTimePeriod == null ) this.defactoTimePeriod = new DefactoTimePeriod(0,0);
 	}
 }

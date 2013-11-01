@@ -8,7 +8,8 @@ import org.aksw.defacto.cache.Cache;
 import org.aksw.defacto.search.cache.solr.Solr4SearchResultCache;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -17,7 +18,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class DefaultSearchEngine implements SearchEngine {
 
-    private Logger logger = Logger.getLogger(DefaultSearchEngine.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultSearchEngine.class);
     protected Cache<SearchResult> searchResultsCache = new Solr4SearchResultCache();
 
     /* (non-Javadoc)
@@ -29,13 +30,11 @@ public abstract class DefaultSearchEngine implements SearchEngine {
         if ( searchResultsCache.contains(query.toString()) ) {
             
             // search results will be identified by the string we used to search in search engine
-            logger.info(String.format("Query: '%s' cached! Starting to get from cache!", query.toString()));
+        	LOGGER.debug(String.format("Query: '%s' cached! Starting to get from cache!", query.toString()));
             SearchResult result = searchResultsCache.getEntry(query.toString());
             result.setPattern(pattern);
             return result;
         }
-        logger.info(String.format("Query: '%s' was not found in the cache, starting to query!", query.toString()));
-        
         return query(query, pattern);
     }
 }

@@ -13,15 +13,17 @@ import org.aksw.defacto.search.query.MetaQuery;
 public class DefaultSearchResult implements SearchResult {
 
     private List<WebSite> hits;
-    private Long totalHitCount;
+    private Long totalHitCount = 0L;
     private MetaQuery query;
     private Pattern pattern;
+	private boolean cached = false;
 
-    public DefaultSearchResult(List<WebSite> websites, Long totalHitCount, MetaQuery query, Pattern pattern) {
+    public DefaultSearchResult(List<WebSite> websites, Long totalHitCount, MetaQuery query, Pattern pattern, boolean cached) {
         
         this.hits = websites;
         this.totalHitCount = totalHitCount;
         this.query = query;
+        this.cached  = cached;
         this.pattern = pattern;
     }
     
@@ -31,11 +33,23 @@ public class DefaultSearchResult implements SearchResult {
         this.totalHitCount = hitCount;
         this.query = metaQuery;
     }
+    public DefaultSearchResult(List<WebSite> websites, Long hitCount, MetaQuery metaQuery, boolean cached) {
+
+        this.hits = websites;
+        this.totalHitCount = hitCount;
+        this.query = metaQuery;
+        this.cached  = cached;
+    }
 
     @Override
     public Long getTotalHitCount() {
 
-        return this.totalHitCount;
+        return this.totalHitCount != null ? this.totalHitCount : 0L;
+    }
+    
+    public String getLanguage() {
+    	
+    	return this.query.getLanguage();
     }
 
     @Override
@@ -63,4 +77,10 @@ public class DefaultSearchResult implements SearchResult {
 
         return this.pattern;
     }
+
+	@Override
+	public boolean isCached() {
+		// TODO Auto-generated method stub
+		return this.cached;
+	}
 }

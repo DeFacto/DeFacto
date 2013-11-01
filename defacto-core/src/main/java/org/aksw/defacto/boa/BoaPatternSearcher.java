@@ -1,14 +1,14 @@
 package org.aksw.defacto.boa;
 
-import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.search.crawl.EvidenceCrawler;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
@@ -25,15 +25,19 @@ import org.apache.solr.common.SolrDocumentList;
  */
 public class BoaPatternSearcher {
 
-    private static HttpSolrServer server;
-    private static final String SOLR_INDEX = "en_boa_detailed";
-//    private static final String SOLR_INDEX = "en_boa_defacto_temporal";
+    private static HttpSolrServer enIndex;
+    private static HttpSolrServer deIndex;
+    private static HttpSolrServer frIndex;
     private Logger logger = Logger.getLogger(BoaPatternSearcher.class);
 
     public BoaPatternSearcher(){
     	
-        server = new HttpSolrServer("http://[2001:638:902:2010:0:168:35:138]:8080/solr/" + SOLR_INDEX);
-        server.setRequestWriter(new BinaryRequestWriter());
+        enIndex = new HttpSolrServer(Defacto.DEFACTO_CONFIG.getStringSetting("crawl", "solr_boa_en"));
+        enIndex.setRequestWriter(new BinaryRequestWriter());
+        deIndex = new HttpSolrServer(Defacto.DEFACTO_CONFIG.getStringSetting("crawl", "solr_boa_de"));
+        deIndex.setRequestWriter(new BinaryRequestWriter());
+        frIndex = new HttpSolrServer(Defacto.DEFACTO_CONFIG.getStringSetting("crawl", "solr_boa_fr"));
+        frIndex.setRequestWriter(new BinaryRequestWriter());
     }
     
     /**
@@ -42,13 +46,14 @@ public class BoaPatternSearcher {
      * threshold of 0.5.
      * 
      * @param propertyUri
+     * @param language 
      * @return
      */
-    public List<Pattern> getNaturalLanguageRepresentations(String propertyUri){
+    public List<Pattern> getNaturalLanguageRepresentations(String propertyUri, String language){
 
         return querySolrIndex(propertyUri, 
-                Defacto.DEFACTO_CONFIG.getIntegerSetting("boa", "NUMBER_OF_BOA_PATTERNS"), 
-                Defacto.DEFACTO_CONFIG.getDoubleSetting("boa", "PATTERN_SCORE_THRESHOLD"));
+                25, 
+                Defacto.DEFACTO_CONFIG.getDoubleSetting("boa", "PATTERN_SCORE_THRESHOLD"), language);
     }
     
     /**
@@ -59,9 +64,9 @@ public class BoaPatternSearcher {
      * @param numberOfBoaPatterns
      * @return
      */
-    public List<Pattern> getNaturalLanguageRepresentations(String propertyUri, int numberOfBoaPatterns){
+    public List<Pattern> getNaturalLanguageRepresentations(String propertyUri, int numberOfBoaPatterns, String language){
 
-        return querySolrIndex(propertyUri, numberOfBoaPatterns, 0.5D);
+        return querySolrIndex(propertyUri, numberOfBoaPatterns, 0.5D, language);
     }
     
     /**
@@ -72,9 +77,9 @@ public class BoaPatternSearcher {
      * @param patternThreshold
      * @return
      */
-    public List<Pattern> getNaturalLanguageRepresentations(String propertyUri, int numberOfBoaPatterns, double patternThreshold){
+    public List<Pattern> getNaturalLanguageRepresentations(String propertyUri, int numberOfBoaPatterns, double patternThreshold, String language){
 
-        return querySolrIndex(propertyUri, numberOfBoaPatterns, patternThreshold);
+        return querySolrIndex(propertyUri, numberOfBoaPatterns, patternThreshold, language);
     }
     
     /**
@@ -82,41 +87,53 @@ public class BoaPatternSearcher {
      * wordnet distance and the overall boa-boaScore.
      * 
      * @param propertyUri
+     * @param language 
      * @return a list of patterns
      */
-    private List<Pattern> querySolrIndex(String propertyUri, int numberOfBoaPatterns, double scoreThreshold) {
+    public List<Pattern> querySolrIndex(String propertyUri, int numberOfBoaPatterns, double scoreThreshold, String language) {
 
-        List<Pattern> patterns = new ArrayList<Pattern>();
+    	
+    	 this.logger.debug("Querying solr index for uri: " + propertyUri + " and language " + language + "."); 
+    	
+        Map<String,Pattern> patterns = new HashMap<String,Pattern>();
 
         try {
         	
-        	// hardcode this for now since it's the only property we want to handle in 
-        	// temporal defacto
-        	propertyUri = "http://dbpedia.org/ontology/spouse";
+        	if ( propertyUri.equals("http://dbpedia.org/ontology/office") ) propertyUri = "http://dbpedia.org/ontology/leaderName";
         	
             SolrQuery query = new SolrQuery("uri:\"" + propertyUri + "\"");
             query.addField("boa-score");
             query.addField("nlr-var");
+            query.addField("nlr-gen");
             query.addField("nlr-no-var");
+            query.addField("SUPPORT_NUMBER_OF_PAIRS_LEARNED_FROM");
             query.addSortField("SUPPORT_NUMBER_OF_PAIRS_LEARNED_FROM", ORDER.desc);
             //query.addSortField("boa-score", ORDER.desc);
             if ( numberOfBoaPatterns > 0 ) query.setRows(numberOfBoaPatterns);
-            QueryResponse response = server.query(query);
+            QueryResponse response = null;
+            if ( language.equals("en") ) response = enIndex.query(query);
+            else if ( language.equals("de") ) response = deIndex.query(query);
+            else if ( language.equals("fr") ) response = frIndex.query(query);
+            
             SolrDocumentList docList = response.getResults();
             
             // return the first list of types
             for (SolrDocument d : docList) {
-                
-                Pattern pattern = new Pattern();
+
+            	Pattern pattern = new Pattern();
                 pattern.naturalLanguageRepresentation = (String) d.get("nlr-var");
+                pattern.generalized = (String) d.get("nlr-gen");
                 pattern.naturalLanguageRepresentationWithoutVariables = (String) d.get("nlr-no-var");
                 pattern.posTags = (String) d.get("pos");
-                pattern.boaScore = (Double) d.get("boa-score");
+                pattern.boaScore = (Double) d.get("SUPPORT_NUMBER_OF_PAIRS_LEARNED_FROM");
+                pattern.language = language;
                 
                 this.logger.debug("Found pattern: " + pattern.naturalLanguageRepresentation); 
                 
-//                if ( pattern.boaScore > scoreThreshold ) 
-                	patterns.add(pattern);
+                // only add the first pattern, we don't want to override the better scored pattern
+                if ( !patterns.containsKey(pattern.normalize()) 
+                		&& patterns.size() < Defacto.DEFACTO_CONFIG.getIntegerSetting("boa", "NUMBER_OF_BOA_PATTERNS") ) 
+                	patterns.put(pattern.normalize(), pattern);
             }
         }
         catch (SolrServerException e) {
@@ -125,8 +142,10 @@ public class BoaPatternSearcher {
             e.printStackTrace();
         }
         
+        List<Pattern> patternList = new ArrayList<Pattern>(patterns.values());
+        
         // we need to sort this list because we always want to have the same results in the eval
-        Collections.sort(patterns, new Comparator<Pattern>() {
+        Collections.sort(patternList, new Comparator<Pattern>() {
 
             @Override // -1 if first is smaller
             public int compare(Pattern pattern1, Pattern pattern2) {
@@ -139,15 +158,26 @@ public class BoaPatternSearcher {
             }
         });
         
-        return patterns;
+        return patternList;
     }
     
     public static void main(String[] args) {
 
+    	Defacto.init();
         BoaPatternSearcher bps = new BoaPatternSearcher();
-        for (Pattern p : bps.getNaturalLanguageRepresentations("http://dbpedia.org/ontology/birthPlace", 500, 0.0)) {
+        for (Pattern p : bps.getNaturalLanguageRepresentations("http://dbpedia.org/ontology/subsidiary", "en")) {
             
-            System.out.println(new DecimalFormat("0.000").format(p.boaScore) + ": " + p.naturalLanguageRepresentation);
+            System.out.println(p.naturalLanguageRepresentation);
         }
+        System.out.println("--------------------------------------------------------");
+		for (Pattern p : bps.getNaturalLanguageRepresentations("http://dbpedia.org/ontology/subsidiary", "de")) {
+		            
+            System.out.println(p.naturalLanguageRepresentation);
+        }
+		System.out.println("--------------------------------------------------------");
+		for (Pattern p : bps.getNaturalLanguageRepresentations("http://dbpedia.org/ontology/subsidiary", "fr")) {
+		    
+		    System.out.println(p.naturalLanguageRepresentation);
+		}
     }
 }

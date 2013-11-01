@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.aksw.defacto.Constants;
+import org.aksw.defacto.Defacto;
 import org.aksw.defacto.cache.Cache;
 import org.aksw.defacto.topic.TopicTerm;
 import org.aksw.defacto.topic.frequency.Word;
@@ -18,7 +19,6 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.BinaryRequestWriter;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
@@ -33,7 +33,7 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
 	
 	public TopicTermSolr4Cache(){
 
-		server = new HttpSolrServer("http://[2001:638:902:2010:0:168:35:138]:8080/solr/en_defacto_topicterms");
+		server = new HttpSolrServer(Defacto.DEFACTO_CONFIG.getStringSetting("crawl", "solr_topicterms"));
 		server.setRequestWriter(new BinaryRequestWriter());
 	}
 	
@@ -56,10 +56,14 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
         QueryResponse response = this.querySolrServer(query);
         List<Word> relatedWords = new ArrayList<Word>();
         for ( SolrDocument doc : response.getResults()) {
-        	for ( String token : (List<String>) doc.get(Constants.LUCENE_TOPIC_TERM_RELATED_TERM) ) {
-        		// mega hack to encode the occurrence of the same word for a given topic term
-        		String[] split = token.split(Constants.TOPIC_TERM_SEPARATOR);
-        		relatedWords.add(new Word(split[0], Integer.valueOf(split[1])));
+        	
+        	if ( doc.containsKey(Constants.LUCENE_TOPIC_TERM_RELATED_TERM)) {
+        		
+        		for ( String token :  (List<String>) doc.get(Constants.LUCENE_TOPIC_TERM_RELATED_TERM)) {
+            		// mega hack to encode the occurrence of the same word for a given topic term
+            		String[] split = token.split(Constants.TOPIC_TERM_SEPARATOR);
+            		relatedWords.add(new Word(split[0], Integer.valueOf(split[1])));
+            	}
         	}
         }
         

@@ -13,10 +13,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
+import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.query.QueryGenerator;
@@ -63,7 +63,7 @@ public class FactSearchTester {
         // 1. generate the search engine queries
         long start = System.currentTimeMillis();
         QueryGenerator queryGenerator = new QueryGenerator(model);
-        Map<Pattern, MetaQuery> queries = queryGenerator.getSearchEngineQueries();
+        Map<Pattern, MetaQuery> queries = queryGenerator.getSearchEngineQueries("en");
         if (queries.size() <= 0)
             return "0|0";
         logger.info("Preparing queries took " + TimeUtil.formatTime(System.currentTimeMillis() - start));
@@ -72,7 +72,7 @@ public class FactSearchTester {
         long startCrawl = System.currentTimeMillis();
         EvidenceCrawler crawler = new EvidenceCrawler(model, queries);
         MetaQuery query = queries.values().iterator().next();
-        Evidence evidence = crawler.crawlEvidence(query.getSubjectLabel(), query.getObjectLabel());
+        Evidence evidence = crawler.crawlEvidence();
         logger.info("Crawling evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
 
         // loop over all patterns
@@ -126,7 +126,7 @@ public class FactSearchTester {
         model.add(ResourceFactory.createStatement(ResourceFactory.createResource(object), ResourceFactory.createProperty("http://www.w3.org/2000/01/rdf-schema#label"),
                 model.createLiteral(sparql.getEnLabel(object), "en")));
         
-        return check(new DefactoModel(model, "undefined", false));
+        return check(new DefactoModel(model, "undefined", false, Arrays.asList("en")));
     }
 
     public static void checkPositiveExamples() throws IOException {
@@ -189,7 +189,7 @@ public class FactSearchTester {
 
         Model model = ModelFactory.createDefaultModel();
         model.read(new FileReader(modelFile), "", "TTL");
-        DefactoModel defactoModel = new DefactoModel(model, "undefined", false);
+        DefactoModel defactoModel = new DefactoModel(model, "undefined", false, Arrays.asList("en"));
         
         logger.info(defactoModel.getFact().toString());
         out.write("Checking: " + defactoModel.getFact().toString() + "." + "\n");

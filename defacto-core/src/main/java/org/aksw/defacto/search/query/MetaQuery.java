@@ -12,19 +12,22 @@ public class MetaQuery {
     private String propertyLabel;
     private String objectLabel;
     private List<Word> topicTerms;
+	private String language;
 
     /**
      * 
      * @param subjectLabel
      * @param propertyLabel
      * @param objectLabel
+     * @param language 
      * @param topicTerms
      */
-    public MetaQuery(String subjectLabel, String propertyLabel, String objectLabel, List<Word> topicTerms) {
+    public MetaQuery(String subjectLabel, String propertyLabel, String objectLabel, String language, List<Word> topicTerms) {
         
         this.subjectLabel   = subjectLabel;
         this.propertyLabel  = propertyLabel;
         this.objectLabel    = objectLabel;
+        this.language		= language;
         this.topicTerms     = topicTerms != null ? topicTerms : new ArrayList<Word>();
     }
     
@@ -34,6 +37,7 @@ public class MetaQuery {
         this.subjectLabel   = parts[0];
         this.propertyLabel  = parts[1];
         this.objectLabel    = parts[2];
+        this.language		= parts[3];
         this.topicTerms     = new ArrayList<Word>();
     }
 
@@ -84,6 +88,10 @@ public class MetaQuery {
     @Override
     public String toString() {
 
-        return String.format("%s|-|%s|-|%s", subjectLabel, propertyLabel, objectLabel);
+        return String.format("%s|-|%s|-|%s|-|%s", subjectLabel, propertyLabel, objectLabel, language);
     }
+
+	public String getLanguage() {
+		return this.language;
+	}
 }

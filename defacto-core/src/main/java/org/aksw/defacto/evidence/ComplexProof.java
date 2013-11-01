@@ -1,12 +1,10 @@
 package org.aksw.defacto.evidence;
 
-import org.aksw.defacto.DefactoModel;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
+import org.aksw.defacto.model.DefactoModel;
 
 import weka.core.Instance;
-
-import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * 
@@ -36,6 +34,9 @@ public class ComplexProof {
 
 	private String largeContext;
 	private String taggedLargeContext;
+
+	private String tinyContext;
+	private String taggedTinyContext;
 
     /**
      * boa pattern found
@@ -77,6 +78,11 @@ public class ComplexProof {
         this.website                  = site;
     }
 
+    public String getLanguage(){
+    	
+    	return this.website.getLanguage();
+    }
+    
     /**
      * 
      * @return
@@ -207,5 +213,66 @@ public class ComplexProof {
 	 */
 	public String getLargeContext() {
 		return largeContext;
+	}
+
+	public void setTinyContext(String tinyContext) {
+		
+		this.tinyContext = tinyContext;
+	}
+	
+	public String getTinyContext() {
+		
+		return this.tinyContext;
+	}
+
+	/**
+	 * @return the taggedTinyContext
+	 */
+	public String getTaggedTinyContext() {
+		return taggedTinyContext;
+	}
+
+	/**
+	 * @param taggedTinyContext the taggedTinyContext to set
+	 */
+	public void setTaggedTinyContext(String taggedTinyContext) {
+		this.taggedTinyContext = taggedTinyContext;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((tinyContext == null) ? 0 : tinyContext.hashCode());
+		result = prime * result + ((website == null) ? 0 : website.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ComplexProof other = (ComplexProof) obj;
+		if (tinyContext == null) {
+			if (other.tinyContext != null)
+				return false;
+		} else if (!tinyContext.equals(other.tinyContext))
+			return false;
+		if (website == null) {
+			if (other.website != null)
+				return false;
+		} else if (!website.equals(other.website))
+			return false;
+		return true;
 	}
 }

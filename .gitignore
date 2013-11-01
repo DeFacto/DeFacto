@@ -23,3 +23,7 @@ defacto-core/resources/cache/topics/cache.txt
 defacto-core/DeFacto.log.lck
 defacto-core/DeFacto.log
 DeFacto.log*
+freebase_links.nt
+logs
+log4j.properties
+defacto-evaluation/cache

@@ -9,8 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.aksw.commons.collections.Pair;
+import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
+import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.util.DummyData;
 import org.aksw.defacto.widget.ResultsPanel;
 import org.ini4j.Ini;
@@ -258,10 +261,13 @@ public class DeFactoUI extends UI
      */
     private void onValidate(Triple triple){
     	//this is actually a dummy call of DeFacto
-    	Evidence evidence = DummyData.createDummyEvidence(5);//TODO call DeFacto properly
+    	Pair<DefactoModel, Evidence> evidence = DummyData.createDummyData(5);//TODO call DeFacto properly
+    	
+    	//build DeFacto model
+    	//Defacto.checkFacts(DefactoDemo.getSampleData(), TIME_DISTRIBUTION_ONLY.NO);
     	
     	//visualize the results
-    	resultsPanel.showResults(triple, evidence);
+    	resultsPanel.showResults(triple, evidence.second);
     }
     
     private List<String> autoSuggest(String prefix){

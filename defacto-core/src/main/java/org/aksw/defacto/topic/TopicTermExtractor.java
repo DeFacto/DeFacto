@@ -26,7 +26,7 @@ import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.wikipedia.WikipediaPageCrawler;
 import org.aksw.defacto.wikipedia.WikipediaSearchResult;
 import org.aksw.defacto.wikipedia.WikipediaSearcher;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
@@ -39,13 +39,14 @@ import org.ini4j.InvalidFileFormatException;
 public class TopicTermExtractor {
 
     private static Logger logger = Logger.getLogger(TopicTermExtractor.class);
-    
+
     private static TopicTermSolr4Cache cache = new TopicTermSolr4Cache();
     
     public static void main(String[] args) throws InvalidFileFormatException, IOException {
-
-    	Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(new File("defacto.ini")));
-        for ( Word w : getPotentialTopicTerms("Barack Obama", "Washington D.C."))  System.out.println(w + " " + w.getFrequency());;
+    	
+    	Defacto.init();
+    	cache = new TopicTermSolr4Cache();
+        for ( Word w : getPotentialTopicTerms("Amazon", "Jeff Bezos"))  System.out.println(w + " " + w.getFrequency());;
     }
     
     /**
@@ -54,10 +55,12 @@ public class TopicTermExtractor {
      * @param objectLabel
      * @return
      */
-    private static List<Word> getPotentialTopicTerms(String subjectLabel, String objectLabel) {
+    private static List<Word> getPotentialTopicTerms(String language, String... labels) {
     	
-    	List<Word> topics = getPotentialTopicTermsFor(subjectLabel);
-    	topics.addAll(getPotentialTopicTermsFor(objectLabel));
+    	List<Word> topics = new ArrayList<Word>();
+    	for ( String label : labels ) 
+    		topics.addAll(getPotentialTopicTermsFor(label, language));
+    	
     	return new ArrayList<Word>(mergeTopicTerms(topics).values());
     }
     
@@ -92,13 +95,13 @@ public class TopicTermExtractor {
      * @param label
      * @return
      */
-	private static List<Word> getPotentialTopicTermsFor(String label) {
+	private static List<Word> getPotentialTopicTermsFor(String label, String language) {
 
 		// go query for the subject in cache if it's no in there put it in
         if ( cache.contains(label) ) return cache.getEntry(label).relatedTopics;
 		
     	List<Word> potentialTopicTerms = new ArrayList<Word>();
-        potentialTopicTerms.addAll(queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipedia(label)));
+        potentialTopicTerms.addAll(queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipedia(label, language)));
         
         // the term that appears more than once is very likely to be a potential topic
         // so we should remove the other terms which are not repeated 
@@ -144,7 +147,7 @@ public class TopicTermExtractor {
         	e.printStackTrace();
             logger.warn("Single website crawling was canceled because of: ", e);
         }
-        logger.info("It took " + (System.currentTimeMillis() - start) +  "ms to crawl wikipedia pages and extract " + potentialTopicTerms.size() + " topic terms!");
+        logger.debug("It took " + (System.currentTimeMillis() - start) +  "ms to crawl wikipedia pages and extract " + potentialTopicTerms.size() + " topic terms!");
         
         executorService.shutdown();
         executorService.shutdownNow();
@@ -179,7 +182,7 @@ public class TopicTermExtractor {
             topicTermFoundInBody = false;
 
             // if the term appears in the webpage body, then numberOfSearchResultsWithTopicTerm should be incremented
-            if ( webSite.getText().toLowerCase().contains(potentialTopicTerm.getWord().toLowerCase()) ) {
+            if ( webSite.getLowerCaseText().contains(potentialTopicTerm.getWord().toLowerCase()) ) {
                 
                 numberOfSearchResultsWithTopicTerm++;
                 topicTermFoundInBody = true;
@@ -187,8 +190,8 @@ public class TopicTermExtractor {
 
             // if the subject or the object label appears in the title of the page
             // then we should increment numberOfSearchResultsWithQueryTermsInTitle
-            if ( webSite.getTitle().toLowerCase().contains(subjectLabel.toLowerCase()) 
-                    || webSite.getTitle().toLowerCase().contains(objectLabel.toLowerCase()) ){
+            if ( webSite.getLowerCaseTitle().contains(subjectLabel.toLowerCase()) 
+                    || webSite.getLowerCaseTitle().contains(objectLabel.toLowerCase()) ){
 
                 numberOfSearchResultsWithQueryTermsInTitle++;
                 
@@ -246,13 +249,15 @@ public class TopicTermExtractor {
     }
 
     /**
+     * TODO uncomment
+     * 
      * 
      * @param evidence
      * @return
      */
-    public static List<Word> getTopicTerms(Evidence evidence) {
+    public static List<Word> getTopicTerms(String subjectLabel, String objectLabel, String language, Evidence evidence) {
         
-        List<Word> potentialTopicTerms = getPotentialTopicTerms(evidence.getSubjectLabel(), evidence.getObjectLabel());
+        List<Word> potentialTopicTerms = getPotentialTopicTerms(language, subjectLabel, objectLabel);
         
         Set<WebSite> websites = new HashSet<WebSite>();
         for ( List<WebSite> sites : evidence.getWebSites().values() ) websites.addAll(sites);
@@ -261,7 +266,7 @@ public class TopicTermExtractor {
         while ( topicTermsIterator.hasNext() ) {
             
             Word topicTerm = topicTermsIterator.next();
-            boolean isTopicTerm = TopicTermExtractor.isTopicTerm(websites, evidence.getSubjectLabel(), evidence.getObjectLabel(), topicTerm);
+            boolean isTopicTerm = TopicTermExtractor.isTopicTerm(websites, subjectLabel, objectLabel, topicTerm);
             
             // TODO if we leave it like this a topic term would then be only a topic term if it's a topic term for ALL website results
             if ( !isTopicTerm ) {
@@ -270,7 +275,7 @@ public class TopicTermExtractor {
                 topicTermsIterator.remove();
             }
         }
-        logger.info(evidence.getSubjectLabel() +" | "+ evidence.getObjectLabel() + ": " + StringUtils.join(potentialTopicTerms, ", "));
+        logger.debug(language + " | " + subjectLabel + " | "+ objectLabel + ": " + StringUtils.join(potentialTopicTerms, ", "));
         
         return potentialTopicTerms;
     }

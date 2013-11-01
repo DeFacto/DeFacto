@@ -1,11 +1,13 @@
 package org.aksw.defacto.evidence;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.search.cache.solr.TopicTermSolr4Cache;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.topic.frequency.Word;
 import org.apache.commons.lang.StringUtils;
@@ -27,7 +29,10 @@ public class WebSite {
     private Double topicMajoritySearch = 0D;
     private Double pageRankScore = 0D;
     private Double topicCoverageScore = 0D;
-	private String annotatedSentences; 
+	private String annotatedSentences;
+	private String language ="";
+	private String lowerCaseText = null;
+	private String lowerCaseTitle = null; 
     
     /**
      * 
@@ -94,10 +99,12 @@ public class WebSite {
      * 
      * @param topicTermsOccurrences
      */
-    public void setTopicTerms(List<Word> topicTerms) {
+    public void setTopicTerms(String language, Collection<Word> topicTerms) {
         
+    	String text = this.text.toLowerCase();
+    	
         for ( Word topicTerm : topicTerms )
-            this.topicTermsOccurrences.put(topicTerm, StringUtils.countMatches(this.text.toLowerCase(), topicTerm.getWord().toLowerCase()));
+            this.topicTermsOccurrences.put(topicTerm, StringUtils.countMatches(text, topicTerm.getWord().toLowerCase()));
     }
 
     /**
@@ -277,5 +284,28 @@ public class WebSite {
 	public void setTaggedText(String annotatedSentences) {
 		
 		this.annotatedSentences = annotatedSentences;
+	}
+
+	public void setLanguage(String language) {
+		
+		this.language  = language;
+	}
+
+	public String getLanguage() {
+		return this.language;
+	}
+
+	public String getLowerCaseText() {
+		
+		if ( this.lowerCaseText  == null ) this.lowerCaseText = this.text.toLowerCase();
+		
+		return this.lowerCaseText;
+	}
+
+	public String getLowerCaseTitle() {
+		
+		if ( this.lowerCaseTitle  == null ) this.lowerCaseTitle  = this.title.toLowerCase();
+		
+		return this.lowerCaseTitle;
 	}
 }

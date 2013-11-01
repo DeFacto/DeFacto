@@ -20,6 +20,8 @@ public class PropertyFeature implements FactFeature {
     @Override
     public void extractFeature(ComplexProof proof, Evidence evidence) {
 
-        proof.getFeatures().setValue(AbstractFactFeatures.PROPERTY_NAME, proof.getModel().getPropertyUri().replace("http://dbpedia.org/ontology/", ""));
+    	String uri = proof.getModel().getPropertyUri().replace("http://dbpedia.org/ontology/", "");
+    	if ( uri.equals("office") ) uri = "leaderName";
+        proof.getFeatures().setValue(AbstractFactFeatures.PROPERTY_NAME, uri);
     }
 }

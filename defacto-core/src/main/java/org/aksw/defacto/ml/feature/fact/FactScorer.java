@@ -8,11 +8,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
+import org.aksw.defacto.Defacto;
+import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
-import org.aksw.defacto.ml.feature.fact.impl.WordnetExpensionFeature;
 
 import weka.classifiers.Classifier;
 import weka.core.Instance;
@@ -36,7 +38,10 @@ public class FactScorer {
         this.classifier = loadClassifier();
         try {
             
-            this.trainingInstances = new Instances(new BufferedReader(new FileReader(loadFileName("/training/arff/fact/defacto_fact_word.arff"))));
+//            this.trainingInstances = new Instances(new BufferedReader(new FileReader(
+//            		loadFileName("/training/arff/fact/defacto_fact_word.arff"))));
+        	this.trainingInstances = new Instances(new BufferedReader(new FileReader(
+        			DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME"))));
         }
         catch (FileNotFoundException e) {
 
@@ -54,37 +59,41 @@ public class FactScorer {
      */
     public void scoreEvidence(Evidence evidence) {
 
-        for ( ComplexProof proof : evidence.getComplexProofs() )
+        for ( ComplexProof proof : evidence.getComplexProofs() ) {
             try {
                 
-                Instances withoutStrings = new Instances(trainingInstances);
-                withoutStrings.setClassIndex(11);
+                Instances instancesWithStringVector = new Instances(trainingInstances);
+                instancesWithStringVector.setClassIndex(24);
                 
                 // create new instance and delete debugging features
                 Instance newInstance = new Instance(proof.getFeatures());
-                newInstance.deleteAttributeAt(10);
-                newInstance.deleteAttributeAt(11);
-                newInstance.deleteAttributeAt(12);
-                newInstance.deleteAttributeAt(12);
+                newInstance.deleteAttributeAt(24);
+                newInstance.deleteAttributeAt(24);
+                newInstance.deleteAttributeAt(24);
+                newInstance.deleteAttributeAt(24);
+                newInstance.deleteAttributeAt(25);
+                newInstance.deleteAttributeAt(25);
                 
                 // insert all the words which occur
-                for ( int i = newInstance.numAttributes() ; i < withoutStrings.numAttributes(); i++) {
+                for ( int i = newInstance.numAttributes() ; i < instancesWithStringVector.numAttributes(); i++) {
                     
-                    String name = withoutStrings.attribute(i).name();
+                    String name = instancesWithStringVector.attribute(i).name();
                     newInstance.insertAttributeAt(i);
-                    newInstance.setValue(withoutStrings.attribute(i), proof.getProofPhrase().contains(name) ? 1D : 0D);
+                    newInstance.setValue(instancesWithStringVector.attribute(i), proof.getTinyContext().contains(name) ? 1D : 0D);
                 }
+                newInstance.setDataset(instancesWithStringVector);
+                instancesWithStringVector.add(newInstance);
                 
-                newInstance.setDataset(withoutStrings);
-                withoutStrings.add(newInstance);
-                
-                proof.setScore(this.classifier.classifyInstance(newInstance));
+                proof.setScore(this.classifier.distributionForInstance(newInstance)[0]);
+                proof.setScore(1D);
+//                System.out.println(proof.getScore() + " - " + this.classifier.classifyInstance(newInstance) + " -" + proof.getTinyContext());
             }
             catch (Exception e) {
 
                 e.printStackTrace();
                 System.exit(0);
             }
+        }
         
         // set for each website the score by multiplying the proofs found on this site
         for ( WebSite website : evidence.getAllWebSites() ) {
@@ -107,11 +116,13 @@ public class FactScorer {
 
         try {
             
-            return (Classifier) weka.core.SerializationHelper.read(loadFileName("/classifier/fact/fact.model"));
+            return (Classifier) weka.core.SerializationHelper.read(
+            		DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_CLASSIFIER_TYPE"));
         }
         catch (Exception e) {
 
-            throw new RuntimeException("Could not load classifier from: " + "classifier/fact/fact.model", e);
+            throw new RuntimeException("Could not load classifier from: " + 
+            		DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_CLASSIFIER_TYPE"), e);
         }
     }
     

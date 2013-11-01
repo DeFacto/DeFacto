@@ -41,8 +41,6 @@ public class ResultsPanel extends VerticalLayout{
 
 	public void showResults(final Triple triple, final Evidence evidence){
 		removeAllComponents();
-		Set<String> words = Sets.newHashSet(evidence.getSubjectLabel(), evidence.getObjectLabel());
-		
 		//show some information about the total number of websites, etc.
 		
 		
@@ -68,7 +66,8 @@ public class ResultsPanel extends VerticalLayout{
 			List<ComplexProof> proofs = evidence.getComplexProofs(website);
 			int cnt = 1;
 			for (ComplexProof proof : proofs) {
-				html += "<tr><td align=\"right\">" + cnt++ + ".</td><td>" + highlightWords(proof.getProofPhrase(), words)  + "</td></tr>";
+				html += "<tr><td align=\"right\">" + cnt++ + ".</td><td>" + highlightWords(proof.getProofPhrase(), 
+						Sets.newHashSet(website.getQuery().getSubjectLabel(), website.getQuery().getObjectLabel()))  + "</td></tr>";
 			}
 			html += "</table>";
 			leftSide.addComponent(new Label(html, ContentMode.HTML));
