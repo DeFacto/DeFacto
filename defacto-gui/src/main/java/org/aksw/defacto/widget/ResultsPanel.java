@@ -5,7 +5,10 @@ package org.aksw.defacto.widget;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.aksw.defacto.ScoreChartGenerator;
@@ -35,6 +38,7 @@ import com.vaadin.ui.themes.Reindeer;
 public class ResultsPanel extends VerticalLayout{
 	
 	private ScoreChartGenerator chartGenerator = new ScoreChartGenerator();
+	private NumberFormat df = DecimalFormat.getPercentInstance(Locale.ENGLISH);
 	
 	public ResultsPanel() {
 	}
@@ -42,8 +46,10 @@ public class ResultsPanel extends VerticalLayout{
 	public void showResults(final Triple triple, final Evidence evidence){
 		removeAllComponents();
 		//show some information about the total number of websites, etc.
-		
-		
+		Label totalScore = new Label("<h2>Overall DeFacto Score: " + df.format(evidence.getDeFactoScore()) + "</h2>", ContentMode.HTML);
+		totalScore.setWidth(null);
+		addComponent(totalScore);
+		setComponentAlignment(totalScore, Alignment.MIDDLE_CENTER);
 		//show entry for each website
 		for (final WebSite website : evidence.getAllWebSites()) {
 			HorizontalLayout l = new HorizontalLayout();

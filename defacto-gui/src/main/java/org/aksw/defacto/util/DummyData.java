@@ -60,6 +60,7 @@ public class DummyData {
     	String objectLabel = "Ulm";
     	Pattern pattern = new Pattern("actor born in ", "en");
     	Evidence evidence = new Evidence(model, 20l, Collections.singleton(pattern));
+    	evidence.setDeFactoScore(0.32);
         
     	for(int i = 0; i < size; i++){
     		WebSite webSite = new WebSite(new MetaQuery(subjectLabel, propertyLabel, objectLabel, language, Lists.<Word>newArrayList()), "http://en.wikipedia.org/wiki/Brad_Pitt" + i);

@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.aksw.commons.collections.Pair;
-import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.util.DummyData;
+import org.aksw.defacto.widget.ProgressDialog;
 import org.aksw.defacto.widget.ResultsPanel;
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
@@ -23,12 +23,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
-import com.google.common.collect.Lists;
 import com.google.common.io.CharStreams;
 import com.google.common.io.InputSupplier;
-import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.graph.NodeFactory;
 import com.hp.hpl.jena.graph.Triple;
+import com.vaadin.annotations.Push;
+import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -46,6 +46,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @Title("DeFacto")
+@Push
+@Theme("defacto")
 @SuppressWarnings("serial")
 public class DeFactoUI extends UI
 {
@@ -72,6 +74,8 @@ public class DeFactoUI extends UI
         VerticalLayout main = new VerticalLayout();
         main.setSizeFull();
         main.setSpacing(true);
+//        main.addStyleName("defacto");
+//        main.addStyleName("main-view");
         layout.addComponent(main);
         //add triple input form to main panel in center top
         Component tripleInput = generateTripleInputForm();
@@ -260,20 +264,41 @@ public class DeFactoUI extends UI
      * @param triple
      */
     private void onValidate(){
-    	Triple triple = new Triple(
+    	final ProgressDialog dialog = new ProgressDialog("Validating...");
+    	addWindow(dialog);
+    	final Triple triple = new Triple(
     			NodeFactory.createURI((String) subjectBox.getValue()), 
     			NodeFactory.createURI((String) predicateBox.getValue()), 
     			NodeFactory.createURI((String) objectBox.getValue()));
     	
-    	//build the DeFacto model
-    	DefactoModel model = DummyData.getDummyModel();
-    	
-    	//this is actually a dummy call of DeFacto
-    	Pair<DefactoModel, Evidence> evidence = DummyData.createDummyData(5);//TODO call DeFacto properly
-//    	Map<DefactoModel, Evidence> evidence = Defacto.checkFacts(Lists.newArrayList(model), TIME_DISTRIBUTION_ONLY.NO);
-    	
-    	//visualize the results
-    	resultsPanel.showResults(triple, evidence.second);
+    	new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				//build the DeFacto model
+		    	DefactoModel model = DummyData.getDummyModel();
+		    	
+		    	//this is actually a dummy call of DeFacto
+		    	final Pair<DefactoModel, Evidence> evidence = DummyData.createDummyData(5);//TODO call DeFacto properly
+//		    	Map<DefactoModel, Evidence> evidence = Defacto.checkFacts(Lists.newArrayList(model), TIME_DISTRIBUTION_ONLY.NO);
+		    	
+				UI.getCurrent().access(new Runnable() {
+					@Override
+					public void run() {
+						//remove progress dialog
+						removeWindow(dialog);
+						//visualize the results
+				    	resultsPanel.showResults(triple, evidence.second);
+					}
+				});
+			}
+		}).start();
     }
     
     private List<String> autoSuggest(String prefix){

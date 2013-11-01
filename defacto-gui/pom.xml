@@ -10,7 +10,7 @@
 	<artifactId>defacto-gui</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>Vaadin Web Application</name>
+	<name>DeFacto Web Application</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -71,6 +71,16 @@
 			<version>2.4</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-push</artifactId>
+			<version>${vaadin.version}</version>
+		</dependency>
+		<dependency>
+                        <groupId>com.vaadin</groupId>
+                        <artifactId>vaadin-theme-compiler</artifactId>
+                        <version>${vaadin.version}</version>
+                </dependency>
 		<dependency>
 	<groupId>org.aksw</groupId>
 	<artifactId>defacto-core</artifactId>
