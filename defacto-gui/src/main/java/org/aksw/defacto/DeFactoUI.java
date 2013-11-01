@@ -23,9 +23,11 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
+import com.google.common.collect.Lists;
 import com.google.common.io.CharStreams;
 import com.google.common.io.InputSupplier;
 import com.hp.hpl.jena.graph.Node;
+import com.hp.hpl.jena.graph.NodeFactory;
 import com.hp.hpl.jena.graph.Triple;
 import com.vaadin.annotations.Title;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -102,6 +104,14 @@ public class DeFactoUI extends UI
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+        //set dummy triple
+        Triple triple = DummyData.getDummyTriple();
+        subjectBox.addItem(triple.getSubject().getURI());
+        subjectBox.setValue(triple.getSubject().getURI());
+        predicateBox.addItem(triple.getPredicate().getURI());
+        predicateBox.setValue(triple.getPredicate().getURI());
+        objectBox.addItem(triple.getObject().getURI());
+        objectBox.setValue(triple.getObject().getURI());
     }
     
     /**
@@ -176,9 +186,7 @@ public class DeFactoUI extends UI
         validateButton.setDescription("Click to start the validation of the triple.");
         validateButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(ClickEvent event) {
-                onValidate(new Triple(Node.createURI((String) subjectBox.getValue()), 
-                		Node.createURI((String) predicateBox.getValue()), 
-                		Node.createURI((String) objectBox.getValue())));
+                onValidate();
             }
         });
         l.addComponent(validateButton);
@@ -187,14 +195,6 @@ public class DeFactoUI extends UI
         l.setExpandRatio(subjectBox, 1f);
         l.setExpandRatio(predicateBox, 1f);
         l.setExpandRatio(objectBox, 1f);
-        
-        //set some dummy input triple
-        subjectBox.addItem("http://dbpedia.org/resource/Brad_Pitt");
-        subjectBox.setValue("http://dbpedia.org/resource/Brad_Pitt");
-        predicateBox.addItem("http://dbpedia.org/ontology/birthPlace");
-        predicateBox.setValue("http://dbpedia.org/ontology/birthPlace");
-        objectBox.addItem("http://dbpedia.org/resource/Berlin");
-        objectBox.setValue("http://dbpedia.org/resource/Berlin");
         
         return l;
     }
@@ -259,12 +259,18 @@ public class DeFactoUI extends UI
      * Run validation of the given triple.
      * @param triple
      */
-    private void onValidate(Triple triple){
+    private void onValidate(){
+    	Triple triple = new Triple(
+    			NodeFactory.createURI((String) subjectBox.getValue()), 
+    			NodeFactory.createURI((String) predicateBox.getValue()), 
+    			NodeFactory.createURI((String) objectBox.getValue()));
+    	
+    	//build the DeFacto model
+    	DefactoModel model = DummyData.getDummyModel();
+    	
     	//this is actually a dummy call of DeFacto
     	Pair<DefactoModel, Evidence> evidence = DummyData.createDummyData(5);//TODO call DeFacto properly
-    	
-    	//build DeFacto model
-    	//Defacto.checkFacts(DefactoDemo.getSampleData(), TIME_DISTRIBUTION_ONLY.NO);
+//    	Map<DefactoModel, Evidence> evidence = Defacto.checkFacts(Lists.newArrayList(model), TIME_DISTRIBUTION_ONLY.NO);
     	
     	//visualize the results
     	resultsPanel.showResults(triple, evidence.second);
