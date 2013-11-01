@@ -1,0 +1,2 @@
+# Module org.aksw.defacto.AppWidgetSet
+# RPC service class, partial path of RPC policy file
