@@ -39,6 +39,10 @@ import org.ini4j.InvalidFileFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.gerbsen.encoding.Encoder.Encoding;
+import com.github.gerbsen.file.BufferedFileWriter;
+import com.github.gerbsen.file.BufferedFileWriter.WRITER_WRITE_MODE;
+
 import weka.core.Instance;
 
 /**
@@ -130,13 +134,16 @@ public class Defacto {
         return evidence;
     }
     
-    public static void writeTrainingFiles() {
+    public static void writeFactTrainingFiles(String filename) {
     	
-    	// rewrite the training file after every checked triple
-        if ( DEFACTO_CONFIG.getBooleanSetting("evidence", "OVERWRITE_EVIDENCE_TRAINING_FILE")  ) writeEvidenceTrainingDataFile();
-        
         // rewrite the fact training file after every proof
         if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) writeFactTrainingDataFile();
+    }
+    
+    public static void writeEvidenceTrainingFiles(String filename) {
+    	
+    	// rewrite the training file after every checked triple
+        if ( DEFACTO_CONFIG.getBooleanSetting("evidence", "OVERWRITE_EVIDENCE_TRAINING_FILE")  ) writeEvidenceTrainingDataFile(filename);
     }
     
     public static void init(){
@@ -172,13 +179,6 @@ public class Defacto {
         
         for (DefactoModel model : defactoModel) {
         	
-//        	if ( !model.getName().contains("spouse") && !model.getName().contains("starring")
-//        			&& !model.getName().contains("subsidiary") && !model.getName().contains("leader") ) continue;
-//        	
-//        	if ( model.getName().contains("spouse") && Integer.valueOf(model.getName().replace("spouse_","").replace(".ttl","")) < 110) continue;
-        	
-//        	if (!model.getName().equals("birth_00052.ttl") ) continue;
-        	
             Evidence evidence = checkFact(model, onlyTimeDistribution);
             evidences.put(model, evidence);
             
@@ -190,7 +190,8 @@ public class Defacto {
             if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) writeFactTrainingDataFile();
             
             // rewrite the training file after every checked triple
-            if ( DEFACTO_CONFIG.getBooleanSetting("evidence", "OVERWRITE_EVIDENCE_TRAINING_FILE")  ) writeEvidenceTrainingDataFile();
+            if ( DEFACTO_CONFIG.getBooleanSetting("evidence", "OVERWRITE_EVIDENCE_TRAINING_FILE")  ) 
+            	writeEvidenceTrainingDataFile(DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME"));
         }
         
         return evidences;
@@ -199,19 +200,11 @@ public class Defacto {
 	/**
      * 
      */
-    private static void writeEvidenceTrainingDataFile() {
+    private static void writeEvidenceTrainingDataFile(String filename) {
 
-        try {
-            
-            BufferedWriter writer = new BufferedWriter(new FileWriter(DefactoConfig.DEFACTO_DATA_DIR + DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") ));
-            writer.write(AbstractEvidenceFeature.provenance.toString());
-            writer.flush();
-            writer.close();
-        }
-        catch (IOException e) {
-
-            e.printStackTrace();
-        }        
+        BufferedFileWriter writer = new BufferedFileWriter(DefactoConfig.DEFACTO_DATA_DIR + filename, Encoding.UTF_8, WRITER_WRITE_MODE.OVERRIDE);
+        writer.write(AbstractEvidenceFeature.provenance.toString());
+        writer.close();
     }
     
     /**

@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.aksw.defacto.Defacto;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
@@ -24,7 +25,7 @@ import com.github.gerbsen.math.Frequency;
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
  *
  */
-public class TimePeriodSearcher {
+public class PatternTimePeriodSearcher {
 
 	public static Set<Pattern> timePatterns = new LinkedHashSet<>();
 	public static Frequency patFreq = new Frequency();
@@ -78,31 +79,47 @@ public class TimePeriodSearcher {
 		
 		Set<String> sentences = new HashSet<>();
 		for ( ComplexProof proof : evidence.getComplexProofs() ) {
-			sentences.add(proof.getMediumContext().trim());
+			
+			switch ( Defacto.DEFACTO_CONFIG.getStringSetting("settings", "context-size") ) {
+			
+				case "tiny": {
+					
+					sentences.add(proof.getTinyContext().trim());
+					break;
+				}
+				case "small": {
+									
+					sentences.add(proof.getSmallContext().trim());
+					break;
+				}
+				case "medium": {
+					
+					sentences.add(proof.getMediumContext().trim());
+					break;
+				}
+				case "large": {
+					
+					sentences.add(proof.getLargeContext().trim());
+					break;
+				}
+				default: throw new RuntimeException("Context size not allowed: " + Defacto.DEFACTO_CONFIG.getStringSetting("settings", "context-size")); 
+			}
 		}
 		
 		return findTimePeriod(timePatterns, sentences);
 	}
 	
-	private static void test(Evidence evidence) {
-		
-		for ( WebSite ws : evidence.getAllWebSites() ) {
-			
-			String[] matches = StringUtils.substringsBetween(ws.getText(), evidence.getModel().timePeriod.from + "", evidence.getModel().timePeriod.to+ "");
-			if ( matches == null ) continue;
-			
-			for ( String substring : matches) {
-				
-				if ( substring.length() < 100 )
-					System.out.println(substring);
-			}
-		}
-	}
-
+	/**
+	 * 
+	 * @param patterns
+	 * @param sentences
+	 * @return
+	 */
 	public static DefactoTimePeriod findTimePeriod(Set<Pattern> patterns, Set<String> sentences) {
 		
 		Frequency firstFreq = new Frequency();
 		Frequency secondFreq = new Frequency();
+		Frequency bothFreq = new Frequency();
 		
 		for ( String sentence : sentences ) {
 			
@@ -128,10 +145,11 @@ public class TimePeriodSearcher {
 						Integer first = Integer.valueOf(matches.get(0));
 						Integer second = Integer.valueOf(matches.get(1));
 						
-						if ( first <= 2013 && first > 1850 && second <= 2013 && second > 1850) {
+						if ( first <= 2013 && first > 1800 && second <= 2013 && second > 1800) {
 							
 							firstFreq.addValue(matches.get(0));
 							secondFreq.addValue(matches.get(1));
+							bothFreq.addValue(matches.get(0) + " " + matches.get(1));
 						}
 					}
 					else System.err.println("YEAR MATCHES WENT WRONG: " + matches);
@@ -140,16 +158,21 @@ public class TimePeriodSearcher {
 		}
 		List<Entry<Comparable<?>, Long>> first = firstFreq.sortByValue();
 		List<Entry<Comparable<?>, Long>> second = secondFreq.sortByValue();
+		List<Entry<Comparable<?>, Long>> both = bothFreq.sortByValue();
 		
-		if ( first.isEmpty() || second.isEmpty() ) return null; 
-		return new DefactoTimePeriod(Integer.valueOf((String)first.get(0).getKey()), Integer.valueOf((String)second.get(0).getKey()));
-	}
-	
-	public static void main(String[] args) {
+		if ( first.isEmpty() || second.isEmpty() ) return null;
 		
-		String s = "iven to every candidate. Katie Holmes and Tom Cruise were married for 7 years (from 2005 - 20 November 2012). Holmes began dating actor Tom C";
-		Set<String> asd = new HashSet<String>();
-		asd.add(s);
-		System.out.println(TimePeriodSearcher.findTimePeriod(timePatterns, asd));
+		if ( Defacto.DEFACTO_CONFIG.getStringSetting("settings", "periodSearchMethod").equals("frequency") )
+			return new DefactoTimePeriod(Integer.valueOf((String) first.get(0).getKey()), Integer.valueOf((String)second.get(0).getKey()));
+		
+		else if ( Defacto.DEFACTO_CONFIG.getStringSetting("settings", "periodSearchMethod").equals("pattern") ) {
+			
+//			for (Entry<Comparable<?>, Long> entry : both) System.out.println(entry.getKey() +": " + entry.getValue());
+			
+			return new DefactoTimePeriod(Integer.valueOf(((String) both.get(0).getKey()).split(" ")[0]), Integer.valueOf(((String) both.get(0).getKey()).split(" ")[1]));
+		}
+		
+		else 
+			return new DefactoTimePeriod(0,0);
 	}
 }

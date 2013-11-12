@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -18,6 +19,7 @@ import org.aksw.defacto.reader.DefactoModelReader;
 import com.github.gerbsen.encoding.Encoder.Encoding;
 import com.github.gerbsen.file.BufferedFileWriter;
 import com.github.gerbsen.file.BufferedFileWriter.WRITER_WRITE_MODE;
+import com.github.gerbsen.math.Frequency;
 
 import edu.stanford.nlp.util.StringUtils;
 
@@ -32,7 +34,7 @@ public class GoldStandardInspection {
 				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", "train-directory");
 		String testDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "FactBench/v1/test/";
 		
-		Set<Integer> years = new TreeSet<>();
+		Frequency yearsFreq = new Frequency();
 		
 		for ( String path : Arrays.asList("award", "birth","death","foundationPlace","nbateam","publicationDate","spouse","starring","subsidiary","leader") ) {
 			
@@ -53,8 +55,12 @@ public class GoldStandardInspection {
 				minYearTrain = Math.min(minYearTrain, model.timePeriod.from);
 				maxYearTrain = Math.max(maxYearTrain, model.timePeriod.to);
 				
-				years.add(model.timePeriod.from);
-				years.add(model.timePeriod.to);
+				if ( model.timePeriod.from.equals(model.timePeriod.to) ) yearsFreq.addValue(model.timePeriod.from);
+				else {
+					
+					yearsFreq.addValue(model.timePeriod.from);
+					yearsFreq.addValue(model.timePeriod.to);
+				}
 				
 				if ( model.timePeriod.from.equals(model.timePeriod.to) ) averageYearTrain += model.timePeriod.from;
 				else averageYearTrain += ((model.timePeriod.from + model.timePeriod.to) / 2);
@@ -88,9 +94,9 @@ public class GoldStandardInspection {
 					averageYearTrain / modelsTrain.size(), averageYearTest / modelsTest.size()));
 		}
 		
-		for ( Integer a : years) {
+		for ( Entry<Comparable<?>, Long> entry : yearsFreq.sortByValue()){
 			
-			System.out.println(a);
+			System.out.println("tf.put("+entry.getKey() + ", " + entry.getValue()+ "L);");
 		}
 	}
 	

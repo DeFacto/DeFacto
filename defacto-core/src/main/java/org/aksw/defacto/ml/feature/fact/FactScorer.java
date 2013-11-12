@@ -85,7 +85,7 @@ public class FactScorer {
                 instancesWithStringVector.add(newInstance);
                 
                 proof.setScore(this.classifier.distributionForInstance(newInstance)[0]);
-                proof.setScore(1D);
+//                proof.setScore(1D);
 //                System.out.println(proof.getScore() + " - " + this.classifier.classifyInstance(newInstance) + " -" + proof.getTinyContext());
             }
             catch (Exception e) {

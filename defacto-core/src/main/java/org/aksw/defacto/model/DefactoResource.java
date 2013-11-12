@@ -28,16 +28,49 @@ public class DefactoResource {
 	public Map<String,String> labels = new HashMap<String,String>();
 	public Map<String,Set<String>> altLabels = new HashMap<String,Set<String>>();
 	public List<Resource> owlSameAs = new ArrayList<Resource>();
+	private String uri;
 
 	public DefactoResource(Resource resource, Model model) {
 		
 		this.resource = resource;
+		this.uri = this.resource.getURI();
 		this.model = model;
 		this.altLabels.put("en", new HashSet<String>());
 		this.altLabels.put("de", new HashSet<String>());
 		this.altLabels.put("fr", new HashSet<String>());
 		
 		init();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((uri == null) ? 0 : uri.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DefactoResource other = (DefactoResource) obj;
+		if (uri == null) {
+			if (other.uri != null)
+				return false;
+		} else if (!uri.equals(other.uri))
+			return false;
+		return true;
 	}
 
 	private void init() {
@@ -139,4 +172,7 @@ public class DefactoResource {
 	public Map<String,String> getAllLabels() {
 		return this.labels;
 	}
+
+	
+	
 }

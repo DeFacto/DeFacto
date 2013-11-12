@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
 public class AzureBingSearchEngine extends DefaultSearchEngine {
 
     private String NUMBER_OF_SEARCH_RESULTS;
-    private String BING_API_KEY;
+    private static String BING_API_KEY;
     private static Logger logger =  Logger.getLogger(AzureBingSearchEngine.class);
     
     public AzureBingSearchEngine() {
@@ -59,6 +59,7 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
         Defacto.init();
         
         AzureBingSearchEngine engine = new AzureBingSearchEngine();
+        System.out.println(BING_API_KEY);
         System.out.println(engine.query(query0, null).getTotalHitCount());
 //        System.out.println(engine.query(query, null).getWebSites().size());
         

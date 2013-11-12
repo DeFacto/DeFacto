@@ -101,7 +101,7 @@ public class EvidenceCrawler {
 //            evidenceCache.put(model, evidence);
 //    	}
 //    	evidence = evidenceCache.get(model);
-    	
+//    	
         // get the time frame or point
         evidence.calculateDefactoTimePeriod();
         

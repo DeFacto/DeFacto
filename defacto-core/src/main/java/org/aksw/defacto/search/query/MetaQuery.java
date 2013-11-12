@@ -8,9 +8,9 @@ import org.aksw.defacto.topic.frequency.Word;
 
 public class MetaQuery {
 
-    private String subjectLabel;
+    public String subjectLabel;
     private String propertyLabel;
-    private String objectLabel;
+    public String objectLabel;
     private List<Word> topicTerms;
 	private String language;
 

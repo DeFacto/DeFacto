@@ -19,7 +19,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
  */
 public class QueryGenerator {
 
-    private BoaPatternSearcher patternSearcher = new BoaPatternSearcher();
+    public static final BoaPatternSearcher patternSearcher = new BoaPatternSearcher();
     private static final Logger LOGGER = LoggerFactory.getLogger(QueryGenerator.class);
     private DefactoModel model;
     
@@ -51,8 +51,8 @@ public class QueryGenerator {
     private Map<Pattern,MetaQuery> generateSearchQueries(Statement fact, String language){
      
         Map<Pattern,MetaQuery> queryStrings =  new HashMap<Pattern,MetaQuery>();
-        String subjectLabel = model.getSubjectLabelNoFallBack(language); 
-        String objectLabel  = model.getObjectLabelNoFallBack(language);
+        String subjectLabel = model.getSubjectLabelNoFallBack(language);//.replaceAll("\\(.+?\\)", "").trim(); 
+        String objectLabel  = model.getObjectLabelNoFallBack(language);//.replaceAll("\\(.+?\\)", "").trim();
         
         // we dont have labels in the given language so we generate a foreign query with english labels
         if ( subjectLabel.equals(Constants.NO_LABEL) || objectLabel.equals(Constants.NO_LABEL) ) {
@@ -63,7 +63,7 @@ public class QueryGenerator {
         
         // TODO
         // query boa index and generate the meta queries
-        for (Pattern pattern : this.patternSearcher.getNaturalLanguageRepresentations(fact.getPredicate().getURI(), language)) {
+        for (Pattern pattern : patternSearcher.getNaturalLanguageRepresentations(fact.getPredicate().getURI(), language)) {
         	
         	queryStrings.put(pattern, new MetaQuery(subjectLabel, pattern.naturalLanguageRepresentation, objectLabel, language, null));
 //        	System.out.println(pattern.naturalLanguageRepresentation);

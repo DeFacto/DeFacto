@@ -18,7 +18,7 @@ import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.reader.DefactoModelReader;
-import org.aksw.defacto.search.time.TimePeriodSearcher;
+import org.aksw.defacto.search.time.PatternTimePeriodSearcher;
 import org.semanticweb.owlapi.io.SystemOutDocumentTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,66 +40,47 @@ public class DefactoEvaluation {
 		
 		Defacto.init();
 		
-		double correctFacts = 0D;
-		double correctFrom	= 0D;
-		double correctTo	= 0D;
+		generateArffFiles("mix");
+		generateArffFiles("random");
+		generateArffFiles("domain");
+		generateArffFiles("property");
+		generateArffFiles("range");
+		generateArffFiles("domainrange");
+		
+	}
+
+	private static void generateArffFiles(String set) throws FileNotFoundException {
 		
 		List<String> languages = Arrays.asList("de", "fr", "en");
 		String trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
 				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", "train-directory");
 		
-//		for ( String path : Arrays.asList("award", "birth","death","foundationPlace","nbateam","publicationDate","spouse","starring","subsidiary","leader") ) {
-			
 		List<DefactoModel> models = new ArrayList<>();//
 		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/", true, languages));
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/spouse", true, languages));
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/nbateam", true, languages));
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/leader", true, languages));
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/range", false, languages));
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix", false, languages));
-		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/property", false, languages));
-		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/random", false, languages));
-		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/domainrange", false, languages));
-		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/domain", false, languages));
-		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/range", false, languages));
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/date/", false, languages));
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/range/", false, languages));
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/domainrange/spouse", false, languages));
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/domainrange/starring", false, languages));
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/domainrange/subsidiary", false, languages));
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/property/", false, languages));
-		Collections.shuffle(models);
 		
-		LOGGER.info("Starting Defacto for " + models.size() + " facts.");
+		// mix contains date properties which will have there own evaluation
+		if ( !set.equals("mix") )
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/"+ set, false, languages));
 		
-		int i = 0, count = 0, empty=0;
-		for ( DefactoModel model : models ){
+		else {
 			
-//			if ( !model.getName().equals("train/wrong/mix/domain/award/award_00028.ttl") ) continue;
-			
-			LOGGER.info("Validating fact ("+i+++"): " + model);
-			Evidence evidence = Defacto.checkFact(model, TIME_DISTRIBUTION_ONLY.NO);
-			
-//			if ( evidence.defactoTimePeriod == null ) System.out.println("NULLNULLNULLNULL");
-//			
-//			if ( evidence.defactoTimePeriod.from.equals(0) && evidence.defactoTimePeriod.to.equals(0)) empty++;
-//			if (evidence.defactoTimePeriod.equals(model.getTimePeriod())) count++;
-//			System.out.println("TIMEPERIOD: " + evidence.defactoTimePeriod + " " + model.getTimePeriod() + "  -->  " + evidence.defactoTimePeriod.equals(model.getTimePeriod()) + " Total: " + count +"/" + i  + "  Empty:" + empty);
-			
-//			for ( Entry<Comparable<?>, Long> sortByValue : TimePeriodSearcher.patFreq.sortByValue()) {
-//				
-//				System.out.println(sortByValue.getKey() + ": " + sortByValue.getValue());
-//			}
-			
-			// this takes pretty long 
-			if ( i % 5 == 0 ) Defacto.writeTrainingFiles();
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/domain", false, languages));
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/property", false, languages));
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/range", false, languages));
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/domainrange", false, languages));
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/random", false, languages));
 		}
-//		for ( Entry<Comparable<?>, Long> sortByValue : TimePeriodSearcher.patFreq.sortByValue()) {
-//			
-//			System.out.println(sortByValue.getKey() + ": " + sortByValue.getValue());
-//		}
 		
-		// be sure to write the final files
-		Defacto.writeTrainingFiles();
+		// just to make preamtive tests in weka possible (same true false distribution) 
+		Collections.shuffle(models);
+		LOGGER.info("Starting Defacto for " + models.size() + " facts for set: " + set);
+		
+		for ( int i = 0; i < models.size() ; i++ ) {
+			
+			LOGGER.info("Validating fact ("+ (i + 1) +"): " + models.get(i));
+			System.out.println(String.format("Validation-Set: %s\tTask: %04d of %04d", set, i+1, models.size()));
+			Evidence evidence = Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
+			Defacto.writeEvidenceTrainingFiles("machinelearning/eval/" + set + ".arff");
+		}
 	}
 }

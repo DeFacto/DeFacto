@@ -27,10 +27,16 @@ public abstract class DefaultSearchEngine implements SearchEngine {
     @Override
     public SearchResult getSearchResults(MetaQuery query, Pattern pattern) {
 
+//    	if ( query.toString().contains("(") && query.toString().contains("") ) {
+//    		query.subjectLabel = query.subjectLabel.replaceAll("\\(.+?\\)", "").trim();
+//    		query.objectLabel = query.objectLabel.replaceAll("\\(.+?\\)", "").trim();
+//    		return query(query, pattern);
+//    	}
+    	
         if ( searchResultsCache.contains(query.toString()) ) {
             
             // search results will be identified by the string we used to search in search engine
-        	LOGGER.debug(String.format("Query: '%s' cached! Starting to get from cache!", query.toString()));
+        	LOGGER.info(String.format("Query: '%s' cached! Starting to get from cache!", query.toString()));
             SearchResult result = searchResultsCache.getEntry(query.toString());
             result.setPattern(pattern);
             return result;

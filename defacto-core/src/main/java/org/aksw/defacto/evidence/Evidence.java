@@ -20,7 +20,7 @@ import org.aksw.defacto.search.time.DefactoTimePeriodSearcher;
 import org.aksw.defacto.search.time.DomainSpecificTimePeriodSearcher;
 import org.aksw.defacto.search.time.GlobalTimePeriodSearcher;
 import org.aksw.defacto.search.time.OccurrenceTimePeriodSearcher;
-import org.aksw.defacto.search.time.TimePeriodSearcher;
+import org.aksw.defacto.search.time.PatternTimePeriodSearcher;
 import org.aksw.defacto.search.time.TimeUtil;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.VectorUtil;
@@ -56,7 +56,7 @@ public class Evidence {
     private Map<String,List<Pattern>> boaPatterns = new HashMap<String,List<Pattern>>();
 	public List<Match> dates = new ArrayList<Match>();
 	public DefactoTimePeriod defactoTimePeriod;
-	public TimePeriodSearcher tsSearcher = new TimePeriodSearcher();
+	public PatternTimePeriodSearcher tsSearcher = new PatternTimePeriodSearcher();
 	
     
     /**
@@ -329,11 +329,32 @@ public class Evidence {
 		
 		this.dates.add(new Match(match, distance));
 	}
-
+	
+	public Map<String, Long> getPreferedContext(){
+		
+		switch ( Defacto.DEFACTO_CONFIG.getStringSetting("settings", "context-size") ) {
+		
+			case "tiny" : 	return this.tinyContextYearOccurrences;
+			case "small" : 	return this.smallContextYearOccurrences;
+			case "medium" : return this.mediumContextYearOccurrences;
+			case "large" :	return this.largeContextYearOccurrences;
+			
+			default: throw new RuntimeException("Context size: " + 
+					Defacto.DEFACTO_CONFIG.getStringSetting("settings", "context-size") + " not supported!");
+		}
+	}
+	
 	/**
 	 * 
 	 */
 	public void calculateDefactoTimePeriod() {
+		
+		// this should get deleted some time soon
+		for ( Entry<String, Long> entry : this.getPreferedContext().entrySet()) {
+			for (int i = 0; i < entry.getValue(); i++ ) {
+				TimeUtil.allYearsAndTimePeriod.addValue(entry.getKey());
+			}
+		}
 
 		DefactoTimePeriodSearcher searcher = null;
 		if ( Defacto.DEFACTO_CONFIG.getStringSetting("settings", "TIME_PERIOD_SEARCHER").equals("domain") ) searcher = new DomainSpecificTimePeriodSearcher();
@@ -342,59 +363,9 @@ public class Evidence {
 		else throw new RuntimeException("Not supported time period searcher: " + Defacto.DEFACTO_CONFIG.getStringSetting("settings", "global"));
 		
 		// from and to are equal
-		if ( this.model.getTimePeriod().isTimePoint() ) {
-
-			this.defactoTimePeriod = searcher.getTimePoint(this);
-			
-			// only to collect data for normalization
-			for ( Entry<String, Long> e : this.smallContextYearOccurrences.entrySet()) {
-				for (int i = 0; i < e.getValue(); i++ ) {
-					TimeUtil.allYears.addValue(e.getKey());
-					TimeUtil.allYearsAndTimePeriod.addValue(e.getKey());
-				}
-			}
-		}
+		if ( this.model.getTimePeriod().isTimePoint() ) this.defactoTimePeriod = searcher.getTimePoint(this);
 		// time periods spans multiple years
-		else {
-			
-			// this needs to be implemented
-			this.defactoTimePeriod = TimePeriodSearcher.findTimePeriod(this);
-			if ( this.defactoTimePeriod == null ) {
-				
-				Frequency freq = new Frequency();
-				
-				for ( Entry<String, Long> entry : this.mediumContextYearOccurrences.entrySet()) {
-					for (int i = 0; i < entry.getValue(); i++ ) {
-						freq.addValue(entry.getKey());
-						TimeUtil.allYearsAndTimePeriod.addValue(entry.getKey());
-					}
-				}
-				
-				int first = 0;
-				int second = 0;
-				
-//				System.out.println(this.model.getTimePeriod());
-				DescriptiveStatistics stats = new DescriptiveStatistics();
-				for ( Entry<Comparable<?>, Long> entry : freq.sortByValue() ) {
-					
-//					for (int i = 0; i < entry.getValue(); i++) stats.addValue(Integer.valueOf((String)entry.getKey()));
-//					System.out.println(entry.getKey() + ": " + entry.getValue());
-					
-					if (first == 0) {
-						first = Integer.valueOf((String)entry.getKey());
-						continue;
-					}
-					if (second == 0) {
-						second = Integer.valueOf((String)entry.getKey());
-						break;
-					}
-				}
-//				System.out.println(stats);
-//				first = (int) stats.getPercentile(50);
-//				second =  (int) stats.getPercentile(50);
-				this.defactoTimePeriod = new DefactoTimePeriod(Math.min(first, second), Math.max(first, second));
-			}
-		}
+		else this.defactoTimePeriod = searcher.getTimePeriod(this);
 		
 		if ( this.defactoTimePeriod == null ) this.defactoTimePeriod = new DefactoTimePeriod(0,0);
 	}

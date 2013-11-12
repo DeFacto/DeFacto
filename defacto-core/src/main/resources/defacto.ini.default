@@ -82,3 +82,7 @@ DISPLAY_WEBSITES_WITH_NO_PROOF = false
 RESOURCE_LABEL = http://www.w3.org/2000/01/rdf-schema#label
 ; training mode or demo mode (training generates arff files, demo mode outputs confidence scores)
 TRAINING_MODE = true
+; time period searcher: occurrence, global, domain
+TIME_PERIOD_SEARCHER = occurrence
+; tiny, small, medium, large
+context-size = tiny

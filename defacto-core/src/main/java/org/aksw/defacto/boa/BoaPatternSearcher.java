@@ -29,6 +29,7 @@ public class BoaPatternSearcher {
     private static HttpSolrServer deIndex;
     private static HttpSolrServer frIndex;
     private Logger logger = Logger.getLogger(BoaPatternSearcher.class);
+	private Map<String,QueryResponse> queryCache = new HashMap<>();
 
     public BoaPatternSearcher(){
     	
@@ -110,12 +111,17 @@ public class BoaPatternSearcher {
             query.addSortField("SUPPORT_NUMBER_OF_PAIRS_LEARNED_FROM", ORDER.desc);
             //query.addSortField("boa-score", ORDER.desc);
             if ( numberOfBoaPatterns > 0 ) query.setRows(numberOfBoaPatterns);
-            QueryResponse response = null;
-            if ( language.equals("en") ) response = enIndex.query(query);
-            else if ( language.equals("de") ) response = deIndex.query(query);
-            else if ( language.equals("fr") ) response = frIndex.query(query);
             
-            SolrDocumentList docList = response.getResults();
+            String key = propertyUri + numberOfBoaPatterns + language;
+            
+            if ( !this.queryCache.containsKey(key) ) {
+            	
+            	if ( language.equals("en") ) this.queryCache.put(key, enIndex.query(query));
+                else if ( language.equals("de") ) this.queryCache.put(key, deIndex.query(query));
+                else if ( language.equals("fr") ) this.queryCache.put(key, frIndex.query(query));
+            }
+            
+            SolrDocumentList docList = this.queryCache.get(key).getResults();
             
             // return the first list of types
             for (SolrDocument d : docList) {
