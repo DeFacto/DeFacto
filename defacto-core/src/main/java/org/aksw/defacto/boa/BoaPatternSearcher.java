@@ -114,6 +114,8 @@ public class BoaPatternSearcher {
             
             String key = propertyUri + numberOfBoaPatterns + language;
             
+            System.out.println(query);
+            
             if ( !this.queryCache.containsKey(key) ) {
             	
             	if ( language.equals("en") ) this.queryCache.put(key, enIndex.query(query));
@@ -170,20 +172,35 @@ public class BoaPatternSearcher {
     public static void main(String[] args) {
 
     	Defacto.init();
-        BoaPatternSearcher bps = new BoaPatternSearcher();
-        for (Pattern p : bps.getNaturalLanguageRepresentations("http://dbpedia.org/ontology/subsidiary", "en")) {
+        queryPatterns("http://dbpedia.org/ontology/award");
+//        queryPatterns("http://dbpedia.org/ontology/birthPlace");
+//        queryPatterns("http://dbpedia.org/ontology/deathPlace");
+//        queryPatterns("http://dbpedia.org/ontology/foundationPlace");
+//        queryPatterns("http://dbpedia.org/ontology/leaderName");
+//        queryPatterns("http://dbpedia.org/ontology/team");
+//        queryPatterns("http://dbpedia.org/ontology/author");
+//        queryPatterns("http://dbpedia.org/ontology/spouse");
+//        queryPatterns("http://dbpedia.org/ontology/starring");
+//        queryPatterns("http://dbpedia.org/ontology/subsidiary");
+    }
+
+	/**
+	 * @param bps
+	 */
+	private static void queryPatterns(String uri) {
+		
+		int nr = 20;
+		BoaPatternSearcher bps = new BoaPatternSearcher();
+		List<Pattern> sub = new ArrayList<>();
+        sub.addAll(bps.getNaturalLanguageRepresentations(uri, nr, "en"));
+        sub.addAll(bps.getNaturalLanguageRepresentations(uri, nr, "de"));
+        sub.addAll(bps.getNaturalLanguageRepresentations(uri, nr,  "fr"));
+        
+        System.out.println(uri);
+        for (Pattern p : sub) {
             
             System.out.println(p.naturalLanguageRepresentation);
         }
-        System.out.println("--------------------------------------------------------");
-		for (Pattern p : bps.getNaturalLanguageRepresentations("http://dbpedia.org/ontology/subsidiary", "de")) {
-		            
-            System.out.println(p.naturalLanguageRepresentation);
-        }
-		System.out.println("--------------------------------------------------------");
-		for (Pattern p : bps.getNaturalLanguageRepresentations("http://dbpedia.org/ontology/subsidiary", "fr")) {
-		    
-		    System.out.println(p.naturalLanguageRepresentation);
-		}
-    }
+        System.out.println();
+	}
 }

@@ -109,8 +109,8 @@ public class DefactoTimePeriodService {
             JSONObject result = new JSONObject();
             result.put("subject", subject);
             result.put("sLabel", StringUtils.join(slabels, ", "));
-            result.put("predicate", subject);
-            result.put("object", subject);
+            result.put("predicate", property);
+            result.put("object", object);
             result.put("oLabel", StringUtils.join(olabels, ", "));
             result.put("from", from == null ? "" : from);
             result.put("to", to == null ? "" : to);

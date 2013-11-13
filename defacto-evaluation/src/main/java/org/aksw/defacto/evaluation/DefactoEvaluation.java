@@ -16,6 +16,7 @@ import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.reader.DefactoModelReader;
 import org.aksw.defacto.search.time.PatternTimePeriodSearcher;
@@ -40,13 +41,12 @@ public class DefactoEvaluation {
 		
 		Defacto.init();
 		
-		generateArffFiles("mix");
+//		generateArffFiles("mix");
 		generateArffFiles("random");
 		generateArffFiles("domain");
 		generateArffFiles("property");
 		generateArffFiles("range");
 		generateArffFiles("domainrange");
-		
 	}
 
 	private static void generateArffFiles(String set) throws FileNotFoundException {
@@ -82,5 +82,8 @@ public class DefactoEvaluation {
 			Evidence evidence = Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
 			Defacto.writeEvidenceTrainingFiles("machinelearning/eval/" + set + ".arff");
 		}
+		
+		// reset the index thingy
+		AbstractEvidenceFeature.createInstances();
 	}
 }

@@ -10,7 +10,7 @@ import weka.core.Instances;
  */
 public abstract class AbstractEvidenceFeature implements EvidenceFeature {
 
-    public static FastVector attributes = new FastVector();
+    public static FastVector attributes;
     
     public static final Attribute PAGE_RANK_MAX                                = new Attribute("page_rank_max");
     public static final Attribute PAGE_RANK_SUM                                = new Attribute("page_rank_sum");
@@ -33,39 +33,42 @@ public abstract class AbstractEvidenceFeature implements EvidenceFeature {
     public static final Attribute GOODNESS 									   = new Attribute("goodness");
     
     public static Attribute CLASS                                              = new Attribute("clazz");
+    public static Instances provenance;
 
     static {
 
-      attributes.addElement(MODEL_NAME);
-      attributes.addElement(PAGE_RANK_MAX);
-      attributes.addElement(PAGE_RANK_SUM);
-      attributes.addElement(TOTAL_HIT_COUNT_FEATURE);
-      attributes.addElement(TOPIC_COVERAGE_SUM);
-      attributes.addElement(TOPIC_COVERAGE_MAX);
-      attributes.addElement(TOPIC_MAJORITY_WEB_SUM);
-      attributes.addElement(TOPIC_MAJORITY_WEB_MAX);
-      attributes.addElement(TOPIC_MAJORITY_SEARCH_RESULT_SUM);
-      attributes.addElement(TOPIC_MAJORITY_SEARCH_RESULT_MAX);
-      attributes.addElement(NUMBER_OF_PROOFS);
-      attributes.addElement(GOODNESS);
-      attributes.addElement(NUMBER_OF_CONFIRMING_PROOFS);
-//      attributes.addElement(NUMBER_OF_POSSIBLY_CONFIRMING_FACTS);
-//      attributes.addElement(NUMBER_OF_POSSIBLY_CONFIRMING_SITES);
-//      attributes.addElement(MAX_NUMBER_OF_POSSIBLY_CONFIRMING_FACT);
-      attributes.addElement(TOTAL_POSITIVES_EVIDENCE_SCORE);
-      attributes.addElement(TOTAL_NEGATIVES_EVIDENCE_SCORE);
-      attributes.addElement(DOMAIN_RANGE_CHECK);
-      FastVector clazz = new FastVector(2);
-      clazz.addElement("true");
-      clazz.addElement("false");
-      CLASS = new Attribute("class", clazz);
-      attributes.addElement(CLASS);
+    	createInstances();
     }
     
-    public static Instances provenance  = new Instances("defacto", attributes, 0);
-    
-    static {
-        
+    public static void createInstances(){
+    	
+    	attributes = new FastVector();
+    	attributes.addElement(MODEL_NAME);
+        attributes.addElement(PAGE_RANK_MAX);
+        attributes.addElement(PAGE_RANK_SUM);
+        attributes.addElement(TOTAL_HIT_COUNT_FEATURE);
+        attributes.addElement(TOPIC_COVERAGE_SUM);
+        attributes.addElement(TOPIC_COVERAGE_MAX);
+        attributes.addElement(TOPIC_MAJORITY_WEB_SUM);
+        attributes.addElement(TOPIC_MAJORITY_WEB_MAX);
+        attributes.addElement(TOPIC_MAJORITY_SEARCH_RESULT_SUM);
+        attributes.addElement(TOPIC_MAJORITY_SEARCH_RESULT_MAX);
+        attributes.addElement(NUMBER_OF_PROOFS);
+        attributes.addElement(GOODNESS);
+        attributes.addElement(NUMBER_OF_CONFIRMING_PROOFS);
+//        attributes.addElement(NUMBER_OF_POSSIBLY_CONFIRMING_FACTS);
+//        attributes.addElement(NUMBER_OF_POSSIBLY_CONFIRMING_SITES);
+//        attributes.addElement(MAX_NUMBER_OF_POSSIBLY_CONFIRMING_FACT);
+        attributes.addElement(TOTAL_POSITIVES_EVIDENCE_SCORE);
+        attributes.addElement(TOTAL_NEGATIVES_EVIDENCE_SCORE);
+        attributes.addElement(DOMAIN_RANGE_CHECK);
+        FastVector clazz = new FastVector(2);
+        clazz.addElement("true");
+        clazz.addElement("false");
+        CLASS = new Attribute("class", clazz);
+        attributes.addElement(CLASS);
+    	
+    	provenance = new Instances("defacto", attributes, 0);
         provenance.setClass(CLASS);
     }
 }
