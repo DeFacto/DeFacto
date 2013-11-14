@@ -3,10 +3,12 @@
  */
 package org.aksw.defacto.search.time;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.ml.feature.fact.FactScorer;
 
 import com.github.gerbsen.encoding.Encoder.Encoding;
 import com.github.gerbsen.file.BufferedFileReader;
@@ -33,7 +35,7 @@ public class TimeUtil {
 	
 	static {
 		
-//		Defacto.init();
+		Defacto.init();
 		readProofFreq("tiny");
 		readProofFreq("small");
 		readProofFreq("medium");
@@ -42,7 +44,9 @@ public class TimeUtil {
 	
 	private static void readProofFreq(String contextSize) {
 		
-		BufferedFileReader reader = new BufferedFileReader("/Users/gerb/Development/workspaces/experimental/defacto/mltemp/eval/freq/"+contextSize+".tsv", Encoding.UTF_8);
+		String path = new File(TimeUtil.class.getResource("/normalization/").getFile()).getAbsolutePath() + "/" + contextSize+".tsv";
+		BufferedFileReader reader = new BufferedFileReader(path, Encoding.UTF_8);
+		
 		String line = "";
 		while ((line =reader.readLine()) != null ) {
 			
