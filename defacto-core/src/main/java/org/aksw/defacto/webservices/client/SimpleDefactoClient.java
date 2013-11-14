@@ -58,7 +58,7 @@ public class SimpleDefactoClient {
 		
 		// start the service
 		JSONObject result = queryDefacto("http://dbpedia.org/resource/Albert_Einstein", "http://dbpedia.org/ontology/award", "http://dbpedia.org/resource/Nobel_Prize_in_Physics",
-				Arrays.asList("en", "de", "fr"), "1921", "1921", subjectLabels, objectLabels, altSubjectLabels, altObjectLabels);
+				Arrays.asList("en", "de", "fr"), "1921", "1921", "tiny", subjectLabels, objectLabels, altSubjectLabels, altObjectLabels);
 
 		writeData(result);
 	}
@@ -87,7 +87,7 @@ public class SimpleDefactoClient {
 	}
 
 	public static JSONObject queryDefacto(String subjectUri, String propertyUri, String objectUri, List<String> languages,
-									String from, String to,
+									String from, String to, String contextSize, 
 									Map<String,String> subjectLabels, Map<String,String> objectLabels, 
 									Map<String,Set<String>> altSubjectLabels, Map<String,Set<String>> altObjectLabels) 
 											throws UniformInterfaceException, ClientHandlerException, JSONException{
@@ -124,6 +124,9 @@ public class SimpleDefactoClient {
 		// languages
 		for (String lang : languages)
 			queryParams.add("language", lang);
+		
+		// context size: tiny, small, medium, large
+		queryParams.add("contextSize", contextSize);
 		
 		// time period
 			queryParams.add("from", from);

@@ -114,8 +114,6 @@ public class BoaPatternSearcher {
             
             String key = propertyUri + numberOfBoaPatterns + language;
             
-            System.out.println(query);
-            
             if ( !this.queryCache.containsKey(key) ) {
             	
             	if ( language.equals("en") ) this.queryCache.put(key, enIndex.query(query));

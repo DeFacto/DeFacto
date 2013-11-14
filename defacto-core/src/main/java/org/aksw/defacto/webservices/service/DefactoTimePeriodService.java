@@ -51,7 +51,8 @@ public class DefactoTimePeriodService {
             @QueryParam("p") String property,
             @QueryParam("from") String from,
             @QueryParam("to") String to,
-            @QueryParam("language") List<String> languages
+            @QueryParam("language") List<String> languages,
+            @QueryParam("contextSize") String contextSize
             ) {
     	
         DefactoServer.log.log(Level.INFO, "Processing <" + subject + ">, <" + property + ">, <" + object + ">");
@@ -61,6 +62,7 @@ public class DefactoTimePeriodService {
         	
             org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
             Defacto.init();
+            Defacto.DEFACTO_CONFIG.setStringSetting("settings", "context-size", contextSize);
             Model model = ModelFactory.createDefaultModel();
             
             // subj
