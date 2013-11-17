@@ -3,8 +3,10 @@
  */
 package org.aksw.defacto.search.engine;
 
+import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.cache.Cache;
+import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.cache.solr.Solr4SearchResultCache;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
@@ -27,12 +29,6 @@ public abstract class DefaultSearchEngine implements SearchEngine {
     @Override
     public SearchResult getSearchResults(MetaQuery query, Pattern pattern) {
 
-//    	if ( query.toString().contains("(") && query.toString().contains("") ) {
-//    		query.subjectLabel = query.subjectLabel.replaceAll("\\(.+?\\)", "").trim();
-//    		query.objectLabel = query.objectLabel.replaceAll("\\(.+?\\)", "").trim();
-//    		return query(query, pattern);
-//    	}
-    	
         if ( searchResultsCache.contains(query.toString()) ) {
             
             // search results will be identified by the string we used to search in search engine
@@ -43,4 +39,16 @@ public abstract class DefaultSearchEngine implements SearchEngine {
         }
         return query(query, pattern);
     }
+    
+    public static void main(String[] args) {
+		
+    	Defacto.init();
+    	
+    	Cache<SearchResult> searchResultsCache = new Solr4SearchResultCache();
+    	SearchResult result = searchResultsCache.getEntry(new MetaQuery("Philipp Lenard|-|?D? won the ?R?|-|Nobel Prize in Physics|-|en").toString());
+    	
+    	for ( WebSite site : result.getWebSites()) {
+    		System.out.println(site.getText());
+    	}
+	}
 }

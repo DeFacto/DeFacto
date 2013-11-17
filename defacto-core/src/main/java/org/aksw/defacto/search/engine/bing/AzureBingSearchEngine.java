@@ -51,16 +51,17 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
     
     public static void main(String[] args) {
         
-        MetaQuery query0 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Obama", "?D? is president of ?R?", "United States", "en"));
-        MetaQuery query  = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Montebelluna", "?R? Wii version of `` ?D?", "Procter & Gamble", "en"));
-        MetaQuery query1 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Gloria Estefan", "??? NONE ???", "Remember Me with Love", "en"));
-        MetaQuery query2 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Avram Hershko", "?D? is a component of ?R?", "United States Marine Corps", "en"));
+//        MetaQuery query0 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Obama", "?D? is president of ?R?", "United States", "en"));
+//        MetaQuery query  = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Montebelluna", "?R? Wii version of `` ?D?", "Procter & Gamble", "en"));
+//        MetaQuery query1 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Gloria Estefan", "??? NONE ???", "Remember Me with Love", "en"));
+//        MetaQuery query2 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Avram Hershko", "?D? is a component of ?R?", "United States Marine Corps", "en"));
         
         Defacto.init();
         
+        MetaQuery q = new MetaQuery("Philipp Lenard|-|?D? won the ?R?|-|Nobel Prize in Physics|-|en");
         AzureBingSearchEngine engine = new AzureBingSearchEngine();
         System.out.println(BING_API_KEY);
-        System.out.println(engine.query(query0, null).getTotalHitCount());
+        System.out.println(engine.query(q, null).getTotalHitCount());
 //        System.out.println(engine.query(query, null).getWebSites().size());
         
 //        URI uri;
@@ -127,6 +128,7 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
         }
         catch (Exception e) {
             
+        	e.printStackTrace();
             return new DefaultSearchResult(new ArrayList<WebSite>(), 0L, query, pattern, false);
         }
     }

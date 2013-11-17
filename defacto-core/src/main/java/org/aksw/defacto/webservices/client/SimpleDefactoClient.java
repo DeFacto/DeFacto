@@ -126,7 +126,7 @@ public class SimpleDefactoClient {
 			queryParams.add("language", lang);
 		
 		// context size: tiny, small, medium, large
-		queryParams.add("contextSize", contextSize);
+		queryParams.add("contextSize", "tiny");
 		
 		// time period
 			queryParams.add("from", from);

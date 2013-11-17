@@ -64,7 +64,10 @@ public class DefactoTimePeriodLearning {
 		
 		Defacto.init();
 		trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
-				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", "train-directory");
+				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory");
+		
+		System.out.println(startSingleConfigurationEvaluation("award", Arrays.asList("en", "fr", "de"),
+				Arrays.asList("award"), "domain", "frequency", "tiny"));
 		
 //		System.out.println(startSingleConfigurationEvaluation("point", Arrays.asList("en", "fr", "de"),
 //				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary"),
@@ -101,7 +104,7 @@ public class DefactoTimePeriodLearning {
 //				"global", "frequency", "tiny"));
 		
 //		startBestConfigurationEvaluation();
-		startEvaluation();
+//		startEvaluation();
 		
 //		System.out.println("IMPORTANT! Die Ergebnisse machen nur sinn wenn nur eine Konfiguration gewählt ist!");
 //		for ( DefactoModel model : wrongModels ){
@@ -137,7 +140,7 @@ public class DefactoTimePeriodLearning {
 		Defacto.DEFACTO_CONFIG.setStringSetting("settings", "TIME_PERIOD_SEARCHER", normalizer);
 		Defacto.DEFACTO_CONFIG.setStringSetting("settings", "periodSearchMethod", searchMethod);
 		Defacto.DEFACTO_CONFIG.setStringSetting("settings", "context-size", contextSize);
-		Collections.shuffle(models);
+//		Collections.shuffle(models);
 		
 		return learn(name, models, new ArrayList<Configuration>());
 	}
@@ -274,7 +277,7 @@ public class DefactoTimePeriodLearning {
 					for ( String periodSearchMethod : patternSearch ) {
 						Defacto.DEFACTO_CONFIG.setStringSetting("settings", "periodSearchMethod", periodSearchMethod);
 						
-						learn(name, models.subList(0, 5), configurations);
+						learn(name, models, configurations);
 					}
 				}
 			}
@@ -328,9 +331,22 @@ public class DefactoTimePeriodLearning {
 		for (int i = 0; i < models.size(); i++) {
 
 			DefactoModel model = models.get(i); 
+			
+//			System.out.println(model.getName());
+//			if ( !model.getName().contains("award_00007") && !model.getName().contains("award_00001") && !model.getName().contains("award_00003") && !model.getName().contains("award_00005") ) continue;
+//			if ( !model.getName().contains("award_00001") ) continue;
+			
 			Evidence evidence = Defacto.checkFact(model, TIME_DISTRIBUTION_ONLY.YES);
 //			createProofFrequency(evidence);
 			DefactoTimePeriod dtp = evidence.defactoTimePeriod;
+			
+			
+//			for( Entry<String, Long> entry : evidence.largeContextYearOccurrences.entrySet() ) {
+//				System.out.println(entry.getKey() + " : " + entry.getValue());
+//			}
+			
+//			System.out.println("Found:"+dtp);
+//			System.out.println("GS:   "+model.timePeriod);
 			
 			// correct year is in retrieved year set
 			if (evidence.getPreferedContext().containsKey(model.timePeriod.from + "")) isPossible++; 
@@ -341,7 +357,7 @@ public class DefactoTimePeriodLearning {
 				// get the index of the correct year in the retrieved year set
 				int hitIndex = getHitIndex(evidence.getPreferedContext(), model.timePeriod.from);
 					
-				// debug wrong facts
+//				// debug wrong facts
 //				if ( hitIndex > 1 )  {
 //					
 //					System.out.println("FROM: "+ model.timePeriod.from + " TO: " + model.timePeriod.to + " INDEX: " + hitIndex);
@@ -374,10 +390,10 @@ public class DefactoTimePeriodLearning {
 			
 			if ( results.fmeasure == 1 ) correct++;
 			else wrongModels.add(model);
-//			System.out.println(String.format(Locale.ENGLISH, "%s/%s total --> P: %.5f, R: %.5f, F: %.5f, MRR: %.5f", 
-//					i+1, models.size(), macroPrecision / (precisionCounter),
-//					macroRecall / (i + 1), macroFmeasure, meanReciprocalRank / meanReciprocalRankCounter)
-//					+  " current --> " + results);
+			System.out.println(String.format(Locale.ENGLISH, "%s/%s total --> P: %.5f, R: %.5f, F: %.5f, MRR: %.5f", 
+					i+1, models.size(), macroPrecision / (precisionCounter),
+					macroRecall / (i + 1), macroFmeasure, meanReciprocalRank / meanReciprocalRankCounter)
+					+  " current --> " + results);
 		}
 		
 		Configuration config = new Configuration(name, results);

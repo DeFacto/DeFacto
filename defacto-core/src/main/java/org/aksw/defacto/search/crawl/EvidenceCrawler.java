@@ -71,7 +71,7 @@ public class EvidenceCrawler {
     	
     	Evidence evidence = null;
     	
-//    	if ( !evidenceCache.containsKey(this.model) ) {
+    	if ( !evidenceCache.containsKey(this.model) ) {
     		
     		long start = System.currentTimeMillis();
         	LOGGER.info("Start getting search results");
@@ -98,14 +98,14 @@ public class EvidenceCrawler {
             for ( SearchResult result : searchResults ) 
                 evidence.addWebSites(result.getPattern(), result.getWebSites());
             
-//            evidenceCache.put(model, evidence);
-//    	}
-//    	evidence = evidenceCache.get(model);
-//    	
+            evidenceCache.put(model, evidence);
+    	}
+    	evidence = evidenceCache.get(model);
+    	
         // get the time frame or point
         evidence.calculateDefactoTimePeriod();
         
-//        long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         // save all the time we can get
         if ( Defacto.onlyTimes.equals(TIME_DISTRIBUTION_ONLY.NO) ) {
 
@@ -164,13 +164,9 @@ public class EvidenceCrawler {
         LOGGER.info("Starting to crawl/get from cache " + searchResultCallables.size() + " search results with " +
         		Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS") + " threads.");
         
-        // wait als long as the scoring needs, and score every website in parallel        
-//        ExecutorService executor = Executors.newFixedThreadPool(this.patternToQueries.size());
-        
-//        System.out.println("NUMBER_OF_SEARCH_RESULTS_THREADS: " + Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS"));
-        ExecutorService executor = Executors.newFixedThreadPool(Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS"));
         try {
-            
+        	
+        	ExecutorService executor = Executors.newFixedThreadPool(Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS"));
             for ( Future<SearchResult> result : executor.invokeAll(searchResultCallables)) {
 
                 results.add(result.get());
@@ -250,7 +246,7 @@ public class EvidenceCrawler {
         // prepare the crawlers for simultanous execution
         for ( SearchResult searchResult : searchResults)
             for ( WebSite site : searchResult.getWebSites() )
-//            	htmlCrawlers.add(new HtmlCrawlerCallable(site));
+            	htmlCrawlers.add(new HtmlCrawlerCallable(site));
 
         // nothing found. nothing to crawl
         if ( !htmlCrawlers.isEmpty() ) {
