@@ -8,8 +8,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -17,31 +15,21 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import static ch.lambdaj.Lambda.*;
-import static ch.lambdaj.Lambda.*;
-import static ch.lambdaj.function.matcher.HasArgumentWithValue.*;
-import static ch.lambdaj.function.matcher.HasNestedPropertyWithValue.*;
-import static java.util.Arrays.*;
-import static org.hamcrest.Matchers.*;
-
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.comp.FMeasureComparator;
 import org.aksw.defacto.evaluation.configuration.Configuration;
-import org.aksw.defacto.evaluation.configuration.TimePointConfiguration;
 import org.aksw.defacto.evaluation.measure.PrecisionRecallFMeasure;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.model.DefactoTimePeriod;
 import org.aksw.defacto.reader.DefactoModelReader;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.solr.common.util.Hash;
 
 import com.github.gerbsen.encoding.Encoder.Encoding;
 import com.github.gerbsen.file.BufferedFileWriter;
 import com.github.gerbsen.file.BufferedFileWriter.WRITER_WRITE_MODE;
 import com.github.gerbsen.math.Frequency;
-import com.github.gerbsen.time.TimeUtil;
 
 /**
  * @author Daniel Gerber <daniel.gerber@deinestadtsuchtdich.de>
