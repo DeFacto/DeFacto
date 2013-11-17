@@ -45,11 +45,11 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
 	@Override
 	public boolean contains(String identifier) {
 		
-//		SolrQuery query = new SolrQuery(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD + ":\"" + identifier + "\"").setRows(1);
-//        QueryResponse response = this.querySolrServer(query);
-//        SolrDocumentList docList = response.getResults();
-//        return docList == null ? false : docList.size() > 0 ? true : false;
-		return false;
+		SolrQuery query = new SolrQuery(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD + ":\"" + identifier + "\"").setRows(1);
+        QueryResponse response = this.querySolrServer(query);
+        SolrDocumentList docList = response.getResults();
+        return docList == null ? false : docList.size() > 0 ? true : false;
+//		return false;
 	}
 
 	@Override

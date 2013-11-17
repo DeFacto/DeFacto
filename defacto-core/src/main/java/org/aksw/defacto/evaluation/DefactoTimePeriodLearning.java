@@ -54,8 +54,8 @@ public class DefactoTimePeriodLearning {
 		trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
 				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory");
 		
-		System.out.println(startSingleConfigurationEvaluation("award", Arrays.asList("en", "fr", "de"),
-				Arrays.asList("award"), "domain", "frequency", "tiny"));
+//		System.out.println(startSingleConfigurationEvaluation("award", Arrays.asList("en", "fr", "de"),
+//				Arrays.asList("award"), "domain", "frequency", "tiny"));
 		
 //		System.out.println(startSingleConfigurationEvaluation("point", Arrays.asList("en", "fr", "de"),
 //				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary"),
@@ -81,9 +81,9 @@ public class DefactoTimePeriodLearning {
 //		System.out.println(startSingleConfigurationEvaluation("period", Arrays.asList("en", "fr", "de"),
 //				Arrays.asList("spouse", "nbateam", "leader"), "global", "frequency", "medium"));
 //		
-//		System.out.println(startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"),
-//				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"),
-//				"occurrence", "frequency", "tiny"));
+		System.out.println(startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"),
+				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"),
+				"occurrence", "frequency", "tiny"));
 //		System.out.println(startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"),
 //				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"),
 //				"domain", "frequency", "tiny"));
