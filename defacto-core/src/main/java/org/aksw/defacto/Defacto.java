@@ -201,6 +201,8 @@ public class Defacto {
      */
     private static void writeEvidenceTrainingDataFile(String filename) {
 
+    	System.out.println(DefactoConfig.DEFACTO_DATA_DIR + filename);
+    	
         BufferedFileWriter writer = new BufferedFileWriter(DefactoConfig.DEFACTO_DATA_DIR + filename, Encoding.UTF_8, WRITER_WRITE_MODE.OVERRIDE);
         writer.write(AbstractEvidenceFeature.provenance.toString());
         writer.close();
