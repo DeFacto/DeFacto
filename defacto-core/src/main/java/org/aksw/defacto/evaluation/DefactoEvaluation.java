@@ -59,17 +59,16 @@ public class DefactoEvaluation {
 		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/", true, languages));
 		
 		// mix contains date properties which will have there own evaluation
-//		if ( !set.equals("mix") )
-//			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/"+ set, false, languages));
-//		
-//		else {
-//			
-//			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/domain", false, languages));
-//			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/property", false, languages));
-//			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/range", false, languages));
-//			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/domainrange", false, languages));
-//			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/random", false, languages));
-//		}
+		if ( !set.equals("mix") )
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/"+ set, false, languages));
+		else {
+			
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/domain", false, languages));
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/property", false, languages));
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/range", false, languages));
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/domainrange", false, languages));
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/random", false, languages));
+		}
 		
 		// just to make preamtive tests in weka possible (same true false distribution) 
 //		Collections.shuffle(models);
