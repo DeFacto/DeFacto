@@ -5,11 +5,10 @@ package org.aksw.defacto.evaluation.generation;
 
 import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
-
-import com.github.gerbsen.encoding.Encoder.Encoding;
-import com.github.gerbsen.file.BufferedFileReader;
-import com.github.gerbsen.file.BufferedFileWriter;
-import com.github.gerbsen.file.BufferedFileWriter.WRITER_WRITE_MODE;
+import org.aksw.defacto.util.BufferedFileReader;
+import org.aksw.defacto.util.BufferedFileWriter;
+import org.aksw.defacto.util.BufferedFileWriter.WRITER_WRITE_MODE;
+import org.aksw.defacto.util.Encoder.Encoding;
 
 /**
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>

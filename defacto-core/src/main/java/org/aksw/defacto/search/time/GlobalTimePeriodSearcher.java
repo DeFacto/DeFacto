@@ -10,8 +10,6 @@ import java.util.Map.Entry;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoTimePeriod;
 
-import com.github.gerbsen.math.Frequency;
-
 public class GlobalTimePeriodSearcher implements DefactoTimePeriodSearcher {
 
 	@Override

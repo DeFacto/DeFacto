@@ -8,11 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.aksw.defacto.Defacto;
-import org.aksw.defacto.ml.feature.fact.FactScorer;
-
-import com.github.gerbsen.encoding.Encoder.Encoding;
-import com.github.gerbsen.file.BufferedFileReader;
-import com.github.gerbsen.math.Frequency;
+import org.aksw.defacto.util.BufferedFileReader;
+import org.aksw.defacto.util.Encoder.Encoding;
+import org.aksw.defacto.util.Frequency;
 
 /**
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>

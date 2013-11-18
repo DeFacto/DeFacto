@@ -69,6 +69,11 @@ public class Constants {
 				"tout", "trop", "très", "tu", "valeur", "voie", "voient", "vont", "votre", "vous", "vu", "ça", "étaient", "état", "étions", "été", "être");
 	}
 	
+	/**
+	 * Use this property to write new lines in files or stdouts
+	 */
+	public static final String NEW_LINE_SEPARATOR	= System.getProperty("line.separator");
+	
 	public enum LANGUAGE {
 		
 		en,

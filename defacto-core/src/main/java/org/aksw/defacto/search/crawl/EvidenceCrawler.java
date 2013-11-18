@@ -30,12 +30,11 @@ import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTermExtractor;
 import org.aksw.defacto.topic.frequency.Word;
+import org.aksw.defacto.util.Frequency;
 import org.aksw.defacto.util.ListUtil;
 import org.aksw.defacto.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.github.gerbsen.math.Frequency;
 
 import edu.stanford.nlp.util.StringUtils;
 

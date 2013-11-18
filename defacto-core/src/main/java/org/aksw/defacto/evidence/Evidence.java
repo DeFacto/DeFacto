@@ -25,9 +25,6 @@ import org.aksw.defacto.search.time.TimeUtil;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.VectorUtil;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
-
-import com.github.gerbsen.math.Frequency;
 
 import weka.core.Instance;
 

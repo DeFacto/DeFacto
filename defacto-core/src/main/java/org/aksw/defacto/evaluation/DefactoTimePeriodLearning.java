@@ -25,11 +25,11 @@ import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.model.DefactoTimePeriod;
 import org.aksw.defacto.reader.DefactoModelReader;
 import org.apache.commons.lang3.StringUtils;
-
-import com.github.gerbsen.encoding.Encoder.Encoding;
-import com.github.gerbsen.file.BufferedFileWriter;
-import com.github.gerbsen.file.BufferedFileWriter.WRITER_WRITE_MODE;
-import com.github.gerbsen.math.Frequency;
+import org.aksw.defacto.util.BufferedFileReader;
+import org.aksw.defacto.util.BufferedFileWriter;
+import org.aksw.defacto.util.BufferedFileWriter.WRITER_WRITE_MODE;
+import org.aksw.defacto.util.Encoder.Encoding;
+import org.aksw.defacto.util.Frequency;
 
 /**
  * @author Daniel Gerber <daniel.gerber@deinestadtsuchtdich.de>

@@ -40,7 +40,7 @@ public class DomainRangeCheckFeature extends AbstractEvidenceFeature {
 	        QueryExecutionFactory qef = new QueryExecutionFactoryHttp("http://dbpedia.org/sparql", "http://dbpedia.org");
 	        // Some boilerplace code which may get simpler soon
 	        long timeToLive = 150l * 60l * 60l * 1000l; 
-	        CacheCoreEx cacheBackend = CacheCoreH2.create("mldefacto", timeToLive, true);
+	        CacheCoreEx cacheBackend = CacheCoreH2.create("mldefacto", timeToLive, false);
 	        CacheEx cacheFrontend = new CacheExImpl(cacheBackend);
 
 	        qef = new QueryExecutionFactoryCacheEx(qef, cacheFrontend);

@@ -30,6 +30,9 @@ import org.aksw.defacto.search.crawl.EvidenceCrawler;
 import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.query.QueryGenerator;
+import org.aksw.defacto.util.BufferedFileWriter;
+import org.aksw.defacto.util.BufferedFileWriter.WRITER_WRITE_MODE;
+import org.aksw.defacto.util.Encoder.Encoding;
 import org.aksw.defacto.util.TimeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -38,10 +41,6 @@ import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.github.gerbsen.encoding.Encoder.Encoding;
-import com.github.gerbsen.file.BufferedFileWriter;
-import com.github.gerbsen.file.BufferedFileWriter.WRITER_WRITE_MODE;
 
 import weka.core.Instance;
 

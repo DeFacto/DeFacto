@@ -17,9 +17,9 @@ import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.model.DefactoTimePeriod;
+import org.aksw.defacto.util.Frequency;
 import org.apache.commons.lang3.StringUtils;
 
-import com.github.gerbsen.math.Frequency;
 
 /**
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>

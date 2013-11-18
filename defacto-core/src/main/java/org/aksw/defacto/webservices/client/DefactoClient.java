@@ -16,9 +16,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.github.gerbsen.encoding.Encoder.Encoding;
-import com.github.gerbsen.file.BufferedFileWriter;
-import com.github.gerbsen.file.BufferedFileWriter.WRITER_WRITE_MODE;
+import org.aksw.defacto.util.BufferedFileWriter;
+import org.aksw.defacto.util.BufferedFileWriter.WRITER_WRITE_MODE;
+import org.aksw.defacto.util.Encoder.Encoding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;

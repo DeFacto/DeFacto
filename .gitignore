@@ -27,3 +27,4 @@ freebase_links.nt
 logs
 log4j.properties
 defacto-evaluation/cache
+test.h2.db

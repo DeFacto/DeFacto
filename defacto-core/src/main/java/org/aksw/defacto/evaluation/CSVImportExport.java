@@ -15,10 +15,6 @@ import java.util.List;
 import rationals.converters.ToString;
 import au.com.bytecode.opencsv.CSVWriter;
 
-import com.github.gerbsen.encoding.Encoder.Encoding;
-import com.github.gerbsen.file.BufferedFileWriter;
-import com.github.gerbsen.file.BufferedFileWriter.WRITER_WRITE_MODE;
-
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;

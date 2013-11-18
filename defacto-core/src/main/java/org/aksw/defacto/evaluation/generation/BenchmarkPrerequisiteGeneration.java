@@ -16,6 +16,10 @@ import java.util.Set;
 
 import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.util.BufferedFileReader;
+import org.aksw.defacto.util.BufferedFileWriter;
+import org.aksw.defacto.util.BufferedFileWriter.WRITER_WRITE_MODE;
+import org.aksw.defacto.util.Encoder.Encoding;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import org.json.JSONArray;
@@ -26,10 +30,6 @@ import org.semanticweb.yars.nx.namespace.SKOS;
 import org.semanticweb.yars.nx.namespace.XSD;
 import org.semanticweb.yars.nx.parser.NxParser;
 
-import com.github.gerbsen.encoding.Encoder.Encoding;
-import com.github.gerbsen.file.BufferedFileReader;
-import com.github.gerbsen.file.BufferedFileWriter;
-import com.github.gerbsen.file.BufferedFileWriter.WRITER_WRITE_MODE;
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
