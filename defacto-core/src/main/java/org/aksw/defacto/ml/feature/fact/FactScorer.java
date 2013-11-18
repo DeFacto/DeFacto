@@ -71,8 +71,8 @@ public class FactScorer {
                 newInstance.deleteAttributeAt(24);
                 newInstance.deleteAttributeAt(24);
                 newInstance.deleteAttributeAt(24);
-                newInstance.deleteAttributeAt(25);
-                newInstance.deleteAttributeAt(25);
+//                newInstance.deleteAttributeAt(25);
+//                newInstance.deleteAttributeAt(25);
                 
                 // insert all the words which occur
                 for ( int i = newInstance.numAttributes() ; i < instancesWithStringVector.numAttributes(); i++) {
@@ -86,7 +86,7 @@ public class FactScorer {
                 
                 proof.setScore(this.classifier.distributionForInstance(newInstance)[0]);
 //                proof.setScore(1D);
-//                System.out.println(proof.getScore() + " - " + this.classifier.classifyInstance(newInstance) + " -" + proof.getTinyContext());
+                System.out.println(proof.getScore() + " -> " + this.classifier.classifyInstance(newInstance) + " -> " + proof.getTinyContext());
             }
             catch (Exception e) {
 

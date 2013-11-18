@@ -41,10 +41,10 @@ public class DefactoEvaluation {
 		
 		Defacto.init();
 		
-		generateArffFiles("mix");
+//		generateArffFiles("mix");
 //		generateArffFiles("random");
 //		generateArffFiles("domain");
-//		generateArffFiles("property");
+		generateArffFiles("property");
 //		generateArffFiles("range");
 //		generateArffFiles("domainrange");
 	}
@@ -53,7 +53,7 @@ public class DefactoEvaluation {
 		
 		List<String> languages = Arrays.asList("de", "fr", "en");
 		String trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
-				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory");
+				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", "train-directory");
 		
 		List<DefactoModel> models = new ArrayList<>();//
 		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/", true, languages));
@@ -78,8 +78,9 @@ public class DefactoEvaluation {
 			
 			LOGGER.info("Validating fact ("+ (i + 1) +"): " + models.get(i));
 			System.out.println(String.format("Validation-Set: %s\tTask: %04d of %04d", set, i+1, models.size()));
-			Evidence evidence = Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.YES);
-			Defacto.writeEvidenceTrainingFiles("machinelearning/eval/" + set + ".arff");
+			Evidence evidence = Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
+			Defacto.writeEvidenceTrainingFiles(
+					Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + set + ".arff");
 		}
 		
 		// reset the index thingy
