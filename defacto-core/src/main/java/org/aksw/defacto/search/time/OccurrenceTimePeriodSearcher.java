@@ -7,7 +7,6 @@ import org.aksw.defacto.Defacto;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoTimePeriod;
 import org.aksw.defacto.util.Frequency;
-import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
 public class OccurrenceTimePeriodSearcher implements DefactoTimePeriodSearcher {
 
