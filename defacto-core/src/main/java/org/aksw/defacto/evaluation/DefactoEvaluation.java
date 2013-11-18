@@ -40,13 +40,13 @@ public class DefactoEvaluation {
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		Defacto.init();
-		
-//		generateArffFiles("mix", args[0]);
-//		generateArffFiles("random", args[0]);
-//		generateArffFiles("domain", args[0]);
+
 		generateArffFiles("property", args[0]);
-//		generateArffFiles("range", args[0]);
-//		generateArffFiles("domainrange", args[0]);
+		generateArffFiles("mix", args[0]);
+		generateArffFiles("random", args[0]);
+		generateArffFiles("domain", args[0]);
+		generateArffFiles("range", args[0]);
+		generateArffFiles("domainrange", args[0]);
 	}
 
 	private static void generateArffFiles(String set, String testOrTrain) throws FileNotFoundException {
