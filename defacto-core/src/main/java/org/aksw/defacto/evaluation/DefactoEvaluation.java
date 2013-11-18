@@ -41,19 +41,19 @@ public class DefactoEvaluation {
 		
 		Defacto.init();
 		
-//		generateArffFiles("mix");
-//		generateArffFiles("random");
-//		generateArffFiles("domain");
-		generateArffFiles("property");
-//		generateArffFiles("range");
-//		generateArffFiles("domainrange");
+//		generateArffFiles("mix", args[0]);
+//		generateArffFiles("random", args[0]);
+//		generateArffFiles("domain", args[0]);
+		generateArffFiles("property", args[0]);
+//		generateArffFiles("range", args[0]);
+//		generateArffFiles("domainrange", args[0]);
 	}
 
-	private static void generateArffFiles(String set) throws FileNotFoundException {
+	private static void generateArffFiles(String set, String testOrTrain) throws FileNotFoundException {
 		
 		List<String> languages = Arrays.asList("de", "fr", "en");
 		String trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
-				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", "train-directory");
+				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", testOrTrain + "-directory");
 		
 		List<DefactoModel> models = new ArrayList<>();//
 		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/", true, languages));
@@ -80,7 +80,7 @@ public class DefactoEvaluation {
 			System.out.println(String.format("Validation-Set: %s\tTask: %04d of %04d", set, i+1, models.size()));
 			Evidence evidence = Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
 			Defacto.writeEvidenceTrainingFiles(
-					Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + set + ".arff");
+					Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
 		}
 		
 		// reset the index thingy
