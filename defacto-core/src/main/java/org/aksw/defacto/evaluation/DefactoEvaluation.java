@@ -71,7 +71,7 @@ public class DefactoEvaluation {
 		}
 		
 		// just to make preamtive tests in weka possible (same true false distribution) 
-//		Collections.shuffle(models);
+		Collections.shuffle(models);
 		LOGGER.info("Starting Defacto for " + models.size() + " facts for set: " + set);
 		
 		for ( int i = 0; i < models.size() ; i++ ) {
