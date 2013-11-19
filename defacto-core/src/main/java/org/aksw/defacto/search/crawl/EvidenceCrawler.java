@@ -70,7 +70,7 @@ public class EvidenceCrawler {
     	
     	Evidence evidence = null;
     	
-    	if ( !evidenceCache.containsKey(this.model) ) {
+//    	if ( !evidenceCache.containsKey(this.model) ) {
     		
     		long start = System.currentTimeMillis();
         	LOGGER.info("Start getting search results");
@@ -97,14 +97,14 @@ public class EvidenceCrawler {
             for ( SearchResult result : searchResults ) 
                 evidence.addWebSites(result.getPattern(), result.getWebSites());
             
-            evidenceCache.put(model, evidence);
-    	}
-    	evidence = evidenceCache.get(model);
+//            evidenceCache.put(model, evidence);
+//    	}
+//    	evidence = evidenceCache.get(model);
     	
         // get the time frame or point
         evidence.calculateDefactoTimePeriod();
         
-        long start = System.currentTimeMillis();
+//        long start = System.currentTimeMillis();
         // save all the time we can get
         if ( Defacto.onlyTimes.equals(TIME_DISTRIBUTION_ONLY.NO) ) {
 
