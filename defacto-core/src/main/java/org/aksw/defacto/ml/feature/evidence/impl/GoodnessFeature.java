@@ -24,7 +24,7 @@ import java.sql.SQLException;
 public class GoodnessFeature extends AbstractEvidenceFeature {
 
     private static DatabaseBackedSPARQLEndpointMetrics metric = null;
-	private static SparqlEndpoint endpoint = SparqlEndpoint.getEndpointDBpediaLiveAKSW();
+	private static SparqlEndpoint endpoint = SparqlEndpoint.getEndpointDBpediaLiveOpenLink();
 	
 	static {
 		
