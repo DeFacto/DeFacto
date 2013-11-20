@@ -99,6 +99,13 @@ public class DefactoResource {
 			RDFNode rdfNode = (RDFNode) sameAsIterator.next();
 			
 			this.owlSameAs.add(rdfNode.asResource());
+			
+			NodeIterator listObjectsOfProperty = model.listObjectsOfProperty(rdfNode.asResource(), Constants.SKOS_ALT_LABEL);
+			while ( listObjectsOfProperty.hasNext() ) {
+				
+				RDFNode node = listObjectsOfProperty.next();
+				this.altLabels.get(node.asLiteral().getLanguage()).add(node.asLiteral().getLexicalForm());
+			}
 		}
 	}
 

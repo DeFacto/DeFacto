@@ -6,6 +6,7 @@ package org.aksw.defacto.reader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.ResIterator;
 
 /**
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
@@ -70,11 +72,32 @@ public class DefactoModelReader {
 		
 		Model model = ModelFactory.createDefaultModel();
         model.read(new FileReader(pathToModel), "", "TTL");
-		
+        
+//        ResIterator listSubjects = model.listSubjects();
+//        int subjects = 0;
+//        
+//        while ( listSubjects.hasNext() ) {
+//        	listSubjects.next();
+//			subjects++;
+//        }
+        
         String absolutePath = new File(pathToModel).getAbsolutePath();
         absolutePath = absolutePath.replace("/Users/gerb/Development/workspaces/experimental/defacto/mltemp/FactBench/v1/", "");
         
-		return new DefactoModel(model, absolutePath, isCorrect, languages);
+        DefactoModel defactoModel = new DefactoModel(model, absolutePath, isCorrect, languages);
+        
+//        if ( subjects == 4) {
+//        	
+//        	System.out.println(defactoModel);
+//        	try {
+//    			defactoModel.write("/Users/gerb/", "model.owl");
+//    		} catch (IOException e) {
+//    			// TODO Auto-generated catch block
+//    			e.printStackTrace();
+//    		}
+//        }
+        
+		return defactoModel;
 	}
 	
 	/**
@@ -144,11 +167,6 @@ public class DefactoModelReader {
 				models.add(readModel(file.getAbsolutePath(), isCorrect, languages));
 			}
 		}
-		
-//		for ( File file : new File(pathToModels).listFiles()) {
-//			
-//			
-//		}
 		
 		return models;
 	}
