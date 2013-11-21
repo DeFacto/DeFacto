@@ -41,8 +41,8 @@ public class DefactoEvaluation {
 		
 		Defacto.init();
 
-		generateArffFiles("property", args[0]);
-		generateArffFiles("mix", args[0]);
+//		generateArffFiles("property", args[0]);
+//		generateArffFiles("mix", args[0]);
 		generateArffFiles("random", args[0]);
 		generateArffFiles("domain", args[0]);
 		generateArffFiles("range", args[0]);
@@ -56,7 +56,7 @@ public class DefactoEvaluation {
 				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", testOrTrain + "-directory");
 		
 		List<DefactoModel> models = new ArrayList<>();//
-//		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/", true, languages));
+		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/", true, languages));
 		
 		// mix contains date properties which will have there own evaluation
 		if ( !set.equals("mix") )
@@ -76,11 +76,13 @@ public class DefactoEvaluation {
 		
 		for ( int i = 0; i < models.size() ; i++ ) {
 			
+			long start = System.currentTimeMillis();
 			LOGGER.info("Validating fact ("+ (i + 1) +"): " + models.get(i));
-			System.out.println(String.format("Validation-Set: %s\tTask: %04d of %04d", set, i+1, models.size()));
-			Evidence evidence = Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.YES);
-//			Defacto.writeEvidenceTrainingFiles(
-//					Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
+			System.out.print(String.format("Validation-Set: %s\tTask: %04d of %04d", set, i+1, models.size()));
+			Evidence evidence = Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
+			Defacto.writeEvidenceTrainingFiles(
+					Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
+			System.out.println(" Time: " + (System.currentTimeMillis() - start));
 		}
 		
 		// reset the index thingy
