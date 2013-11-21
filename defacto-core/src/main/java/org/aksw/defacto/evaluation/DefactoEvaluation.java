@@ -56,7 +56,7 @@ public class DefactoEvaluation {
 				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", testOrTrain + "-directory");
 		
 		List<DefactoModel> models = new ArrayList<>();//
-		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/", true, languages));
+//		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/", true, languages));
 		
 		// mix contains date properties which will have there own evaluation
 		if ( !set.equals("mix") )
@@ -78,9 +78,9 @@ public class DefactoEvaluation {
 			
 			LOGGER.info("Validating fact ("+ (i + 1) +"): " + models.get(i));
 			System.out.println(String.format("Validation-Set: %s\tTask: %04d of %04d", set, i+1, models.size()));
-			Evidence evidence = Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
-			Defacto.writeEvidenceTrainingFiles(
-					Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
+			Evidence evidence = Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.YES);
+//			Defacto.writeEvidenceTrainingFiles(
+//					Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
 		}
 		
 		// reset the index thingy
