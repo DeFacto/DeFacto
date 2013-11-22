@@ -42,7 +42,7 @@ public class DefactoEvaluation {
 		Defacto.init();
 
 //		generateArffFiles("property", args[0]);
-//		generateArffFiles("mix", args[0]);
+		generateArffFiles("mix", args[0]);
 		generateArffFiles("random", args[0]);
 		generateArffFiles("domain", args[0]);
 		generateArffFiles("range", args[0]);
