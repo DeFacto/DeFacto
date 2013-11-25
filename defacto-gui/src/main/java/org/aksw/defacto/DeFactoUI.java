@@ -11,11 +11,13 @@ import java.util.Map;
 
 import org.aksw.commons.collections.Pair;
 import org.aksw.defacto.config.DefactoConfig;
+import org.aksw.defacto.data.SupportedRelationsContainer;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.util.DummyData;
 import org.aksw.defacto.widget.ProgressDialog;
 import org.aksw.defacto.widget.ResultsPanel;
+import org.aksw.defacto.widget.SearchResourceDialog;
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
@@ -75,7 +77,7 @@ public class DeFactoUI extends UI
         main.setSizeFull();
         main.setSpacing(true);
 //        main.addStyleName("defacto");
-//        main.addStyleName("main-view");
+        main.addStyleName("main-view");
         layout.addComponent(main);
         //add triple input form to main panel in center top
         Component tripleInput = generateTripleInputForm();
@@ -125,6 +127,8 @@ public class DeFactoUI extends UI
     private Component generateTripleInputForm(){
     	HorizontalLayout l = new HorizontalLayout();
     	l.setWidth("100%");
+    	l.addStyleName("triple-input");
+    	l.setMargin(true);
     	l.setSpacing(true);
     	
     	//subject
@@ -135,7 +139,7 @@ public class DeFactoUI extends UI
         	@Override
         	public void changeVariables(Object source, Map<String, Object> variables) {
         		String filter = (String) variables.get("filter");
-        		if(filter != null && filter.length() > 1){
+        		if(filter != null && filter.length() > 2){
         			List<String> suggestions = autoSuggest(filter);
         			removeAllItems();
         			for (String s : suggestions) {
@@ -160,8 +164,13 @@ public class DeFactoUI extends UI
         //predicate
         predicateBox = new ComboBox("Predicate");
         predicateBox.setWidth("100%");
-        predicateBox.setInputPrompt("Please enter the predicate of the triple");
+        predicateBox.setInputPrompt("Please choose the predicate of the triple");
         predicateBox.setImmediate(true);
+        predicateBox.setPageLength(12);
+      //add supported predefined relations
+        predicateBox.setContainerDataSource(new SupportedRelationsContainer());
+        predicateBox.setItemCaptionPropertyId("label");
+        predicateBox.setNewItemsAllowed(false);
         predicateBox.addValueChangeListener(new ValueChangeListener() {
 			
 			@Override
@@ -170,6 +179,7 @@ public class DeFactoUI extends UI
 			}
 		});
         l.addComponent(predicateBox);
+        
         
         //object
         objectBox = new ComboBox("Object");
@@ -190,6 +200,9 @@ public class DeFactoUI extends UI
         validateButton.setDescription("Click to start the validation of the triple.");
         validateButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(ClickEvent event) {
+            	SearchResourceDialog d = new SearchResourceDialog();
+            	d.setModal(true);
+//            	UI.getCurrent().addWindow(d);
                 onValidate();
             }
         });
@@ -259,6 +272,10 @@ public class DeFactoUI extends UI
     	return l;
     }
     
+    private void loadSupportedRelations(){
+    	
+    }
+    
     /**
      * Run validation of the given triple.
      * @param triple
@@ -266,10 +283,15 @@ public class DeFactoUI extends UI
     private void onValidate(){
     	final ProgressDialog dialog = new ProgressDialog("Validating...");
     	addWindow(dialog);
+    	
+    	String subjectURI = (String) subjectBox.getValue();
+    	String predicateURI = (String) subjectBox.getItem(subjectBox.getValue()).getItemProperty("uri").getValue();
+    	String objectURI = (String) objectBox.getValue();
+    	
     	final Triple triple = new Triple(
-    			NodeFactory.createURI((String) subjectBox.getValue()), 
-    			NodeFactory.createURI((String) predicateBox.getValue()), 
-    			NodeFactory.createURI((String) objectBox.getValue()));
+    			NodeFactory.createURI(subjectURI), 
+    			NodeFactory.createURI(predicateURI), 
+    			NodeFactory.createURI(objectURI));
     	
     	new Thread(new Runnable() {
 			
@@ -277,7 +299,7 @@ public class DeFactoUI extends UI
 			public void run() {
 				
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -322,6 +344,20 @@ public class DeFactoUI extends UI
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    	
+//    	SolrQuery parameters = new SolrQuery();
+//    	parameters.set("q", prefix);
+//    	parameters.setRequestHandler("ac");
+//    	parameters.setRows(20);
+//    	try {
+//			QueryResponse response = solr.query(parameters);
+//			SolrDocumentList list = response.getResults();
+//			for (SolrDocument doc : list) {
+//				suggestions.add((String) doc.getFieldValue("uri"));
+//			}
+//		} catch (SolrServerException e) {
+//			e.printStackTrace();
+//		}
     	return suggestions;
     }
 }

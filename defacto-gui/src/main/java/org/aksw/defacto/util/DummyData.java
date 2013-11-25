@@ -12,6 +12,7 @@ import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.model.DefactoModel;
+import org.aksw.defacto.model.DefactoTimePeriod;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.topic.frequency.Word;
 
@@ -61,10 +62,12 @@ public class DummyData {
     	Pattern pattern = new Pattern("actor born in ", "en");
     	Evidence evidence = new Evidence(model, 20l, Collections.singleton(pattern));
     	evidence.setDeFactoScore(0.32);
+    	evidence.defactoTimePeriod = new DefactoTimePeriod(1920, 1980);
         
     	for(int i = 0; i < size; i++){
-    		WebSite webSite = new WebSite(new MetaQuery(subjectLabel, propertyLabel, objectLabel, language, Lists.<Word>newArrayList()), "http://en.wikipedia.org/wiki/Brad_Pitt" + i);
+    		WebSite webSite = new WebSite(new MetaQuery(subjectLabel, propertyLabel, objectLabel, language, Lists.<Word>newArrayList()), "http://www.lonelyplanet.com/germany/baden-wurttemberg/ulm/sights" + i);
         	webSite.setTitle("Test page" + i);
+        	webSite.setText("fiendishly funny fountain dedicated to Albert Einstein, who was born in Ulm but left aged one year. The nearby health administration building, at Zeughaus 14");
         	webSite.setScore(0.63);
         	webSite.setPageRank(5);
         	webSite.setPageRankScore(0.73);

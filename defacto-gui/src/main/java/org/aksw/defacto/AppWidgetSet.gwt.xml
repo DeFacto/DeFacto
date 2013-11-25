@@ -46,4 +46,6 @@
     <inherits name="com.vaadin.terminal.gwt.DefaultWidgetSet" />
 
     <inherits name="org.dussan.vaadin.dcharts.DchartsWidgetset" />
+
+    
 </module>

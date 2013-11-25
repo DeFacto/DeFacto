@@ -4833,3 +4833,12 @@ body .defacto.v-app .v-app-loading {
 .defacto .edit-dashboard .v-formlayout .v-formlayout-captioncell {
 	vertical-align: middle;
 }
+
+.defacto .crosshair {
+	cursor:crosshair;
+}
+
+.defacto .line-separator{
+	height:1px;
+	border-bottom:2px solid #918888;
+}
