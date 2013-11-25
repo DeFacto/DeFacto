@@ -82,20 +82,20 @@ public class DefactoEvaluation {
 		LOGGER.info("Starting Defacto for " + models.size() + " facts for set: " + set);
 		System.out.println("Starting Defacto for " + models.size() + " facts for set: " + set);
 		
-//		for ( int i = 0; i < models.size() ; i++ ) {
-//			
-//			long start = System.currentTimeMillis();
-//			LOGGER.info("Validating fact ("+ (i + 1) +"): " + models.get(i));
-//			System.out.print(String.format("Validation-Set: %s\tTask: %04d of %04d", set, i+1, models.size()));
-//			Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
-//			if ( i % 10 == 0 ) Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
-//			Defacto.writeEvidenceTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
-//			System.out.println(" Time: " + (System.currentTimeMillis() - start));
-//		}
-//		// write the last ones
-//		Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
-//		
-//		// reset the index thingy
-//		AbstractEvidenceFeature.createInstances();
+		for ( int i = 0; i < models.size() ; i++ ) {
+			
+			long start = System.currentTimeMillis();
+			LOGGER.info("Validating fact ("+ (i + 1) +"): " + models.get(i));
+			System.out.print(String.format("Validation-Set: %s\tTask: %04d of %04d", set, i+1, models.size()));
+			Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
+			if ( i % 10 == 0 ) Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
+			Defacto.writeEvidenceTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
+			System.out.println(" Time: " + (System.currentTimeMillis() - start));
+		}
+		// write the last ones
+		Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
+		
+		// reset the index thingy
+		AbstractEvidenceFeature.createInstances();
 	}
 }
