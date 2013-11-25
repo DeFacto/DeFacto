@@ -83,6 +83,7 @@ public class DefactoModelReader {
         
         String absolutePath = new File(pathToModel).getAbsolutePath();
         absolutePath = absolutePath.replace("/Users/gerb/Development/workspaces/experimental/defacto/mltemp/FactBench/v1/", "");
+        absolutePath = absolutePath.replace("/home/dgerber/data/defacto/factbench_v1/data/v1/", "");
         
         DefactoModel defactoModel = new DefactoModel(model, absolutePath, isCorrect, languages);
         

@@ -62,11 +62,12 @@ public class FactScorer {
      */
     public void scoreEvidence(Evidence evidence) {
 
+    	Instances instancesWithStringVector = new Instances(trainingInstances);
+        instancesWithStringVector.setClassIndex(26);
+    	
         for ( ComplexProof proof : evidence.getComplexProofs() ) {
+        	
             try {
-                
-                Instances instancesWithStringVector = new Instances(trainingInstances);
-                instancesWithStringVector.setClassIndex(26);
                 
                 // create new instance and delete debugging features
                 Instance newInstance = new Instance(proof.getFeatures());
@@ -79,7 +80,7 @@ public class FactScorer {
                 // insert all the words which occur
                 for ( int i = 26 + 1 ; i < instancesWithStringVector.numAttributes(); i++) {
                     
-                	List<String> parts = new ArrayList<>(Arrays.asList(proof.getTinyContext().split(" ")));
+                	List<String> parts = Arrays.asList(proof.getTinyContext().split(" "));
                     newInstance.insertAttributeAt(i);
                     Attribute attribute = instancesWithStringVector.attribute(i);
                     newInstance.setValue(attribute, parts.contains(attribute.name()) ? 1D : 0D);
@@ -89,6 +90,9 @@ public class FactScorer {
                 
                 proof.setScore(this.classifier.distributionForInstance(newInstance)[0]);
 //                System.out.println(proof.getScore() + " -> " + this.classifier.classifyInstance(newInstance) + " -> " + proof.getTinyContext());
+                
+                // remove the new instance again
+                instancesWithStringVector.delete();
             }
             catch (Exception e) {
 
