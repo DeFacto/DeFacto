@@ -44,6 +44,7 @@ public class DefactoEvaluation {
 
 		for ( String trainOrTest :  args) {
 			
+			generateArffFiles("correct",	trainOrTest);
 			generateArffFiles("property",	trainOrTest);
 			generateArffFiles("mix",		trainOrTest);
 			generateArffFiles("random", 	trainOrTest);
@@ -60,13 +61,15 @@ public class DefactoEvaluation {
 				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", testOrTrain + "-directory");
 		
 		List<DefactoModel> models = new ArrayList<>();//
-		models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/", true, languages));
 		
 		// mix contains date properties which will have there own evaluation
-		if ( !set.equals("mix") )
+		if ( !set.equals("mix") && !set.equals("correct") )
 			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/"+ set, false, languages));
-		else {
+		else if ( set.equals("correct") ) {
 			
+			models.addAll(DefactoModelReader.readModels(trainDirectory + "correct/", true, languages));
+		}
+		else {
 			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/domain", false, languages));
 			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/property", false, languages));
 			models.addAll(DefactoModelReader.readModels(trainDirectory + "wrong/mix/range", false, languages));
@@ -77,21 +80,22 @@ public class DefactoEvaluation {
 		// just to make preamtive tests in weka possible (same true false distribution) 
 		Collections.shuffle(models, new Random(100));
 		LOGGER.info("Starting Defacto for " + models.size() + " facts for set: " + set);
+		System.out.println("Starting Defacto for " + models.size() + " facts for set: " + set);
 		
-		for ( int i = 0; i < models.size() ; i++ ) {
-			
-			long start = System.currentTimeMillis();
-			LOGGER.info("Validating fact ("+ (i + 1) +"): " + models.get(i));
-			System.out.print(String.format("Validation-Set: %s\tTask: %04d of %04d", set, i+1, models.size()));
-			Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
-			if ( i % 10 == 0 ) Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
-			Defacto.writeEvidenceTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
-			System.out.println(" Time: " + (System.currentTimeMillis() - start));
-		}
-		// write the last ones
-		Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
-		
-		// reset the index thingy
-		AbstractEvidenceFeature.createInstances();
+//		for ( int i = 0; i < models.size() ; i++ ) {
+//			
+//			long start = System.currentTimeMillis();
+//			LOGGER.info("Validating fact ("+ (i + 1) +"): " + models.get(i));
+//			System.out.print(String.format("Validation-Set: %s\tTask: %04d of %04d", set, i+1, models.size()));
+//			Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
+//			if ( i % 10 == 0 ) Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
+//			Defacto.writeEvidenceTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
+//			System.out.println(" Time: " + (System.currentTimeMillis() - start));
+//		}
+//		// write the last ones
+//		Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
+//		
+//		// reset the index thingy
+//		AbstractEvidenceFeature.createInstances();
 	}
 }
