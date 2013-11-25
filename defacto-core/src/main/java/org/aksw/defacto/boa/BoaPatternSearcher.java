@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -171,15 +172,24 @@ public class BoaPatternSearcher {
 
     	Defacto.init();
         queryPatterns("http://dbpedia.org/ontology/award");
-//        queryPatterns("http://dbpedia.org/ontology/birthPlace");
-//        queryPatterns("http://dbpedia.org/ontology/deathPlace");
-//        queryPatterns("http://dbpedia.org/ontology/foundationPlace");
-//        queryPatterns("http://dbpedia.org/ontology/leaderName");
-//        queryPatterns("http://dbpedia.org/ontology/team");
-//        queryPatterns("http://dbpedia.org/ontology/author");
-//        queryPatterns("http://dbpedia.org/ontology/spouse");
-//        queryPatterns("http://dbpedia.org/ontology/starring");
-//        queryPatterns("http://dbpedia.org/ontology/subsidiary");
+        System.out.println("--------------");
+        queryPatterns("http://dbpedia.org/ontology/birthPlace");
+        System.out.println("--------------");
+        queryPatterns("http://dbpedia.org/ontology/deathPlace");
+        System.out.println("--------------");
+        queryPatterns("http://dbpedia.org/ontology/foundationPlace");
+        System.out.println("--------------");
+        queryPatterns("http://dbpedia.org/ontology/leaderName");
+        System.out.println("--------------");
+        queryPatterns("http://dbpedia.org/ontology/team");
+        System.out.println("--------------");
+        queryPatterns("http://dbpedia.org/ontology/author");
+        System.out.println("--------------");
+        queryPatterns("http://dbpedia.org/ontology/spouse");
+        System.out.println("--------------");
+        queryPatterns("http://dbpedia.org/ontology/starring");
+        System.out.println("--------------");
+        queryPatterns("http://dbpedia.org/ontology/subsidiary");
     }
 
 	/**
@@ -195,9 +205,11 @@ public class BoaPatternSearcher {
         sub.addAll(bps.getNaturalLanguageRepresentations(uri, nr,  "fr"));
         
         System.out.println(uri);
-        for (Pattern p : sub) {
-            
-            System.out.println(p.naturalLanguageRepresentation);
+        Iterator<Pattern> iterator = sub.iterator();
+        while ( iterator.hasNext()) {
+			Pattern pattern = iterator.next();
+			
+            System.out.println(pattern.naturalLanguageRepresentation + " --- " + pattern.normalize());
         }
         System.out.println();
 	}

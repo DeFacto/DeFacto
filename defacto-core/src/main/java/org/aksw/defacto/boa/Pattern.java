@@ -1,8 +1,11 @@
 package org.aksw.defacto.boa;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -86,6 +89,30 @@ public class Pattern {
     	}
     	
         return this.normalizedPattern;
+    }
+    
+    public String getNormalized() {
+        
+    	String s = this.naturalLanguageRepresentationNormalized;
+    	
+    		if ( s.isEmpty() ) {
+                
+                s = 
+                            naturalLanguageRepresentationWithoutVariables.
+                            replaceAll(",", "").replace("`", "").replace(" 's", "'s").replaceAll("  ", " ").//replaceAll("'[^s]", "").
+                            replaceAll("-LRB-", "").replaceAll("-RRB-", "").replaceAll("[0-9]{4}", "").trim();
+                // ensure that we match the pattern and nothing more
+                
+                if ( s.equals("'s") )
+                    s = s + " ";
+                else
+                    s = " " + s + " ";
+            }
+    		
+            List<String> naturalLanguageRepresentationChunks = new ArrayList<String>(Arrays.asList(s.toLowerCase().trim().split(" ")));
+            naturalLanguageRepresentationChunks.removeAll(Constants.NEW_STOP_WORDS);
+            
+            return " " + StringUtils.join(naturalLanguageRepresentationChunks, " ").trim().replaceAll(" +", " ") + " ";
     }
     
     /* (non-Javadoc)

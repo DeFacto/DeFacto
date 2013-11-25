@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.config.DefactoConfig;
@@ -17,6 +19,7 @@ import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 
 import weka.classifiers.Classifier;
+import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -41,7 +44,7 @@ public class FactScorer {
 //            this.trainingInstances = new Instances(new BufferedReader(new FileReader(
 //            		loadFileName("/training/arff/fact/defacto_fact_word.arff"))));
         	this.trainingInstances = new Instances(new BufferedReader(new FileReader(
-        			DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME"))));
+        			DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("fact", "ARFF_TRAINING_DATA_FILENAME"))));
         }
         catch (FileNotFoundException e) {
 
@@ -63,23 +66,23 @@ public class FactScorer {
             try {
                 
                 Instances instancesWithStringVector = new Instances(trainingInstances);
-                instancesWithStringVector.setClassIndex(24);
+                instancesWithStringVector.setClassIndex(26);
                 
                 // create new instance and delete debugging features
                 Instance newInstance = new Instance(proof.getFeatures());
-                newInstance.deleteAttributeAt(24);
-                newInstance.deleteAttributeAt(24);
-                newInstance.deleteAttributeAt(24);
-                newInstance.deleteAttributeAt(24);
-//                newInstance.deleteAttributeAt(25);
-//                newInstance.deleteAttributeAt(25);
+                newInstance.deleteAttributeAt(27);
+                newInstance.deleteAttributeAt(27);
+                newInstance.deleteAttributeAt(27);
+                newInstance.deleteAttributeAt(27);
+                newInstance.deleteAttributeAt(27);
                 
                 // insert all the words which occur
-                for ( int i = newInstance.numAttributes() ; i < instancesWithStringVector.numAttributes(); i++) {
+                for ( int i = 26 + 1 ; i < instancesWithStringVector.numAttributes(); i++) {
                     
-                    String name = instancesWithStringVector.attribute(i).name();
+                	List<String> parts = new ArrayList<>(Arrays.asList(proof.getTinyContext().split(" ")));
                     newInstance.insertAttributeAt(i);
-                    newInstance.setValue(instancesWithStringVector.attribute(i), proof.getTinyContext().contains(name) ? 1D : 0D);
+                    Attribute attribute = instancesWithStringVector.attribute(i);
+                    newInstance.setValue(attribute, parts.contains(attribute.name()) ? 1D : 0D);
                 }
                 newInstance.setDataset(instancesWithStringVector);
                 instancesWithStringVector.add(newInstance);

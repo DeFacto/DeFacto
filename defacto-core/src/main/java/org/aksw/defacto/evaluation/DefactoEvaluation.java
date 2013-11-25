@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
@@ -41,12 +42,15 @@ public class DefactoEvaluation {
 		
 		Defacto.init();
 
-//		generateArffFiles("property", args[0]);
-		generateArffFiles("mix", args[0]);
-		generateArffFiles("random", args[0]);
-		generateArffFiles("domain", args[0]);
-		generateArffFiles("range", args[0]);
-		generateArffFiles("domainrange", args[0]);
+		for ( String trainOrTest :  args) {
+			
+			generateArffFiles("property",	trainOrTest);
+			generateArffFiles("mix",		trainOrTest);
+			generateArffFiles("random", 	trainOrTest);
+			generateArffFiles("domain",		trainOrTest);
+			generateArffFiles("range", 		trainOrTest);
+			generateArffFiles("domainrange",trainOrTest);
+		}
 	}
 
 	private static void generateArffFiles(String set, String testOrTrain) throws FileNotFoundException {
@@ -71,7 +75,7 @@ public class DefactoEvaluation {
 		}
 		
 		// just to make preamtive tests in weka possible (same true false distribution) 
-		Collections.shuffle(models);
+		Collections.shuffle(models, new Random(100));
 		LOGGER.info("Starting Defacto for " + models.size() + " facts for set: " + set);
 		
 		for ( int i = 0; i < models.size() ; i++ ) {
@@ -79,11 +83,13 @@ public class DefactoEvaluation {
 			long start = System.currentTimeMillis();
 			LOGGER.info("Validating fact ("+ (i + 1) +"): " + models.get(i));
 			System.out.print(String.format("Validation-Set: %s\tTask: %04d of %04d", set, i+1, models.size()));
-			Evidence evidence = Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.YES);
-			Defacto.writeEvidenceTrainingFiles(
-					Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
+			Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
+			if ( i % 10 == 0 ) Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
+			Defacto.writeEvidenceTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
 			System.out.println(" Time: " + (System.currentTimeMillis() - start));
 		}
+		// write the last ones
+		Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
 		
 		// reset the index thingy
 		AbstractEvidenceFeature.createInstances();

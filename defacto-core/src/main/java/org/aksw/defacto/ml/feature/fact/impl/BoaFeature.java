@@ -34,7 +34,7 @@ public class BoaFeature implements FactFeature {
 	
 	SmithWaterman smithWaterman = new SmithWaterman();
     QGramsDistance qgrams		= new QGramsDistance();
-    Levenshtein lev		= new Levenshtein();
+    Levenshtein lev				= new Levenshtein();
     BoaPatternSearcher searcher = new BoaPatternSearcher();
 
     @Override
@@ -50,6 +50,9 @@ public class BoaFeature implements FactFeature {
         proof.getFeatures().setValue(AbstractFactFeatures.LEVENSHTEIN_BOA_SCORE, 0);
         proof.getFeatures().setValue(AbstractFactFeatures.LEVENSHTEIN, 0);
         
+        proof.getFeatures().setValue(AbstractFactFeatures.BOA_PATTERN_COUNT, 0);
+        proof.getFeatures().setValue(AbstractFactFeatures.BOA_PATTERN_NORMALIZED_COUNT, 0);
+        
         if ( proof.getProofPhrase().trim().isEmpty() ) return; 
         
         List<Pattern> patterns = searcher.querySolrIndex(evidence.getModel().getPropertyUri(), 20, 0, proof.getLanguage());
@@ -64,32 +67,32 @@ public class BoaFeature implements FactFeature {
         
         for ( Pattern p : patterns ) {
         	
-        	if ( p.normalize().trim().isEmpty() ) continue;
+        	if ( p.getNormalized().trim().isEmpty() ) continue;
 //        	if ( !proof.getProofPhrase().contains(p.normalize()) ) continue;
         	
-        	float swSim = smithWaterman.getSimilarity(p.normalize(), proof.getProofPhrase());
+        	float swSim = smithWaterman.getSimilarity(p.getNormalized(), proof.getProofPhrase());
 			if ( swSim > smithWatermanSimilarity ) {
 				
 				smithWatermanSimilarity = swSim;
 				swPattern = p;
 			}
 			
-			float qgramsSim = qgrams.getSimilarity(p.normalize(), proof.getProofPhrase());
+			float qgramsSim = qgrams.getSimilarity(p.getNormalized(), proof.getProofPhrase());
 			if ( qgramsSim > qgramsSimilarity ) {
 				
 				qgramsSimilarity = qgramsSim; 
 				qgramPattern = p;
 			}
 			
-			float levSim = lev.getSimilarity(p.normalize(), proof.getProofPhrase());
+			float levSim = lev.getSimilarity(p.getNormalized(), proof.getProofPhrase());
 			if ( levSim > levSimilarity ) {
 				
 				levSimilarity = levSim; 
 				levPattern = p;
 			}
 			
-			if ( proof.getProofPhrase().contains(p.normalize()) ) patternCounter++; 
-			if ( proof.getNormalizedProofPhrase().contains(p.normalize()) ) patternNormalizedCounter++; 
+			if ( proof.getProofPhrase().contains(p.getNormalized()) ) patternCounter++; 
+			if ( proof.getNormalizedProofPhrase().contains(p.getNormalized()) ) patternNormalizedCounter++; 
         }
         
         proof.getFeatures().setValue(AbstractFactFeatures.BOA_PATTERN_COUNT, patternCounter);

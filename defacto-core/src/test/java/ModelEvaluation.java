@@ -13,11 +13,11 @@ import java.util.Set;
 
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.config.DefactoConfig;
+import org.aksw.defacto.util.Frequency;
 import org.aksw.defacto.util.SparqlUtil;
 import org.apache.commons.io.FileUtils;
 import org.ini4j.Ini;
 
-import com.github.gerbsen.math.Frequency;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;

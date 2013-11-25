@@ -107,19 +107,19 @@ public class Defacto {
         factFeatureExtraction.extractFeatureForFact(evidence);
         LOGGER.info("Fact feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFactConfirmation));
         
-        // 4. score the facts
+        // 
+    	 // 4. score the facts
         long startFactScoring = System.currentTimeMillis();
         FactScorer factScorer = new FactScorer();
         factScorer.scoreEvidence(evidence);
         LOGGER.info("Fact Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startFactScoring));
-        
-        // 5. calculate the factFeatures for the model
+    	
+    	// 5. calculate the factFeatures for the model
         long startFeatureExtraction = System.currentTimeMillis();
         EvidenceFeatureExtractor featureCalculator = new EvidenceFeatureExtractor();
         featureCalculator.extractFeatureForEvidence(evidence);
         LOGGER.info("Evidence feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFeatureExtraction));
-        
-        // 6. score the model
+            
         if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) {
 
             long startScoring = System.currentTimeMillis();
@@ -136,7 +136,7 @@ public class Defacto {
     public static void writeFactTrainingFiles(String filename) {
     	
         // rewrite the fact training file after every proof
-        if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) writeFactTrainingDataFile();
+        if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) writeFactTrainingDataFile(filename);
     }
     
     public static void writeEvidenceTrainingFiles(String filename) {
@@ -186,7 +186,8 @@ public class Defacto {
                 System.out.println("Defacto: " + new DecimalFormat("0.00").format(evidence.getDeFactoScore()) + " % that this fact is true! Actual: " + model.isCorrect() +"\n");
 
             // rewrite the fact training file after every proof
-            if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) writeFactTrainingDataFile();
+            if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) 
+            	writeFactTrainingDataFile(DEFACTO_CONFIG.getStringSetting("evidence", "FACT_TRAINING_DATA_FILENAME"));
             
             // rewrite the training file after every checked triple
             if ( DEFACTO_CONFIG.getBooleanSetting("evidence", "OVERWRITE_EVIDENCE_TRAINING_FILE")  ) 
@@ -209,60 +210,60 @@ public class Defacto {
     /**
      * this tries to write an arff file which is also compatible with google docs spreadsheets
      */
-    private static void writeFactTrainingDataFile() {
+    private static void writeFactTrainingDataFile(String filename) {
 
         try {
             
-            BufferedWriter writer = new BufferedWriter(new FileWriter(DefactoConfig.DEFACTO_DATA_DIR + DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME")));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(DefactoConfig.DEFACTO_DATA_DIR + filename));
             writer.write(AbstractFactFeatures.factFeatures.toString().substring(0, AbstractFactFeatures.factFeatures.toString().indexOf("@data")));
             writer.write("\n@data\n");
 
-            // add all instances to a list to shuffle them
-            List<Instance> instances = new ArrayList<Instance>();
-            for ( int i = 0; i < AbstractFactFeatures.factFeatures.numInstances() ; i++ ) instances.add(AbstractFactFeatures.factFeatures.instance(i));
-            Collections.shuffle(instances);
-            
-            // temp collections
-            List<Instance> pickedInstances = new ArrayList<Instance>();
-            Set<Integer> randoms = new HashSet<Integer>();
-            Map<String,Integer> modelsToProofsSize = new HashMap<String,Integer>();
-            
+//            // add all instances to a list to shuffle them
+//            List<Instance> instances = new ArrayList<Instance>();
+//            for ( int i = 0; i < AbstractFactFeatures.factFeatures.numInstances() ; i++ ) instances.add(AbstractFactFeatures.factFeatures.instance(i));
+////            Collections.shuffle(instances);
+//            
+//            // temp collections
+//            List<Instance> pickedInstances = new ArrayList<Instance>();
+//            Set<Integer> randoms = new HashSet<Integer>();
+//            Map<String,Integer> modelsToProofsSize = new HashMap<String,Integer>();
+//            
 //            int numberOfProofsPerRelation = Integer.MAX_VALUE;
-            int numberOfProofsPerRelation = 50;
-            int maxNumberOfFacts = Integer.MAX_VALUE;
+////            int numberOfProofsPerRelation = 50;
+//            int maxNumberOfFacts = Integer.MAX_VALUE;
+//            
+//            for ( Instance instance : instances ) {
+//            	
+//            	String type = instance.stringValue(AbstractFactFeatures.FILE_NAME).substring(0, instance.stringValue(AbstractFactFeatures.FILE_NAME).lastIndexOf("/"));
+//            	type = type.replace("property/", "");
+//            	type = type.replace("domainrange/", "");
+//            	type = type.replace("domain/", "");
+//            	type = type.replace("range/", "");
+//            	type = type.replace("random/", "");
+//            	
+//            	if ( modelsToProofsSize.containsKey(type) ) {
+//                    
+//                    if ( modelsToProofsSize.get(type) < numberOfProofsPerRelation ) {
+//                        
+//                        pickedInstances.add(instance);
+//                        modelsToProofsSize.put(type, modelsToProofsSize.get(type) + 1);
+//                    }
+//                }
+//                else {
+//                    
+//                    pickedInstances.add(instance);
+//                    modelsToProofsSize.put(type, 1);
+//                }
+//            }
             
-            for ( Instance instance : instances ) {
-            	
-            	String type = instance.stringValue(AbstractFactFeatures.FILE_NAME).substring(0, instance.stringValue(AbstractFactFeatures.FILE_NAME).lastIndexOf("/"));
-            	type = type.replace("property/", "");
-            	type = type.replace("domainrange/", "");
-            	type = type.replace("domain/", "");
-            	type = type.replace("range/", "");
-            	type = type.replace("random/", "");
-            	
-            	if ( modelsToProofsSize.containsKey(type) ) {
-                    
-                    if ( modelsToProofsSize.get(type) < numberOfProofsPerRelation ) {
-                        
-                        pickedInstances.add(instance);
-                        modelsToProofsSize.put(type, modelsToProofsSize.get(type) + 1);
-                    }
-                }
-                else {
-                    
-                    pickedInstances.add(instance);
-                    modelsToProofsSize.put(type, 1);
-                }
-            }
-            
-            System.out.println("\n----------");
-            System.out.println(modelsToProofsSize.size());
-            for ( Map.Entry<String, Integer> entry : modelsToProofsSize.entrySet()) {
-            	
-            	System.out.println(entry.getKey() + ": " + entry.getValue());
-            }
-            
-            System.out.println("----------\n");
+//            System.out.println("\n----------");
+//            System.out.println(modelsToProofsSize.size());
+//            for ( Map.Entry<String, Integer> entry : modelsToProofsSize.entrySet()) {
+//            	
+//            	System.out.println(entry.getKey() + ": " + entry.getValue());
+//            }
+//            
+//            System.out.println("----------\n");
             
 //            while ( pickedInstances.size() <= maxNumberOfFacts && pickedInstances.size() < AbstractFactFeatures.factFeatures.numInstances()) {
 //
@@ -290,13 +291,13 @@ public class Defacto {
 //                    }
 //                }
 //            }
-            Collections.shuffle(pickedInstances);
+//            Collections.shuffle(pickedInstances);
             
-//            Enumeration<Instance> enumerateInstances = AbstractFactFeatures.factFeatures.enumerateInstances();
-            for (Instance instance : pickedInstances) {
-//            while ( enumerateInstances.hasMoreElements() ) {
-            	writer.write(instance.toString() + "\n");
-//            	writer.write(enumerateInstances.nextElement().toString() + "\n");
+            Enumeration<Instance> enumerateInstances = AbstractFactFeatures.factFeatures.enumerateInstances();
+//            for (Instance instance : pickedInstances) {
+            while ( enumerateInstances.hasMoreElements() ) {
+//            	writer.write(instance.toString() + "\n");
+            	writer.write(enumerateInstances.nextElement().toString() + "\n");
             }
             
             writer.flush();

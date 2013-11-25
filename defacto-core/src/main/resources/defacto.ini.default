@@ -48,6 +48,7 @@ NUMBER_NLP_STANFORD_MODELS = 2
 FACT_TRAINING_DATA_FILENAME = resources/training/arff/fact/defacto_fact.arff
 ; LINEAR_REGRESSION_CLASSIFIER or MULTILAYER_PERCEPTRON or SMO
 FACT_CLASSIFIER_TYPE = LINEAR_REGRESSION_CLASSIFIER
+ARFF_TRAINING_DATA_FILENAME = machinelearning/model/fact/66_33_proof_smo_reg/66_33_proof_smo_reg_polykernel.arff
 ; do we want to write the fact confirmation weka training file
 OVERWRITE_FACT_TRAINING_FILE = false
 

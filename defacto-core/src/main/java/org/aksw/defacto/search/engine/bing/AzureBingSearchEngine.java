@@ -58,7 +58,7 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
         
         Defacto.init();
         
-        MetaQuery q = new MetaQuery("Philipp Lenard|-|?D? won the ?R?|-|Nobel Prize in Physics|-|en");
+        MetaQuery q = new MetaQuery("Ghostbusters II|-|?D? NONE ?R?|-|Bill Murray|-|fr");
         AzureBingSearchEngine engine = new AzureBingSearchEngine();
         System.out.println(BING_API_KEY);
         System.out.println(engine.query(q, null).getTotalHitCount());
@@ -93,7 +93,7 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
         try {
 
             AzureSearchCompositeQuery aq = new AzureSearchCompositeQuery();
-            aq.setAppid(this.BING_API_KEY);
+            aq.setAppid(BING_API_KEY);
             aq.setLatitude("47.603450");
             aq.setLongitude("-122.329696");
             if ( query.getLanguage().equals("en") ) aq.setMarket("en-US");

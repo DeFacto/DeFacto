@@ -24,7 +24,7 @@ public class TokenDistanceFeature implements FactFeature {
 
         complexProof.getFeatures().setValue(AbstractFactFeatures.TOKEN_DISTANCE, complexProof.getProofPhrase().split(" ").length);
         
-        String normalCaseProof = complexProof.getNormalizedProofPhrase();
+        String normalCaseProof = complexProof.getProofPhrase();
 		String[] patternParts = normalCaseProof.split(" ");
 		
 		int tokenCount = patternParts.length;
@@ -34,7 +34,7 @@ public class TokenDistanceFeature implements FactFeature {
 		
 		// all characters minus the number of whitespaces divided by number of tokens
 		// number of whitespaces is one smaller then token count
-		double averageTokenLength = (double)(characterCount - (tokenCount - 1)) / (double) tokenCount;
+		double averageTokenLength = tokenCount > 0 ? (double)(characterCount - (tokenCount - 1)) / (double) tokenCount : 0;
 		
 		// count the number of all digits in a pattern
 		int digitCount = 0;
