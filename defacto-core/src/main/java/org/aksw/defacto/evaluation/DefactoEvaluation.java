@@ -21,6 +21,7 @@ import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.reader.DefactoModelReader;
 import org.aksw.defacto.search.time.PatternTimePeriodSearcher;
+import org.apache.commons.lang3.ArrayUtils;
 import org.semanticweb.owlapi.io.SystemOutDocumentTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,16 +42,10 @@ public class DefactoEvaluation {
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		Defacto.init();
-
-		for ( String trainOrTest :  args) {
-			
-			generateArffFiles("correct",	trainOrTest);
-			generateArffFiles("property",	trainOrTest);
-			generateArffFiles("mix",		trainOrTest);
-			generateArffFiles("random", 	trainOrTest);
-			generateArffFiles("domain",		trainOrTest);
-			generateArffFiles("range", 		trainOrTest);
-			generateArffFiles("domainrange",trainOrTest);
+		
+		for ( String trainOrTestAndSet : args) {
+			String[] split = trainOrTestAndSet.split("-");
+			generateArffFiles(split[0], split[1]);
 		}
 	}
 

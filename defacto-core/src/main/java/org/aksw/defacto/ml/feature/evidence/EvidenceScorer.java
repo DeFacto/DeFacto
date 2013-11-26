@@ -16,7 +16,7 @@ import weka.core.Instances;
  * 
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
  */
-public class EvidenceScorer {
+public class EvidenceScorer implements Scorer {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EvidenceScorer.class);
     
@@ -113,7 +113,7 @@ public class EvidenceScorer {
      * 
      * @return
      */
-    private Classifier loadClassifier() {
+    public Classifier loadClassifier() {
 
         try {
             
@@ -130,7 +130,7 @@ public class EvidenceScorer {
      * @param evidence
      * @return
      */
-    public void scoreEvidence(Evidence evidence) {
+    public Double scoreEvidence(Evidence evidence) {
 
         try {
             
@@ -151,5 +151,7 @@ public class EvidenceScorer {
 
             e.printStackTrace();
         }
+        
+        return evidence.getDeFactoScore();
     }
 }
