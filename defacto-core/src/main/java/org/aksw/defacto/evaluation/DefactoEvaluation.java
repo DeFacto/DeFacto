@@ -45,7 +45,9 @@ public class DefactoEvaluation {
 		
 		for ( String trainOrTestAndSet : args) {
 			String[] split = trainOrTestAndSet.split("-");
-			generateArffFiles(split[0], split[1]);
+			
+			if ( split[0].equals("train") || split[0].equals("test") )
+				generateArffFiles(split[0], split[1]);
 		}
 	}
 
