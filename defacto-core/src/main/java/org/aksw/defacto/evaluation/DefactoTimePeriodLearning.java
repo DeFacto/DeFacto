@@ -203,7 +203,7 @@ public class DefactoTimePeriodLearning {
 		Defacto.DEFACTO_CONFIG.setStringSetting("settings", "periodSearchMethod", searchMethod);
 		Defacto.DEFACTO_CONFIG.setStringSetting("settings", "context-size", contextSize);
 //		Collections.shuffle(models);
-		models = models.subList(0, 5);
+//		models = models.subList(0, 5);
 		
 		return learn(name, models, new ArrayList<Configuration>());
 	}
