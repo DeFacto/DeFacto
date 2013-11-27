@@ -69,8 +69,8 @@ public class WekaModelGeneration {
 		
 		for ( String[] sets : Arrays.asList(new String[]{"domain", "range"}, new String[]{"domainRange", "property"}, new String[]{"random", "mix"})) {
 			
-			String finalOutput = "~ & \\multicolumn{5}{c}{"+StringUtils.capitalize(sets[0])+"} & \\phantom{a} & \\multicolumn{5}{c}{"+StringUtils.capitalize(sets[1])+"}\\\\\n"; 
-			finalOutput += "~ & C & P & R & F$_1$ & AUC 	& RSME 	& & C & P 		& R 		& F$_1$ & AUC		& RMSE \\\\\n";
+			String finalOutput = "~ & \\multicolumn{6}{c}{"+StringUtils.capitalize(sets[0])+"} & \\phantom{a} & \\multicolumn{6}{c}{"+StringUtils.capitalize(sets[1])+"}\\\\\n"; 
+			finalOutput += "~ & C & P & R & F$_1$ & AUC 	& RMSE 	& & C & P 		& R 		& F$_1$ & AUC		& RMSE \\\\\n";
 			finalOutput += "\\cmidrule{2-7} \\cmidrule{9-14}\\\\\n";
 			
 			for (Classifier cls : classifier) {

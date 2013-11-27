@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -41,11 +42,14 @@ public class EvidenceEvaluation {
 	private static Classifier classifier = null; 
 	private static Instances trainingInstances = null;
 	private static Instances backupInstances = null;
+	private static Map<Integer,Integer> correctYearMap = new TreeMap<>();
+	private static Map<Integer,Integer> wrongYearMap = new TreeMap<>();
 	
 	public static void main(String[] args) throws Exception {
 		
 		Defacto.init();
 		loadClassifier();
+		initYearMap();
 		Map<String,Integer> relationToCorrectCount = new TreeMap<>();
 		trainingInstances = new Instances(new BufferedReader(new FileReader(DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "ARFF_EVIDENCE_TRAINING_DATA_FILENAME"))));
 		backupInstances = new Instances(new BufferedReader(new FileReader(DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "ARFF_EVIDENCE_TRAINING_DATA_FILENAME"))));
@@ -68,27 +72,56 @@ public class EvidenceEvaluation {
 			
 			freq.addValue(classifier.distributionForInstance(instance)[0]);
 			
+			DefactoModel model = DefactoModelReader.readModel("/Users/gerb/Development/workspaces/experimental/defacto/mltemp/FactBench/v1/" + backupInstances.instance(i).attribute(0).value(i));
+			String averageYear = ((model.timePeriod.to + model.timePeriod.from) / 2) + "";
+			averageYear = averageYear.substring(0, 3) + "0";
+			if ( Integer.valueOf(averageYear) < 1900 ) averageYear = "1890";
+			
 			if ( classifier.distributionForInstance(instance)[0] > 0.5D ) {
 				
 				sum++;
 				if ( !relationToCorrectCount.containsKey(relation) ) relationToCorrectCount.put(relation, 1);
 				else relationToCorrectCount.put(relation, relationToCorrectCount.get(relation) + 1);
+				
+				correctYearMap.put(Integer.valueOf(averageYear), correctYearMap.get(Integer.valueOf(averageYear)) + 1);
 			}
 			else {
 				
-				System.out.println(backupInstances.instance(i).attribute(0).value(i));
+				wrongYearMap.put(Integer.valueOf(averageYear), wrongYearMap.get(Integer.valueOf(averageYear)) + 1);
+//				System.out.println(model);
+//				System.out.println(backupInstances.instance(i).attribute(0).value(i));
 			}
 		}
 		
-		for ( Entry<Comparable<?>, Long> sortByValue : freq.sortByValue() ) {
+		for ( int i = 1890; i <= 2010 ; i = i+10 ) {
+
+			Integer correct = correctYearMap.get(i);
+			Integer wrong = wrongYearMap.get(i);
+			Double ratio = (((wrong * 100) / (double)(wrong + correct)) * (wrong + correct)) / 3300 ;
+			String year = i + "";
+			if ( i == 1890 ) year = "< 1890";
 			
-			System.out.println(sortByValue.getKey() + "\t" +sortByValue.getValue());
+			System.out.println(year + "\t&\t" + correct + "\t&\t" + wrong + "\t&\t" + String.format(Locale.ENGLISH, "%.1f", ratio)+ "\\\\");
 		}
 		
-		System.out.println("All: " + sum);
-		for (Map.Entry<String, Integer> entry : relationToCorrectCount.entrySet() ){
+//		for ( Entry<Comparable<?>, Long> sortByValue : freq.sortByValue() ) {
+//			
+//			System.out.println(sortByValue.getKey() + "\t" +sortByValue.getValue());
+//		}
+		
+//		System.out.println("All: " + sum);
+//		for (Map.Entry<String, Integer> entry : relationToCorrectCount.entrySet() ){
+//			
+//			System.out.println(entry.getKey() + "\t" + entry.getValue());
+//		}
+	}
+
+	private static void initYearMap() {
+		
+		for ( int i = 1890; i <= 2010 ; i = i+10 ) {
 			
-			System.out.println(entry.getKey() + "\t" + entry.getValue());
+			correctYearMap.put(i, 0);
+			wrongYearMap.put(i, 0);
 		}
 	}
 
