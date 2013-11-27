@@ -52,11 +52,12 @@ public class DefactoTimePeriodLearning {
 		
 		Defacto.init();
 		trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
-				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory");
+				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", args[0] + "-directory");
+		
+		printLatexTable();
 		
 //		System.out.println(startSingleConfigurationEvaluation("award", Arrays.asList("en", "fr", "de"),
 //				Arrays.asList("award"), "domain", "frequency", "tiny"));
-		
 //		System.out.println(startSingleConfigurationEvaluation("point", Arrays.asList("en", "fr", "de"),
 //				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary"),
 //				"occurrence", "frequency", "tiny"));
@@ -81,9 +82,9 @@ public class DefactoTimePeriodLearning {
 //		System.out.println(startSingleConfigurationEvaluation("period", Arrays.asList("en", "fr", "de"),
 //				Arrays.asList("spouse", "nbateam", "leader"), "global", "frequency", "medium"));
 //		
-		System.out.println(startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"),
-				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"),
-				"occurrence", "frequency", "tiny"));
+//		System.out.println(startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"),
+//				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"),
+//				"occurrence", "frequency", "tiny"));
 //		System.out.println(startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"),
 //				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"),
 //				"domain", "frequency", "tiny"));
@@ -100,6 +101,79 @@ public class DefactoTimePeriodLearning {
 //		}
 	}
 	
+	private static void printLatexTable() throws FileNotFoundException {
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("award", Arrays.asList("en"), Arrays.asList("award"), "domain", "frequency", "small")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("award", Arrays.asList("en", "fr", "de"), Arrays.asList("award"), "domain", "frequency", "tiny")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("birth", Arrays.asList("en"), Arrays.asList("birth"), "domain", "frequency", "tiny")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("birth", Arrays.asList("en", "fr", "de"), Arrays.asList("birth"), "domain", "frequency", "small")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("death", Arrays.asList("en"), Arrays.asList("death"), "domain", "frequency", "tiny")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("death", Arrays.asList("en", "fr", "de"), Arrays.asList("death"), "domain", "frequency", "tiny")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("foundation", Arrays.asList("en"), Arrays.asList("foundationPlace"), "domain", "frequency", "large")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("foundation", Arrays.asList("en", "fr", "de"), Arrays.asList("foundationPlace"), "domain", "frequency", "large")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("publication", Arrays.asList("en"), Arrays.asList("publicationDate"), "domain", "frequency", "medium")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("publication", Arrays.asList("en", "fr", "de"), Arrays.asList("publicationDate"), "domain", "frequency", "small")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("starring", Arrays.asList("en"), Arrays.asList("starring"), "domain", "frequency", "medium")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("starring", Arrays.asList("en", "fr", "de"), Arrays.asList("starring"), "domain", "frequency", "medium")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("subsidiary", Arrays.asList("en"), Arrays.asList("subsidiary"), "domain", "frequency", "tiny")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("subsidiary", Arrays.asList("en", "fr", "de"), Arrays.asList("subsidiary"), "domain", "frequency", "tiny")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("spouse", Arrays.asList("en"), Arrays.asList("spouse"), "domain", "frequency", "tiny")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("spouse", Arrays.asList("en", "fr", "de"), Arrays.asList("spouse"), "domain", "frequency", "tiny")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("team", Arrays.asList("en"), Arrays.asList("nbateam"), "domain", "frequency", "medium")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("team", Arrays.asList("en", "fr", "de"), Arrays.asList("nbateam"), "domain", "frequency", "tiny")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("leader", Arrays.asList("en"), Arrays.asList("leader"), "domain", "frequency", "medium")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("leader", Arrays.asList("en", "fr", "de"), Arrays.asList("leader"), "domain", "frequency", "medium")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("timepoint", Arrays.asList("en"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary"), "domain", "frequency", "large")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("timepoint", Arrays.asList("en", "fr", "de"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary"), "domain", "frequency", "large")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("timeperiod", Arrays.asList("en"), Arrays.asList("spouse", "nbateam", "leader"), "domain", "frequency", "large")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("timeperiod", Arrays.asList("en", "fr", "de"), Arrays.asList("spouse", "nbateam", "leader"), "domain", "frequency", "large")));
+		System.out.println("\\midrule");
+		
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("all", Arrays.asList("en"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"), "domain", "frequency", "large")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"), "domain", "frequency", "large")));
+		System.out.println("\\midrule");
+	}
+
+	private static String configToLatex(Configuration cfg) {
+		
+		List<String> line = new ArrayList<>();
+		
+		String context = cfg.context.equals("tiny") ?  "25" : cfg.context.equals("small") ?  "50" : cfg.context.equals("medium") ? "100" : "150";
+		line.add(cfg.language.equals("[en]") ? cfg.name + "$_{en}^{"+context+"}$" : cfg.language.equals("[en, fr, de]") ? cfg.name + "$_{ml}^{"+context+"}$" : "ERROR");
+		line.add(format(cfg.precision));
+		line.add(format(cfg.recall));
+		line.add(format(cfg.fMeasure));
+		line.add(format(cfg.mrrAverage));
+		line.add(cfg.correctStart+ "");
+		line.add(cfg.correctEnd + "");
+		line.add(cfg.isPossible.split("/")[0]);
+		line.add(format(cfg.correct / (double)Integer.valueOf(cfg.isPossible.split("/")[0])));
+		
+		return StringUtils.join(line, "\t&\t") + "\t\\\\";
+	}
+
 	private static void generateProofFrequencies() throws FileNotFoundException {
 		
 		System.out.println(startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"),
@@ -129,6 +203,7 @@ public class DefactoTimePeriodLearning {
 		Defacto.DEFACTO_CONFIG.setStringSetting("settings", "periodSearchMethod", searchMethod);
 		Defacto.DEFACTO_CONFIG.setStringSetting("settings", "context-size", contextSize);
 //		Collections.shuffle(models);
+		models = models.subList(0, 5);
 		
 		return learn(name, models, new ArrayList<Configuration>());
 	}
@@ -312,6 +387,9 @@ public class DefactoTimePeriodLearning {
 		Double macroRecall		= 0D;
 		Double macroFmeasure	= 0D;
 		
+		int correctStart = 0;
+		int correctEnd = 0;
+		
 		Double meanReciprocalRank = 0D;
 		int meanReciprocalRankCounter = 0;
 		
@@ -376,12 +454,15 @@ public class DefactoTimePeriodLearning {
 			macroRecall += results.recall;
 			macroFmeasure = getFmeasure(macroPrecision / precisionCounter, macroRecall / (i + 1));
 			
+			if ( model.timePeriod.from.equals(dtp.from) ) correctStart++;
+			if ( model.timePeriod.to.equals(dtp.to) ) correctEnd++;
+			
 			if ( results.fmeasure == 1 ) correct++;
 			else wrongModels.add(model);
-			System.out.println(String.format(Locale.ENGLISH, "%s/%s total --> P: %.5f, R: %.5f, F: %.5f, MRR: %.5f", 
-					i+1, models.size(), macroPrecision / (precisionCounter),
-					macroRecall / (i + 1), macroFmeasure, meanReciprocalRank / meanReciprocalRankCounter)
-					+  " current --> " + results);
+//			System.out.println(String.format(Locale.ENGLISH, "%s/%s total --> P: %.5f, R: %.5f, F: %.5f, MRR: %.5f", 
+//					i+1, models.size(), macroPrecision / (precisionCounter),
+//					macroRecall / (i + 1), macroFmeasure, meanReciprocalRank / meanReciprocalRankCounter)
+//					+  " current --> " + results);
 		}
 		
 		Configuration config = new Configuration(name, results);
@@ -390,6 +471,8 @@ public class DefactoTimePeriodLearning {
 		config.recall 				= macroRecall / (models.size());
 		config.fMeasure 			= macroFmeasure;
 		config.correct 				= correct;
+		config.correctStart			= correctStart;
+		config.correctEnd			= correctEnd;
 		config.normalizer 			= Defacto.DEFACTO_CONFIG.getStringSetting("settings", "TIME_PERIOD_SEARCHER");
 		config.context 				= Defacto.DEFACTO_CONFIG.getStringSetting("settings", "context-size");
 		config.language 			= CURRENT_LANGUAGE;

@@ -22,6 +22,8 @@ public class Configuration {
 	public String name;
 	public List<DefactoModel> models;
 	public String periodSearchMethod;
+	public int correctStart;
+	public int correctEnd;
 	
 	public Configuration(String name, List<String> relationNames) {
 		
