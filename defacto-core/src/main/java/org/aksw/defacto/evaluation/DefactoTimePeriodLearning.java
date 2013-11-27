@@ -378,8 +378,6 @@ public class DefactoTimePeriodLearning {
 		return new PrecisionRecallFMeasure(relevantYears, retrievedYears);
 	}
 
-	
-	
 	public static Configuration learn(String name, List<DefactoModel> models, List<Configuration> configurations){
 		
 		int precisionCounter = 0;

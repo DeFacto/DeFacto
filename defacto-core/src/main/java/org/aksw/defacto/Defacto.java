@@ -86,7 +86,7 @@ public class Defacto {
         long start = System.currentTimeMillis();
         QueryGenerator queryGenerator = new QueryGenerator(model);
         Map<Pattern,MetaQuery> queries = new HashMap<Pattern,MetaQuery>();
-        for ( String language : DefactoConfig.LANGUAGES ) 
+        for ( String language : model.languages ) 
         	queries.putAll(queryGenerator.getSearchEngineQueries(language));
           
         if ( queries.size() <= 0 ) return new Evidence(model); 
