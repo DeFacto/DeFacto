@@ -353,7 +353,7 @@ public class DefactoTimePeriodLearning {
 		
 		Collections.sort(configurations, new FMeasureComparator());
 		
-		BufferedFileWriter writer  = new BufferedFileWriter(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "eval/" + name + ".tsv", Encoding.UTF_8, WRITER_WRITE_MODE.APPEND);
+		BufferedFileWriter writer  = new BufferedFileWriter(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "machinelearning/eval/" + name + ".tsv", Encoding.UTF_8, WRITER_WRITE_MODE.APPEND);
 		for ( Configuration configuration : configurations ) writer.write(configuration.toString());
 		writer.close();
 		
