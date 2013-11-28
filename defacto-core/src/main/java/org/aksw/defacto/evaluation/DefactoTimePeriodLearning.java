@@ -105,12 +105,12 @@ public class DefactoTimePeriodLearning {
 	
 	private static void printLatexTable() throws FileNotFoundException {
 		
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("award", Arrays.asList("en"), Arrays.asList("award"), "domain", "frequency", "small")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("award", Arrays.asList("en"), Arrays.asList("award"), "domain", "frequency", "medium")));
 		System.out.println(configToLatex(startSingleConfigurationEvaluation("award", Arrays.asList("en", "fr", "de"), Arrays.asList("award"), "domain", "frequency", "tiny")));
 		System.out.println("\\midrule");
 		
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("birth", Arrays.asList("en"), Arrays.asList("birth"), "domain", "frequency", "tiny")));
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("birth", Arrays.asList("en", "fr", "de"), Arrays.asList("birth"), "domain", "frequency", "small")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("birth", Arrays.asList("en"), Arrays.asList("birth"), "global", "frequency", "small")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("birth", Arrays.asList("en", "fr", "de"), Arrays.asList("birth"), "global", "frequency", "tiny")));
 		System.out.println("\\midrule");
 		
 		System.out.println(configToLatex(startSingleConfigurationEvaluation("death", Arrays.asList("en"), Arrays.asList("death"), "domain", "frequency", "tiny")));
@@ -121,15 +121,15 @@ public class DefactoTimePeriodLearning {
 		System.out.println(configToLatex(startSingleConfigurationEvaluation("foundation", Arrays.asList("en", "fr", "de"), Arrays.asList("foundationPlace"), "domain", "frequency", "large")));
 		System.out.println("\\midrule");
 		
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("publication", Arrays.asList("en"), Arrays.asList("publicationDate"), "domain", "frequency", "medium")));
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("publication", Arrays.asList("en", "fr", "de"), Arrays.asList("publicationDate"), "domain", "frequency", "small")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("publication", Arrays.asList("en"), Arrays.asList("publicationDate"), "global", "frequency", "large")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("publication", Arrays.asList("en", "fr", "de"), Arrays.asList("publicationDate"), "global", "frequency", "large")));
 		System.out.println("\\midrule");
 		
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("starring", Arrays.asList("en"), Arrays.asList("starring"), "domain", "frequency", "medium")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("starring", Arrays.asList("en"), Arrays.asList("starring"), "global", "frequency", "small")));
 		System.out.println(configToLatex(startSingleConfigurationEvaluation("starring", Arrays.asList("en", "fr", "de"), Arrays.asList("starring"), "domain", "frequency", "medium")));
 		System.out.println("\\midrule");
 		
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("subsidiary", Arrays.asList("en"), Arrays.asList("subsidiary"), "domain", "frequency", "tiny")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("subsidiary", Arrays.asList("en"), Arrays.asList("subsidiary"), "domain", "frequency", "large")));
 		System.out.println(configToLatex(startSingleConfigurationEvaluation("subsidiary", Arrays.asList("en", "fr", "de"), Arrays.asList("subsidiary"), "domain", "frequency", "tiny")));
 		System.out.println("\\midrule");
 		
@@ -137,7 +137,7 @@ public class DefactoTimePeriodLearning {
 		System.out.println(configToLatex(startSingleConfigurationEvaluation("spouse", Arrays.asList("en", "fr", "de"), Arrays.asList("spouse"), "domain", "frequency", "tiny")));
 		System.out.println("\\midrule");
 		
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("team", Arrays.asList("en"), Arrays.asList("nbateam"), "domain", "frequency", "medium")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("team", Arrays.asList("en"), Arrays.asList("nbateam"), "domain", "frequency", "large")));
 		System.out.println(configToLatex(startSingleConfigurationEvaluation("team", Arrays.asList("en", "fr", "de"), Arrays.asList("nbateam"), "domain", "frequency", "tiny")));
 		System.out.println("\\midrule");
 		
@@ -145,16 +145,16 @@ public class DefactoTimePeriodLearning {
 		System.out.println(configToLatex(startSingleConfigurationEvaluation("leader", Arrays.asList("en", "fr", "de"), Arrays.asList("leader"), "domain", "frequency", "medium")));
 		System.out.println("\\midrule");
 		
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("timepoint", Arrays.asList("en"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary"), "domain", "frequency", "large")));
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("timepoint", Arrays.asList("en", "fr", "de"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary"), "domain", "frequency", "large")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("timepoint", Arrays.asList("en"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary"), "occurrence", "frequency", "tiny")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("timepoint", Arrays.asList("en", "fr", "de"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary"), "occurrence", "frequency", "tiny")));
 		System.out.println("\\midrule");
 		
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("timeperiod", Arrays.asList("en"), Arrays.asList("spouse", "nbateam", "leader"), "domain", "frequency", "large")));
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("timeperiod", Arrays.asList("en", "fr", "de"), Arrays.asList("spouse", "nbateam", "leader"), "domain", "frequency", "large")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("timeperiod", Arrays.asList("en"), Arrays.asList("spouse", "nbateam", "leader"), "domain", "frequency", "medium")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("timeperiod", Arrays.asList("en", "fr", "de"), Arrays.asList("spouse", "nbateam", "leader"), "domain", "frequency", "medium")));
 		System.out.println("\\midrule");
 		
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("all", Arrays.asList("en"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"), "domain", "frequency", "large")));
-		System.out.println(configToLatex(startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"), "domain", "frequency", "large")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("all", Arrays.asList("en"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"), "domain", "frequency", "medium")));
+		System.out.println(configToLatex(startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"), Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"), "domain", "frequency", "medium")));
 		System.out.println("\\midrule");
 	}
 
