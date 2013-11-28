@@ -28,3 +28,6 @@ logs
 log4j.properties
 defacto-evaluation/cache
 test.h2.db
+defacto-core/cache/sparql/mldefacto.trace.db
+defacto-core/cache/sparql/pmi-cache.h2.db
+defacto-core/cache/sparql/mldefacto.h2.db
