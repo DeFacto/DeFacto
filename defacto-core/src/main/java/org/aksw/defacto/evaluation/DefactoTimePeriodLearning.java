@@ -54,7 +54,9 @@ public class DefactoTimePeriodLearning {
 		trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
 				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", args[0] + "-directory");
 		
-		printLatexTable();
+		if ( args[0].equals("train") ) startEvaluation();
+		else if (args[0].equals("test")) printLatexTable();
+		else System.out.println("Nothing to do! Wrong arguments!");
 		
 //		System.out.println(startSingleConfigurationEvaluation("award", Arrays.asList("en", "fr", "de"),
 //				Arrays.asList("award"), "domain", "frequency", "tiny"));
@@ -93,7 +95,7 @@ public class DefactoTimePeriodLearning {
 //				"global", "frequency", "tiny"));
 		
 //		startBestConfigurationEvaluation();
-//		startEvaluation();
+		
 		
 //		System.out.println("IMPORTANT! Die Ergebnisse machen nur sinn wenn nur eine Konfiguration gewählt ist!");
 //		for ( DefactoModel model : wrongModels ){
@@ -351,8 +353,7 @@ public class DefactoTimePeriodLearning {
 		
 		Collections.sort(configurations, new FMeasureComparator());
 		
-		BufferedFileWriter writer  = new BufferedFileWriter("/Users/gerb/Development/workspaces/tex/AKSW_Papers"
-				+ "/2013/JWS_Temporal_Multilingual_Defacto/statistics/eval/" + name + ".tsv", Encoding.UTF_8, WRITER_WRITE_MODE.APPEND);
+		BufferedFileWriter writer  = new BufferedFileWriter(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "eval/" + name + ".tsv", Encoding.UTF_8, WRITER_WRITE_MODE.APPEND);
 		for ( Configuration configuration : configurations ) writer.write(configuration.toString());
 		writer.close();
 		
