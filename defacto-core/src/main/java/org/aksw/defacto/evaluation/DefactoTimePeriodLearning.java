@@ -281,7 +281,7 @@ public class DefactoTimePeriodLearning {
 			cells.add(format(cfg.mrrAverage));
 			cells.add(cfg.isPossible.split("/")[0]);
 			cells.add(format(cfg.correct / (double) Integer.valueOf(cfg.isPossible.split("/")[0])));
-			cells.add("");
+			cells.add(" ");
 		}
 		
 		return StringUtils.join(cells, " & ") + "\\\\";
