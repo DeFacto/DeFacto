@@ -272,7 +272,10 @@ public class DefactoTimePeriodLearning {
 		List<String> cells = new ArrayList<>();
 		cells.add(name);
 		
+		int i = 0;
 		for ( Configuration cfg : cfgs) {
+			
+			i++;
 			
 			cells.add(cfg.context.equals("tiny") ?  "25" : cfg.context.equals("small") ?  "50" : cfg.context.equals("medium") ? "100" : "150" );
 			cells.add(format(cfg.precision));
@@ -281,7 +284,7 @@ public class DefactoTimePeriodLearning {
 			cells.add(format(cfg.mrrAverage));
 			cells.add(cfg.isPossible.split("/")[0]);
 			cells.add(format(cfg.correct / (double) Integer.valueOf(cfg.isPossible.split("/")[0])));
-			cells.add(" ");
+			if (i < 3) cells.add(" ");
 		}
 		
 		return StringUtils.join(cells, " & ") + "\\\\";
