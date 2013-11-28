@@ -256,7 +256,7 @@ public class DefactoTimePeriodLearning {
 		Configuration domEnFrDe = getBestCfg(configs, "domain", 	Arrays.asList("en", "fr", "de"));
 		
 		System.out.println(fillCells(occEn.name + "$_{en}$", occEn, gloEn, domEn));
-		System.out.println(fillCells(occEnFrDe.name + "$_{en,fr,de}$", occEnFrDe, gloEnFrDe, domEnFrDe) + "\\midrule");
+		System.out.println(fillCells(occEnFrDe.name + "$_{ml}$", occEnFrDe, gloEnFrDe, domEnFrDe) + "\\midrule");
 	}
 	
 	/**
@@ -274,7 +274,7 @@ public class DefactoTimePeriodLearning {
 		
 		for ( Configuration cfg : cfgs) {
 			
-			cells.add(cfg.context.equals("tiny") ?  "25" : cfg.context.equals("small") ?  "50" : cfg.context.equals("medium") ? "75" : "100" );
+			cells.add(cfg.context.equals("tiny") ?  "25" : cfg.context.equals("small") ?  "50" : cfg.context.equals("medium") ? "100" : "150" );
 			cells.add(format(cfg.precision));
 			cells.add(format(cfg.recall));
 			cells.add(maxF1.equals(cfg.fMeasure) ? "\\textbf{" + format(cfg.fMeasure) + "}" : format(cfg.fMeasure));
