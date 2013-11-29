@@ -34,6 +34,8 @@ import org.slf4j.LoggerFactory;
 public class DefactoEvaluation {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefactoEvaluation.class);
+	static Long duration = 0L;
+	static Long number = 1L;
 	
 	/**
 	 * @param args
@@ -42,7 +44,6 @@ public class DefactoEvaluation {
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		Defacto.init();
-		
 		for ( String trainOrTestAndSet : args) {
 			String[] split = trainOrTestAndSet.split("-");
 			if ( split[0].equals("train") || split[0].equals("test") ) generateArffFiles(split[1], split[0]);
@@ -85,7 +86,11 @@ public class DefactoEvaluation {
 			Defacto.checkFact(models.get(i), TIME_DISTRIBUTION_ONLY.NO);
 			if ( i % 10 == 0 ) Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
 			Defacto.writeEvidenceTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");
-			System.out.println(" Time: " + (System.currentTimeMillis() - start));
+			long duration = System.currentTimeMillis() - start;
+			System.out.println(" Time: " + duration + " Avg: " + DefactoEvaluation.duration / number);
+			
+			DefactoEvaluation.duration += duration;
+			DefactoEvaluation.number++;
 		}
 		// write the last ones
 		Defacto.writeFactTrainingFiles(Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_TRAINING_DATA_FILENAME") + testOrTrain + "/" + set + ".arff");

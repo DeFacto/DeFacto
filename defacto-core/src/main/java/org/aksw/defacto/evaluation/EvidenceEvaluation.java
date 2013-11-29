@@ -59,16 +59,19 @@ public class EvidenceEvaluation {
 		System.out.println(String.format("Got %s instances!", 	trainingInstances.numInstances()));
 		System.out.println(String.format("Got %s attributes!", 	trainingInstances.numAttributes()));
 		System.out.println(String.format("Got %s classes!", 	trainingInstances.numClasses()));
+		System.out.println(String.format("Got %s instances!", 	backupInstances.numInstances()));
+		System.out.println(String.format("Got %s attributes!", 	backupInstances.numAttributes()));
+//		System.out.println(String.format("Got %s classes!", 	backupInstances.numClasses()));
+		
 		int sum = 0;
 		
 		Frequency freq = new Frequency();
 		
-		for ( int i = 0 ; i < trainingInstances.numInstances() ; i++) {
-			
+		for ( int i = 0 ; i < backupInstances.numInstances() -1; i++) {
 			Instance instance = trainingInstances.instance(i);
 			String relation = backupInstances.instance(i).attribute(0).value(i);
 			relation = relation.replaceAll("(train|test)/correct/", "").replaceAll("/.*", "");
-//			System.out.println("REL: " +  relation);
+//			
 			
 			freq.addValue(classifier.distributionForInstance(instance)[0]);
 			
@@ -93,13 +96,13 @@ public class EvidenceEvaluation {
 			}
 		}
 		
-		for ( int i = 1890; i <= 2010 ; i = i+10 ) {
+		for ( int j = 1890; j <= 2010 ; j = j+10 ) {
 
-			Integer correct = correctYearMap.get(i);
-			Integer wrong = wrongYearMap.get(i);
-			Double ratio = (((wrong * 100) / (double)(wrong + correct)) * (wrong + correct)) / 3300 ;
-			String year = i + "";
-			if ( i == 1890 ) year = "< 1890";
+			Integer correct = correctYearMap.get(j);
+			Integer wrong = wrongYearMap.get(j);
+			Double ratio = (((wrong * 100) / (double)(wrong + correct)) * (wrong + correct)) / 3700 ;
+			String year = j + "";
+			if ( j == 1890 ) year = "< 1890";
 			
 			System.out.println(year + "\t&\t" + correct + "\t&\t" + wrong + "\t&\t" + String.format(Locale.ENGLISH, "%.1f", ratio)+ "\\\\");
 		}
@@ -110,10 +113,10 @@ public class EvidenceEvaluation {
 //		}
 		
 //		System.out.println("All: " + sum);
-//		for (Map.Entry<String, Integer> entry : relationToCorrectCount.entrySet() ){
-//			
-//			System.out.println(entry.getKey() + "\t" + entry.getValue());
-//		}
+		for (Map.Entry<String, Integer> entry : relationToCorrectCount.entrySet() ){
+			
+			System.out.println(entry.getKey() + "\t" + entry.getValue());
+		}
 	}
 
 	private static void initYearMap() {
@@ -122,40 +125,6 @@ public class EvidenceEvaluation {
 			
 			correctYearMap.put(i, 0);
 			wrongYearMap.put(i, 0);
-		}
-	}
-
-	public static void evaluate(String trainOrTest) throws FileNotFoundException {
-		
-		Scorer scorer = new DummyEvidenceScorer();
-		Map<String,Integer> relationToCorrectCount = new HashMap<>();
-		
-		String trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
-				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", trainOrTest + "-directory");
-		
-		List<DefactoModel> models = DefactoModelReader.readModels(trainDirectory + "correct/", true, Arrays.asList("en", "de", "fr"));
-		Collections.shuffle(models, new Random(100));
-		
-		for ( DefactoModel model : models) {
-			
-			Evidence evidence = Defacto.checkFact(model, TIME_DISTRIBUTION_ONLY.NO);
-			scorer.scoreEvidence(evidence);
-			
-			if ( evidence.getDeFactoScore() >= 0.5 ) {
-				
-				if ( !relationToCorrectCount.containsKey(model.getPropertyUri()) ) relationToCorrectCount.put(model.getPropertyUri(), 1);
-				else relationToCorrectCount.put(model.getPropertyUri(), relationToCorrectCount.get(model.getPropertyUri()) + 1);
-			}
-			
-			for (Map.Entry<String, Integer> entry : relationToCorrectCount.entrySet() ){
-				
-				System.out.println(entry.getKey() + ": " + entry.getValue());
-			}
-		}
-		
-		for (Map.Entry<String, Integer> entry : relationToCorrectCount.entrySet() ){
-			
-			System.out.println(entry.getKey() + ": " + entry.getValue());
 		}
 	}
 

@@ -169,7 +169,7 @@ public class DefactoTimePeriodLearning {
 		line.add(format(cfg.fMeasure));
 		line.add(format(cfg.mrrAverage));
 		line.add(cfg.correctStart+ "");
-		if ( Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary").contains(cfg.name) )
+		if ( Arrays.asList("award", "birth", "death", "foundation", "publication", "starring", "subsidiary").contains(cfg.name) )
 			line.add("-");
 		else
 			line.add(cfg.correctEnd + "");
