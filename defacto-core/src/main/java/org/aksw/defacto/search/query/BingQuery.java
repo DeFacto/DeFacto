@@ -10,7 +10,7 @@ public class BingQuery implements Query {
     public String generateQuery(MetaQuery query) {
 
         String subject  = query.getSubjectLabel().replace("&", "and");
-        String property = normalizePredicate(query.getPropertyLabel().substring(0, query.getPropertyLabel().length() - 3).substring(3).trim());
+        String property = normalizePredicate(query.getPropertyLabel().trim());
         String object   = query.getObjectLabel().replace("&", "and");
         String queryString = "";
         
@@ -42,13 +42,13 @@ public class BingQuery implements Query {
 
     @Override
     public String normalizePredicate(String propertyLabel) {
-
-        return propertyLabel.replaceAll(",", "").replace("`", "").replace(" 's", "'s").replaceAll(" +", " ").replaceAll("'[^s]", "").replaceAll("&", "and").trim();
+System.out.println(propertyLabel);
+        return propertyLabel.replaceAll(",", "").replace("`", "").replace(" 's", "'s").replace("?R?", "").replace("?D?", "").replaceAll(" +", " ").replaceAll("'[^s]", "").replaceAll("&", "and").trim();
     }
     
     public static void main(String[] args) {
 
-        MetaQuery query1 = new MetaQuery("Mount Eccles National Park|-|??? NONE ???|-|Texas|-|de");
+        MetaQuery query1 = new MetaQuery("Franck Ribery|-| politician |-|Galatasaray|-|en");
         MetaQuery query2 = new MetaQuery("Mount Eccles National Park|-|?D? is a stupid ?R?|-|Texas|-|en");
         MetaQuery query3 = new MetaQuery("Mount Eccles National Park|-|?D? 's is a , ,, , '' stupid ?R?|-|Texas|-|fr");
         
