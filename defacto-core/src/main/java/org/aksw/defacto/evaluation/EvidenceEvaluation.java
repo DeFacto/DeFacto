@@ -50,6 +50,8 @@ public class EvidenceEvaluation {
 		Defacto.init();
 		loadClassifier();
 		initYearMap();
+		testFactArff();
+		
 		Map<String,Integer> relationToCorrectCount = new TreeMap<>();
 		trainingInstances = new Instances(new BufferedReader(new FileReader(DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "ARFF_EVIDENCE_TRAINING_DATA_FILENAME"))));
 		backupInstances = new Instances(new BufferedReader(new FileReader(DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "ARFF_EVIDENCE_TRAINING_DATA_FILENAME"))));
@@ -80,7 +82,7 @@ public class EvidenceEvaluation {
 			averageYear = averageYear.substring(0, 3) + "0";
 			if ( Integer.valueOf(averageYear) < 1900 ) averageYear = "1890";
 			
-			if ( classifier.distributionForInstance(instance)[0] > 0.5D ) {
+			if ( classifier.distributionForInstance(instance)[0] < 0.5D ) {
 				
 				sum++;
 				if ( !relationToCorrectCount.containsKey(relation) ) relationToCorrectCount.put(relation, 1);
@@ -117,6 +119,30 @@ public class EvidenceEvaluation {
 			
 			System.out.println(entry.getKey() + "\t" + entry.getValue());
 		}
+	}
+
+	private static void testFactArff() throws FileNotFoundException, IOException {
+		
+		try {
+			Instances instances = new Instances(new BufferedReader(new FileReader("/Users/gerb/Development/workspaces/experimental/defacto/mltemp/machinelearning/model/fact/66_33_proof_smo_reg/66_33_proof_smo_reg_polykernel.arff")));
+			
+			Frequency freq = new Frequency();
+			
+			for ( int i = 0 ; i < instances.numInstances(); i++) {
+				
+				freq.addValue(instances.instance(i).value(0));// + " " +  instances.instance(i).stringValue(26));
+			}
+			
+			for ( Entry<Comparable<?>, Long> sortByValue : freq.sortByValue()){
+				
+				System.out.println(sortByValue.getKey() + ": " + sortByValue.getValue());
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.exit(0);
 	}
 
 	private static void initYearMap() {

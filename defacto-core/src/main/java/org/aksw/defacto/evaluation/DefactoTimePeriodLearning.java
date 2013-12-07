@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Set;
 
 import org.aksw.defacto.Defacto;
@@ -54,12 +55,15 @@ public class DefactoTimePeriodLearning {
 		trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
 				+ Defacto.DEFACTO_CONFIG.getStringSetting("eval", args[0] + "-directory");
 		
-		if ( args[0].equals("train") ) startEvaluation();
-		else if (args[0].equals("test")) printLatexTable();
-		else System.out.println("Nothing to do! Wrong arguments!");
+//		if ( args[0].equals("train") ) startEvaluation();
+//		else if (args[0].equals("test")) printLatexTable();
+//		else System.out.println("Nothing to do! Wrong arguments!");
 		
 //		System.out.println(startSingleConfigurationEvaluation("award", Arrays.asList("en", "fr", "de"),
 //				Arrays.asList("award"), "domain", "frequency", "tiny"));
+		
+		System.out.println(startSingleConfigurationEvaluation("award", Arrays.asList("en", "fr", "de"),
+				Arrays.asList("birth"), "domain", "frequency", "tiny"));
 //		System.out.println(startSingleConfigurationEvaluation("point", Arrays.asList("en", "fr", "de"),
 //				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary"),
 //				"occurrence", "frequency", "tiny"));
@@ -207,8 +211,8 @@ public class DefactoTimePeriodLearning {
 		Defacto.DEFACTO_CONFIG.setStringSetting("settings", "TIME_PERIOD_SEARCHER", normalizer);
 		Defacto.DEFACTO_CONFIG.setStringSetting("settings", "periodSearchMethod", searchMethod);
 		Defacto.DEFACTO_CONFIG.setStringSetting("settings", "context-size", contextSize);
-//		Collections.shuffle(models);
-//		models = models.subList(0, 5);
+		Collections.shuffle(models, new Random(100));
+//		models = models.subList(0, 20);
 		
 		return learn(name, models, new ArrayList<Configuration>());
 	}
@@ -404,21 +408,13 @@ public class DefactoTimePeriodLearning {
 
 			DefactoModel model = models.get(i); 
 			
-//			System.out.println(model.getName());
-//			if ( !model.getName().contains("award_00007") && !model.getName().contains("award_00001") && !model.getName().contains("award_00003") && !model.getName().contains("award_00005") ) continue;
-//			if ( !model.getName().contains("award_00001") ) continue;
-			
 			Evidence evidence = Defacto.checkFact(model, TIME_DISTRIBUTION_ONLY.YES);
 //			createProofFrequency(evidence);
 			DefactoTimePeriod dtp = evidence.defactoTimePeriod;
 			
 			
-//			for( Entry<String, Long> entry : evidence.largeContextYearOccurrences.entrySet() ) {
-//				System.out.println(entry.getKey() + " : " + entry.getValue());
-//			}
-			
-//			System.out.println("Found:"+dtp);
-//			System.out.println("GS:   "+model.timePeriod);
+			System.out.println("Found:"+dtp);
+			System.out.println("GS:   "+model.timePeriod);
 			
 			// correct year is in retrieved year set
 			if (evidence.getPreferedContext().containsKey(model.timePeriod.from + "")) isPossible++; 
