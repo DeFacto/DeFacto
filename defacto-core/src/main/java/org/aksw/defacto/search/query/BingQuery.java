@@ -14,6 +14,8 @@ public class BingQuery implements Query {
         String object   = query.getObjectLabel().replace("&", "and");
         String queryString = "";
         
+        System.out.println("METAQUERY: " +query );
+        
         // standard search engine query
         if ( query.getTopicTerms().isEmpty() ) {
             
@@ -32,6 +34,9 @@ public class BingQuery implements Query {
                 // use the norelax option here because bing only includes first 4 terms as must contain
                 queryString += " AND norelax:\"" + query.getTopicTerms().get(i).getWord() + "\"";
         }
+        
+        System.out.println("QUERYSTRING: " + queryString);
+        
         return queryString;
     }
 

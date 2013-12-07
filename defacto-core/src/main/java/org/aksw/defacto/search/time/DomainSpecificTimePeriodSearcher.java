@@ -37,8 +37,13 @@ public class DomainSpecificTimePeriodSearcher implements DefactoTimePeriodSearch
 				
 				if ( entryPopularity >= maxEntryPopularity ) maxEntry = entry;
 			}
+			
+			//Integer year =  Integer.valueOf(entry.getKey());
+			//long trainFreq = TimeUtil.trainFreq.containsKey(year) ? TimeUtil.trainFreq.get(year) : 0;
+			
+			//System.out.println(entry.getKey() + "\t" + trainFreq + "\t" + entry.getValue() + "\t" + entry.getValue() / TimeUtil.getDomainNormalizedRootPopularity(year));
 		}
-		    
+		
 		return maxEntry == null ? null : new DefactoTimePeriod(maxEntry.getKey(), maxEntry.getKey());
 	}
 

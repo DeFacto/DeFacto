@@ -39,7 +39,7 @@ public class SimpleDefactoClient {
 		subjectLabels.put("de", enRiberyLabel);
 		subjectLabels.put("fr", enRiberyLabel);
 		
-		String enFCBLabel = "Galatasaray Istanbul";
+		String enFCBLabel = "Galtasaray";
 		Map<String, String> objectLabels = new HashMap<>();
 		objectLabels.put("en", enFCBLabel);
 		objectLabels.put("de", enFCBLabel);
@@ -56,7 +56,7 @@ public class SimpleDefactoClient {
 		altObjectLabels.put("fr", new HashSet<>(Arrays.asList("FC Bayern", "Bayern", "FCB")));
 		
 		// start the service
-		JSONObject result = queryDefacto("http://dbpedia.org/resource/Frank_Ribéry", "http://dbpedia.org/ontology/leaderName", "http://dbpedia.org/resource/Olympique_Marseille",
+		JSONObject result = queryDefacto("http://dbpedia.org/resource/Frank_Ribéryy", "http://dbpedia.org/ontology/leaderName", "http://dbpedia.org/resource/Olympique_Marseilley",
 				Arrays.asList("en"/*, "de", "fr"*/), "2007", "2013", "tiny", subjectLabels, objectLabels, altSubjectLabels, altObjectLabels);
 		
 		System.out.println("End: " + (System.currentTimeMillis()-start));
