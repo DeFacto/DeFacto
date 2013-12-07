@@ -138,9 +138,9 @@ public class BoaPatternSearcher {
                 this.logger.debug("Found pattern: " + pattern.naturalLanguageRepresentation); 
                 
                 // only add the first pattern, we don't want to override the better scored pattern
-                if ( !patterns.containsKey(pattern.normalize()) 
+                if ( !patterns.containsKey(pattern.getNormalized())  
                 		&& patterns.size() < Defacto.DEFACTO_CONFIG.getIntegerSetting("boa", "NUMBER_OF_BOA_PATTERNS") ) 
-                	patterns.put(pattern.normalize(), pattern);
+                	patterns.put(pattern.getNormalized(), pattern);
             }
         }
         catch (SolrServerException e) {
