@@ -16,7 +16,6 @@ import org.ini4j.Ini;
  */
 public class DefactoConfig {
 
-    public static List<String> LANGUAGES = null;
 	private Ini defactoConfig;
     
     public static String DEFACTO_DATA_DIR;
@@ -25,7 +24,6 @@ public class DefactoConfig {
         
         this.defactoConfig =  config;
         DEFACTO_DATA_DIR = this.defactoConfig.get("eval", "data-directory");
-        LANGUAGES = new ArrayList<String>(Arrays.asList(this.defactoConfig.get("boa", "languages").split(",")));
     }
     
     /**
