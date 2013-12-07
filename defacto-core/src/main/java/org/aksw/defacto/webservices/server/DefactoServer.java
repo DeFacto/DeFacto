@@ -35,8 +35,6 @@ import com.sun.jersey.api.core.ResourceConfig;
  */
 public class DefactoServer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefactoServer.class);
-    
     private static URI getBaseURI() {
     	
     	Defacto.init();
@@ -45,6 +43,7 @@ public class DefactoServer {
         		port(Defacto.DEFACTO_CONFIG.getIntegerSetting("server", "port")).build();
     }
     public static final URI BASE_URI = getBaseURI();
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefactoServer.class);
 
     protected static HttpServer startServer() throws IOException {
 

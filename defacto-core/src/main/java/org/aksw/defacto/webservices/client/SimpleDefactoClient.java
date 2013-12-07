@@ -30,7 +30,10 @@ public class SimpleDefactoClient {
 	
 	public static void main(String[] args) throws IOException, JSONException {
 
-		String enRiberyLabel = "Franck Ribéry"; 
+		System.out.println("Start");
+		long start = System.currentTimeMillis();
+		
+		String enRiberyLabel = "Franck Ribery"; 
 		Map<String, String> subjectLabels = new HashMap<>();
 		subjectLabels.put("en", enRiberyLabel);
 		subjectLabels.put("de", enRiberyLabel);
@@ -55,6 +58,8 @@ public class SimpleDefactoClient {
 		// start the service
 		JSONObject result = queryDefacto("http://dbpedia.org/resource/Frank_Ribéry", "http://dbpedia.org/ontology/team", "http://dbpedia.org/resource/FC_Bayern_München",
 				Arrays.asList("en"/*, "de", "fr"*/), "2007", "2013", "tiny", subjectLabels, objectLabels, altSubjectLabels, altObjectLabels);
+		
+		System.out.println("End: " + (System.currentTimeMillis()-start));
 
 		writeData(result);
 	}

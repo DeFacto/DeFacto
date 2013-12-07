@@ -55,9 +55,7 @@ public class Defacto {
     	YES,
     	NO;
     }
-	private static int numberOfModels;
-    private static int currentModel;
-    private static long startTime;
+    
     public static DefactoConfig DEFACTO_CONFIG;
     public static TIME_DISTRIBUTION_ONLY onlyTimes;
     
@@ -170,9 +168,6 @@ public class Defacto {
     public static Map<DefactoModel,Evidence> checkFacts(List<DefactoModel> defactoModel, TIME_DISTRIBUTION_ONLY onlyTimeDistribution) {
 
     	init();
-        startTime       = System.currentTimeMillis();
-        numberOfModels  = defactoModel.size();
-        currentModel    = 1;
         
         Map<DefactoModel,Evidence> evidences = new HashMap<DefactoModel, Evidence>();
         

@@ -103,6 +103,7 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
             aq.setSources(new AZURESEARCH_QUERYTYPE[] { AZURESEARCH_QUERYTYPE.WEB });
             
             aq.setQuery(this.generateQuery(query));
+            System.out.println(this.generateQuery(query));
             aq.doQuery();
             
             AzureSearchResultSet<AbstractAzureSearchResult> ars = aq.getQueryResult();
