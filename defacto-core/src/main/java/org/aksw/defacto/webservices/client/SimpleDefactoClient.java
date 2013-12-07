@@ -30,35 +30,31 @@ public class SimpleDefactoClient {
 	
 	public static void main(String[] args) throws IOException, JSONException {
 
+		String enRiberyLabel = "Franck Ribéry"; 
 		Map<String, String> subjectLabels = new HashMap<>();
-		subjectLabels.put("en", "Albert Einstein");
-		subjectLabels.put("de", "Albert Einstein");
-		subjectLabels.put("fr", "Albert Einstein");
+		subjectLabels.put("en", enRiberyLabel);
+		subjectLabels.put("de", enRiberyLabel);
+		subjectLabels.put("fr", enRiberyLabel);
 		
+		String enFCBLabel = "FC Bayern München";
 		Map<String, String> objectLabels = new HashMap<>();
-		objectLabels.put("en", "Nobel Prize in Physics");
-		objectLabels.put("de", "Nobelpreis für Physik");
-		objectLabels.put("fr", "Prix Nobel de physique");
+		objectLabels.put("en", enFCBLabel);
+		objectLabels.put("de", enFCBLabel);
+		objectLabels.put("fr", enFCBLabel);
 		
 		Map<String, Set<String>> altSubjectLabels = new HashMap<>();
-		Set<String> enSAltLabels = new HashSet<>(Arrays.asList("A. Einstein")); // add more for each language
-		Set<String> deSAltLabels = new HashSet<>(Arrays.asList("Einstein, Albert")); // from the surface form files
-		Set<String> frSAltLabels = new HashSet<>(Arrays.asList("Albert Einstin"));
-		altSubjectLabels.put("en", enSAltLabels);
-		altSubjectLabels.put("de", deSAltLabels);
-		altSubjectLabels.put("fr", frSAltLabels);
+		altSubjectLabels.put("en", new HashSet<>(Arrays.asList("Ribéry", "Ribery", "Frank R.")));
+		altSubjectLabels.put("de", new HashSet<>(Arrays.asList("Ribéry", "Ribery", "Frank R.")));
+		altSubjectLabels.put("fr", new HashSet<>(Arrays.asList("Ribéry", "Ribery", "Frank R.")));
 		
 		Map<String, Set<String>> altObjectLabels = new HashMap<>();
-		Set<String> enOAltLabels = new HashSet<>(Arrays.asList("Nobel Physics Prize")); // add more for each language
-		Set<String> deOAltLabels = new HashSet<>(Arrays.asList("Physik-Nobelpreis")); // from the surface form files
-		Set<String> frOAltLabels = new HashSet<>(Arrays.asList("Nobel laureates in physics"));
-		altObjectLabels.put("en", enOAltLabels);
-		altObjectLabels.put("de", deOAltLabels);
-		altObjectLabels.put("fr", frOAltLabels);
+		altObjectLabels.put("en", new HashSet<>(Arrays.asList("FC Bayern", "Bayern", "FCB")));
+		altObjectLabels.put("de", new HashSet<>(Arrays.asList("FC Bayern", "Bayern", "FCB")));
+		altObjectLabels.put("fr", new HashSet<>(Arrays.asList("FC Bayern", "Bayern", "FCB")));
 		
 		// start the service
-		JSONObject result = queryDefacto("http://dbpedia.org/resource/Albert_Einstein", "http://dbpedia.org/ontology/award", "http://dbpedia.org/resource/Nobel_Prize_in_Physics",
-				Arrays.asList("en", "de", "fr"), "1921", "1921", "tiny", subjectLabels, objectLabels, altSubjectLabels, altObjectLabels);
+		JSONObject result = queryDefacto("http://dbpedia.org/resource/Frank_Ribéry", "http://dbpedia.org/ontology/team", "http://dbpedia.org/resource/FC_Bayern_München",
+				Arrays.asList("en"/*, "de", "fr"*/), "2007", "2013", "tiny", subjectLabels, objectLabels, altSubjectLabels, altObjectLabels);
 
 		writeData(result);
 	}

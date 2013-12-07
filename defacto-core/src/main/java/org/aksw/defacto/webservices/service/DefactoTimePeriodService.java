@@ -24,6 +24,8 @@ import org.aksw.defacto.webservices.server.DefactoServer;
 import org.ini4j.Ini;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -43,6 +45,8 @@ public class DefactoTimePeriodService {
 	// http://localhost:1234/getdefactotimes?s=http%3A%2F%2Fdbpedia.org%2Fresource%2FBallack&p=http%3A%2F%2Fdbpedia.org%2Fontology%2Fteam&o=http%3A%2F%2Fdbpedia.org%2Fresource%2FChelsea_F.C.&slabel=Michael%20Ballack&olabel=Chelsea
 	// http://localhost:1234/getdefactotimes?s=http%3A%2F%2Fdbpedia.org%2Fresource%2FBallack&p=http%3A%2F%2Fdbpedia.org%2Fontology%2Fteam&o=http%3A%2F%2Fdbpedia.org%2Fresource%2FChelsea_F.C.&slabel=Michael%20Ballack&olabel=Chelsea
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DefactoTimePeriodService.class);
+	
     @POST
     @Produces("application/json")
     public Response getJson(
@@ -55,8 +59,9 @@ public class DefactoTimePeriodService {
             @QueryParam("contextSize") String contextSize
             ) {
     	
-        DefactoServer.log.log(Level.INFO, "Processing <" + subject + ">, <" + property + ">, <" + object + ">");
-        if ( olabels != null && slabels != null) DefactoServer.log.log(Level.INFO, "Processing <" + slabels + ">, <" + property + ">, <" + olabels + ">");
+    	LOGGER.info("Processing <" + subject + ">, <" + property + ">, <" + object + ">");
+        if ( olabels != null && slabels != null) 
+        	LOGGER.info("Processing <" + slabels + ">, <" + property + ">, <" + olabels + ">");
         
         try {
         	
@@ -122,8 +127,8 @@ public class DefactoTimePeriodService {
         }
         catch (Exception e) {
         
-        	DefactoServer.log.log(Level.WARNING, "Error while processing <" + subject + "," + property + "," + object + ">");
-            DefactoServer.log.log(Level.WARNING, e.getMessage());
+        	LOGGER.error("Error while processing <" + subject + "," + property + "," + object + ">");
+        	LOGGER.error(e.getMessage());
             e.printStackTrace();
         }
         return Response.serverError().build();
