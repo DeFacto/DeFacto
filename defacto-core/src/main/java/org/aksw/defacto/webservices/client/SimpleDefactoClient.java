@@ -39,7 +39,7 @@ public class SimpleDefactoClient {
 		subjectLabels.put("de", enRiberyLabel);
 		subjectLabels.put("fr", enRiberyLabel);
 		
-		String enFCBLabel = "Galatasaray";
+		String enFCBLabel = "FC Bayern München";
 		Map<String, String> objectLabels = new HashMap<>();
 		objectLabels.put("en", enFCBLabel);
 		objectLabels.put("de", enFCBLabel);
@@ -47,16 +47,16 @@ public class SimpleDefactoClient {
 		
 		Map<String, Set<String>> altSubjectLabels = new HashMap<>();
 		altSubjectLabels.put("en", new HashSet<>(Arrays.asList("Ribéry", "Ribery", "Frank R.")));
-		altSubjectLabels.put("de", new HashSet<>(Arrays.asList("Ribéry", "Ribery", "Frank R.")));
-		altSubjectLabels.put("fr", new HashSet<>(Arrays.asList("Ribéry", "Ribery", "Frank R.")));
+//		altSubjectLabels.put("de", new HashSet<>(Arrays.asList("Ribéry", "Ribery", "Frank R.")));
+//		altSubjectLabels.put("fr", new HashSet<>(Arrays.asList("Ribéry", "Ribery", "Frank R.")));
 		
 		Map<String, Set<String>> altObjectLabels = new HashMap<>();
 		altObjectLabels.put("en", new HashSet<>(Arrays.asList("FC Bayern", "Bayern", "FCB")));
-		altObjectLabels.put("de", new HashSet<>(Arrays.asList("FC Bayern", "Bayern", "FCB")));
-		altObjectLabels.put("fr", new HashSet<>(Arrays.asList("FC Bayern", "Bayern", "FCB")));
+//		altObjectLabels.put("de", new HashSet<>(Arrays.asList("FC Bayern", "Bayern", "FCB")));
+//		altObjectLabels.put("fr", new HashSet<>(Arrays.asList("FC Bayern", "Bayern", "FCB")));
 		
 		// start the service
-		JSONObject result = queryDefacto("http://dbpedia.org/resource/Frank_Ribéryyy", "http://dbpedia.org/ontology/leaderName", "http://dbpedia.org/resource/Olympique_Marseilley",
+		JSONObject result = queryDefacto("http://dbpedia.org/resource/Frank_Ribéry", "http://dbpedia.org/ontology/team", "http://dbpedia.org/resource/FC_Bayern_München",
 				Arrays.asList("en"/*, "de", "fr"*/), "2007", "2013", "tiny", subjectLabels, objectLabels, altSubjectLabels, altObjectLabels);
 		
 		System.out.println("End: " + (System.currentTimeMillis()-start));
