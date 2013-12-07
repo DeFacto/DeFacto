@@ -137,8 +137,10 @@ public class BoaPatternSearcher {
                 
                 this.logger.debug("Found pattern: " + pattern.naturalLanguageRepresentation); 
                 
+                System.out.println(pattern.getNormalized());
+                
                 // only add the first pattern, we don't want to override the better scored pattern
-                if ( !patterns.containsKey(pattern.getNormalized())  
+                if ( !pattern.getNormalized().trim().isEmpty() && !patterns.containsKey(pattern.getNormalized())  
                 		&& patterns.size() < Defacto.DEFACTO_CONFIG.getIntegerSetting("boa", "NUMBER_OF_BOA_PATTERNS") ) 
                 	patterns.put(pattern.getNormalized(), pattern);
             }
@@ -179,9 +181,9 @@ public class BoaPatternSearcher {
 //        System.out.println("--------------");
 //        queryPatterns("http://dbpedia.org/ontology/foundationPlace");
         System.out.println("--------------");
-        queryPatterns("http://dbpedia.org/ontology/leaderName");
+//        queryPatterns("http://dbpedia.org/ontology/leaderName");
         System.out.println("--------------");
-        queryPatterns("http://dbpedia.org/ontology/team");
+//        queryPatterns("http://dbpedia.org/ontology/team");
         System.out.println("--------------");
 //        queryPatterns("http://dbpedia.org/ontology/author");
 //        System.out.println("--------------");
