@@ -54,7 +54,7 @@ public class BoaPatternSearcher {
     public List<Pattern> getNaturalLanguageRepresentations(String propertyUri, String language){
 
         return querySolrIndex(propertyUri, 
-                25, 
+                50, 
                 Defacto.DEFACTO_CONFIG.getDoubleSetting("boa", "PATTERN_SCORE_THRESHOLD"), language);
     }
     
