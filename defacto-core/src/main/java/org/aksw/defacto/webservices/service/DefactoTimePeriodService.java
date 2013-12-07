@@ -66,7 +66,6 @@ public class DefactoTimePeriodService {
         try {
         	
             org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
-            Defacto.init();
             Defacto.DEFACTO_CONFIG.setStringSetting("settings", "context-size", contextSize);
             Model model = ModelFactory.createDefaultModel();
             
