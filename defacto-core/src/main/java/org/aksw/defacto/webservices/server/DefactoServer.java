@@ -39,6 +39,8 @@ public class DefactoServer {
     
     private static URI getBaseURI() {
     	
+    	Defacto.init();
+    	
         return UriBuilder.fromUri(Defacto.DEFACTO_CONFIG.getStringSetting("server", "ip")).
         		port(Defacto.DEFACTO_CONFIG.getIntegerSetting("server", "port")).build();
     }
@@ -57,8 +59,6 @@ public class DefactoServer {
 
     public static void main(String[] args) throws IOException {
         try {
-        	
-        	Defacto.init();
         	
             // the following statement is used to log any messages  
             LOGGER.info("Service started");
