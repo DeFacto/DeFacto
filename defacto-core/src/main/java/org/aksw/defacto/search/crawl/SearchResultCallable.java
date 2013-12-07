@@ -32,6 +32,8 @@ public class SearchResultCallable implements Callable<SearchResult> {
     @Override
     public SearchResult call() throws Exception {
 
+    	System.out.println("SRC: " + this.query);
+    	
         return this.engine.getSearchResults(this.query, this.pattern);
     }
 

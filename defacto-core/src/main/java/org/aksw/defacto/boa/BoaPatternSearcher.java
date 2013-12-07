@@ -137,7 +137,7 @@ public class BoaPatternSearcher {
                 
                 this.logger.debug("Found pattern: " + pattern.naturalLanguageRepresentation); 
                 
-                System.out.println(pattern.getNormalized());
+//                System.out.println(pattern.getNormalized());
                 
                 // only add the first pattern, we don't want to override the better scored pattern
                 if ( !pattern.getNormalized().trim().isEmpty() && !patterns.containsKey(pattern.getNormalized())  
