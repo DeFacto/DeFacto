@@ -3,7 +3,11 @@
  */
 package org.aksw.defacto.search.time;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -42,26 +46,33 @@ public class TimeUtil {
 	
 	private static void readProofFreq(String contextSize) {
 		
-		String path = new File(TimeUtil.class.getResource("/normalization/").getFile()).getAbsolutePath() + "/" + contextSize+".tsv";
-		BufferedFileReader reader = new BufferedFileReader(path, Encoding.UTF_8);
+//		String path = new File(TimeUtil.class.getResource("/normalization/").getFile()).getAbsolutePath() + "/" + contextSize+".tsv";
+//		BufferedFileReader reader = new BufferedFileReader(path, Encoding.UTF_8);
 		
-		String line = "";
-		while ((line =reader.readLine()) != null ) {
-			
-			String[] parts = line.split("\t"); 
-			
-			switch ( contextSize ) {
-			
-				case "tiny" :	tinyFreq.put(Integer.valueOf(parts[0]), Long.valueOf(parts[1])); break;
-				case "small" : 	smallFreq.put(Integer.valueOf(parts[0]), Long.valueOf(parts[1])); break;
-				case "medium" : mediumFreq.put(Integer.valueOf(parts[0]), Long.valueOf(parts[1])); break;
-				case "large" :	largeFreq.put(Integer.valueOf(parts[0]), Long.valueOf(parts[1])); break;
-			
-				default: throw new RuntimeException("Context size: " + 
-					Defacto.DEFACTO_CONFIG.getStringSetting("settings", "context-size") + " not supported!");
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(TimeUtil.class.getClassLoader().getResourceAsStream("normalization/"+ contextSize +".tsv")));
+			String line = "";
+			while ((line = reader.readLine()) != null ) {
+				
+				String[] parts = line.split("\t"); 
+				
+				switch ( contextSize ) {
+				
+					case "tiny" :	tinyFreq.put(Integer.valueOf(parts[0]), Long.valueOf(parts[1])); break;
+					case "small" : 	smallFreq.put(Integer.valueOf(parts[0]), Long.valueOf(parts[1])); break;
+					case "medium" : mediumFreq.put(Integer.valueOf(parts[0]), Long.valueOf(parts[1])); break;
+					case "large" :	largeFreq.put(Integer.valueOf(parts[0]), Long.valueOf(parts[1])); break;
+				
+					default: throw new RuntimeException("Context size: " + 
+						Defacto.DEFACTO_CONFIG.getStringSetting("settings", "context-size") + " not supported!");
+				}
 			}
+			reader.close();
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		reader.close();
 	}
 
 	/**

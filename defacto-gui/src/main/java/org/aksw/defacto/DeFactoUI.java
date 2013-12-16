@@ -5,19 +5,26 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.aksw.commons.collections.Pair;
+import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.data.SupportedRelationsContainer;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
+import org.aksw.defacto.util.AGDISTIS;
+import org.aksw.defacto.util.AGDISTISResult;
+import org.aksw.defacto.util.DeFactoModelGenerator;
 import org.aksw.defacto.util.DummyData;
+import org.aksw.defacto.util.EvidenceRDFGenerator;
 import org.aksw.defacto.widget.ProgressDialog;
 import org.aksw.defacto.widget.ResultsPanel;
 import org.aksw.defacto.widget.SearchResourceDialog;
+import org.dllearner.kb.sparql.SparqlEndpoint;
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
@@ -25,6 +32,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
+import com.google.common.collect.Sets;
 import com.google.common.io.CharStreams;
 import com.google.common.io.InputSupplier;
 import com.hp.hpl.jena.graph.NodeFactory;
@@ -60,6 +68,7 @@ public class DeFactoUI extends UI
 	private ComboBox subjectBox;
 	
 	private Button validateButton;
+	private DeFactoModelGenerator modelGenerator = new DeFactoModelGenerator(SparqlEndpoint.getEndpointDBpedia());
 
     @Override
     protected void init(VaadinRequest request) {
@@ -67,7 +76,7 @@ public class DeFactoUI extends UI
         layout.setSizeFull();
         layout.setMargin(true);
         setContent(layout);
-        
+        layout.addStyleName("main-view");
         //header
         Component header = createHeader();
         layout.addComponent(header);
@@ -78,25 +87,30 @@ public class DeFactoUI extends UI
         main.setSpacing(true);
 //        main.addStyleName("defacto");
         main.addStyleName("main-view");
+//        main.addStyleName("result-panel");
         layout.addComponent(main);
         //add triple input form to main panel in center top
         Component tripleInput = generateTripleInputForm();
         main.addComponent(tripleInput);
         //add results panel to main panel in center bottom
         resultsPanel = new ResultsPanel();
-        resultsPanel.setHeight(null);
+        main.addComponent(resultsPanel);
+        main.setExpandRatio(resultsPanel, 1f);
+//        resultsPanel.setHeight(null);
         //wrap in panel for scrolling
-        Panel panel = new Panel();
-        panel.setContent(resultsPanel);
-        panel.setWidth("100%");
-        panel.setHeight(null);
-        panel.setSizeFull();
-        main.addComponent(panel);
-        main.setExpandRatio(panel, 1f);
+//        Panel panel = new Panel();
+//        panel.setContent(resultsPanel);
+//        panel.setWidth("100%");
+//        panel.setHeight(null);
+//        panel.setSizeFull();
+//        main.addComponent(panel);
+//        main.setExpandRatio(panel, 1f);
 
         //footer
         Component footer = createFooter();
+        footer.setWidth(null);
         layout.addComponent(footer);
+        layout.setComponentAlignment(footer, Alignment.MIDDLE_RIGHT);
         
         layout.setExpandRatio(main, 1f);
         
@@ -112,12 +126,16 @@ public class DeFactoUI extends UI
 		}
         //set dummy triple
         Triple triple = DummyData.getDummyTriple();
-        subjectBox.addItem(triple.getSubject().getURI());
-        subjectBox.setValue(triple.getSubject().getURI());
+//        subjectBox.addItem(triple.getSubject().getURI());
+//        subjectBox.setValue(triple.getSubject().getURI());
+        subjectBox.addItem("Albert Einstein");
+        subjectBox.setValue("Albert Einstein");
         predicateBox.addItem(triple.getPredicate().getURI());
         predicateBox.setValue(triple.getPredicate().getURI());
-        objectBox.addItem(triple.getObject().getURI());
-        objectBox.setValue(triple.getObject().getURI());
+//        objectBox.addItem(triple.getObject().getURI());
+//        objectBox.setValue(triple.getObject().getURI());
+        objectBox.addItem("Nobel Prize in Physics");
+        objectBox.setValue("Nobel Prize in Physics");
     }
     
     /**
@@ -213,7 +231,9 @@ public class DeFactoUI extends UI
         l.setExpandRatio(predicateBox, 1f);
         l.setExpandRatio(objectBox, 1f);
         
-        return l;
+        Panel p = new Panel("Enter the fact:");
+        p.setContent(l);
+        return p;
     }
     
     /**
@@ -272,10 +292,6 @@ public class DeFactoUI extends UI
     	return l;
     }
     
-    private void loadSupportedRelations(){
-    	
-    }
-    
     /**
      * Run validation of the given triple.
      * @param triple
@@ -284,31 +300,44 @@ public class DeFactoUI extends UI
     	final ProgressDialog dialog = new ProgressDialog("Validating...");
     	addWindow(dialog);
     	
-    	String subjectURI = (String) subjectBox.getValue();
-    	String predicateURI = (String) subjectBox.getItem(subjectBox.getValue()).getItemProperty("uri").getValue();
-    	String objectURI = (String) objectBox.getValue();
-    	
-    	final Triple triple = new Triple(
-    			NodeFactory.createURI(subjectURI), 
-    			NodeFactory.createURI(predicateURI), 
-    			NodeFactory.createURI(objectURI));
+    	final String subject = (String) subjectBox.getValue();
+    	final String predicateURI = (String) predicateBox.getItem(predicateBox.getValue()).getItemProperty("uri").getValue();
+    	final String object = (String) objectBox.getValue();
     	
     	new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				//determine the URIs
+				AGDISTISResult result = AGDISTIS.disambiguate(subject, object);
+				String subjectURI = result.getSubjectURI();
+				if(subjectURI == null){
+					
 				}
+				String objectURI = result.getObjectURI();
+				if(objectURI == null){
+					
+				}
+				
+				subjectURI = "http://dbpedia.org/resource/Albert_Einstein";
+		    	objectURI = "http://dbpedia.org/resource/Nobel_Prize_in_Physics";
+				
+				//build the triple
+				final Triple triple = new Triple(
+		    			NodeFactory.createURI(subjectURI), 
+		    			NodeFactory.createURI(predicateURI), 
+		    			NodeFactory.createURI(objectURI));
+				
+				
 				//build the DeFacto model
-		    	DefactoModel model = DummyData.getDummyModel();
+//		    	final DefactoModel model = DummyData.getEinsteinModel();
+				final DefactoModel model = modelGenerator.generateModel(Sets.newHashSet(subjectURI, objectURI));
 		    	
-		    	//this is actually a dummy call of DeFacto
-		    	final Pair<DefactoModel, Evidence> evidence = DummyData.createDummyData(5);//TODO call DeFacto properly
-//		    	Map<DefactoModel, Evidence> evidence = Defacto.checkFacts(Lists.newArrayList(model), TIME_DISTRIBUTION_ONLY.NO);
+		    	//call of DeFacto
+				final Calendar startTime = Calendar.getInstance();
+		    	final Evidence evidence = Defacto.checkFact(model, TIME_DISTRIBUTION_ONLY.NO);
+		    	final Calendar endTime = Calendar.getInstance();
 		    	
 				UI.getCurrent().access(new Runnable() {
 					@Override
@@ -316,7 +345,7 @@ public class DeFactoUI extends UI
 						//remove progress dialog
 						removeWindow(dialog);
 						//visualize the results
-				    	resultsPanel.showResults(triple, evidence.second);
+				    	resultsPanel.showResults(triple, evidence, startTime, endTime);
 					}
 				});
 			}
@@ -360,4 +389,23 @@ public class DeFactoUI extends UI
 //		}
     	return suggestions;
     }
+    
+    public static void main(String[] args) throws Exception {
+    	Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(DeFactoUI.class.getClassLoader().getResourceAsStream("defacto.ini")));
+    	AGDISTISResult result = AGDISTIS.disambiguate("Albert Einstein", "Nobel Prize");
+    	System.out.println(result);
+    	
+    	final DefactoModel model = DummyData.getEinsteinModel();
+    	
+    	//this is actually a dummy call of DeFacto
+//    	final Pair<DefactoModel, Evidence> evidence = DummyData.createDummyData(5);//TODO call DeFacto properly
+    	Calendar startTime = Calendar.getInstance();
+    	final Evidence evidence = Defacto.checkFact(model, TIME_DISTRIBUTION_ONLY.NO);
+    	Calendar endTime = Calendar.getInstance();
+    	
+		System.out.println(evidence.getDeFactoScore());
+    	System.out.println(evidence.defactoTimePeriod.getFrom());
+    	
+    	System.out.println(EvidenceRDFGenerator.getProvenanceInformationAsString(DummyData.getDummyTriple(), evidence, startTime, endTime, "TURTLE"));
+	}
 }

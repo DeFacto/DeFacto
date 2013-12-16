@@ -35,7 +35,7 @@ public class GoodnessFeature extends AbstractEvidenceFeature {
 			String dbPort = "3306";
 			String database = "dbpedia_metrics";
 			String dbUser = "root";
-            Connection conn = DriverManager.getConnection("jdbc:mysql://" + dbHost + ":" + dbPort + "/" + database + "?" + "user=" + dbUser);
+            Connection conn = DriverManager.getConnection("jdbc:mysql://" + dbHost + ":" + dbPort + "/" + database + "?" + "user=" + dbUser + "&password=pw" );
 			metric = new DatabaseBackedSPARQLEndpointMetrics(endpoint, "pmi-cache", conn);
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block

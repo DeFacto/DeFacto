@@ -31,12 +31,11 @@ import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTermExtractor;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.Frequency;
-import org.aksw.defacto.util.ListUtil;
 import org.aksw.defacto.util.TimeUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.stanford.nlp.util.StringUtils;
 
 /**
  * 

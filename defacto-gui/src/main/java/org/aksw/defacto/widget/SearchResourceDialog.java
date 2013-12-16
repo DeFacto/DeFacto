@@ -11,7 +11,6 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
-import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -73,7 +72,9 @@ public class SearchResourceDialog extends Window{
 			}
 		});
 		select.setSelectable(true);
+		select.setMultiSelect(false);
 		select.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
+		
         l.addComponent(select);
         
         l.setExpandRatio(select, 1f);

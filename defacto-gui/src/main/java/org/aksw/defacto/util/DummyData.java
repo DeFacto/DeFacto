@@ -34,8 +34,8 @@ public class DummyData {
 	public static Triple getDummyTriple(){
 		return new Triple(
 				NodeFactory.createURI("http://dbpedia.org/resource/Albert_Einstein"), 
-        		NodeFactory.createURI("http://dbpedia.org/ontology/birthPlace"), 
-        		NodeFactory.createURI("http://dbpedia.org/resource/Ulm"));
+        		NodeFactory.createURI("http://dbpedia.org/ontology/award"), 
+        		NodeFactory.createURI("http://dbpedia.org/resource/Nobel_Prize_in_Physics"));
 	}
 	
 	public static DefactoModel getDummyModel() {
@@ -49,6 +49,12 @@ public class DummyData {
 		albert.addProperty(property, ulm);
 		DefactoModel defactoModel = new DefactoModel(model, "ballack", true, Arrays.asList("en"));
 		return defactoModel;
+	}
+	
+	public static DefactoModel getEinsteinModel(){
+		Model model = ModelFactory.createDefaultModel();
+		model.read(DefactoModel.class.getClassLoader().getResourceAsStream("Einstein.ttl"), null, "TURTLE");
+		return new DefactoModel(model, "src/main/resources/Einstein.ttl", true, Arrays.asList("en","fr", "de"));
 	}
 	
 	public static Pair<DefactoModel, Evidence> createDummyData(int size){

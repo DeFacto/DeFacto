@@ -3,6 +3,7 @@ package org.aksw.defacto.ml.feature.evidence;
 import java.io.File;
 
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.fact.FactScorer;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ public class EvidenceScorer implements Scorer {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EvidenceScorer.class);
     
-    private String pathToClassifier     = new File(FactScorer.class.getResource("/classifier/evidence/" + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE") + ".model").getFile()).getAbsolutePath();
+    private String pathToClassifier ;//    = new File(FactScorer.class.getResource("/classifier/evidence/" + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE") + ".model").getFile()).getAbsolutePath();
 //    private String pathToEvaluation     = "resources/classifier/evidence/" + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE") + ".eval.model";
 //    private String pathToTrainingData   = Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME");
     
@@ -30,6 +31,8 @@ public class EvidenceScorer implements Scorer {
      * 
      */
     public EvidenceScorer() {
+    	pathToClassifier = new File(DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "EVIDENCE_CLASSIFIER_TYPE")).getAbsolutePath();
+
         
         if ( new File(pathToClassifier).exists() ) {
             

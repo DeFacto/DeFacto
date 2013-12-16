@@ -123,6 +123,26 @@
       <artifactId>jena</artifactId>
       <version>2.0.1-SNAPSHOT</version>
     </dependency>
+		<dependency>
+			<groupId>info.bliki.wiki</groupId>
+			<artifactId>bliki-core</artifactId>
+			<version>3.0.17</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-lang</artifactId>
+					<groupId>commons-lang</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-compress</artifactId>
+					<groupId>org.apache.commons</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+	<groupId>net.minidev</groupId>
+	<artifactId>json-smart</artifactId>
+	<version>1.2</version>
+</dependency> 
 	</dependencies>
 
 	<build>

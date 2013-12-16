@@ -13,10 +13,6 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Mohamed Morsey
- * Date: 6/8/12
- * Time: 8:26 PM
  * Generates the provenance information according to W3C draft described in http://www.w3.org/TR/prov-primer/
  */
 public class ProvenanceInformationGenerator {

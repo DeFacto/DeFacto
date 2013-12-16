@@ -3,15 +3,14 @@
  */
 package org.aksw.defacto.search.concurrent;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.nlp.ner.RegexTagger;
 import org.aksw.defacto.util.NlpUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import edu.stanford.nlp.util.StringUtils;
 
 /**
  * @author gerb

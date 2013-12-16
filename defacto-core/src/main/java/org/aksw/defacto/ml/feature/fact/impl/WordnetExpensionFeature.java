@@ -6,6 +6,7 @@ package org.aksw.defacto.ml.feature.fact.impl;
 import java.io.File;
 import java.util.List;
 
+import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.BoaPatternSearcher;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.ComplexProof;
@@ -21,7 +22,10 @@ import org.aksw.defacto.wordnet.WordNetExpansion;
  */
 public class WordnetExpensionFeature implements FactFeature {
 
-    WordNetExpansion wordnetExpansion = new WordNetExpansion(new File(WordnetExpensionFeature.class.getResource("/wordnet/dict").getFile()).getAbsolutePath());
+//    WordNetExpansion wordnetExpansion = new WordNetExpansion(new File(WordnetExpensionFeature.class.getResource("/wordnet/dict").getFile()).getAbsolutePath());
+    WordNetExpansion wordnetExpansion = new WordNetExpansion(Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "WORDNET_DICTIONARY"));
+    
+    
     BoaPatternSearcher searcher = new BoaPatternSearcher();
     
     /* (non-Javadoc)

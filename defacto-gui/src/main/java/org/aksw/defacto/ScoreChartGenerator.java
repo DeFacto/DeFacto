@@ -56,7 +56,7 @@ public class ScoreChartGenerator {
 					.add(topicCoverage, "Topic Coverage")
 					.add(tmSearchScore, "TM in Search")
 					.add(tmWebScore, "TM in Web")
-					.add(pageRankScore, "PageRank Score")
+//					.add(pageRankScore, "PageRank Score")
 					.add(score, "DeFacto Score");					;
 					
 

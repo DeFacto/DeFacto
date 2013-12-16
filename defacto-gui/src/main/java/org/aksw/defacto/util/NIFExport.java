@@ -34,9 +34,9 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
  */
 public class NIFExport {
 	
-	public static final String DEFACTO_NAMESPACE = "http://defacto.aksw.org/" ;
-	 private static final String PROV_NAMESPACE = "http://www.w3.org/ns/prov#";
-	    private static final String DUBLIN_CORE_NAMESPACE = "http://purl.org/dc/terms/";
+	public static final String DEFACTO_NAMESPACE = "http://defacto.aksw.org/";
+	public static final String PROV_NAMESPACE = "http://www.w3.org/ns/prov#";
+	public static final String DUBLIN_CORE_NAMESPACE = "http://purl.org/dc/terms/";
 	    
 	private static final Text2RDF nifConverter = new Text2RDF();
 	
