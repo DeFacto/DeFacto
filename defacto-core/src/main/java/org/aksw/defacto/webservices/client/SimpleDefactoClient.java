@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,13 +21,15 @@ import au.com.bytecode.opencsv.CSVWriter;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientHandlerException;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class SimpleDefactoClient {
 
-	public static final WebResource webResource = Client.create().resource("http://139.18.2.164:1234/getdefactotimes");
+//	public static final WebResource webResource = Client.create().resource("http://139.18.2.164:1234/getdefactotimes");
+	public static final WebResource webResource = Client.create().resource("http://localhost:1234/getdefactotimes");
 	
 	public static void main(String[] args) throws IOException, JSONException {
 
@@ -130,10 +133,17 @@ public class SimpleDefactoClient {
 		queryParams.add("contextSize", "tiny");
 		
 		// time period
-			queryParams.add("from", from);
-			queryParams.add("to", to);
+		queryParams.add("from", from);
+		queryParams.add("to", to);
 
 		// start the service
-		return new JSONObject(webResource.queryParams(queryParams).post(String.class));
+		ClientResponse clientResponse = webResource.queryParams(queryParams).post(ClientResponse.class);
+		String message = clientResponse.getEntity(String.class);
+		
+		if ( clientResponse.getClientResponseStatus().getStatusCode() == Response.Status.BAD_REQUEST.getStatusCode() ) 
+			throw new RuntimeException("\nWrong parameters given: \n" + message);
+		else {
+			return new JSONObject(message);
+		}
 	}
 }

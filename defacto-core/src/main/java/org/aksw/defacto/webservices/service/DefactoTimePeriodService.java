@@ -5,14 +5,20 @@
 package org.aksw.defacto.webservices.service;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.aksw.defacto.Constants;
@@ -20,6 +26,7 @@ import org.aksw.defacto.Defacto;
 import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
+import org.aksw.defacto.webservices.client.SimpleDefactoClient;
 import org.aksw.defacto.webservices.server.DefactoServer;
 import org.ini4j.Ini;
 import org.json.JSONException;
@@ -32,6 +39,8 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDFS;
+import com.sun.jersey.api.client.ClientHandlerException;
+import com.sun.jersey.api.client.UniformInterfaceException;
 
 import edu.stanford.nlp.util.StringUtils;
 
@@ -58,6 +67,11 @@ public class DefactoTimePeriodService {
             @QueryParam("language") List<String> languages,
             @QueryParam("contextSize") String contextSize
             ) {
+    	
+    	String message = validateInput(subject, slabels, sAltLabels, object, olabels, oAltLabels, property, from, to, languages, contextSize);
+    	
+    	if ( !message.isEmpty() )
+    		return Response.status(Response.Status.BAD_REQUEST).entity(message).type(MediaType.TEXT_PLAIN).build();
     	
     	LOGGER.info("Processing <" + subject + ">, <" + property + ">, <" + object + ">");
         if ( olabels != null && slabels != null) 
@@ -132,6 +146,51 @@ public class DefactoTimePeriodService {
         }
         return Response.serverError().build();
     }
+
+
+	private String validateInput(String subject, List<String> slabels, List<String> sAltLabels, String object, List<String> olabels, List<String> oAltLabels, 
+			String property, String from, String to,
+			List<String> languages, String contextSize) {
+
+		String message = "";
+		
+		if ( subject == null || subject.isEmpty() ) message += "\tNo subject uri given!\n";
+		if ( object == null  || object.isEmpty() ) message += "\tNo object uri given!\n";
+		if ( slabels == null || slabels.isEmpty() ) message += "\tNo subject labels given!\n";
+		if ( olabels == null || olabels.isEmpty() ) message += "\tNo object labels given!\n";
+		if ( sAltLabels == null || sAltLabels.isEmpty() ) message += "\tNo subject alternative labels given!\n";
+		if ( oAltLabels == null || oAltLabels.isEmpty() ) message += "\tNo object alternative labels given!\n";
+		if ( property == null || property.isEmpty() ) message += "\tNo property uri given!\n";
+		
+		if ( languages == null || languages.isEmpty() ) message += "\tNo languages given!\n";
+		if ( !languages.isEmpty() ) {
+			
+			List<String> configuredLanguages = Arrays.asList(Defacto.DEFACTO_CONFIG.getStringSetting("settings", "languages").split(","));
+			for ( String suppliedLanguage : languages ) {
+				
+				if ( !configuredLanguages.contains(suppliedLanguage) ) message += "\tLanguage '"+suppliedLanguage+"' not supported!";
+			}
+		}
+		
+		return message;
+	}
+	
+	public static void main(String[] args) throws UniformInterfaceException, ClientHandlerException, JSONException {
+		
+//		String subjectUri, String propertyUri, String objectUri, List<String> languages,
+//		String from, String to, String contextSize, 
+//		Map<String,String> subjectLabels, Map<String,String> objectLabels, 
+//		Map<String,Set<String>> altSubjectLabels, Map<String,Set<String>> altObjectLabels) 
+		
+		Map<String, Set<String>> altSubjectLabels = new HashMap<>();
+		altSubjectLabels.put("en", new HashSet<>(Arrays.asList("Ribéry", "Ribery", "Frank R.")));
+		
+		Map<String,String> empty = new HashMap<String,String>();
+		Map<String,Set<String>> empty2 = new HashMap<String,Set<String>>();
+		JSONObject result = SimpleDefactoClient.queryDefacto("", "", "", Arrays.asList("en"), "", "", "", empty, empty, altSubjectLabels, altSubjectLabels);
+		System.out.println(result);
+	}
+
 
 	private void buildYearOccurrences(JSONObject result, Evidence ev) throws JSONException {
 		
