@@ -132,7 +132,7 @@ public class DeFactoUI extends UI
     }
     
     /**
-	 * Load examples form FactBench dataset.
+	 * Load examples from FactBench dataset.
 	 */
 	private void loadExampleData() {
 		Set<FactBenchExample> examples = FactBenchExamplesLoader.loadExamples();
@@ -166,7 +166,7 @@ public class DeFactoUI extends UI
     	l.setSpacing(true);
     	
     	//subject
-    	subjectBox = new ComboBox("Fact"){
+    	subjectBox = new ComboBox("Example facts:"){
         	/* (non-Javadoc)
         	 * @see com.vaadin.ui.ComboBox#changeVariables(java.lang.Object, java.util.Map)
         	 */
@@ -184,7 +184,7 @@ public class DeFactoUI extends UI
         	}
         };
         subjectBox.setWidth("100%");
-        subjectBox.setInputPrompt("Please choose on of the facts for validation");
+        subjectBox.setInputPrompt("Please choose one of the facts for validation");
         subjectBox.setImmediate(true);
         subjectBox.addContainerProperty("fact", String.class, null);
         subjectBox.addValueChangeListener(new ValueChangeListener() {
@@ -199,7 +199,7 @@ public class DeFactoUI extends UI
         
         //validation button
         validateButton = new Button("Validate");
-        validateButton.setDescription("Click to start the validation of the triple.");
+        validateButton.setDescription("Click to start the validation of the fact.");
         validateButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(ClickEvent event) {
             	SearchResourceDialog d = new SearchResourceDialog();
@@ -212,9 +212,7 @@ public class DeFactoUI extends UI
         
         l.setExpandRatio(subjectBox, 1f);
         
-        Panel p = new Panel("Choose one of examples facts:");
-        p.setContent(l);
-        return p;
+        return l;
     }
 
 	/**

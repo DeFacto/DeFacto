@@ -12,7 +12,7 @@ import com.hp.hpl.jena.graph.Triple;
  * @author Lorenz Buehmann
  *
  */
-public class FactBenchExample {
+public class FactBenchExample implements Comparable<FactBenchExample>{
 
 	Triple triple;
 	String fact;
@@ -76,6 +76,14 @@ public class FactBenchExample {
 		} else if (!fact.equals(other.fact))
 			return false;
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(FactBenchExample o) {
+		return this.fact.compareTo(o.getFact());
 	}
 	
 	
