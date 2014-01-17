@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03_26f__63>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0fs_s> ;
+        dbo:from             "1991"^^xsd:gYear ;
+        dbo:to               "1991"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.03_26f>
+        rdfs:label      "AVG Technologies"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.03_26f__63> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/AVG_Technologies> ;
+        skos:altLabel   "AVG Technologies N.V."@en , "AVG Technologies"@en , "Avg.com"@en , "Grisoft"@en .
+
+<http://rdf.freebase.com/ns/m.0fs_s>
+        rdfs:label     "Brünn"@de , "Brno"@fr , "Brno"@en ;
+        owl:sameAs     <http://dbpedia.org/resource/Brno> , <http://de.dbpedia.org/resource/Brünn> , <http://fr.dbpedia.org/resource/Brno> ;
+        skos:altLabel  "Brno-Turany"@fr , "Aeroport de Brno-Turany"@fr , "Brno, Czech Republic"@fr , "Brno, Czech Republic"@en , "Brno, Czech Republic"@de , "Brno, Czech"@fr , "Brno, Czech"@en , "Brno, Czech"@de , "AUTOSALON Brno"@fr , "AUTOSALON Brno"@en , "AUTOSALON Brno"@de , "Brno City"@fr , "Brno City"@en , "Brno City"@de , "Exhibition Centre Brno"@fr , "Deutsche Technische Hochschule Brünn"@fr , "Deutsche Technische Hochschule Brünn"@en , "Deutsche Technische Hochschule Brünn"@de , "Exhibition Centre Brno"@en , "Exhibition Centre Brno"@de , "Brno-Tuřany"@fr , "Brunn"@fr , "Brunn"@en , "Brunn"@de , "Deutsche Technische Hochschule Brunn"@en , "Deutsche Technische Hochschule Brunn"@de , "Deutsche Technische Hochschule Brunn"@fr , "Brno"@en , "Brno"@de , "Brno"@fr , "Brno-Centre"@fr , "Brno-Centre"@en , "Brno-Centre"@de , "Brünn"@fr , "Brünn"@en , "Brünn"@de , "Brne"@fr , "Brne"@en , "Brne"@de , "Brně"@en , "Brně"@de , "Brně"@fr , "Aéroport de Brno-Tuřany"@fr , "Bruenn"@fr , "Bruenn"@en , "Bruenn"@de , "LOCODE:CZBRQ"@fr , "LOCODE:CZBRQ"@en , "LOCODE:CZBRQ"@de .

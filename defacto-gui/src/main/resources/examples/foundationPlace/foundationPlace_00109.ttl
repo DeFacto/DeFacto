@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0fyp9>
+        rdfs:label      "Fujitsu"@fr , "Fujitsu"@en , "Fujitsu"@de ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.0fyp9__109> ;
+        owl:sameAs      <http://dbpedia.org/resource/Fujitsu> , <http://de.dbpedia.org/resource/Fujitsu> , <http://fr.dbpedia.org/resource/Fujitsu> ;
+        skos:altLabel   "Fujitsu Network Communications Inc."@fr , "Fujitsu Network Communications Inc."@en , "Fujitsu Network Communications Inc."@de , "Fujitsū"@de , "Fujitsū Kabushiki-gaisha"@de , "Fuji"@fr , "Fujitsu Limited"@fr , "Fuji"@de , "Fujitsu Limited"@en , "Fujitsu Limited"@de , "Fuji"@en , "Fujitsu Consulting"@fr , "Fujitsu Consulting"@en , "Fujitsu Consulting"@de , "Fujitsu Services"@fr , "Fujitsu Services"@en , "Fujitsu Services"@de , "Fujitsu Semiconductor Europe GmbH"@fr , "Fujitsu Semiconductor Europe GmbH"@en , "Fujitsu Semiconductor Europe GmbH"@de , "FUJITSU"@fr , "FUJITSU"@en , "FUJITSU"@de , "Fujitsuu"@fr , "Fujitsuu"@en , "Fujitsuu"@de , "Fujitsu Microelectronics Europe GmbH"@fr , "Fujitsu Microelectronics Europe GmbH"@en , "Fujitsu Microelectronics Europe GmbH"@de , "Fujitsu Ltd"@en , "Fujitsu Ltd. - 富士通株式会社"@fr , "Fujitsu Ltd. - 富士通株式会社"@en , "Fujitsu Ltd. - 富士通株式会社"@de , "Fujitsu Laboratories Ltd."@fr , "Fujitsu"@fr , "Fujitsu Laboratories Ltd."@en , "Fujitsu Laboratories Ltd."@de , "Fujitsu"@en , "Fujitsu"@de , "Fujitsu Laboratories Ltd"@fr , "Fujitsu Laboratories Ltd"@de , "Fujitsu Laboratories Ltd"@en , "ETERNUS"@fr , "ETERNUS"@de , "ETERNUS"@en , "Fujitsu Philippines, Inc."@fr , "Fujitsu Philippines, Inc."@en , "Fujitsu Philippines, Inc."@de , "Fujitsu Ltd."@fr , "Huzitu"@fr , "Fujitsu Ltd."@de , "Fujitsu Ltd."@en , "Huzitu"@en , "Huzitu"@de .
+
+<http://rdf.freebase.com/ns/m.0fyp9__109>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0gp66n> ;
+        dbo:from             "1935-06"^^xsd:gYearMonth ;
+        dbo:to               "1935-06"^^xsd:gYearMonth .
+
+<http://rdf.freebase.com/ns/m.0gp66n>
+        rdfs:label     "Kawasaki"@fr , "Kawasaki"@de , "Kawasaki"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Kawasaki_(Kanagawa)> , <http://dbpedia.org/resource/Kawasaki,_Kanagawa> , <http://de.dbpedia.org/resource/Kawasaki_(Kanagawa)> ;
+        skos:altLabel  "Kawasaki"@fr , "Kawasaki"@de , "Kawasaki"@en , "Kawasaki City"@fr , "Kawasaki City"@de , "Kawasaki City"@en , "Kawasaki, Kanagawa"@fr , "Kawasaki, Kanagawa"@de , "Kawasaki, Kanagawa"@en , "Kawasaki, Japan"@fr , "Kawasaki, Japan"@de , "Kawasaki, Japan"@en .

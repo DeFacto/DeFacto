@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Alexandre_Millerand__1>
+        dbo:from    "1920-01-20"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/France> ;
+        dbo:to      "1920-09-24"^^xsd:date .
+
+<http://dbpedia.org/resource/Alexandre_Millerand>
+        rdfs:label     "Alexandre Millerand"@en , "Alexandre Millerand"@fr , "Alexandre Millerand"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Alexandre_Millerand__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Alexandre_Millerand> , <http://fr.dbpedia.org/resource/Alexandre_Millerand> ;
+        skos:altLabel  "Alexandre Millerand"@fr , "Alexandre Millerand"@de , "Alexandre Millerand"@en , "Millerand"@fr , "Millerand"@de , "Millerand"@en , "Etienne Alexandre Millerand"@fr , "Etienne Alexandre Millerand"@de , "Etienne Alexandre Millerand"@en , "Étienne Alexandre Millerand"@fr , "Étienne Alexandre Millerand"@de , "Étienne Alexandre Millerand"@en .
+
+<http://dbpedia.org/resource/France>
+        rdfs:label     "France"@de , "France"@fr , "France"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Frankreich> , <http://fr.dbpedia.org/resource/France> ;
+        skos:altLabel  "Purangsu"@en , "FrancE"@de , "FrancE"@en , "Republique francaise"@fr , "Republic of France"@fr , "Rance"@fr , "Française"@fr , "Republique francaise"@de , "Republic of France"@de , "Republique francaise"@en , "Republic of France"@en , "Hexagone"@fr , "Hexagone"@en , "Hexagone"@de , "Franţa"@fr , "Franta"@fr , "Franţa"@de , "Franţa"@en , "Franta"@en , "Franta"@de , "Franse"@fr , "Franse"@de , "Franse"@en , "FRANCE"@fr , "FRANCE"@de , "FRANCE"@en , "République française"@fr , "République française"@de , "République française"@en , "Franc3"@fr , "Franc3"@de , "Franc3"@en , "Frakkland"@fr , "Frakkland"@de , "Frakkland"@en , "Frankreich"@fr , "Frankreich"@en , "Frankreich"@de , "Franciaorszag"@fr , "Franciaorszag"@de , "Franciaorszag"@en , "ISO 3166-1:FR"@fr , "ISO 3166-1:FR"@de , "ISO 3166-1:FR"@en , "Ranska"@fr , "Ranska"@de , "Ranska"@en , "Francaises"@fr , "List of Lands of the Carolingian Empire"@fr , "List of Lands of the Carolingian Empire"@de , "List of Lands of the Carolingian Empire"@en , "Peurangseu"@fr , "Collapse of Charlemagne's empire"@fr , "Peurangseu"@de , "Collapse of Charlemagne's empire"@de , "Collapse of Charlemagne's empire"@en , "Peurangseu"@en , "Francaise"@fr , "Franc"@fr , "FRance"@fr , "Franc"@de , "FRance"@en , "FRance"@de , "Franc"@en , "Franciaország"@fr , "Franciaország"@en , "Franciaország"@de , "Franța"@fr , "Franța"@de , "Franța"@en , "Etymology of France"@fr , "Etymology of France"@de , "Etymology of France"@en , "Belle France"@fr , "Belle France"@de , "Belle France"@en , "Françaises"@fr , "Republic of france"@fr , "Republic of france"@de , "Republic of france"@en , "Hexagône"@fr , "Fracne"@fr , "France"@fr , "Hexagône"@de , "France"@de , "Hexagône"@en , "France"@en , "Fracne"@de , "Fracne"@en , "French Republic"@fr , "French Republic"@de , "French Republic"@en , "Ance"@fr , "Purangsu"@fr , "FrancE"@fr , "La France"@fr , "Purangsu"@de .

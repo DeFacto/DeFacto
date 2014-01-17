@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.06znsfw__139>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0cm5m> ;
+        dbo:from             "1994"^^xsd:gYear ;
+        dbo:to               "1994"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.06znsfw>
+        rdfs:label      "SNP Schneider-Neureither & Partner"@de , "SNP Schneider-Neureither & Partner AG"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.06znsfw__139> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/SNP_Schneider-Neureither_&_Partner_AG> , <http://dbpedia.org/resource/SNP_Schneider-Neureither_&_Partner_AG> ;
+        skos:altLabel   "SNP AG"@de , "SNP Schneider-Neureither & Partner AG"@de .
+
+<http://rdf.freebase.com/ns/m.0cm5m>
+        rdfs:label     "Heidelberg"@de , "Heidelberg"@en , "Heidelberg"@fr ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Heidelberg> , <http://dbpedia.org/resource/Heidelberg> , <http://de.dbpedia.org/resource/Heidelberg> ;
+        skos:altLabel  "Heidelburg"@fr , "Heidelburg"@de , "Heidelburg"@en , "Heidelberg romantics"@fr , "Heidelberg romantics"@de , "Heidelberg romantics"@en , "LOCODE:DEHEI"@fr , "LOCODE:DEHEI"@de , "LOCODE:DEHEI"@en , "Heidelberg, Germany"@fr , "Wieblingen"@fr , "Wieblingen"@de , "Wieblingen"@en , "Heidelberg, Germany"@de , "Heidelberg, Germany"@en , "Heidelberg"@fr , "Heidelberg"@de , "Heidelberg"@en .

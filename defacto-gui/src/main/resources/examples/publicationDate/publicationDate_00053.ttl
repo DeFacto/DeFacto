@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.08433>
+        rdfs:label       "William S. Burroughs"@fr , "William S. Burroughs"@en , "William S. Burroughs"@de ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.01vhfj__53> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/William_S._Burroughs> , <http://fr.dbpedia.org/resource/William_S._Burroughs> , <http://dbpedia.org/resource/William_S._Burroughs> ;
+        skos:altLabel    "Williams Burroughs"@fr , "William Seward Burroughs II"@fr , "William Seward Burroughs II"@en , "William Seward Burroughs II"@de , "William Seward Burroughs, II"@fr , "William Seward Burroughs, II"@en , "William Seward Burroughs, II"@de , "W. S. Burroughs"@fr , "W. S. Burroughs"@en , "W. S. Burroughs"@de , "William"@fr , "William S. Burroughs"@fr , "William S. Burroughs"@en , "William S. Burroughs"@de , "Ilse Klapper"@fr , "Ilse Klapper"@en , "Ilse Klapper"@de , "Burroughs, William S."@fr , "Burroughs, William S."@en , "Burroughs, William S."@de , "William Seward Burroughs"@en , "William Seward Burroughs"@fr , "Wiliam s burroughs"@fr , "Wiliam s burroughs"@de , "Wiliam s burroughs"@en , "Bill Burroughs"@fr , "Bill Burroughs"@en , "Bill Burroughs"@de , "William S Burroughs"@fr , "William S Burroughs"@en , "William S Burroughs"@de , "Bill"@en , "William burrough"@fr , "William burrough"@de , "William burrough"@en , "William S. Burroughs, Sr."@fr , "William S. Burroughs, Sr."@en , "William S. Burroughs, Sr."@de , "William Burroughs"@fr , "William Burroughs"@en , "William Burroughs"@de , "William Lee"@en , "Burroughs"@fr , "Burroughs"@de , "Burroughs"@en , "William S. Bourroughs"@en , "William S. Bourroughs"@de , "The Invisible Man"@en , "Il hombre invisible"@en , "W.S. Burroughs"@fr , "W.S. Burroughs"@en , "W.S. Burroughs"@de .
+
+<http://rdf.freebase.com/ns/m.01vhfj__53>
+        dbo:author  <http://rdf.freebase.com/ns/m.01vhfj> ;
+        dbo:from    "1964"^^xsd:gYear ;
+        dbo:to      "1964"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.01vhfj>
+        rdfs:label     "Nova Express"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Nova_Express> ;
+        skos:altLabel  "Nova Express"@en .

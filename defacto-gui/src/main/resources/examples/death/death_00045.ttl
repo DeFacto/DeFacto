@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Chandler,_Arizona>
+        rdfs:label     "Chandler, Arizona"@de , "Chandler, Arizona"@en , "Chandler, Arizona"@fr ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Chandler_(Arizona)> , <http://de.dbpedia.org/resource/Chandler_(Arizona)> ;
+        skos:altLabel  "Aeroport municipal de Chandler"@fr , "Chandler, Arizona"@fr , "Chandler, Arizona"@de , "Chandler, Arizona"@en , "Aéroport municipal de Chandler"@fr , "Chandler Municipal Airport"@fr , "LOCODE:USCHD"@fr , "Chandler, AZ"@fr , "Chandler az"@fr , "LOCODE:USCHD"@de , "Chandler az"@de , "LOCODE:USCHD"@en , "Chandler az"@en , "Chandler, AZ"@de , "Chandler, AZ"@en , "Chandler Public Library"@fr , "Chandler Public Library"@de , "Chandler Public Library"@en , "Chandler"@fr , "Chandler"@de , "Chandler"@en .
+
+<http://dbpedia.org/resource/Waylon_Jennings__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Chandler,_Arizona> ;
+        dbo:from        "2002-02-13"^^xsd:date ;
+        dbo:to          "2002-02-13"^^xsd:date .
+
+<http://dbpedia.org/resource/Waylon_Jennings>
+        rdfs:label     "Waylon Jennings"@fr , "Waylon Jennings"@de , "Waylon Jennings"@en ;
+        dbo:death      <http://dbpedia.org/resource/Waylon_Jennings__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Waylon_Jennings> , <http://de.dbpedia.org/resource/Waylon_Jennings> ;
+        skos:altLabel  "Waylon jennings"@fr , "Waylon jennings"@de , "Waylon jennings"@en , "Jennings"@fr , "Jennings"@de , "Jennings"@en , "Waymore"@fr , "Waymore"@de , "Waymore"@en , "Walon Jennings"@fr , "Waylan jennings"@fr , "Waylon Jennings"@fr , "Waylon Jennings"@de , "Waylon Jennings"@en , "Walon Jennings"@de , "Waylan jennings"@de , "Walon Jennings"@en , "Waylan jennings"@en , "The Waylors"@fr , "The Waylors"@de , "The Waylors"@en .

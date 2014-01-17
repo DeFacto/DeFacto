@@ -1,0 +1,25 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Myl%C3%A8ne_Jampano%C3%AF>
+        skos:altLabel  "Mylene Jampanoi"@en , "Mylène Jampanoï"@en .
+
+<http://rdf.freebase.com/ns/m.026s62x__41>
+        dbo:from    "2006"^^xsd:gYear ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.06kh6q> ;
+        dbo:to      "2009"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.026s62x>
+        rdfs:label     "Mylène Jampanoï"@fr , "Mylène Jampanoï"@de , "Mylène Jampanoï"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.026s62x__41> ;
+        owl:sameAs     <http://dbpedia.org/resource/Myl%C3%A8ne_Jampano%C3%AF> ;
+        skos:altLabel  "Léna Jam-Panoï"@en , "Léna Jam-Panoi"@en , "Myléne Jampanoï"@en , "Mylene Jampanoi"@en , "Mylène Jampanöï"@en .
+
+<http://rdf.freebase.com/ns/m.06kh6q>
+        rdfs:label     "Milind Soman"@fr , "Milind Soman"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Milind_Soman> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Milind_Soman> ;
+        skos:altLabel  "Milind Soman"@fr , "Milind soman"@fr , "Soman"@fr .

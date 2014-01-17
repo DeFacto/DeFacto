@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0gfk_zd>
+        rdfs:label    "Alexandra Christmann"@en ;
+        dbo:marriage  <http://rdf.freebase.com/ns/m.0gfk_zd__119> .
+
+<http://rdf.freebase.com/ns/m.0gfk_zd__119>
+        dbo:from    "2003-10-03"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.016k6x> ;
+        dbo:to      "2005-02-08"^^xsd:date .
+
+<http://rdf.freebase.com/ns/m.016k6x>
+        rdfs:label     "Ben Kingsley"@en , "Ben Kingsley"@de , "Ben Kingsley"@fr ;
+        owl:sameAs     <http://dbpedia.org/resource/Ben_Kingsley> , <http://de.dbpedia.org/resource/Ben_Kingsley> , <http://fr.dbpedia.org/resource/Ben_Kingsley> ;
+        skos:altLabel  "Kingsley"@fr , "Kingsley"@de , "Kingsley"@en , "Krishna Bhanji"@de , "Krishna Bhanji"@fr , "Krishna Bhanji"@en , "Ben kingsley"@fr , "Ben kingsley"@de , "Ben kingsley"@en , "Ben Kingsly"@fr , "Ben Kingsly"@de , "Ben Kingsly"@en , "Sir Ben Kingsley"@fr , "Krishna Pandit Bhanji"@fr , "Krishna Pandit Bhanji"@de , "Sir Ben Kingsley, CBE"@en , "Krishna Pandit Bhanji"@en , "Sir Ben Kingsley"@de , "Sir Ben Kingsley"@en , "કૃષ્ણા પંડિત ભાનજી"@en , "Ben Kingsley"@fr , "Ben Kingsley"@de , "Ben Kingsley"@en .

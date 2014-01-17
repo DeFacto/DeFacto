@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Julius_Nyerere>
+        rdfs:label     "Julius Nyerere"@de , "Julius Nyerere"@fr , "Julius Nyerere"@en ;
+        dbo:inOffice   <http://dbpedia.org/resource/Julius_Nyerere__4> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Julius_Nyerere> , <http://de.dbpedia.org/resource/Julius_Nyerere> ;
+        skos:altLabel  "Mwalimu J.K. Nyerere"@fr , "Mwalimu J.K. Nyerere"@en , "Mwalimu J.K. Nyerere"@de , "Julius K. Nyerere"@en , "Julius K. Nyerere"@de , "Julius K. Nyerere"@fr , "Julius Nyrere"@en , "Julius Nyrere"@de , "Julius Nyrere"@fr , "Julius Kambarage Nyerere"@en , "Julius Kambarage Nyerere"@de , "Julius Kambarage Nyerere"@fr , "Julius Kambarage Neyrere"@en , "Julius Kambarage Neyrere"@de , "Julius Kambarage Neyrere"@fr , "Kambarage"@de , "Mwalimu Julius Kambarage Nyerere"@en , "Mwalimu Julius Kambarage Nyerere"@de , "Mwalimu Julius Kambarage Nyerere"@fr , "Mwalimu Nyerere"@en , "Mwalimu Nyerere"@de , "Mwalimu Nyerere"@fr , "Nyerere, Julius Kambarage"@en , "Nyerere, Julius Kambarage"@de , "Nyerere, Julius Kambarage"@fr , "Julius"@fr , "Mwalimu"@en , "Mwalimu"@de , "Mwalimu"@fr , "Julius"@en , "Julius"@de , "Julius Nyerere"@de , "Julius Nyerere"@fr , "Julius Nyerere"@en , "Nyerere"@fr , "Nyerere"@en , "Nyerere"@de .
+
+<http://dbpedia.org/resource/Tanganyika>
+        rdfs:label     "Tanganyika"@en , "Tanganyika"@fr , "Tanganyika"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Tanganjika> , <http://fr.dbpedia.org/resource/Tanganyika_(protectorat)> ;
+        skos:altLabel  "Tanganyica"@fr , "Tanganyica"@de , "Tanganyica"@en , "Tanganyikans"@fr , "Tanganyikans"@de , "Tanganyikans"@en , "Tanganyikan"@fr , "Tanganyikan"@de , "Tanganyikan"@en , "Tanganika"@fr , "Tanganika"@de , "Tanganika"@en , "Tanganijka"@de , "Tanganyikas"@de , "Britisch-Tanganjika"@de , "Nyika"@de , "Tanganyka"@fr , "Tanganjika"@fr , "Republic of Tanganyika"@fr , "Tanganyika"@fr , "Tanganyka"@de , "Tanganjika"@de , "Republic of Tanganyika"@de , "Republic of Tanganyika"@en , "Tanganjika"@en , "Tanganyika"@de , "Tanganyka"@en , "Tanganyika"@en .
+
+<http://dbpedia.org/resource/Julius_Nyerere__4>
+        dbo:from    "1961-12-09"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Tanganyika> ;
+        dbo:to      "1962-01-22"^^xsd:date .

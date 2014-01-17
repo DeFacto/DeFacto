@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0c3kw>
+        rdfs:label       "Greg Bear"@de , "Greg Bear"@en , "Greg Bear"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.08ybt7__25> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/Greg_Bear> , <http://de.dbpedia.org/resource/Greg_Bear> , <http://dbpedia.org/resource/Greg_Bear> ;
+        skos:altLabel    "Greg Bear"@fr , "Greg Bear"@de , "Greg Bear"@en , "Bear"@fr , "Bear"@de , "Bear"@en , "Bear, Greg"@fr , "Bear, Greg"@de , "Bear, Greg"@en , "Greg D. Bear"@en , "Gregory Dale Bear"@fr , "Gregory Dale Bear"@de , "Gregory Dale Bear"@en .
+
+<http://rdf.freebase.com/ns/m.08ybt7>
+        rdfs:label     "Darwin's Radio"@en , "L'Échelle de Darwin"@fr ;
+        owl:sameAs     <http://dbpedia.org/resource/Darwin's_Radio> , <http://de.dbpedia.org/resource/> , <http://fr.dbpedia.org/resource/L'Échelle_de_Darwin> ;
+        skos:altLabel  "L'Échelle De Darwin"@fr , "Darwin"@fr , "L'échelle de darwin"@fr , "Darwins Radio"@fr , "Darwin's Radio"@fr , "L'échelle de Darwin"@fr , "L'Echelle de Darwin"@fr , "L'echelle de Darwin"@fr , "L'Echelle De Darwin"@fr , "L'echelle de darwin"@fr , "L'Échelle de Darwin"@fr .
+
+<http://rdf.freebase.com/ns/m.08ybt7__25>
+        dbo:author  <http://rdf.freebase.com/ns/m.08ybt7> ;
+        dbo:from    "1999"^^xsd:gYear ;
+        dbo:to      "1999"^^xsd:gYear .

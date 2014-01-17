@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Beverly_Hills,_California>
+        rdfs:label     "Beverly Hills, California"@de , "Beverly Hills, California"@fr , "Beverly Hills, California"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Beverly_Hills> , <http://de.dbpedia.org/resource/Beverly_Hills> ;
+        skos:altLabel  "Beverley Hills"@en , "Beverley Hills"@de , "Beverley Hills"@fr , "Hills"@fr , "Hills"@en , "Hills"@de , "LOCODE:USBVH"@fr , "Bev Hills"@en , "Bev Hills"@de , "Bev Hills"@fr , "LOCODE:USBVH"@en , "LOCODE:USBVH"@de , "Beverly Hill, California"@fr , "Beverly Hill, California"@en , "Beverly Hill, California"@de , "Beverly Hills"@fr , "Beverly Hills"@en , "Beverly Hills"@de , "Beverly Hills, Ca"@fr , "Beverly Hills, Ca"@en , "Beverly Hills, Ca"@de , "Zip code 90210"@en , "Zip code 90210"@de , "Zip code 90210"@fr , "Beverly hills california"@fr , "Beverly hills california"@en , "Beverly hills california"@de , "Beverley Hills, California"@en , "Beverley Hills, California"@de , "Beverley Hills, California"@fr , "Beverly Hills, Calif."@en , "Beverly Hills, Calif."@de , "Beverly Hills, Calif."@fr , "Beverly Hills, California"@de , "Beverly Hills, California"@fr , "Beverly Hills, California"@en , "Beverly Hills, CA"@en , "Beverly Hills, CA"@de , "Beverly Hills, CA"@fr , "Beverly"@fr , "Beverly"@de .
+
+<http://dbpedia.org/resource/Charlton_Heston__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Beverly_Hills,_California> ;
+        dbo:from        "2008-04-05"^^xsd:date ;
+        dbo:to          "2008-04-05"^^xsd:date .
+
+<http://dbpedia.org/resource/Charlton_Heston>
+        rdfs:label     "Charlton Heston"@en , "Charlton Heston"@fr , "Charlton Heston"@de ;
+        dbo:death      <http://dbpedia.org/resource/Charlton_Heston__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Charlton_Heston> , <http://fr.dbpedia.org/resource/Charlton_Heston> ;
+        skos:altLabel  "Carlton Heston"@en , "Charlton"@de , "Charlton Heston"@fr , "Charlton Heston"@de , "Charlton Heston"@en , "Charleton Heston"@fr , "Charleton Heston"@de , "Charleton Heston"@en , "Chuck Heston"@fr , "Charleston Heston"@fr , "Chuck Heston"@de , "Charleston Heston"@de , "Charleston Heston"@en , "Chuck Heston"@en , "Heston"@fr , "Heston"@de , "Heston"@en , "Charlton heston"@fr , "John Charles Carter"@fr , "Heston, Charlton"@fr , "Carlton Heston"@fr , "Charlton heston"@de , "John Charles Carter"@de , "Heston, Charlton"@de , "Carlton Heston"@de , "Charlton heston"@en , "John Charles Carter"@en , "Heston, Charlton"@en .

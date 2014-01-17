@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Leonid_Kuchma__2>
+        dbo:from    "1992-10-13"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Ukraine> ;
+        dbo:to      "1993-09-22"^^xsd:date .
+
+<http://dbpedia.org/resource/Leonid_Kuchma>
+        rdfs:label     "Leonid Kuchma"@en , "Leonid Kuchma"@fr , "Leonid Kuchma"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Leonid_Kuchma__2> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Leonid_Kutschma> , <http://fr.dbpedia.org/resource/Leonid_Koutchma> ;
+        skos:altLabel  "Kuchma Leonid Danylovych"@fr , "Kuchma Leonid Danylovych"@de , "Kuchma Leonid Danylovych"@en , "Kuchma"@fr , "Kuchma"@de , "Kutschma"@de , "Kuchma"@en , "Leonid Danylovych Kuchma"@fr , "Leonid Danylovych Kuchma"@de , "Leonid Danylovych Kuchma"@en , "Leonid Danylowytsch Kutschma"@de , "Koutchma"@fr , "Leonid Kutschma"@de , "Leonid"@fr , "Leonid"@de , "Leonid"@en , "Leonid Kuchma"@fr , "Leonid Kuchma"@de , "Leonid Kuchma"@en , "Leonid Koutchma"@fr , "Leonid Maximovich Kuchma"@fr , "Leonid Maximovich Kuchma"@de , "Leonid Maximovich Kuchma"@en .
+
+<http://dbpedia.org/resource/Ukraine>
+        rdfs:label     "Ukraine"@de , "Ukraine"@fr , "Ukraine"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Ukraine> , <http://de.dbpedia.org/resource/Ukraine> ;
+        skos:altLabel  "Russia"@fr , "Russia"@de , "Russia"@en , "Ukraine"@fr , "Ukraine"@en , "Ukraine"@de , "Republic of Ukraine"@fr , "Republic of Ukraine"@de , "Republic of Ukraine"@en , "République d'Ukraine"@fr , "The ukrane"@fr , "Ukrainia"@fr , "Ukrainia"@en , "Ukrainia"@de , "The ukrane"@de , "The ukrane"@en , "Ukraine during World War II"@fr , "Ukraine during World War II"@de , "Ukraine during World War II"@en , "Ukraine in World War II"@fr , "Ukraine in World War II"@de , "Ukraine in World War II"@en , "Ukraina"@fr , "ISO 3166-1:UA"@fr , "Ukraˈjina"@fr , "ISO 3166-1:UA"@en , "ISO 3166-1:UA"@de , "Ukraˈjina"@en , "Ukraˈjina"@de , "Ukraina"@en , "Ukraina"@de , "Kiev compromise"@fr , "Kiev compromise"@de , "Kiev compromise"@en , "Ukraien"@fr , "Ukraien"@de , "Ukraien"@en , "Ukrayina"@fr , "Ukrayina"@en , "Ukrayina"@de , "Ukra'jina"@fr , "Ukra'jina"@de , "Ukra'jina"@en , "Ukrainische Kultur"@de , "Ukrania"@fr , "Ukrania"@de , "Ukrania"@en , "The Ukraine"@fr , "The Ukraine"@de , "The Ukraine"@en , "Ukraine map"@fr , "Ukraine map"@de , "Ukraine map"@en , "Republique d'Ukraine"@fr , "Ukarine"@fr , "Ukarine"@de , "Ukarine"@en , "Ucraine"@fr , "Ucraine"@de , "Ucraine"@en , "Ukrainienne"@fr , "Ukrajina"@fr , "Ukrajina"@en , "Ukrajina"@de , "Ukraninian"@fr , "Ukrane"@fr , "Ykpaiha"@fr , "Ukriane"@fr , "Ukraninian"@de , "Ukrane"@en , "Ykpaiha"@en , "Ykpaiha"@de , "Ukraninian"@en , "Ukrane"@de , "Ukriane"@en , "Ukriane"@de .

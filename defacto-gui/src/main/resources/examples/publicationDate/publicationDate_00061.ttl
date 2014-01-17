@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/The_Infinitive_of_Go>
+        skos:altLabel  "The Infinitive of Go"@en .
+
+<http://rdf.freebase.com/ns/m.0dwc8x__61>
+        dbo:author  <http://rdf.freebase.com/ns/m.0dwc8x> ;
+        dbo:from    "1980"^^xsd:gYear ;
+        dbo:to      "1980"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0dwc8x>
+        rdfs:label  "The Infinitive of Go"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/The_Infinitive_of_Go> .
+
+<http://rdf.freebase.com/ns/m.043ns>
+        rdfs:label       "John Brunner"@de , "John Brunner"@en , "John Brunner"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.0dwc8x__61> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/John_Brunner> , <http://de.dbpedia.org/resource/John_Brunner> , <http://dbpedia.org/resource/John_Brunner_(novelist)> ;
+        skos:altLabel    "John Brunner"@de , "John Brunner"@en , "Gill Hunt"@en , "Keith Woodcott"@en , "Brunner"@fr , "Brunner"@de , "Brunner"@en , "John Kilian Houston Brunner"@en , "A. P. H*rb*rt"@en , "John Loxmith"@en , "Kilian Houston Brunner"@en , "K. Houston Brunner"@en , "Trevor Staines"@en , "John Brunner"@fr .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0fvt2>
+        rdfs:label       "Stephen Baxter"@de , "Stephen Baxter"@en , "Stephen Baxter"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.06hbsl__99> ;
+        owl:sameAs       <http://dbpedia.org/resource/Stephen_Baxter> , <http://de.dbpedia.org/resource/Stephen_Baxter> , <http://fr.dbpedia.org/resource/Stephen_Baxter> ;
+        skos:altLabel    "Stephen M. Baxter"@en , "Steven Baxter"@fr , "Steven Baxter"@de , "Steven Baxter"@en , "Stephen Baxter"@fr , "Stephen Baxter"@de , "Stephen Baxter"@en , "S. M. Baxter"@en , "Stephen Michael Baxter"@en , "Zeitschiffe"@de , "Stephen baxter"@fr , "Stephen baxter"@de , "Die Zeitschiffe"@de , "Stephen baxter"@en , "Baxter"@fr , "Baxter, Stephen"@fr , "Baxter, Stephen"@de , "Baxter, Stephen"@en .
+
+<http://rdf.freebase.com/ns/m.06hbsl__99>
+        dbo:author  <http://rdf.freebase.com/ns/m.06hbsl> ;
+        dbo:from    "2003"^^xsd:gYear ;
+        dbo:to      "2003"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.06hbsl>
+        rdfs:label     "L'Œil du temps"@fr , "Time's Eye"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Time's_Eye_(novel)> ;
+        skos:altLabel  "Time's Eye"@en .

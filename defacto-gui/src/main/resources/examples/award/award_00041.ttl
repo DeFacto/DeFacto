@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02bd35>
+        rdfs:label         "Harold C. Urey"@de , "Harold Urey"@en , "Harold Clayton Urey"@fr ;
+        dbo:recievedAward  <http://rdf.freebase.com/ns/m.02bd35__41> ;
+        owl:sameAs         <http://dbpedia.org/resource/Harold_Urey> , <http://de.dbpedia.org/resource/Harold_C._Urey> , <http://fr.dbpedia.org/resource/Harold_Clayton_Urey> ;
+        skos:altLabel      "Harold Clayton Urey"@fr , "Harold Clayton Urey"@de , "Harold Clayton Urey"@en , "Harold, C. Urey"@fr , "Harold, C. Urey"@de , "Harold, C. Urey"@en , "Urey, Harold Clayton"@fr , "Urey, Harold Clayton"@de , "Urey, Harold Clayton"@en , "Clayton Urey"@fr , "Clayton Urey"@de , "Clayton Urey"@en , "Harold Urey"@fr , "Harold Urey"@de , "Harold Urey"@en , "Urey"@fr , "Urey"@de , "Urey"@en , "Harold C. Urey"@fr , "Harold C. Urey"@de , "Harold C. Urey"@en .
+
+<http://rdf.freebase.com/ns/m.05fmy>
+        rdfs:label     "Prix Nobel de chimie"@fr , "Nobel Prize in Chemistry"@en , "Nobelpreis für Chemie"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Prix_Nobel_de_chimie> , <http://dbpedia.org/resource/Nobel_Prize_in_Chemistry> , <http://de.dbpedia.org/resource/Nobelpreis_für_Chemie> ;
+        skos:altLabel  "Nobelpriset i kemi"@fr , "Nobelpriset i kemi"@en , "Nobelpriset i kemi"@de , "Nobel Prize for chemistry"@fr , "Nobel Prize for chemistry"@en , "Nobel Prize for chemistry"@de , "Nobel prize of Chemistry"@en , "Nobel prize of Chemistry"@de , "Nobel prize of Chemistry"@fr , "Chemienobelpreis"@de , "Prix Nobel de chimie"@fr , "Chemie-Nobelpreis"@de , "Nobelpreis für Chemie"@de , "Nobelpreis fur Chemie"@de , "Nobel prize chemistry"@fr , "Nobel prize chemistry"@en , "Nobel prize chemistry"@de , "Nobel Prize in chemistry"@fr , "Nobel Prize in chemistry"@en , "Nobel Prize in chemistry"@de , "Nobel prize in Chemistry"@fr , "Nobel prize in Chemistry"@de , "Nobel prize in Chemistry"@en , "Prix nobel de chimie"@fr , "ChemistrY"@fr , "Nobel Prize for Chemistry"@fr , "Nobel Prize for Chemistry"@en , "Chemistry"@en , "Chemistry"@de , "Chemistry"@fr , "Nobel Prize for Chemistry"@de , "Nobel prize for chemistry"@en , "ChemistrY"@en , "ChemistrY"@de , "Nobel prize for chemistry"@de , "Nobel prize for chemistry"@fr , "Prix Nobel de Chimie"@fr , "Nobel Prize in Chemistry"@en , "Nobel Prize in Chemistry"@de , "Nobel Prize in Chemistry"@fr , "Nobel prize in chemistry"@en , "Nobel prize in chemistry"@de , "Nobel prize in chemistry"@fr .
+
+<http://rdf.freebase.com/ns/m.02bd35__41>
+        dbo:award  <http://rdf.freebase.com/ns/m.05fmy> ;
+        dbo:from   "1934"^^xsd:gYear ;
+        dbo:to     "1934"^^xsd:gYear .

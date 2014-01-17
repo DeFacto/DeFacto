@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0q8tn>
+        rdfs:label     "Madison"@fr , "Madison"@de , "Madison"@en ;
+        owl:sameAs     <http://dbpedia.org/resource/Madison,_Alabama> , <http://de.dbpedia.org/resource/Madison_(Alabama)> , <http://fr.dbpedia.org/resource/> ;
+        skos:altLabel  "Madison, Al"@de , "Madison, Al"@en , "Madison, AL"@de , "LOCODE:USMAZ"@de , "Madison, AL"@en , "LOCODE:USMAZ"@en , "Madison"@de , "Madison"@en , "Madison, Alabama"@de , "Madison, Alabama"@en .
+
+<http://rdf.freebase.com/ns/m.05vjwf>
+        rdfs:label      "Intergraph"@en , "Intergraph"@de ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.05vjwf__117> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/Intergraph> , <http://dbpedia.org/resource/Intergraph> ;
+        skos:altLabel   "Intergraph"@de , "Intergraph Corporation"@de , "Geomedia"@de , "GeoMedia"@de , "M&S Computing"@de , "INTERGRAPH"@de .
+
+<http://rdf.freebase.com/ns/m.05vjwf__117>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0q8tn> ;
+        dbo:from             "1969"^^xsd:gYear ;
+        dbo:to               "1969"^^xsd:gYear .

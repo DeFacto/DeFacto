@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02khrk>
+        rdfs:label       "EMC Corporation"@fr , "EMC Corporation"@en , "EMC Corporation"@de ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.02khrk__83> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/EMC_Corporation> , <http://dbpedia.org/resource/EMC_Corporation> , <http://de.dbpedia.org/resource/EMC_Corporation> ;
+        skos:altLabel    "Legato Software"@fr , "Legato Software"@de , "Legato Software"@en , "Emc2"@de , "Legato"@fr , "EMC Autostart"@fr , "Legato Systems"@fr , "EMC Corporation"@fr , "Legato"@de , "Legato"@en , "EMC Autostart"@de , "Legato Systems"@de , "EMC Corporation"@de , "EMC Autostart"@en , "Legato Systems"@en , "EMC Corporation"@en , "EMC²"@fr , "EMC²"@de , "EMC"@en , "EMC Corp."@fr , "EMC Corp."@de , "EMC Corp."@en , "Avamar"@fr , "Avamar"@de , "Avamar"@en .
+
+<http://rdf.freebase.com/ns/m.02vrm_b>
+        rdfs:label     "Mozy"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Mozy> ;
+        skos:altLabel  "Berkeley Data Systems"@en , "Mozy"@en .
+
+<http://rdf.freebase.com/ns/m.02khrk__83>
+        dbo:from        "2007-10-01"^^xsd:date ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.02vrm_b> ;
+        dbo:to          "2007-10-01"^^xsd:date .

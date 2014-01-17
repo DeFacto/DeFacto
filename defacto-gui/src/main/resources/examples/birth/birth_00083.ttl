@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/David_Ferrer__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Alicante> ;
+        dbo:from        "1982-04-02"^^xsd:date ;
+        dbo:to          "1982-04-02"^^xsd:date .
+
+<http://dbpedia.org/resource/Alicante>
+        rdfs:label     "Alicante"@en , "Alicante"@fr , "Alicante"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Alicante> , <http://de.dbpedia.org/resource/Alicante> ;
+        skos:altLabel  "Altet"@fr , "Alacant"@fr , "Alicant"@fr , "Alicant"@de , "Alicant"@en , "Alacant"@de , "Alacant"@en , "Alicante"@fr , "Alicante"@de , "Alicante"@en , "Alacant, Alicante"@fr , "Akra Leuke"@fr , "Akra Leuke"@de , "Akra Leuke"@en , "Alacant, Alicante"@de , "Alacant, Alicante"@en , "Alicante El Altet"@fr , "LOCODE:ESALC"@fr , "LOCODE:ESALC"@de , "LOCODE:ESALC"@en , "Alicante, Spain"@fr , "Alicante, Spain"@de , "Alicante, Spain"@en .
+
+<http://dbpedia.org/resource/David_Ferrer>
+        rdfs:label     "David Ferrer"@en , "David Ferrer"@fr , "David Ferrer"@de ;
+        dbo:birth      <http://dbpedia.org/resource/David_Ferrer__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/David_Ferrer> , <http://fr.dbpedia.org/resource/David_Ferrer> ;
+        skos:altLabel  "Ferrer"@fr , "Ferrer"@de , "Ferrer"@en , "David Ferrer"@fr , "David Ferrer"@de , "David Ferrer"@en , "David Ferrer Ern Gaydamak"@fr , "David Ferrer Ern"@fr , "David Ferrer Ern Gaydamak"@de , "David Ferrer Ern"@de , "David Ferrer Ern"@en , "David Ferrer Ern Gaydamak"@en .

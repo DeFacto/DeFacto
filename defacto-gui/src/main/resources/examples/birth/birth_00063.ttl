@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Todd_Woodbridge__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Sydney> ;
+        dbo:from        "1971-04-02"^^xsd:date ;
+        dbo:to          "1971-04-02"^^xsd:date .
+
+<http://dbpedia.org/resource/Sydney>
+        rdfs:label     "Sydney"@fr , "Sydney"@en , "Sydney"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Sydney> , <http://fr.dbpedia.org/resource/Sydney> ;
+        skos:altLabel  "Sydney Australia"@fr , "Sydney Australia"@de , "Sydney Australia"@en , "Greater Sydney"@fr , "Greater Sydney"@de , "Greater Sydney"@en , "LOCODE:AUSYD"@fr , "LOCODE:AUSYD"@en , "LOCODE:AUSYD"@de , "Sydney, NSW"@fr , "Sydney, NSW"@en , "Sydney, NSW"@de , "Sydneians"@fr , "Sydney, AU-NSW"@fr , "Sydney, AU-NSW"@en , "Sydney, AU-NSW"@de , "Sydneians"@en , "Sydneians"@de , "Sydney, New South Wales, Australia"@fr , "Sydney, New South Wales, Australia"@en , "Sydney, New South Wales, Australia"@de , "Fort Denison"@de , "Sydney"@fr , "Sydney"@de , "Sydney"@en , "Capital of New South Wales"@fr , "Capital of New South Wales"@en , "Capital of New South Wales"@de , "Xedni"@fr , "Sydney (N.S.W.), Australia"@fr , "Sydney (N.S.W.), Australia"@de , "Xedni"@en , "Xedni"@de , "Sydney (N.S.W.), Australia"@en , "Sydney, Australia"@fr , "Sydney, Australia"@en , "Sydney, Australia"@de , "Sydney, NSW, Australia"@fr , "Sydney, NSW, Australia"@en , "Sydney, NSW, Australia"@de , "Sidney, Australia"@fr , "Sidney, Australia"@en , "Sidney, Australia"@de , "Syndey"@fr , "Syndey"@en , "Syndey"@de , "Sydneysider"@fr , "Sydney, New South Wales"@fr , "Sydney, New South Wales"@en , "Sydney, New South Wales"@de , "Sydneian"@fr , "Sydneian"@en , "Sydneian"@de , "Sydneysider"@en , "Sydneysider"@de , "Sydneysiders"@fr , "Sydneysiders"@en , "Sydneysiders"@de .
+
+<http://dbpedia.org/resource/Todd_Woodbridge>
+        rdfs:label     "Todd Woodbridge"@en , "Todd Woodbridge"@fr , "Todd Woodbridge"@de ;
+        dbo:birth      <http://dbpedia.org/resource/Todd_Woodbridge__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Todd_Woodbridge> , <http://de.dbpedia.org/resource/Todd_Woodbridge> ;
+        skos:altLabel  "Todd"@fr , "Woodbridge"@fr , "Woodbridge"@en , "Woodbridge"@de , "Todd Woodbridge"@fr , "Todd Woodbridge"@en , "Todd Woodbridge"@de .

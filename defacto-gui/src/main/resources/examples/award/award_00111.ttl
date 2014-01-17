@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02lhv>
+        rdfs:label         "Elias Canetti"@de , "Elias Canetti"@en , "Elias Canetti"@fr ;
+        dbo:recievedAward  <http://rdf.freebase.com/ns/m.02lhv__111> ;
+        owl:sameAs         <http://fr.dbpedia.org/resource/Elias_Canetti> , <http://de.dbpedia.org/resource/Elias_Canetti> , <http://dbpedia.org/resource/Elias_Canetti> ;
+        skos:altLabel      "Canetti, Elias"@fr , "Canetti, Elias"@de , "Canetti, Elias"@en , "Canetti"@fr , "Canetti"@de , "Elias Canetti"@fr , "Elias"@fr , "Elias Canetti"@de , "Elias"@de , "Elias Canetti"@en , "Elias"@en .
+
+<http://rdf.freebase.com/ns/m.0ddd9>
+        rdfs:label     "Prix Nobel de littérature"@fr , "Nobelpreis für Literatur"@de , "Nobel Prize in Literature"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Nobelpreis_für_Literatur> , <http://dbpedia.org/resource/Nobel_Prize_in_Literature> , <http://fr.dbpedia.org/resource/Prix_Nobel_de_littérature> ;
+        skos:altLabel  "Nobel Prize for Literature"@fr , "Nobel Prize for Literature"@en , "Nobel Prize for Literature"@de , "Literatur-Nobelpreis"@de , "Nobel Prize in Literature"@fr , "Nobel Prize in Literature"@en , "Nobel Prize in Literature"@de , "Nobel prize"@fr , "Liste des prix nobel de litterature"@fr , "Nobel Prize In Literature"@fr , "Nobel prize"@de , "Nobel prize"@en , "Nobel Prize for litterature"@fr , "Nobel Prize In Literature"@en , "Nobel Prize In Literature"@de , "Nobel Prize for litterature"@en , "Nobel Prize for litterature"@de , "Nobel Laureate in Literature"@fr , "Nobel Laureate in Literature"@en , "Nobel Laureate in Literature"@de , "Prix Nobel de littérature"@fr , "Nobel prize literature"@fr , "Nobel prize literature"@en , "Nobel prize literature"@de , "The Nobel Prize in Literature"@fr , "The Nobel Prize in Literature"@de , "The Nobel Prize in Literature"@en , "Nobel Literature Prize"@fr , "Nobel Literature Prize"@en , "Nobel Literature Prize"@de , "Nobel prize list for literature"@fr , "Nobel prize list for literature"@de , "Nobel prize list for literature"@en , "Literaturnobelpreis"@de , "Nobel Prize in literature"@fr , "Nobel Prize in literature"@de , "Nobel Prize in literature"@en , "Nobel Prize laureates in Literature"@fr , "Nobel Prize laureates in Literature"@de , "Nobel Prize laureates in Literature"@en , "Nobel prize for literature"@fr , "Nobel prize for literature"@de , "Nobel prize for literature"@en , "Prix nobel de littérature"@fr , "Prix Nobel de litterature"@fr , "Nobelpreis fur Literatur"@de , "Nobel Prize for literature"@fr , "Nobel Prize for literature"@en , "Nobel Prize for literature"@de , "Literaturnobelpreisträger"@de , "LiteraturE"@fr , "LiteraturE"@de , "LiteraturE"@en , "Prix Nobel de Litterature"@fr , "Liste des prix nobel de littérature"@fr , "Nobel prize in literature"@fr , "Nobel prize in literature"@en , "Nobel prize in literature"@de , "Prix Nobel de Littérature"@fr , "Nobel Prize in Literature laureates"@fr , "Prix nobel de litterature"@fr , "Nobel Prize in Literature laureates"@en , "Nobel Prize in Literature laureates"@de , "Literaturnobelpreistrager"@de , "Literature"@fr , "Literature"@en , "Literature"@de , "Nobel prize in Literature"@fr , "Nobel prize in Literature"@de , "Nobel prize in Literature"@en , "Nobelpreis für Literatur"@de .
+
+<http://rdf.freebase.com/ns/m.02lhv__111>
+        dbo:award  <http://rdf.freebase.com/ns/m.0ddd9> ;
+        dbo:from   "1981"^^xsd:gYear ;
+        dbo:to     "1981"^^xsd:gYear .

@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0807_n>
+        rdfs:label      "MarkLogic"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.0807_n__33> ;
+        owl:sameAs      <http://dbpedia.org/resource/MarkLogic> .
+
+<http://rdf.freebase.com/ns/m.0807_n__33>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.01jr6> ;
+        dbo:from             "2001"^^xsd:gYear ;
+        dbo:to               "2001"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.01jr6>
+        rdfs:label     "Berkeley"@en , "Berkeley"@fr , "Berkeley"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Berkeley> , <http://dbpedia.org/resource/Berkeley,_California> , <http://fr.dbpedia.org/resource/Berkeley_(Californie)> ;
+        skos:altLabel  "Berkeley Daily Gazette"@fr , "Berkeley Daily Gazette"@en , "Berkeley Daily Gazette"@de , "Berkeley, California"@fr , "Berkeley, California"@en , "Berkeley, California"@de , "Berkeley"@fr , "Berkeley"@en , "Berkeley"@de , "People's Republic of Berkeley"@fr , "People's Republic of Berkeley"@en , "People's Republic of Berkeley"@de , "Berkeley, CA"@fr , "Berkeley, CA"@en , "Berkeley, CA"@de , "Berkely, California"@fr , "Berkeley, Calif."@en , "Berkely, California"@en , "Berkely, California"@de , "The People's Republic of Berkeley"@en , "Berkley, CA"@fr , "Berkeley Gazette"@fr , "Berkeley Gazette"@en , "Berkeley Gazette"@de , "Berkley, CA"@de , "Berkley, CA"@en , "Berkley, California"@fr , "Berkley, California"@en , "Berkley, California"@de , "Berkeley, Ca"@fr , "Alameda County / Berkeley city"@en , "Berkeley, Ca"@en , "Berkeley, Ca"@de , "Stockyards, California"@fr , "Stockyards, California"@en , "Stockyards, California"@de , "Berkely, CA"@fr , "Berkely, CA"@en , "Berkely, CA"@de , "LOCODE:USJBK"@fr , "LOCODE:USJBK"@en , "LOCODE:USJBK"@de , "Peoples republic of berkeley"@fr , "Peoples republic of berkeley"@de , "Peoples republic of berkeley"@en , "Berkeley California"@fr , "Berkeley California"@en , "Berkeley California"@de , "Stockyard"@fr , "Stockyard"@de , "Stockyard"@en , "Berserkley"@fr , "Berserkley"@de , "Berserkley"@en , "Berzerkely"@en .
+
+<http://dbpedia.org/resource/MarkLogic>
+        skos:altLabel  "MarkMail"@en , "MarkLogic"@en , "MarkLogic Server"@en , "Mark Logic"@en , "Mark logic"@en .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.06y9c2>
+        rdfs:label     "Pete Wentz"@de , "Pete Wentz"@fr , "Peter Wentz"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.06y9c2__129> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Pete_Wentz> , <http://de.dbpedia.org/resource/Pete_Wentz> , <http://dbpedia.org/resource/Pete_Wentz> ;
+        skos:altLabel  "Peter Wentz"@fr , "Peter Wentz"@de , "Peter Wentz"@en , "Wentz, Pete"@en , "Bronx Wentz"@fr , "Bronx Wentz"@de , "Bronx Wentz"@en , "Pete Wentz"@fr , "Pete Wentz"@de , "Pete Wentz"@en , "Bartskull logo"@fr , "Bartskull logo"@de , "Bartskull logo"@en , "Bartskull Films"@fr , "Bartskull Films"@de , "Bartskull Films"@en , "Petey Wentz"@fr , "Petey Wentz"@de , "Petey Wentz"@en , "Wentz"@fr , "Peter Lewis Kingston Wentz III"@fr , "Wentz"@de , "Peter Lewis Kingston Wentz III"@de , "Peter Lewis Kingston Wentz III"@en , "Wentz"@en , "Peter Lewis Kingston Wentz"@fr , "Peter Lewis Kingston Wentz"@de , "Peter Lewis Kingston Wentz"@en .
+
+<http://rdf.freebase.com/ns/m.033wx9>
+        rdfs:label     "Ashlee Simpson-Wentz"@en , "Ashlee Simpson"@de , "Ashlee Simpson Wentz"@fr ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Ashlee_Simpson> , <http://fr.dbpedia.org/resource/Ashlee_Simpson_Wentz> , <http://dbpedia.org/resource/Ashlee_Simpson> ;
+        skos:altLabel  "Asslee Simpson"@fr , "Asslee Simpson"@en , "Asslee Simpson"@de , "Bronx Mowgli Wentz"@fr , "Bronx Mowgli Wentz"@en , "Bronx Mowgli Wentz"@de , "Simpson"@fr , "Simpson"@en , "Simpson"@de , "Ashlee Nicole Simpson"@fr , "Ashlee Nicole Simpson"@en , "Ashlee Nicole Simpson"@de , "Ashlee Simpson"@fr , "Ashlee Simpson"@en , "Ashlee Simpson"@de , "Ashlee Nicole Simpson-Wentz"@fr , "Ashlee Nicole Simpson-Wentz"@en , "Ashlee Nicole Simpson-Wentz"@de , "Ashlee"@de , "Ashlee simpson"@fr , "Ashlee simpson"@en , "Ashlee simpson"@de , "Ashley Nicolle Simpson"@en , "Simpson, Ashlee"@en , "Ashley Simpson"@fr , "Ashley Simpson"@en , "Ashley Simpson"@de , "Ashleigh simpson"@fr , "Ashleigh simpson"@en , "Ashleigh simpson"@de , "Ashlee Simpson-Wentz"@fr , "Ashlee Simpson-Wentz"@en , "Ashlee Simpson-Wentz"@de , "Ashlee Simpson on SNL"@fr , "Ashlee Simpson on SNL"@en , "Ashlee Simpson on SNL"@de , "Ash"@en , "Ashlie Simpson"@fr , "Ashlie Simpson"@en , "Ashlie Simpson"@de , "Ashleegate"@fr , "Ashleegate"@en , "Ashleegate"@de , "Ashlee Wentz"@fr , "Ashlee Wentz"@en , "Ashlee Wentz"@de , "Ashley Wentz-Simpson"@fr , "Ashlee Simpson Wentz"@fr , "Ashley Wentz-Simpson"@en , "Ashley Wentz-Simpson"@de , "Wentz"@fr .
+
+<http://rdf.freebase.com/ns/m.06y9c2__129>
+        dbo:from    "2008-05-17"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.033wx9> ;
+        dbo:to      "2011-11-22"^^xsd:date .

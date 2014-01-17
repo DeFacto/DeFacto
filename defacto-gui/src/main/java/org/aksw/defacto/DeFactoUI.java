@@ -6,10 +6,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.config.DefactoConfig;
@@ -21,6 +21,8 @@ import org.aksw.defacto.util.AGDISTISResult;
 import org.aksw.defacto.util.DeFactoModelGenerator;
 import org.aksw.defacto.util.DummyData;
 import org.aksw.defacto.util.EvidenceRDFGenerator;
+import org.aksw.defacto.util.FactBenchExample;
+import org.aksw.defacto.util.FactBenchExamplesLoader;
 import org.aksw.defacto.widget.ProgressDialog;
 import org.aksw.defacto.widget.ResultsPanel;
 import org.aksw.defacto.widget.SearchResourceDialog;
@@ -90,7 +92,8 @@ public class DeFactoUI extends UI
 //        main.addStyleName("result-panel");
         layout.addComponent(main);
         //add triple input form to main panel in center top
-        Component tripleInput = generateTripleInputForm();
+//        Component tripleInput = generateTripleInputForm();
+        Component tripleInput = generateExampleInputForm();
         main.addComponent(tripleInput);
         //add results panel to main panel in center bottom
         resultsPanel = new ResultsPanel();
@@ -124,21 +127,97 @@ public class DeFactoUI extends UI
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        //set dummy triple
-        Triple triple = DummyData.getDummyTriple();
-//        subjectBox.addItem(triple.getSubject().getURI());
-//        subjectBox.setValue(triple.getSubject().getURI());
-        subjectBox.addItem("Albert Einstein");
-        subjectBox.setValue("Albert Einstein");
-        predicateBox.addItem(triple.getPredicate().getURI());
-        predicateBox.setValue(triple.getPredicate().getURI());
-//        objectBox.addItem(triple.getObject().getURI());
-//        objectBox.setValue(triple.getObject().getURI());
-        objectBox.addItem("Nobel Prize in Physics");
-        objectBox.setValue("Nobel Prize in Physics");
+        
+        loadExampleData();
     }
     
     /**
+	 * Load examples form FactBench dataset.
+	 */
+	private void loadExampleData() {
+		Set<FactBenchExample> examples = FactBenchExamplesLoader.loadExamples();
+		for (FactBenchExample example : examples) {
+			subjectBox.addItem(example).getItemProperty("fact").setValue(example.getFact());
+		}
+		
+//		//set dummy triple
+//        Triple triple = DummyData.getDummyTriple();
+////        subjectBox.addItem(triple.getSubject().getURI());
+////        subjectBox.setValue(triple.getSubject().getURI());
+//        subjectBox.addItem("Albert Einstein");
+//        subjectBox.setValue("Albert Einstein");
+//        predicateBox.addItem(triple.getPredicate().getURI());
+//        predicateBox.setValue(triple.getPredicate().getURI());
+////        objectBox.addItem(triple.getObject().getURI());
+////        objectBox.setValue(triple.getObject().getURI());
+//        objectBox.addItem("Nobel Prize in Physics");
+//        objectBox.setValue("Nobel Prize in Physics");
+	}
+	
+	/**
+     * Create the basic input form for the triple to validate.
+     * @return
+     */
+    private Component generateExampleInputForm(){
+    	HorizontalLayout l = new HorizontalLayout();
+    	l.setWidth("100%");
+    	l.addStyleName("triple-input");
+    	l.setMargin(true);
+    	l.setSpacing(true);
+    	
+    	//subject
+    	subjectBox = new ComboBox("Fact"){
+        	/* (non-Javadoc)
+        	 * @see com.vaadin.ui.ComboBox#changeVariables(java.lang.Object, java.util.Map)
+        	 */
+        	@Override
+        	public void changeVariables(Object source, Map<String, Object> variables) {
+        		String filter = (String) variables.get("filter");
+        		if(filter != null && filter.length() > 2){
+        			List<String> suggestions = autoSuggest(filter);
+        			removeAllItems();
+        			for (String s : suggestions) {
+						addItem(s);
+					}
+        		}
+        		super.changeVariables(source, variables);
+        	}
+        };
+        subjectBox.setWidth("100%");
+        subjectBox.setInputPrompt("Please choose on of the facts for validation");
+        subjectBox.setImmediate(true);
+        subjectBox.addContainerProperty("fact", String.class, null);
+        subjectBox.addValueChangeListener(new ValueChangeListener() {
+			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				updateValidationAllowed();
+			}
+		});
+        l.addComponent(subjectBox);
+        
+        
+        //validation button
+        validateButton = new Button("Validate");
+        validateButton.setDescription("Click to start the validation of the triple.");
+        validateButton.addClickListener(new Button.ClickListener() {
+            public void buttonClick(ClickEvent event) {
+            	SearchResourceDialog d = new SearchResourceDialog();
+            	d.setModal(true);
+                onValidateFactBenchExample();
+            }
+        });
+        l.addComponent(validateButton);
+        l.setComponentAlignment(validateButton, Alignment.BOTTOM_RIGHT);
+        
+        l.setExpandRatio(subjectBox, 1f);
+        
+        Panel p = new Panel("Choose one of examples facts:");
+        p.setContent(l);
+        return p;
+    }
+
+	/**
      * Create the basic input form for the triple to validate.
      * @return
      */
@@ -346,6 +425,39 @@ public class DeFactoUI extends UI
 						removeWindow(dialog);
 						//visualize the results
 				    	resultsPanel.showResults(triple, evidence, startTime, endTime);
+					}
+				});
+			}
+		}).start();
+    }
+    
+    /**
+     * Run validation of the given triple.
+     * @param triple
+     */
+    private void onValidateFactBenchExample(){
+    	final ProgressDialog dialog = new ProgressDialog("Validating...");
+    	addWindow(dialog);
+    	
+    	new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				final FactBenchExample example = (FactBenchExample) subjectBox.getValue();
+		    	
+		    	//call of DeFacto
+				final Calendar startTime = Calendar.getInstance();
+		    	final Evidence evidence = Defacto.checkFact(example.getModel(), TIME_DISTRIBUTION_ONLY.NO);
+		    	final Calendar endTime = Calendar.getInstance();
+		    	
+				UI.getCurrent().access(new Runnable() {
+					@Override
+					public void run() {
+						//remove progress dialog
+						removeWindow(dialog);
+						//visualize the results
+				    	resultsPanel.showResults(example.getTriple(), evidence, startTime, endTime);
 					}
 				});
 			}

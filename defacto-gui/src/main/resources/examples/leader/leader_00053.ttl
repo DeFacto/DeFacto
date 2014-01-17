@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Kenya>
+        rdfs:label     "Kenya"@fr , "Kenya"@de , "Kenya"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Kenya> , <http://de.dbpedia.org/resource/Kenia> ;
+        skos:altLabel  "Kénya"@fr , "Kenya-Africa"@fr , "Kenya-Africa"@de , "Kenya-Africa"@en , "Kenya"@fr , "Kenya"@de , "Kenya"@en , "République du Kenya"@fr , "Bodenschatze Kenias"@de , "Etymology of Kenya"@fr , "Etymology of Kenya"@de , "Etymology of Kenya"@en , "Republic of Kenya"@fr , "Republic of Kenya"@de , "Republic of Kenya"@en , "Kenyan"@fr , "Kenia"@fr , "ISO 3166-1:KE"@fr , "Kenyans"@fr , "Kenyans"@de , "Kenyan"@de , "Kenia"@de , "Kenyan"@en , "Kenyans"@en , "Kenia"@en , "ISO 3166-1:KE"@de , "Bodenschätze Kenias"@de , "ISO 3166-1:KE"@en , "Republique du Kenya"@fr , "Administrative divisions of Kenya"@fr , "Administrative divisions of Kenya"@de , "Administrative divisions of Kenya"@en , "Republik Kenia"@de , "Kényan"@fr .
+
+<http://dbpedia.org/resource/Jomo_Kenyatta__2>
+        dbo:from    "1963-06-01"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Kenya> ;
+        dbo:to      "1964-12-12"^^xsd:date .
+
+<http://dbpedia.org/resource/Jomo_Kenyatta>
+        rdfs:label     "Jomo Kenyatta"@en , "Jomo Kenyatta"@fr , "Jomo Kenyatta"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Jomo_Kenyatta__2> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Jomo_Kenyatta> , <http://de.dbpedia.org/resource/Jomo_Kenyatta> ;
+        skos:altLabel  "Kenyatta, Jomo"@fr , "Kenyatta, Jomo"@de , "Kenyatta, Jomo"@en , "Jomo Kenyatta"@fr , "Jomo Kenyatta"@de , "Jomo Kenyatta"@en , "H. E. Mzee Jomo Kenyatta"@fr , "Jomo Kenyata"@fr , "Kamau wa Ngengi"@fr , "H. E. Mzee Jomo Kenyatta"@de , "Jomo Kenyata"@de , "H. E. Mzee Jomo Kenyatta"@en , "Jomo Kenyata"@en , "Kamau wa Ngengi"@de , "Kamau wa Ngengi"@en , "Johnstone Kamau"@fr , "Johnstone Kamau"@de , "Johnstone Kamau"@en , "Mzee Jomo Kenyatta"@fr , "Mzee Jomo Kenyatta"@de , "Mzee Jomo Kenyatta"@en , "Kamau Ngengi"@fr , "Jomo Kenyatta: First President of Kenya"@fr , "Kenyatta"@fr , "Kamau Ngengi"@de , "Jomo Kenyatta: First President of Kenya"@de , "Kenyatta"@de , "Jomo Kenyatta: First President of Kenya"@en , "Kenyatta"@en , "Kamau Ngengi"@en .

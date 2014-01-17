@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.06py2__73>
+        dbo:from        "2005-01"^^xsd:gYearMonth ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.03bt0fy> ;
+        dbo:to          "2005-01"^^xsd:gYearMonth .
+
+<http://rdf.freebase.com/ns/m.06py2>
+        rdfs:label       "Sun Microsystems"@fr , "Sun Microsystems"@en , "Sun Microsystems"@de ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.06py2__73> ;
+        owl:sameAs       <http://dbpedia.org/resource/Sun_Microsystems> , <http://de.dbpedia.org/resource/Sun_Microsystems> , <http://fr.dbpedia.org/resource/Sun_Microsystems> ;
+        skos:altLabel    "Sun Microsystem"@fr , "Sun Microsystem"@en , "Sun Microsystem"@de , "Javasoft"@fr , "Javasoft"@de , "Javasoft"@en , "Sun Microsystems Inc."@fr , "Sun Microsystems Inc."@en , "Sun Microsystems Inc."@de , "Sun microsystems"@fr , "Sun microsystems"@de , "Sun microsystems"@en , "Sun workstation"@fr , "Sun workstation"@de , "Sun workstation"@en , "Sun MicroSystems"@fr , "Sun MicroSystems"@de , "Sun MicroSystems"@en , "SUN Microsystems"@fr , "SUN Microsystems"@en , "SUN Microsystems"@de , "Sun Microsystems, Inc."@fr , "SunSoft, Inc."@fr , "SUN MICROSYSTEMS, INC."@en , "Sun Fellow"@fr , "Sun Microsystems, Inc."@de , "Sun Microsystems, Inc."@en , "SunSoft, Inc."@de , "SunSoft, Inc."@en , "JavaSoft"@fr , "Sun Fellow"@de , "JavaSoft"@en , "Sun Fellow"@en , "JavaSoft"@de , "Sun netra t1 105"@fr , "Sun netra t1 105"@de , "Sun netra t1 105"@en , "Sun Microsystems, Incorporated"@fr , "SUN MICROSYSTEMS INC"@en , "The network is the computer"@fr , "The network is the computer"@de , "The network is the computer"@en , "Sun Microsystems, Incorporated"@de , "Sun Microsystems, Incorporated"@en , "Sun.com"@fr , "Sun.com"@de , "Sun.com"@en , "Sun"@en , "Sun Microsystems, Inc"@fr , "Sun Microsystems, Inc"@de , "Sun Microsystems, Inc"@en , "SUNW"@fr , "SUNW"@en , "SUNW"@de , "Oracle America"@fr , "Oracle America"@de , "Oracle America"@en , "Sun Microsystems Incorporated"@fr , "Sun Microsystems Incorporated"@en , "Sun Microsystems Incorporated"@de , "Sun micro"@fr , "Sun micro"@de , "Sun micro"@en , "Sun Microsystems"@fr , "Sun Microsystems"@de , "Sun Microsystems"@en , "Sun Micro"@fr , "Sun Micro"@en , "Sun Micro"@de , "Sun Ultra 20 Workstation"@fr , "Sun Ultra 20 Workstation"@de , "Sun Ultra 20 Workstation"@en .
+
+<http://rdf.freebase.com/ns/m.03bt0fy>
+        rdfs:label  "SevenSpace"@en .

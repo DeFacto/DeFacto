@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Emeka_Okafor__2>
+        dbo:from  "2009"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/New_Orleans_Hornets> ;
+        dbo:to    "2011"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Emeka_Okafor>
+        rdfs:label      "Emeka Okafor"@de , "Emeka Okafor"@en , "Emeka Okafor"@fr ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Emeka_Okafor__2> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Emeka_Okafor> , <http://de.dbpedia.org/resource/Emeka_Okafor> ;
+        skos:altLabel   "Chukwuemeka Noubuisi \"Emeka\" Okafor"@fr , "Emeka Okafor"@fr , "Emeka Okafor"@de , "Emeka Okafor"@en , "Okafor"@fr , "Chukwuemeka Noubuisi \"Emeka\" Okafor"@de , "Okafor"@de , "Chukwuemeka Noubuisi \"Emeka\" Okafor"@en , "Okafor"@en , "Chukwuemeka Noubuisi Okafor"@fr , "Chukwuemeka Okafor"@fr , "Chukwuemeka Noubuisi Okafor"@de , "Chukwuemeka Okafor"@de , "Chukwuemeka Noubuisi Okafor"@en , "Chukwuemeka Okafor"@en , "Chukwuemeka Ndubuisi Okafor"@fr , "Chukwuemeka Ndubuisi Okafor"@de , "Chukwuemeka Ndubuisi Okafor"@en .
+
+<http://dbpedia.org/resource/New_Orleans_Hornets>
+        rdfs:label     "New Orleans Hornets"@en , "New Orleans Hornets"@fr , "New Orleans Hornets"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/New_Orleans_Hornets> , <http://fr.dbpedia.org/resource/Hornets_de_la_Nouvelle-Orléans> ;
+        skos:altLabel  "Hornets De La Nouvelle-Orléans"@fr , "Hornets de la nouvelle-orléans"@fr , "Hornets De La Nouvelle-Orleans"@fr , "Hornets de la nouvelle-orleans"@fr , "Hornets"@de , "Oklahoma City Hornets"@fr , "Oklahoma City Hornets"@de , "Oklahoma City Hornets"@en , "Hornets, New Orleans"@fr , "Hornets de la Nouvelle Orleans"@fr , "Charlotte Hornets"@fr , "Hornets de la Nouvelle Orléans"@fr , "Hornets, New Orleans"@de , "Hornets, New Orleans"@en , "Charlotte Hornets"@de , "Hornets de la Nouvelle-Orléans"@fr , "Hornets de la Nouvelle-Orleans"@fr , "New Orleans Hornets"@fr , "New Orleans Hornets"@en , "New Orleans Hornets"@de , "Oklahoma City"@fr , "Hornet"@fr , "Hornet"@de , "Hornet"@en .

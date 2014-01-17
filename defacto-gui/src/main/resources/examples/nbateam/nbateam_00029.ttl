@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Richard_Jefferson>
+        rdfs:label      "Richard Jefferson"@en , "Richard Jefferson"@fr , "Richard Jefferson"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Richard_Jefferson__1> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Richard_Jefferson> , <http://de.dbpedia.org/resource/Richard_Jefferson> ;
+        skos:altLabel   "Jefferson"@fr , "Jefferson"@de , "Ricky Jefferson"@fr , "Ricky Jefferson"@de , "Ricky Jefferson"@en , "Richard Jefferson"@fr , "Richard Jefferson"@de , "Richard Jefferson"@en .
+
+<http://dbpedia.org/resource/Richard_Jefferson__1>
+        dbo:from  "2001"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/New_Jersey_Nets> ;
+        dbo:to    "2007"^^xsd:gYear .
+
+<http://dbpedia.org/resource/New_Jersey_Nets>
+        rdfs:label  "New Jersey Nets"@en , "New Jersey Nets"@fr , "New Jersey Nets"@de .

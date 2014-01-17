@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Jason_Richardson>
+        rdfs:label      "Jason Richardson"@fr , "Jason Richardson"@de , "Jason Richardson"@en ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Jason_Richardson__1> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Jason_Richardson> , <http://fr.dbpedia.org/resource/Jason_Richardson> ;
+        skos:altLabel   "J Rich"@fr , "Jason Anthoney (J-Rich) Richardson"@fr , "J Rich"@de , "Jason Anthoney (J-Rich) Richardson"@de , "J Rich"@en , "Jason Anthoney (J-Rich) Richardson"@en , "Jason Richardson"@fr , "J-Rich"@fr , "Jason Richardson"@de , "J-Rich"@de , "Jason Richardson"@en , "J-Rich"@en , "Richardson"@fr , "Jason Anthoney \"J-Rich\" Richardson"@fr , "Jason Anthoney \"J-Rich\" Richardson"@de , "Jason Anthoney \"J-Rich\" Richardson"@en , "Jason Anthoney Richardson"@fr , "Jason Anthoney Richardson"@de , "Jason Anthoney Richardson"@en .
+
+<http://dbpedia.org/resource/Jason_Richardson__1>
+        dbo:from  "2001"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Golden_State_Warriors> ;
+        dbo:to    "2007"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Golden_State_Warriors>
+        rdfs:label     "Golden State Warriors"@en , "Golden State Warriors"@de , "Golden State Warriors"@fr ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Warriors_de_Golden_State> , <http://de.dbpedia.org/resource/Golden_State_Warriors> ;
+        skos:altLabel  "GS Warrriors"@en , "GS Warrriors"@de , "GS Warrriors"@fr , "Warriorsworld.net"@fr , "Warriorsworld.net"@en , "Golden States Warriors"@fr , "Warriorsworld.net"@de , "Oakland Warriors"@fr , "Oakland Warriors"@en , "Oakland Warriors"@de , "Warriors du golden state"@fr , "San Francisco Warriors"@en , "San Francisco Warriors"@de , "San Francisco Warriors"@fr , "Golden State"@en , "Golden State"@de , "Golden State"@fr , "Warriors de Philadelphie"@fr , "Golden St. Warriors"@en , "Golden St. Warriors"@de , "Golden St. Warriors"@fr , "Warrior"@fr , "Warrior"@en , "Warrior"@de , "Warriors de Golden State"@fr , "Warriors de San Francisco"@fr , "Philadelphia Warriors"@en , "Philadelphia Warriors"@de , "Philadelphia Warriors"@fr , "GS Warriors"@en , "GS Warriors"@de , "GS Warriors"@fr , "Warriors du Golden State"@fr , "Golden State Warriors"@fr , "Golden State Warriors"@en , "Golden State Warriors"@de , "Golden st. warriors"@fr , "Golden st. warriors"@en , "Golden st. warriors"@de , "Goldens State Warriors"@en , "Goldens State Warriors"@de , "Goldens State Warriors"@fr .

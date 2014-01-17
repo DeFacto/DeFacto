@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Jeff_Anderson>
+        rdfs:label     "Jeff Anderson"@en , "Jeff Anderson"@fr , "Jeff Anderson"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Jeff_Anderson> , <http://fr.dbpedia.org/resource/Jeff_Anderson> ;
+        skos:altLabel  "Jeff Anderson"@fr , "Anderson"@fr , "Jeff Anderson"@de , "Anderson, Jeff"@fr , "Anderson, Jeff"@de .
+
+<http://dbpedia.org/resource/Clerks>
+        rdfs:label      "Clerks"@de , "Clerks"@fr , "Clerks"@en ;
+        dbo:isStarring  <http://dbpedia.org/resource/Clerks__1> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Clerks_:_Les_Employés_modèles> , <http://de.dbpedia.org/resource/Clerks_–_Die_Ladenhüter> ;
+        skos:altLabel   "Clerks movie"@fr , "Clerks movie"@en , "Clerks movie"@de , "Clerks, Les Employes Modeles"@fr , "I'm 37!!"@en , "I'm 37!!"@de , "I'm 37!!"@fr , "Dante And Randall"@en , "Dante And Randall"@de , "Dante And Randall"@fr , "Clerks - Die Ladenhüter"@de , "Clerks"@en , "Clerks"@de , "Clerks"@fr , "Clerks, les employes modeles"@fr , "Clerks, les employés modèles"@fr , "Commis en folie"@fr , "Clerks : Les Employés modèles"@fr , "Clerks – Die Ladenhuter"@de , "Clerks : Les Employes modeles"@fr , "Clerks - Die Ladenhuter"@de , "Clerks, Les Employés Modèles"@fr , "Clerks – Die Ladenhüter"@de , "Clerks."@en , "Clerks."@de , "Big Choice Video"@en , "Big Choice Video"@de , "Big Choice Video"@fr , "Clerks."@fr , "Clerk"@en , "Clerk"@de , "Clerk"@fr , "Quick Stop"@en , "Quick Stop"@de , "Quick Stop"@fr , "Clerks X"@fr , "Clerks X"@en , "Clerks X"@de .
+
+<http://dbpedia.org/resource/Clerks__1>
+        dbo:from      "1994-10-19"^^xsd:date ;
+        dbo:starring  <http://dbpedia.org/resource/Jeff_Anderson> ;
+        dbo:to        "1994-10-19"^^xsd:date .

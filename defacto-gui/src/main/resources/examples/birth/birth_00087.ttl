@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Vallejo,_California>
+        rdfs:label     "Vallejo, California"@de , "Vallejo, California"@fr , "Vallejo, California"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Vallejo_(ville)> , <http://de.dbpedia.org/resource/Vallejo_(Kalifornien)> ;
+        skos:altLabel  "Central Vallejo, California"@en , "Central Vallejo, California"@de , "Central Vallejo, California"@fr , "Vallejo, ca"@en , "Vallejo, ca"@de , "Vallejo, ca"@fr , "Downtown Vallejo, California"@en , "Downtown Vallejo, California"@de , "Downtown Vallejo, California"@fr , "Vallejo, Ca"@fr , "South Vallejo, Vallejo, California"@en , "South Vallejo, Vallejo, California"@de , "South Vallejo, Vallejo, California"@fr , "Vallejo, Ca"@en , "Vallejo, Ca"@de , "Vallejo"@en , "Vallejo"@de , "Vallejo"@fr , "Vallejo, California"@fr , "Vallejo, California"@en , "Vallejo, California"@de , "LOCODE:USVLO"@en , "LOCODE:USVLO"@de , "LOCODE:USVLO"@fr , "Blue Rock Springs"@en , "Blue Rock Springs"@de , "Blue Rock Springs"@fr , "North Vallejo, Vallejo, California"@fr , "North Vallejo, Vallejo, California"@en , "North Vallejo, Vallejo, California"@de , "Vallejo, CA"@fr , "Vallejo, CA"@en , "Vallejo, CA"@de , "Vallejo, Calif."@en , "Vallejo, Calif."@de , "Vallejo, Calif."@fr , "Vallejo ca"@en , "Vallejo ca"@de , "Vallejo ca"@fr .
+
+<http://dbpedia.org/resource/Jeff_Gordon>
+        rdfs:label     "Jeff Gordon"@en , "Jeff Gordon"@fr , "Jeff Gordon"@de ;
+        dbo:birth      <http://dbpedia.org/resource/Jeff_Gordon__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Jeff_Gordon> , <http://de.dbpedia.org/resource/Jeff_Gordon> ;
+        skos:altLabel  "Jeffery Gordon"@fr , "Jeffery Gordon"@de , "Jeffery Gordon"@en , "Jeff Michael Gordon"@fr , "Jeff Gordon"@fr , "Jeff Michael Gordon"@de , "Jeff Gordon"@de , "Jeff Michael Gordon"@en , "Jeff Gordon"@en , "Jeffrey Michael Gordon"@fr , "Jeffrey Michael Gordon"@de , "Jeffrey Michael Gordon"@en , "Jeffery Michael Gordon"@fr , "Jeffery Michael Gordon"@de , "Jeffery Michael Gordon"@en .
+
+<http://dbpedia.org/resource/Jeff_Gordon__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Vallejo,_California> ;
+        dbo:from        "1971-08-04"^^xsd:date ;
+        dbo:to          "1971-08-04"^^xsd:date .

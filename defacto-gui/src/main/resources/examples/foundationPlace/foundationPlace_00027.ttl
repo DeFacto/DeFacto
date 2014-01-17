@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.04fdd3>
+        rdfs:label      "Intuit"@fr , "Intuit"@de , "Intuit Inc."@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.04fdd3__27> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Intuit> , <http://fr.dbpedia.org/resource/Intuit> , <http://dbpedia.org/resource/Intuit> ;
+        skos:altLabel   "INTU"@fr , "INTU"@de , "Lacerte"@fr , "Lacerte"@de , "Intuit"@fr , "Intuit"@de , "Intuit"@en , "Intuit Inc."@fr , "Intuit, Inc."@fr , "Intuit Inc."@de , "QuickBase"@fr , "Intuit, Inc."@de , "QuickBase"@de , "ProSeries"@fr , "ProSeries"@de .
+
+<http://rdf.freebase.com/ns/m.0r6c4>
+        rdfs:label     "Mountain View"@de , "Mountain View"@en , "Mountain View"@fr ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Mountain_View_(Santa_Clara_County,_Kalifornien)> , <http://dbpedia.org/resource/Mountain_View,_California> , <http://fr.dbpedia.org/resource/Mountain_View_(Californie)> ;
+        skos:altLabel  "Mountain View, California"@fr , "Mountain View"@fr , "Mountain View, Calif."@fr , "Mountain View, California"@de , "Mountain View"@de , "Mountain View"@en , "Mountain View, Calif."@de , "Mountain View, California"@en , "Mountain View, Calif."@en , "Mountain View, CA"@fr , "Mountain View, CA"@de , "Mountain View, CA"@en , "Mountain View, Santa Clara County, California"@fr , "Mountain View, Santa Clara County, California"@de , "Mountain View, Santa Clara County, California"@en , "Santa Clara County / Mountain View city"@en , "Mtn View, CA"@fr , "Mtn View, CA"@de , "Mtn View, CA"@en , "Mountain View, Santa Clara County, CA"@fr , "Mountain View, Santa Clara County, CA"@de , "Mountain View, Santa Clara County, CA"@en , "Mountain View, Santa Clara, California"@fr , "Mountain View, Santa Clara, California"@de , "Mountain View, Santa Clara, California"@en , "Mountain View, Santa Clara, CA"@fr , "Mountain View, Santa Clara, CA"@de , "Mountain View, Santa Clara, CA"@en .
+
+<http://rdf.freebase.com/ns/m.04fdd3__27>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0r6c4> ;
+        dbo:from             "1983"^^xsd:gYear ;
+        dbo:to               "1983"^^xsd:gYear .

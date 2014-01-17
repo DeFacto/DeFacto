@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02nl0d>
+        rdfs:label     "Le Monde des Ā"@fr , "Welt der Null-A"@de , "The World of Null-A"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Welt_der_Null-A> , <http://dbpedia.org/resource/The_World_of_Null-A> , <http://fr.dbpedia.org/resource/Le_Monde_des_Ā> ;
+        skos:altLabel  "Welt der Null-A"@de , "Le Monde des non-A"@fr , "Le monde des A"@fr , "Le monde des Ã"@fr , "The World of Null-A"@fr , "The World of Null-A"@de , "Le Monde des A"@fr , "Le monde des ā"@fr , "Le Monde Des A"@fr , "World of Null-A"@de , "World of Null-A"@fr , "Le Monde Des Ā"@fr , "Le Monde des Ã"@fr , "Le monde des non-A"@fr , "Le monde des Ā"@fr , "Le Monde des Ā"@fr , "Le monde des a"@fr .
+
+<http://rdf.freebase.com/ns/m.0kmw>
+        rdfs:label       "Alfred Elton van Vogt"@de , "A. E. van Vogt"@fr , "A. E. van Vogt"@en ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.02nl0d__119> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/Alfred_Elton_van_Vogt> , <http://fr.dbpedia.org/resource/A._E._van_Vogt> , <http://dbpedia.org/resource/A._E._van_Vogt> ;
+        skos:altLabel    "Alfred Elton Van Vogt"@fr , "A.E. Van Vogt"@fr , "A.E. Van Vogt"@en , "A.E. Van Vogt"@de , "A.E. Vogt"@fr , "A.E. Vogt"@en , "The Hypnotism Handbook"@fr , "A.E. Vogt"@de , "Alfred E. Van Vogt"@fr , "A. E. van Vogt"@en , "A. E. van Vogt"@de , "A. E. van Vogt"@fr , "A. E. van Voigt"@en , "AE van Vogt"@en , "AE van Vogt"@de , "AE van Vogt"@fr , "Elton"@de , "Van Vogt"@fr , "Van Vogt"@de , "Van vogt"@en , "Van vogt"@de , "Van vogt"@fr , "Vogt"@fr , "A E Van Vogt"@fr , "A E Van Vogt"@en , "A E Van Vogt"@de , "A E van Vogt"@fr , "A E van Vogt"@en , "A E van Vogt"@de , "A. E. Van Vogt"@fr , "A. E. Van Vogt"@en , "A. E. Van Vogt"@de , "Van Vogt, A. E."@en , "Van Vogt, A. E."@de , "Van Vogt, A. E."@fr , "A.E. van Vogt"@fr , "A.E. van Vogt"@en , "A.E. van Vogt"@de , "Alfred E. van Vogt"@en , "Alfred E. van Vogt"@de , "Alfred E. van Vogt"@fr , "Alfred Elton van Vogt"@fr , "Alfred Elton van Vogt"@en , "Alfred Elton van Vogt"@de .
+
+<http://rdf.freebase.com/ns/m.02nl0d__119>
+        dbo:author  <http://rdf.freebase.com/ns/m.02nl0d> ;
+        dbo:from    "1948"^^xsd:gYear ;
+        dbo:to      "1948"^^xsd:gYear .

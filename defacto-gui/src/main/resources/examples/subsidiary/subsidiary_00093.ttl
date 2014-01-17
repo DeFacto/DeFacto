@@ -1,0 +1,23 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Blue_Coat_Systems>
+        skos:altLabel  "CacheFlow"@en , "ProxySG"@en , "Permeo Technologies"@en , "Blue Coat Systems"@en .
+
+<http://rdf.freebase.com/ns/m.03dh4q1>
+        rdfs:label  "Springbank"@en .
+
+<http://rdf.freebase.com/ns/m.0dy7mj>
+        rdfs:label       "Blue Coat Systems"@en ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.0dy7mj__93> ;
+        owl:sameAs       <http://dbpedia.org/resource/Blue_Coat_Systems> ;
+        skos:altLabel    "BLUE COAT SYSTEMS INC"@en , "CACHEFLOW INC"@en .
+
+<http://rdf.freebase.com/ns/m.0dy7mj__93>
+        dbo:from        "2000"^^xsd:gYear ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.03dh4q1> ;
+        dbo:to          "2000"^^xsd:gYear .

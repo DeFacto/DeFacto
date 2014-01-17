@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Herbert_Hoover__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/West_Branch,_Iowa> ;
+        dbo:from        "1874-08-10"^^xsd:date ;
+        dbo:to          "1874-08-10"^^xsd:date .
+
+<http://dbpedia.org/resource/West_Branch,_Iowa>
+        rdfs:label     "West Branch, Iowa"@en , "West Branch, Iowa"@fr , "West Branch, Iowa"@de ;
+        skos:altLabel  "West Branch"@en , "West Branch, Iowa"@en , "West Branch, IA"@en .
+
+<http://dbpedia.org/resource/Herbert_Hoover>
+        rdfs:label     "Herbert Hoover"@en , "Herbert Hoover"@fr , "Herbert Hoover"@de ;
+        dbo:birth      <http://dbpedia.org/resource/Herbert_Hoover__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Herbert_Hoover> , <http://de.dbpedia.org/resource/Herbert_Hoover> ;
+        skos:altLabel  "Herbert Hoover"@en , "Hoover, Herbert Clark"@fr , "Hoover, Herbert Clark"@de , "Hoover, Herbert Clark"@en , "Hoover Administration"@fr , "Hoover Administration"@de , "Hoover Administration"@en , "31st President of the United States"@fr , "Herbert C. Hoover"@fr , "President Hoover"@fr , "31st President of the United States"@de , "31st President of the United States"@en , "President Hoover"@de , "President Hoover"@en , "Presidency of Herbert Hoover"@fr , "Herbert C. Hoover"@de , "Presidency of Herbert Hoover"@de , "Presidency of Herbert Hoover"@en , "Herbert C. Hoover"@en , "Herbert Clark Hoover"@fr , "Herbert Clark Hoover"@de , "Herbert Clark Hoover"@en , "Hoover"@fr , "Hoover"@de , "Hoover"@en , "President Herbert Hoover"@fr , "President Herbert Hoover"@de , "President Herbert Hoover"@en , "Herbert Hoover"@fr , "Herbert Hoover"@de .

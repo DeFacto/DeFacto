@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.05zh32>
+        rdfs:label     "Les Dieux de Mars"@fr , "The Gods of Mars"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Les_Dieux_de_Mars> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/The_Gods_of_Mars> ;
+        skos:altLabel  "Gods of Mars"@fr , "Les Dieux de Mars"@fr , "The Gods of Mars"@fr .
+
+<http://rdf.freebase.com/ns/m.05zh32__123>
+        dbo:author  <http://rdf.freebase.com/ns/m.05zh32> ;
+        dbo:from    "1918"^^xsd:gYear ;
+        dbo:to      "1918"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.02mpb>
+        rdfs:label       "Edgar Rice Burroughs"@de , "Edgar Rice Burroughs"@en , "Edgar Rice Burroughs"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.05zh32__123> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/Edgar_Rice_Burroughs> , <http://de.dbpedia.org/resource/Edgar_Rice_Burroughs> , <http://dbpedia.org/resource/Edgar_Rice_Burroughs> ;
+        skos:altLabel    "Burroughs, Edgar Rice"@fr , "Burroughs, Edgar Rice"@de , "Burroughs, Edgar Rice"@en , "Edgar"@fr , "Normal Bean"@en , "Edgar"@de , "Edgar"@en , "Edgar R. Burroughs"@fr , "Edgar R. Burroughs"@de , "Edgar R. Burroughs"@en , "Edgar Burroughs"@fr , "Edgar Burroughs"@de , "Edgar Burroughs"@en , "E.R.Burroughs"@en , "Edgar Rice Burroughs"@fr , "Edgar Rice Burroughs"@de , "Edgar Rice Burroughs"@en , "Burroughs"@fr , "Edgar Rice Burrough"@fr , "Burroughs"@de , "Edgar Rice Burrough"@de , "Burroughs"@en , "Edgar Rice Burrough"@en , "Norman Bean"@en .

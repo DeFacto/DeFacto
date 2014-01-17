@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.08623t__21>
+        dbo:from    "2005-02"^^xsd:gYearMonth ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.025p38> ;
+        dbo:to      "2009-05"^^xsd:gYearMonth .
+
+<http://rdf.freebase.com/ns/m.08623t>
+        rdfs:label     "Ness Wadia"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.08623t__21> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Ness_Wadia> ;
+        skos:altLabel  "Ness Wadia"@en , "Ness"@en .
+
+<http://rdf.freebase.com/ns/m.025p38>
+        rdfs:label     "Preity Zinta"@en , "Preity Zinta"@de , "Preity Zinta"@fr ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Preity_Zinta> , <http://dbpedia.org/resource/Preity_Zinta> , <http://de.dbpedia.org/resource/Preity_Zinta> ;
+        skos:altLabel  "Preetam Singh"@en , "Priety Zinta"@fr , "Preity"@fr , "Preeti Zinta"@fr , "Priety Zinta"@de , "Preeti Zinta"@de , "Priety Zinta"@en , "Preeti Zinta"@en , "PZNZ Media"@fr , "Preity"@de , "Preity"@en , "PZNZ Media"@de , "PZNZ Media"@en , "Preity Zintar"@en , "प्रीति ज़िंटा"@en , "Background and personal life of Preity Zinta"@fr , "Background and personal life of Preity Zinta"@de , "Background and personal life of Preity Zinta"@en , "Preity Zinta"@fr , "Preity Zinta"@de , "Preity Zinta"@en , "Zinta"@fr , "Zinta"@de , "Zinta"@en , "Personal life of Preity Zinta"@fr , "Preity Zinta Bollywood"@fr , "Personal life of Preity Zinta"@de , "Personal life of Preity Zinta"@en , "Preity Zinta Bollywood"@de , "Preity Zinta Bollywood"@en .

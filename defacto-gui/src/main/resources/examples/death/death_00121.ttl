@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Springfield,_Missouri>
+        rdfs:label     "Springfield, Missouri"@en , "Springfield, Missouri"@fr , "Springfield, Missouri"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Springfield_(Missouri)> , <http://fr.dbpedia.org/resource/Springfield_(Missouri)> ;
+        skos:altLabel  "Springfield, Missouri"@en , "Springfield, MO"@fr , "Springfield, MO"@de , "Springfield, MO"@en , "LOCODE:USSGF"@fr , "Springfield missouri"@fr , "Springfield missouri"@de , "Springfield missouri"@en , "LOCODE:USSGF"@de , "LOCODE:USSGF"@en , "Springfield"@fr , "Springfield"@de , "Springfield"@en , "The Summit Preparatory School"@fr , "Springfield, Mo."@fr , "The Summit Preparatory School"@de , "Springfield, Mo."@de , "Springfield, Mo."@en , "The Summit Preparatory School"@en , "Springfield, Missouri"@fr , "Springfield Mo"@fr , "Springfield, Missouri"@de , "Springfield Mo"@de , "Springfield Mo"@en .
+
+<http://dbpedia.org/resource/Conway_Twitty>
+        rdfs:label     "Conway Twitty"@de , "Conway Twitty"@en , "Conway Twitty"@fr ;
+        dbo:death      <http://dbpedia.org/resource/Conway_Twitty__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Conway_Twitty> , <http://fr.dbpedia.org/resource/Conway_Twitty> ;
+        skos:altLabel  "Harold Lloyd Jenkins"@fr , "Twitty"@fr , "Harold Lloyd Jenkins"@de , "Twitty"@de , "Harold Lloyd Jenkins"@en , "Twitty"@en , "Conway Twitty"@fr , "Conway Twitty"@de , "Conway Twitty"@en , "Harold Jenkins a.k.a Conway Twitty"@fr , "Conway"@fr , "Harold Jenkins"@fr , "Conway"@de , "Conway"@en , "Harold Jenkins"@de , "Harold Jenkins"@en , "Conway Titty"@fr , "Harold Jenkins a.k.a Conway Twitty"@de , "Harold Jenkins a.k.a Conway Twitty"@en , "Conway Titty"@de , "Conway Titty"@en .
+
+<http://dbpedia.org/resource/Conway_Twitty__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Springfield,_Missouri> ;
+        dbo:from        "1993-06-05"^^xsd:date ;
+        dbo:to          "1993-06-05"^^xsd:date .

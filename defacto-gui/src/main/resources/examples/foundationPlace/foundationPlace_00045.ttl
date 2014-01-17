@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0c1j_c>
+        rdfs:label      "Art Technology Group"@de , "Art Technology Group"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.0c1j_c__45> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/Art_Technology_Group> , <http://dbpedia.org/resource/Art_Technology_Group> ;
+        skos:altLabel   "Art Technology Group"@de , "Joseph Chung"@de , "ATG"@en .
+
+<http://rdf.freebase.com/ns/m.0c1j_c__45>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.01qh7> ;
+        dbo:from             "1991"^^xsd:gYear ;
+        dbo:to               "1991"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.01qh7>
+        rdfs:label     "Cambridge"@en , "Cambridge"@fr , "Cambridge"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Cambridge_(Massachusetts)> , <http://dbpedia.org/resource/Cambridge,_Massachusetts> , <http://de.dbpedia.org/resource/Cambridge_(Massachusetts)> ;
+        skos:altLabel  "Cambridge City Council, Massachusetts"@fr , "Cambridge City Council, Massachusetts"@en , "Cambridge City Council, Massachusetts"@de , "Cambridge, Massachusetts"@fr , "Cambridge, Massachusetts"@en , "Cambridge, Massachusetts"@de , "Newtowne"@fr , "Cambridge City Council"@fr , "Cambridge City Council"@en , "Newtowne"@en , "Newtowne"@de , "Cambridge City Council"@de , "Cambridge, Mass."@fr , "Cambridge, Mass."@en , "Cambridge, Mass."@de , "Cambridge,Massachusetts"@fr , "Cambridge,Massachusetts"@en , "Cambridge,Massachusetts"@de , "Cambridge, Massachusetts, United States of America"@fr , "Cambridge, Massachusetts, United States of America"@en , "Cambridge, Massachusetts, United States of America"@de , "Newe Towne"@fr , "Newe Towne"@de , "Newe Towne"@en , "Massachusetts Cambridge"@fr , "Massachusetts Cambridge"@en , "Massachusetts Cambridge"@de , "Cambridge, MA"@fr , "Cambridge, MA"@en , "Cambridge, MA"@de , "LOCODE:USJHY"@fr , "LOCODE:USJHY"@en , "LOCODE:USJHY"@de , "People's Republic of Cambridge"@fr , "People's Republic of Cambridge"@en , "People's Republic of Cambridge"@de , "Cambridge, Mass"@en , "Newtown, MA"@fr , "Newtown, MA"@en , "Newtown, MA"@de , "Cambridge"@fr , "Cambridge MA"@fr , "Cambridge,MA"@fr , "Cambridge"@de , "Cambridge"@en , "Cambridge MA"@en , "Cambridge MA"@de , "Cambridge,MA"@en , "Cambridge,MA"@de , "Cambridge, ma"@fr , "Cambridge, ma"@en , "Cambridge, ma"@de , "Middlesex County / Cambridge city"@en .

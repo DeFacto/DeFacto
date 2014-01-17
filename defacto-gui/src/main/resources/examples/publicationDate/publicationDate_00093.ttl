@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.018qhj>
+        rdfs:label       "Mary Doria Russell"@en , "Mary Doria Russell"@de , "Mary Doria Russell"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.01tgs8__93> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/Mary_Doria_Russell> , <http://fr.dbpedia.org/resource/Mary_Doria_Russell> , <http://dbpedia.org/resource/Mary_Doria_Russell> ;
+        skos:altLabel    "Russell"@fr , "Mary Doria Russell"@de , "Mary Doria Russell"@fr .
+
+<http://rdf.freebase.com/ns/m.01tgs8>
+        rdfs:label     "The Sparrow"@en , "Le Moineau de Dieu"@fr ;
+        owl:sameAs     <http://dbpedia.org/resource/The_Sparrow_(novel)> , <http://de.dbpedia.org/resource/> , <http://fr.dbpedia.org/resource/Le_Moineau_de_Dieu> ;
+        skos:altLabel  "Le Moineau de dieu"@fr , "The Sparrow"@fr , "Sperling."@en , "Le Moineau de Dieu"@fr , "Sparrow, The"@en , "Le moineau de Dieu"@en , "Sparrow"@fr .
+
+<http://rdf.freebase.com/ns/m.01tgs8__93>
+        dbo:author  <http://rdf.freebase.com/ns/m.01tgs8> ;
+        dbo:from    "1996"^^xsd:gYear ;
+        dbo:to      "1996"^^xsd:gYear .

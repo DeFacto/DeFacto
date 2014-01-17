@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03k_bf__53>
+        dbo:from        "1998"^^xsd:gYear ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.02h6mpq> ;
+        dbo:to          "1998"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.03k_bf>
+        rdfs:label       "GE Healthcare"@en , "GE Healthcare"@de ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.03k_bf__53> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/GE_Healthcare> , <http://dbpedia.org/resource/GE_Healthcare> ;
+        skos:altLabel    "GE Healthcare Medical Diagnostics"@de , "GE Healthcare Medical Diagnostics"@en , "GE Healthcare Global Diagnostic Imaging"@de , "GE Healthcare Global Diagnostic Imaging"@en , "GE Healthcare Integrated IT Solutions"@de , "GE Healthcare Integrated IT Solutions"@en , "GE Healthcare Surgery"@de , "GE Healthcare Surgery"@en , "Ge healthcare"@de , "GE Healthcare Clinical Systems"@de , "Ge healthcare"@en , "GE Healthcare Clinical Systems"@en , "GE Healthcare"@de , "GE Healthcare"@en .
+
+<http://rdf.freebase.com/ns/m.02h6mpq>
+        rdfs:label  "Molecular Dynamics"@en .

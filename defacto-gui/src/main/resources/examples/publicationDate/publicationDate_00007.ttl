@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.027vqtl>
+        rdfs:label  "Dreams of Dark and Light: The Great Short Fiction of Tanith Lee"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/Dreams_of_Dark_and_Light:_The_Great_Short_Fiction_of_Tanith_Lee> .
+
+<http://rdf.freebase.com/ns/m.027vqtl__7>
+        dbo:author  <http://rdf.freebase.com/ns/m.027vqtl> ;
+        dbo:from    "1986"^^xsd:gYear ;
+        dbo:to      "1986"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0420qv>
+        rdfs:label       "Tanith Lee"@fr , "Tanith Lee"@de , "Tanith Lee"@en ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.027vqtl__7> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/Tanith_Lee> , <http://dbpedia.org/resource/Tanith_Lee> , <http://de.dbpedia.org/resource/Tanith_Lee> ;
+        skos:altLabel    "The Book of the Mad"@fr , "The Book of the Mad"@de , "The Four-BEE Series"@fr , "The Four-BEE Series"@de , "A Bed of Earth"@fr , "A Bed of Earth"@de , "Esther Garber"@fr , "Esther Garber"@en , "Esther Garber"@de , "The Storm Lord"@de , "The Storm Lord"@fr , "Tanith"@fr , "Tanith"@de , "Tanit"@fr , "The Secret Books of Paradys"@fr , "The Secret Books of Paradys"@de , "Venus Preserved"@fr , "Paradys"@de , "Paradys"@fr , "Venus Preserved"@de , "Doll Skulls"@de , "Doll Skulls"@fr , "Faces Under Water"@fr , "Faces Under Water"@de , "Bed of Earth"@fr , "Bed of Earth"@de , "The White Serpent"@fr , "Drinking Sapphire Wine"@fr , "Drinking Sapphire Wine"@de , "The White Serpent"@de , "The Book of the Damned"@de , "The Book of the Damned"@fr , "Don't Bite the Sun"@fr , "Don't Bite the Sun"@de , "Anackire"@fr , "Anackire"@de , "Saint Fire"@de , "Saint Fire"@fr , "Book of the Dead"@fr , "Book of the Dead"@de , "The Secret Books of Venus"@de , "The Secret Books of Venus"@fr , "Tanith Lee"@fr , "The Book of the Dead"@fr , "The Book of the Dead"@de , "The Book of the Beast"@de , "Tanith Lee"@de , "The Book of the Beast"@fr , "The Novels of Vis"@fr , "The Novels of Vis"@de .

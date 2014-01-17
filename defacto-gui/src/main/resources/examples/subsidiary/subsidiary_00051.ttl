@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.01zb9v__51>
+        dbo:from        "1998"^^xsd:gYear ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.02h6mjf> ;
+        dbo:to          "1998"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.01zb9v>
+        rdfs:label       "Cadence Design Systems"@fr , "Cadence Design Systems"@de , "Cadence Design Systems"@en ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.01zb9v__51> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/Cadence_Design_Systems> , <http://fr.dbpedia.org/resource/Cadence_Design_Systems> , <http://dbpedia.org/resource/Cadence_Design_Systems> ;
+        skos:altLabel    "Cadence Design"@fr , "Cadence Design"@de , "Cadence Design Systems"@fr , "Cadence Design Systems"@de , "Cadence Design Systems, Inc."@fr , "Cadence Design Systems, Inc."@de , "Quickturn Design Systems"@fr , "Quickturn Design Systems"@de , "Cadence"@fr , "Quickturn"@fr , "Cadence Design Systems (India) Pvt. Ltd."@fr , "Quickturn"@de , "Cadence Design Systems (India) Pvt. Ltd."@de , "SDA Systems"@fr , "Cadence"@de , "ECAD"@fr , "Quickturn Systems"@fr , "Quickturn Systems"@de , "CDNS"@fr , "CDNS"@de .
+
+<http://rdf.freebase.com/ns/m.02h6mjf>
+        rdfs:label     "Quickturn Design Systems"@en ;
+        skos:altLabel  "Quickturn Design Systems Inc"@en .

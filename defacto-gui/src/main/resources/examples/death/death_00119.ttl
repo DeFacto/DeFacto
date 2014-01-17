@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Ginger_Rogers>
+        rdfs:label     "Ginger Rogers"@de , "Ginger Rogers"@en , "Ginger Rogers"@fr ;
+        dbo:death      <http://dbpedia.org/resource/Ginger_Rogers__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Ginger_Rogers> , <http://fr.dbpedia.org/resource/Ginger_Rogers> ;
+        skos:altLabel  "Virginia Katherine McMath"@fr , "Virginia Katherine McMath"@de , "Virginia Katherine McMath"@en , "Ginger"@fr , "Virginia Katherine Mcmath"@fr , "Ginger"@de , "Virginia Katherine Mcmath"@de , "Virginia Katherine Mcmath"@en , "Ginger"@en , "Ginger Rogers"@fr , "Ginger Rogers"@de , "Ginger Rogers"@en , "Rogers"@fr .
+
+<http://dbpedia.org/resource/Ginger_Rogers__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Rancho_Mirage,_California> ;
+        dbo:from        "1995-04-25"^^xsd:date ;
+        dbo:to          "1995-04-25"^^xsd:date .
+
+<http://dbpedia.org/resource/Rancho_Mirage,_California>
+        rdfs:label     "Rancho Mirage, California"@fr , "Rancho Mirage, California"@de , "Rancho Mirage, California"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Rancho_Mirage> , <http://fr.dbpedia.org/resource/Rancho_Mirage> ;
+        skos:altLabel  "Rancho Mirage, Ca"@fr , "Rancho Mirage, Ca"@de , "Rancho Mirage, Ca"@en , "Rancho Mirage"@fr , "Rancho Mirage"@en , "Rancho Mirage"@de , "Rancho Mirage, CA"@fr , "Rancho Mirage, CA"@de , "Rancho Mirage, CA"@en , "Rancho Mirage, California"@fr , "Rancho Mirage, California"@de , "Rancho Mirage, California"@en .

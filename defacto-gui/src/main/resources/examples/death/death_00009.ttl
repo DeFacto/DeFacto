@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Gerald_Ford>
+        rdfs:label     "Gerald Ford"@de , "Gerald Ford"@fr , "Gerald Ford"@en ;
+        dbo:death      <http://dbpedia.org/resource/Gerald_Ford__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Gerald_Ford> , <http://fr.dbpedia.org/resource/Gerald_Ford> ;
+        skos:altLabel  "Nixon pardon"@fr , "Nixon pardon"@de , "Nixon pardon"@en , "Leslie Lynch King Jr"@fr , "Gerald Rudolph, Jr. Ford"@fr , "Gerald Rudolph, Jr. Ford"@de , "Gerald Rudolph, Jr. Ford"@en , "Gerald R. Ford"@fr , "Leslie Lynch King Jr"@de , "Gerald R. Ford"@de , "Gerald R. Ford"@en , "Leslie Lynch King Jr"@en , "Gerald R. Ford, Jr."@fr , "Gerald R. Ford, Jr."@de , "Gerald R. Ford, Jr."@en , "38th President of the United States"@fr , "38th President of the United States"@de , "38th President of the United States"@en , "Leslie Lynch King"@fr , "Leslie Lynch King"@de , "Leslie Lynch King"@en , "Vice President Ford"@fr , "Leslie L King"@fr , "Leslie L King"@de , "Leslie L King"@en , "Vice President Ford"@de , "Vice President Ford"@en , "Presidency of Gerald Ford"@fr , "Presidency of Gerald Ford"@de , "Presidency of Gerald Ford"@en , "Leslie Lynch King, Jr"@fr , "Birth and life of Gerald Ford"@fr , "Leslie Lynch King, Jr"@de , "Birth and life of Gerald Ford"@de , "Leslie Lynch King, Jr"@en , "Birth and life of Gerald Ford"@en , "Jerry Ford"@fr , "Jerry Ford"@de , "Jerry Ford"@en , "Gerald R Ford"@fr , "Gerald R Ford"@de , "Gerald R Ford"@en , "President Gerald Ford"@fr , "President Gerald Ford"@de , "President Gerald Ford"@en , "Gerald Rudolph Ford"@fr , "Gerald Rudolph Ford"@de , "Gerald Rudolph Ford"@en , "Leslie Lynch King, Jr."@fr , "Gerry Ford"@fr , "Leslie Lynch King, Jr."@de , "Gerry Ford"@de , "Gerry Ford"@en , "Leslie Lynch King, Jr."@en , "Presidency of Gerald R. Ford"@fr , "Presidency of Gerald R. Ford"@de , "Presidency of Gerald R. Ford"@en , "Presidency of gerald ford"@fr , "Presidency of gerald ford"@de , "Presidency of gerald ford"@en , "Leslie L. King"@fr , "Leslie L. King"@de , "Leslie L. King"@en , "Gerald Rudolph Ford Jr"@fr , "Ford Administration"@fr , "Ford Administration"@de , "Ford Administration"@en , "Gerald Rudolph Ford, Jr."@fr , "Ford"@fr , "Leslie Lynch King Jr."@fr , "Presidency of Gerald Ford administration"@fr , "Leslie Lynch King Jr."@de , "Presidency of Gerald Ford administration"@en , "Presidency of Gerald Ford administration"@de , "Leslie Lynch King Jr."@en , "Gerald R. Ford, Jr"@fr , "Gerald ford"@fr , "Ford"@de , "Ford"@en , "Gerald Rudolph Ford, Jr."@de , "Gerald R. Ford, Jr"@de , "Gerald Rudolph Ford, Jr."@en , "Gerald R. Ford, Jr"@en , "Gerald ford"@de , "Gerald ford"@en , "Gerald Ford, Jr."@fr , "Gerald Ford, Jr."@de , "Gerald Ford, Jr."@en , "President Ford"@fr , "President Ford"@de , "President Ford"@en , "Gerald fod"@fr , "Gerald fod"@de , "Gerald fod"@en , "Gerald Ford"@fr , "Ford administration"@fr , "Gerald Ford"@de , "Ford administration"@de , "Ford administration"@en , "Gerald Ford"@en .
+
+<http://dbpedia.org/resource/Gerald_Ford__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Rancho_Mirage,_California> ;
+        dbo:from        "2006-12-26"^^xsd:date ;
+        dbo:to          "2006-12-26"^^xsd:date .
+
+<http://dbpedia.org/resource/Rancho_Mirage,_California>
+        rdfs:label     "Rancho Mirage, California"@fr , "Rancho Mirage, California"@de , "Rancho Mirage, California"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Rancho_Mirage> , <http://fr.dbpedia.org/resource/Rancho_Mirage> ;
+        skos:altLabel  "Rancho Mirage, Ca"@fr , "Rancho Mirage, Ca"@de , "Rancho Mirage, Ca"@en , "Rancho Mirage"@fr , "Rancho Mirage"@en , "Rancho Mirage"@de , "Rancho Mirage, CA"@fr , "Rancho Mirage, CA"@de , "Rancho Mirage, CA"@en , "Rancho Mirage, California"@fr , "Rancho Mirage, California"@de , "Rancho Mirage, California"@en .

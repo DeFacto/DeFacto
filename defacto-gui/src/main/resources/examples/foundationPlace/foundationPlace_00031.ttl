@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.079rs4>
+        rdfs:label      "Kantega"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.079rs4__31> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Kantega> ;
+        skos:altLabel   "Kantega"@en .
+
+<http://rdf.freebase.com/ns/m.05b4w>
+        rdfs:label     "Norwegen"@de , "Norvège"@fr , "Norway"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Norvège> , <http://dbpedia.org/resource/Norway> , <http://de.dbpedia.org/resource/Norwegen> ;
+        skos:altLabel  "Konigreich Norwegen"@de , "Norvégienne"@fr , "Norge"@fr , "Norge"@en , "Norge"@de , "Königreich Norwegen"@de , "Nore"@fr , "Norwegen"@fr , "Norwegen"@en , "Norwegen"@de , "Royal Kingdom of Norway"@fr , "Royal Kingdom of Norway"@en , "Royal Kingdom of Norway"@de , "Norwegia"@fr , "Norwegia"@de , "Norwegia"@en , "Noorwegen"@fr , "Noorwegen"@en , "Noorwegen"@de , "Norway"@fr , "Noregur"@fr , "Norway"@de , "Noregur"@en , "Noregur"@de , "Norway"@en , "Norwegian state"@fr , "Noreg"@fr , "Norwegian kingdom"@fr , "Norwegian state"@en , "Norwegian state"@de , "Norwegian kingdom"@en , "Norwegian kingdom"@de , "Royaume de Norvege"@fr , "Kongeriket Noreg"@fr , "Kongeriket Noreg"@en , "Kongeriket Noreg"@de , "Norvége"@fr , "Norwegische Literatur"@de , "Norvege"@fr , "Norvege"@en , "Norvege"@de , "Norvège"@fr , "Norvège"@en , "Norvège"@de , "Norvegienne"@fr , "Kongeriket Norge"@fr , "Kongeriket Norge"@en , "Kongeriket Norge"@de , "NORWAY"@fr , "NORWAY"@en , "NORWAY"@de , "Royaume de Norvège"@fr , "Noruega"@fr , "Noruega"@en , "Noruega"@de , "Etymology of Norway"@fr , "ISO 3166-1:NO"@fr , "Etymology of Norway"@en , "Kingdom of Norway"@en , "ISO 3166-1:NO"@en , "ISO 3166-1:NO"@de , "Etymology of Norway"@de .
+
+<http://rdf.freebase.com/ns/m.079rs4__31>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.05b4w> ;
+        dbo:from             "2003"^^xsd:gYear ;
+        dbo:to               "2003"^^xsd:gYear .

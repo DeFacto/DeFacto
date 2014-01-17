@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0r679>
+        rdfs:label     "Cupertino"@en , "Cupertino"@de , "Cupertino"@fr ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Cupertino> , <http://dbpedia.org/resource/Cupertino,_California> , <http://fr.dbpedia.org/resource/Cupertino> ;
+        skos:altLabel  "Cupertino"@fr , "Cupertino"@de , "Cupertino"@en , "Santa Clara County / Cupertino city"@en , "Cupertino, Calif."@fr , "Cupertino, Calif."@de , "Cupertino, Calif."@en , "LOCODE:USCUO"@fr , "LOCODE:USCUO"@de , "LOCODE:USCUO"@en , "Cupertino, CA"@fr , "Cupertino, CA"@de , "Cupertino, CA"@en , "Cupertino, Ca"@fr , "Cupertino, Ca"@de , "Cupertino, Ca"@en , "Cupertino, California"@fr , "Cupertino, California"@de , "Cupertino, California"@en .
+
+<http://rdf.freebase.com/ns/m.019qx__59>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0r679> ;
+        dbo:from             "1983"^^xsd:gYear ;
+        dbo:to               "1983"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.019qx>
+        rdfs:label      "Borland"@de , "Borland"@en , "Borland"@fr ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.019qx__59> ;
+        owl:sameAs      <http://dbpedia.org/resource/Borland> , <http://de.dbpedia.org/resource/Borland> , <http://fr.dbpedia.org/resource/Borland> ;
+        skos:altLabel   "INPRISE CORP"@en , "Inprise"@fr , "Inprise"@de , "Inprise"@en , "BORLAND SOFTWARE CORP"@en , "BORLAND INTERNATIONAL INC"@en , "Inc. Borland International"@fr , "Borland"@fr , "Inc. Borland International"@de , "Inc. Borland International"@en , "Borland Software Corporation"@fr , "Borland"@de , "Borland"@en , "Borland Software Corporation"@de , "Borland Software Corporation"@en , "Borland International, Inc."@fr , "Borland International, Inc."@de , "Borland International, Inc."@en , "Segue Software"@fr , "Segue Software"@de , "Segue Software"@en , "Inprise Corporation"@fr , "Borland International"@fr , "Borland International"@de , "Borland International"@en , "Borland Software"@fr , "Borland Software"@de , "Borland Software"@en , "Inprise Corporation"@de , "Inprise Corporation"@en .

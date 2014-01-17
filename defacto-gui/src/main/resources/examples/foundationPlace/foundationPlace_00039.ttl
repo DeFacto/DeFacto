@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.08vbs___39>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.018dk_> ;
+        dbo:from             "1998"^^xsd:gYear ;
+        dbo:to               "1998"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.08vbs_>
+        rdfs:label      "iUpload"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.08vbs___39> .
+
+<http://rdf.freebase.com/ns/m.018dk_>
+        rdfs:label     "Burlington"@en , "Burlington"@de , "Burlington"@fr ;
+        owl:sameAs     <http://dbpedia.org/resource/Burlington,_Ontario> , <http://de.dbpedia.org/resource/Burlington_(Ontario)> , <http://fr.dbpedia.org/resource/Burlington_(Ontario)> ;
+        skos:altLabel  "Holy Rosary Elementary School"@fr , "Holy Rosary Elementary School"@de , "Holy Rosary Elementary School"@en , "Shoreacres, Ontario"@fr , "Shoreacres, Ontario"@de , "Shoreacres, Ontario"@en , "St. Mark Elementary School"@fr , "Palmer"@fr , "St. Mark Elementary School"@de , "St. Mark Elementary School"@en , "Palmer"@de , "Palmer"@en , "Headon Forest"@fr , "Kilbride, Ontario"@fr , "Kilbride, Ontario"@de , "Kilbride, Ontario"@en , "Headon Forest"@de , "Headon Forest"@en , "Mountainside, ON"@fr , "Mountainside, ON"@de , "Mountainside, ON"@en , "Pineland Public School"@fr , "Pineland Public School"@de , "Pineland Public School"@en , "Longmoor, Ontario"@fr , "LaSalle, Burlington"@fr , "LaSalle, Burlington"@de , "LaSalle, Burlington"@en , "Strathcona Gardens"@fr , "Headon Forest, Ontario"@fr , "Strathcona Gardens"@de , "Strathcona Gardens"@en , "Headon Forest, Ontario"@de , "Headon Forest, Ontario"@en , "Burlington, Ontario"@fr , "Tansley, Ontario"@fr , "Zimmerman, Ontario"@fr , "Headon Forest, ON"@fr , "Longmoor, Ontario"@de , "Burlington, Ontario"@de , "Zimmerman, Ontario"@de , "Zimmerman, Ontario"@en , "Tansley, Ontario"@de , "Headon Forest, ON"@de , "Longmoor, Ontario"@en , "Tansley, Ontario"@en , "Headon Forest, ON"@en , "Burlington, Ontario"@en , "Downtown Burlington, Ontario"@fr , "Downtown Burlington, Ontario"@de , "Downtown Burlington, Ontario"@en , "Tyandaga, Ontario"@fr , "Tyandaga, Ontario"@de , "Tyandaga, Ontario"@en , "Mountainside, Ontario"@fr , "Mountainside, Ontario"@de , "Mountainside, Ontario"@en , "Orchard, Ontario"@fr , "Orchard, Ontario"@de , "Orchard, Ontario"@en , "Freeman, Ontario"@fr , "Freeman, Ontario"@de , "Freeman, Ontario"@en , "Longmoor"@fr , "Longmoor"@de , "Longmoor"@en , "Burlington ontario"@fr , "Brant Hills"@fr , "Burlington ontario"@de , "Brant Hills"@de , "Brant Hills"@en , "Burlington ontario"@en , "Kilbride"@fr , "Kilbride"@de , "Kilbride"@en , "Alton Vilage, Ontario"@fr , "Pinedale, Ontario"@fr , "Alton Vilage, Ontario"@de , "Pinedale, Ontario"@de , "Pinedale, Ontario"@en , "Alton Vilage, Ontario"@en , "Appleby, Ontario"@fr , "Burlington, Canada"@en , "Appleby, Ontario"@de , "Appleby, Ontario"@en , "Dynes, Ontario"@fr , "Dynes, Ontario"@de , "Dynes, Ontario"@en , "Nelson, Ontario"@fr , "Nelson, Ontario"@de , "Nelson, Ontario"@en , "Appleby"@fr , "Palmer, ON"@fr , "Palmer, Ontario"@fr , "Millcroft, ON"@fr , "Elizabeth Gardens"@fr , "Millcroft, Ontario"@fr , "Appleby"@de , "Appleby"@en , "Millcroft, ON"@de , "Millcroft, ON"@en , "Palmer, ON"@de , "Palmer, Ontario"@de , "Palmer, Ontario"@en , "Elizabeth Gardens"@de , "Millcroft, Ontario"@de , "Palmer, ON"@en , "Millcroft, Ontario"@en , "Elizabeth Gardens"@en , "Mountainside"@fr , "Mountainside"@de , "Mountainside"@en , "Burlington"@fr , "Appleby, ON"@fr , "Burlington"@de , "Appleby, ON"@de , "Appleby, ON"@en , "Burlington"@en , "Maple, Burlington"@fr , "Maple, Burlington"@de , "Maple, Burlington"@en , "Burlington, ON"@fr , "Burlington, ON"@de , "Burlington, ON"@en .

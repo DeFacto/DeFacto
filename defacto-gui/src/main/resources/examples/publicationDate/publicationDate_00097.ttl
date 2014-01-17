@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.01_t_3__97>
+        dbo:author  <http://rdf.freebase.com/ns/m.01_t_3> ;
+        dbo:from    "2002"^^xsd:gYear ;
+        dbo:to      "2002"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.01_t_3>
+        rdfs:label     "The Golden Age"@en , "L'Œcumène d'or"@fr ;
+        owl:sameAs     <http://dbpedia.org/resource/The_Golden_Age_(novel_series)> , <http://de.dbpedia.org/resource/> , <http://fr.dbpedia.org/resource/L'Œcumène_d'or> ;
+        skos:altLabel  "The Phoenix Exultant"@fr , "L'Œcumene d'or"@fr , "Golden Age"@fr , "L'œcumène d'or"@fr , "L'Œcumene D'or"@fr , "The Golden Age trilogy"@fr , "L'Œcumène d'or"@fr , "L'Oecumene d'or"@fr , "L'Œcumène D'or"@fr , "The Golden Transcendence"@fr , "L'œcumene d'or"@fr , "The Golden Age"@fr .
+
+<http://rdf.freebase.com/ns/m.01zkwq>
+        rdfs:label       "John C. Wright"@fr , "John C. Wright"@en , "John C. Wright"@de ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.01_t_3__97> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/John_C._Wright> , <http://dbpedia.org/resource/John_C._Wright_(author)> , <http://de.dbpedia.org/resource/> ;
+        skos:altLabel    "Fugitives of Chaos"@fr , "John Wright"@en , "John C. Wright, Esq."@en , "John Charles Wright"@en , "John C. Wright"@fr , "Titans of Chaos"@fr , "Wright"@fr .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Fiji>
+        rdfs:label     "Fiji"@de , "Fiji"@fr , "Fiji"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Fidji> , <http://de.dbpedia.org/resource/Fidschi> ;
+        skos:altLabel  "Fiji Archipelago"@fr , "Fiji Archipelago"@de , "Fiji Archipelago"@en , "Republique des iles Fidji"@fr , "Fiji Islands"@fr , "Fiji Islands"@de , "Fiji Islands"@en , "Sovereign Democratic Republic of Fiji"@fr , "Sovereign Democratic Republic of Fiji"@de , "Sovereign Democratic Republic of Fiji"@en , "Udu Point"@fr , "Fidji"@fr , "Fidji"@en , "Fidji"@de , "Holidays in fiji"@fr , "Holidays in fiji"@en , "Holidays in fiji"@de , "Udu Point"@de , "Udu Point"@en , "Republique des Fidji"@fr , "Republik Fidschi"@de , "Figi"@fr , "Figi"@de , "Figi"@en , "République des Fidji"@fr , "Republic of Fiji"@fr , "Republic of Fiji"@de , "Republic of Fiji"@en , "Chikoba"@fr , "Chikoba"@de , "Chikoba"@en , "Fidschi-Inseln"@de , "Fiji Islander"@fr , "Fiji Islander"@de , "Fiji Islander"@en , "Fidschiinseln"@de , "Îles Fidji"@fr , "Naitaubu"@fr , "Naitaubu"@de , "Naitaubu"@en , "Fijis"@fr , "Holidays in Fiji"@fr , "Fijis"@de , "Holidays in Fiji"@en , "Fijis"@en , "Holidays in Fiji"@de , "Name of Fiji"@fr , "Fiji"@fr , "Republic of the Fiji Islands"@fr , "Name of Fiji"@de , "Republic of the Fiji Islands"@de , "Republic of the Fiji Islands"@en , "Fiji"@de , "Name of Fiji"@en , "Fiji"@en , "Fiji's"@fr , "Iles Fidji"@fr , "Fiji's"@de , "Fiji's"@en , "FIJI"@fr , "FIJI"@de , "FIJI"@en , "Fidschi"@de , "Matanitu Ko Viti"@fr , "Matanitu Ko Viti"@en , "Matanitu Ko Viti"@de , "Matanitu Tu-Vaka-i-koya ko Viti"@fr , "Fidji Islands"@fr , "Fidji Islands"@en , "Fidji Islands"@de , "Fijian Islands"@fr , "Tourism in Fiji"@fr , "Votua"@fr , "Fijian Islands"@de , "Tourism in Fiji"@de , "Tourism in Fiji"@en , "Fijian Islands"@en , "Votua"@de , "Votua"@en , "ISO 3166-1:FJ"@fr , "Etymology of Fiji"@fr , "Cikobia"@fr , "ISO 3166-1:FJ"@de , "Etymology of Fiji"@de , "Cikobia"@de , "ISO 3166-1:FJ"@en , "Cikobia"@en , "Etymology of Fiji"@en , "Yacata"@fr , "Yacata"@de , "Yacata"@en , "République des Îles Fidji"@fr , "Votua, Fiji"@fr , "Votua, Fiji"@de , "Votua, Fiji"@en , "République des îles Fidji"@fr , "Republique des Iles Fidji"@fr , "Cannibal Isles"@fr , "Cannibal Isles"@de , "Cannibal Isles"@en , "Fiji Island"@fr , "Fiji Island"@de , "Fiji Island"@en , "Ile fidji"@fr .
+
+<http://dbpedia.org/resource/Laisenia_Qarase>
+        rdfs:label     "Laisenia Qarase"@de , "Laisenia Qarase"@en , "Laisenia Qarase"@fr ;
+        dbo:inOffice   <http://dbpedia.org/resource/Laisenia_Qarase__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Laisenia_Qarase> , <http://de.dbpedia.org/resource/Laisenia_Qarase> ;
+        skos:altLabel  "Laisena Qarase"@fr , "Qarase"@de , "Laisenia Qarase"@fr , "Laisenia Qarase"@de .
+
+<http://dbpedia.org/resource/Laisenia_Qarase__1>
+        dbo:from    "2001-03-16"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Fiji> ;
+        dbo:to      "2006-12-05"^^xsd:date .

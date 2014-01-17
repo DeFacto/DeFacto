@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0gp6r5>
+        rdfs:label     "Tokushima"@fr , "Tokushima"@en , "Tokushima"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Tokushima> , <http://fr.dbpedia.org/resource/Tokushima> , <http://dbpedia.org/resource/Tokushima,_Tokushima> ;
+        skos:altLabel  "Tokusima, Tokusima"@fr , "Tokushima-shi"@fr , "Tokusima, Tokusima"@de , "Tokushima-shi"@de , "Tokusima, Tokusima"@en , "Tokushima-shi"@en , "Tokusima"@fr , "Tokushima City"@fr , "Tokusima"@de , "Tokusima"@en , "Tokushima City"@de , "Tokushima City"@en , "Tokushima"@fr , "Tokushima"@de , "Tokushima"@en , "Tokushima, Japan"@fr , "Tokushima, Japan"@de , "Tokushima, Japan"@en , "Tokushima, Tokushima"@fr , "Tokushima, Tokushima"@de , "Tokushima, Tokushima"@en .
+
+<http://rdf.freebase.com/ns/m.0czxf4>
+        rdfs:label      "JustSystems"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.0czxf4__107> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/JustSystems> ;
+        skos:altLabel   "JustSystems"@en , "Justsystem"@en , "Justsystems"@en .
+
+<http://rdf.freebase.com/ns/m.0czxf4__107>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0gp6r5> ;
+        dbo:from             "1979"^^xsd:gYear ;
+        dbo:to               "1979"^^xsd:gYear .

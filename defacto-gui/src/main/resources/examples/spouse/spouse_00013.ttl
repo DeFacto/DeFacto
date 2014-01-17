@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0168dy>
+        rdfs:label     "Brittany Murphy"@fr , "Brittany Murphy"@de , "Brittany Murphy"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.0168dy__13> ;
+        owl:sameAs     <http://dbpedia.org/resource/Brittany_Murphy> , <http://fr.dbpedia.org/resource/Brittany_Murphy> , <http://de.dbpedia.org/resource/Brittany_Murphy> ;
+        skos:altLabel  "Britt"@en , "Brittany Anne Murphy-Monjack"@fr , "Brittney Murphy"@en , "Brittney Murphy"@de , "Brittney Murphy"@fr , "Brittany Anne Murphy-Monjack"@en , "Brittany Anne Murphy-Monjack"@de , "Brittany Murphy"@en , "Brittany Murphy"@de , "Brittany Murphy"@fr , "Brittany Bertolotti"@en , "Brittany Bertolotti"@de , "Brittany Anne Bertolotti"@en , "Brittany Anne Bertolotti"@de , "Brittany Anne Bertolotti"@fr , "Britney Murphy"@en , "Britney Murphy"@de , "Britney Murphy"@fr , "Brittany Anne Murphy"@en , "Brittany Anne Murphy"@de , "Brittany Anne Murphy"@fr , "Britanny murphey"@fr , "Britanny murphey"@en , "Britanny murphey"@de , "Murphy, Brittany"@en , "Brittany"@fr , "Sug@r"@en , "Sug@r"@de , "Sug@r"@fr , "Brittany murphy"@fr , "Murphy"@fr , "Murphy"@en , "Murphy"@de , "Brittany murphy"@en , "Brittany murphy"@de , "Britanny Murphy"@fr , "Britanny Murphy"@en , "Britanny Murphy"@de .
+
+<http://rdf.freebase.com/ns/m.0168dy__13>
+        dbo:from    "2007-05"^^xsd:gYearMonth ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.09rsfs1> ;
+        dbo:to      "2009-12-20"^^xsd:date .
+
+<http://rdf.freebase.com/ns/m.09rsfs1>
+        rdfs:label     "Simon Monjack"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Simon_Monjack> ;
+        skos:altLabel  "Simon Monjack"@en , "Simon Mark Monjack"@en .

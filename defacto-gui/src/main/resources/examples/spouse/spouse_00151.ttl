@@ -1,0 +1,26 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Jill_Halfpenny>
+        skos:altLabel  "Jill Halfpenny"@en .
+
+<http://rdf.freebase.com/ns/m.04c1dp>
+        rdfs:label  "Jill Halfpenny"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/Jill_Halfpenny> .
+
+<http://rdf.freebase.com/ns/m.04638_4__151>
+        dbo:from    "2007-02-03"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.04c1dp> ;
+        dbo:to      "2010-11"^^xsd:gYearMonth .
+
+<http://dbpedia.org/resource/Craig_Conway_(actor)>
+        skos:altLabel  "Craig Conway"@en .
+
+<http://rdf.freebase.com/ns/m.04638_4>
+        rdfs:label    "Craig Conway"@en ;
+        dbo:marriage  <http://rdf.freebase.com/ns/m.04638_4__151> ;
+        owl:sameAs    <http://dbpedia.org/resource/Craig_Conway_(actor)> .

@@ -1,0 +1,25 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Link%C3%B6ping>
+        skos:altLabel  "Linkoping"@en , "Linköping"@en .
+
+<http://rdf.freebase.com/ns/m.0zw1_>
+        rdfs:label     "Linköping"@en , "Linköping"@de , "Linköping"@fr ;
+        owl:sameAs     <http://dbpedia.org/resource/Link%C3%B6ping> ;
+        skos:altLabel  "Linkoping"@en .
+
+<http://rdf.freebase.com/ns/m.0b_pc3__87>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0zw1_> ;
+        dbo:from             "1983"^^xsd:gYear ;
+        dbo:to               "1983"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0b_pc3>
+        rdfs:label      "IFS AB"@en , "Industrial and Financial Systems"@de ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.0b_pc3__87> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/Industrial_and_Financial_Systems> , <http://dbpedia.org/resource/IFS_AB> ;
+        skos:altLabel   "Industrial and Financial Systems"@de , "IFS AB"@de , "IFS Deutschland GmbH & CO. KG"@de .

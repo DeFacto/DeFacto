@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Memphis_Grizzlies>
+        rdfs:label     "Memphis Grizzlies"@en , "Memphis Grizzlies"@fr , "Memphis Grizzlies"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Memphis_Grizzlies> , <http://fr.dbpedia.org/resource/Grizzlies_de_Memphis> ;
+        skos:altLabel  "Memphis Grizzlies"@fr , "Memphis Grizzlies"@de , "Memphis Grizzlies"@en , "Grizzlies de Vancouver"@fr , "Vancouver Grizzlies"@fr , "Vancouver Grizzlies"@de , "Grizzlies de Memphis"@fr , "Memphis grizzles"@fr , "Grizzlies"@fr , "Memphis grizzles"@de , "Grizzlies"@de , "Grizzlies"@en , "Memphis grizzles"@en , "Grizzlies de memphis"@fr , "Grizzlies De Memphis"@fr .
+
+<http://dbpedia.org/resource/Mike_Miller_(basketball_player)__2>
+        dbo:from  "2002"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Memphis_Grizzlies> ;
+        dbo:to    "2007"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Mike_Miller_(basketball_player)>
+        rdfs:label      "Mike Miller (basketball player)"@en , "Mike Miller (basketball player)"@fr , "Mike Miller (basketball player)"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Mike_Miller_(basketball_player)__2> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Mike_Miller> , <http://fr.dbpedia.org/resource/Mike_Miller_(basket-ball)> ;
+        skos:altLabel   "Mike Miller"@de , "Mike Miller"@en , "Mike Miller"@fr , "Mike miller"@fr .

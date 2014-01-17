@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.056wb>
+        rdfs:label       "Michael Crichton"@de , "Michael Crichton"@fr , "Michael Crichton"@en ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.05_m0c__65> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/Michael_Crichton> , <http://fr.dbpedia.org/resource/Michael_Crichton> , <http://dbpedia.org/resource/Michael_Crichton> ;
+        skos:altLabel    "Crichton"@fr , "Crichton"@en , "Crichton"@de , "Michael crighton"@fr , "AudioBook - Michael Crichton"@en , "Michael crighton"@en , "Michael crighton"@de , "John Michael Crichton"@en , "Jeffery Hudson"@fr , "Jeffery Hudson"@en , "Jeffery Hudson"@de , "Michael Crighton"@fr , "Michael Crighton"@en , "Michael Crighton"@de , "Aliens Cause Global Warming"@fr , "Aliens Cause Global Warming"@de , "Aliens Cause Global Warming"@en , "Michale Circhton"@fr , "Michale Circhton"@de , "Michale Circhton"@en , "Constant c Productions"@fr , "Constant c Productions"@en , "Constant c Productions"@de , "Micheal crichton"@fr , "Micheal crichton"@de , "Micheal crichton"@en , "J. Michael Crichton"@en , "Crichton, Michael"@en , "John Lange"@fr , "Books by Michael Crichton"@fr , "John Lange"@de , "Books by Michael Crichton"@de , "John Lange"@en , "Books by Michael Crichton"@en , "Michael Chriton"@fr , "Michael Chriton"@de , "Michael Chriton"@en , "Crighton"@fr , "Crighton"@de , "Crighton"@en , "Michael Crichton"@fr , "Michael Crichton"@en , "Michael Crichton"@de , "M Crichton"@en , "Michael Circhton"@fr , "Michael Circhton"@en , "Michael Circhton"@de , "Michael Crichton's 2nd posthumous novel"@fr , "Michael Crichton's 2nd posthumous novel"@en , "Michael Crichton's 2nd posthumous novel"@de , "Douglas Crichton"@fr , "Douglas Crichton"@de , "Douglas Crichton"@en , "Michael Douglas"@en , "Michael Chrichton"@fr , "Michael Chrichton"@de , "Michael Chrichton"@en , "Works by Michael Crichton"@fr , "Works by Michael Crichton"@en , "Works by Michael Crichton"@de .
+
+<http://rdf.freebase.com/ns/m.05_m0c__65>
+        dbo:author  <http://rdf.freebase.com/ns/m.05_m0c> ;
+        dbo:from    "1975"^^xsd:gYear ;
+        dbo:to      "1975"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.05_m0c>
+        rdfs:label     "Der große Eisenbahnraub"@de , "The Great Train Robbery"@en , "Un train d'or pour la Crimée"@fr ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Der_große_Eisenbahnraub_(Roman)> , <http://fr.dbpedia.org/resource/Un_train_d'or_pour_la_Crimée> , <http://dbpedia.org/resource/The_Great_Train_Robbery_(novel)> ;
+        skos:altLabel  "Un train d'or pour la Crimee"@fr , "Un Train d'Or pour la Crimee"@fr , "The Great Train Robbery"@fr , "The Great Train Robbery"@de , "Un train d'or pour la Crimée"@fr , "Der große Eisenbahnraub"@de , "Un Train d'Or pour la Crimée"@fr .

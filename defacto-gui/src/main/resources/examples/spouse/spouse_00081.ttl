@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03lt8g>
+        rdfs:label     "Eva Longoria"@de , "Eva Longoria"@fr , "Eva Longoria"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Eva_Longoria> , <http://dbpedia.org/resource/Eva_Longoria> , <http://de.dbpedia.org/resource/Eva_Longoria> ;
+        skos:altLabel  "Eva Longoria Christopher"@de , "Eva Jacqueline Longoria Parker"@en , "Eva Longoria Christopher"@en , "Eva Longoria-Parker"@de , "Eva Longoria-Parker"@en , "Eva J. Longoria"@fr , "Eva J. Longoria"@de , "Eva J. Longoria"@en , "Eva Longoria"@fr , "Eva Parker"@fr , "Eva Longoria"@de , "Eva Parker"@de , "Eva Longoria"@en , "Eva Parker"@en , "Eva Longoria Parker"@fr , "Eva langoria"@fr , "Longoria"@fr , "Eva Longoria Parker"@de , "Eva Longoria Parker"@en , "Eva langoria"@de , "Eva langoria"@en , "Longoria"@de , "Longoria"@en , "Eva Longoria-Christopher"@en , "Eva L. Parker"@fr , "Eva L. Parker"@de , "Eva L. Parker"@en , "Eva Jacqueline Longoria"@fr , "Eva Jacqueline Longoria"@de , "Eva Jacqueline Longoria"@en , "Eva Longoria Christopher"@fr , "Eva Longoria-Parker"@fr .
+
+<http://rdf.freebase.com/ns/m.0202l6__81>
+        dbo:from    "2007-07-06"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.03lt8g> ;
+        dbo:to      "2011-01-28"^^xsd:date .
+
+<http://rdf.freebase.com/ns/m.0202l6>
+        rdfs:label     "Tony Parker"@en , "Tony Parker"@de , "Tony Parker"@fr ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.0202l6__81> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Tony_Parker> , <http://de.dbpedia.org/resource/Tony_Parker> , <http://dbpedia.org/resource/Tony_Parker> ;
+        skos:altLabel  "Tony Parker"@en , "Tony parker"@fr , "Tony"@de , "Parker, Tony"@en , "T. P."@en , "Alexandra paressant"@fr , "Alexandra paressant"@de , "Alexandra paressant"@en , "Alexandra Paressant"@fr , "Alexandra Paressant"@de , "William Anthony Parker"@en , "Alexandra Paressant"@en , "William Anthony \"Tony\" Parker Jr."@en , "Tony P"@en , "Parker"@fr , "Parker"@de , "Parker"@en , "Tony Parker"@fr , "Tony Parker"@de .

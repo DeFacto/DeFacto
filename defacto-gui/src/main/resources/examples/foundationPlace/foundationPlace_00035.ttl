@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.083zh7>
+        rdfs:label      "XITEX Software"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.083zh7__35> .
+
+<http://rdf.freebase.com/ns/m.02qbpd>
+        rdfs:label     "Donezk"@de , "Donetsk"@en , "Donetsk"@fr ;
+        owl:sameAs     <http://dbpedia.org/resource/Donetsk> , <http://fr.dbpedia.org/resource/Donetsk> , <http://de.dbpedia.org/resource/Donezk> ;
+        skos:altLabel  "Donesk"@fr , "Donesk"@en , "Donesk"@de , "Yuzovaka"@fr , "Yuzovaka"@en , "Yuzovaka"@de , "Jusowka"@de , "Yuzovo"@fr , "Yuzovo"@en , "Yuzovo"@de , "Donetsk, Ukraine"@fr , "Donetsk, Ukraine"@en , "Donetsk, Ukraine"@de , "Donetsk, USSR"@fr , "Donetsk, USSR"@en , "Donetsk, USSR"@de , "Donetz'k"@fr , "Donetz'k"@en , "Donetz'k"@de , "Yuzovka"@fr , "Yuzovka"@en , "Yuzovka"@de , "Donezk"@fr , "Donezk"@en , "Donezk"@de , "Donetsk"@fr , "Donets'k"@fr , "Donetsk Special Economic Zone"@en , "Donetsk Special Economic Zone"@de , "Donets'k"@en , "Donets'k"@de , "Donetsk Special Economic Zone"@fr , "Donetsk"@en , "Donetsk"@de , "Donets’k"@fr , "Donets’k"@en , "Donets’k"@de , "Iouzovka"@fr , "Donetsk SEZ"@fr , "Donetsk SEZ"@en , "Donetsk SEZ"@de , "Stalino"@fr , "Stalino"@en , "Stalino"@de , "Doneck"@fr , "Doneck"@en , "Doneck"@de , "Donetsk, Donestskaya oblast"@fr , "Donetsk, Donestskaya oblast"@en , "Donetsk, Donestskaya oblast"@de .
+
+<http://rdf.freebase.com/ns/m.083zh7__35>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.02qbpd> ;
+        dbo:from             "1999"^^xsd:gYear ;
+        dbo:to               "1999"^^xsd:gYear .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Northampton,_Massachusetts>
+        rdfs:label     "Northampton, Massachusetts"@de , "Northampton, Massachusetts"@en , "Northampton, Massachusetts"@fr ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Northampton_(Massachusetts)> , <http://fr.dbpedia.org/resource/Northampton_(Massachusetts)> ;
+        skos:altLabel  "Northampton"@de , "Northampton"@en , "Northampton, MA"@fr , "Northampton, MA"@de , "Northampton, MA"@en , "Lesbianville"@fr , "Lesbianville"@de , "Lesbianville"@en , "Northhampton, Massachusetts"@fr , "Northhampton, Massachusetts"@de , "Northhampton, Massachusetts"@en , "LOCODE:USNHM"@fr , "LOCODE:USNHM"@de , "LOCODE:USNHM"@en , "Northhampton, MA"@fr , "Northhampton, MA"@de , "Northhampton, MA"@en , "Northampton, Massachusetts"@fr , "Northampton, ma"@fr , "Northampton, ma"@de , "Northampton, ma"@en , "Northampton massachusetts"@fr , "Northampton, Massachusetts"@de , "Northampton massachusetts"@de , "Northampton massachusetts"@en , "Northampton, Massachusetts"@en , "North Hampton, Massachusetts"@fr , "North Hampton, Massachusetts"@de , "North Hampton, Massachusetts"@en , "Northampton"@fr .
+
+<http://dbpedia.org/resource/Calvin_Coolidge__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Northampton,_Massachusetts> ;
+        dbo:from        "1933-01-05"^^xsd:date ;
+        dbo:to          "1933-01-05"^^xsd:date .
+
+<http://dbpedia.org/resource/Calvin_Coolidge>
+        rdfs:label     "Calvin Coolidge"@de , "Calvin Coolidge"@fr , "Calvin Coolidge"@en ;
+        dbo:death      <http://dbpedia.org/resource/Calvin_Coolidge__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Calvin_Coolidge> , <http://de.dbpedia.org/resource/Calvin_Coolidge> ;
+        skos:altLabel  "Coolidge administration"@de , "Coolidge administration"@en , "J. Calvin Coolidge, Jr."@fr , "J. Calvin Coolidge, Jr."@de , "J. Calvin Coolidge, Jr."@en , "Calvin Coolidge"@fr , "Calvin Coolidge"@de , "Calvin Coolidge"@en , "John C. Coolidge"@fr , "John C. Coolidge"@de , "John C. Coolidge"@en , "Calvin Cooldige"@fr , "President Coolidge"@fr , "President Coolidge"@en , "President Coolidge"@de , "Calvin Cooldige"@de , "Calvin Cooldige"@en , "Calvin coolidge"@fr , "Presidency of Calvin Coolidge"@fr , "Calvin coolidge"@en , "Calvin coolidge"@de , "Presidency of Calvin Coolidge"@en , "Presidency of Calvin Coolidge"@de , "30th President of the United States"@fr , "Coolidge Administration"@fr , "John C. Coolidge, Jr."@fr , "Coolidge Administration"@de , "John C. Coolidge, Jr."@en , "John C. Coolidge, Jr."@de , "Coolidge Administration"@en , "John Calvin Coolidge"@fr , "30th President of the United States"@de , "John Calvin Coolidge"@en , "30th President of the United States"@en , "John Calvin Coolidge"@de , "Calvin"@fr , "Calvin"@en , "Calvin"@de , "John Calvin Coolidge Jr."@fr , "John Calvin Coolidge Jr."@en , "John Calvin Coolidge Jr."@de , "President Calvin Coolidge"@fr , "President Calvin Coolidge"@en , "President Calvin Coolidge"@de , "Calvin collidge"@fr , "Calvin collidge"@de , "Calvin collidge"@en , "Calvin Koolaid"@fr , "Calvin Koolaid"@en , "Calvin Koolaid"@de , "John Coolidge, Jr."@fr , "John Coolidge, Jr."@en , "John Coolidge, Jr."@de , "J. Calvin Coolidge"@fr , "J. Calvin Coolidge"@de , "J. Calvin Coolidge"@en , "Silent cal"@fr , "Silent cal"@de , "Silent cal"@en , "Coolidge"@fr , "Coolidge"@de , "Coolidge"@en , "The business of America is business"@fr , "The business of America is business"@de , "The business of America is business"@en , "Coolidge administration"@fr , "John Calvin Coolidge, Jr."@fr , "John Calvin Coolidge, Jr."@en , "John Calvin Coolidge, Jr."@de .

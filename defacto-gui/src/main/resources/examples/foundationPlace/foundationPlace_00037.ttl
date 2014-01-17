@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.08b8rz>
+        rdfs:label      "Attensity"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.08b8rz__37> ;
+        owl:sameAs      <http://dbpedia.org/resource/Attensity> .
+
+<http://rdf.freebase.com/ns/m.08b8rz__37>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0f2r6> ;
+        dbo:from             "2000"^^xsd:gYear ;
+        dbo:to               "2000"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0f2r6>
+        rdfs:label     "Salt Lake City"@en , "Salt Lake City"@fr , "Salt Lake City"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Salt_Lake_City> , <http://fr.dbpedia.org/resource/Salt_Lake_City> , <http://dbpedia.org/resource/Salt_Lake_City> ;
+        skos:altLabel  "Salt Lake County / Salt Lake City city"@en , "Salt Lake City , Utah"@fr , "Salt Lake City , Utah"@de , "Salt Lake City , Utah"@en , "Salt Lake city"@fr , "Salt Lake city"@en , "Salt Lake city"@de , "SALT"@fr , "Salt Lake City, Utah, USA"@fr , "Salt Lake City, Utah, USA"@de , "Salt Lake City, Utah, USA"@en , "Capital of Utah"@fr , "Capital of Utah"@de , "Capital of Utah"@en , "Salt Lake, Utah"@fr , "Salt Lake, Utah"@en , "Salt Lake, Utah"@de , "Salt Lake City, USA"@fr , "Salt Lake City, USA"@en , "Salt Lake City, USA"@de , "Salt Lake, UT"@fr , "Salt Lake, UT"@de , "Salt Lake, UT"@en , "SL, UT"@fr , "SL, UT"@de , "SL, UT"@en , "Salt Lake"@fr , "Salt Lake"@en , "Salt Lake"@de , "Saltlake City"@fr , "Lake City"@fr , "Salt lake city"@fr , "Salt Lake City, UT, USA"@fr , "Saltlake City"@de , "Saltlake City"@en , "Salt lake city"@de , "Salt Lake City, UT, USA"@en , "Salt Lake City, UT, USA"@de , "Salt lake city"@en , "Lake City"@de , "Lake City"@en , "Great Salt Lake City"@fr , "Great Salt Lake City"@de , "Great Salt Lake City"@en , "Grid plan"@fr , "Grid plan"@en , "Grid plan"@de , "Salt Lake City"@fr , "Salt Lake City"@de , "Salt Lake City"@en , "Salt Lake City, UT"@fr , "Salt Lake City, UT"@en , "Salt Lake City, UT"@de , "Utah state capital"@fr , "Utah state capital"@de , "Utah state capital"@en , "Salt Lake City, Utah"@fr , "Salt Lake City, Ut"@fr , "Salt Lake City, Utah"@de , "Salt Lake City, Utah"@en , "Salt Lake City, Ut"@en , "Salt Lake City, Ut"@de , "Salt Lake Cit"@fr , "Salt Lake Cit"@en , "Salt Lake Cit"@de , "LOCODE:USSLC"@fr , "LOCODE:USSLC"@de , "LOCODE:USSLC"@en .
+
+<http://dbpedia.org/resource/Attensity>
+        skos:altLabel  "Attensity"@en .

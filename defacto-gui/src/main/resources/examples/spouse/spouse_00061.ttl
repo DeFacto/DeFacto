@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0n8z150>
+        rdfs:label     "Ahna O'Reilly"@fr , "Ahna O'Reilly"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.0n8z150__61> ;
+        skos:altLabel  "Ahna O'Reilly and Family"@en .
+
+<http://rdf.freebase.com/ns/m.05bnp0>
+        rdfs:label     "James Franco"@en , "James Franco"@de , "James Franco"@fr ;
+        owl:sameAs     <http://de.dbpedia.org/resource/James_Franco> , <http://dbpedia.org/resource/James_Franco> , <http://fr.dbpedia.org/resource/James_Franco> ;
+        skos:altLabel  "James Franco"@de , "James Franco"@en , "Teddy"@en , "Teddy Ted"@fr , "Franco"@fr , "Franco"@de , "Franco"@en , "James franco"@fr , "James franco"@de , "James franco"@en , "James franko"@fr , "James franko"@de , "Ted"@en , "James franko"@en , "James Edward Franco"@fr , "James Edward Franco"@en , "James Franco"@fr .
+
+<http://rdf.freebase.com/ns/m.0n8z150__61>
+        dbo:from    "2006"^^xsd:gYear ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.05bnp0> ;
+        dbo:to      "2011"^^xsd:gYear .

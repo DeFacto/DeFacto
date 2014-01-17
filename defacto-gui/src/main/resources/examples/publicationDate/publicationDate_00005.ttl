@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.01zkxv>
+        rdfs:label       "Charles Stross"@de , "Charles Stross"@fr , "Charles Stross"@en ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.0gsx27__5> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/Charles_Stross> , <http://dbpedia.org/resource/Charles_Stross> , <http://fr.dbpedia.org/resource/Charles_Stross> ;
+        skos:altLabel    "Charles Stross"@fr , "Sharles Stross"@fr , "Sharles Stross"@de , "Sharles Stross"@en , "Charles Stross"@de , "Charles Stross"@en , "The Merchant Princes"@fr , "The Merchant Princes"@de , "The Merchant Princes"@en , "Merchant Princes"@fr , "Merchant Princes"@de , "Merchant Princes"@en , "Charles David George Stross"@en , "Charles Davidson"@en , "Laundryverse"@fr , "Laundryverse"@de , "Laundryverse"@en , "On Her Majesty's Occult Service"@fr , "Stross"@fr , "Charlie Stross"@fr , "Stross"@de , "Stross"@en , "On Her Majesty's Occult Service"@de , "Charlie Stross"@de , "On Her Majesty's Occult Service"@en , "Charlie Stross"@en .
+
+<http://rdf.freebase.com/ns/m.0gsx27>
+        rdfs:label     "Famille et Cie"@fr , "The Clan Corporate"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Famille_et_Cie> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/The_Clan_Corporate> ;
+        skos:altLabel  "The Clan Corporate"@fr , "Famille et Cie"@fr .
+
+<http://rdf.freebase.com/ns/m.0gsx27__5>
+        dbo:author  <http://rdf.freebase.com/ns/m.0gsx27> ;
+        dbo:from    "2006"^^xsd:gYear ;
+        dbo:to      "2006"^^xsd:gYear .

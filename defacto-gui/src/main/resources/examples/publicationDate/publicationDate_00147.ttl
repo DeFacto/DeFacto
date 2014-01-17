@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.01d5z6>
+        rdfs:label       "Clifford D. Simak"@de , "Clifford D. Simak"@en , "Clifford D. Simak"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.05p10z__147> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/Clifford_D._Simak> , <http://dbpedia.org/resource/Clifford_D._Simak> , <http://de.dbpedia.org/resource/Clifford_D._Simak> ;
+        skos:altLabel    "Simak"@fr , "Simak"@de , "Simak"@en , "Simak, Clifford D."@fr , "Clifford D. Simak"@fr , "Clifford D. Simak"@de , "Clifford D. Simak"@en , "Simak, Clifford D."@de , "Simak, Clifford D."@en , "Time and Again"@fr , "Clifford Donald Simak"@fr , "Time and Again"@de , "Clifford Donald Simak"@de , "Clifford Donald Simak"@en , "Time and Again"@en , "Clifford D Simak"@fr , "Clifford D Simak"@de , "Clifford D Simak"@en , "Cliff Simak"@fr , "Clifford Simak"@fr , "Cliff Simak"@de , "Clifford Simak"@de , "Cliff Simak"@en , "Clifford Simak"@en .
+
+<http://rdf.freebase.com/ns/m.05p10z>
+        rdfs:label     "Way Station"@en , "Au carrefour des étoiles"@fr ;
+        owl:sameAs     <http://dbpedia.org/resource/Way_Station_(novel)> , <http://de.dbpedia.org/resource/> , <http://fr.dbpedia.org/resource/Au_carrefour_des_étoiles> ;
+        skos:altLabel  "Au carrefour des etoiles"@fr , "Au carrefour des étoiles"@fr , "Au Carrefour Des Etoiles"@fr , "Way Station"@fr , "Way Station"@en , "Here Gather the Stars"@fr , "Here Gather the Stars"@en , "Way station"@fr , "Way station"@en , "Au Carrefour Des Étoiles"@fr .
+
+<http://rdf.freebase.com/ns/m.05p10z__147>
+        dbo:author  <http://rdf.freebase.com/ns/m.05p10z> ;
+        dbo:from    "1963"^^xsd:gYear ;
+        dbo:to      "1963"^^xsd:gYear .

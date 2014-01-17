@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0r5v5g3>
+        rdfs:label    "Jade Duell"@en ;
+        dbo:marriage  <http://rdf.freebase.com/ns/m.0r5v5g3__1> .
+
+<http://rdf.freebase.com/ns/m.01q_ph>
+        rdfs:label     "Owen Wilson"@fr , "Owen Wilson"@de , "Owen Wilson"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Owen_Wilson> , <http://dbpedia.org/resource/Owen_Wilson> , <http://de.dbpedia.org/resource/Owen_Wilson> ;
+        skos:altLabel  "Owen wilson"@fr , "Owen wilson"@de , "Owen wilson"@en , "O"@en , "Owen Wilson"@fr , "Owen Wilson"@de , "Owen Wilson"@en , "The Butterscotch Stallion"@fr , "The Butterscotch Stallion"@de , "The Butterscotch Stallion"@en , "Wilson"@fr , "Owen Cunningham Wilson"@de , "Owen Cunningham Wilson"@en , "Wilson, Owen"@en , "Owen C. Wilson"@fr , "Owen C. Wilson"@de , "Owen C. Wilson"@en , "Owen"@fr .
+
+<http://rdf.freebase.com/ns/m.0r5v5g3__1>
+        dbo:from    "2009-12"^^xsd:gYearMonth ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.01q_ph> ;
+        dbo:to      "2011-06"^^xsd:gYearMonth .

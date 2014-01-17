@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/The_Big_U>
+        skos:altLabel  "American Megaversity"@en , "The Big U"@en , "Big U"@en .
+
+<http://rdf.freebase.com/ns/m.0h9g6>
+        rdfs:label  "The Big U"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/The_Big_U> .
+
+<http://rdf.freebase.com/ns/m.05qfw3s>
+        rdfs:label       "William Rollo"@en ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.0h9g6__69> .
+
+<http://rdf.freebase.com/ns/m.0h9g6__69>
+        dbo:author  <http://rdf.freebase.com/ns/m.0h9g6> ;
+        dbo:from    "1984"^^xsd:gYear ;
+        dbo:to      "1984"^^xsd:gYear .

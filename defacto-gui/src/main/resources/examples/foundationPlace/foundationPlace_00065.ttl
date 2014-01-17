@@ -1,0 +1,25 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.04d7h2>
+        rdfs:label      "FrontRange Solutions"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.04d7h2__65> ;
+        owl:sameAs      <http://dbpedia.org/resource/FrontRange_Solutions> ;
+        skos:altLabel   "Front Range Solutions"@en .
+
+<http://rdf.freebase.com/ns/m.01vsl>
+        rdfs:label     "Colorado Springs"@fr , "Colorado Springs"@de , "Colorado Springs"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Colorado_Springs> , <http://dbpedia.org/resource/Colorado_Springs,_Colorado> , <http://fr.dbpedia.org/resource/Colorado_Springs> ;
+        skos:altLabel  "History of Colorado Springs, Colorado"@fr , "History of Colorado Springs, Colorado"@de , "History of Colorado Springs, Colorado"@en , "Colorado City, Jefferson Territory"@fr , "Colorado City, Jefferson Territory"@en , "Colorado City, Jefferson Territory"@de , "El Paso County / Colorado Springs city"@en , "CSP, Colorado"@fr , "CSP, Colorado"@en , "CSP, Colorado"@de , "Col. Springs"@fr , "Col. Springs"@de , "Col. Springs"@en , "Colo Springs"@fr , "Colorado Colorado Springs"@fr , "Colo Springs"@en , "Colo Springs"@de , "Colorado Colorado Springs"@en , "Colorado Colorado Springs"@de , "City of Colorado Springs"@fr , "City of Colorado Springs"@en , "City of Colorado Springs"@de , "Colorado City, Colorado Territory"@fr , "Springs Adventist Academy"@fr , "Colorado City, Colorado Territory"@en , "Colorado City, Colorado Territory"@de , "Springs Adventist Academy"@en , "Springs Adventist Academy"@de , "38th Regimental Combat Team"@fr , "38th Regimental Combat Team"@de , "38th Regimental Combat Team"@en , "Downtown Colorado Springs, Colorado"@fr , "Downtown Colorado Springs, Colorado"@de , "Downtown Colorado Springs, Colorado"@en , "Colorado Springs, Colorado"@fr , "Colorado Springs, Colorado"@en , "Colorado Springs, Colorado"@de , "LOCODE:USCOS"@fr , "LOCODE:USCOS"@en , "LOCODE:USCOS"@de , "Protestant vatican"@fr , "Protestant vatican"@de , "Protestant vatican"@en , "Colorado Springs CO"@fr , "Colorado Springs CO"@en , "Colorado Springs CO"@de , "Colo Spgs"@fr , "Colo Spgs"@en , "Colo Spgs"@de , "CO Springs, CO"@fr , "CO Springs, CO"@de , "CO Springs, CO"@en , "Colorado"@fr , "Colorado Springs, CO"@fr , "Colorado Springs, CO"@de , "Colorado Springs, CO"@en , "Col. Springs, CO"@fr , "Col. Springs, CO"@de , "Col. Springs, CO"@en , "Colorado Springs US Air Force"@fr , "CO Springs"@fr , "Colorado Springs"@fr , "CO Springs"@de , "CO Springs"@en , "Colorado Springs"@en , "Colorado Springs"@de .
+
+<http://dbpedia.org/resource/FrontRange_Solutions>
+        skos:altLabel  "FrontRange Solutions"@en , "Front Range Solutions"@en .
+
+<http://rdf.freebase.com/ns/m.04d7h2__65>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.01vsl> ;
+        dbo:from             "2000"^^xsd:gYear ;
+        dbo:to               "2000"^^xsd:gYear .

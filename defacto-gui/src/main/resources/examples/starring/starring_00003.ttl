@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Julie_Dreyfus>
+        rdfs:label     "Julie Dreyfus"@en , "Julie Dreyfus"@fr , "Julie Dreyfus"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Julie_Dreyfus> , <http://de.dbpedia.org/resource/Julie_Dreyfus> ;
+        skos:altLabel  "Dreyfus"@fr , "Dreyfus"@de , "Julie Dreyfus"@fr , "Julie Dreyfus"@de , "Julie dreyfuss"@fr , "Julie dreyfuss"@de .
+
+<http://dbpedia.org/resource/Kill_Bill>
+        rdfs:label      "Kill Bill"@en , "Kill Bill"@fr , "Kill Bill"@de ;
+        dbo:isStarring  <http://dbpedia.org/resource/Kill_Bill__1> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Kill_Bill> , <http://fr.dbpedia.org/resource/Kill_Bill> ;
+        skos:altLabel   "Kill Bill 2"@fr , "Kill Bill : Volume 2"@fr , "Kill Bill, volume 1"@fr , "Kill Bill"@fr , "Kill Bill"@de , "Kill Bill"@en , "Kill Bill: Volume 3"@fr , "Kill Bill: Volume 3"@en , "Kill Bill: Volume 3"@de , "Kill Bill: Vol. 1"@fr , "Kill Bill: Vol. 2"@fr , "Bill"@fr , "Kill"@fr , "Tuer Bill"@fr , "Kill bill"@fr , "Kill bill"@de , "Kill bill"@en , "Kill Bill Vol 2"@fr , "Kill Bill : volume 1"@fr .
+
+<http://dbpedia.org/resource/Kill_Bill__1>
+        dbo:from      "2003-10-10"^^xsd:date ;
+        dbo:starring  <http://dbpedia.org/resource/Julie_Dreyfus> ;
+        dbo:to        "2003-10-10"^^xsd:date .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Palm_Desert,_California>
+        rdfs:label     "Palm Desert, California"@en , "Palm Desert, California"@fr , "Palm Desert, California"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Palm_Desert> , <http://de.dbpedia.org/resource/Palm_Desert> ;
+        skos:altLabel  "Paseo"@fr , "Paseo"@de , "Paseo"@en , "Palm"@fr , "El Paseo Gardens"@fr , "El Paseo Gardens"@de , "El Paseo Gardens"@en , "El Paseo Gradens"@fr , "El Paseo"@fr , "Palm Desert, Ca"@fr , "Palm Desert, California"@fr , "Palm Desert"@fr , "El Paseo"@de , "Palm Desert, California"@de , "Palm Desert, California"@en , "El Paseo"@en , "El Paseo Gradens"@de , "Palm Desert, Ca"@de , "Palm Desert"@de , "Palm Desert, Ca"@en , "Palm Desert"@en , "El Paseo Gradens"@en , "Palm Desert, CA"@fr , "Palm Desert, CA"@de , "Palm Desert, CA"@en , "LOCODE:USPMD"@fr , "LOCODE:USPMD"@de , "LOCODE:USPMD"@en .
+
+<http://dbpedia.org/resource/John_Ford>
+        rdfs:label     "John Ford"@en , "John Ford"@fr , "John Ford"@de ;
+        dbo:death      <http://dbpedia.org/resource/John_Ford__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/John_Ford> , <http://fr.dbpedia.org/resource/John_Ford> ;
+        skos:altLabel  "Ford, John"@fr , "John Ford"@fr , "John Ford statue"@fr , "John Ford"@de , "John Ford statue"@de , "John Ford"@en , "John Ford statue"@en , "Ford, John"@de , "Ford, John"@en , "Cavalry trilogy"@fr , "Cavalry trilogy"@de , "Cavalry trilogy"@en , "John ford"@fr , "Ford"@fr , "John Martin Feeney"@fr .
+
+<http://dbpedia.org/resource/John_Ford__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Palm_Desert,_California> ;
+        dbo:from        "1973-08-31"^^xsd:date ;
+        dbo:to          "1973-08-31"^^xsd:date .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Minsk>
+        rdfs:label     "Minsk"@de , "Minsk"@fr , "Minsk"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Minsk> , <http://fr.dbpedia.org/resource/Minsk> ;
+        skos:altLabel  "Miensk"@en , "Miensk"@de , "Miensk"@fr , "Gorod Minsk"@en , "Gorod Minsk"@de , "Gorod Minsk"@fr , "Provice of Minsk"@fr , "Provice of Minsk"@de , "Provice of Minsk"@en , "Minskaya"@fr , "Minskaya"@en , "Minskaya"@de , "Minsku"@en , "Minsku"@de , "Minsku"@fr , "LOCODE:BYMSQ"@en , "LOCODE:BYMSQ"@de , "LOCODE:BYMSQ"@fr , "Capital of Belarus"@en , "Capital of Belarus"@de , "Capital of Belarus"@fr , "Horad Minsk"@en , "Horad Minsk"@de , "Horad Minsk"@fr , "Minsk, Belarus"@fr , "Minskas"@en , "Minskas"@de , "Minskas"@fr , "Minsk, Belarus"@en , "Minsk, Belarus"@de , "Mensk"@en , "Mensk"@de , "Mensk"@fr , "Minsk"@fr , "Minsk, USSR"@en , "Minsk, USSR"@de , "Minsk, USSR"@fr , "Minsk"@en , "Minsk"@de .
+
+<http://dbpedia.org/resource/Max_Mirnyi>
+        rdfs:label     "Max Mirnyi"@en , "Max Mirnyi"@fr , "Max Mirnyi"@de ;
+        dbo:birth      <http://dbpedia.org/resource/Max_Mirnyi__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Max_Mirnyi> , <http://de.dbpedia.org/resource/Max_Mirny> ;
+        skos:altLabel  "Max Mirnyi"@fr , "Max Mirnyi"@de , "Max Mirnyi"@en , "Max Mirny"@fr , "Max Mirny"@en , "Max Mirny"@de , "Mirny"@fr , "Mirny"@de , "Mirnyi"@de , "Mirny"@en .
+
+<http://dbpedia.org/resource/Max_Mirnyi__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Minsk> ;
+        dbo:from        "1977-07-06"^^xsd:date ;
+        dbo:to          "1977-07-06"^^xsd:date .

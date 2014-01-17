@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02dyk3>
+        rdfs:label      "IWin.com"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.02dyk3__89> ;
+        skos:altLabel   "IWin, Inc."@en .
+
+<http://rdf.freebase.com/ns/m.026mj>
+        rdfs:label     "Delaware"@fr , "Delaware"@en , "Delaware"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Delaware> , <http://de.dbpedia.org/resource/Delaware> , <http://dbpedia.org/resource/Delaware> ;
+        skos:altLabel  "The Small Wonder"@fr , "Delaware trivia"@fr , "The Small Wonder"@de , "Delaware trivia"@de , "The Small Wonder"@en , "Delaware trivia"@en , "1st State"@fr , "1st State"@de , "1st State"@en , "Culture of Delaware"@fr , "Culture of Delaware"@de , "Culture of Delaware"@en , "Delaware"@fr , "Delaware"@de , "Delaware"@en , "Government of Delaware"@fr , "Government of Delaware"@de , "Government of Delaware"@en , "Alcohol laws of Delaware"@fr , "Alcohol laws of Delaware"@de , "Alcohol laws of Delaware"@en , "Education in Delaware"@fr , "US-DE"@fr , "US-DE"@en , "US-DE"@de , "Religion in Delaware"@fr , "Education in Delaware"@de , "Religion in Delaware"@de , "Religion in Delaware"@en , "Education in Delaware"@en , "Dela"@en , "Economy of Delaware"@fr , "Economy of Delaware"@de , "Economy of Delaware"@en , "Demographics of Delaware"@fr , "Delaware, United States"@fr , "Three lower counties"@fr , "Delaware, United States"@de , "Three lower counties"@de , "Three lower counties"@en , "Delaware, United States"@en , "Demographics of Delaware"@de , "Demographics of Delaware"@en , "Del"@en , "Deleware"@fr , "Deleware"@de , "Deleware"@en , "The Blue Hen State"@fr , "The Blue Hen State"@de , "The Blue Hen State"@en , "State of Delaware"@fr , "State of Delaware"@de , "State of Delaware"@en , "Climate of Delaware"@fr , "Climate of Delaware"@en , "Climate of Delaware"@de , "Geography of Delaware"@fr , "Geography of Delaware"@de , "Geography of Delaware"@en , "Sports in Delaware"@fr , "Sports in Delaware"@de , "Sports in Delaware"@en , "DE"@en , "The First State"@fr , "The First State"@en , "The First State"@de , "List of municipalities in Delaware"@fr , "List of municipalities in Delaware"@en , "List of municipalities in Delaware"@de , "Delawarean"@fr , "Delawarean"@en , "Delawarean"@de , "Del."@fr , "Del."@de , "Del."@en , "Transportation in Delaware"@fr , "Transportation in Delaware"@de , "Transportation in Delaware"@en , "Transport in Delaware"@fr , "Transport in Delaware"@de , "Transport in Delaware"@en .
+
+<http://rdf.freebase.com/ns/m.02dyk3__89>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.026mj> ;
+        dbo:from             "2001"^^xsd:gYear ;
+        dbo:to               "2001"^^xsd:gYear .

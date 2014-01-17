@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Morihiro_Hosokawa>
+        rdfs:label     "Morihiro Hosokawa"@en , "Morihiro Hosokawa"@fr , "Morihiro Hosokawa"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Morihiro_Hosokawa__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Morihiro_Hosokawa> , <http://fr.dbpedia.org/resource/Morihiro_Hosokawa> ;
+        skos:altLabel  "Hosokawa"@fr , "Hosokawa"@de , "Hosokawa"@en , "Morihiro Hosokawa"@fr , "Morihiro Hosokawa"@en , "Morihiro Hosokawa"@de , "Hosokawa Morihiro"@fr , "Hosokawa Morihiro"@de , "Hosokawa Morihiro"@en .
+
+<http://dbpedia.org/resource/Japan>
+        rdfs:label     "Japan"@de , "Japan"@fr , "Japan"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Japon> , <http://de.dbpedia.org/resource/Japan> ;
+        skos:altLabel  "Nippon"@fr , "Japao"@fr , "Japan"@fr , "État du Japon"@fr , "Japan"@de , "Japan"@en , "Japao"@de , "Japao"@en , "Japonaise"@fr , "Empire du Soleil levant"@fr , "Iapam"@fr , "Iapam"@de , "Iapam"@en , "Giappone"@fr , "Ilbon"@fr , "State of Japan"@fr , "Ilbon"@de , "State of Japan"@de , "Ilbon"@en , "State of Japan"@en , "Giappone"@de , "Giappone"@en , "Japanese Home Islands"@fr , "Administrative divisions of Japan"@fr , "Japanese Home Islands"@de , "Das Land der aufgehenden Sonne"@de , "Administrative divisions of Japan"@de , "Administrative divisions of Japan"@en , "Japanese Home Islands"@en , "Jpan"@fr , "Archipelago of Japan"@fr , "Jpan"@de , "Archipelago of Japan"@de , "Archipelago of Japan"@en , "Jpan"@en , "Moonland"@fr , "Japanio"@fr , "Moonland"@de , "Japanio"@de , "Japanio"@en , "Moonland"@en , "Republic of Japan"@fr , "Republic of Japan"@de , "Republic of Japan"@en , "ISO 3166-1:JP"@fr , "ISO 3166-1:JP"@de , "ISO 3166-1:JP"@en , "JAPAN"@fr , "JAPAN"@de , "JAPAN"@en , "Yilbon"@fr , "Yilbon"@de , "Yilbon"@en , "Japon"@fr , "Japon"@de , "Japon"@en , "Nihon"@fr , "Nihon"@de , "Nihon"@en , "Land der aufgehenden Sonne"@de , "Nihon-koku"@fr , "Riben"@fr , "Riben"@de , "Riben"@en , "Etat du Japon"@fr , "Nippon-koku"@fr , "Nihon-koku"@de , "Nippon-koku"@de , "Nippon-koku"@en , "Nihon-koku"@en , "Etymology of Japan"@fr , "Etymology of Japan"@de , "Etymology of Japan"@en , "Japanese territory"@fr , "Jepun"@fr , "Jepun"@de , "Jepun"@en , "Japanese financial sector"@fr , "Japanese territory"@de , "Japanese financial sector"@de , "Japanese financial sector"@en , "Japanese territory"@en , "Japang"@fr , "Japang"@de , "Japang"@en , "Rìběn"@fr , "Japanese lifestyle"@fr , "Rìběn"@de , "Japanese lifestyle"@de , "Japanese lifestyle"@en , "Rìběn"@en , "Nihonkoku"@fr , "Le japon"@fr , "Subdivisions of Japan"@fr , "Subdivisions of Japan"@de , "Subdivisions of Japan"@en , "The State of Japan"@fr , "The State of Japan"@de , "The State of Japan"@en , "Japoa"@fr , "Giapan"@fr , "Japoa"@de , "Japoa"@en , "JapaN"@fr , "Ja-pan"@fr , "The Land of the Rising Sun"@fr , "Giapan"@de , "Giapan"@en , "JapaN"@de , "JapaN"@en , "Zipango"@de , "Ja-pan"@de , "The Land of the Rising Sun"@de , "Ja-pan"@en , "The Land of the Rising Sun"@en , "Nipponkoku"@fr .
+
+<http://dbpedia.org/resource/Morihiro_Hosokawa__1>
+        dbo:from    "1993-08-09"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Japan> ;
+        dbo:to      "1994-04-28"^^xsd:date .

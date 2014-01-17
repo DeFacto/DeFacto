@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02114t>
+        rdfs:label     "Scarlett Johansson"@en , "Scarlett Johansson"@de , "Scarlett Johansson"@fr ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.02114t__19> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Scarlett_Johansson> , <http://dbpedia.org/resource/Scarlett_Johansson> , <http://fr.dbpedia.org/resource/Scarlett_Johansson> ;
+        skos:altLabel  "Scarlet Johannsen"@fr , "Scarlet Johannsen"@en , "Scarlet Johannsen"@de , "Scarlet johannson"@fr , "Scarlet johannson"@en , "Scarlet johannson"@de , "Scarlet Johanson"@fr , "Scarlet Johanson"@de , "Scarlet Johanson"@en , "Scarlett johanssen"@fr , "Scarlett johanssen"@de , "Scarlett johanssen"@en , "Scarlett Marie Johansson"@de , "Scarlett Johannsen"@fr , "Scarlett Johannsen"@en , "Scarlett Johannsen"@de , "Johansson"@fr , "Johansson"@de , "Johansson"@en , "Scarlett I Johansson"@fr , "Scarlett I Johansson"@de , "Scarlett I Johansson"@en , "Scarlet johansson"@fr , "Scarlett Johanson"@fr , "ScarlettJohansson"@fr , "Scarlet johansson"@de , "Scarlet johansson"@en , "ScarlettJohansson"@en , "Scarlett Johanson"@en , "Scarlett Johanson"@de , "ScarlettJohansson"@de , "Scarlet Johansson"@fr , "Scarlet Johannson"@fr , "Scarlet Johansson"@de , "Scarlett"@de , "Scarlet Johansson"@en , "Scarlet Johannson"@en , "Scarlet Johannson"@de , "Scarlet johanson"@fr , "Scarlet johanson"@en , "Scarlet johanson"@de , "Scarlett Johanssen"@fr , "Scarlett Johanssen"@en , "Scarlett Johanssen"@de , "Scarlett Johansson"@fr , "Scarlett Johansson"@en , "Scarlett Johansson"@de , "Scarlet Johansen"@fr , "ScarJo"@fr , "Scarlet Johansen"@de , "Scarlet Johansen"@en , "ScarJo"@en , "ScarJo"@de , "Scarlett Johannson"@fr , "Scarlett Johannson"@de , "Scarlett Johannson"@en , "Scarlett Johansen"@fr , "Scarlett Johansen"@de , "Scarlett Johansen"@en , "Scarlett I. Johansson"@fr , "Scarlett I. Johansson"@en , "Scarlett I. Johansson"@de , "Scarlet Johanssen"@fr , "Scarlet Johanssen"@de , "Scarlet Johanssen"@en , "Scarlett Ingrid Johansson"@en .
+
+<http://rdf.freebase.com/ns/m.02114t__19>
+        dbo:from    "2008-09-27"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.036hf4> ;
+        dbo:to      "2011-07-01"^^xsd:date .
+
+<http://rdf.freebase.com/ns/m.036hf4>
+        rdfs:label     "Ryan Reynolds"@en , "Ryan Reynolds"@de , "Ryan Reynolds"@fr ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Ryan_Reynolds> , <http://dbpedia.org/resource/Ryan_Reynolds> , <http://de.dbpedia.org/resource/Ryan_Reynolds> ;
+        skos:altLabel  "Ryan Reynolds"@fr , "Ryan R. Reynolds"@fr , "Ryan Rodney Reynolds"@de , "Ryan Reynolds"@de , "Ryan Rodney Reynolds"@en , "Ryan Reynolds"@en , "Ryan R. Reynolds"@de , "Ryan R. Reynolds"@en , "Reynolds"@fr , "Reynolds"@en , "Champ Nightengale"@en , "Ryan"@en , "Ryan reynolds"@fr , "Ryan reynolds"@de , "Ryan reynolds"@en .

@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.078g3l>
+        rdfs:label     "John Heard"@de , "John Heard"@en , "John Heard"@fr ;
+        owl:sameAs     <http://de.dbpedia.org/resource/John_Heard> , <http://fr.dbpedia.org/resource/John_Heard> , <http://dbpedia.org/resource/John_Heard_(actor)> ;
+        skos:altLabel  "John Heard, Jr."@en , "Heard"@de , "Heard"@fr , "John Heard"@fr , "John Heard"@de .
+
+<http://rdf.freebase.com/ns/m.0j11784>
+        rdfs:label    "Lana Pritchard"@en ;
+        dbo:marriage  <http://rdf.freebase.com/ns/m.0j11784__17> .
+
+<http://rdf.freebase.com/ns/m.0j11784__17>
+        dbo:from    "2010-05-24"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.078g3l> ;
+        dbo:to      "2010-12-22"^^xsd:date .

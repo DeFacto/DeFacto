@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Belgium>
+        rdfs:label     "Belgium"@de , "Belgium"@fr , "Belgium"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Belgique> , <http://de.dbpedia.org/resource/Belgien> ;
+        skos:altLabel  "Belgum"@de , "Belgum"@en , "Belgien"@fr , "Belgien"@en , "Belgien"@de , "Gelbique"@fr , "Belgique"@fr , "ISO 3166-1:BE"@fr , "Belgique"@de , "ISO 3166-1:BE"@de , "ISO 3166-1:BE"@en , "Belgique"@en , "Begium"@fr , "Begium"@de , "Begium"@en , "Koenigreich Belgien"@fr , "Koenigreich Belgien"@de , "Koenigreich Belgien"@en , "Beljum"@fr , "Beljum"@de , "Beljum"@en , "Cockpit of Europe"@fr , "Cockpit of Europe"@de , "Cockpit of Europe"@en , "Belguim"@fr , "Belguim"@de , "Belguim"@en , "Blegium"@fr , "Beldjike"@fr , "Beldjike"@de , "Beldjike"@en , "Blegium"@de , "Blegium"@en , "People of Belgium"@fr , "Belge"@fr , "People of Belgium"@de , "People of Belgium"@en , "Belge"@de , "Konigreich Belgien"@fr , "Konigreich Belgien"@de , "Konigreich Belgien"@en , "Kingdom Of Belgium"@fr , "Kingdom Of Belgium"@de , "Kingdom Of Belgium"@en , "Beljam"@fr , "Beljam"@de , "Beljam"@en , "Königreich Belgien"@fr , "Königreich Belgien"@de , "Königreich Belgien"@en , "Kingdom of Belgium"@fr , "België"@fr , "Belgian"@fr , "Belgian"@en , "Belgian"@de , "Kingdom of Belgium"@de , "Kingdom of Belgium"@en , "België"@de , "België"@en , "Belgier"@de , "Belgium facts"@fr , "Belgium facts"@de , "Belgium facts"@en , "Belgium"@fr , "Belgium"@de , "Belgium"@en , "Koninkrijk België"@fr , "Koninkrijk België"@de , "Koninkrijk België"@en , "Belgie"@fr , "Belgio"@fr , "Belgio"@de , "Belgio"@en , "Belgie"@de , "Belgie"@en , "Beligum"@fr , "Beligum"@de , "Beligum"@en , "facts"@fr , "Kingdom of the Belgians"@fr , "The Quebec of Europe"@fr , "facts"@de , "The Quebec of Europe"@en , "Kingdom of the Belgians"@en , "Kingdom of the Belgians"@de , "facts"@en , "The Quebec of Europe"@de , "Royaume de Belgique"@fr , "Koninkrijk Belgie"@fr , "Belgian Government"@fr , "Royaume de Belgique"@de , "Koninkrijk Belgie"@de , "Belgian Government"@de , "Koninkrijk Belgie"@en , "Royaume de Belgique"@en , "Belgian Government"@en , "Belgum"@fr .
+
+<http://dbpedia.org/resource/Paul-Henri_Spaak__1>
+        dbo:from    "1947-03-20"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Belgium> ;
+        dbo:to      "1949-08-11"^^xsd:date .
+
+<http://dbpedia.org/resource/Paul-Henri_Spaak>
+        rdfs:label     "Paul-Henri Spaak"@en , "Paul-Henri Spaak"@fr , "Paul-Henri Spaak"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Paul-Henri_Spaak__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Paul-Henri_Spaak> , <http://de.dbpedia.org/resource/Paul-Henri_Spaak> ;
+        skos:altLabel  "Paul-Henry Spaak"@en , "Paul Henri Spaak"@fr , "Paul Henri Spaak"@de , "Paul Henri Spaak"@en , "Paul-Henri Spaak"@fr , "Paul-Henri Spaak"@de , "Paul-Henri Spaak"@en , "Spaak"@fr , "Spaak"@de , "Spaak"@en , "P.-A. Spaak"@fr , "Paul Henri Charles Spaak"@fr , "Paul Henri Charles Spaak"@de , "Paul Henri Charles Spaak"@en , "Paul-Henry Spaak"@fr , "Paul-Henry Spaak"@de .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Scottsdale,_Arizona>
+        rdfs:label     "Scottsdale, Arizona"@en , "Scottsdale, Arizona"@fr , "Scottsdale, Arizona"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Scottsdale> , <http://fr.dbpedia.org/resource/Scottsdale_(Arizona)> ;
+        skos:altLabel  "Vasai S-vasoni"@fr , "Vasai S-vasoni"@de , "Vasai S-vasoni"@en , "Scottsdale az"@fr , "Scottsdale az"@de , "Scottsdale az"@en , "Sweetwater Ranch, Arizona"@fr , "Sweetwater Ranch, Arizona"@de , "Sweetwater Ranch, Arizona"@en , "Scottsdale, AZ"@fr , "Scottsdale, az"@fr , "Scottsdale, AZ"@de , "Scottsdale, az"@de , "Scottsdale, az"@en , "Scottsdale, AZ"@en , "Scottsdale, Arizona"@fr , "Scottsdale, Arizona"@de , "Scottsdale, Arizona"@en , "Scottsdale"@fr , "Scottsdale"@de , "Scottsdale"@en , "Eskatel"@fr , "The New Shul"@fr , "Eskatel"@de , "The New Shul"@de , "Eskatel"@en , "The New Shul"@en , "Vaṣai S-vaṣonĭ"@fr , "Vaṣai S-vaṣonĭ"@de , "Vaṣai S-vaṣonĭ"@en , "LOCODE:USSTZ"@fr , "LOCODE:USSTZ"@de , "LOCODE:USSTZ"@en .
+
+<http://dbpedia.org/resource/Billy_Preston>
+        rdfs:label     "Billy Preston"@en , "Billy Preston"@fr , "Billy Preston"@de ;
+        dbo:death      <http://dbpedia.org/resource/Billy_Preston__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Billy_Preston> , <http://de.dbpedia.org/resource/Billy_Preston> ;
+        skos:altLabel  "Billy Preston"@fr , "Billy Preston"@de , "Billy Preston"@en , "Preston"@fr .
+
+<http://dbpedia.org/resource/Billy_Preston__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Scottsdale,_Arizona> ;
+        dbo:from        "2006-06-06"^^xsd:date ;
+        dbo:to          "2006-06-06"^^xsd:date .

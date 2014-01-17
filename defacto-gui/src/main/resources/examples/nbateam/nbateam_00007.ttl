@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Dwight_Howard>
+        rdfs:label      "Dwight Howard"@en , "Dwight Howard"@fr , "Dwight Howard"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Dwight_Howard__2> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Dwight_Howard> , <http://de.dbpedia.org/resource/Dwight_Howard> ;
+        skos:altLabel   "Dwight David Howard"@de , "Dwight"@de , "Dwight Howard"@fr , "Dwight Howard"@de , "Dwight Howard"@en , "Howard"@fr .
+
+<http://dbpedia.org/resource/Dwight_Howard__2>
+        dbo:from  "2012"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Los_Angeles_Lakers> ;
+        dbo:to    "2012"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Los_Angeles_Lakers>
+        rdfs:label     "Los Angeles Lakers"@de , "Los Angeles Lakers"@fr , "Los Angeles Lakers"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Los_Angeles_Lakers> , <http://fr.dbpedia.org/resource/Lakers_de_Los_Angeles> ;
+        skos:altLabel  "Los Angeles Laker"@fr , "Los Angeles Laker"@en , "Los Angeles Laker"@de , "Gems de Détroit"@fr , "Lakers de los angeles"@fr , "Lakers de Los Angeles"@fr , "Lakers De Los Angeles"@fr , "The Los Angeles Lakers"@fr , "Losangeles lakers"@en , "Losangeles lakers"@de , "The Los Angeles Lakers"@en , "The Los Angeles Lakers"@de , "Losangeles lakers"@fr , "Laker"@fr , "Laker"@en , "Minneapolis Lakers"@en , "Minneapolis Lakers"@de , "Minneapolis Lakers"@fr , "Laker"@de , "Minnesota Lakers"@en , "Minnesota Lakers"@de , "Minnesota Lakers"@fr , "Lakers"@fr , "Lakers"@en , "Lakers"@de , "Gems de Detroit"@fr , "Los Angeles Lakers retired numbers"@en , "Los Angeles Lakers retired numbers"@de , "Los Angeles Lakers retired numbers"@fr , "L.A. Lakers"@en , "L.A. Lakers"@de , "L.A. Lakers"@fr , "LA Lakers"@en , "LA Lakers"@de , "LA Lakers"@fr , "Lakers de Minneapolis"@fr , "L. A. Lakers"@de , "La lakers"@fr , "La lakers"@en , "La lakers"@de , "Detroit Gems"@fr , "Los Angeles Lakers"@fr , "Los Angeles Lakers"@en , "Los Angeles Lakers"@de , "L.a lakers"@fr , "L.a lakers"@en , "L.a lakers"@de .

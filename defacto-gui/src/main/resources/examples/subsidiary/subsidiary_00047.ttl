@@ -1,0 +1,18 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02h6ght>
+        rdfs:label  "Connetics"@en .
+
+<http://rdf.freebase.com/ns/m.03364_s>
+        rdfs:label       "Stiefel Laboratories"@en ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.03364_s__47> .
+
+<http://rdf.freebase.com/ns/m.03364_s__47>
+        dbo:from        "2006-12"^^xsd:gYearMonth ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.02h6ght> ;
+        dbo:to          "2006-12"^^xsd:gYearMonth .

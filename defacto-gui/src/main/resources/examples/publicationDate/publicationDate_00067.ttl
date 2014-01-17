@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02fdym>
+        rdfs:label     "The Hitchhiker's Guide to the Galaxy"@en , "Per Anhalter durch die Galaxis"@de , "Le Guide du voyageur galactique"@fr ;
+        owl:sameAs     <http://dbpedia.org/resource/The_Hitchhiker's_Guide_to_the_Galaxy_(novel)> , <http://de.dbpedia.org/resource/Per_Anhalter_durch_die_Galaxis> , <http://fr.dbpedia.org/resource/Le_Guide_du_voyageur_galactique> ;
+        skos:altLabel  "Vierteilige Trilogie"@de , "Le Guide du voyageur galactique"@fr , "Zaphod Beeblebrox"@de , "Guide du routard galactique"@fr , "Fiet Vujagig"@de , "Le Guide du Routard galactique"@fr , "The Hitchhiker’s Guide to the Galaxy"@fr , "The Hitchhiker’s Guide to the Galaxy"@en , "The Hitchhiker’s Guide to the Galaxy"@de , "Per Anhalter durch die Galaxis"@de , "Le Guide galactique"@fr , "Vogone"@de , "The Illustrated Hitchhiker's Guide to the Galaxy"@fr , "The Illustrated Hitchhiker's Guide to the Galaxy"@en , "The Illustrated Hitchhiker's Guide to the Galaxy"@de , "The Hitch Hiker's Guide to the Galaxy"@en , "Dent"@de , "Guide"@fr , "The More Than Complete Hitchhiker's Guide"@en , "La vie, l'univers et tout le reste"@fr , "Hitchhiker's Guide to the Galaxy"@de , "The Hitchhiker's Guide to the Galaxy"@fr , "Le guide du voyageur galactique"@fr , "The Hitchhiker's Guide to the Galaxy"@en , "The Hitchhiker's Guide to the Galaxy"@de , "Arthur Dent"@de , "The HitchHiker's Guide to the Galaxy"@fr , "Anhalter"@de , "HHGTTG"@de , "PADDG"@de , "Guide galactique"@fr , "Guide du voyageur galactique"@fr , "A Hitchhiker's Guide to the Galaxy"@fr , "Le Guide Du Voyageur Galactique"@fr , "A Hitchhiker's Guide to the Galaxy"@en , "A Hitchhiker's Guide to the Galaxy"@de , "The Illustrated Hitch Hiker's Guide to the Galaxy"@en , "Tricia McMillan"@de , "The Universe of Douglas Adams"@en , "Vogonen"@de , "Le Guide du Voyageur Galactique"@fr , "THHGTTG"@de , "Le Guide du routard galactique"@fr , "Per Anhalter ins All"@de , "The Hitchhiker's Quartet"@en .
+
+<http://rdf.freebase.com/ns/m.0282x>
+        rdfs:label       "Douglas Adams"@fr , "Douglas Adams"@en , "Douglas Adams"@de ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.02fdym__67> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/Douglas_Adams> , <http://dbpedia.org/resource/Douglas_Adams> , <http://fr.dbpedia.org/resource/Douglas_Adams> ;
+        skos:altLabel    "DNA"@en , "Douglas adams"@fr , "Douglas adams"@en , "Douglas adams"@de , "Dirk Gently"@de , "Douglas"@fr , "Douglas"@en , "Adams, Douglas Noël"@fr , "Douglass adams"@en , "Douglass adams"@de , "Adams, Douglas Noël"@en , "Douglass adams"@fr , "Adams, Douglas Noël"@de , "Douglas N. Adams"@en , "Bop Ad"@fr , "Adams"@fr , "Bop Ad"@en , "Bop Ad"@de , "Adams, Douglas Noel"@fr , "Adams, Douglas Noel"@en , "Adams, Douglas Noel"@de , "David Agnew"@en , "Douglas Adams"@fr , "Douglas Adams"@en , "Douglas Adams"@de , "Douglas Adams bibliography"@fr , "Douglas Adams bibliography"@en , "Douglas Adams bibliography"@de , "Jane Belson"@fr , "Jane Belson"@en , "Jane Belson"@de , "Adams, Douglas"@fr , "Adams, Douglas"@de , "Adams, Douglas"@en , "Douglas Noël Adams"@fr , "Douglas Noël Adams"@en , "Douglas Noël Adams"@de , "Douglas Addams"@en , "Douglas Noel Adams"@fr , "Douglas Noel Adams"@en , "Douglas Noel Adams"@de , "Douglas Adams Biography"@fr , "Douglas Adams Biography"@en , "Douglas Adams Biography"@de .
+
+<http://rdf.freebase.com/ns/m.02fdym__67>
+        dbo:author  <http://rdf.freebase.com/ns/m.02fdym> ;
+        dbo:from    "1979"^^xsd:gYear ;
+        dbo:to      "1979"^^xsd:gYear .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/J._R._Smith>
+        rdfs:label      "J. R. Smith"@fr , "J. R. Smith"@de , "J. R. Smith"@en ;
+        dbo:playedTeam  <http://dbpedia.org/resource/J._R._Smith__2> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/J._R._Smith> , <http://fr.dbpedia.org/resource/J._R._Smith> ;
+        skos:altLabel   "Earl Smith, III"@fr , "Earl Smith, III"@de , "J. R. Smith"@fr , "J. R. Smith"@de , "Earl Smith III."@de , "J R Smith"@fr , "J R Smith"@de , "JR Smith"@fr , "JR Smith"@de , "J.R. Smith"@fr , "J.R. Smith"@de , "Earl Smith III"@fr , "Earl Smith III"@de .
+
+<http://dbpedia.org/resource/Denver_Nuggets>
+        rdfs:label     "Denver Nuggets"@en , "Denver Nuggets"@fr , "Denver Nuggets"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Nuggets_de_Denver> , <http://de.dbpedia.org/resource/Denver_Nuggets> ;
+        skos:altLabel  "Colorado nuggets"@fr , "Colorado nuggets"@de , "Colorado nuggets"@en , "Denver nuggets"@fr , "Nuggets"@fr , "Denver nuggets"@de , "Denver nuggets"@en , "Nuggets"@de , "Nuggets"@en , "Jonathon Herrera"@fr , "Denver Rockets"@fr , "Jonathon Herrera"@de , "Denver Rockets"@de , "Denver Rockets"@en , "Jonathon Herrera"@en , "Nuggets de Denver"@fr , "Rockets de Denver"@fr , "Denver nuggetts"@fr , "Denver nuggetts"@de , "Denver nuggetts"@en , "Denver"@de , "Denver Nuggets"@fr , "Denver Nuggets"@de , "Denver Nuggets"@en , "Denver Larks"@fr , "Denver Larks"@de , "Denver Larks"@en , "Nuggets de denver"@fr .
+
+<http://dbpedia.org/resource/J._R._Smith__2>
+        dbo:from  "2006"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Denver_Nuggets> ;
+        dbo:to    "2010"^^xsd:gYear .

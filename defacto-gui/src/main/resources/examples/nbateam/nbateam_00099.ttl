@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Atlanta_Hawks>
+        rdfs:label     "Atlanta Hawks"@de , "Atlanta Hawks"@fr , "Atlanta Hawks"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Atlanta_Hawks> , <http://fr.dbpedia.org/resource/Hawks_d'Atlanta> ;
+        skos:altLabel  "Atlanta Hawks"@en , "Atlanta Hawks"@de , "Atlanta Hawks"@fr , "Hawks de Saint-Louis"@fr , "Milwaukee Hawks"@en , "Milwaukee Hawks"@de , "Milwaukee Hawks"@fr , "Tri-Cities BlackHawks"@en , "Tri-Cities BlackHawks"@de , "Tri-Cities BlackHawks"@fr , "Tri-Cities"@de , "Saint Louis Hawks"@en , "Saint Louis Hawks"@de , "Saint Louis Hawks"@fr , "Hawk"@en , "Hawk"@de , "Hawk"@fr , "Saint-Louis Hawks"@fr , "Hawks"@en , "Tri-Cities Black Hawks"@fr , "Hawks"@de , "Hawks"@fr , "Atl Hawks"@en , "Hawks d'Atlanta"@fr , "Atl Hawks"@de , "Atl Hawks"@fr , "Buffalo Bisons"@en , "Buffalo Bisons"@de , "Buffalo Bisons"@fr , "St. Louis Hawks"@en , "St. Louis Hawks"@de , "St. Louis Hawks"@fr , "Tri-Cities Blackhawks"@en , "Tri-Cities Blackhawks"@de , "Tri-Cities Blackhawks"@fr .
+
+<http://dbpedia.org/resource/Nazr_Mohammed>
+        rdfs:label      "Nazr Mohammed"@fr , "Nazr Mohammed"@de , "Nazr Mohammed"@en ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Nazr_Mohammed__2> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Nazr_Mohammed> , <http://de.dbpedia.org/resource/Nazr_Mohammed> ;
+        skos:altLabel   "Nazr mohamed"@fr , "Nazr Mohammed"@fr , "Nazr mohamed"@de , "Nazr Mohammed"@de , "Nazr Tahiru Mohammed"@fr , "Nazr Tahiru Mohammed"@de , "Nazr Mohammad"@fr , "Nazr Mohammad"@de .
+
+<http://dbpedia.org/resource/Nazr_Mohammed__2>
+        dbo:from  "2001"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Atlanta_Hawks> ;
+        dbo:to    "2003"^^xsd:gYear .

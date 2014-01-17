@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.05sk39>
+        rdfs:label     "Soleil vert"@fr , "Make Room! Make Room!"@en , "New York 1999"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Soleil_vert> , <http://de.dbpedia.org/resource/New_York_1999> , <http://dbpedia.org/resource/Make_Room!_Make_Room!> ;
+        skos:altLabel  "Soleil Vert"@fr , "Make Room! Make Room!"@fr , "Make Room! Make Room!"@de , "Soleil"@fr , "Soleil vert"@fr , "Make Room"@fr , "Make Room"@de , "New York 1999"@de , "New York"@de .
+
+<http://rdf.freebase.com/ns/m.01dhnq>
+        rdfs:label       "Harry Harrison"@en , "Harry Harrison"@de , "Harry Harrison"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.05sk39__55> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/Harry_Harrison> , <http://de.dbpedia.org/resource/Harry_Harrison> , <http://dbpedia.org/resource/Harry_Harrison> ;
+        skos:altLabel    "Harrison"@fr , "Harrison"@en , "H. Harrison"@en , "Harry Harrison"@fr , "Harry Harrison"@de , "Harry Harrison"@en , "Wade Kaempfert"@en , "Hank Dempsey"@de , "Hank Dempsey"@en , "Henry Maxwell Dempsey"@fr , "Henry Maxwell Dempsey"@de , "Henry Maxwell Dempsey"@en , "Harry Maxwell Harrison"@de , "Harry Maxwell Harrison"@en , "Felix Boyd"@de , "Felix Boyd"@en .
+
+<http://rdf.freebase.com/ns/m.05sk39__55>
+        dbo:author  <http://rdf.freebase.com/ns/m.05sk39> ;
+        dbo:from    "1966"^^xsd:gYear ;
+        dbo:to      "1966"^^xsd:gYear .

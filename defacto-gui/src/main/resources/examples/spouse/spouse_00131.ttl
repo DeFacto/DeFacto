@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.044gyq>
+        rdfs:label     "Jill Scott"@fr , "Jill Scott"@en , "Jill Scott"@de ;
+        skos:altLabel  "The Lady Jill Scott"@en .
+
+<http://rdf.freebase.com/ns/m.05n5qxc>
+        rdfs:label     "Lil' John Roberts"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.05n5qxc__131> ;
+        skos:altLabel  "Lil John"@en , "Lil' John"@en .
+
+<http://rdf.freebase.com/ns/m.05n5qxc__131>
+        dbo:from    "2008-06-20"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.044gyq> ;
+        dbo:to      "2009-06-23"^^xsd:date .

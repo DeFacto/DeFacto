@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.01frl0__115>
+        dbo:from        "2006"^^xsd:gYear ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.03f75lg> ;
+        dbo:to          "2006"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.01frl0>
+        rdfs:label       "Mentor Graphics"@fr , "Mentor Graphics"@de , "Mentor Graphics"@en ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.01frl0__115> ;
+        owl:sameAs       <http://dbpedia.org/resource/Mentor_Graphics> , <http://de.dbpedia.org/resource/Mentor_Graphics> , <http://fr.dbpedia.org/resource/Mentor_Graphics> ;
+        skos:altLabel    "Accelerated Technology"@fr , "Accelerated Technology"@de , "Mentor Embedded Linux"@fr , "Mentor"@fr , "Mentor Embedded Linux"@de , "Mentor"@de , "CodeSourcery"@fr , "CodeSourcery"@de , "ModelSim"@fr , "ModelSim"@de , "Mentor Graphics"@fr , "Mentor Graphics"@de .
+
+<http://rdf.freebase.com/ns/m.03f75lg>
+        rdfs:label  "Summit Design"@en .

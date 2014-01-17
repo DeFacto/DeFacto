@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Jason_Richardson>
+        rdfs:label      "Jason Richardson"@fr , "Jason Richardson"@de , "Jason Richardson"@en ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Jason_Richardson__3> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Jason_Richardson> , <http://fr.dbpedia.org/resource/Jason_Richardson> ;
+        skos:altLabel   "J Rich"@fr , "Jason Anthoney (J-Rich) Richardson"@fr , "J Rich"@de , "Jason Anthoney (J-Rich) Richardson"@de , "J Rich"@en , "Jason Anthoney (J-Rich) Richardson"@en , "Jason Richardson"@fr , "J-Rich"@fr , "Jason Richardson"@de , "J-Rich"@de , "Jason Richardson"@en , "J-Rich"@en , "Richardson"@fr , "Jason Anthoney \"J-Rich\" Richardson"@fr , "Jason Anthoney \"J-Rich\" Richardson"@de , "Jason Anthoney \"J-Rich\" Richardson"@en , "Jason Anthoney Richardson"@fr , "Jason Anthoney Richardson"@de , "Jason Anthoney Richardson"@en .
+
+<http://dbpedia.org/resource/Phoenix_Suns>
+        rdfs:label     "Phoenix Suns"@en , "Phoenix Suns"@fr , "Phoenix Suns"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Suns_de_Phoenix> , <http://de.dbpedia.org/resource/Phoenix_Suns> ;
+        skos:altLabel  "Phx suns"@fr , "Phx suns"@de , "Phx suns"@en , "Suns de Phoenix"@fr , "Phoenix suns"@fr , "Phoenix Suns"@fr , "Phoenix suns"@de , "Phoenix Suns"@de , "Phoenix suns"@en , "Phoenix Suns"@en , "Phoenix"@fr , "Suns"@fr , "Suns"@de , "Suns"@en , "Phoenix Suns roster"@fr , "Phoenix Suns roster"@de , "Phoenix Suns roster"@en , "Arizona suns"@fr , "Arizona suns"@de , "Arizona suns"@en , "Suns de phoenix"@fr .
+
+<http://dbpedia.org/resource/Jason_Richardson__3>
+        dbo:from  "2008"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Phoenix_Suns> ;
+        dbo:to    "2010"^^xsd:gYear .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Steubenville,_Ohio>
+        rdfs:label     "Steubenville, Ohio"@en , "Steubenville, Ohio"@fr , "Steubenville, Ohio"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Steubenville> , <http://de.dbpedia.org/resource/Steubenville> ;
+        skos:altLabel  "LOCODE:USUYJ"@fr , "LOCODE:USUYJ"@de , "LOCODE:USUYJ"@en , "Steubenville, Oh"@fr , "Steubenville, Oh"@de , "Steubenville, Oh"@en , "Steubenville"@fr , "Steubenville"@de , "Steubenville"@en , "Steuby"@fr , "Steuby"@de , "Steuby"@en , "Steubenville, OH"@fr , "Steubenville, OH"@de , "Steubenville, OH"@en , "Steuben"@fr , "Steuben"@de , "Steuben"@en , "Steubenville, Ohio"@fr , "Steubenville, Ohio"@de , "Steubenville, Ohio"@en .
+
+<http://dbpedia.org/resource/Dean_Martin__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Steubenville,_Ohio> ;
+        dbo:from        "1917-06-07"^^xsd:date ;
+        dbo:to          "1917-06-07"^^xsd:date .
+
+<http://dbpedia.org/resource/Dean_Martin>
+        rdfs:label     "Dean Martin"@en , "Dean Martin"@fr , "Dean Martin"@de ;
+        dbo:birth      <http://dbpedia.org/resource/Dean_Martin__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Dean_Martin> , <http://de.dbpedia.org/resource/Dean_Martin> ;
+        skos:altLabel  "Dean"@fr , "Dino Crocetti"@fr , "Dino Crocetti"@de , "Dino Crocetti"@en , "Martin"@fr , "Dean Martin"@fr , "Dino Martini"@fr , "Dean Martin"@de , "Dean Martin"@en , "Dino Martini"@de , "Dino Martini"@en , "Dino Martin"@fr , "Dino Paul Crocetti"@fr , "Dino Paul Crocetti"@de , "Dino Paul Crocetti"@en , "Dino Martin"@de , "Dino Martin"@en , "Martin, Dean"@fr , "Martin, Dean"@de , "Martin, Dean"@en .

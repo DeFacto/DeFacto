@@ -1,0 +1,27 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/The_Last_Starship_from_Earth>
+        skos:altLabel  "The Last Starship from Earth"@en .
+
+<http://rdf.freebase.com/ns/m.08b8jm>
+        rdfs:label       "John Boyd"@fr , "John Boyd"@en ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.02_5zg__129> ;
+        owl:sameAs       <http://dbpedia.org/resource/John_Boyd_(author)> ;
+        skos:altLabel    "Boyd Upchurch"@en , "Boyd Bradfield Upchurch"@en .
+
+<http://rdf.freebase.com/ns/m.02_5zg>
+        rdfs:label  "The Last Starship from Earth"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/The_Last_Starship_from_Earth> .
+
+<http://rdf.freebase.com/ns/m.02_5zg__129>
+        dbo:author  <http://rdf.freebase.com/ns/m.02_5zg> ;
+        dbo:from    "1968"^^xsd:gYear ;
+        dbo:to      "1968"^^xsd:gYear .
+
+<http://dbpedia.org/resource/John_Boyd_(author)>
+        skos:altLabel  "John Boyd"@en , "Boyd Bradfield Upchurch"@en .

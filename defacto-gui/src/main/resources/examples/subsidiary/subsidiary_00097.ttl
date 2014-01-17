@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03bt55c>
+        rdfs:label  "Epicor Medical"@en .
+
+<http://rdf.freebase.com/ns/m.0b6yg5__97>
+        dbo:from        "2004"^^xsd:gYear ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.03bt55c> ;
+        dbo:to          "2004"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0b6yg5>
+        rdfs:label       "St. Jude Medical"@de , "St. Jude Medical"@en ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.0b6yg5__97> ;
+        owl:sameAs       <http://dbpedia.org/resource/St._Jude_Medical> , <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/St._Jude_Medical> ;
+        skos:altLabel    "St. Jude Medical, Inc."@de , "Saint Jude Medical"@en , "St. Jude Medical"@de , "Jude"@de , "St.Jude Medical"@de , "St Jude Medical"@de , "St. Jude Medical Inc."@de , "Advanced Neuromodulation System"@de .

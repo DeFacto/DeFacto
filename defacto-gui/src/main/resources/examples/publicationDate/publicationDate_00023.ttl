@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03vtl0>
+        rdfs:label     "L'une rêve et l'autre pas"@fr , "Bettler in Spanien"@de , "Beggars in Spain"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/Bettler_in_Spanien> , <http://dbpedia.org/resource/Beggars_in_Spain> ;
+        skos:altLabel  "Beggars in Spain"@de , "Beggars in spain"@de , "Bettler in Spanien"@de .
+
+<http://rdf.freebase.com/ns/m.03vtl0__23>
+        dbo:author  <http://rdf.freebase.com/ns/m.03vtl0> ;
+        dbo:from    "1993"^^xsd:gYear ;
+        dbo:to      "1993"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.02gzkb>
+        rdfs:label       "Nancy Kress"@en , "Nancy Kress"@de , "Nancy Kress"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.03vtl0__23> ;
+        owl:sameAs       <http://dbpedia.org/resource/Nancy_Kress> , <http://fr.dbpedia.org/resource/Nancy_Kress> , <http://de.dbpedia.org/resource/Nancy_Kress> ;
+        skos:altLabel    "Kress"@fr , "Kress"@de , "Kress"@en , "Nancy Anne Koningisor"@en , "Nancy Anne Kress"@en , "Nancy Kress"@fr , "Nancy Kress"@de , "Nancy Kress"@en .

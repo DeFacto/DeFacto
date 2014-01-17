@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0247wp__101>
+        dbo:author  <http://rdf.freebase.com/ns/m.0247wp> ;
+        dbo:from    "2001"^^xsd:gYear ;
+        dbo:to      "2001"^^xsd:gYear .
+
+<http://dbpedia.org/resource/First_Landing>
+        skos:altLabel  "First Landing"@en .
+
+<http://rdf.freebase.com/ns/m.06gdm>
+        rdfs:label       "Robert Zubrin"@en , "Robert Zubrin"@de , "Robert Zubrin"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.0247wp__101> ;
+        owl:sameAs       <http://dbpedia.org/resource/Robert_Zubrin> , <http://fr.dbpedia.org/resource/Robert_Zubrin> , <http://de.dbpedia.org/resource/Robert_Zubrin> ;
+        skos:altLabel    "Zubrin"@fr , "Zubrin"@de , "Bob Zubrin"@fr , "Bob Zubrin"@de , "Robert"@fr , "Robert Zubrin"@fr , "Robert Zubrin"@de , "Robert M. Zubrin"@en .
+
+<http://rdf.freebase.com/ns/m.0247wp>
+        rdfs:label  "First Landing"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/First_Landing> .

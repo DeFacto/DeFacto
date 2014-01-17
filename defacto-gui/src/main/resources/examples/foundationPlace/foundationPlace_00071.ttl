@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.011r1z__71>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.01zlwg6> ;
+        dbo:from             "1969"^^xsd:gYear ;
+        dbo:to               "1969"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.011r1z>
+        rdfs:label      "Environmental Systems Research Institute, Inc."@fr , "ESRI"@en , "ESRI"@de ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.011r1z__71> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Environmental_Systems_Research_Institute> , <http://dbpedia.org/resource/Esri> , <http://de.dbpedia.org/resource/ESRI> ;
+        skos:altLabel   "Environmental Systems Research Institute Inc."@en , "ESRI Inc."@de , "Environmental Systems Research Institute, Inc."@fr , "Environmental Systems Research Institute, Inc"@fr , "Environmental Systems Research Institute, Inc."@de , "Environmental Systems Research Institute, Inc"@de , "Environmental Systems Research Institute, Inc"@en , "Environmental Systems Research Institute, Inc."@en , "ArcInfo"@de , "Esri"@fr , "Esri"@de , "Esri"@en , "ESRI Press"@fr , "ESRI"@fr , "ESRI Press"@de , "ESRI"@de , "ESRI Press"@en , "ESRI"@en , "Environmental systems research institute"@fr , "Environmental systems research institute"@de , "Environmental systems research institute"@en , "Environmental Systems Research Institute"@fr , "Environmental Systems Research Institute Inc"@fr , "Environmental Systems Research Institute"@de , "Environmental Systems Research Institute Inc"@de , "Environmental Systems Research Institute Inc"@en , "Environmental Systems Research Institute"@en , "Esri, Inc."@fr , "Esri, Inc."@de , "Esri, Inc."@en , "Environmental Systems Research Institute Inc."@fr , "Environmental Systems Research Institute Inc."@de .
+
+<http://rdf.freebase.com/ns/m.01zlwg6>
+        rdfs:label     "Redlands"@fr , "Redlands"@de , "Redlands"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Redlands_(Kalifornien)> , <http://fr.dbpedia.org/resource/Redlands_(Californie)> , <http://dbpedia.org/resource/Redlands,_California> ;
+        skos:altLabel  "Redlands, Ca"@fr , "Redlands (Kalifornien)"@de , "Redlands, Ca"@de , "Redlands, Ca"@en , "LOCODE:USRLS"@fr , "LOCODE:USRLS"@de , "LOCODE:USRLS"@en , "San Bernardino County / Redlands city"@en , "Redlands, CA"@fr , "Redlands, CA"@de , "Redlands, CA"@en , "Downtown Redlands, California"@fr , "Downtown Redlands, California"@de , "Downtown Redlands, California"@en , "Redlands, California"@fr , "Redlands"@fr , "Lugonia, California"@fr , "Redlands, California"@de , "Redlands"@de , "Redlands"@en , "Redlands, California"@en , "Lugonia, California"@de , "Lugonia, California"@en , "Guachama"@fr , "Guachama"@de , "Guachama"@en .

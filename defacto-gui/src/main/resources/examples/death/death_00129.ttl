@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/West_Hollywood,_California>
+        rdfs:label     "West Hollywood, California"@de , "West Hollywood, California"@fr , "West Hollywood, California"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/West_Hollywood> , <http://de.dbpedia.org/resource/West_Hollywood> ;
+        skos:altLabel  "West hollywood california"@en , "West hollywood california"@de , "West hollywood california"@fr , "Sherman, California"@fr , "Sherman, California"@en , "Sherman, California"@de , "West Hollywood, California"@fr , "West Hollywood, California"@en , "West Hollywood, California"@de , "LOCODE:USWWU"@en , "LOCODE:USWWU"@de , "LOCODE:USWWU"@fr , "West Hollywood, Los Angeles, CA"@en , "West Hollywood, Los Angeles, CA"@de , "West Hollywood, Los Angeles, CA"@fr , "WeHo"@en , "WeHo"@de , "WeHo"@fr , "West Hollywood, Los Angeles, California"@en , "West Hollywood, Los Angeles, California"@de , "West Hollywood, Los Angeles, California"@fr , "WEHO"@en , "WEHO"@de , "WEHO"@fr , "Historic Boystown - West Hollywood"@en , "Historic Boystown - West Hollywood"@de , "Historic Boystown - West Hollywood"@fr , "Historic Boystown"@en , "Historic Boystown"@de , "Historic Boystown"@fr , "West Hollywood, CA"@en , "West Hollywood, CA"@de , "West Hollywood, CA"@fr , "West Hollywood"@fr , "West Hollywood"@en , "West Hollywood"@de , "Hollywood"@de , "Hollywood"@fr .
+
+<http://dbpedia.org/resource/Johnny_Carson__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/West_Hollywood,_California> ;
+        dbo:from        "2005-01-23"^^xsd:date ;
+        dbo:to          "2005-01-23"^^xsd:date .
+
+<http://dbpedia.org/resource/Johnny_Carson>
+        rdfs:label     "Johnny Carson"@en , "Johnny Carson"@fr , "Johnny Carson"@de ;
+        dbo:death      <http://dbpedia.org/resource/Johnny_Carson__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Johnny_Carson> , <http://de.dbpedia.org/resource/Johnny_Carson> ;
+        skos:altLabel  "John William “Johnny” Carson"@de , "John William “Johnny” Carson"@en , "John William Carson"@fr , "John William Carson"@de , "John William Carson"@en , "Johnny Carson"@fr , "Johnny Carson"@de , "Johnny Carson"@en , "Jonny Carson"@fr , "John William \"Johnny\" Carson"@fr , "Jonny Carson"@de , "John William \"Johnny\" Carson"@de , "Jonny Carson"@en , "John William \"Johnny\" Carson"@en , "Carson"@fr , "Carson"@de , "Johnny carson"@fr , "Johnny carson"@de , "Johnny carson"@en , "King of Late Night"@fr , "King of Late Night"@de , "King of Late Night"@en , "Johny carson"@fr , "The Squirrel's Nest"@fr , "Johny carson"@de , "Johny carson"@en , "The Squirrel's Nest"@de , "The Squirrel's Nest"@en , "John William “Johnny” Carson"@fr .

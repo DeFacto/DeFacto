@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Hamlet,_North_Carolina>
+        rdfs:label     "Hamlet, North Carolina"@en , "Hamlet, North Carolina"@fr , "Hamlet, North Carolina"@de ;
+        skos:altLabel  "Hamlet, NC"@en , "Hamlet, North Carolina"@en , "Hamlet"@en , "LOCODE:USHML"@en .
+
+<http://dbpedia.org/resource/John_Coltrane__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Hamlet,_North_Carolina> ;
+        dbo:from        "1926-09-23"^^xsd:date ;
+        dbo:to          "1926-09-23"^^xsd:date .
+
+<http://dbpedia.org/resource/John_Coltrane>
+        rdfs:label     "John Coltrane"@en , "John Coltrane"@de , "John Coltrane"@fr ;
+        dbo:birth      <http://dbpedia.org/resource/John_Coltrane__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/John_Coltrane> , <http://fr.dbpedia.org/resource/John_Coltrane> ;
+        skos:altLabel  "John W Coltrane"@fr , "John W Coltrane"@de , "John W Coltrane"@en , "Coltrane"@fr , "Coltrane"@en , "Coltrane"@de , "Coltrane, John"@fr , "Coltrane, John"@en , "Coltrane, John"@de , "John Coltrane Quartet"@fr , "John Coltrane Quartet"@en , "John Coltrane Quartet"@de , "Trane"@fr , "Trane"@de , "Trane"@en , "St. John William Coltrane"@fr , "St. John William Coltrane"@de , "St. John William Coltrane"@en , "Saint John Will-I-Am Coltrane"@fr , "Saint John Will-I-Am Coltrane"@de , "Saint John Will-I-Am Coltrane"@en , "Saint Coltrane"@fr , "Saint Coltrane"@de , "Saint Coltrane"@en , "John W. Coltrane"@fr , "John W. Coltrane"@en , "John W. Coltrane"@de , "St John Coltrane"@fr , "St John Coltrane"@de , "St John Coltrane"@en , "Jowcol Music"@fr , "Jowcol Music"@de , "Jowcol Music"@en , "Saint John William Coltrane"@fr , "Saint John William Coltrane"@en , "Saint John William Coltrane"@de , "John Coltrane"@fr , "John Coltrane"@en , "John Coltrane"@de , "St Coltrane"@fr , "Johnny Coltrane"@fr , "Saint John Coltrane"@fr , "John William Coltrane"@fr , "St Coltrane"@de , "Johnny Coltrane"@de , "John William Coltrane"@en , "John William Coltrane"@de , "St Coltrane"@en , "Saint John Coltrane"@en , "Johnny Coltrane"@en , "Saint John Coltrane"@de , "St. Coltrane"@fr , "St. Coltrane"@de , "St. Coltrane"@en , "John Coltran"@fr , "John Coltran"@en , "John Coltran"@de , "St. John Coltrane"@fr , "St. John Coltrane"@en , "St. John Coltrane"@de , "John Coltrain"@fr , "John Coltrain"@de , "John Coltrain"@en , "John coltrane"@fr , "John coltrane"@de , "John coltrane"@en , "St John William Coltrane"@fr , "St John William Coltrane"@en , "St John William Coltrane"@de .

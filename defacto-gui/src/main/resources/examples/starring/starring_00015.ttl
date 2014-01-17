@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Keira_Knightley>
+        rdfs:label     "Keira Knightley"@fr , "Keira Knightley"@en , "Keira Knightley"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Keira_Knightley> , <http://de.dbpedia.org/resource/Keira_Knightley> ;
+        skos:altLabel  "Keira knightely"@fr , "Keira knightely"@en , "Keira knightely"@de , "Keira Knigthley"@fr , "Keira Knightely"@en , "Keira Knightely"@de , "Keira Knightely"@fr , "Kiera knightly"@fr , "Keira knightley"@en , "Keira knightley"@de , "Keira knightley"@fr , "Kiera knightly"@en , "Kiera knightly"@de , "Keria knightly"@fr , "Kiera Knightley"@en , "Kiera Knightley"@de , "Keria knightly"@en , "Kiera Knightley"@fr , "Keria knightly"@de , "Keira Christina Knightley"@fr , "Keira Christina Knightley"@en , "Keira Christina Knightley"@de , "Knightley"@fr , "Knightley"@en , "Knightley"@de , "Keira Knightley"@fr , "Kiara Knightly"@fr , "Kiara Knightly"@en , "Kiara Knightly"@de , "Keira Knightley"@en , "Keira Knightley"@de , "Kiera Knightly"@en , "Kiera Knightly"@de , "Kiera Knightly"@fr , "Keira knightly"@en , "Keira knightly"@de , "Keira knightly"@fr , "Keira"@en , "Keira"@de , "Keira"@fr , "Keira Knightly"@en , "Keira Knightly"@de , "Keira Knightly"@fr .
+
+<http://dbpedia.org/resource/Love_Actually>
+        rdfs:label      "Love Actually"@en , "Love Actually"@fr , "Love Actually"@de ;
+        dbo:isStarring  <http://dbpedia.org/resource/Love_Actually__1> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Tatsächlich…_Liebe> , <http://fr.dbpedia.org/resource/Love_Actually> ;
+        skos:altLabel   "Tatsächlich … Liebe"@de , "Tatsachlich Liebe"@de , "Tatsachlich… Liebe"@de , "Tatsächlich Liebe"@de , "Tatsachlich ... Liebe"@de , "Love, Actually"@fr , "Love, Actually"@de , "Love, Actually"@en , "Love actually"@fr , "Love Actually"@fr , "Love actually"@de , "Tatsachlich...Liebe"@de , "Love Actually"@de , "Love Actually"@en , "Love actually"@en , "Tatsachlich … Liebe"@de , "Tatsachlich... Liebe"@de , "Tatsächlich… Liebe"@de , "Tatsächlich...Liebe"@de , "Tatsächlich... Liebe"@de , "Tatsächlich ... Liebe"@de .
+
+<http://dbpedia.org/resource/Love_Actually__1>
+        dbo:from      "2003-11-07"^^xsd:date ;
+        dbo:starring  <http://dbpedia.org/resource/Keira_Knightley> ;
+        dbo:to        "2003-11-07"^^xsd:date .

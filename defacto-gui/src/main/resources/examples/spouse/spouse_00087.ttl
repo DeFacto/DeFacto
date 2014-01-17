@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0c7sj1__87>
+        dbo:from    "2007-02-13"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.04ns2xh> ;
+        dbo:to      "2011-02"^^xsd:gYearMonth .
+
+<http://rdf.freebase.com/ns/m.0c7sj1>
+        rdfs:label     "Sara Maldonado"@fr , "Sara Maldonado"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.0c7sj1__87> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/> , <http://fr.dbpedia.org/resource/Sara_Maldonado> , <http://dbpedia.org/resource/Sara_Maldonado> ;
+        skos:altLabel  "Sara Maldonado Fuentes"@fr , "Sara Maldonado Fuentes"@en , "Sarita"@en , "Sari"@en , "Sara Maldonado"@fr , "Sara Maldonado"@en .
+
+<http://rdf.freebase.com/ns/m.04ns2xh>
+        rdfs:label     "Billy Rovzar"@fr , "Billy Rovzar"@en ;
+        skos:altLabel  "Billy"@fr , "Billy"@en , "Guillermo Fernando Rovzar Diez Barroso"@en .

@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0b6kmh>
+        rdfs:label      "Pervasive Software"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.0b6kmh__43> ;
+        owl:sameAs      <http://dbpedia.org/resource/Pervasive_Software> .
+
+<http://dbpedia.org/resource/Pervasive_Software>
+        skos:altLabel  "Pervasive Software"@en , "Data rush"@en , "Pervasive DataRush"@en , "Pervasive"@en .
+
+<http://rdf.freebase.com/ns/m.07b_l>
+        rdfs:label     "Texas"@fr , "Texas"@en , "Texas"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Texas> , <http://dbpedia.org/resource/Texas> , <http://de.dbpedia.org/resource/Texas> ;
+        skos:altLabel  "Texas, United States"@fr , "Texas, United States"@en , "Texas, United States"@de , "Nuevas Filipinas"@fr , "Nuevas Filipinas"@en , "Nuevas Filipinas"@de , "Religion in Texas"@fr , "Religion in Texas"@en , "Religion in Texas"@de , "TX"@en , "The Lone Star State"@fr , "The Lone Star State"@en , "The Lone Star State"@de , "Christianity in Texas"@fr , "Christianity in Texas"@en , "Christianity in Texas"@de , "Tex"@en , "Texanisch"@de , "Texas"@fr , "Texas"@en , "Texas"@de , "28th state"@fr , "28th state"@en , "28th state"@de , "Lake Ozark, Texas"@en , "Lake Ozark, Texas"@de , "Lake Ozark, Texas"@fr , "US-TX"@fr , "US-TX"@en , "US-TX"@de , "Texos"@fr , "Texos"@en , "Texos"@de , "Lone Star State"@fr , "The State of Texas"@fr , "Texass"@fr , "Lone Star State"@en , "The State of Texas"@en , "The State of Texas"@de , "Lone Star State"@de , "Texass"@en , "Texass"@de , "State of Texas"@fr , "28th State"@fr , "State of Texas"@en , "State of Texas"@de , "28th State"@en , "28th State"@de , "Texan"@fr .
+
+<http://rdf.freebase.com/ns/m.0b6kmh__43>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.07b_l> ;
+        dbo:from             "1994"^^xsd:gYear ;
+        dbo:to               "1994"^^xsd:gYear .

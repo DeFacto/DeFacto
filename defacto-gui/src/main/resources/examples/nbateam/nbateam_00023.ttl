@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Elton_Brand__3>
+        dbo:from  "2008"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Philadelphia_76ers> ;
+        dbo:to    "2011"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Philadelphia_76ers>
+        rdfs:label     "Philadelphia 76ers"@de , "Philadelphia 76ers"@fr , "Philadelphia 76ers"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Philadelphia_76ers> , <http://fr.dbpedia.org/resource/76ers_de_Philadelphie> ;
+        skos:altLabel  "Syracuse Nationals"@de , "Sixers"@fr , "Philadelphia Sixers"@fr , "Philadelphia Sixers"@en , "Philadelphia Sixers"@de , "Philadelphie Sixers"@fr , "76ers de Philadelphie"@fr , "Philly Sixers"@en , "Philly Sixers"@de , "Philly Sixers"@fr , "Phila 76ers"@en , "Phila 76ers"@de , "Phila 76ers"@fr , "76ers"@en , "76ers"@de , "76ers"@fr , "Nationals de Syracuse"@fr , "Phildelphia 76ers"@en , "Phildelphia 76ers"@de , "Phildelphia 76ers"@fr , "Sixers de Philadelphie"@fr , "Philadelphie 76ers"@fr , "Philidelphia 76ers"@fr , "Philidelphia 76ers"@en , "Philidelphia 76ers"@de , "Phila Sixers"@fr , "Philly 76ers"@en , "Philly 76ers"@de , "Philly 76ers"@fr , "Phila Sixers"@en , "Phila Sixers"@de , "76'ers"@fr , "76'ers"@en , "76'ers"@de , "Philedelphia 76ers"@fr , "Philedelphia 76ers"@en , "Philedelphia 76ers"@de , "Philadelphia 76ers"@en , "Philadelphia 76ers"@de , "Philadelphia 76ers"@fr , "Syracuse Nationals"@fr .
+
+<http://dbpedia.org/resource/Elton_Brand>
+        rdfs:label      "Elton Brand"@en , "Elton Brand"@fr , "Elton Brand"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Elton_Brand__3> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Elton_Brand> , <http://fr.dbpedia.org/resource/Elton_Brand> ;
+        skos:altLabel   "Elton brand"@fr , "Elton brand"@de , "Elton brand"@en , "Elton"@fr , "Elton Brand"@fr , "Elton"@de , "Elton"@en , "Elton Brand"@de , "Elton Brand"@en , "Elton Tyron Brand"@fr , "Brand"@fr , "Elton Tyron Brand"@de , "Brand"@de , "Brand"@en , "Elton Tyron Brand"@en .

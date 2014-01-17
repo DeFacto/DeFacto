@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Lynden_Pindling>
+        rdfs:label     "Lynden Pindling"@en , "Lynden Pindling"@fr , "Lynden Pindling"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Lynden_Pindling__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Lynden_O._Pindling> , <http://fr.dbpedia.org/resource/Lynden_Oscar_Pindling> ;
+        skos:altLabel  "Lynden Oscar Pindling"@fr , "Lynden Oscar Pindling"@de , "Pindling"@de , "Pindling, Sir Lynden Oscar"@fr , "Pindling, Sir Lynden Oscar"@de , "Lynden O. Pindling"@fr , "Lynden O. Pindling"@de , "Lynden Pindling"@fr , "Lynden Pindling"@de , "Bahamian Black Tuesday"@fr , "Sir Pindling"@fr , "Bahamian Black Tuesday"@de , "Sir Pindling"@de , "Sir Lynden Pindling"@fr , "Sir Lynden Pindling"@de .
+
+<http://dbpedia.org/resource/Lynden_Pindling__1>
+        dbo:from    "1973-07-10"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Bahamas> ;
+        dbo:to      "1992-08-21"^^xsd:date .
+
+<http://dbpedia.org/resource/Bahamas>
+        rdfs:label  "Bahamas"@en , "Bahamas"@fr , "Bahamas"@de .

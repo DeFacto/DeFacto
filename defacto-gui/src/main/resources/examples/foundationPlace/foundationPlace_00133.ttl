@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.018f94>
+        rdfs:label     "Bochum"@fr , "Bochum"@de , "Bochum"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Bochum> , <http://dbpedia.org/resource/Bochum> , <http://fr.dbpedia.org/resource/Bochum> ;
+        skos:altLabel  "Bochum, Germany"@fr , "Bochum, Germany"@de , "Bochum, Germany"@en , "Kornharpen-Voede-Abzweig"@fr , "Bochum"@fr , "LOCODE:DEBOM"@fr , "Kornharpen-Voede-Abzweig"@de , "Bochum"@de , "Kornharpen-Voede-Abzweig"@en , "LOCODE:DEBOM"@de , "Bochum"@en , "LOCODE:DEBOM"@en .
+
+<http://rdf.freebase.com/ns/m.04zvnrp__133>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.018f94> ;
+        dbo:from             "1985"^^xsd:gYear ;
+        dbo:to               "1985"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.04zvnrp>
+        rdfs:label      "G Data"@en , "G Data Software"@fr , "G DATA Software"@de ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.04zvnrp__133> ;
+        owl:sameAs      <http://dbpedia.org/resource/G_Data> , <http://de.dbpedia.org/resource/G_DATA_Software> , <http://fr.dbpedia.org/resource/G_Data_Software> ;
+        skos:altLabel   "G Data"@fr , "G Data"@de , "G Data Software"@fr , "G DATA"@de , "G-DATA"@de , "GDATA"@fr , "GDATA"@de , "GData"@de , "G DATA Software"@fr , "Gdata"@fr , "G DATA Software AG"@de , "G DATA Software"@de , "Gdata"@de , "G-Data"@fr , "G-Data"@de .
