@@ -68,8 +68,8 @@
 
 		<dependency>
 			<groupId>nz.ac.waikato.cms.weka</groupId>
-			<artifactId>weka-stable</artifactId>
-			<version>3.6.6</version>
+			<artifactId>weka-dev</artifactId>
+			<version>3.7.11</version>
 		</dependency>
 
 		<dependency>

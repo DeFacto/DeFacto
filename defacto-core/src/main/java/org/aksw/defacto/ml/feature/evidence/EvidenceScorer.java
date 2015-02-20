@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import weka.classifiers.Classifier;
+import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -141,8 +142,9 @@ public class EvidenceScorer implements Scorer {
             withoutName.setClassIndex(withoutName.numAttributes() - 1);
             withoutName.deleteStringAttributes();
             
-            Instance newInstance = new Instance(evidence.getFeatures());
-            newInstance.deleteAttributeAt(1);
+            //Instance newInstance = new Instance(evidence.getFeatures());
+           Instance newInstance = new DenseInstance(evidence.getFeatures());
+           newInstance.deleteAttributeAt(1);
             newInstance.setDataset(withoutName);
 
             // this gives us the probability distribution for an input triple

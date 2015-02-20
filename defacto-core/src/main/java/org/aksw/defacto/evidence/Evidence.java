@@ -26,6 +26,7 @@ import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.VectorUtil;
 import org.apache.commons.lang3.ArrayUtils;
 
+import weka.core.DenseInstance;
 import weka.core.Instance;
 
 /**
@@ -91,9 +92,11 @@ public class Evidence {
     
         if ( features == null ) {
 
-            this.features = new Instance(AbstractEvidenceFeature.provenance.numAttributes());
-            this.features.setDataset(AbstractEvidenceFeature.provenance);
-            this.features.setValue(AbstractEvidenceFeature.CLASS, String.valueOf(model.isCorrect()));
+           Instance instance = new DenseInstance(AbstractEvidenceFeature.provenance.numAttributes());
+           //this.features = new Instance(AbstractEvidenceFeature.provenance.numAttributes());
+           this.features = instance;
+           this.features.setDataset(AbstractEvidenceFeature.provenance);
+           this.features.setValue(AbstractEvidenceFeature.CLASS, String.valueOf(model.isCorrect()));
         }
         
         return features;

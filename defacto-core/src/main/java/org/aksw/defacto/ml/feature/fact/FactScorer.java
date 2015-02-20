@@ -18,8 +18,10 @@ import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 
+import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
+import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -70,7 +72,8 @@ public class FactScorer {
             try {
                 
                 // create new instance and delete debugging features
-                Instance newInstance = new Instance(proof.getFeatures());
+                //Instance newInstance = new Instance(proof.getFeatures());
+                Instance newInstance = new DenseInstance(proof.getFeatures());
                 newInstance.deleteAttributeAt(27);
                 newInstance.deleteAttributeAt(27);
                 newInstance.deleteAttributeAt(27);
