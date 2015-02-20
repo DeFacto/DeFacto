@@ -1,5 +1,6 @@
 package org.aksw.defacto;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.io.*;
 import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.data.SupportedRelationsContainer;
@@ -35,8 +37,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Sets;
-import com.google.common.io.CharStreams;
-import com.google.common.io.InputSupplier;
 import com.hp.hpl.jena.graph.NodeFactory;
 import com.hp.hpl.jena.graph.Triple;
 import com.vaadin.annotations.Push;
@@ -331,14 +331,20 @@ public class DeFactoUI extends UI
     	l.setWidth("100%");
     	
     	try {
-			InputSupplier<InputStream> inputSupplier = new InputSupplier<InputStream>() {
+         CharSource ch;
+         ch = Files.asCharSource(new File("header.html"), Charsets.UTF_8);
+
+			/*InputSupplier<InputStream> inputSupplier = new InputSupplier<InputStream>() {
 			    public InputStream getInput() throws IOException {
 			        return DeFactoUI.this.getClass().getClassLoader().getResourceAsStream("header.html");
 			    }
 			};
 			String s = CharStreams.toString(CharStreams.newReaderSupplier(inputSupplier, Charsets.UTF_8));
+         */
+         String s = ch.toString();
+
 			l.setValue(s);
-    	} catch (IOException e) {
+    	} catch (Exception e) {
 			e.printStackTrace();
 		}
     	
@@ -353,16 +359,24 @@ public class DeFactoUI extends UI
     	Label l = new Label();
     	l.setContentMode(ContentMode.HTML);
     	l.setWidth("100%");
-    	
+
     	try {
-			InputSupplier<InputStream> inputSupplier = new InputSupplier<InputStream>() {
+			/*InputSupplier<InputStream> inputSupplier = new InputSupplier<InputStream>() {
 			    public InputStream getInput() throws IOException {
 			        return DeFactoUI.this.getClass().getClassLoader().getResourceAsStream("footer.html");
 			    }
-			};
-			String s = CharStreams.toString(CharStreams.newReaderSupplier(inputSupplier, Charsets.UTF_8));
+			};*/
+
+
+         CharSource ch;
+         ch = Files.asCharSource(new File("footer.html"), Charsets.UTF_8);
+
+
+//         String s = CharStreams.toString(CharStreams.newReaderSupplier(inputSupplier, Charsets.UTF_8));
+         String s = ch.toString();
+
 			l.setValue(s);
-    	} catch (IOException e) {
+    	} catch (Exception e) {
 			e.printStackTrace();
 		}
     	
