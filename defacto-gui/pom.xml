@@ -186,7 +186,7 @@
 					<compileReport>true</compileReport>
 					<style>OBF</style>
 					<strict>true</strict>
-					<runTarget>http://localhost:8080/</runTarget>
+					<runTarget>http://localhost:5679/</runTarget>
 				</configuration>
 				<executions>
 					<execution>
@@ -206,7 +206,7 @@
 					<systemProperties>
 						<systemProperty>
 							<name>jetty.port</name>
-							<value>5678</value>
+							<value>5679</value>
 						</systemProperty>
 					</systemProperties>
 					<scanIntervalSeconds>0</scanIntervalSeconds>

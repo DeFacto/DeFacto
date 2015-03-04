@@ -12,6 +12,10 @@
 					<artifactId>commons-compress</artifactId>
 					<groupId>org.apache.commons</groupId>
 				</exclusion>
+                <exclusion>
+                    <groupId>nz.ac.waikato.cms.weka</groupId>
+                    <artifactId>weka-dev</artifactId>
+                </exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -68,8 +72,8 @@
 
 		<dependency>
 			<groupId>nz.ac.waikato.cms.weka</groupId>
-			<artifactId>weka-dev</artifactId>
-			<version>3.7.11</version>
+			<artifactId>weka-stable</artifactId>
+			<version>3.6.6</version>
 		</dependency>
 
 		<dependency>

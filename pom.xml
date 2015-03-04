@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>org.aksw</groupId>
 	<artifactId>defacto</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>main</name>
 
-	<modules>
+    <modules>
 		<module>defacto-core</module>
 		<module>defacto-evaluation</module>
     	<module>defacto-gui</module>
-  </modules>
+    </modules>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -28,14 +28,16 @@
 	</build>
 
 	<repositories>
-
+        <repository>
+            <id>maven repo</id>
+            <url>http://repo1.maven.org/maven2/</url>
+        </repository>
 		<repository>
 			<id>maven2-repository.dev.java.net</id>
 			<name>Java.net Repository for Maven</name>
 			<url>http://download.java.net/maven/2/</url>
 			<layout>default</layout>
 		</repository>
-
 		<repository>
 			<id>apache-repo-releases</id>
 			<url>https://repository.apache.org/content/repositories/releases/</url>
@@ -43,19 +45,16 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-
 		<repository>
 			<id>repository.apache.org</id>
 			<name>apache Repository</name>
 			<url>http://repository.apache.org/snapshots</url>
 		</repository>
-
         <repository>
             <id>maven.aksw.internal</id>
             <name>University Leipzig, AKSW Maven2 Repository</name>
             <url>http://maven.aksw.org/repository/internal</url>
         </repository>
-
         <repository>
             <id>maven.aksw.snapshots</id>
             <name>University Leipzig, AKSW Maven2 Repository</name>
@@ -67,8 +66,6 @@
 			<name>Scala-tools Maven2 Repository</name>
 			<url>http://scala-tools.org/repo-releases/</url>
 		</repository>
-
-
 		<repository>
 			<id>tc-maven-repo</id>
 			<url>https://github.com/tc/tc-maven-repo/raw/master/releases</url>
@@ -78,7 +75,6 @@
 			<id>sameas-4j-googlecode</id>
 			<url>http://asmx-sameas4j.googlecode.com/svn/repo</url>
 		</repository>
-
 		<repository>
 			<id>info-bliki-repository</id>
 			<url>http://gwtwiki.googlecode.com/svn/maven-repository/</url>
@@ -89,7 +85,6 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
 		<repository>
 			<id>nxparser-repo</id>
 			<url>http://nxparser.googlecode.com/svn/repository</url>
@@ -103,13 +98,11 @@
 			<id>vaadin-addons</id>
 			<url>http://maven.vaadin.com/vaadin-addons</url>
 		</repository>
-
 		<repository>
 			<id>wordnet</id>
 			<url>https://dev-iesl.cs.umass.edu/nexus/content/repositories/public/</url>
 		</repository>
-
-		<repository>
+		<!--<repository>
 			<releases>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -119,30 +112,24 @@
 			<name>BillyLieuranceNet</name>
 			<url>http://www.billylieurance.net/maven2</url>
 			<layout>default</layout>
-		</repository>
-
+		</repository>-->
 		<repository>
 			<id>gerb_snapshots</id>
 			<url>https://raw.github.com/gerbsen/maven-repo/master/snapshots/</url>
 		</repository>
-
 	</repositories>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.3.166</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.6.2</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>info.bliki.wiki</groupId>
 			<artifactId>bliki-core</artifactId>
@@ -154,23 +141,18 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-
 		<!--dependency> <groupId>com.hp.hpl.jena</groupId> <artifactId>jena</artifactId> 
 			<version>2.8.5</version> </dependency -->
-
 		<dependency>
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.1</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -187,7 +169,6 @@
 			<version>1.2.17</version>
 <!-- 			<scope>runtime</scope> -->
 		</dependency>
-
 	</dependencies>
 
 </project>

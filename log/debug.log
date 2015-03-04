@@ -1,0 +1,18 @@
+2015-03-02 23:27:15,491 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: LocatorFile
+2015-03-02 23:27:15,494 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: ClassLoaderLocator
+2015-03-02 23:27:15,511 DEBUG main com.hp.hpl.jena.util.LocationMapper - Failed to find configuration: file:location-mapping.rdf;file:location-mapping.n3;file:location-mapping.ttl;file:etc/location-mapping.rdf;file:etc/location-mapping.n3;file:etc/location-mapping.ttl
+2015-03-02 23:27:15,511 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: LocatorFile
+2015-03-02 23:27:15,514 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: LocatorURL
+2015-03-02 23:27:15,514 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: ClassLoaderLocator
+2015-03-03 10:47:07,550 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: LocatorFile
+2015-03-03 10:47:07,571 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: ClassLoaderLocator
+2015-03-03 10:47:07,588 DEBUG main com.hp.hpl.jena.util.LocationMapper - Failed to find configuration: file:location-mapping.rdf;file:location-mapping.n3;file:location-mapping.ttl;file:etc/location-mapping.rdf;file:etc/location-mapping.n3;file:etc/location-mapping.ttl
+2015-03-03 10:47:07,588 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: LocatorFile
+2015-03-03 10:47:07,591 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: LocatorURL
+2015-03-03 10:47:07,591 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: ClassLoaderLocator
+2015-03-03 11:19:32,804 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: LocatorFile
+2015-03-03 11:19:32,807 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: ClassLoaderLocator
+2015-03-03 11:19:32,824 DEBUG main com.hp.hpl.jena.util.LocationMapper - Failed to find configuration: file:location-mapping.rdf;file:location-mapping.n3;file:location-mapping.ttl;file:etc/location-mapping.rdf;file:etc/location-mapping.n3;file:etc/location-mapping.ttl
+2015-03-03 11:19:32,824 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: LocatorFile
+2015-03-03 11:19:32,827 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: LocatorURL
+2015-03-03 11:19:32,827 DEBUG main com.hp.hpl.jena.util.FileManager - Add location: ClassLoaderLocator

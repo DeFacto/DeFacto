@@ -32,6 +32,15 @@ public class FactBenchExamplesLoader {
 			logger.info("Loading FactBench examples...");
 			examples = new TreeSet<FactBenchExample>();
 			try {
+            File propertyFolder2[] = examplesFolder.listFiles();
+            if(propertyFolder2!=null && propertyFolder2.length>0) {
+               for (int i = 0; i < propertyFolder2.length; i++) {
+               }
+            }else
+            {
+               logger.info("Error while trying open examples folder: " + examplesFolder.toString());
+            }
+
 				for (File propertyFolder : examplesFolder.listFiles()) {
 					for (File file : propertyFolder.listFiles()) {
 						DefactoModel model = DefactoModelReader.readModel(file.getPath());

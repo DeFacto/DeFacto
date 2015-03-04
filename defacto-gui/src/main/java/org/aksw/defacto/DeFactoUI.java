@@ -57,6 +57,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/* defacto updating - diuego*/
 @Title("DeFacto")
 @Push
 @Theme("defacto")
@@ -64,11 +65,11 @@ import com.vaadin.ui.VerticalLayout;
 public class DeFactoUI extends UI
 {
 	private ResultsPanel resultsPanel;
-	
+
 	private ComboBox objectBox;
 	private ComboBox predicateBox;
 	private ComboBox subjectBox;
-	
+
 	private Button validateButton;
 	private DeFactoModelGenerator modelGenerator = new DeFactoModelGenerator(SparqlEndpoint.getEndpointDBpedia());
 
@@ -526,10 +527,13 @@ public class DeFactoUI extends UI
     	Calendar startTime = Calendar.getInstance();
     	final Evidence evidence = Defacto.checkFact(model, TIME_DISTRIBUTION_ONLY.NO);
     	Calendar endTime = Calendar.getInstance();
-    	
-		System.out.println(evidence.getDeFactoScore());
-    	System.out.println(evidence.defactoTimePeriod.getFrom());
-    	
-    	System.out.println(EvidenceRDFGenerator.getProvenanceInformationAsString(DummyData.getDummyTriple(), evidence, startTime, endTime, "TURTLE"));
+
+        if (evidence != null) {
+            System.out.println(evidence.getDeFactoScore());
+            System.out.println(evidence.defactoTimePeriod.getFrom());
+            System.out.println(EvidenceRDFGenerator.getProvenanceInformationAsString(DummyData.getDummyTriple(), evidence, startTime, endTime, "TURTLE"));
+        }else{
+            System.out.println("Error to load the evidence :-( ");
+        }
 	}
 }

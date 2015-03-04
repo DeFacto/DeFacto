@@ -69,65 +69,73 @@ public class Defacto {
      * @return
      */
     public static Evidence checkFact(DefactoModel model, TIME_DISTRIBUTION_ONLY onlyTimes) {
-    	
-    	init();
-    	LOGGER.info("Checking fact: " + model);
-    	Defacto.onlyTimes = onlyTimes;
-    	
-    	// hack to get surface forms before timing
-    	// not needed anymore, since surfaceforms are inside model
-    	// SubjectObjectFactSearcher.getInstance();
-    	// not needed anymore since we do not use NER tagging
-    	// NlpModelManager.getInstance();
-        
-        // 1. generate the search engine queries
-        long start = System.currentTimeMillis();
-        QueryGenerator queryGenerator = new QueryGenerator(model);
-        Map<Pattern,MetaQuery> queries = new HashMap<Pattern,MetaQuery>();
-        for ( String language : model.languages ) 
-        	queries.putAll(queryGenerator.getSearchEngineQueries(language));
-          
-        if ( queries.size() <= 0 ) return new Evidence(model); 
-        LOGGER.info("Preparing queries took " + TimeUtil.formatTime(System.currentTimeMillis() - start));
-        
-        // 2. download the search results in parallel
-        long startCrawl = System.currentTimeMillis();
-        EvidenceCrawler crawler = new EvidenceCrawler(model, queries);
-        Evidence evidence = crawler.crawlEvidence();
-        LOGGER.info("Crawling evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
-        
-        // short cut to avoid unnecessary computation
-        if ( onlyTimes.equals(TIME_DISTRIBUTION_ONLY.YES) ) return evidence;
-        
-        // 3. confirm the facts
-        long startFactConfirmation = System.currentTimeMillis();
-        FactFeatureExtraction factFeatureExtraction = new FactFeatureExtraction();
-        factFeatureExtraction.extractFeatureForFact(evidence);
-        LOGGER.info("Fact feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFactConfirmation));
-        
-        // 
-    	 // 4. score the facts
-        long startFactScoring = System.currentTimeMillis();
-        FactScorer factScorer = new FactScorer();
-        factScorer.scoreEvidence(evidence);
-        LOGGER.info("Fact Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startFactScoring));
-    	
-    	// 5. calculate the factFeatures for the model
-        long startFeatureExtraction = System.currentTimeMillis();
-        EvidenceFeatureExtractor featureCalculator = new EvidenceFeatureExtractor();
-        featureCalculator.extractFeatureForEvidence(evidence);
-        LOGGER.info("Evidence feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFeatureExtraction));
-            
-        if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) {
 
-            long startScoring = System.currentTimeMillis();
-            EvidenceScorer scorer = new EvidenceScorer();
-            scorer.scoreEvidence(evidence);
-            LOGGER.info("Evidence Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
+        Evidence evidence = null;
+
+        try{
+
+            init();
+            LOGGER.info("Checking fact: " + model);
+            Defacto.onlyTimes = onlyTimes;
+
+            // hack to get surface forms before timing
+            // not needed anymore, since surfaceforms are inside model
+            // SubjectObjectFactSearcher.getInstance();
+            // not needed anymore since we do not use NER tagging
+            // NlpModelManager.getInstance();
+
+            // 1. generate the search engine queries
+            long start = System.currentTimeMillis();
+            QueryGenerator queryGenerator = new QueryGenerator(model);
+            Map<Pattern,MetaQuery> queries = new HashMap<Pattern,MetaQuery>();
+            for ( String language : model.languages )
+                queries.putAll(queryGenerator.getSearchEngineQueries(language));
+
+            if ( queries.size() <= 0 ) return new Evidence(model);
+            LOGGER.info("Preparing queries took " + TimeUtil.formatTime(System.currentTimeMillis() - start));
+
+            // 2. download the search results in parallel
+            long startCrawl = System.currentTimeMillis();
+            EvidenceCrawler crawler = new EvidenceCrawler(model, queries);
+            evidence = crawler.crawlEvidence();
+            LOGGER.info("Crawling evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
+
+            // short cut to avoid unnecessary computation
+            if ( onlyTimes.equals(TIME_DISTRIBUTION_ONLY.YES) ) return evidence;
+
+            // 3. confirm the facts
+            long startFactConfirmation = System.currentTimeMillis();
+            FactFeatureExtraction factFeatureExtraction = new FactFeatureExtraction();
+            factFeatureExtraction.extractFeatureForFact(evidence);
+            LOGGER.info("Fact feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFactConfirmation));
+
+            //
+            // 4. score the facts
+            long startFactScoring = System.currentTimeMillis();
+            FactScorer factScorer = new FactScorer();
+            factScorer.scoreEvidence(evidence);
+            LOGGER.info("Fact Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startFactScoring));
+
+            // 5. calculate the factFeatures for the model
+            long startFeatureExtraction = System.currentTimeMillis();
+            EvidenceFeatureExtractor featureCalculator = new EvidenceFeatureExtractor();
+            featureCalculator.extractFeatureForEvidence(evidence);
+            LOGGER.info("Evidence feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFeatureExtraction));
+
+            if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) {
+
+                long startScoring = System.currentTimeMillis();
+                EvidenceScorer scorer = new EvidenceScorer();
+                scorer.scoreEvidence(evidence);
+                LOGGER.info("Evidence Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
+            }
+
+            LOGGER.info("Overall time for fact: " +  TimeUtil.formatTime(System.currentTimeMillis() - start));
+
+        }catch(Exception e){
+            LOGGER.error(e.toString());
         }
-        
-        LOGGER.info("Overall time for fact: " +  TimeUtil.formatTime(System.currentTimeMillis() - start));
-        
+
         return evidence;
     }
     
@@ -169,7 +177,7 @@ public class Defacto {
 
     	init();
         
-        Map<DefactoModel,Evidence> evidences = new HashMap<DefactoModel, Evidence>();
+        Map<DefactoModel,Evidence> evidences = new HashMap<>();
         
         for (DefactoModel model : defactoModel) {
         	

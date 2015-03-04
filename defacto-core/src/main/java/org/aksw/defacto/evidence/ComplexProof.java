@@ -4,8 +4,9 @@ import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
 import org.aksw.defacto.model.DefactoModel;
 
-import weka.core.DenseInstance;
+//import weka.core.DenseInstance;
 import weka.core.Instance;
+
 
 /**
  * 
@@ -13,8 +14,8 @@ import weka.core.Instance;
  */
 public class ComplexProof {
 
-    //private Instance instance = new Instance(AbstractFactFeatures.factFeatures.numAttributes());
-   private Instance instance = new DenseInstance(AbstractFactFeatures.factFeatures.numAttributes());
+    private Instance instance = new Instance(AbstractFactFeatures.factFeatures.numAttributes());
+   //private Instance instance = new DenseInstance(AbstractFactFeatures.factFeatures.numAttributes());
 
 
     private Pattern pattern;

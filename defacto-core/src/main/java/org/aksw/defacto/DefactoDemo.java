@@ -4,12 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
+import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -33,11 +31,21 @@ public class DefactoDemo {
      * @throws IOException 
      * @throws InvalidFileFormatException 
      */
-    public static void main(String[] args) throws InvalidFileFormatException, IOException {
+    public static void main(String[] args) throws IOException {
 
-        org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
-        Defacto.checkFacts(getSampleData(), TIME_DISTRIBUTION_ONLY.NO);
-//        Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getTrainingData());
+        String path = System.getProperty("user.dir") + "/defacto-core/log/log4j.properties";
+        org.apache.log4j.PropertyConfigurator.configure(path);
+
+        /*Map<DefactoModel,Evidence> evidences =
+                Defacto.checkFacts(getSampleData(), TIME_DISTRIBUTION_ONLY.NO);
+        */
+
+        DefactoModel model = getSampleData().get(0);
+
+        Evidence evidence = Defacto.checkFact(model, TIME_DISTRIBUTION_ONLY.NO);
+
+//
+// Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getTrainingData());
     }
     
     public static List<DefactoModel> getTrainingData() {
@@ -92,53 +100,50 @@ public class DefactoDemo {
      * @return a set of two models which contain each a fact and the appropriate labels for the resources
      */
     private static List<DefactoModel> getSampleData(){
-        
+
+        /************************* MODEL 1 **************************/
         Model model1 = ModelFactory.createDefaultModel();
-        
         Resource albert = model1.createResource("http://dbpedia.org/resource/Albert_Einstein");
         albert.addProperty(RDFS.label, "Albert Einstein");
         Resource ulm = model1.createResource("http://dbpedia.org/resource/Ulm");
         ulm.addProperty(RDFS.label, "Ulm");
         albert.addProperty(model1.createProperty("http://dbpedia.org/ontology/birthPlace"), ulm);
-        
+        /************************* MODEL 2 **************************/
         Model model2 = ModelFactory.createDefaultModel();
-        
         Resource quentin = model2.createResource("http://dbpedia.org/resource/Quentin_Tarantino");
         quentin.addProperty(RDFS.label, "Quentin Tarantino");
         Resource deathProof = model2.createResource("http://dbpedia.org/resource/Death_Proof");
         deathProof.addProperty(RDFS.label, "Death Proof");
         deathProof.addProperty(model2.createProperty("http://dbpedia.org/ontology/director"), quentin);
-        
+        /************************* MODEL 3 **************************/
         Model model3 = ModelFactory.createDefaultModel();
-        
         Resource germany = model3.createResource("http://dbpedia.org/resource/Germany");
         germany.addProperty(RDFS.label, "Germany");
         Resource berlin = model3.createResource("http://dbpedia.org/resource/Bonn");
         berlin.addProperty(RDFS.label, "Bonn");
         berlin.addProperty(model3.createProperty("http://dbpedia.org/ontology/capital"), germany);
-        
+        /************************* MODEL 4 **************************/
         Model model4 = ModelFactory.createDefaultModel();
-        
         Resource ballack = model4.createResource("http://dbpedia.org/resource/Michael_Ballack");
         ballack.addProperty(RDFS.label, "Ballack");
         Resource chelsea = model4.createResource("http://dbpedia.org/resource/Chelsea_F.C.");
         chelsea.addProperty(RDFS.label, "Chelsea");
         chelsea.addProperty(model4.createProperty("http://dbpedia.org/ontology/team"), ballack);
-        
+        /************************* MODEL 5 **************************/
         Model model5 = ModelFactory.createDefaultModel();
-        
         Resource ronaldo = model5.createResource("http://dbpedia.org/resource/Cristiano_Ronaldo");
         ronaldo.addProperty(RDFS.label, "Cristiano Ronaldo");
         Resource manu = model5.createResource("http://dbpedia.org/resource/Manchester_United_F.C.");
         manu.addProperty(RDFS.label, "United");
         manu.addProperty(model5.createProperty("http://dbpedia.org/ontology/team"), ronaldo);
-        
-        List<DefactoModel> models = new ArrayList<DefactoModel>();
-//        models.add(new DefactoModel(model1, "albert", true));
-//        models.add(new DefactoModel(model2, "quentin", true));
-//        models.add(new DefactoModel(model3, "bonn", true));
+
+        /************************* RETURN LIST **************************/
+        List<DefactoModel> models = new ArrayList<>();
+        models.add(new DefactoModel(model1, "albert", true, Arrays.asList("en")));
+        models.add(new DefactoModel(model2, "quentin", true, Arrays.asList("en")));
+        models.add(new DefactoModel(model3, "bonn", true, Arrays.asList("en")));
         models.add(new DefactoModel(model4, "ballack", true, Arrays.asList("en")));
-//        models.add(new DefactoModel(model5, "ronaldo", true));
+        models.add(new DefactoModel(model5, "ronaldo", true, Arrays.asList("en")));
         
         return models;
     }

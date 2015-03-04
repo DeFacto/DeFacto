@@ -21,7 +21,7 @@ import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
-import weka.core.DenseInstance;
+//import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -72,8 +72,8 @@ public class FactScorer {
             try {
                 
                 // create new instance and delete debugging features
-                //Instance newInstance = new Instance(proof.getFeatures());
-                Instance newInstance = new DenseInstance(proof.getFeatures());
+                Instance newInstance = new Instance(proof.getFeatures());
+               // Instance newInstance = new DenseInstance(proof.getFeatures());
                 newInstance.deleteAttributeAt(27);
                 newInstance.deleteAttributeAt(27);
                 newInstance.deleteAttributeAt(27);
@@ -124,11 +124,21 @@ public class FactScorer {
     private Classifier loadClassifier() {
 
         try {
-            
-            return (Classifier) weka.core.SerializationHelper.read(
-            		DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_CLASSIFIER_TYPE"));
+
+
+            System.out.println("dir: " + DefactoConfig.DEFACTO_DATA_DIR);
+            System.out.println("[fact]/FACT_CLASSIFIER_TYPE: " + Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_CLASSIFIER_TYPE"));
+
+            System.out.println("loading the classifiers...");
+            Object oClassifier = weka.core.SerializationHelper.read(DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_CLASSIFIER_TYPE"));
+            System.out.println("converting...");
+            Classifier c = (Classifier)oClassifier;
+            return c;
+
         }
         catch (Exception e) {
+
+            System.out.println("erro: " + e.toString());
 
             throw new RuntimeException("Could not load classifier from: " + 
             		DefactoConfig.DEFACTO_DATA_DIR + Defacto.DEFACTO_CONFIG.getStringSetting("fact", "FACT_CLASSIFIER_TYPE"), e);

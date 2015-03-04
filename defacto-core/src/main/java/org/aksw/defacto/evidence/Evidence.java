@@ -26,7 +26,7 @@ import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.VectorUtil;
 import org.apache.commons.lang3.ArrayUtils;
 
-import weka.core.DenseInstance;
+//import weka.core.DenseInstance;
 import weka.core.Instance;
 
 /**
@@ -39,7 +39,7 @@ public class Evidence {
     private Map<Pattern,List<WebSite>> webSites         = new LinkedHashMap<Pattern,List<WebSite>>();
     private Map<String,List<Word>> topicTerms           = new HashMap<String,List<Word>>();
 //    private Map<Pattern,Double[][]> similarityMatricies = new LinkedHashMap<Pattern,Double[][]>();
-    public Double[][] similarityMatrix                 = null;
+    public Double[][] similarityMatrix                  = null;
     
     public Map<String,Long> tinyContextYearOccurrences = new LinkedHashMap<String, Long>();
     public Map<String,Long> smallContextYearOccurrences = new LinkedHashMap<String, Long>();
@@ -48,7 +48,7 @@ public class Evidence {
     
     private Instance features;
     private Long totalHitCount;
-    private double deFactoScore;
+    private Double deFactoScore;
     
     private Set<ComplexProof> complexProofs;
     private Map<String,List<Pattern>> boaPatterns = new HashMap<String,List<Pattern>>();
@@ -92,11 +92,11 @@ public class Evidence {
     
         if ( features == null ) {
 
-           Instance instance = new DenseInstance(AbstractEvidenceFeature.provenance.numAttributes());
-           //this.features = new Instance(AbstractEvidenceFeature.provenance.numAttributes());
-           this.features = instance;
-           this.features.setDataset(AbstractEvidenceFeature.provenance);
-           this.features.setValue(AbstractEvidenceFeature.CLASS, String.valueOf(model.isCorrect()));
+           //Instance instance = new DenseInstance(AbstractEvidenceFeature.provenance.numAttributes());
+           //this.features = instance;
+            this.features = new Instance(AbstractEvidenceFeature.provenance.numAttributes());
+            this.features.setDataset(AbstractEvidenceFeature.provenance);
+            this.features.setValue(AbstractEvidenceFeature.CLASS, String.valueOf(model.isCorrect()));
         }
         
         return features;
@@ -233,8 +233,10 @@ public class Evidence {
      * @return
      */
     public Double getDeFactoScore() {
-
-        return this.deFactoScore;
+        if (this.deFactoScore != null){
+            return this.deFactoScore;}
+        else{
+            return 0.0;}
     }
 
     /**
