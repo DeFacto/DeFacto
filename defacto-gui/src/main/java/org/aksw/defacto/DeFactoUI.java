@@ -332,18 +332,18 @@ public class DeFactoUI extends UI
     	l.setWidth("100%");
     	
     	try {
-         CharSource ch;
-         ch = Files.asCharSource(new File("header.html"), Charsets.UTF_8);
+  //       CharSource ch;
+    //     ch = Files.asCharSource(new File("header.html"), Charsets.UTF_8);
 
-			/*InputSupplier<InputStream> inputSupplier = new InputSupplier<InputStream>() {
+			InputSupplier<InputStream> inputSupplier = new InputSupplier<InputStream>() {
 			    public InputStream getInput() throws IOException {
 			        return DeFactoUI.this.getClass().getClassLoader().getResourceAsStream("header.html");
 			    }
 			};
 			String s = CharStreams.toString(CharStreams.newReaderSupplier(inputSupplier, Charsets.UTF_8));
-         */
+         /*
          String s = ch.toString();
-
+*/
 			l.setValue(s);
     	} catch (Exception e) {
 			e.printStackTrace();
@@ -362,19 +362,18 @@ public class DeFactoUI extends UI
     	l.setWidth("100%");
 
     	try {
-			/*InputSupplier<InputStream> inputSupplier = new InputSupplier<InputStream>() {
+			InputSupplier<InputStream> inputSupplier = new InputSupplier<InputStream>() {
 			    public InputStream getInput() throws IOException {
 			        return DeFactoUI.this.getClass().getClassLoader().getResourceAsStream("footer.html");
 			    }
-			};*/
-
-
+			};
+            /*
          CharSource ch;
          ch = Files.asCharSource(new File("footer.html"), Charsets.UTF_8);
+*/
 
-
-//         String s = CharStreams.toString(CharStreams.newReaderSupplier(inputSupplier, Charsets.UTF_8));
-         String s = ch.toString();
+         String s = CharStreams.toString(CharStreams.newReaderSupplier(inputSupplier, Charsets.UTF_8));
+//         String s = ch.toString();
 
 			l.setValue(s);
     	} catch (Exception e) {

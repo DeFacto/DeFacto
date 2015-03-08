@@ -142,7 +142,7 @@
 	<groupId>net.minidev</groupId>
 	<artifactId>json-smart</artifactId>
 	<version>1.2</version>
-</dependency> 
+    </dependency>
 	</dependencies>
 
 	<build>
@@ -202,7 +202,7 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<configuration>
+               <configuration>
 					<systemProperties>
 						<systemProperty>
 							<name>jetty.port</name>

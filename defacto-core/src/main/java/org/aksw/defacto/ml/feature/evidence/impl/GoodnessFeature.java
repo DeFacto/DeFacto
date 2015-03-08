@@ -13,6 +13,8 @@ import org.dllearner.core.owl.Individual;
 import org.dllearner.core.owl.ObjectProperty;
 import org.dllearner.kb.sparql.SparqlEndpoint;
 
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -33,9 +35,10 @@ public class GoodnessFeature extends AbstractEvidenceFeature {
 			
 			String dbHost = "localhost";
 			String dbPort = "3306";
-			String database = "dbpedia_metrics";
+			//String database = "dbpedia_metrics";
+            String database = "myschema";
 			String dbUser = "root";
-            Connection conn = DriverManager.getConnection("jdbc:mysql://" + dbHost + ":" + dbPort + "/" + database + "?" + "user=" + dbUser + "&password=pw" );
+            Connection conn = DriverManager.getConnection("jdbc:mysql://" + dbHost + ":" + dbPort + "/" + database + "?" + "user=" + dbUser + "&password=l567794" );
 			metric = new DatabaseBackedSPARQLEndpointMetrics(endpoint, "pmi-cache", conn);
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block

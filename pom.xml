@@ -24,6 +24,25 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.0.1</version>
+                <configuration>
+                    <rules>
+                        <DependencyConvergence/>
+                    </rules>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>enforce</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+            </plugin>-->
 		</plugins>
 	</build>
 
@@ -170,5 +189,4 @@
 <!-- 			<scope>runtime</scope> -->
 		</dependency>
 	</dependencies>
-
 </project>
