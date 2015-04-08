@@ -1,0 +1,11 @@
+Package: defacto-ui
+Version: [[version]]
+Section: web
+Priority: optional
+Architecture: all
+Depends: tomcat7, openjdk-7-jre | sun-java7-jre
+Maintainer: Jens Lehmann <lehmann@informatik.uni-leipzig.de>
+Distribution: ldstack-nightly
+Homepage: http://aksw.org/Projects/DeFacto.html
+Description: Deep Fact Validation
+  DeFacto (Deep Fact Validation) is an algorithm for validating statements by finding confirming sources for it on the web. It takes a statement (such as “Jamaica Inn was directed by Alfred Hitchcock”) as input and then tries to find evidence for the truth of that statement by searching for information in the web.
