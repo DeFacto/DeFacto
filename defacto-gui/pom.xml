@@ -90,6 +90,10 @@
           <groupId>edu.stanford.nlp</groupId>
           <artifactId>stanford-corenlp</artifactId>
         </exclusion>
+        <exclusion>
+         <groupId>com.google.guava</groupId>
+         <artifactId>guava</artifactId>
+        </exclusion>
 	</exclusions>
 </dependency>
 <dependency>
