@@ -177,5 +177,28 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.dllearner</groupId>
+            <artifactId>components-core</artifactId>
+            <version>1.0-20131210.161252-449</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-compress</artifactId>
+                    <groupId>org.apache.commons</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>nz.ac.waikato.cms.weka</groupId>
+                    <artifactId>weka-dev</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.aksw.jena-sparql-api</groupId>
+                    <artifactId>jena-sparql-api-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.aksw.jena-sparql-api</groupId>
+                    <artifactId>jena-sparql-api-utils</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 </project>
