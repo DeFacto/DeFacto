@@ -9,10 +9,11 @@
 	<name>main</name>
 
 	<modules>
-		<module>defacto-core</module>
-		<module>defacto-evaluation</module>
-    	<module>defacto-gui</module>
-  </modules>
+        <module>defacto-core</module>
+        <module>defacto-evaluation</module>
+        <module>defacto-gui</module>
+        <module>defacto-restful</module>
+    </modules>
 	<build>
 		<plugins>
 			<plugin>
@@ -187,7 +188,6 @@
 			<version>1.2.17</version>
 <!-- 			<scope>runtime</scope> -->
 		</dependency>
-
 	</dependencies>
 
 </project>
