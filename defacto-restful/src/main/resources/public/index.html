@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<title>Hello</title>
+<link href="css/angular-bootstrap.css" rel="stylesheet">
+<style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none !important;
+}
+</style>
+    <script src="http://code.angularjs.org/1.2.15/angular.min.js"></script>
+    <script src="http://code.angularjs.org/1.2.15/angular-resource.min.js"></script>
+    
+</head>
+
+<body ng-app="test">
+	<div class="container">
+		<h1>test</h1>
+		<div ng-controller="home" ng-cloak class="ng-cloak">
+			<p>{{test}}</p>
+		
+		</div>
+	</div>
+	
+	<script src="js/test.js"></script>
+</body>
+</html>
