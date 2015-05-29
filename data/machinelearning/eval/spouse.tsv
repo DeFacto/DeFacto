@@ -1,0 +1,48 @@
+spouse	[en, fr, de]	frequency	domain	tiny	75.2	&	67.2	&	71.0	&	70.4	&	49	&	61.2	30
+spouse	[en]	frequency	domain	tiny	77.1	&	65.2	&	70.6	&	55.6	&	37	&	78.4	29
+spouse	[en, fr, de]	frequency	domain	medium	68.5	&	72.2	&	70.3	&	73.3	&	63	&	49.2	31
+spouse	[en]	frequency	domain	medium	69.5	&	70.3	&	69.9	&	75.0	&	53	&	52.8	28
+spouse	[en]	frequency	global	tiny	75.5	&	64.4	&	69.5	&	55.6	&	37	&	78.4	29
+spouse	[en, fr, de]	frequency	domain	small	68.1	&	69.5	&	68.8	&	69.2	&	54	&	55.6	30
+spouse	[en, fr, de]	frequency	global	tiny	70.8	&	65.6	&	68.1	&	70.4	&	49	&	55.1	27
+spouse	[en, fr, de]	frequency	occurrence	tiny	69.6	&	66.5	&	68.0	&	70.4	&	49	&	59.2	29
+spouse	[en]	frequency	occurrence	medium	67.5	&	68.0	&	67.7	&	75.0	&	53	&	50.9	27
+spouse	[en]	frequency	global	medium	64.4	&	70.6	&	67.4	&	75.0	&	53	&	50.9	27
+spouse	[en, fr, de]	frequency	occurrence	medium	62.7	&	72.1	&	67.0	&	73.3	&	63	&	49.2	31
+spouse	[en, fr, de]	frequency	global	medium	62.8	&	71.4	&	66.8	&	73.3	&	63	&	49.2	31
+spouse	[en]	frequency	occurrence	tiny	68.0	&	65.2	&	66.6	&	55.6	&	37	&	75.7	28
+spouse	[en, fr, de]	frequency	occurrence	small	64.2	&	68.8	&	66.5	&	69.2	&	54	&	51.9	28
+spouse	[en]	frequency	domain	large	65.9	&	66.6	&	66.2	&	66.7	&	57	&	54.4	31
+spouse	[en, fr, de]	frequency	domain	large	63.7	&	68.4	&	66.0	&	75.0	&	65	&	49.2	32
+spouse	[en]	frequency	domain	small	68.2	&	63.5	&	65.8	&	53.3	&	41	&	65.9	27
+spouse	[en]	frequency	global	small	67.0	&	63.2	&	65.1	&	53.3	&	41	&	65.9	27
+spouse	[en]	frequency	occurrence	small	64.4	&	64.5	&	64.4	&	53.3	&	41	&	65.9	27
+spouse	[en, fr, de]	frequency	global	small	62.3	&	66.3	&	64.3	&	69.2	&	54	&	51.9	28
+spouse	[en, fr, de]	frequency	occurrence	large	60.2	&	68.5	&	64.1	&	75.0	&	65	&	49.2	32
+spouse	[en, fr, de]	frequency	global	large	58.0	&	66.9	&	62.2	&	75.0	&	65	&	49.2	32
+spouse	[en]	frequency	global	large	58.7	&	64.4	&	61.4	&	66.7	&	57	&	50.9	29
+spouse	[en]	frequency	occurrence	large	57.7	&	62.9	&	60.2	&	66.7	&	57	&	47.4	27
+spouse	[en, fr, de]	frequency	domain	tiny	75.2	&	67.2	&	71.0	&	70.4	&	49	&	61.2	30
+spouse	[en]	frequency	domain	tiny	77.1	&	65.2	&	70.6	&	55.6	&	37	&	78.4	29
+spouse	[en, fr, de]	frequency	domain	medium	68.5	&	72.2	&	70.3	&	73.3	&	63	&	49.2	31
+spouse	[en]	frequency	domain	medium	69.5	&	70.3	&	69.9	&	75.0	&	53	&	52.8	28
+spouse	[en]	frequency	global	tiny	75.5	&	64.4	&	69.5	&	55.6	&	37	&	78.4	29
+spouse	[en, fr, de]	frequency	domain	small	68.1	&	69.5	&	68.8	&	69.2	&	54	&	55.6	30
+spouse	[en, fr, de]	frequency	global	tiny	70.8	&	65.6	&	68.1	&	70.4	&	49	&	55.1	27
+spouse	[en, fr, de]	frequency	occurrence	tiny	69.6	&	66.5	&	68.0	&	70.4	&	49	&	59.2	29
+spouse	[en]	frequency	occurrence	medium	67.5	&	68.0	&	67.7	&	75.0	&	53	&	50.9	27
+spouse	[en]	frequency	global	medium	64.4	&	70.6	&	67.4	&	75.0	&	53	&	50.9	27
+spouse	[en, fr, de]	frequency	occurrence	medium	62.7	&	72.1	&	67.0	&	73.3	&	63	&	49.2	31
+spouse	[en, fr, de]	frequency	global	medium	62.8	&	71.4	&	66.8	&	73.3	&	63	&	49.2	31
+spouse	[en]	frequency	occurrence	tiny	68.0	&	65.2	&	66.6	&	55.6	&	37	&	75.7	28
+spouse	[en, fr, de]	frequency	occurrence	small	64.2	&	68.8	&	66.5	&	69.2	&	54	&	51.9	28
+spouse	[en]	frequency	domain	large	65.9	&	66.6	&	66.2	&	66.7	&	57	&	54.4	31
+spouse	[en, fr, de]	frequency	domain	large	63.7	&	68.4	&	66.0	&	75.0	&	65	&	49.2	32
+spouse	[en]	frequency	domain	small	68.2	&	63.5	&	65.8	&	53.3	&	41	&	65.9	27
+spouse	[en]	frequency	global	small	67.0	&	63.2	&	65.1	&	53.3	&	41	&	65.9	27
+spouse	[en]	frequency	occurrence	small	64.4	&	64.5	&	64.4	&	53.3	&	41	&	65.9	27
+spouse	[en, fr, de]	frequency	global	small	62.3	&	66.3	&	64.3	&	69.2	&	54	&	51.9	28
+spouse	[en, fr, de]	frequency	occurrence	large	60.2	&	68.5	&	64.1	&	75.0	&	65	&	49.2	32
+spouse	[en, fr, de]	frequency	global	large	58.0	&	66.9	&	62.2	&	75.0	&	65	&	49.2	32
+spouse	[en]	frequency	global	large	58.7	&	64.4	&	61.4	&	66.7	&	57	&	50.9	29
+spouse	[en]	frequency	occurrence	large	57.7	&	62.9	&	60.2	&	66.7	&	57	&	47.4	27

@@ -1,0 +1,48 @@
+leader	[en, fr, de]	frequency	domain	medium	55.9	&	76.7	&	64.7	&	72.6	&	72	&	45.8	33
+leader	[en, fr, de]	frequency	occurrence	medium	53.6	&	75.4	&	62.6	&	72.6	&	72	&	44.4	32
+leader	[en, fr, de]	frequency	global	medium	53.3	&	75.6	&	62.5	&	72.6	&	72	&	44.4	32
+leader	[en, fr, de]	frequency	domain	large	52.8	&	74.2	&	61.7	&	71.4	&	73	&	42.5	31
+leader	[en, fr, de]	frequency	domain	small	52.4	&	71.5	&	60.5	&	76.2	&	69	&	46.4	32
+leader	[en, fr, de]	frequency	global	small	51.3	&	73.5	&	60.4	&	76.2	&	69	&	46.4	32
+leader	[en, fr, de]	frequency	occurrence	large	50.3	&	72.4	&	59.3	&	71.4	&	73	&	41.1	30
+leader	[en, fr, de]	frequency	global	large	50.1	&	71.5	&	58.9	&	71.4	&	73	&	39.7	29
+leader	[en, fr, de]	frequency	occurrence	small	50.0	&	70.4	&	58.5	&	76.2	&	69	&	44.9	31
+leader	[en, fr, de]	frequency	global	tiny	46.4	&	73.5	&	56.9	&	58.3	&	66	&	40.9	27
+leader	[en, fr, de]	frequency	domain	tiny	46.3	&	71.1	&	56.1	&	58.3	&	66	&	39.4	26
+leader	[en, fr, de]	frequency	occurrence	tiny	45.0	&	69.8	&	54.7	&	58.3	&	66	&	37.9	25
+leader	[en]	frequency	domain	medium	46.7	&	64.4	&	54.1	&	70.7	&	56	&	42.9	24
+leader	[en]	frequency	occurrence	medium	42.6	&	65.1	&	51.5	&	70.7	&	56	&	41.1	23
+leader	[en]	frequency	global	medium	42.6	&	63.1	&	50.9	&	70.7	&	56	&	41.1	23
+leader	[en]	frequency	domain	small	44.8	&	57.9	&	50.5	&	83.3	&	47	&	46.8	22
+leader	[en]	frequency	occurrence	large	40.7	&	64.6	&	49.9	&	82.9	&	57	&	36.8	21
+leader	[en]	frequency	domain	large	40.5	&	63.8	&	49.5	&	82.9	&	57	&	35.1	20
+leader	[en]	frequency	global	large	39.2	&	64.4	&	48.7	&	82.9	&	57	&	35.1	20
+leader	[en]	frequency	occurrence	small	39.3	&	59.8	&	47.4	&	83.3	&	47	&	46.8	22
+leader	[en]	frequency	global	small	40.5	&	55.8	&	47.0	&	83.3	&	47	&	46.8	22
+leader	[en]	frequency	global	tiny	40.4	&	55.2	&	46.6	&	56.2	&	40	&	45.0	18
+leader	[en]	frequency	domain	tiny	39.1	&	56.4	&	46.2	&	56.2	&	40	&	45.0	18
+leader	[en]	frequency	occurrence	tiny	36.2	&	55.7	&	43.9	&	56.2	&	40	&	40.0	16
+leader	[en, fr, de]	frequency	domain	medium	55.9	&	76.7	&	64.7	&	72.6	&	72	&	45.8	33
+leader	[en, fr, de]	frequency	occurrence	medium	53.6	&	75.4	&	62.6	&	72.6	&	72	&	44.4	32
+leader	[en, fr, de]	frequency	global	medium	53.3	&	75.6	&	62.5	&	72.6	&	72	&	44.4	32
+leader	[en, fr, de]	frequency	domain	large	52.8	&	74.2	&	61.7	&	71.4	&	73	&	42.5	31
+leader	[en, fr, de]	frequency	domain	small	52.4	&	71.5	&	60.5	&	76.2	&	69	&	46.4	32
+leader	[en, fr, de]	frequency	global	small	51.3	&	73.5	&	60.4	&	76.2	&	69	&	46.4	32
+leader	[en, fr, de]	frequency	occurrence	large	50.3	&	72.4	&	59.3	&	71.4	&	73	&	41.1	30
+leader	[en, fr, de]	frequency	global	large	50.1	&	71.5	&	58.9	&	71.4	&	73	&	39.7	29
+leader	[en, fr, de]	frequency	occurrence	small	50.0	&	70.4	&	58.5	&	76.2	&	69	&	44.9	31
+leader	[en, fr, de]	frequency	global	tiny	46.4	&	73.5	&	56.9	&	58.3	&	66	&	40.9	27
+leader	[en, fr, de]	frequency	domain	tiny	46.3	&	71.1	&	56.1	&	58.3	&	66	&	39.4	26
+leader	[en, fr, de]	frequency	occurrence	tiny	45.0	&	69.8	&	54.7	&	58.3	&	66	&	37.9	25
+leader	[en]	frequency	domain	medium	46.7	&	64.4	&	54.1	&	70.7	&	55	&	43.6	24
+leader	[en]	frequency	occurrence	medium	42.6	&	65.1	&	51.5	&	70.7	&	55	&	41.8	23
+leader	[en]	frequency	global	medium	42.6	&	63.1	&	50.9	&	70.7	&	55	&	41.8	23
+leader	[en]	frequency	domain	small	44.8	&	57.9	&	50.5	&	83.3	&	47	&	46.8	22
+leader	[en]	frequency	occurrence	large	40.7	&	64.6	&	49.9	&	82.9	&	56	&	37.5	21
+leader	[en]	frequency	domain	large	40.5	&	63.8	&	49.5	&	82.9	&	56	&	35.7	20
+leader	[en]	frequency	global	large	39.2	&	64.4	&	48.7	&	82.9	&	56	&	35.7	20
+leader	[en]	frequency	global	tiny	41.6	&	55.6	&	47.6	&	66.7	&	39	&	48.7	19
+leader	[en]	frequency	occurrence	small	39.3	&	59.8	&	47.4	&	83.3	&	47	&	46.8	22
+leader	[en]	frequency	domain	tiny	40.3	&	56.4	&	47.0	&	66.7	&	39	&	48.7	19
+leader	[en]	frequency	global	small	40.5	&	55.8	&	47.0	&	83.3	&	47	&	46.8	22
+leader	[en]	frequency	occurrence	tiny	37.4	&	56.0	&	44.9	&	66.7	&	39	&	43.6	17

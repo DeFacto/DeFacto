@@ -1,0 +1,22 @@
+@relation defacto
+
+@attribute name_feature string
+@attribute page_rank_max numeric
+@attribute page_rank_sum numeric
+@attribute total_hit_count numeric
+@attribute topic_coverage_sum numeric
+@attribute topic_coverage_max numeric
+@attribute topic_majority_web_sum numeric
+@attribute topic_majority_web_max numeric
+@attribute topic_majority_search_sum numeric
+@attribute topic_majority_search_max numeric
+@attribute number_of_proofs numeric
+@attribute goodness numeric
+@attribute number_of_confirming_sites numeric
+@attribute total_positives_evidence_score numeric
+@attribute total_negatives_evidence_score numeric
+@attribute domain_range_check numeric
+@attribute class {true,false}
+
+@data
+

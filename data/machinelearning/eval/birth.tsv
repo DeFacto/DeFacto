@@ -1,0 +1,72 @@
+birth	[en, fr, de]	frequency	global	tiny	94.6	&	93.3	&	94.0	&	96.2	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	global	small	94.6	&	93.3	&	94.0	&	96.6	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	global	medium	94.6	&	93.3	&	94.0	&	95.0	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	global	large	94.6	&	93.3	&	94.0	&	92.1	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	occurrence	small	93.2	&	92.0	&	92.6	&	96.6	&	73	&	94.5	69
+birth	[en, fr, de]	frequency	occurrence	tiny	91.9	&	90.7	&	91.3	&	96.2	&	73	&	93.2	68
+birth	[en, fr, de]	frequency	occurrence	medium	90.5	&	89.3	&	89.9	&	95.0	&	73	&	91.8	67
+birth	[en]	frequency	global	small	91.7	&	88.0	&	89.8	&	91.8	&	70	&	94.3	66
+birth	[en]	frequency	global	medium	91.7	&	88.0	&	89.8	&	91.7	&	70	&	94.3	66
+birth	[en]	frequency	global	large	91.7	&	88.0	&	89.8	&	85.4	&	70	&	94.3	66
+birth	[en, fr, de]	frequency	domain	tiny	89.2	&	88.0	&	88.6	&	96.2	&	73	&	90.4	66
+birth	[en, fr, de]	frequency	domain	small	89.2	&	88.0	&	88.6	&	96.6	&	73	&	90.4	66
+birth	[en, fr, de]	frequency	domain	medium	89.2	&	88.0	&	88.6	&	95.0	&	73	&	90.4	66
+birth	[en, fr, de]	frequency	domain	large	87.8	&	86.7	&	87.2	&	92.1	&	73	&	89.0	65
+birth	[en]	frequency	global	tiny	88.9	&	85.3	&	87.1	&	92.9	&	69	&	92.8	64
+birth	[en, fr, de]	frequency	occurrence	large	86.5	&	85.3	&	85.9	&	92.1	&	73	&	87.7	64
+birth	[en]	frequency	occurrence	tiny	83.3	&	80.0	&	81.6	&	92.9	&	69	&	87.0	60
+birth	[en]	frequency	occurrence	medium	83.3	&	80.0	&	81.6	&	91.7	&	70	&	85.7	60
+birth	[en]	frequency	occurrence	small	81.9	&	78.7	&	80.3	&	91.8	&	70	&	84.3	59
+birth	[en]	frequency	domain	small	76.4	&	73.3	&	74.8	&	91.8	&	70	&	78.6	55
+birth	[en]	frequency	domain	medium	75.0	&	72.0	&	73.5	&	91.7	&	70	&	77.1	54
+birth	[en]	frequency	domain	large	75.0	&	72.0	&	73.5	&	85.4	&	70	&	77.1	54
+birth	[en]	frequency	domain	tiny	73.6	&	70.7	&	72.1	&	92.9	&	69	&	76.8	53
+birth	[en]	frequency	occurrence	large	72.2	&	69.3	&	70.7	&	85.4	&	70	&	74.3	52
+birth	[en, fr, de]	frequency	global	tiny	94.6	&	93.3	&	94.0	&	96.2	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	global	small	94.6	&	93.3	&	94.0	&	96.6	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	global	medium	94.6	&	93.3	&	94.0	&	95.0	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	global	large	94.6	&	93.3	&	94.0	&	92.1	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	occurrence	small	93.2	&	92.0	&	92.6	&	96.6	&	73	&	94.5	69
+birth	[en, fr, de]	frequency	occurrence	tiny	91.9	&	90.7	&	91.3	&	96.2	&	73	&	93.2	68
+birth	[en, fr, de]	frequency	occurrence	medium	90.5	&	89.3	&	89.9	&	95.0	&	73	&	91.8	67
+birth	[en]	frequency	global	small	91.7	&	88.0	&	89.8	&	91.8	&	70	&	94.3	66
+birth	[en]	frequency	global	medium	91.7	&	88.0	&	89.8	&	91.7	&	70	&	94.3	66
+birth	[en]	frequency	global	large	91.7	&	88.0	&	89.8	&	85.4	&	70	&	94.3	66
+birth	[en, fr, de]	frequency	domain	tiny	89.2	&	88.0	&	88.6	&	96.2	&	73	&	90.4	66
+birth	[en, fr, de]	frequency	domain	small	89.2	&	88.0	&	88.6	&	96.6	&	73	&	90.4	66
+birth	[en, fr, de]	frequency	domain	medium	89.2	&	88.0	&	88.6	&	95.0	&	73	&	90.4	66
+birth	[en, fr, de]	frequency	domain	large	87.8	&	86.7	&	87.2	&	92.1	&	73	&	89.0	65
+birth	[en]	frequency	global	tiny	88.9	&	85.3	&	87.1	&	92.9	&	69	&	92.8	64
+birth	[en, fr, de]	frequency	occurrence	large	86.5	&	85.3	&	85.9	&	92.1	&	73	&	87.7	64
+birth	[en]	frequency	occurrence	tiny	83.3	&	80.0	&	81.6	&	92.9	&	69	&	87.0	60
+birth	[en]	frequency	occurrence	medium	83.3	&	80.0	&	81.6	&	91.7	&	70	&	85.7	60
+birth	[en]	frequency	occurrence	small	81.9	&	78.7	&	80.3	&	91.8	&	70	&	84.3	59
+birth	[en]	frequency	domain	small	76.4	&	73.3	&	74.8	&	91.8	&	70	&	78.6	55
+birth	[en]	frequency	domain	medium	75.0	&	72.0	&	73.5	&	91.7	&	70	&	77.1	54
+birth	[en]	frequency	domain	large	75.0	&	72.0	&	73.5	&	85.4	&	70	&	77.1	54
+birth	[en]	frequency	domain	tiny	73.6	&	70.7	&	72.1	&	92.9	&	69	&	76.8	53
+birth	[en]	frequency	occurrence	large	72.2	&	69.3	&	70.7	&	85.4	&	70	&	74.3	52
+birth	[en, fr, de]	frequency	global	tiny	94.6	&	93.3	&	94.0	&	96.2	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	global	small	94.6	&	93.3	&	94.0	&	96.6	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	global	medium	94.6	&	93.3	&	94.0	&	95.0	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	global	large	94.6	&	93.3	&	94.0	&	92.1	&	73	&	95.9	70
+birth	[en, fr, de]	frequency	occurrence	small	93.2	&	92.0	&	92.6	&	96.6	&	73	&	94.5	69
+birth	[en, fr, de]	frequency	occurrence	tiny	91.9	&	90.7	&	91.3	&	96.2	&	73	&	93.2	68
+birth	[en, fr, de]	frequency	occurrence	medium	90.5	&	89.3	&	89.9	&	95.0	&	73	&	91.8	67
+birth	[en]	frequency	global	small	91.7	&	88.0	&	89.8	&	91.8	&	70	&	94.3	66
+birth	[en]	frequency	global	medium	91.7	&	88.0	&	89.8	&	91.7	&	70	&	94.3	66
+birth	[en]	frequency	global	large	91.7	&	88.0	&	89.8	&	85.4	&	70	&	94.3	66
+birth	[en, fr, de]	frequency	domain	tiny	89.2	&	88.0	&	88.6	&	96.2	&	73	&	90.4	66
+birth	[en, fr, de]	frequency	domain	small	89.2	&	88.0	&	88.6	&	96.6	&	73	&	90.4	66
+birth	[en, fr, de]	frequency	domain	medium	89.2	&	88.0	&	88.6	&	95.0	&	73	&	90.4	66
+birth	[en, fr, de]	frequency	domain	large	87.8	&	86.7	&	87.2	&	92.1	&	73	&	89.0	65
+birth	[en]	frequency	global	tiny	88.9	&	85.3	&	87.1	&	92.9	&	69	&	92.8	64
+birth	[en, fr, de]	frequency	occurrence	large	86.5	&	85.3	&	85.9	&	92.1	&	73	&	87.7	64
+birth	[en]	frequency	occurrence	tiny	83.3	&	80.0	&	81.6	&	92.9	&	69	&	87.0	60
+birth	[en]	frequency	occurrence	medium	83.3	&	80.0	&	81.6	&	91.7	&	70	&	85.7	60
+birth	[en]	frequency	occurrence	small	81.9	&	78.7	&	80.3	&	91.8	&	70	&	84.3	59
+birth	[en]	frequency	domain	small	76.4	&	73.3	&	74.8	&	91.8	&	70	&	78.6	55
+birth	[en]	frequency	domain	medium	75.0	&	72.0	&	73.5	&	91.7	&	70	&	77.1	54
+birth	[en]	frequency	domain	large	75.0	&	72.0	&	73.5	&	85.4	&	70	&	77.1	54
+birth	[en]	frequency	domain	tiny	73.6	&	70.7	&	72.1	&	92.9	&	69	&	76.8	53
+birth	[en]	frequency	occurrence	large	72.2	&	69.3	&	70.7	&	85.4	&	70	&	74.3	52

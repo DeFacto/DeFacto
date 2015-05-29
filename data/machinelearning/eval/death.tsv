@@ -1,0 +1,48 @@
+death	[en, fr, de]	frequency	domain	tiny	84.0	&	84.0	&	84.0	&	86.8	&	75	&	84.0	63
+death	[en, fr, de]	frequency	domain	small	81.3	&	81.3	&	81.3	&	82.9	&	75	&	81.3	61
+death	[en]	frequency	domain	tiny	80.6	&	77.3	&	78.9	&	86.6	&	68	&	85.3	58
+death	[en]	frequency	domain	small	78.4	&	77.3	&	77.9	&	85.7	&	69	&	84.1	58
+death	[en, fr, de]	frequency	occurrence	tiny	77.3	&	77.3	&	77.3	&	86.8	&	75	&	77.3	58
+death	[en, fr, de]	frequency	domain	medium	77.3	&	77.3	&	77.3	&	73.1	&	75	&	77.3	58
+death	[en, fr, de]	frequency	domain	large	77.3	&	77.3	&	77.3	&	69.2	&	75	&	77.3	58
+death	[en]	frequency	occurrence	small	74.3	&	73.3	&	73.8	&	85.7	&	69	&	79.7	55
+death	[en]	frequency	domain	medium	74.3	&	73.3	&	73.8	&	72.0	&	72	&	76.4	55
+death	[en]	frequency	occurrence	tiny	73.6	&	70.7	&	72.1	&	86.6	&	68	&	77.9	53
+death	[en, fr, de]	frequency	occurrence	small	72.0	&	72.0	&	72.0	&	82.9	&	75	&	72.0	54
+death	[en]	frequency	domain	large	70.3	&	69.3	&	69.8	&	67.9	&	72	&	72.2	52
+death	[en, fr, de]	frequency	global	tiny	66.7	&	66.7	&	66.7	&	86.8	&	75	&	66.7	50
+death	[en]	frequency	global	tiny	61.1	&	58.7	&	59.9	&	86.6	&	68	&	64.7	44
+death	[en, fr, de]	frequency	occurrence	medium	53.3	&	53.3	&	53.3	&	73.1	&	75	&	53.3	40
+death	[en]	frequency	occurrence	medium	52.7	&	52.0	&	52.3	&	72.0	&	72	&	54.2	39
+death	[en]	frequency	global	small	48.6	&	48.0	&	48.3	&	85.7	&	69	&	52.2	36
+death	[en, fr, de]	frequency	global	small	48.0	&	48.0	&	48.0	&	82.9	&	75	&	48.0	36
+death	[en, fr, de]	frequency	occurrence	large	48.0	&	48.0	&	48.0	&	69.2	&	75	&	48.0	36
+death	[en]	frequency	occurrence	large	45.9	&	45.3	&	45.6	&	67.9	&	72	&	47.2	34
+death	[en]	frequency	global	medium	25.7	&	25.3	&	25.5	&	72.0	&	72	&	26.4	19
+death	[en]	frequency	global	large	23.0	&	22.7	&	22.8	&	67.9	&	72	&	23.6	17
+death	[en, fr, de]	frequency	global	medium	21.3	&	21.3	&	21.3	&	73.1	&	75	&	21.3	16
+death	[en, fr, de]	frequency	global	large	17.3	&	17.3	&	17.3	&	69.2	&	75	&	17.3	13
+death	[en, fr, de]	frequency	domain	tiny	84.0	&	84.0	&	84.0	&	86.8	&	75	&	84.0	63
+death	[en, fr, de]	frequency	domain	small	81.3	&	81.3	&	81.3	&	82.8	&	75	&	81.3	61
+death	[en]	frequency	domain	tiny	80.6	&	77.3	&	78.9	&	86.6	&	68	&	85.3	58
+death	[en]	frequency	domain	small	78.4	&	77.3	&	77.9	&	85.7	&	69	&	84.1	58
+death	[en, fr, de]	frequency	occurrence	tiny	77.3	&	77.3	&	77.3	&	86.8	&	75	&	77.3	58
+death	[en, fr, de]	frequency	domain	medium	77.3	&	77.3	&	77.3	&	73.1	&	75	&	77.3	58
+death	[en, fr, de]	frequency	domain	large	77.3	&	77.3	&	77.3	&	69.1	&	75	&	77.3	58
+death	[en]	frequency	occurrence	small	74.3	&	73.3	&	73.8	&	85.7	&	69	&	79.7	55
+death	[en]	frequency	domain	medium	74.3	&	73.3	&	73.8	&	72.0	&	72	&	76.4	55
+death	[en]	frequency	occurrence	tiny	73.6	&	70.7	&	72.1	&	86.6	&	68	&	77.9	53
+death	[en, fr, de]	frequency	occurrence	small	72.0	&	72.0	&	72.0	&	82.8	&	75	&	72.0	54
+death	[en]	frequency	domain	large	70.3	&	69.3	&	69.8	&	67.9	&	72	&	72.2	52
+death	[en, fr, de]	frequency	global	tiny	66.7	&	66.7	&	66.7	&	86.8	&	75	&	66.7	50
+death	[en]	frequency	global	tiny	61.1	&	58.7	&	59.9	&	86.6	&	68	&	64.7	44
+death	[en, fr, de]	frequency	occurrence	medium	53.3	&	53.3	&	53.3	&	73.1	&	75	&	53.3	40
+death	[en]	frequency	occurrence	medium	52.7	&	52.0	&	52.3	&	72.0	&	72	&	54.2	39
+death	[en]	frequency	global	small	48.6	&	48.0	&	48.3	&	85.7	&	69	&	52.2	36
+death	[en, fr, de]	frequency	global	small	48.0	&	48.0	&	48.0	&	82.8	&	75	&	48.0	36
+death	[en, fr, de]	frequency	occurrence	large	48.0	&	48.0	&	48.0	&	69.1	&	75	&	48.0	36
+death	[en]	frequency	occurrence	large	45.9	&	45.3	&	45.6	&	67.9	&	72	&	47.2	34
+death	[en]	frequency	global	medium	25.7	&	25.3	&	25.5	&	72.0	&	72	&	26.4	19
+death	[en]	frequency	global	large	23.0	&	22.7	&	22.8	&	67.9	&	72	&	23.6	17
+death	[en, fr, de]	frequency	global	medium	21.3	&	21.3	&	21.3	&	73.1	&	75	&	21.3	16
+death	[en, fr, de]	frequency	global	large	17.3	&	17.3	&	17.3	&	69.1	&	75	&	17.3	13

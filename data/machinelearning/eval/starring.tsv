@@ -1,0 +1,48 @@
+starring	[en, fr, de]	frequency	domain	medium	62.7	&	56.0	&	59.2	&	75.5	&	57	&	73.7	42
+starring	[en, fr, de]	frequency	domain	large	60.3	&	54.7	&	57.3	&	69.8	&	60	&	68.3	41
+starring	[en]	frequency	global	small	67.9	&	48.0	&	56.3	&	83.7	&	40	&	90.0	36
+starring	[en, fr, de]	frequency	global	small	58.1	&	48.0	&	52.6	&	80.4	&	48	&	75.0	36
+starring	[en]	frequency	domain	medium	59.3	&	46.7	&	52.2	&	75.9	&	46	&	76.1	35
+starring	[en, fr, de]	frequency	global	medium	55.2	&	49.3	&	52.1	&	75.5	&	57	&	64.9	37
+starring	[en, fr, de]	frequency	global	large	54.4	&	49.3	&	51.7	&	69.8	&	60	&	61.7	37
+starring	[en]	frequency	global	tiny	68.9	&	41.3	&	51.7	&	90.4	&	35	&	88.6	31
+starring	[en, fr, de]	frequency	occurrence	tiny	59.6	&	45.3	&	51.5	&	87.5	&	44	&	77.3	34
+starring	[en, fr, de]	frequency	global	tiny	57.9	&	44.0	&	50.0	&	87.5	&	44	&	75.0	33
+starring	[en, fr, de]	frequency	occurrence	medium	52.2	&	46.7	&	49.3	&	75.5	&	57	&	61.4	35
+starring	[en]	frequency	domain	large	55.0	&	44.0	&	48.9	&	69.7	&	49	&	67.3	33
+starring	[en, fr, de]	frequency	domain	tiny	56.1	&	42.7	&	48.5	&	87.5	&	44	&	72.7	32
+starring	[en]	frequency	occurrence	tiny	64.4	&	38.7	&	48.3	&	90.4	&	35	&	82.9	29
+starring	[en, fr, de]	frequency	domain	small	53.2	&	44.0	&	48.2	&	80.4	&	48	&	68.8	33
+starring	[en]	frequency	global	medium	54.2	&	42.7	&	47.8	&	75.9	&	46	&	69.6	32
+starring	[en, fr, de]	frequency	occurrence	small	51.6	&	42.7	&	46.7	&	80.4	&	48	&	66.7	32
+starring	[en]	frequency	occurrence	small	54.7	&	38.7	&	45.3	&	83.7	&	40	&	72.5	29
+starring	[en]	frequency	domain	small	54.7	&	38.7	&	45.3	&	83.7	&	40	&	72.5	29
+starring	[en, fr, de]	frequency	occurrence	large	45.6	&	41.3	&	43.4	&	69.8	&	60	&	51.7	31
+starring	[en]	frequency	domain	tiny	57.8	&	34.7	&	43.3	&	90.4	&	35	&	74.3	26
+starring	[en]	frequency	occurrence	medium	47.5	&	37.3	&	41.8	&	75.9	&	46	&	60.9	28
+starring	[en]	frequency	global	large	46.7	&	37.3	&	41.5	&	69.7	&	49	&	57.1	28
+starring	[en]	frequency	occurrence	large	41.7	&	33.3	&	37.0	&	69.7	&	49	&	51.0	25
+starring	[en, fr, de]	frequency	domain	medium	62.7	&	56.0	&	59.2	&	75.5	&	57	&	73.7	42
+starring	[en, fr, de]	frequency	domain	large	60.3	&	54.7	&	57.3	&	69.8	&	60	&	68.3	41
+starring	[en]	frequency	global	small	67.9	&	48.0	&	56.3	&	83.7	&	40	&	90.0	36
+starring	[en, fr, de]	frequency	global	small	58.1	&	48.0	&	52.6	&	80.4	&	48	&	75.0	36
+starring	[en]	frequency	domain	medium	59.3	&	46.7	&	52.2	&	75.9	&	46	&	76.1	35
+starring	[en, fr, de]	frequency	global	medium	55.2	&	49.3	&	52.1	&	75.5	&	57	&	64.9	37
+starring	[en, fr, de]	frequency	global	large	54.4	&	49.3	&	51.7	&	69.8	&	60	&	61.7	37
+starring	[en]	frequency	global	tiny	68.9	&	41.3	&	51.7	&	90.4	&	35	&	88.6	31
+starring	[en, fr, de]	frequency	occurrence	tiny	59.6	&	45.3	&	51.5	&	87.5	&	44	&	77.3	34
+starring	[en, fr, de]	frequency	global	tiny	57.9	&	44.0	&	50.0	&	87.5	&	44	&	75.0	33
+starring	[en, fr, de]	frequency	occurrence	medium	52.2	&	46.7	&	49.3	&	75.5	&	57	&	61.4	35
+starring	[en]	frequency	domain	large	55.0	&	44.0	&	48.9	&	69.7	&	49	&	67.3	33
+starring	[en, fr, de]	frequency	domain	tiny	56.1	&	42.7	&	48.5	&	87.5	&	44	&	72.7	32
+starring	[en]	frequency	occurrence	tiny	64.4	&	38.7	&	48.3	&	90.4	&	35	&	82.9	29
+starring	[en, fr, de]	frequency	domain	small	53.2	&	44.0	&	48.2	&	80.4	&	48	&	68.8	33
+starring	[en]	frequency	global	medium	54.2	&	42.7	&	47.8	&	75.9	&	46	&	69.6	32
+starring	[en, fr, de]	frequency	occurrence	small	51.6	&	42.7	&	46.7	&	80.4	&	48	&	66.7	32
+starring	[en]	frequency	occurrence	small	54.7	&	38.7	&	45.3	&	83.7	&	40	&	72.5	29
+starring	[en]	frequency	domain	small	54.7	&	38.7	&	45.3	&	83.7	&	40	&	72.5	29
+starring	[en, fr, de]	frequency	occurrence	large	45.6	&	41.3	&	43.4	&	69.8	&	60	&	51.7	31
+starring	[en]	frequency	domain	tiny	57.8	&	34.7	&	43.3	&	90.4	&	35	&	74.3	26
+starring	[en]	frequency	occurrence	medium	47.5	&	37.3	&	41.8	&	75.9	&	46	&	60.9	28
+starring	[en]	frequency	global	large	46.7	&	37.3	&	41.5	&	69.7	&	49	&	57.1	28
+starring	[en]	frequency	occurrence	large	41.7	&	33.3	&	37.0	&	69.7	&	49	&	51.0	25

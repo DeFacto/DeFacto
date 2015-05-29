@@ -1,0 +1,48 @@
+nbateam	[en, fr, de]	frequency	domain	tiny	65.2	&	58.7	&	61.8	&	67.8	&	53	&	32.1	17
+nbateam	[en, fr, de]	frequency	domain	medium	64.9	&	58.0	&	61.3	&	58.4	&	63	&	27.0	17
+nbateam	[en, fr, de]	frequency	domain	small	63.3	&	58.8	&	61.0	&	69.1	&	58	&	27.6	16
+nbateam	[en, fr, de]	frequency	occurrence	small	60.2	&	58.1	&	59.1	&	69.1	&	58	&	25.9	15
+nbateam	[en, fr, de]	frequency	global	medium	62.1	&	55.4	&	58.6	&	58.4	&	63	&	23.8	15
+nbateam	[en, fr, de]	frequency	occurrence	tiny	60.4	&	56.7	&	58.5	&	67.8	&	53	&	28.3	15
+nbateam	[en, fr, de]	frequency	domain	large	62.5	&	54.1	&	58.0	&	50.6	&	68	&	23.5	16
+nbateam	[en, fr, de]	frequency	global	tiny	60.4	&	55.3	&	57.8	&	67.8	&	53	&	26.4	14
+nbateam	[en, fr, de]	frequency	occurrence	medium	60.8	&	54.0	&	57.2	&	58.4	&	63	&	22.2	14
+nbateam	[en, fr, de]	frequency	global	small	58.8	&	55.4	&	57.1	&	69.1	&	58	&	22.4	13
+nbateam	[en, fr, de]	frequency	global	large	60.6	&	51.4	&	55.6	&	50.6	&	68	&	20.6	14
+nbateam	[en]	frequency	domain	large	59.1	&	48.4	&	53.2	&	61.1	&	53	&	28.3	15
+nbateam	[en]	frequency	domain	medium	60.3	&	47.2	&	52.9	&	68.6	&	44	&	36.4	16
+nbateam	[en]	frequency	domain	small	61.4	&	46.2	&	52.7	&	75.8	&	39	&	38.5	15
+nbateam	[en, fr, de]	frequency	occurrence	large	57.0	&	48.8	&	52.6	&	50.6	&	68	&	17.6	12
+nbateam	[en]	frequency	global	medium	57.8	&	47.0	&	51.9	&	68.6	&	44	&	34.1	15
+nbateam	[en]	frequency	global	large	56.3	&	47.8	&	51.7	&	61.1	&	53	&	26.4	14
+nbateam	[en]	frequency	occurrence	medium	54.2	&	47.4	&	50.6	&	68.6	&	44	&	34.1	15
+nbateam	[en]	frequency	global	small	57.1	&	44.6	&	50.1	&	75.8	&	39	&	35.9	14
+nbateam	[en]	frequency	occurrence	large	53.6	&	46.6	&	49.9	&	61.1	&	53	&	26.4	14
+nbateam	[en]	frequency	occurrence	small	53.5	&	45.3	&	49.1	&	75.8	&	39	&	35.9	14
+nbateam	[en]	frequency	domain	tiny	60.2	&	41.1	&	48.8	&	71.2	&	33	&	42.4	14
+nbateam	[en]	frequency	global	tiny	56.7	&	38.9	&	46.2	&	71.2	&	33	&	39.4	13
+nbateam	[en]	frequency	occurrence	tiny	49.4	&	41.0	&	44.8	&	71.2	&	33	&	36.4	12
+nbateam	[en, fr, de]	frequency	domain	tiny	65.2	&	58.7	&	61.8	&	67.8	&	53	&	32.1	17
+nbateam	[en, fr, de]	frequency	domain	medium	64.9	&	58.0	&	61.3	&	58.4	&	63	&	27.0	17
+nbateam	[en, fr, de]	frequency	domain	small	63.3	&	58.8	&	61.0	&	69.1	&	58	&	27.6	16
+nbateam	[en, fr, de]	frequency	occurrence	small	60.2	&	58.1	&	59.1	&	69.1	&	58	&	25.9	15
+nbateam	[en, fr, de]	frequency	global	medium	62.1	&	55.4	&	58.6	&	58.4	&	63	&	23.8	15
+nbateam	[en, fr, de]	frequency	occurrence	tiny	60.4	&	56.7	&	58.5	&	67.8	&	53	&	28.3	15
+nbateam	[en, fr, de]	frequency	domain	large	62.5	&	54.1	&	58.0	&	50.6	&	68	&	23.5	16
+nbateam	[en, fr, de]	frequency	global	tiny	60.4	&	55.3	&	57.8	&	67.8	&	53	&	26.4	14
+nbateam	[en, fr, de]	frequency	occurrence	medium	60.8	&	54.0	&	57.2	&	58.4	&	63	&	22.2	14
+nbateam	[en, fr, de]	frequency	global	small	58.8	&	55.4	&	57.1	&	69.1	&	58	&	22.4	13
+nbateam	[en, fr, de]	frequency	global	large	60.6	&	51.4	&	55.6	&	50.6	&	68	&	20.6	14
+nbateam	[en]	frequency	domain	large	59.1	&	48.4	&	53.2	&	61.1	&	53	&	28.3	15
+nbateam	[en]	frequency	domain	medium	60.3	&	47.2	&	52.9	&	68.6	&	44	&	36.4	16
+nbateam	[en]	frequency	domain	small	61.4	&	46.2	&	52.7	&	75.8	&	39	&	38.5	15
+nbateam	[en, fr, de]	frequency	occurrence	large	57.0	&	48.8	&	52.6	&	50.6	&	68	&	17.6	12
+nbateam	[en]	frequency	global	medium	57.8	&	47.0	&	51.9	&	68.6	&	44	&	34.1	15
+nbateam	[en]	frequency	global	large	56.3	&	47.8	&	51.7	&	61.1	&	53	&	26.4	14
+nbateam	[en]	frequency	occurrence	medium	54.2	&	47.4	&	50.6	&	68.6	&	44	&	34.1	15
+nbateam	[en]	frequency	global	small	57.1	&	44.6	&	50.1	&	75.8	&	39	&	35.9	14
+nbateam	[en]	frequency	occurrence	large	53.6	&	46.6	&	49.9	&	61.1	&	53	&	26.4	14
+nbateam	[en]	frequency	occurrence	small	53.5	&	45.3	&	49.1	&	75.8	&	39	&	35.9	14
+nbateam	[en]	frequency	domain	tiny	60.2	&	41.1	&	48.8	&	71.2	&	33	&	42.4	14
+nbateam	[en]	frequency	global	tiny	56.7	&	38.9	&	46.2	&	71.2	&	33	&	39.4	13
+nbateam	[en]	frequency	occurrence	tiny	49.4	&	41.0	&	44.8	&	71.2	&	33	&	36.4	12

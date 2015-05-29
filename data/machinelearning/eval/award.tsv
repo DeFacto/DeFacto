@@ -1,0 +1,120 @@
+award	[en, fr, de]	frequency	occurrence	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	domain	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	domain	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	global	tiny	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	domain	tiny	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en, fr, de]	frequency	global	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	domain	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	medium	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	large	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en, fr, de]	frequency	occurrence	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	domain	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	domain	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	global	tiny	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	domain	tiny	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en, fr, de]	frequency	global	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	domain	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	medium	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	large	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en, fr, de]	frequency	occurrence	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	domain	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	domain	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	global	tiny	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	domain	tiny	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en, fr, de]	frequency	global	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	domain	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	medium	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	large	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en, fr, de]	frequency	occurrence	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	domain	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	domain	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	global	tiny	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	domain	tiny	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en, fr, de]	frequency	global	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	domain	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	medium	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	large	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en, fr, de]	frequency	occurrence	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	tiny	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	small	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	domain	medium	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	occurrence	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	global	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en, fr, de]	frequency	domain	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	occurrence	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	domain	large	100.0	&	98.7	&	99.3	&	100.0	&	74	&	100.0	74
+award	[en]	frequency	global	tiny	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	domain	tiny	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en, fr, de]	frequency	global	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	domain	small	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	medium	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73
+award	[en]	frequency	global	large	98.6	&	97.3	&	98.0	&	100.0	&	74	&	98.6	73

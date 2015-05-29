@@ -1,0 +1,48 @@
+publication	[en, fr, de]	frequency	global	large	74.7	&	74.7	&	74.7	&	79.4	&	72	&	77.8	56
+publication	[en, fr, de]	frequency	global	medium	73.0	&	72.0	&	72.5	&	78.8	&	71	&	76.1	54
+publication	[en, fr, de]	frequency	global	small	72.0	&	72.0	&	72.0	&	81.8	&	70	&	77.1	54
+publication	[en, fr, de]	frequency	occurrence	tiny	70.8	&	68.0	&	69.4	&	86.0	&	68	&	75.0	51
+publication	[en, fr, de]	frequency	global	tiny	70.8	&	68.0	&	69.4	&	86.0	&	68	&	75.0	51
+publication	[en, fr, de]	frequency	occurrence	small	65.3	&	65.3	&	65.3	&	81.8	&	70	&	70.0	49
+publication	[en, fr, de]	frequency	occurrence	medium	63.5	&	62.7	&	63.1	&	78.8	&	71	&	66.2	47
+publication	[en, fr, de]	frequency	occurrence	large	62.7	&	62.7	&	62.7	&	79.4	&	72	&	65.3	47
+publication	[en, fr, de]	frequency	domain	small	60.0	&	60.0	&	60.0	&	81.8	&	70	&	64.3	45
+publication	[en]	frequency	global	large	60.3	&	58.7	&	59.5	&	72.8	&	67	&	65.7	44
+publication	[en, fr, de]	frequency	domain	medium	59.5	&	58.7	&	59.1	&	78.8	&	71	&	62.0	44
+publication	[en, fr, de]	frequency	domain	tiny	59.7	&	57.3	&	58.5	&	86.0	&	68	&	63.2	43
+publication	[en, fr, de]	frequency	domain	large	57.3	&	57.3	&	57.3	&	79.4	&	72	&	59.7	43
+publication	[en]	frequency	occurrence	medium	58.3	&	56.0	&	57.1	&	77.1	&	63	&	66.7	42
+publication	[en]	frequency	occurrence	tiny	59.4	&	54.7	&	56.9	&	83.5	&	56	&	73.2	41
+publication	[en]	frequency	global	medium	56.9	&	54.7	&	55.8	&	77.1	&	63	&	65.1	41
+publication	[en]	frequency	global	tiny	58.0	&	53.3	&	55.6	&	83.5	&	56	&	71.4	40
+publication	[en]	frequency	global	small	55.6	&	53.3	&	54.4	&	79.5	&	58	&	69.0	40
+publication	[en]	frequency	occurrence	large	54.8	&	53.3	&	54.1	&	72.8	&	67	&	59.7	40
+publication	[en]	frequency	occurrence	small	54.2	&	52.0	&	53.1	&	79.5	&	58	&	67.2	39
+publication	[en]	frequency	domain	medium	51.4	&	49.3	&	50.3	&	77.1	&	63	&	58.7	37
+publication	[en]	frequency	domain	large	49.3	&	48.0	&	48.6	&	72.8	&	67	&	53.7	36
+publication	[en]	frequency	domain	small	47.2	&	45.3	&	46.3	&	79.5	&	58	&	58.6	34
+publication	[en]	frequency	domain	tiny	47.8	&	44.0	&	45.8	&	83.5	&	56	&	58.9	33
+publication	[en, fr, de]	frequency	global	large	74.7	&	74.7	&	74.7	&	79.4	&	72	&	77.8	56
+publication	[en, fr, de]	frequency	global	medium	73.0	&	72.0	&	72.5	&	78.8	&	71	&	76.1	54
+publication	[en, fr, de]	frequency	global	small	72.0	&	72.0	&	72.0	&	81.8	&	70	&	77.1	54
+publication	[en, fr, de]	frequency	occurrence	tiny	70.8	&	68.0	&	69.4	&	86.0	&	68	&	75.0	51
+publication	[en, fr, de]	frequency	global	tiny	70.8	&	68.0	&	69.4	&	86.0	&	68	&	75.0	51
+publication	[en, fr, de]	frequency	occurrence	small	65.3	&	65.3	&	65.3	&	81.8	&	70	&	70.0	49
+publication	[en, fr, de]	frequency	occurrence	medium	63.5	&	62.7	&	63.1	&	78.8	&	71	&	66.2	47
+publication	[en, fr, de]	frequency	occurrence	large	62.7	&	62.7	&	62.7	&	79.4	&	72	&	65.3	47
+publication	[en, fr, de]	frequency	domain	small	60.0	&	60.0	&	60.0	&	81.8	&	70	&	64.3	45
+publication	[en]	frequency	global	large	60.3	&	58.7	&	59.5	&	72.8	&	67	&	65.7	44
+publication	[en, fr, de]	frequency	domain	medium	59.5	&	58.7	&	59.1	&	78.8	&	71	&	62.0	44
+publication	[en, fr, de]	frequency	domain	tiny	59.7	&	57.3	&	58.5	&	86.0	&	68	&	63.2	43
+publication	[en, fr, de]	frequency	domain	large	57.3	&	57.3	&	57.3	&	79.4	&	72	&	59.7	43
+publication	[en]	frequency	occurrence	medium	58.3	&	56.0	&	57.1	&	77.1	&	63	&	66.7	42
+publication	[en]	frequency	occurrence	tiny	59.4	&	54.7	&	56.9	&	83.5	&	56	&	73.2	41
+publication	[en]	frequency	global	medium	56.9	&	54.7	&	55.8	&	77.1	&	63	&	65.1	41
+publication	[en]	frequency	global	tiny	58.0	&	53.3	&	55.6	&	83.5	&	56	&	71.4	40
+publication	[en]	frequency	global	small	55.6	&	53.3	&	54.4	&	79.5	&	58	&	69.0	40
+publication	[en]	frequency	occurrence	large	54.8	&	53.3	&	54.1	&	72.8	&	67	&	59.7	40
+publication	[en]	frequency	occurrence	small	54.2	&	52.0	&	53.1	&	79.5	&	58	&	67.2	39
+publication	[en]	frequency	domain	medium	51.4	&	49.3	&	50.3	&	77.1	&	63	&	58.7	37
+publication	[en]	frequency	domain	large	49.3	&	48.0	&	48.6	&	72.8	&	67	&	53.7	36
+publication	[en]	frequency	domain	small	47.2	&	45.3	&	46.3	&	79.5	&	58	&	58.6	34
+publication	[en]	frequency	domain	tiny	47.8	&	44.0	&	45.8	&	83.5	&	56	&	58.9	33
