@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/LeBron_James>
+        rdfs:label     "LeBron James"@de , "LeBron James"@fr , "LeBron James"@en ;
+        dbo:birth      <http://dbpedia.org/resource/LeBron_James__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/LeBron_James> , <http://fr.dbpedia.org/resource/LeBron_James> ;
+        skos:altLabel  "Leron james"@fr , "Leron james"@de , "Leron james"@en , "LeBron James"@fr , "LeBron James"@de , "LeBron James"@en , "King James"@fr , "Le Bron James"@fr , "Lebron james"@fr , "Lebron james"@en , "Lebron james"@de , "King LeBron"@fr , "King LeBron"@de , "King LeBron"@en , "LB23"@fr , "LB23"@de , "LB23"@en , "James, LeBron Raymone"@fr , "James, LeBron Raymone"@en , "James, LeBron Raymone"@de , "LeBron"@fr , "LeBron"@en , "LeBron"@de , "LaBron James"@fr , "Lebron James"@fr , "LaBron James"@de , "Lebron James"@en , "LaBron James"@en , "Lebron James"@de , "The Decision"@fr , "The Decision"@en , "The Decision"@de , "Savannah Brinson"@fr , "Savannah Brinson"@en , "Savannah Brinson"@de , "James, LeBron"@fr , "James, LeBron"@en , "James, LeBron"@de , "Bron Bron"@fr , "Bron Bron"@en , "Bron Bron"@de , "James"@fr , "LeBron Jim"@fr , "LeBron Jim"@en , "LeBron Jim"@de , "LeBron Witness Shirt"@fr , "Dunkman"@fr , "LeBron Witness Shirt"@de , "Dunkman"@en , "LeBron Witness Shirt"@en , "Dunkman"@de , "Lebron"@fr , "Lebron"@de , "Lebron"@en , "Lebron Raymone James"@fr , "Lebron Raymone James"@en , "Lebron Raymone James"@de , "The Little Emperor"@fr , "LeBron Raymone James"@fr , "The Little Emperor"@de , "LeBron Raymone James"@en , "The Little Emperor"@en , "LeBron Raymone James"@de , "Le bron james"@fr , "Le bron james"@de , "Le bron james"@en .
+
+<http://dbpedia.org/resource/LeBron_James__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Akron,_Ohio> ;
+        dbo:from        "1984-12-30"^^xsd:date ;
+        dbo:to          "1984-12-30"^^xsd:date .
+
+<http://dbpedia.org/resource/Akron,_Ohio>
+        rdfs:label     "Akron, Ohio"@de , "Akron, Ohio"@fr , "Akron, Ohio"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Akron> , <http://fr.dbpedia.org/resource/Akron_(Ohio)> ;
+        skos:altLabel  "Akron Ohio"@en , "Akron Ohio"@de , "Akron Ohio"@fr , "Akron, oh"@fr , "Akron, oh"@en , "Akron, oh"@de , "Downtown Akron, OH"@en , "Downtown Akron, OH"@de , "Downtown Akron, OH"@fr , "Akron, Oh"@en , "Akron, Oh"@de , "Akron, Oh"@fr , "Akron"@fr , "Akron"@en , "Akron"@de , "Ohio Akron"@fr , "Ohio Akron"@en , "Ohio Akron"@de , "Rubber City"@en , "Rubber City"@de , "Rubber City"@fr , "Akron Police Department"@en , "Akron Police Department"@de , "Akron Police Department"@fr , "Downtown Akron, Ohio"@fr , "Downtown Akron, Ohio"@en , "Downtown Akron, Ohio"@de , "Ak rowdy"@fr , "Ak rowdy"@en , "Ak rowdy"@de , "Akron, Ohio Police"@fr , "Akron, Ohio"@en , "Akron, Ohio"@de , "Akron, Ohio"@fr , "LOCODE:USAKH"@fr , "Akron, Ohio Police"@en , "Akron, Ohio Police"@de , "LOCODE:USAKH"@en , "LOCODE:USAKH"@de , "Akron, OH"@en , "Akron, OH"@de , "Akron, OH"@fr .

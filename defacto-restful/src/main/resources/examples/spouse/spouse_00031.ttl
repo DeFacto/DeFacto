@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02pl5rm>
+        rdfs:label     "Hiroko Hatano"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.02pl5rm__31> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/> , <http://fr.dbpedia.org/resource/> , <http://dbpedia.org/resource/Hiroko_Hatano> ;
+        skos:altLabel  "Hatano Hiroko"@en , "Hiroko Hatano"@en , "Hiroko"@en , "鈴木 浩子"@en , "畑野浩子"@en .
+
+<http://rdf.freebase.com/ns/m.02pl5rm__31>
+        dbo:from    "2004-06"^^xsd:gYearMonth ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.0gbwtgv> ;
+        dbo:to      "2006-02-25"^^xsd:date .
+
+<http://rdf.freebase.com/ns/m.0gbwtgv>
+        rdfs:label     "Takashi Kashiwabara"@en ;
+        skos:altLabel  "Takashi"@en .

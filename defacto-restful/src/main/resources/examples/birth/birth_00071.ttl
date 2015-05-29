@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Ringo_Starr__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Liverpool> ;
+        dbo:from        "1940-07-07"^^xsd:date ;
+        dbo:to          "1940-07-07"^^xsd:date .
+
+<http://dbpedia.org/resource/Liverpool>
+        rdfs:label     "Liverpool"@de , "Liverpool"@fr , "Liverpool"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Liverpool> , <http://fr.dbpedia.org/resource/Liverpool> ;
+        skos:altLabel  "Palthania"@fr , "Palthania"@en , "Palthania"@de , "Archive 1"@fr , "Archive 1"@en , "Archive 1"@de , "Liverpool, UK"@fr , "Liverpool, UK"@en , "Liverpool, UK"@de , "Liverpool, Britain"@fr , "Liverpool, Britain"@en , "Liverpool, Britain"@de , "Palfania"@fr , "Palfania"@en , "Palfania"@de , "Scouseland"@fr , "Scouseland"@de , "Scouseland"@en , "Palvania"@fr , "Palvania"@de , "Palvania"@en , "County Borough of Liverpool"@fr , "County Borough of Liverpool"@en , "County Borough of Liverpool"@de , "GB-LIV"@de , "Liverpool"@fr , "Landmarks in Liverpool"@fr , "Landmarks in Liverpool"@en , "Landmarks in Liverpool"@de , "Liverpool"@en , "Liverpool"@de , "Liverpool, England"@fr , "Liverpool, England"@en , "Liverpool, England"@de , "Liverpool, Merseyside"@fr , "Liverpool, Merseyside"@de , "Liverpool, Merseyside"@en , "Liverpool – Maritime Mercantile City"@fr , "Liverpool – Maritime Mercantile City"@en , "Liverpool – Maritime Mercantile City"@de , "Metropolitan Borough of Liverpool"@fr , "Metropolitan Borough of Liverpool"@de , "Metropolitan Borough of Liverpool"@en , "The weather in Liverpool"@fr , "The weather in Liverpool"@de , "The weather in Liverpool"@en , "Lerpwl"@fr , "Lerpwl"@en , "Lerpwl"@de , "Liverpudlians"@fr , "Liverpudlians"@de , "Liverpudlians"@en , "Liverpudlian"@fr , "Liverpudlian"@en , "Liverpudlian"@de , "L'POOL"@fr , "L'POOL"@en , "L'POOL"@de .
+
+<http://dbpedia.org/resource/Ringo_Starr>
+        rdfs:label     "Ringo Starr"@de , "Ringo Starr"@fr , "Ringo Starr"@en ;
+        dbo:birth      <http://dbpedia.org/resource/Ringo_Starr__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Ringo_Starr> , <http://fr.dbpedia.org/resource/Ringo_Starr> ;
+        skos:altLabel  "Richie Snare"@fr , "Richie Snare"@en , "Richie Snare"@de , "Ringo Starr"@fr , "Ringo Starr"@en , "Ringo Starr"@de , "Ringo"@fr , "Ringo Starr filmography"@en , "Ringo Starr filmography"@de , "Ringo Starr filmography"@fr , "Ringo"@en , "Ringo"@de , "Richard Starrkey"@fr , "Richard Starrkey"@de , "Richard Starrkey"@en , "Starr"@fr , "Starr"@de , "Ringo Starr Filmography"@fr , "Ringo Starr Filmography"@en , "Ringo Starr Filmography"@de , "Starr, Ringo"@fr , "Starr, Ringo"@en , "Starr, Ringo"@de , "Richard Henry Parkin Starkey Jr."@fr , "Richard Henry Parkin Starkey Jr."@en , "Richard Henry Parkin Starkey Jr."@de , "Ringo Star"@fr , "Ringo Star"@en , "Ringo Star"@de , "Richard Starkey"@fr , "Richard Starkey"@en , "Richard Starkey"@de , "Richard Starky"@fr , "Richard Starky"@en , "Richard Starky"@de , "Beatle Ringo"@fr , "Beatle Ringo"@en , "Beatle Ringo"@de , "Ringo starkey"@fr , "Ringo starkey"@en , "Ringo starkey"@de , "Ringo starr"@fr , "Ringo starr"@en , "Ringo starr"@de , "Ringo Starkey"@fr , "Ringo Starkey"@en , "Ringo Starkey"@de , "Filmography of Ringo Starr"@fr , "Filmography of Ringo Starr"@en , "Filmography of Ringo Starr"@de .

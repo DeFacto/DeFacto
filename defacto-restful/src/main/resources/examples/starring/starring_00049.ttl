@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Mad_Max>
+        rdfs:label      "Mad Max"@en , "Mad Max"@fr , "Mad Max"@de ;
+        dbo:isStarring  <http://dbpedia.org/resource/Mad_Max__1> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Mad_Max> , <http://fr.dbpedia.org/resource/Mad_Max> ;
+        skos:altLabel   "Mad Max 2 : le défi"@fr , "Madmax"@fr , "Madmax"@de , "Madmax"@en , "Mad Max III"@fr , "Mad max 1"@fr , "Mad max 1"@de , "Mad max 1"@en , "Mad Max 2 : le defi"@fr , "Mad max"@fr , "Mad max"@de , "Mad max"@en , "Main Force Patrol"@fr , "Main Force Patrol"@de , "Main Force Patrol"@en , "Mad Max"@fr , "Mad Max"@de , "Mad Max"@en .
+
+<http://dbpedia.org/resource/Steve_Bisley>
+        rdfs:label     "Steve Bisley"@en , "Steve Bisley"@fr , "Steve Bisley"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Steve_Bisley> ;
+        skos:altLabel  "Steve Bisley"@fr .
+
+<http://dbpedia.org/resource/Mad_Max__1>
+        dbo:from      "1979-04-12"^^xsd:date ;
+        dbo:starring  <http://dbpedia.org/resource/Steve_Bisley> ;
+        dbo:to        "1979-04-12"^^xsd:date .

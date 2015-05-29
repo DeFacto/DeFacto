@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03svg3>
+        rdfs:label  "Ascend Communications"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/Ascend_Communications> .
+
+<http://dbpedia.org/resource/Ascend_Communications>
+        skos:altLabel  "Ascend Communications"@en .
+
+<http://rdf.freebase.com/ns/m.04m53>
+        rdfs:label       "Lucent"@en , "Lucent Technologies"@de , "Lucent Technologies"@fr ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.04m53__5> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/Lucent_Technologies> , <http://dbpedia.org/resource/Lucent> , <http://fr.dbpedia.org/resource/Lucent_Technologies> ;
+        skos:altLabel    "Lucent Technologies Network Systems GmbH"@de , "Lucent Technologies, Inc."@fr , "Octel Communications Corp."@fr , "Lucent"@fr , "Octel Communications Corp."@de , "Lucent"@de , "Alcatel-Lucent USA"@fr , "Lucent Technologies, Inc."@de , "Alcatel-Lucent USA"@de , "Groupe Lucent Technologies"@fr , "TeKaDe"@de , "Octel Communications"@fr , "Lucent Technologies Inc."@fr , "Octel Communications"@de , "Lucent Technologies Inc."@de , "Lucent Technologies"@fr , "Lucent Technologies"@de , "LambdaXtreme"@fr , "LambdaXtreme"@de .
+
+<http://rdf.freebase.com/ns/m.04m53__5>
+        dbo:from        "1999"^^xsd:gYear ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.03svg3> ;
+        dbo:to          "1999"^^xsd:gYear .

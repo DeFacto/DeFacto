@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03hhd12>
+        rdfs:label     "William Duell"@de , "William Duell"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/William_Duell> , <http://dbpedia.org/resource/William_Duell> ;
+        skos:altLabel  "William Duell"@de , "Duell"@de , "George William Duell"@en , "Darwin William Duell"@en .
+
+<http://rdf.freebase.com/ns/m.0j6dznw__73>
+        dbo:from    "2004"^^xsd:gYear ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.03hhd12> ;
+        dbo:to      "2011-12-22"^^xsd:date .
+
+<http://rdf.freebase.com/ns/m.0j6dznw>
+        rdfs:label    "Mary Barto"@en ;
+        dbo:marriage  <http://rdf.freebase.com/ns/m.0j6dznw__73> .

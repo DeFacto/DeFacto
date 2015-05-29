@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Malaysia>
+        rdfs:label     "Malaysia"@de , "Malaysia"@fr , "Malaysia"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Malaysia> , <http://fr.dbpedia.org/resource/Malaisie> ;
+        skos:altLabel  "Name of Malaysia"@fr , "Name of Malaysia"@en , "Name of Malaysia"@de , "ISO 3166-1:MY"@fr , "ISO 3166-1:MY"@de , "ISO 3166-1:MY"@en , "Malaysia sports"@fr , "Malaysia sports"@de , "Malaysia sports"@en , "Republic of Malaysia"@fr , "Republic of Malaysia"@de , "Republic of Malaysia"@en , "MSIA"@fr , "MSIA"@en , "MSIA"@de , "Subdivisions of Malaysia"@fr , "Subdivisions of Malaysia"@en , "Subdivisions of Malaysia"@de , "Malaya"@fr , "Malaya"@de , "Malaya"@en , "Maylasia"@fr , "Maylasia"@en , "Maylasia"@de , "Fédération de Malaysia"@fr , "MALAYSIA"@fr , "Federation state of Malaysia"@fr , "Islam in Malaysia"@de , "MALAYSIA"@de , "Federation state of Malaysia"@en , "Federation state of Malaysia"@de , "MALAYSIA"@en , "Federation de Malaysia"@fr , "M'sia"@fr , "M'sia"@en , "M'sia"@de , "Malaysian Federation"@fr , "Malaysian Federation"@de , "Malaysian Federation"@en , "Malaysians"@fr , "Malaysians"@de , "Malaysians"@en , "Malayasia"@fr , "Malayasia"@de , "Malayasia"@en , "Maylaysia"@fr , "Maylaysia"@de , "Maylaysia"@en , "Malaixiya"@fr , "Malaixiya"@de , "Malaixiya"@en , "Malais"@fr , "Embassy of Malaysia"@fr , "Embassy of Malaysia"@de , "Embassy of Malaysia"@en , "Malyasia"@fr , "Malaysie"@fr , "Malasia"@fr , "Malasia"@en , "Malasia"@de , "Malyasia"@de , "Malyasia"@en , "Malaisia"@fr , "Malaisie"@fr , "Malaisia"@de , "Malaisia"@en , "Malaisie"@de , "Malaisie"@en , "Malaise"@fr , "Malaysien"@de , "Persekutuan Malaysia"@fr , "Malay"@fr , "Malay"@de , "Malay"@en , "Persekutuan Malaysia"@de , "Persekutuan Malaysia"@en , "Federation of Malaysia"@fr , "Federation of Malaysia"@de , "Federation of Malaysia"@en , "Etymology of Malaysia"@fr , "Etymology of Malaysia"@en , "Etymology of Malaysia"@de , "Malaysia"@fr , "Malaysia"@de , "Malaysia"@en .
+
+<http://dbpedia.org/resource/Hussein_Onn__1>
+        dbo:from    "1976-01-15"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Malaysia> ;
+        dbo:to      "1981-07-16"^^xsd:date .
+
+<http://dbpedia.org/resource/Hussein_Onn>
+        rdfs:label     "Hussein Onn"@en , "Hussein Onn"@fr , "Hussein Onn"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Hussein_Onn__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Hussein_Onn> , <http://de.dbpedia.org/resource/Hussein_Onn> ;
+        skos:altLabel  "Hussein"@fr , "Hussein bin Onn"@fr , "Hussein bin Onn"@de , "Tun Hussein bin Dato' Onn"@fr , "Tun Hussein bin Dato' Onn"@de , "Datuk Huseein bin Onn"@fr , "Datuk Huseein bin Onn"@de , "Hussein bin Dato' Onn"@fr , "Hussein bin Dato' Onn"@de , "Hussein Onn"@fr , "Hussein Onn"@de , "Tun Hussein Onn"@fr , "Tun Hussein Onn"@de , "Datuk Tun Hussien Onn"@fr , "Datuk Tun Hussien Onn"@de .

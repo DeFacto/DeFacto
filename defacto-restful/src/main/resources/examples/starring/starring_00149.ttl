@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Edward_Scissorhands>
+        rdfs:label      "Edward Scissorhands"@en , "Edward Scissorhands"@fr , "Edward Scissorhands"@de ;
+        dbo:isStarring  <http://dbpedia.org/resource/Edward_Scissorhands__1> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Edward_aux_mains_d'argent> , <http://de.dbpedia.org/resource/Edward_mit_den_Scherenhänden> ;
+        skos:altLabel   "Edward aux mains d'argent"@fr , "Edward mit den Scherenhänden"@de , "Edward Aux Mains D'argent"@fr , "Edward Scissorhands"@fr , "Edward Scissorhands"@de , "Edward Scissorhands"@en , "Edward aux mains d'Argent"@fr , "Edward mit den Scherenhanden"@de , "Edward Scissor Hands"@fr , "Edward Scissor Hands"@de , "Edward Scissor Hands"@en , "Edward aux mains d’argent"@fr , "Edward scissorhands"@fr , "Edward scissorhands"@de , "Edward scissorhands"@en , "Edward ScissorHands"@fr , "Edward ScissorHands"@de , "Edward ScissorHands"@en .
+
+<http://dbpedia.org/resource/Vincent_Price>
+        rdfs:label     "Vincent Price"@en , "Vincent Price"@fr , "Vincent Price"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Vincent_Price> , <http://de.dbpedia.org/resource/Vincent_Price> ;
+        skos:altLabel  "Price"@fr , "Vincent Leonard Price"@fr , "Vincent L. Price"@de , "Vincent"@de , "Vincent Leonard Price"@de , "Vincent L. Price"@en , "Vincent"@en , "Vincent Leonard Price"@en , "Vincent price"@fr , "Vincent Price"@fr , "Vincent Price"@de , "Vincent Price"@en , "Vincent price"@de , "Vincent price"@en , "Vincent L. Price"@fr , "Vincent"@fr .
+
+<http://dbpedia.org/resource/Edward_Scissorhands__1>
+        dbo:from      "1990-12-07"^^xsd:date ;
+        dbo:starring  <http://dbpedia.org/resource/Vincent_Price> ;
+        dbo:to        "1990-12-07"^^xsd:date .

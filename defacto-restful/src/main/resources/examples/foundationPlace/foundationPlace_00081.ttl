@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Platform_Computing>
+        skos:altLabel  "Platform Computing"@en .
+
+<http://rdf.freebase.com/ns/m.082nvy__81>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0h7h6> ;
+        dbo:from             "1992"^^xsd:gYear ;
+        dbo:to               "1992"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0h7h6>
+        rdfs:label     "Toronto"@fr , "Toronto"@de , "Toronto"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Toronto> , <http://dbpedia.org/resource/Toronto> , <http://de.dbpedia.org/resource/Toronto> ;
+        skos:altLabel  "Toronto, Canada"@fr , "Toronto, Canada"@de , "Toronto, Canada"@en , "Edifice du gouvernement du Canada a North York"@fr , "Toronto, CA"@fr , "Toronto, CA"@de , "Toronto, CA"@en , "LOCODE:CATOR"@fr , "LOCODE:CATOR"@de , "LOCODE:CATOR"@en , "t.dot"@en , "Édifice du gouvernement du Canada à North York"@fr , "Toronto, Ontario Part 2"@fr , "Toronto, Ontario Part 2"@de , "Toronto, Ontario Part 2"@en , "Torontonian"@fr , "Torontonian"@de , "Torontonian"@en , "City of Toronto"@fr , "Toronto Police Service"@fr , "City of Toronto"@de , "City of Toronto"@en , "Toronto Municipality, Ontario"@fr , "The big tee oh"@fr , "Toronto Municipality, Ontario"@de , "Toronto Municipality, Ontario"@en , "The big tee oh"@de , "The big tee oh"@en , "York"@fr , "Toronto, Ontario"@fr , "Toronto, Ontario"@de , "Toronto, Ontario"@en , "Tdot"@fr , "Tdot"@de , "Tdot"@en , "The big to"@fr , "The big to"@de , "The big to"@en , "Service de police de Toronto"@fr , "Trawna"@fr , "Issues in Toronto, Ontario"@fr , "Toronto Ontario"@fr , "Issues in Toronto, Ontario"@de , "Issues in Toronto, Ontario"@en , "Trawna"@de , "Trawna"@en , "Toronto, Canada."@fr , "Toronto Ontario"@de , "Toronto, Canada."@de , "Toronto Ontario"@en , "Toronto, Canada."@en , "Toronto, Ontario, Canada"@fr , "Toronto, Ontario, Canada"@de , "Toronto, Ontario, Canada"@en , "Toronto, ON"@fr , "Torontonians"@fr , "Accordion City"@fr , "Toronto, ON"@de , "Accordion City"@de , "Accordion City"@en , "Torontonians"@de , "Toronto, ON"@en , "Torontonians"@en , "Toronto List of MPs and MPPs"@fr , "Toronto List of MPs and MPPs"@de , "Toronto List of MPs and MPPs"@en , "tranna"@en , "Torotno"@fr , "Torotno"@de , "Torotno"@en , "Highways within Greater Toronto Area"@fr , "Highways within Greater Toronto Area"@de , "Highways within Greater Toronto Area"@en , "T Dot"@en , "T-Dot"@fr , "T-Dot"@de , "T-Dot"@en , "List of City of Toronto Issues"@fr , "List of City of Toronto Issues"@de , "List of City of Toronto Issues"@en , "Torontorian"@fr , "History of crime in Toronto"@fr , "History of crime in Toronto"@de , "History of crime in Toronto"@en , "Torontorian"@de , "Torontorian"@en , "Toronto, ontario Part 2"@fr , "Toronto, ontario Part 2"@de , "Toronto, ontario Part 2"@en , "Toronto"@fr , "Toronto"@de , "Toronto"@en , "Tornonto, Ont."@fr , "Public Transportation in Toronto"@fr , "The weather in Toronto"@fr , "Tornonto, Ont."@de , "Public Transportation in Toronto"@de , "The weather in Toronto"@de , "Public Transportation in Toronto"@en , "The weather in Toronto"@en , "Tornonto, Ont."@en , "Issues of Toronto"@fr , "Issues of Toronto"@de , "Issues of Toronto"@en , "Toronto, Ontario."@fr , "Toronto, Ontario."@de , "Toronto, Ontario."@en , "Service de Police de Toronto"@fr , "T.O."@en , "List of Toronto MPs and MPPs"@fr , "Toronto Division"@fr , "List of Toronto MPs and MPPs"@de , "Toronto Division"@de , "Toronto Division"@en , "List of Toronto MPs and MPPs"@en .
+
+<http://rdf.freebase.com/ns/m.082nvy>
+        rdfs:label      "Platform Computing"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.082nvy__81> ;
+        owl:sameAs      <http://dbpedia.org/resource/Platform_Computing> .

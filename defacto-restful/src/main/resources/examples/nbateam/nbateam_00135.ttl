@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Martell_Webster__1>
+        dbo:from  "2006"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Portland_Trail_Blazers> ;
+        dbo:to    "2009"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Portland_Trail_Blazers>
+        rdfs:label     "Portland Trail Blazers"@de , "Portland Trail Blazers"@fr , "Portland Trail Blazers"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Trail_Blazers_de_Portland> , <http://de.dbpedia.org/resource/Portland_Trail_Blazers> ;
+        skos:altLabel  "Portland Blazers"@en , "Portland Blazers"@de , "Portland Blazers"@fr , "Portland Trial Blazers"@en , "Portland Trial Blazers"@de , "Portland Trial Blazers"@fr , "Blazermania"@en , "Blazermania"@de , "Blazermania"@fr , "Trailblazers de Portland"@fr , "Portland"@en , "Portland"@de , "Portland"@fr , "Trial Blazers"@en , "Trial Blazers"@de , "Trial Blazers"@fr , "Blazer"@fr , "Blazer"@en , "Blazer"@de , "Jail Blazers"@en , "Jail Blazers"@de , "Jail Blazers"@fr , "Portland TrailBlazers"@en , "Portland Trailblazers"@en , "Portland Trailblazers"@de , "Portland Trailblazers"@fr , "Portland TrailBlazers"@de , "Portland TrailBlazers"@fr , "Trail Blazers"@fr , "Trail Blazers"@en , "Trail Blazers"@de , "Trail Blazers de Portland"@fr , "Portland Trail Blazers"@fr , "Portland Trail Blazers"@en , "Trail blazers de portland"@fr , "Portland Trail Blazers"@de , "Blazers de Portland"@fr .
+
+<http://dbpedia.org/resource/Martell_Webster>
+        rdfs:label      "Martell Webster"@en , "Martell Webster"@fr , "Martell Webster"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Martell_Webster__1> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Martell_Webster> , <http://de.dbpedia.org/resource/Martell_Webster> ;
+        skos:altLabel   "Martell Webster"@fr , "Webster"@fr , "Martell Webster"@de .

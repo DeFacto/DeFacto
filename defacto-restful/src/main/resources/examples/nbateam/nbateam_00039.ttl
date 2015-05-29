@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Kwame_Brown__3>
+        dbo:from  "2007"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Memphis_Grizzlies> ;
+        dbo:to    "2007"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Kwame_Brown>
+        rdfs:label      "Kwame Brown"@en , "Kwame Brown"@fr , "Kwame Brown"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Kwame_Brown__3> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Kwame_Brown> , <http://fr.dbpedia.org/resource/Kwame_Brown> ;
+        skos:altLabel   "Kwame James Brown"@de , "Brown"@fr , "Kwame Brown"@fr , "Kwame Brown"@de , "Kwame"@de , "Kwame"@fr .
+
+<http://dbpedia.org/resource/Memphis_Grizzlies>
+        rdfs:label     "Memphis Grizzlies"@en , "Memphis Grizzlies"@fr , "Memphis Grizzlies"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Memphis_Grizzlies> , <http://fr.dbpedia.org/resource/Grizzlies_de_Memphis> ;
+        skos:altLabel  "Memphis Grizzlies"@fr , "Memphis Grizzlies"@de , "Memphis Grizzlies"@en , "Grizzlies de Vancouver"@fr , "Vancouver Grizzlies"@fr , "Vancouver Grizzlies"@de , "Grizzlies de Memphis"@fr , "Memphis grizzles"@fr , "Grizzlies"@fr , "Memphis grizzles"@de , "Grizzlies"@de , "Grizzlies"@en , "Memphis grizzles"@en , "Grizzlies de memphis"@fr , "Grizzlies De Memphis"@fr .

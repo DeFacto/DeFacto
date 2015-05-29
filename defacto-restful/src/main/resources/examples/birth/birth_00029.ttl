@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Abbott,_Texas>
+        rdfs:label     "Abbott, Texas"@en , "Abbott, Texas"@fr , "Abbott, Texas"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Abbott_(Texas)> ;
+        skos:altLabel  "Abbott City, Texas"@de , "Abbott City, Texas"@en , "Abbott, TX"@de , "Abbott, TX"@en , "Abbott"@de , "Abbott"@en , "Abbott, Texas"@en , "Abbott, Texas"@de .
+
+<http://dbpedia.org/resource/Willie_Nelson>
+        rdfs:label     "Willie Nelson"@en , "Willie Nelson"@fr , "Willie Nelson"@de ;
+        dbo:birth      <http://dbpedia.org/resource/Willie_Nelson__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Willie_Nelson> , <http://de.dbpedia.org/resource/Willie_Nelson> ;
+        skos:altLabel  "Willie Nelson"@fr , "Willie Nelson"@de , "Willie Nelson"@en , "Willie"@de , "Nelson, Willie"@fr , "Nelson, Willie"@de , "Nelson, Willie"@en , "Trigger"@fr , "Willie nelson"@fr , "Willie Hugh Nelson"@fr , "Trigger"@de , "Willie nelson"@de , "Willie Hugh Nelson"@de , "Trigger"@en , "Willie Hugh Nelson"@en , "Willie nelson"@en , "Family"@fr , "Nelson, Willie Hugh"@fr , "Family"@de , "Family"@en , "Nelson, Willie Hugh"@de , "Nelson, Willie Hugh"@en , "Nelson"@fr , "Willie Nelson's Family"@fr , "Willie Nelson's Family"@de , "Willie Nelson's Family"@en , "TeaPot Party"@fr , "TeaPot Party"@de , "TeaPot Party"@en .
+
+<http://dbpedia.org/resource/Willie_Nelson__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Abbott,_Texas> ;
+        dbo:from        "1933-04-29"^^xsd:date ;
+        dbo:to          "1933-04-29"^^xsd:date .

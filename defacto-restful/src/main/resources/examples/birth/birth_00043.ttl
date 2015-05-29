@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Mike_Bryan>
+        rdfs:label     "Mike Bryan"@en , "Mike Bryan"@fr , "Mike Bryan"@de ;
+        dbo:birth      <http://dbpedia.org/resource/Mike_Bryan__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Mike_Bryan> , <http://de.dbpedia.org/resource/Mike_Bryan> ;
+        skos:altLabel  "Mike Bryan"@de , "Mike Bryan"@en , "Mike"@fr , "Mike"@de , "Mike"@en , "Michael Carl Bryan"@de , "Bryan"@fr , "Bryan"@de , "Mike Bryan"@fr .
+
+<http://dbpedia.org/resource/Mike_Bryan__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Camarillo,_California> ;
+        dbo:from        "1978-04-29"^^xsd:date ;
+        dbo:to          "1978-04-29"^^xsd:date .
+
+<http://dbpedia.org/resource/Camarillo,_California>
+        rdfs:label     "Camarillo, California"@en , "Camarillo, California"@fr , "Camarillo, California"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Camarillo> , <http://de.dbpedia.org/resource/Camarillo> ;
+        skos:altLabel  "Camarillo"@fr , "Camarillo, ca"@fr , "LOCODE:USCMR"@fr , "Camarillo, ca"@de , "LOCODE:USCMR"@de , "LOCODE:USCMR"@en , "Camarillo, ca"@en , "Camarillo"@de , "Camarillo"@en , "Camarillo, CA"@fr , "Camarillo, CA"@de , "Camarillo, CA"@en , "Camarillo, California"@fr , "Camarillo, California"@de , "Camarillo, California"@en .

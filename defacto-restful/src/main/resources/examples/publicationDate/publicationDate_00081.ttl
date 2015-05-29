@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.017yrh>
+        rdfs:label       "John Norman"@fr , "John Norman"@en , "John Norman"@de ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.04t3lsv__81> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/John_Norman> , <http://de.dbpedia.org/resource/John_Norman> , <http://dbpedia.org/resource/John_Norman> ;
+        skos:altLabel    "Goreen"@fr , "Goréen"@fr , "Mouvement goreen"@fr , "Norman"@fr , "John Norman"@fr , "John Norman"@de , "John Norman"@en , "John Frederick Lange Jr."@en , "John Frederick Lange Jr."@de , "Mouvement goréen"@fr .
+
+<http://rdf.freebase.com/ns/m.04t3lsv__81>
+        dbo:author  <http://rdf.freebase.com/ns/m.04t3lsv> ;
+        dbo:from    "1966"^^xsd:gYear ;
+        dbo:to      "1966"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.04t3lsv>
+        rdfs:label     "Tarnsman of Gor"@en ;
+        skos:altLabel  "Tansman of Gor"@en .

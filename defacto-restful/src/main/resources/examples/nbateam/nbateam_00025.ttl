@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Cleveland_Cavaliers>
+        rdfs:label     "Cleveland Cavaliers"@en , "Cleveland Cavaliers"@fr , "Cleveland Cavaliers"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Cavaliers_de_Cleveland> , <http://de.dbpedia.org/resource/Cleveland_Cavaliers> ;
+        skos:altLabel  "The cleveland cavs"@fr , "The cleveland cavs"@de , "The cleveland cavs"@en , "Moondog"@fr , "Moondog"@de , "Moondog"@en , "Cavalier"@fr , "Cavalier"@de , "Cavalier"@en , "Cleveland Cavs"@fr , "Cleveland Cavs"@de , "Cleveland Cavs"@en , "Cavaliers, Cleveland"@fr , "Whammer"@fr , "Cavaliers, Cleveland"@de , "Cavaliers, Cleveland"@en , "Whammer"@de , "Whammer"@en , "Cleveland Cavaliers"@fr , "Cleveland Cavaliers"@de , "Cleveland Cavaliers"@en , "Cavaliers De Cleveland"@fr , "Cavs"@fr , "Moondog - Cavaliers"@fr , "Cavaliers de Cleveland"@fr , "Cavs"@de , "Moondog - Cavaliers"@de , "Cavs"@en , "Moondog - Cavaliers"@en , "Cavaliers de cleveland"@fr .
+
+<http://dbpedia.org/resource/Carlos_Boozer>
+        rdfs:label      "Carlos Boozer"@en , "Carlos Boozer"@fr , "Carlos Boozer"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Carlos_Boozer__1> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Carlos_Boozer> , <http://fr.dbpedia.org/resource/Carlos_Boozer> ;
+        skos:altLabel   "Carlos Austin Boozer, Jr."@fr , "Carlos Austin Boozer, Jr."@de , "Carlos Austin Boozer, Jr."@en , "Boozer"@fr , "Carlos Boozer"@fr , "Carlos Boozer"@de , "Carlos Boozer"@en , "Boozer"@de , "Boozer"@en , "Carlos Boozer free agency controversy"@fr , "Carlos Boozer free agency controversy"@de , "Carlos Boozer free agency controversy"@en .
+
+<http://dbpedia.org/resource/Carlos_Boozer__1>
+        dbo:from  "2002"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Cleveland_Cavaliers> ;
+        dbo:to    "2004"^^xsd:gYear .

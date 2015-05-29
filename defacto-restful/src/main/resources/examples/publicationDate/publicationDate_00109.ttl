@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0g949d__109>
+        dbo:author  <http://rdf.freebase.com/ns/m.0g949d> ;
+        dbo:from    "1984"^^xsd:gYear ;
+        dbo:to      "1984"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0g949d>
+        rdfs:label  "Across the Sea of Suns"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/Across_the_Sea_of_Suns> .
+
+<http://rdf.freebase.com/ns/m.09ljl>
+        rdfs:label       "Gregory Benford"@en , "Gregory Benford"@fr , "Gregory Benford"@de ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.0g949d__109> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/Gregory_Benford> , <http://fr.dbpedia.org/resource/Gregory_Benford> , <http://dbpedia.org/resource/Gregory_Benford> ;
+        skos:altLabel    "Greg Benford"@fr , "Greg Benford"@de , "Greg Benford"@en , "G. A. Benford"@fr , "Benford"@fr , "Benford, Gregory"@fr , "Gergory Benford"@fr , "Benford law of controversy"@fr , "G. A. Benford"@de , "Benford"@de , "Benford, Gregory"@de , "G. A. Benford"@en , "Benford, Gregory"@en , "Benford"@en , "Gergory Benford"@de , "Benford law of controversy"@de , "Gergory Benford"@en , "Benford law of controversy"@en , "Gregory"@fr , "Benford's Law of Controversy"@fr , "Benford's Law of Controversy"@de , "Benford's Law of Controversy"@en , "Sterling Blake"@en , "Benford's law of controversy"@fr , "Gregory Benford"@fr , "Benford's law of controversy"@de , "Gregory Benford"@de , "Benford's law of controversy"@en , "Gregory Benford"@en , "Gregory S. Benford"@fr , "Gregory S. Benford"@de , "Gregory S. Benford"@en .
+
+<http://dbpedia.org/resource/Across_the_Sea_of_Suns>
+        skos:altLabel  "Across the sea of suns"@en , "Across the Sea of Suns"@en .

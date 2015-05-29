@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0md8t__73>
+        dbo:author  <http://rdf.freebase.com/ns/m.0md8t> ;
+        dbo:from    "1999"^^xsd:gYear ;
+        dbo:to      "1999"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0dpqk>
+        rdfs:label       "Eric Idle"@en , "Eric Idle"@de , "Eric Idle"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.0md8t__73> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/Eric_Idle> , <http://de.dbpedia.org/resource/Eric_Idle> , <http://dbpedia.org/resource/Eric_Idle> ;
+        skos:altLabel    "Brian Hope"@en , "Eric C. Idleberg"@en , "Montypython Flyingcircus"@en , "Rice Lied"@en , "Idle"@fr , "Idle"@de , "Idle"@en , "Eric Idle"@fr , "Eric Idle"@de , "Eric Idle"@en , "Eric Spam Eggs and Chips Idle"@en , "Monty Python"@en , "The Usual Lot"@en , "Dirk McQuickly"@en , "Eric Whicker Whicker Idle"@en , "IDLE"@de , "Eric Idol"@fr , "Eric Idol"@de , "Eric Idol"@en .
+
+<http://rdf.freebase.com/ns/m.0md8t>
+        rdfs:label  "The Road to Mars"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/The_Road_to_Mars> .
+
+<http://dbpedia.org/resource/The_Road_to_Mars>
+        skos:altLabel  "The Road to Mars"@en .

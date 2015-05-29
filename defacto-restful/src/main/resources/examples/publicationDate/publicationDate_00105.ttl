@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.07l1r__105>
+        dbo:author  <http://rdf.freebase.com/ns/m.07l1r> ;
+        dbo:from    "1969"^^xsd:gYear ;
+        dbo:to      "1969"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.07w21>
+        rdfs:label       "Ursula K. Le Guin"@en , "Ursula K. Le Guin"@de , "Ursula K. Le Guin"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.07l1r__105> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/Ursula_K._Le_Guin> , <http://de.dbpedia.org/resource/Ursula_K._Le_Guin> , <http://dbpedia.org/resource/Ursula_K._Le_Guin> ;
+        skos:altLabel    "Le Guin"@fr , "Le Guin"@en , "Le Guin"@de , "Ursula K Leguin"@fr , "Ursula K Leguin"@de , "U. K. Le Guin"@en , "Ursula K Leguin"@en , "Ursula LeGuin"@fr , "Ursula LeGuin"@de , "Ursula LeGuin"@en , "Ursula K. Le Guen"@fr , "Ursula K. Le Guen"@de , "Ursula K. Le Guen"@en , "Leguin"@fr , "Leguin"@de , "Ursula Kroeber LeGuin"@de , "Leguin"@en , "Ursula k le guin"@fr , "Ursula k le guin"@en , "Ursula k le guin"@de , "Ursula Guin"@fr , "Ursula Guin"@en , "Ursula Guin"@de , "Ursula Leguin"@fr , "Ursula Leguin"@de , "Ursula Leguin"@en , "Ursula le Guin"@fr , "Ursula Kroeber Le Guin"@fr , "Ursula le Guin"@de , "Ursula Kroeber Le Guin"@en , "Ursula Kroeber Le Guin"@de , "Ursula le Guin"@en , "Le Guin, Ursula Kroeber"@fr , "Le Guin, Ursula Kroeber"@en , "Le Guin, Ursula Kroeber"@de , "Ursula K. le Guin"@fr , "Ursula K. le Guin"@en , "Ursula K. le Guin"@de , "Ursula Le Guin"@fr , "Ursula Le Guin"@de , "Ursula Le Guin"@en , "Ursula leguin"@fr , "Ursula K. Le Guin"@fr , "Ursula K. LeGuin"@fr , "Le Guin, Ursula K."@en , "Ursula K. Leguin"@fr , "Ursula leguin"@de , "Ursula leguin"@en , "Ursula K. LeGuin"@de , "Ursula K. Leguin"@en , "Ursula K. Leguin"@de , "Ursula K. Le Guin"@en , "Ursula K. Le Guin"@de , "Ursula K. LeGuin"@en , "Ursual K. le Guin"@fr , "Ursual K. le Guin"@de , "Ursual K. le Guin"@en .
+
+<http://rdf.freebase.com/ns/m.07l1r>
+        rdfs:label     "La Main gauche de la nuit"@fr , "Die linke Hand der Dunkelheit"@de , "The Left Hand of Darkness"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/The_Left_Hand_of_Darkness> , <http://fr.dbpedia.org/resource/La_Main_gauche_de_la_nuit> ;
+        skos:altLabel  "Shifgrethor"@fr , "Shifgrethor"@en , "The Left Hand Of Darkness"@fr , "La main gauche de la nuit"@fr , "La Main gauche de la nuit"@fr , "Left Hand of Darkness"@fr , "Left Hand of Darkness"@en , "The Left Hand Of Darkness"@en , "The left hand of darkness"@fr , "The left hand of darkness"@en , "The Left Hand of Darkness"@fr , "The Left Hand of Darkness"@en , "La Main Gauche De La Nuit"@fr , "Left hand of darkness"@fr , "Left hand of darkness"@en .

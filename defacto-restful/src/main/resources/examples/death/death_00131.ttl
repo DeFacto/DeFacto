@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Andy_Williams__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Branson,_Missouri> ;
+        dbo:from        "2012-09-25"^^xsd:date ;
+        dbo:to          "2012-09-25"^^xsd:date .
+
+<http://dbpedia.org/resource/Andy_Williams>
+        rdfs:label     "Andy Williams"@en , "Andy Williams"@fr , "Andy Williams"@de ;
+        dbo:death      <http://dbpedia.org/resource/Andy_Williams__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Andy_Williams_(chanteur)> , <http://de.dbpedia.org/resource/Andy_Williams> ;
+        skos:altLabel  "Howard Andrew Williams"@fr , "Howard Andrew Williams"@de , "Howard Andrew Williams"@en , "Andy Williams"@fr , "Andy Williams"@de , "Andy Williams"@en , "Williams, Andrew"@fr , "Williams, Andrew"@de , "Williams, Andrew"@en , "Andy"@fr , "Andy williams"@fr , "Andy"@de , "Andy williams"@de , "Andy williams"@en , "Andy"@en .
+
+<http://dbpedia.org/resource/Branson,_Missouri>
+        rdfs:label     "Branson, Missouri"@en , "Branson, Missouri"@fr , "Branson, Missouri"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Branson_(Missouri)> , <http://de.dbpedia.org/resource/Branson_(Missouri)> ;
+        skos:altLabel  "Branson, MO"@de , "Branson, MO"@en , "Branson, Missouri"@fr , "Branson, Missouri"@de , "Branson, Missouri"@en , "Branson"@fr , "Branson"@de , "Branson"@en , "Branson missouri"@fr , "Branson missouri"@de , "Branson missouri"@en , "LOCODE:USPLK"@fr , "LOCODE:USPLK"@de , "LOCODE:USPLK"@en , "Branson mo"@fr , "Branson mo"@de , "Branson mo"@en , "Branson, MO mSA"@fr , "Branson, MO mSA"@de , "Branson, MO mSA"@en , "Branson, MO"@fr .

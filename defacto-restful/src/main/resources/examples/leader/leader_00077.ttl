@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Finland>
+        rdfs:label     "Finland"@de , "Finland"@fr , "Finland"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Finnland> , <http://fr.dbpedia.org/resource/Finlande> ;
+        skos:altLabel  "Republique de Finlande"@fr , "Republik Finnland"@de , "Republiken Finland"@fr , "Republiken Finland"@de , "Republiken Finland"@en , "Fenno"@fr , "Fenno"@en , "Fenno"@de , "Name of Finland"@fr , "Name of Finland"@en , "Name of Finland"@de , "Fin land"@fr , "Finlande"@fr , "Finlande"@en , "Finlande"@de , "Fin land"@en , "Fin land"@de , "Finland's"@fr , "Finland's"@de , "Finland's"@en , "République de Finlande"@fr , "Etymology of Finland"@fr , "Etymology of Finland"@en , "Etymology of Finland"@de , "Suomen Tasavalta"@fr , "Suomen Tasavalta"@en , "Suomen Tasavalta"@de , "ISO 3166-1:FI"@fr , "ISO 3166-1:FI"@en , "ISO 3166-1:FI"@de , "Finland"@fr , "Finland"@en , "Finland"@de , "Finn Land"@fr , "Finn Land"@en , "Finn Land"@de , "FinlanD"@fr , "FinlanD"@en , "FinlanD"@de , "Finnland"@fr , "Finlandaise"@fr , "Finnland"@en , "Finnland"@de , "Republic of Finland"@fr , "Republic of Finland"@de , "Republic of Finland"@en , "Soome"@fr , "Soome"@en , "Soome"@de , "FINLAND"@fr , "FINLAND"@en , "FINLAND"@de , "Finland during World War II"@fr , "Finland during World War II"@en , "Finland during World War II"@de , "Suomen tasavalta"@fr , "Suomen tasavalta"@en , "Suomen tasavalta"@de .
+
+<http://dbpedia.org/resource/Väinö_Tanner__1>
+        dbo:from    "1926-12-13"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Finland> ;
+        dbo:to      "1927-12-17"^^xsd:date .
+
+<http://dbpedia.org/resource/Väinö_Tanner>
+        rdfs:label     "Väinö Tanner"@en , "Väinö Tanner"@fr , "Väinö Tanner"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Väinö_Tanner__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Väinö_Tanner> , <http://de.dbpedia.org/resource/Väinö_Tanner> ;
+        skos:altLabel  "Vaino Alfred Tanner"@de , "Vaino Tanner"@fr , "Vaino Tanner"@de , "Väinö Tanner"@fr , "Tanner"@de , "Väinö Tanner"@de , "Väinö Alfred Tanner"@de .

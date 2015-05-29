@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Charlotte_Bobcats>
+        rdfs:label     "Charlotte Bobcats"@en , "Charlotte Bobcats"@fr , "Charlotte Bobcats"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Bobcats_de_Charlotte> , <http://de.dbpedia.org/resource/Charlotte_Bobcats> ;
+        skos:altLabel  "Bobcat"@en , "Bobcats de Charlotte"@fr , "Charlotte Flight"@fr , "Charlotte Flight"@en , "Charlotte Flight"@de , "Bobcats de charlotte"@fr , "Charlotte Bobcats"@fr , "Charlotte Bobcats"@de , "Charlotte Bobcats"@en , "Bobcats De Charlotte"@fr , "Bobcat"@fr , "Bobcat"@de .
+
+<http://dbpedia.org/resource/Raymond_Felton>
+        rdfs:label      "Raymond Felton"@en , "Raymond Felton"@fr , "Raymond Felton"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Raymond_Felton__1> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Raymond_Felton> , <http://fr.dbpedia.org/resource/Raymond_Felton> ;
+        skos:altLabel   "Felton"@fr , "Felton"@de , "Felton"@en , "Raymond Bernard Felton"@fr , "Raymond Bernard Felton"@de , "Raymond Bernard Felton"@en , "Raymond Bernard Felton junior"@de , "Ray Felton"@fr , "Ray Felton"@de , "Ray Felton"@en , "Raymond Felton"@fr , "Raymond Felton"@de , "Raymond Felton"@en .
+
+<http://dbpedia.org/resource/Raymond_Felton__1>
+        dbo:from  "2005"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Charlotte_Bobcats> ;
+        dbo:to    "2009"^^xsd:gYear .

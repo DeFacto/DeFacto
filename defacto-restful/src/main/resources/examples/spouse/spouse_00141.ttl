@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03n_z_>
+        rdfs:label     "Karen Elson"@fr , "Karen Elson"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Karen_Elson> , <http://fr.dbpedia.org/resource/Karen_Elson> ;
+        skos:altLabel  "Elson"@en , "Elson"@fr , "Le Freak"@en , "Elson, Karen"@en , "Karen Elson"@fr , "Karen Elson"@en .
+
+<http://rdf.freebase.com/ns/m.01vsnff__141>
+        dbo:from    "2005-06-01"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.03n_z_> ;
+        dbo:to      "2011-06"^^xsd:gYearMonth .
+
+<http://rdf.freebase.com/ns/m.01vsnff>
+        rdfs:label     "Jack White"@fr , "Jack White"@de , "Jack White"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.01vsnff__141> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Jack_White> , <http://dbpedia.org/resource/Jack_White_(musician)> , <http://de.dbpedia.org/resource/Jack_White_(Musiker)> ;
+        skos:altLabel  "Jack White III"@en , "John S. O'Leary"@de , "John S. O'Leary"@en , "jack_white"@en , "Three Quid"@fr , "Jack white"@fr , "Jack white"@de , "Jack white"@en , "Three Quid"@de , "The White Stripes"@en , "Three Quid"@en , "White"@fr , "Third Man Records"@de , "White"@en , "3 Quid"@fr , "3 Quid"@de , "3 Quid"@en , "Gillis, John Anthony"@en , "John Anthony Gillis"@fr , "John Anthony Gillis"@de , "White, Jack"@en , "John Anthony Gillis"@en , "The Third Man"@en , "Jack White"@fr , "Jack White (né Gillis)"@en , "Jack White"@de , "Gillis"@de , "Jack White"@en , "John S. O'Leary"@fr , "Jack White III"@fr , "Jack White III"@de .

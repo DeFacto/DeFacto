@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.01wv9p__3>
+        dbo:from    "2004-06-05"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.043zg> ;
+        dbo:to      "2012-04-09"^^xsd:date .
+
+<http://rdf.freebase.com/ns/m.01wv9p>
+        rdfs:label     "Marc Anthony"@en , "Marc Anthony"@de , "Marc Anthony"@fr ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.01wv9p__3> ;
+        owl:sameAs     <http://dbpedia.org/resource/Marc_Anthony> , <http://fr.dbpedia.org/resource/Marc_Anthony> , <http://de.dbpedia.org/resource/Marc_Anthony> ;
+        skos:altLabel  "Skinny"@en , "Anthony"@fr , "Marco Antonio Muñiz"@en , "Marc Anthony"@fr , "Marc Anthony"@de , "Marc Anthony"@en , "Marco Antonio Muniz"@de , "Marc Antony"@en , "Marco Antonio Muñiz Ruiz"@en .
+
+<http://rdf.freebase.com/ns/m.043zg>
+        rdfs:label     "Jennifer Lopez"@en , "Jennifer Lopez"@de , "Jennifer Lopez"@fr ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/> , <http://fr.dbpedia.org/resource/Jennifer_Lopez> , <http://dbpedia.org/resource/Jennifer_Lopez> , <http://dbpedia.org/resource/La_gitana> , <http://de.dbpedia.org/resource/Jennifer_Lopez> , <http://de.dbpedia.org/resource/> ;
+        skos:altLabel  "La Lopez"@en , "Jay low"@fr , "Jay low"@de , "Jay low"@en , "Q'Viva!: The Chosen"@fr , "Q'Viva!: The Chosen"@de , "Q'Viva!: The Chosen"@en , "Jennifer \"J. Lo\" Lopez"@fr , "Jennifer \"J. Lo\" Lopez"@de , "Jennifer \"J. Lo\" Lopez"@en , "Lopez, Jennifer"@fr , "Love and Light"@fr , "Lopez, Jennifer"@de , "Love and Light"@de , "Lopez, Jennifer"@en , "Love and Light"@en , "JayLo"@fr , "JayLo"@de , "JayLo"@en , "Jenyfer lopez"@fr , "Lola"@en , "Jennifer lopez"@fr , "Jennifer lopez"@de , "Jennifer lopez"@en , "JLo"@en , "Jennifer \"J-Lo\" Lopez"@fr , "Jennifer \"J-Lo\" Lopez"@de , "Jennifer \"J-Lo\" Lopez"@en , "J. Lo"@fr , "Jennifer Lopez"@fr , "J-LO"@fr , "J-LO"@de , "J-LO"@en , "Live Luxe"@fr , "J. Lo"@de , "Jennifer Lopez"@de , "Live Luxe"@de , "Jennifer Lopez"@en , "Live Luxe"@en , "J. Lo"@en , "Jenny Lopez"@fr , "Live"@fr , "Jennifer Lynn Lopez"@fr , "Love & Glamour"@fr , "Jenny Lopez"@de , "Live"@de , "Love & Glamour"@de , "Jenny Lopez"@en , "Live"@en , "Love & Glamour"@en , "Jennifer López"@fr , "J-Lo"@fr , "Jennifer Lynn Lopez"@de , "Jennifer López"@de , "Jennifer López"@en , "J-Lo"@de , "J-Lo"@en , "Jennifer Lynn Lopez"@en , "Hooked on You"@fr , "Hooked on You"@de , "Hooked on You"@en , "Jenifer lopez"@fr , "Jenifer lopez"@de , "Jenifer lopez"@en , "Jennifer \"J.Lo\" Lopez"@fr , "Jennifer \"J.Lo\" Lopez"@de , "Jennifer \"J.Lo\" Lopez"@en , "Jennifer J.Lo Lopez"@fr , "J Lo"@fr , "Image and personal life of Jennifer Lopez"@fr , "A suivre: Jennifer Lopez"@fr , "J lo"@fr , "Personal life and public image of Jennifer Lopez"@fr , "J. Lo."@fr , "Live Platinum"@fr , "J–LO"@fr , "Jennifer Lynn López"@de , "A suivre: Jennifer Lopez"@de , "Jennifer 'J-Lo' Lopez"@en , "J lo"@de , "Personal life and public image of Jennifer Lopez"@de , "J. Lo."@de , "Live Platinum"@de , "J–LO"@de , "A suivre: Jennifer Lopez"@en , "J–LO"@en , "J lo"@en , "J. Lo."@en , "Live Platinum"@en , "Jennifer Lynn Muñiz"@en , "Personal life and public image of Jennifer Lopez"@en , "Jennifer J.Lo Lopez"@de , "J Lo"@de , "J Lo"@en , "Jennifer J.Lo Lopez"@en , "Image and personal life of Jennifer Lopez"@de , "Image and personal life of Jennifer Lopez"@en , "López"@fr , "La gitana"@en , "¡Q'Viva!: The Chosen"@fr , "¡Q'Viva!: The Chosen"@de , "¡Q'Viva!: The Chosen"@en , "Lopez"@fr , "Jennifer J. Lo Lopez"@fr , "Jennifer J. Lo Lopez"@de , "Jennifer J. Lo Lopez"@en , "J. LO."@fr , "J. LO."@de , "J. LO."@en , "J.Lo"@fr , "J.Lo"@de , "J.Lo"@en , "Jenny from the Block"@en .

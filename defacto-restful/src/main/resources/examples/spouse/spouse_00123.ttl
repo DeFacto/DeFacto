@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0k2151r__123>
+        dbo:from    "2008-06-28"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.0264f6> ;
+        dbo:to      "2012"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0264f6>
+        rdfs:label     "Ruben Studdard"@fr , "Ruben Studdard"@en , "Ruben Studdard"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Ruben_Studdard> , <http://dbpedia.org/resource/Ruben_Studdard> , <http://de.dbpedia.org/resource/Ruben_Studdard> ;
+        skos:altLabel  "Studdard"@fr , "Rubben Studdard"@en , "Ruben stoddard"@fr , "Studdard"@de , "Studdard"@en , "Ruben stoddard"@de , "Ruben stoddard"@en , "Ruben Christopher Studdard"@en , "Reuben studdard"@fr , "Ruben Studdard"@fr , "Christopher Ruben Studdard"@de , "Reuben Studdard"@fr , "Ruben Studdard"@de , "Reuben Studdard"@de , "Ruben Studdard"@en , "Reuben Studdard"@en , "Reuben Stoddard"@fr , "Ruben Stoddard"@fr , "Reuben stoddard"@fr , "Reuben studdard"@de , "Reuben Stoddard"@de , "Reuben Stoddard"@en , "Reuben studdard"@en , "Reuben stoddard"@de , "Reuben stoddard"@en , "Ruben Stoddard"@de , "Ruben Stoddard"@en , "Studdard, Ruben"@en , "Ruben Studard"@fr , "Ruben Studard"@de , "Ruben Studard"@en .
+
+<http://rdf.freebase.com/ns/m.0k2151r>
+        rdfs:label    "Surata Zuri McCants"@en ;
+        dbo:marriage  <http://rdf.freebase.com/ns/m.0k2151r__123> .

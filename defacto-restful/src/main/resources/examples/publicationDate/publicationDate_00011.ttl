@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0fwxwl>
+        rdfs:label       "Catherine Crook de Camp"@en , "Catherine Crook de Camp"@de ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.0fytp2__11> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/> , <http://dbpedia.org/resource/Catherine_Crook_de_Camp> , <http://de.dbpedia.org/resource/Catherine_Crook_de_Camp> ;
+        skos:altLabel    "Catherine Crook De Camp"@de , "De Camp"@de , "Catherine crook de camp"@de , "Catherine de Camp"@de , "Catherine C. de Camp"@de , "Catherine Crook de Camp"@de , "Crook"@de , "Crook de Camp"@de , "Camp"@de .
+
+<http://rdf.freebase.com/ns/m.0fytp2>
+        rdfs:label  "Footprints on Sand"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/Footprints_on_Sand> .
+
+<http://rdf.freebase.com/ns/m.0fytp2__11>
+        dbo:author  <http://rdf.freebase.com/ns/m.0fytp2> ;
+        dbo:from    "1981"^^xsd:gYear ;
+        dbo:to      "1981"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Footprints_on_Sand>
+        skos:altLabel  "Footprints on sand"@en , "Footprint"@en , "Footprints on Sand"@en .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03h0ypn>
+        rdfs:label     "Anna Torv"@fr , "Anna Torv"@de , "Anna Torv"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.03h0ypn__147> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Anna_Torv> , <http://fr.dbpedia.org/resource/Anna_Torv> , <http://dbpedia.org/resource/Anna_Torv> ;
+        skos:altLabel  "Anna Charmichael Torv"@en , "Anna Torv"@fr , "Anna Torv"@de , "Anna Torv"@en , "Torv"@de , "Anna Tõrv"@en .
+
+<http://rdf.freebase.com/ns/m.05m66w>
+        rdfs:label     "Mark Valley"@de , "Mark Valley"@fr , "Mark Valley"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Mark_Valley> , <http://de.dbpedia.org/resource/Mark_Valley> , <http://dbpedia.org/resource/Mark_Valley> ;
+        skos:altLabel  "Mark Valley"@fr , "Mark Valley"@de , "Mark Thomas Valley"@en .
+
+<http://rdf.freebase.com/ns/m.03h0ypn__147>
+        dbo:from    "2008-12"^^xsd:gYearMonth ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.05m66w> ;
+        dbo:to      "2009"^^xsd:gYear .

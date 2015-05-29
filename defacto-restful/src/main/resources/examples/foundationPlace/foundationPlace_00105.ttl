@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.06fz7h>
+        rdfs:label      "Pegasus Software"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.06fz7h__105> ;
+        owl:sameAs      <http://dbpedia.org/resource/Pegasus_Software> .
+
+<http://dbpedia.org/resource/Pegasus_Software>
+        skos:altLabel  "Pegasus Software"@en , "Pegasus"@en .
+
+<http://rdf.freebase.com/ns/m.06fz7h__105>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.01z645> ;
+        dbo:from             "1981"^^xsd:gYear ;
+        dbo:to               "1981"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.01z645>
+        rdfs:label     "Kettering"@fr , "Kettering"@de , "Kettering"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Kettering_(Northamptonshire)> , <http://fr.dbpedia.org/resource/Kettering_(Angleterre)> , <http://dbpedia.org/resource/Kettering> ;
+        skos:altLabel  "Kettering, Northhamptonshire"@fr , "Kettering, Northhamptonshire"@de , "Kettering, Northhamptonshire"@en , "Kettering, England"@fr , "Kettering, England"@de , "Kettering, England"@en , "Kettering, Northamptonshire"@fr , "Kettering, Northamptonshire"@de , "Kettering, Northamptonshire"@en , "Kettering"@fr , "Kettering"@de , "Kettering"@en .

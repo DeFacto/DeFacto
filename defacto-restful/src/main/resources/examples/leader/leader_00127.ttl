@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Slovenia>
+        rdfs:label     "Slovenia"@de , "Slovenia"@fr , "Slovenia"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Slowenien> , <http://fr.dbpedia.org/resource/Slovénie> ;
+        skos:altLabel  "Republique slovene"@fr , "Slowenische Wirtschaft"@de , "Slowenien"@de , "Republic of Slovenia"@fr , "Szlovénia"@fr , "Republic of Slovenia"@en , "Republic of Slovenia"@de , "Szlovénia"@en , "Szlovénia"@de , "Slovenian"@fr , "Slovenian"@en , "Slovenian"@de , "Slovènie"@fr , "Slovenia (general), Slovenia"@fr , "Slovenia (general), Slovenia"@en , "Slovenia (general), Slovenia"@de , "Republique de Slovenie"@fr , "Eslovenia"@fr , "Eslovenia"@en , "Eslovenia"@de , "Slovénie"@fr , "Slovénie"@en , "Slovénie"@de , "Nordslowenien"@de , "Slovenie"@fr , "Slovenie"@en , "Slovenie"@de , "Szlovenia"@fr , "Szlovenia"@en , "Szlovenia"@de , "Subdivisions de Slovénie"@fr , "ISO 3166-1:SI"@fr , "ISO 3166-1:SI"@en , "ISO 3166-1:SI"@de , "Subdivisions de Slovenie"@fr , "Slovenia"@fr , "Slovenia"@en , "Slovenia"@de , "République slovène"@fr , "Republika Slovenija"@fr , "Republika Slovenija"@en , "Republika Slovenija"@de , "Subdivisions of Slovenia"@fr , "Subdivisions of Slovenia"@en , "Subdivisions of Slovenia"@de , "Administrative divisions of Slovenia"@fr , "Administrative divisions of Slovenia"@en , "Administrative divisions of Slovenia"@de , "République de Slovénie"@fr , "Slovenija"@fr , "Slovenija"@en , "Slovenija"@de , "Eslovênia"@fr , "Eslovênia"@en , "Eslovênia"@de , "Liste slowenischer Schriftsteller"@de , "Republik Slowenien"@de .
+
+<http://dbpedia.org/resource/Anton_Rop__1>
+        dbo:from    "2002-12-11"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Slovenia> ;
+        dbo:to      "2004-11-09"^^xsd:date .
+
+<http://dbpedia.org/resource/Anton_Rop>
+        rdfs:label     "Anton Rop"@en , "Anton Rop"@fr , "Anton Rop"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Anton_Rop__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Anton_Rop> , <http://de.dbpedia.org/resource/Anton_Rop> ;
+        skos:altLabel  "Tone Rop"@fr , "Tone Rop"@en , "Tone Rop"@de , "Anton Rop"@fr , "Anton Rop"@de , "Anton Rop"@en .

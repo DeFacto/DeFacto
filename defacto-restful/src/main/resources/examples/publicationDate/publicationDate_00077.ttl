@@ -1,0 +1,25 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Philip_Jos%C3%A9_Farmer>
+        skos:altLabel  "Philip José Farmer"@en , "Philip Jose Farmer"@en .
+
+<http://rdf.freebase.com/ns/m.0hlnd>
+        rdfs:label       "Philip José Farmer"@de , "Philip José Farmer"@en , "Philip José Farmer"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.056fky__77> ;
+        owl:sameAs       <http://dbpedia.org/resource/Philip_Jos%C3%A9_Farmer> ;
+        skos:altLabel    "Paul Chapin"@en , "Lord Grandith"@en , "Philip Farmer"@en , "Cordwainer Bird"@en , "Dane Helstrom"@en , "Rod Keen"@en , "Philip Jose Farmer"@en , "Kilgore Trout"@en , "Harry Manders"@en , "Jonathan Swift Sommers, III"@en .
+
+<http://rdf.freebase.com/ns/m.056fky>
+        rdfs:label     "Venus on the Half-Shell"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Venus_on_the_Half-Shell> ;
+        skos:altLabel  "Venus on the Half-Shell"@en , "Venus on the Half Shell"@en .
+
+<http://rdf.freebase.com/ns/m.056fky__77>
+        dbo:author  <http://rdf.freebase.com/ns/m.056fky> ;
+        dbo:from    "1975"^^xsd:gYear ;
+        dbo:to      "1975"^^xsd:gYear .

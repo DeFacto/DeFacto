@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0l39b>
+        rdfs:label     "Provo"@de , "Provo"@fr , "Provo"@en ;
+        owl:sameAs     <http://dbpedia.org/resource/Provo,_Utah> , <http://fr.dbpedia.org/resource/Provo_(Utah)> , <http://de.dbpedia.org/resource/Provo> ;
+        skos:altLabel  "Provo Utah"@en , "LOCODE:USPVU"@fr , "LOCODE:USPVU"@de , "LOCODE:USPVU"@en , "Utah County / Provo city"@en , "Provo, UT"@fr , "Provo, UT"@de , "Provo, UT"@en , "Provo"@fr , "Provo"@de , "Provo"@en , "Provo, Utah"@fr , "Provo, Utah"@de , "Provo, Utah"@en , "Provo, Ut"@fr , "Provo, Ut"@de , "Provo, Ut"@en , "Provo Utah"@fr , "Provo Utah"@de .
+
+<http://rdf.freebase.com/ns/m.016pgj>
+        rdfs:label      "Novell"@en , "Novell"@de , "Novell"@fr ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.016pgj__3> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Novell> , <http://fr.dbpedia.org/resource/Novell> , <http://dbpedia.org/resource/Novell> ;
+        skos:altLabel   "Novell Press"@fr , "Novell Press"@de , "Novell Press"@en , "SilverStream Software"@fr , "Novell Inc."@fr , "Microsoft-Novell agreement"@fr , "SilverStream Software"@de , "Novell Inc."@de , "SilverStream Software"@en , "Novell Inc."@en , "Microsoft-Novell agreement"@de , "Microsoft-Novell agreement"@en , "NOVL"@fr , "Novel"@fr , "NOVL"@de , "Novel"@de , "NOVL"@en , "Novel"@en , "Novell"@fr , "Novell, Inc."@fr , "Novell"@de , "Novell"@en , "Novell, Inc."@de , "Novell, Inc."@en , "Inc. Novell"@fr , "Inc. Novell"@de , "Inc. Novell"@en .
+
+<http://rdf.freebase.com/ns/m.016pgj__3>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0l39b> ;
+        dbo:from             "1979"^^xsd:gYear ;
+        dbo:to               "1979"^^xsd:gYear .

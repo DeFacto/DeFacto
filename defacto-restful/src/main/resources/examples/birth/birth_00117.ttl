@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Rudyard_Kipling__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Mumbai> ;
+        dbo:from        "1865-12-30"^^xsd:date ;
+        dbo:to          "1865-12-30"^^xsd:date .
+
+<http://dbpedia.org/resource/Rudyard_Kipling>
+        rdfs:label     "Rudyard Kipling"@en , "Rudyard Kipling"@fr , "Rudyard Kipling"@de ;
+        dbo:birth      <http://dbpedia.org/resource/Rudyard_Kipling__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Rudyard_Kipling> , <http://de.dbpedia.org/resource/Rudyard_Kipling> ;
+        skos:altLabel  "Kipling, Joseph Rudyard"@de , "Kipling, Joseph Rudyard"@en , "R Kipling"@fr , "R Kipling"@de , "R Kipling"@en , "Rudyard Kipling"@fr , "Rudyard Kipling"@de , "Rudyard Kipling"@en , "R. Kipling"@fr , "R. Kipling"@de , "R. Kipling"@en , "Rudyard"@fr , "Rudyard"@de , "Rudyard"@en , "Rudy Kipling"@fr , "Rudy Kipling"@de , "Rudy Kipling"@en , "Ruyard Kipling"@fr , "Ruyard Kipling"@de , "Ruyard Kipling"@en , "Kipling"@fr , "Kipling"@de , "Kipling"@en , "Kipling Society"@fr , "Kipling Society"@de , "Kipling Society"@en , "Kipling rudyard"@fr , "Joseph Rudyard Kipling"@fr , "Kipling rudyard"@de , "Joseph Rudyard Kipling"@de , "Kipling rudyard"@en , "Joseph Rudyard Kipling"@en , "Kipling, Joseph Rudyard"@fr .
+
+<http://dbpedia.org/resource/Mumbai>
+        rdfs:label     "Mumbai"@de , "Mumbai"@fr , "Mumbai"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Bombay> , <http://de.dbpedia.org/resource/Mumbai> ;
+        skos:altLabel  "Bombei"@fr , "Mubai"@fr , "Bombei"@de , "Bombei"@en , "Mubai"@de , "Mubai"@en , "Mombai"@fr , "Mombai"@de , "Mombai"@en , "Bom Bahia"@fr , "City of Mumbai"@fr , "City of Mumbai"@de , "City of Mumbai"@en , "Bom Bahia"@de , "Bom Bahia"@en , "Mumbai, India"@fr , "Bombay City"@fr , "Mumbai, India"@de , "Mumbai, India"@en , "Bombay City"@de , "Bombay City"@en , "Greater Bombay"@fr , "Greater Bombay"@de , "Greater Bombay"@en , "Mumbaī"@fr , "Mumbaī"@de , "Mumbaī"@en , "Mumbaii"@fr , "Bumbai"@fr , "Bumbai"@de , "Bumbai"@en , "Mumbaii"@de , "Mumbaii"@en , "Demographics of Mumbai"@fr , "Demographics of Mumbai"@de , "Demographics of Mumbai"@en , "Mumbaï"@fr , "Greater Mumbai"@fr , "City of Bombay"@fr , "Mumbai, MH"@fr , "Greater Mumbai"@de , "City of Bombay"@de , "Mumbai, MH"@de , "Mumbai, MH"@en , "City of Bombay"@en , "Greater Mumbai"@en , "Bombay also known as mumbai"@fr , "Mumbai"@fr , "Mumbai"@de , "Mumbai"@en , "Bombay india"@fr , "Eastindians"@fr , "Bombay also known as mumbai"@de , "Bombay india"@de , "Eastindians"@de , "Bombay also known as mumbai"@en , "Eastindians"@en , "Bombay india"@en , "Mumbaai"@fr , "Mumbaai"@de , "Mumbaai"@en , "Mumbay"@fr , "Mumbaikars"@fr , "Mumbay"@de , "Mumbaikars"@de , "Mumbaikars"@en , "Mumbay"@en , "Downtown Mumbai"@fr , "Downtown Mumbai"@de , "Downtown Mumbai"@en , "Bomaím"@fr , "Bomaím"@de , "Bomaím"@en , "Bombai"@fr , "Bombai"@de , "Bombai"@en , "Bombay"@fr , "Bombay"@de , "Bombay"@en , "Bombay, India"@fr , "Bombay, India"@de , "Bombay, India"@en , "Site de developpement de bombay"@fr , "Mumbia"@fr , "Mumbai, Maharastra"@fr , "Bomaim"@fr , "Mumbia"@de , "Mumbia"@en , "Bombay, Maharashtra"@fr , "Mumbai, Maharastra"@de , "Mumbai, Maharastra"@en , "Bomaim"@de , "Bomaim"@en , "Bombay, Maharashtra"@de , "Bombay, Maharashtra"@en , "Demographics of Bombay"@fr , "Demographics of Bombay"@de , "Demographics of Bombay"@en , "Bombay, MH"@fr , "Bombay, MH"@de , "Bombay, MH"@en , "Mumbai, Maharashtra"@fr , "Mumbai, Maharashtra"@de , "Mumbai, Maharashtra"@en , "Mumbai City"@fr , "Mumbai City"@de , "Mumbai City"@en , "Crime in Mumbai"@fr , "Crime in Mumbai"@de , "Crime in Mumbai"@en .

@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02h78m1>
+        rdfs:label     "XenSource"@en ;
+        skos:altLabel  "XenSource Inc"@en .
+
+<http://rdf.freebase.com/ns/m.01t1bk__35>
+        dbo:from        "2007-08"^^xsd:gYearMonth ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.02h78m1> ;
+        dbo:to          "2007-08"^^xsd:gYearMonth .
+
+<http://rdf.freebase.com/ns/m.01t1bk>
+        rdfs:label       "Citrix Systems"@de , "Citrix Systems"@fr , "Citrix Systems"@en ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.01t1bk__35> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/Citrix_Systems> , <http://dbpedia.org/resource/Citrix_Systems> , <http://de.dbpedia.org/resource/Citrix_Systems> ;
+        skos:altLabel    "CTXS"@fr , "CTXS"@de , "CTXS"@en , "Citrix systems"@fr , "Citrix Cloud Center"@de , "Citrix XenDesktop"@fr , "Citrix Systems, Inc."@fr , "Citrix XenDesktop"@de , "Citrix Systems, Inc."@de , "Citrix XenDesktop"@en , "Citrix Systems, Inc."@en , "Citrix"@fr , "Citrix Systems"@fr , "XenDesktop"@fr , "Citrix Systems"@de , "Citrix Systems"@en , "Citrix"@de , "Citrix"@en , "Citrix Systems Inc"@de , "XenDesktop"@de , "XenDesktop"@en , "MultiWin"@fr .

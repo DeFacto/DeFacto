@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.059btz__75>
+        dbo:from    "2005"^^xsd:gYear ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.03npw77> ;
+        dbo:to      "2011"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.059btz>
+        rdfs:label     "Poppy Montgomery"@en , "Poppy Montgomery"@de , "Poppy Montgomery"@fr ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.059btz__75> ;
+        owl:sameAs     <http://dbpedia.org/resource/Poppy_Montgomery> , <http://de.dbpedia.org/resource/Poppy_Montgomery> , <http://fr.dbpedia.org/resource/Poppy_Montgomery> ;
+        skos:altLabel  "Poppy Petal Emma Elizabeth Deveraux Donahue"@en , "Poppy"@fr , "Poppy"@de , "Poppy Montgomery"@fr , "Poppy Montgomery"@de .
+
+<http://rdf.freebase.com/ns/m.03npw77>
+        rdfs:label     "Adam Kaufman"@fr , "Adam Kaufman"@de , "Adam Kaufman"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Adam_Kaufman_(acteur)> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Adam_Kaufman_(actor)> ;
+        skos:altLabel  "Adam Kaufman"@fr .

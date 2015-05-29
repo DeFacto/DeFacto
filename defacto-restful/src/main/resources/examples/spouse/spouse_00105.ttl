@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0q48svj__105>
+        dbo:from    "2008-09-21"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.0719hb> ;
+        dbo:to      "2011"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0719hb>
+        rdfs:label     "Christel Khalil"@fr , "Christel Khalil"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Christel_Khalil> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Christel_Khalil> ;
+        skos:altLabel  "Christel"@fr , "Christel Khalil"@fr , "Christel Adnana Khalil"@en .
+
+<http://rdf.freebase.com/ns/m.0q48svj>
+        rdfs:label    "Stephen Hensley"@en ;
+        dbo:marriage  <http://rdf.freebase.com/ns/m.0q48svj__105> .

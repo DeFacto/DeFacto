@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/James_Buchanan>
+        rdfs:label     "James Buchanan"@en , "James Buchanan"@de , "James Buchanan"@fr ;
+        dbo:death      <http://dbpedia.org/resource/James_Buchanan__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/James_Buchanan> , <http://fr.dbpedia.org/resource/James_Buchanan> ;
+        skos:altLabel  "Jimmy Buchanan"@fr , "Jimmy Buchanan"@en , "Jimmy Buchanan"@de , "President Buchanan"@fr , "President Buchanan"@en , "President Buchanan"@de , "James Buchannan"@fr , "James Buchannan"@en , "James Buchannan"@de , "President James Buchanan"@fr , "President James Buchanan"@en , "President James Buchanan"@de , "Presidency of James Buchanan"@fr , "Presidency of James Buchanan"@en , "Presidency of James Buchanan"@de , "Buchanan Administration"@en , "Buchanan Administration"@de , "Buchanan Administration"@fr , "Sexuality of James Buchanan"@fr , "Sexuality of James Buchanan"@en , "Sexuality of James Buchanan"@de , "15th President of the United States"@en , "15th President of the United States"@de , "15th President of the United States"@fr , "First gay president"@fr , "First gay president"@en , "First gay president"@de , "Buchanan, James"@fr , "Buchanan, James"@en , "Buchanan, James"@de , "James Buchanan judicial appointments"@fr , "James Buchanan judicial appointments"@en , "James Buchanan judicial appointments"@de , "James Buchanon"@fr , "James Buchanon"@de , "James Buchanon"@en , "James Buchanan"@en , "James Buchanan"@de , "James Buchanan"@fr , "Buchanan"@en , "Buchanan"@de , "Buchanan"@fr , "James Buchanan, Jr."@fr , "James Buchanan, Jr."@en , "James Buchanan, Jr."@de .
+
+<http://dbpedia.org/resource/James_Buchanan__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Lancaster,_Pennsylvania> ;
+        dbo:from        "1868-06-01"^^xsd:date ;
+        dbo:to          "1868-06-01"^^xsd:date .
+
+<http://dbpedia.org/resource/Lancaster,_Pennsylvania>
+        rdfs:label     "Lancaster, Pennsylvania"@en , "Lancaster, Pennsylvania"@fr , "Lancaster, Pennsylvania"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Lancaster_(Pennsylvanie)> , <http://de.dbpedia.org/resource/Lancaster_(Pennsylvania)> ;
+        skos:altLabel  "City of Lancaster, Pennsylvania"@fr , "City of Lancaster, Pennsylvania"@de , "City of Lancaster, Pennsylvania"@en , "Lancaster, PA"@fr , "Lancaster, PA"@de , "Lancaster, PA"@en , "Lancester, Pennsylvania"@fr , "Lancester, Pennsylvania"@de , "Lancester, Pennsylvania"@en , "City of Lancaster. Pennsylvania"@fr , "LOCODE:USLNS"@fr , "City of Lancaster. Pennsylvania"@de , "LOCODE:USLNS"@de , "LOCODE:USLNS"@en , "City of Lancaster. Pennsylvania"@en , "Lancaster, Pennsylvania"@fr , "Lancaster, Pennsylvania"@de , "Lancaster, Pennsylvania"@en , "Lancaster Community Safety Coalition"@fr , "Lancaster Community Safety Coalition"@de , "Lancaster Community Safety Coalition"@en , "Lancaster"@fr , "Lancaster"@de , "Lancaster"@en , "City of Lancaster, Pennsylvania."@fr , "City of Lancaster, Pennsylvania."@de , "City of Lancaster, Pennsylvania."@en .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Dom_Mintoff__1>
+        dbo:from    "1971-06-21"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Malta> ;
+        dbo:to      "1984-12-22"^^xsd:date .
+
+<http://dbpedia.org/resource/Dom_Mintoff>
+        rdfs:label     "Dom Mintoff"@en , "Dom Mintoff"@fr , "Dom Mintoff"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Dom_Mintoff__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Dom_Mintoff> , <http://fr.dbpedia.org/resource/Dom_Mintoff> ;
+        skos:altLabel  "Duminku Mintoff"@de , "Mintoff"@de , "Dominic Mintoff"@fr , "Dom Mintoff"@fr , "Dom Mintoff"@de , "Dom Mintoff"@en , "Dominic Mintoff"@de , "Dominic Mintoff"@en .
+
+<http://dbpedia.org/resource/Malta>
+        rdfs:label     "Malta"@de , "Malta"@fr , "Malta"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Malte> , <http://de.dbpedia.org/resource/Malta> ;
+        skos:altLabel  "Malta"@fr , "Malta"@en , "Malta"@de , "Malte"@fr , "Name of Malta"@fr , "Name of Malta"@de , "Name of Malta"@en , "Etat de Malte"@fr , "Sport in Malta"@fr , "Souvereign Military Order of Malta"@fr , "Sport in Malta"@en , "Sport in Malta"@de , "Souvereign Military Order of Malta"@en , "Souvereign Military Order of Malta"@de , "Repubblika ta’ Malta"@de , "ISO 3166-1:MT"@fr , "Republique de Malte"@fr , "ISO 3166-1:MT"@en , "ISO 3166-1:MT"@de , "The Souvereign Military Order of Malta"@fr , "The Souvereign Military Order of Malta"@en , "The Souvereign Military Order of Malta"@de , "Maltese archipelago"@fr , "Maltese archipelago"@en , "Maltese archipelago"@de , "List of islands of Malta"@fr , "List of islands of Malta"@en , "List of islands of Malta"@de , "Maltese Islands"@fr , "Maltese Islands"@en , "Maltese Islands"@de , "État de Malte"@fr , "Architecture of Malta"@fr , "Architecture of Malta"@en , "Architecture of Malta"@de , "Repubblika ta'Malta"@fr , "Repubblika ta'Malta"@de , "Repubblika ta'Malta"@en , "Repubblika ta' Malta"@fr , "Republic of Malta"@fr , "Repubblika ta' Malta"@de , "Republic of Malta"@en , "Republic of Malta"@de , "Etymology of Malta"@fr , "Etymology of Malta"@de , "Etymology of Malta"@en , "Health in Malta"@fr , "Health in Malta"@en , "Health in Malta"@de , "Republik Malta"@de , "Malta GC"@fr , "Malta GC"@en , "Malta GC"@de , "République de Malte"@fr , "Islands of Malta, Malta"@fr , "Islands of Malta, Malta"@en , "Islands of Malta, Malta"@de , "County of Malta"@fr , "County of Malta"@en , "County of Malta"@de , "Maltese islands"@fr , "Maltese islands"@en , "Maltese islands"@de .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Godzilla_(1998_film)>
+        rdfs:label      "Godzilla (1998 film)"@en , "Godzilla (1998 film)"@fr , "Godzilla (1998 film)"@de ;
+        dbo:isStarring  <http://dbpedia.org/resource/Godzilla_(1998_film)__1> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Godzilla_(film,_1998)> , <http://de.dbpedia.org/resource/Godzilla_(1998)> ;
+        skos:altLabel   "The American Godzilla"@fr , "The American Godzilla"@de , "The American Godzilla"@en , "Nick Tatopoulos"@fr , "Nick Tatopoulos"@de , "Nick Tatopoulos"@en , "Zilla"@fr , "Godzilla"@fr , "Godzilla"@de , "Godzilla"@en , "Zilla(1998 film)"@fr , "Zilla(1998 film)"@de , "Zilla(1998 film)"@en .
+
+<http://dbpedia.org/resource/Michael_Lerner_(actor)>
+        rdfs:label     "Michael Lerner (actor)"@en , "Michael Lerner (actor)"@fr , "Michael Lerner (actor)"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Michael_Lerner_(Schauspieler)> , <http://fr.dbpedia.org/resource/Michael_Lerner_(acteur)> ;
+        skos:altLabel  "Michael lerner"@fr , "Lerner"@fr , "Lerner"@de , "Lerner"@en , "Michael Lerner"@de , "Michael Lerner"@en , "Michael Lerner"@fr .
+
+<http://dbpedia.org/resource/Godzilla_(1998_film)__1>
+        dbo:from      "1998-05-20"^^xsd:date ;
+        dbo:starring  <http://dbpedia.org/resource/Michael_Lerner_(actor)> ;
+        dbo:to        "1998-05-20"^^xsd:date .

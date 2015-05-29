@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Belarus>
+        rdfs:label     "Belarus"@de , "Belarus"@fr , "Belarus"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Weißrussland> , <http://fr.dbpedia.org/resource/Biélorussie> ;
+        skos:altLabel  "Belorussland"@de , "Weissruthenien"@de , "Byelarus"@fr , "Belarus'"@fr , "Beloruss"@fr , "Last European dictatorship"@fr , "Byelarus"@de , "Belarus'"@de , "Beloruss"@de , "Belarus'"@en , "Byelarus"@en , "Beloruss"@en , "Last European dictatorship"@de , "Last European dictatorship"@en , "Belarussi"@fr , "Belarussi"@de , "Belarussi"@en , "République du Belarus"@fr , "Name of Belarus"@fr , "Name of Belarus"@de , "Name of Belarus"@en , "Etymology of Belarus"@fr , "Russe"@fr , "Etymology of Belarus"@de , "Etymology of Belarus"@en , "Republic of Belarus"@fr , "Biełarus"@fr , "Bielorussia"@fr , "Weißruthenien"@de , "Bellarus"@fr , "Belarus"@fr , "Belarus"@en , "Belarus"@de , "Biełarus"@de , "Biełarus"@en , "Bellarus"@de , "Bellarus"@en , "Republic of Belarus"@de , "Bielorussia"@de , "Bielorussia"@en , "Republic of Belarus"@en , "République de Bélarus"@fr , "Byelarossia"@fr , "Byelarossia"@de , "Byelarossia"@en , "Belorussia"@fr , "Belorussia"@de , "Belorussia"@en , "Belorus"@fr , "Belorus"@de , "Belorus"@en , "Bélarus"@fr , "Belaruss"@fr , "Biélo-Russie"@fr , "Republique de Belarus"@fr , "Vitryssland"@fr , "Republik Weißrussland"@de , "Vitryssland"@en , "Vitryssland"@de , "Belaruss"@de , "Republik Belarus"@de , "Belaruss"@en , "Republique du Belarus"@fr , "Weißrußland"@de , "Belarus’"@fr , "République de Biélorussie"@fr , "Belarus’"@de , "Belarus’"@en , "Republic of Beloruss"@fr , "Republic of Beloruss"@de , "Republic of Beloruss"@en , "Respublika Belarus"@fr , "Respublika Belarus"@de , "Respublika Belarus"@en , "Republique de Bielorussie"@fr , "Bielo-Russie"@fr , "Biełaruś"@fr , "Byelorussia"@fr , "Biełaruś"@de , "Biełaruś"@en , "Byelorussia"@en , "Byelorussia"@de , "Weissrussland"@fr , "Belorußland"@de , "Weissrussland"@en , "Weissrussland"@de , "ISO 3166-1:BY"@fr , "ISO 3166-1:BY"@de , "ISO 3166-1:BY"@en , "Russia"@fr , "Belarussia"@fr , "Republic of Belorus"@fr , "Republic of Belorus"@de , "Republic of Belorus"@en , "Belorusi"@fr , "Biélorussie"@fr , "Russia"@de , "Belorusi"@de , "Belorusi"@en , "Russia"@en , "Belarussia"@de , "Belarussia"@en , "Buelorussia"@fr , "Belorusia"@fr , "Buelorussia"@de , "Belorusland"@de , "Buelorussia"@en , "Belorusia"@de , "Belorusia"@en , "Bielorussie"@fr , "Bielo-russie"@fr , "République du Bélarus"@fr , "Weißrussland"@de .
+
+<http://dbpedia.org/resource/Sergei_Sidorsky__1>
+        dbo:from    "2003-07-10"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Belarus> ;
+        dbo:to      "2010-12-28"^^xsd:date .
+
+<http://dbpedia.org/resource/Sergei_Sidorsky>
+        rdfs:label     "Sergei Sidorsky"@en , "Sergei Sidorsky"@fr , "Sergei Sidorsky"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Sergei_Sidorsky__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Sjarhej_Sidorski> , <http://fr.dbpedia.org/resource/Siarhieï_Sidorski> ;
+        skos:altLabel  "Siarhieï Sidorski"@fr , "Sergei Sidorsky"@fr , "Sidorski"@de , "Sergei Sidorsky"@de , "Sergei Sidorsky"@en , "Sergeï Sidorski"@fr , "Sergey Sidorsky"@fr , "Syarhey Sidorski"@fr , "Sergey Sidorsky"@de , "Sergey Sidorsky"@en , "Syarhey Sidorski"@de , "Syarhey Sidorski"@en , "Sjarhej Sidorski"@de , "Siarhiej Sidorski"@fr , "Siarhiej Sidorski"@de , "Siarhiej Sidorski"@en , "Sergey Sergeyevich Sidorsky"@fr , "Sergey Sergeyevich Sidorsky"@de , "Sergey Sergeyevich Sidorsky"@en , "Sergey Sidorski"@fr , "Sergey Sidorski"@de , "Sergey Sidorski"@en , "Sergej Sidorski"@de , "Siarhiei Sidorski"@fr , "Sergei Sidorski"@fr , "Sergei Sidorski"@de .

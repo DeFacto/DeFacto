@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0tjs034>
+        rdfs:label    "Marissa Lefton"@en ;
+        dbo:marriage  <http://rdf.freebase.com/ns/m.0tjs034__63> .
+
+<http://rdf.freebase.com/ns/m.0tjs034__63>
+        dbo:from    "2008"^^xsd:gYear ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.05v_gz> ;
+        dbo:to      "2012"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.05v_gz>
+        rdfs:label     "Michael Welch"@de , "Michael Welch"@en , "Michael Welch"@fr ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Michael_Welch_(acteur)> , <http://de.dbpedia.org/resource/Michael_Welch> , <http://dbpedia.org/resource/Michael_Welch_(actor)> ;
+        skos:altLabel  "Michael Welch"@fr , "Michael Welch"@de , "Michael Welch"@en , "Welch"@fr , "Welch"@de , "Michael Alan Welch"@de , "Michael Alan Welch"@en , "Mike Welch"@de , "Mike Welch"@en , "Mike"@en .

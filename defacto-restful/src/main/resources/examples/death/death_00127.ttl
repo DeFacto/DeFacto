@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Beverly_Hills,_California>
+        rdfs:label     "Beverly Hills, California"@de , "Beverly Hills, California"@fr , "Beverly Hills, California"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Beverly_Hills> , <http://de.dbpedia.org/resource/Beverly_Hills> ;
+        skos:altLabel  "Beverley Hills"@en , "Beverley Hills"@de , "Beverley Hills"@fr , "Hills"@fr , "Hills"@en , "Hills"@de , "LOCODE:USBVH"@fr , "Bev Hills"@en , "Bev Hills"@de , "Bev Hills"@fr , "LOCODE:USBVH"@en , "LOCODE:USBVH"@de , "Beverly Hill, California"@fr , "Beverly Hill, California"@en , "Beverly Hill, California"@de , "Beverly Hills"@fr , "Beverly Hills"@en , "Beverly Hills"@de , "Beverly Hills, Ca"@fr , "Beverly Hills, Ca"@en , "Beverly Hills, Ca"@de , "Zip code 90210"@en , "Zip code 90210"@de , "Zip code 90210"@fr , "Beverly hills california"@fr , "Beverly hills california"@en , "Beverly hills california"@de , "Beverley Hills, California"@en , "Beverley Hills, California"@de , "Beverley Hills, California"@fr , "Beverly Hills, Calif."@en , "Beverly Hills, Calif."@de , "Beverly Hills, Calif."@fr , "Beverly Hills, California"@de , "Beverly Hills, California"@fr , "Beverly Hills, California"@en , "Beverly Hills, CA"@en , "Beverly Hills, CA"@de , "Beverly Hills, CA"@fr , "Beverly"@fr , "Beverly"@de .
+
+<http://dbpedia.org/resource/William_Randolph_Hearst__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Beverly_Hills,_California> ;
+        dbo:from        "1951-08-14"^^xsd:date ;
+        dbo:to          "1951-08-14"^^xsd:date .
+
+<http://dbpedia.org/resource/William_Randolph_Hearst>
+        rdfs:label     "William Randolph Hearst"@fr , "William Randolph Hearst"@en , "William Randolph Hearst"@de ;
+        dbo:death      <http://dbpedia.org/resource/William_Randolph_Hearst__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/William_Randolph_Hearst> , <http://fr.dbpedia.org/resource/William_Randolph_Hearst> ;
+        skos:altLabel  "William R. Hearst"@fr , "William Randoph Hearst"@en , "William Randoph Hearst"@de , "William Randoph Hearst"@fr , "William R. Hearst"@en , "William R. Hearst"@de , "William Randolph Hearst, Sr."@en , "William Randolph Hearst, Sr."@de , "William Randolph Hearst, Sr."@fr , "William Randolf Hearst"@en , "William Randolf Hearst"@de , "William Randolf Hearst"@fr , "Bill Hearst"@fr , "Bill Hearst"@en , "Bill Hearst"@de , "William Randolph Hearst"@fr , "William Randolph Hearst"@en , "William Randolph Hearst"@de , "William Randolph Hear$t"@en , "William Randolph Hear$t"@de , "William Randolph Hear$t"@fr , "Hearst"@fr , "Hearst"@en , "Hearst"@de , "William Randolph Hearst I"@fr , "William Randolph Hearst I"@en , "William Randolph Hearst I"@de , "W. R. Hearst"@fr , "W. R. Hearst"@en , "W. R. Hearst"@de , "Randolph Hearst"@en , "Randolph Hearst"@de , "Randolph Hearst"@fr , "Beverly House"@fr , "Beverly House"@en , "Beverly House"@de , "William Randolph Herst"@en , "William Randolph Herst"@de , "William Randolph Herst"@fr , "William Randolph Hurst"@fr , "William Randolph Hurst"@en , "William Randolph Hurst"@de .

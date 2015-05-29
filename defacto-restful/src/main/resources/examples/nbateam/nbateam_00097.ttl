@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/John_Lucas_III__5>
+        dbo:from  "2006"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Houston_Rockets> ;
+        dbo:to    "2006"^^xsd:gYear .
+
+<http://dbpedia.org/resource/John_Lucas_III>
+        rdfs:label      "John Lucas III"@en , "John Lucas III"@fr , "John Lucas III"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/John_Lucas_III__5> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/John_Lucas_III> ;
+        skos:altLabel   "John Lucas"@en , "John Lucas"@fr , "John Lucas III"@fr , "John Harding Lucas III"@en , "John Lucas III"@en , "John Harding Lucas III"@fr .
+
+<http://dbpedia.org/resource/Houston_Rockets>
+        rdfs:label     "Houston Rockets"@en , "Houston Rockets"@fr , "Houston Rockets"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Rockets_de_Houston> , <http://de.dbpedia.org/resource/Houston_Rockets> ;
+        skos:altLabel  "Rockets de houston"@fr , "Rockets de San Diego"@fr , "San Diego Rockets"@fr , "San Diego Rockets"@de , "San Diego Rockets"@en , "Houston Rockets"@fr , "Houston"@fr , "Houston Rockets"@de , "Houston"@de , "Houston Rockets"@en , "Houston"@en , "Rocket"@fr , "Rocket"@de , "Rocket"@en , "Twin Towers"@fr , "Rockets de Houston"@fr , "Twin Towers"@de , "Twin Towers"@en .

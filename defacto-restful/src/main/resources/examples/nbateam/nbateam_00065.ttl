@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Derek_Fisher>
+        rdfs:label      "Derek Fisher"@en , "Derek Fisher"@fr , "Derek Fisher"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Derek_Fisher__3> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Derek_Fisher> , <http://de.dbpedia.org/resource/Derek_Fisher> ;
+        skos:altLabel   "D-Fish"@fr , "D-Fish"@de , "D-Fish"@en , "DFISH"@fr , "Point 4"@fr , "Point 4"@de , "Point 4"@en , "DFISH"@de , "DFISH"@en , "Derrick Fisher"@fr , "Derrick Fisher"@de , "Derrick Fisher"@en , "Derek Fisher"@fr , "Derek Fisher"@de , "Derek Fisher"@en , "The Fish That Saved LA"@fr , "The Fish That Saved LA"@de , "The Fish That Saved LA"@en .
+
+<http://dbpedia.org/resource/Derek_Fisher__3>
+        dbo:from  "2006"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Utah_Jazz> ;
+        dbo:to    "2006"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Utah_Jazz>
+        rdfs:label     "Utah Jazz"@de , "Utah Jazz"@en , "Utah Jazz"@fr ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Jazz_de_l'Utah> , <http://de.dbpedia.org/resource/Utah_Jazz> ;
+        skos:altLabel  "Jazz De L'Utah"@fr , "Jazz"@fr , "Jazz"@de , "Jazz"@en , "Utah Jazz"@fr , "Utah Jazz"@de , "Utah Jazz"@en , "New Orleans Jazz"@fr , "New Orleans Jazz"@de , "New Orleans Jazz"@en , "Jazz de l'Utah"@fr , "Utah jazz"@fr , "Utah jazz"@en , "Utah jazz"@de , "Jazz de l'utah"@fr .

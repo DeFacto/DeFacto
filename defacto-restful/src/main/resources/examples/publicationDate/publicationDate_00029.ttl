@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.045b5g__29>
+        dbo:author  <http://rdf.freebase.com/ns/m.045b5g> ;
+        dbo:from    "1985"^^xsd:gYear ;
+        dbo:to      "1985"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.018fq>
+        rdfs:label       "Bruce Sterling"@de , "Bruce Sterling"@en , "Bruce Sterling"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.045b5g__29> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/Bruce_Sterling> , <http://dbpedia.org/resource/Bruce_Sterling> , <http://fr.dbpedia.org/resource/Bruce_Sterling> ;
+        skos:altLabel    "Sterling"@fr , "Bruce Sterling"@fr , "Sterling"@de , "Bruce Sterling"@de , "Bruce Sterling"@en , "Sterling"@en , "Vincenty Omniaveritas"@en , "Globalhead"@fr , "Globalhead"@de , "Globalhead"@en , "Vincent Omniaveritas"@en , "Bruce sterling"@fr , "Chairman Bruce"@fr , "Michael Bruce Sterling"@en , "Bruce sterling"@de , "Bruce sterling"@en , "Chairman Bruce"@de , "Chairman Bruce"@en .
+
+<http://rdf.freebase.com/ns/m.045b5g>
+        rdfs:label     "Schismatrice +"@fr , "Schismatrix"@en , "Schismatrix"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Schismatrix> , <http://dbpedia.org/resource/Schismatrix> , <http://fr.dbpedia.org/resource/Schismatrice_+> ;
+        skos:altLabel  "Schismatrix plus"@fr , "Schismatrix"@fr , "Schismatrix"@en , "Schismatrix"@de , "Schismatrice"@fr , "La Schismatrice"@fr , "La schismatrice"@fr .

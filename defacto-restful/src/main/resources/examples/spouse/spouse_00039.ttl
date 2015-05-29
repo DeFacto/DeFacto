@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02wk4d__39>
+        dbo:from    "2006-09-18"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.05_dcr> ;
+        dbo:to      "2011-08-19"^^xsd:date .
+
+<http://rdf.freebase.com/ns/m.05_dcr>
+        rdfs:label     "Cecilia Cheung"@de , "Cecilia Cheung"@fr , "Cecilia Cheung"@en ;
+        owl:sameAs     <http://dbpedia.org/resource/Cecilia_Cheung> , <http://de.dbpedia.org/resource/Cecilia_Cheung> , <http://fr.dbpedia.org/resource/Cecilia_Cheung> ;
+        skos:altLabel  "Cecilia Cheung"@fr , "Cecilia Cheung"@en , "Cecilia Cheung"@de , "Cecilia Tse"@fr , "Cecilia Tse"@en , "Cecilia Tse"@de , "Zhang Bozhi"@en , "Zhang Bozhi"@de , "Zhang Bozhi"@fr , "Cecilia Cheung Pak-Chi"@en , "Zhang Baizh"@en , "Cecilia Cheung Pak-Chi"@fr , "Cheung"@de , "Cheung"@fr , "Zhang Baizhi"@en , "Zhang Baizhi"@fr , "Zhang Baizhi"@de , "Cecilia"@en , "Cecilia"@de , "Cecilia"@fr , "Zhāng Bózhī"@en , "張栢芝"@en , "Cheung, Cecilia"@en , "Zhang bozhi"@fr , "Zhang bozhi"@en , "Zhang bozhi"@de , "cecilia_cheung"@en , "Baizhi Zhang"@en , "Baizhi Zhang"@fr , "Zhangbozhi"@fr , "Zhangbozhi"@en , "Zhangbozhi"@de , "Cheung Pak-chi"@en , "Pak-Chi Cheung"@fr , "张柏芝"@en , "Bozhi Zhang"@en , "Bozhi Zhang"@fr , "Cheung Pak-Chi"@fr .
+
+<http://rdf.freebase.com/ns/m.02wk4d>
+        rdfs:label     "Nicholas Tse"@de , "Nicholas Tse"@en , "Nicholas Tse"@fr ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.02wk4d__39> ;
+        owl:sameAs     <http://dbpedia.org/resource/Nicholas_Tse> , <http://fr.dbpedia.org/resource/Nicholas_Tse> , <http://de.dbpedia.org/resource/Nicholas_Tse> ;
+        skos:altLabel  "Xie T'ingfeng"@en , "Xiè Tíngfēng"@fr , "Nic Tse"@en , "Xiè Tíngfēng"@de , "Ting-Fung Tse Nicholas"@en , "Nicholas Tse Ting-Fung"@en , "Tse Nicholas"@fr , "謝霆鋒"@en , "Ting-Fung Tse"@en , "Tse Nicholas"@de , "Xie Tingfeng"@fr , "Xie Tingfeng"@de , "Tingfeng Xie"@en , "谢霆锋"@en , "Nicolas Tse"@fr , "Nicolas Tse"@de , "Nicholas Tse"@fr , "Nicholas Tse"@de , "Nic"@en , "Tse, Nicholas"@en , "Tse Ting-Fung"@en , "Lemon"@en .

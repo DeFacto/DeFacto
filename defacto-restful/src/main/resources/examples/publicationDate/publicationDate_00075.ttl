@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Alas,_Babylon>
+        skos:altLabel  "Babylon"@en , "Randy Bragg"@en , "Alas Babylon"@en , "Alas, Babylon"@en .
+
+<http://rdf.freebase.com/ns/m.03sbqd>
+        rdfs:label       "Pat Frank"@en ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.0x26k__75> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Pat_Frank> ;
+        skos:altLabel    "Harry H. Frank"@en , "Pat Frank"@en , "Harry Hart Frank Jr."@en , "Harry Hart Frank"@en .
+
+<http://rdf.freebase.com/ns/m.0x26k>
+        rdfs:label  "Alas, Babylon"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/Alas,_Babylon> .
+
+<http://rdf.freebase.com/ns/m.0x26k__75>
+        dbo:author  <http://rdf.freebase.com/ns/m.0x26k> ;
+        dbo:from    "1959"^^xsd:gYear ;
+        dbo:to      "1959"^^xsd:gYear .

@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0j1vvq7__113>
+        dbo:from    "2010-09-15"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.01r2q_> ;
+        dbo:to      "2011"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.01r2q_>
+        rdfs:label     "Kelly McGillis"@de , "Kelly McGillis"@fr , "Kelly McGillis"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Kelly_McGillis> , <http://fr.dbpedia.org/resource/Kelly_McGillis> , <http://dbpedia.org/resource/Kelly_McGillis> ;
+        skos:altLabel  "Kelly"@fr , "McGillis"@fr , "Gillis"@fr , "McGillis"@de , "McGillis"@en , "Kelly Ann McGillis"@en , "Kelly McGillis"@fr , "Kelly McGillis"@de , "Kelly McGillis"@en , "Kelly Mcgillis"@fr , "Kelly mcgillis"@fr , "Kelly Mcgillis"@de , "Kelly Mcgillis"@en , "Kelly mcgillis"@de , "Kelly mcgillis"@en .
+
+<http://rdf.freebase.com/ns/m.0j1vvq7>
+        rdfs:label    "Melanie Leis"@en ;
+        dbo:marriage  <http://rdf.freebase.com/ns/m.0j1vvq7__113> .

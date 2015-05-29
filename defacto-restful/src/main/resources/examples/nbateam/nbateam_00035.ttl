@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Carlos_Delfino__6>
+        dbo:from  "2007"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Toronto_Raptors> ;
+        dbo:to    "2007"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Toronto_Raptors>
+        rdfs:label     "Toronto Raptors"@en , "Toronto Raptors"@fr , "Toronto Raptors"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Toronto_Raptors> , <http://fr.dbpedia.org/resource/Raptors_de_Toronto> ;
+        skos:altLabel  "Toronto raptor"@fr , "Toronto raptor"@de , "Toronto raptor"@en , "Raptors Toronto"@de , "Raptors de Toronto"@fr , "Raptorschat"@fr , "Raptorschat"@de , "Raptorschat"@en , "Raptors de toronto"@fr , "Raptor"@fr , "Raptors De Toronto"@fr , "The Toronto Raptors"@fr , "The Toronto Raptors"@de , "The Toronto Raptors"@en , "Toronto Raptors"@fr , "Toronto Rapists"@fr , "Toronto raptors"@fr , "Raptor"@de , "Raptor"@en , "Toronto Raptors"@de , "Toronto Rapists"@de , "Toronto raptors"@de , "Toronto Rapists"@en , "Toronto Raptors"@en , "Toronto raptors"@en , "Toronto Rapters"@fr , "Toronto Rapters"@de , "Toronto Rapters"@en , "The Raptor"@fr , "The Raptor"@de , "The Raptor"@en .
+
+<http://dbpedia.org/resource/Carlos_Delfino>
+        rdfs:label      "Carlos Delfino"@en , "Carlos Delfino"@fr , "Carlos Delfino"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Carlos_Delfino__6> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Carlos_Delfino> , <http://fr.dbpedia.org/resource/Carlos_Delfino> ;
+        skos:altLabel   "Carlos Francisco Delfino"@fr , "Carlos Francisco Delfino"@en , "Carlos Francisco Delfino"@de , "Delfino"@de , "Carlos Delfino"@fr , "Carlos Delfino"@de , "Carlos Delfino"@en .

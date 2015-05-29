@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Johnny_Cash__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Kingsland,_Arkansas> ;
+        dbo:from        "1932-02-26"^^xsd:date ;
+        dbo:to          "1932-02-26"^^xsd:date .
+
+<http://dbpedia.org/resource/Kingsland,_Arkansas>
+        rdfs:label     "Kingsland, Arkansas"@en , "Kingsland, Arkansas"@fr , "Kingsland, Arkansas"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Kingsland_(Arkansas)> , <http://fr.dbpedia.org/resource/Kingsland,_Arkansas> ;
+        skos:altLabel  "Kingsland, AR"@de , "Kingsland, AR"@fr , "Kingsland"@fr , "Kingsland"@de , "Kingsland, Arkansas"@fr , "Kingsland, Arkansas"@de .
+
+<http://dbpedia.org/resource/Johnny_Cash>
+        rdfs:label     "Johnny Cash"@de , "Johnny Cash"@fr , "Johnny Cash"@en ;
+        dbo:birth      <http://dbpedia.org/resource/Johnny_Cash__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Johnny_Cash> , <http://de.dbpedia.org/resource/Johnny_Cash> ;
+        skos:altLabel  "Jonny Cash"@fr , "Jonny Cash"@en , "Jonny Cash"@de , "Chicken in Black"@fr , "Chicken in Black"@en , "Chicken in Black"@de , "Man in Black"@de , "Cash"@fr , "Johnny Cash – Biography"@fr , "Cash"@de , "Cash"@en , "Johnny Cash – Biography"@en , "Johnny Cash – Biography"@de , "JR Cash"@fr , "JR Cash"@de , "JR Cash"@en , "Johnny Cash - Biography"@fr , "Johnny Cash - Biography"@en , "Johnny Cash - Biography"@de , "Cash, Johnny"@fr , "Cash, Johnny"@de , "Cash, Johnny"@en , "Johnie Cash"@fr , "Johnie Cash"@de , "Johnie Cash"@en , "Johny Cash"@fr , "Johny Cash"@de , "Johny Cash"@en , "J. R. Cash"@fr , "J. R. Cash"@en , "J. R. Cash"@de , "Johnny Cash lists"@fr , "Johnny R. Cash"@fr , "J.R. Cash"@fr , "J Cash"@fr , "J R Cash"@fr , "Johnny Cash lists"@de , "Johnny Cash lists"@en , "J. Cash"@fr , "J.R. Cash"@de , "J.R. Cash"@en , "J Cash"@en , "J Cash"@de , "Johnny R. Cash"@de , "J. Cash"@en , "J. Cash"@de , "Johnny R. Cash"@en , "J R Cash"@de , "J R Cash"@en , "Cash, John"@fr , "Cash, John"@en , "Cash, John"@de , "Johnny cash"@fr , "Johnny Cash family"@fr , "Johnny Cash"@fr , "Johnny cash"@de , "Johnny Cash family"@de , "Johnny Cash family"@en , "Johnny cash"@en , "Johnny Cash"@en , "Johnny Cash"@de , "JohnnyCash"@fr , "JohnnyCash"@en , "JohnnyCash"@de , "John R Cash"@fr , "John R Cash"@en , "John R Cash"@de .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Ivan_Ljubičić__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Banja_Luka> ;
+        dbo:from        "1979-03-19"^^xsd:date ;
+        dbo:to          "1979-03-19"^^xsd:date .
+
+<http://dbpedia.org/resource/Banja_Luka>
+        rdfs:label     "Banja Luka"@en , "Banja Luka"@fr , "Banja Luka"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Banja_Luka> , <http://fr.dbpedia.org/resource/Banja_Luka> ;
+        skos:altLabel  "Banja luka"@fr , "Banja luka"@de , "Banja luka"@en , "Banja Luka"@fr , "Banja Luka"@de , "Banja Luka"@en , "Luka"@de , "Banya Luka"@fr , "Banya Luka"@de , "Banya Luka"@en , "Banjaluka"@fr , "Banjaluka"@de , "Banjaluka"@en , "Trapisti"@de .
+
+<http://dbpedia.org/resource/Ivan_Ljubičić>
+        rdfs:label     "Ivan Ljubičić"@en , "Ivan Ljubičić"@fr , "Ivan Ljubičić"@de ;
+        dbo:birth      <http://dbpedia.org/resource/Ivan_Ljubičić__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Ivan_Ljubičić> , <http://de.dbpedia.org/resource/Ivan_Ljubičić> ;
+        skos:altLabel  "Ivan Ljubicic"@fr , "Ivan Ljubicic"@de , "Ljubicic"@fr , "Ljubicic"@de , "Ivan Ljubičić"@fr , "Ivan Ljubičić"@de , "Ljubičić"@fr , "Ljubičić"@de .

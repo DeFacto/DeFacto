@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/John_Wayne__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Winterset,_Iowa> ;
+        dbo:from        "1907-05-26"^^xsd:date ;
+        dbo:to          "1907-05-26"^^xsd:date .
+
+<http://dbpedia.org/resource/John_Wayne>
+        rdfs:label     "John Wayne"@en , "John Wayne"@fr , "John Wayne"@de ;
+        dbo:birth      <http://dbpedia.org/resource/John_Wayne__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/John_Wayne> , <http://fr.dbpedia.org/resource/John_Wayne> ;
+        skos:altLabel  "John"@fr , "Marion Robert Morrison"@fr , "List of John Wayne films"@fr , "Marion Robert Morrison"@de , "List of John Wayne films"@de , "Marion Robert Morrison"@en , "List of John Wayne films"@en , "List of John Wayne Films"@fr , "List of John Wayne Films"@de , "List of John Wayne Films"@en , "Marion Michael Morrison"@fr , "Marion Morrison"@fr , "Marion Michael Morrison"@de , "Marion Michael Morrison"@en , "Marion Morrison"@de , "Marion Morrison"@en , "Wayne"@fr , "Wayne"@de , "Wayne"@en , "Morrison"@fr , "John Wayne filmography"@fr , "John Wayne filmography"@de , "John Wayne filmography"@en , "John Wayne"@fr , "John Wayne"@de , "John Wayne"@en , "John wayne"@fr , "John wayne"@de , "John wayne"@en .
+
+<http://dbpedia.org/resource/Winterset,_Iowa>
+        rdfs:label     "Winterset, Iowa"@en , "Winterset, Iowa"@fr , "Winterset, Iowa"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Winterset> , <http://fr.dbpedia.org/resource/Winterset> ;
+        skos:altLabel  "Winterset, Iowa"@en , "LOCODE:USWNT"@fr , "LOCODE:USWNT"@de , "LOCODE:USWNT"@en , "Winterset"@fr , "Winterset, IA"@fr , "Winterset"@de , "Winterset, IA"@de , "Winterset"@en , "Winterset, IA"@en , "Winterset, Iowa"@fr , "Winterset, Iowa"@de .

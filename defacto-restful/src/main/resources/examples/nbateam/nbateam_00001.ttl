@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Phoenix_Suns>
+        rdfs:label     "Phoenix Suns"@en , "Phoenix Suns"@fr , "Phoenix Suns"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Suns_de_Phoenix> , <http://de.dbpedia.org/resource/Phoenix_Suns> ;
+        skos:altLabel  "Phx suns"@fr , "Phx suns"@de , "Phx suns"@en , "Suns de Phoenix"@fr , "Phoenix suns"@fr , "Phoenix Suns"@fr , "Phoenix suns"@de , "Phoenix Suns"@de , "Phoenix suns"@en , "Phoenix Suns"@en , "Phoenix"@fr , "Suns"@fr , "Suns"@de , "Suns"@en , "Phoenix Suns roster"@fr , "Phoenix Suns roster"@de , "Phoenix Suns roster"@en , "Arizona suns"@fr , "Arizona suns"@de , "Arizona suns"@en , "Suns de phoenix"@fr .
+
+<http://dbpedia.org/resource/Amar'e_Stoudemire__1>
+        dbo:from  "2002"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Phoenix_Suns> ;
+        dbo:to    "2009"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Amar'e_Stoudemire>
+        rdfs:label      "Amar'e Stoudemire"@en , "Amar'e Stoudemire"@fr , "Amar'e Stoudemire"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Amar'e_Stoudemire__1> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Amar'e_Stoudemire> , <http://fr.dbpedia.org/resource/Amar'e_Stoudemire> ;
+        skos:altLabel   "Amare stoudamire"@fr , "Amare stoudamire"@de , "Amare stoudamire"@en , "Amare Stoudemaire"@fr , "Amare Stoudemaire"@de , "Amare Stoudemaire"@en , "Amaré Stoudemire"@fr , "Amaré Stoudemire"@de , "Amaré Stoudemire"@en , "Stoudemire"@fr , "Stoudemire"@de , "Stoudemire"@en , "Amare Stoudamire"@fr , "Amare Stoudamire"@de , "Amare Stoudamire"@en , "Amare Stoudemire"@fr , "Amare Stoudemire"@de , "Amare Stoudemire"@en , "Amar'e Carsares Stoudemire"@fr , "Amar'e Carsares Stoudemire"@de , "Amar'e Carsares Stoudemire"@en , "Amar'e Stoudemire"@fr , "Amare Carsares Stoudemire"@fr , "Amare Carsares Stoudemire"@de , "Amare Carsares Stoudemire"@en , "Amare stoudemire"@fr , "Amar'e Stoudemire"@de , "Amar'e Stoudemire"@en , "Amare stoudemire"@de , "Amare stoudemire"@en .

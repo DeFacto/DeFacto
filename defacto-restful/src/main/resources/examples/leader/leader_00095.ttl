@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Joaquim_Rafael_Branco__1>
+        dbo:from    "2008-06-22"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/São_Tomé_and_Príncipe> ;
+        dbo:to      "2010-08-14"^^xsd:date .
+
+<http://dbpedia.org/resource/São_Tomé_and_Príncipe>
+        rdfs:label     "São Tomé and Príncipe"@de , "São Tomé and Príncipe"@fr , "São Tomé and Príncipe"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Sao_Tomé-et-Principe> , <http://de.dbpedia.org/resource/São_Tomé_und_Príncipe> ;
+        skos:altLabel  "Sao Tomé et Principe"@fr , "São Tomé et Príncipe"@fr , "Principe"@fr , "Sao Tomé e Príncipe"@de , "São Tomé e Príncipe"@de , "São Tomé e Príncipe"@fr , "Sao Tome and Principe"@de , "Sao Tome"@de , "Republique democratique de Sao Tome et Principe"@fr , "São Tomé-et-Principe"@fr , "Saint-Thomas-et-ile du Prince"@fr , "Republique democratique"@fr , "Sao Tome-et-Principe"@fr , "Sao Tomé-et-Principe"@fr , "São Tomé-et-Príncipe"@fr , "République démocratique de São Tomé et Príncipe"@fr , "Saint-Thomas-et-l'Île du Prince"@fr , "Saint-Thomas-et-île du Prince"@fr , "Sao tome-et-principe"@fr , "Sao Tomé und Príncipe"@de , "São tomé-et-principe"@fr , "Demokratische Republik São Tomé und Príncipe"@de , "Sao Tome & Principe"@fr , "Saint-Thomas-et-Prince"@fr , "Sao Tomé und Principe"@de , "Sao-Tome-et-Principe"@fr , "Republique democratique de Sao Tome-et-Principe"@fr , "São Tomé und Príncipe"@de , "Sao Tomé"@de , "République démocratique de São Tomé e Príncipe"@fr , "Sao Tome e Principe"@de , "Sao Tome e Principe"@fr , "Sao-Tomé-et-Principe"@fr , "Sao Tome und Principe"@de , "République démocratique de Sao Tomé-et-Principe"@fr , "Saint-Thomas-et-l'Ile du Prince"@fr , "Republique democratique de Sao Tome e Principe"@fr , "Sao Tome et Principe"@fr , "Sao Tomé e Principe"@fr , "République démocratique"@fr , "Demokratische Republik Sao Tome und Principe"@de .
+
+<http://dbpedia.org/resource/Joaquim_Rafael_Branco>
+        rdfs:label     "Joaquim Rafael Branco"@en , "Joaquim Rafael Branco"@fr , "Joaquim Rafael Branco"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Joaquim_Rafael_Branco__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Joaquim_Rafael_Branco> , <http://fr.dbpedia.org/resource/Joaquim_Rafael_Branco> ;
+        skos:altLabel  "Joaquim Rafael Branco"@de , "Joaquim Rafael Branco"@fr , "Joaquim"@fr , "Joaquim"@de , "Branco"@fr , "Branco"@de .

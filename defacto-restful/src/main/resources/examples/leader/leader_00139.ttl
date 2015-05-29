@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Paul_Biya__1>
+        dbo:from    "1975-06-30"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Cameroon> ;
+        dbo:to      "1982-11-06"^^xsd:date .
+
+<http://dbpedia.org/resource/Paul_Biya>
+        rdfs:label     "Paul Biya"@en , "Paul Biya"@fr , "Paul Biya"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Paul_Biya__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Paul_Biya> , <http://de.dbpedia.org/resource/Paul_Biya> ;
+        skos:altLabel  "Paul Biya"@fr , "Paul biya"@fr , "Paul Biya"@de , "Paul biya"@de , "Paul biya"@en , "Paul Biya"@en , "Paul Biya Bi Mvondo"@fr , "Paul Barthélemy Biya'a bi Mvondo"@fr , "Paul Barthélemy Biya'a bi Mvondo"@de , "Paul Barthélemy Biya'a bi Mvondo"@en , "Paul Barthelemy Biya'a bi Mvondo"@fr , "Paul Barthelemy Biya'a bi Mvondo"@de , "Paul Barthelemy Biya'a bi Mvondo"@en , "Biya"@fr , "Biya"@de , "Biya"@en .
+
+<http://dbpedia.org/resource/Cameroon>
+        rdfs:label     "Cameroon"@de , "Cameroon"@fr , "Cameroon"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Kamerun> , <http://fr.dbpedia.org/resource/Cameroun> ;
+        skos:altLabel  "Caméroun"@fr , "La République du Cameroun"@fr , "La République du Cameroun"@en , "La République du Cameroun"@de , "Republique De Cameroun"@fr , "Republique De Cameroun"@de , "Republique De Cameroun"@en , "Cameroom"@fr , "Cameroom"@de , "Cameroom"@en , "République unie du Cameroun"@fr , "Republique du Cameroun"@fr , "Republique du Cameroun"@de , "Republique du Cameroun"@en , "The Cameroons"@fr , "The Cameroons"@en , "The Cameroons"@de , "La vie au Cameroun"@fr , "La Republique du Cameroun"@fr , "Camroon"@fr , "Cameroonese"@fr , "La Republique du Cameroun"@de , "Camroon"@en , "Camroon"@de , "Cameroonese"@en , "Cameroonese"@de , "La Republique du Cameroun"@en , "Camerun"@fr , "Camerun"@de , "Camerun"@en , "Republik Kamerun"@de , "Federal Republic of Cameroon"@fr , "Federal Republic of Cameroon"@en , "Federal Republic of Cameroon"@de , "Cameroon"@fr , "Cameroon"@de , "Cameroon"@en , "Le Cameroun"@fr , "Administrative divisions of Cameroon"@fr , "Le Cameroun"@de , "Administrative divisions of Cameroon"@de , "Le Cameroun"@en , "Administrative divisions of Cameroon"@en , "Camerounais"@fr , "The Republic Of Cameroon"@fr , "The Republic Of Cameroon"@de , "The Republic Of Cameroon"@en , "Africa in Miniature"@fr , "Republic of Cameroon"@fr , "Country Cameroon"@fr , "Africa in miniature"@fr , "Kamerun"@de , "Africa in Miniature"@de , "Country Cameroon"@en , "Country Cameroon"@de , "Republic of Cameroon"@de , "Africa in Miniature"@en , "Africa in miniature"@en , "Republic of Cameroon"@en , "Africa in miniature"@de , "ISO 639:mcs"@fr , "ISO 639:mcs"@de , "ISO 639:mcs"@en , "République fédérale du Cameroun"@fr , "Republic Of Cameroon"@fr , "République du Cameroun"@fr , "Republic Of Cameroon"@de , "Republic Of Cameroon"@en , "ISO 3166-1:CM"@fr , "ISO 3166-1:CM"@en , "ISO 3166-1:CM"@de , "Kameroen"@fr , "Kameroen"@de , "Kameroen"@en , "Republique federale du Cameroun"@fr , "Camerounaise"@fr , "Republique unie du Cameroun"@fr , "République De Cameroun"@fr , "République De Cameroun"@de , "République De Cameroun"@en , "Camaroon"@fr , "Cameroun"@fr , "United Republic of Cameroon"@fr , "Camaroon"@de , "Camaroon"@en , "United Republic of Cameroon"@de , "United Republic of Cameroon"@en , "Sub-divisions of Cameroon"@fr , "Sub-divisions of Cameroon"@de , "Sub-divisions of Cameroon"@en .

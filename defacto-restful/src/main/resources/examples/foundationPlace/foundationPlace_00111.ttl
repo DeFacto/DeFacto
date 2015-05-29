@@ -1,0 +1,25 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Applied_Minds>
+        skos:altLabel  "Applied Minds"@en .
+
+<http://rdf.freebase.com/ns/m.04yx44__111>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0k_q_> ;
+        dbo:from             "2000"^^xsd:gYear ;
+        dbo:to               "2000"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.04yx44>
+        rdfs:label      "Applied Minds"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.04yx44__111> ;
+        owl:sameAs      <http://dbpedia.org/resource/Applied_Minds> ;
+        skos:altLabel   "Applied Minds, Inc."@en , "AMI"@en .
+
+<http://rdf.freebase.com/ns/m.0k_q_>
+        rdfs:label     "Glendale"@de , "Glendale"@fr , "Glendale"@en ;
+        owl:sameAs     <http://dbpedia.org/resource/Glendale,_California> , <http://de.dbpedia.org/resource/Glendale_(Kalifornien)> , <http://fr.dbpedia.org/resource/Glendale_(Californie)> ;
+        skos:altLabel  "Chamlian Armenian School"@fr , "Chamlian Armenian School"@de , "Chamlian Armenian School"@en , "Los Angeles County / Glendale city"@en , "Los Angeles Township, California"@fr , "Los Angeles Township, California"@de , "Los Angeles Township, California"@en , "Glendale, CA"@fr , "Glendale, CA"@de , "Glendale, CA"@en , "Verdugo City, California"@fr , "Verdugo City, California"@de , "Verdugo City, California"@en , "Glendale california"@fr , "Glendale, California"@fr , "Glendale, California"@de , "Glendale, California"@en , "Glendale california"@de , "Glendale california"@en , "North Glendale, California"@fr , "North Glendale, California"@de , "North Glendale, California"@en , "Glendale, ca"@fr , "Glendale, ca"@de , "Glendale, ca"@en , "LOCODE:USJGX"@fr , "LOCODE:USJGX"@de , "LOCODE:USJGX"@en , "Glendale"@fr , "Glendale, Californie"@fr , "Glendale"@de , "Glendale"@en .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Cary_Grant__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Davenport,_Iowa> ;
+        dbo:from        "1986-11-29"^^xsd:date ;
+        dbo:to          "1986-11-29"^^xsd:date .
+
+<http://dbpedia.org/resource/Davenport,_Iowa>
+        rdfs:label     "Davenport, Iowa"@en , "Davenport, Iowa"@fr , "Davenport, Iowa"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Davenport_(Iowa)> , <http://fr.dbpedia.org/resource/Davenport_(Iowa)> ;
+        skos:altLabel  "Stampe Lilac Garden"@fr , "Stampe Lilac Garden"@de , "Stampe Lilac Garden"@en , "Davenport"@fr , "LOCODE:USDVN"@fr , "Davenport"@de , "LOCODE:USDVN"@de , "Davenport"@en , "LOCODE:USDVN"@en , "Meredith Haley"@fr , "Meredith Haley"@de , "Meredith Haley"@en , "Davenport, Iowa"@fr , "Davenport, Iowa"@de , "Davenport, Iowa"@en , "Davenport, iowa"@fr , "Davenport, iowa"@de , "Davenport, iowa"@en , "Davenport, IA"@fr , "Davenport, IA"@de , "Davenport, IA"@en .
+
+<http://dbpedia.org/resource/Cary_Grant>
+        rdfs:label     "Cary Grant"@de , "Cary Grant"@fr , "Cary Grant"@en ;
+        dbo:death      <http://dbpedia.org/resource/Cary_Grant__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Cary_Grant> , <http://de.dbpedia.org/resource/Cary_Grant> ;
+        skos:altLabel  "Cary"@en , "Cary"@de , "Cary"@fr , "Archibald Alexander Leach"@en , "Archibald Alexander Leach"@de , "Archibald Alexander Leach"@fr , "Cary Grant."@en , "Cary Grant."@de , "Cary Grant."@fr , "Archibald alec leach"@fr , "Archibald alec leach"@en , "Archibald alec leach"@de , "Cary grant filmography"@en , "Cary grant filmography"@de , "Cary grant filmography"@fr , "Leach"@en , "Leach"@de , "Leach"@fr , "Grant"@fr , "Carry Grant"@en , "Carry Grant"@de , "Carry Grant"@fr , "Archibald Leach"@fr , "Cary Grant filmography"@en , "Cary Grant filmography"@de , "Cary Grant filmography"@fr , "Archie Leach"@en , "Archie Leach"@de , "Archie Leach"@fr , "Cary Grant"@en , "Cary Grant"@de , "Cary Grant"@fr , "Cary grant"@fr , "Cary grant"@en , "Cary grant"@de , "Alexander Archibald Leach"@de .

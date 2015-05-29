@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Ella_Fitzgerald>
+        rdfs:label     "Ella Fitzgerald"@en , "Ella Fitzgerald"@fr , "Ella Fitzgerald"@de ;
+        dbo:birth      <http://dbpedia.org/resource/Ella_Fitzgerald__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Ella_Fitzgerald> , <http://fr.dbpedia.org/resource/Ella_Fitzgerald> ;
+        skos:altLabel  "FitzGerald"@fr , "FitzGerald"@de , "FitzGerald"@en , "Ella"@fr , "Ella"@de , "Ella"@en , "Ella Jane Fitzgerald"@de , "Louis Armstrong"@fr , "Louis Armstrong"@de , "Louis Armstrong"@en , "Ella Fitzgerald"@fr , "Ella Fitzgerald"@de , "Ella Fitzgerald"@en .
+
+<http://dbpedia.org/resource/Ella_Fitzgerald__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Newport_News,_Virginia> ;
+        dbo:from        "1917-04-25"^^xsd:date ;
+        dbo:to          "1917-04-25"^^xsd:date .
+
+<http://dbpedia.org/resource/Newport_News,_Virginia>
+        rdfs:label     "Newport News, Virginia"@de , "Newport News, Virginia"@fr , "Newport News, Virginia"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Newport_News_(Virginie)> , <http://de.dbpedia.org/resource/Newport_News> ;
+        skos:altLabel  "Newport News Waterworks"@en , "Newport News Waterworks"@de , "Newport News Waterworks"@fr , "Newport news, va"@en , "Newport news, va"@de , "Newport news, va"@fr , "Downtown Newport News, Virginia"@en , "Downtown Newport News, Virginia"@de , "Downtown Newport News, Virginia"@fr , "Bad News, VA"@en , "Bad News, VA"@de , "Bad News, VA"@fr , "Newport News, VA"@en , "Newport News, VA"@de , "Newport News, VA"@fr , "LOCODE:USNNS"@en , "Newport News, Va."@en , "Newport News, Va."@de , "Newport News, Va."@fr , "LOCODE:USNNS"@de , "LOCODE:USNNS"@fr , "City of Newport News, Virginia"@fr , "City of Newport News, Virginia"@en , "City of Newport News, Virginia"@de , "Newport News, Virginia"@fr , "Newport News, Virginia"@en , "Newport News, Virginia"@de , "Bad News, Virginia"@en , "Bad News, Virginia"@de , "Bad News, Virginia"@fr , "Newport News"@fr , "Newport News"@en , "Newport News"@de , "Newportnews"@en , "Newportnews"@de , "Newportnews"@fr , "Newport"@fr , "Newport"@en , "Newport"@de .

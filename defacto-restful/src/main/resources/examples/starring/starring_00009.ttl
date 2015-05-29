@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Seven_(film)>
+        rdfs:label      "Seven (film)"@en , "Seven (film)"@fr , "Seven (film)"@de ;
+        dbo:isStarring  <http://dbpedia.org/resource/Seven_(film)__1> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Seven_(film)> , <http://de.dbpedia.org/resource/Sieben_(Film)> ;
+        skos:altLabel   "John Doe"@de , "Seven"@fr , "Seven"@de , "Seven"@en , "Se7en"@fr , "Se7en"@de , "Se7en"@en , "John Doe"@fr , "John Doe"@en .
+
+<http://dbpedia.org/resource/Seven_(film)__1>
+        dbo:from      "1995-09-22"^^xsd:date ;
+        dbo:starring  <http://dbpedia.org/resource/Morgan_Freeman> ;
+        dbo:to        "1995-09-22"^^xsd:date .
+
+<http://dbpedia.org/resource/Morgan_Freeman>
+        rdfs:label     "Morgan Freeman"@en , "Morgan Freeman"@fr , "Morgan Freeman"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Morgan_Freeman> , <http://de.dbpedia.org/resource/Morgan_Freeman> ;
+        skos:altLabel  "Freeman"@fr , "Morgan Freeman"@fr , "Morgan Freeman"@de , "Morgan Freeman"@en , "Morgan Porterfield Freeman, Jr."@fr , "Morgan Porterfield Freeman, Jr."@en , "Morgan Porterfield Freeman, Jr."@de , "Morgan Porterfield Freeman"@de .

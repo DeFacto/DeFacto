@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02ngbf>
+        rdfs:label     "Solange Knowles"@de , "Solange Knowles"@fr , "Solange Knowles"@en ;
+        owl:sameAs     <http://dbpedia.org/resource/Solange_Knowles> , <http://fr.dbpedia.org/resource/Solange_Knowles> , <http://de.dbpedia.org/resource/Solange_Knowles> ;
+        skos:altLabel  "Knowles, Solange"@en , "Pretty Good"@fr , "Pretty Good"@de , "Pretty Good"@en , "Knowles"@de , "Beyonce's sister"@fr , "Beyonce's sister"@de , "Beyonce's sister"@en , "Piaget"@fr , "Piaget"@de , "Piaget"@en , "Solange"@fr , "Solange Piaget Knowles"@fr , "Solange"@de , "Solange"@en , "Solange Piaget Knowles"@de , "Solange Piaget Knowles"@en , "Solange Knowles"@fr , "Solange Knowles"@de , "Solange Knowles"@en , "Solange Knowles-Smith"@en , "Solange Ijiat Knowles"@en , "Solange Knowles Smith"@en .
+
+<http://rdf.freebase.com/ns/m.0dn_jg__125>
+        dbo:from    "2004-02-27"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.02ngbf> ;
+        dbo:to      "2007"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0dn_jg>
+        rdfs:label    "Daniel Smith"@en ;
+        dbo:marriage  <http://rdf.freebase.com/ns/m.0dn_jg__125> .

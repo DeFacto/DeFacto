@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0gfz4x>
+        rdfs:label  "The Continent Makers and Other Tales of the Viagens"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/The_Continent_Makers_and_Other_Tales_of_the_Viagens> .
+
+<http://rdf.freebase.com/ns/m.0gfz4x__3>
+        dbo:author  <http://rdf.freebase.com/ns/m.0gfz4x> ;
+        dbo:from    "1953"^^xsd:gYear ;
+        dbo:to      "1953"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0c8br>
+        rdfs:label       "Lyon Sprague de Camp"@fr , "Lyon Sprague de Camp"@de , "L. Sprague de Camp"@en ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.0gfz4x__3> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/Lyon_Sprague_de_Camp> , <http://de.dbpedia.org/resource/Lyon_Sprague_de_Camp> , <http://dbpedia.org/resource/L._Sprague_de_Camp> ;
+        skos:altLabel    "Sprague de Camp"@fr , "Sprague de Camp"@en , "Sprague de Camp"@de , "L. Sprague De Camp"@en , "L. Sprague De Camp"@de , "L. Sprague De Camp"@fr , "Lyon sprague de camp"@fr , "Camp"@de , "Lyon Sprague De Camp"@fr , "Lyon Sprague De Camp"@en , "Lyon Sprague De Camp"@de , "L. Sprague deCamp"@fr , "L. Sprague DeCamp"@en , "L. Sprague DeCamp"@de , "L. Sprague DeCamp"@fr , "L. Sprague deCamp"@en , "L. Sprague deCamp"@de , "De Camp"@en , "De Camp"@de , "De Camp"@fr , "De Camp, L. Sprague"@en , "De Camp, L. Sprague"@de , "De Camp, L. Sprague"@fr , "L. Sprague de Camp"@en , "L. Sprague de Camp"@de , "L. Sprague de Camp"@fr , "Lyon Sprague de Camp"@en , "Lyon Sprague de Camp"@de , "Lyon Sprague de Camp"@fr , "Lyman R. Lyon"@en , "L Sprague de Camp"@en , "L Sprague de Camp"@de , "L Sprague de Camp"@fr , "Sprague"@en , "Sprague"@de , "Sprague"@fr .

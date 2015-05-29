@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.08n_fd>
+        rdfs:label       "Thomas Thurston Thomas"@en ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.015w1p__79> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Thomas_Thurston_Thomas> ;
+        skos:altLabel    "Thomas Timoux Thomas"@en , "Thomas Thurston Thomas"@en , "Thomas T. Thomas"@en , "Thomas Wren"@en .
+
+<http://rdf.freebase.com/ns/m.015w1p>
+        rdfs:label     "Flare"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Flare_(science_fiction_novel)> ;
+        skos:altLabel  "Flare Science Fiction Novel"@en , "Flare"@en .
+
+<http://rdf.freebase.com/ns/m.015w1p__79>
+        dbo:author  <http://rdf.freebase.com/ns/m.015w1p> ;
+        dbo:from    "1992"^^xsd:gYear ;
+        dbo:to      "1992"^^xsd:gYear .

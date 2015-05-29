@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03knl>
+        rdfs:label     "Halle Berry"@fr , "Halle Berry"@de , "Halle Berry"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Halle_Berry> , <http://dbpedia.org/resource/Halle_Berry> , <http://de.dbpedia.org/resource/Halle_Berry> ;
+        skos:altLabel  "Haly berry"@en , "Halle Berry"@fr , "Halle Berry"@de , "Halle Berry"@en , "Hally Berry"@fr , "Hally Berry"@de , "Hally Berry"@en , "Halle"@fr , "Halle"@de , "Halle"@en , "Halle berry"@fr , "Halle Barry"@fr , "Berry"@fr , "Halle berry"@de , "Halle Barry"@de , "Berry"@de , "Halle Barry"@en , "Berry"@en , "Halle berry"@en , "Maria Halle Berry"@fr , "Halle Maria Berry"@fr , "Maria Halle Berry"@de , "Halle Maria Berry"@de , "Maria Halle Berry"@en , "Halle Maria Berry"@en , "Haly berry"@fr , "Haly berry"@de .
+
+<http://rdf.freebase.com/ns/m.02z6p5f>
+        rdfs:label     "Gabriel Aubry"@de , "Gabriel Aubry"@fr , "Gabriel Aubry"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.02z6p5f__99> ;
+        owl:sameAs     <http://dbpedia.org/resource/Gabriel_Aubry> , <http://de.dbpedia.org/resource/Gabriel_Aubry> , <http://fr.dbpedia.org/resource/Gabriel_Aubry> ;
+        skos:altLabel  "Gabriel Aubrey"@fr , "Gabriel Aubrey"@de , "Aubry"@fr , "Aubry"@de , "Gabriel Aubry"@fr , "Gabriel Aubry"@de .
+
+<http://rdf.freebase.com/ns/m.02z6p5f__99>
+        dbo:from    "2005-11"^^xsd:gYearMonth ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.03knl> ;
+        dbo:to      "2010-04-30"^^xsd:date .

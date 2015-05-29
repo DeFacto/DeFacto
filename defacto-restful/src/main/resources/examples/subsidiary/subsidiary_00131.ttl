@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.05njw__131>
+        dbo:from        "2007-04"^^xsd:gYearMonth ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.03g3cgn> ;
+        dbo:to          "2007-04"^^xsd:gYearMonth .
+
+<http://rdf.freebase.com/ns/m.03g3cgn>
+        rdfs:label     "LODESTAR"@en ;
+        skos:altLabel  "LODESTAR Corporation"@en .
+
+<http://rdf.freebase.com/ns/m.05njw>
+        rdfs:label       "Oracle"@de , "Oracle Corporation"@fr , "Oracle Corporation"@en ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.05njw__131> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/Oracle> , <http://dbpedia.org/resource/Oracle_Corporation> , <http://fr.dbpedia.org/resource/Oracle_Corporation> ;
+        skos:altLabel    "Oracle"@fr , "Oracle"@en , "Oracle"@de , "ORACLE CORP"@en , "Oracle Corporation"@de , "Oracle Corporation"@en , "Oracle Corporation"@fr , "The Oracle Corporation"@en , "The Oracle Corporation"@de , "The Oracle Corporation"@fr , "Oracle.com"@fr , "Oracle.com"@en , "Oracle.com"@de , "Oracle Corp"@fr , "Oracle corporation"@fr , "Oracle corporation"@en , "Oracle corporation"@de , "Oracle Corp"@en , "Oracle Corp"@de , "Oracle Corp."@fr , "Oracle Corp."@en , "Oracle Corp."@de , "ORACLE Corporation"@fr , "Oracle corp."@fr , "Oracle corp."@en , "Oracle corp."@de , "ORACLE Corporation"@en , "ORACLE Corporation"@de , "ORCL"@en , "ORCL"@de , "ORCL"@fr , "Oracle corp"@en , "Oracle corp"@de , "Oracle corp"@fr , "Siebel Systems"@fr , "Oracle France"@fr , "SCOracle"@fr , "SCOracle"@en , "SCOracle"@de , "InQuira"@fr , "InQuira"@en , "InQuira"@de , "Ozark Holding Inc"@en .

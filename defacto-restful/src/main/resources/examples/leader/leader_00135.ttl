@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Habib_Bourguiba>
+        rdfs:label     "Habib Bourguiba"@en , "Habib Bourguiba"@fr , "Habib Bourguiba"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Habib_Bourguiba__2> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Habib_Bourguiba> , <http://de.dbpedia.org/resource/Habib_Bourguiba> ;
+        skos:altLabel  "Habib Burqibah"@fr , "Habib Burqibah"@de , "Habib Burqibah"@en , "Habib bourghiba"@fr , "Bourghiba"@de , "Bourguiba, Habib ibn Ali"@fr , "Habib ibn Ali Bourguiba"@fr , "Bourguiba"@fr , "Habib Bourguiba"@fr , "Habib Bourguiba"@de , "Habib Bourguiba"@en , "Habib"@fr , "Habib"@de , "Habib"@en , "Habib ben Ali Bourguiba"@fr , "Ḥabīb Būrqībah"@fr , "Bourguiba, Habib ibn Ali"@de , "Habib ibn Ali Bourguiba"@de , "Bourguiba, Habib ibn Ali"@en , "Bourguiba"@de , "Habib ben Ali Bourguiba"@de , "Habib ben Ali Bourguiba"@en , "Ḥabīb Būrqībah"@de , "Habib ibn Ali Bourguiba"@en , "Bourguiba"@en , "Ḥabīb Būrqībah"@en , "Habib Ben Ali Bourguiba"@fr , "Habib Ben Ali Bourguiba"@de , "Habib Ben Ali Bourguiba"@en , "Habib Bourgiba"@fr , "Habib Bourgiba"@de , "Habib Bourgiba"@en .
+
+<http://dbpedia.org/resource/Kingdom_of_Tunisia>
+        rdfs:label  "Kingdom of Tunisia"@en , "Kingdom of Tunisia"@fr , "Kingdom of Tunisia"@de .
+
+<http://dbpedia.org/resource/Habib_Bourguiba__2>
+        dbo:from    "1956-04-15"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Kingdom_of_Tunisia> ;
+        dbo:to      "1957-07-25"^^xsd:date .

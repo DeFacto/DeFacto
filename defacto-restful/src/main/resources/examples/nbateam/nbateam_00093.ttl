@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Mike_Miller_(basketball_player)__4>
+        dbo:from  "2009"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Washington_Wizards> ;
+        dbo:to    "2009"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Washington_Wizards>
+        rdfs:label     "Washington Wizards"@de , "Washington Wizards"@fr , "Washington Wizards"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Washington_Wizards> , <http://fr.dbpedia.org/resource/Wizards_de_Washington> ;
+        skos:altLabel  "Washington"@fr , "Wizards"@de , "Washingotn Wiziards"@en , "Washingotn Wiziards"@de , "Washingotn Wiziards"@fr , "Chicago Packers"@de , "Chicago Packers"@fr , "Chicago Packers"@en , "Bullets de Baltimore"@fr , "Wizards de Washington"@fr , "Washington Bullets"@en , "Washington Bullets"@de , "Washington Bullets"@fr , "Washington Wizards"@en , "Washington Wizards"@de , "Washington Wizards"@fr , "Chicago Zephyrs"@en , "Chicago Zephyrs"@de , "Chicago Zephyrs"@fr , "Baltimore Bullets"@en , "Baltimore Bullets"@de , "Baltimore Bullets"@fr , "Wizards de washington"@fr , "Capital Bullets"@en , "Capital Bullets"@de , "Capital Bullets"@fr , "Wizard"@en , "Wizard"@de , "Wizard"@fr , "Washington Wiz"@en , "Washington Wiz"@de , "Washington Wiz"@fr , "Packer"@en , "Packer"@de , "Packer"@fr .
+
+<http://dbpedia.org/resource/Mike_Miller_(basketball_player)>
+        rdfs:label      "Mike Miller (basketball player)"@en , "Mike Miller (basketball player)"@fr , "Mike Miller (basketball player)"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Mike_Miller_(basketball_player)__4> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Mike_Miller> , <http://fr.dbpedia.org/resource/Mike_Miller_(basket-ball)> ;
+        skos:altLabel   "Mike Miller"@de , "Mike Miller"@en , "Mike Miller"@fr , "Mike miller"@fr .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Frank_Sinatra>
+        rdfs:label     "Frank Sinatra"@de , "Frank Sinatra"@fr , "Frank Sinatra"@en ;
+        dbo:birth      <http://dbpedia.org/resource/Frank_Sinatra__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Frank_Sinatra> , <http://de.dbpedia.org/resource/Frank_Sinatra> ;
+        skos:altLabel  "Francis Albert \"Frank\" Sinatra"@en , "Columbus Day Riot"@fr , "Columbus Day Riot"@de , "Columbus Day Riot"@en , "Frank sinatra"@fr , "Frank sinatra"@de , "Frank sinatra"@en , "Francis Albert Sinatra"@fr , "Francis Albert Sinatra"@de , "Francis Albert Sinatra"@en , "Frank senatra"@fr , "Frank senatra"@de , "Frank senatra"@en , "Ol' Blue Eyes"@fr , "Ol' Blue Eyes"@de , "Ol' Blue Eyes"@en , "Political beliefs of frank sinatra"@fr , "Political beliefs of frank sinatra"@en , "Political beliefs of frank sinatra"@de , "Sinatra"@fr , "Sinatra"@de , "Sinatra"@en , "A Voice in Time: 1939-1952"@fr , "A Voice in Time: 1939-1952"@de , "A Voice in Time: 1939-1952"@en , "Fbi files on frank sinatra"@fr , "Fbi files on frank sinatra"@de , "Fbi files on frank sinatra"@en , "Frank sanatra"@fr , "Frank sanatra"@de , "Frank sanatra"@en , "Political beliefs of Frank Sinatra"@fr , "Political beliefs of Frank Sinatra"@en , "Political beliefs of Frank Sinatra"@de , "Frank Sinatra"@fr , "Franck Sinatra"@fr , "Frank Sinatra"@de , "Frank Sinatra"@en , "Franck Sinatra"@en , "Franck Sinatra"@de , "Frankie Blue Eyes"@de , "Francis A. Sinatra"@fr , "Francis A. Sinatra"@de , "Francis A. Sinatra"@en , "Biography of frank sinatra"@fr , "Biography of frank sinatra"@en , "Biography of frank sinatra"@de , "Francis Sinatra"@fr , "Francis Sinatra"@de , "Francis Sinatra"@en , "Old blue eyes"@fr , "Old blue eyes"@en , "Old blue eyes"@de , "Frank Sinatra, Sr."@fr , "FBI Files on Frank Sinatra"@fr , "Frank Sinatra, Sr."@de , "FBI Files on Frank Sinatra"@de , "Frank Sinatra, Sr."@en , "FBI Files on Frank Sinatra"@en , "Old Blue Eyes"@fr , "Old Blue Eyes"@en , "Old Blue Eyes"@de , "Biography of Frank Sinatra"@fr , "Biography of Frank Sinatra"@de , "Biography of Frank Sinatra"@en , "Frank"@fr , "Frank"@de , "Frank"@en , "Ol’ Blue Eyes"@fr , "Ol’ Blue Eyes"@en , "Ol’ Blue Eyes"@de , "A Voice in Time: 1939–1952"@fr , "A Voice in Time: 1939–1952"@de , "A Voice in Time: 1939–1952"@en , "Sinatra Sings Cole Porter"@fr , "Sinatra Sings Cole Porter"@de , "Sinatra Sings Cole Porter"@en , "Life of Frank Sinatra"@fr , "Life of Frank Sinatra"@de , "Life of Frank Sinatra"@en , "Francis Albert \"Frank\" Sinatra"@fr , "Francis Albert \"Frank\" Sinatra"@de .
+
+<http://dbpedia.org/resource/Frank_Sinatra__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Hoboken,_New_Jersey> ;
+        dbo:from        "1915-12-12"^^xsd:date ;
+        dbo:to          "1915-12-12"^^xsd:date .
+
+<http://dbpedia.org/resource/Hoboken,_New_Jersey>
+        rdfs:label     "Hoboken, New Jersey"@en , "Hoboken, New Jersey"@fr , "Hoboken, New Jersey"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Hoboken_(New_Jersey)> , <http://fr.dbpedia.org/resource/Hoboken_(New_Jersey)> ;
+        skos:altLabel  "Hoboken City, Hudson County, New Jersey"@fr , "Hoboken City, Hudson County, New Jersey"@de , "Hoboken City, Hudson County, New Jersey"@en , "Hoboken NJ"@fr , "Hoboken NJ"@de , "Hoboken NJ"@en , "LOCODE:USHBK"@fr , "Hoboken, NJ"@fr , "LOCODE:USHBK"@de , "LOCODE:USHBK"@en , "Hoboken, nj"@fr , "Hoboken, NJ"@de , "Hoboken, nj"@de , "Hoboken, NJ"@en , "Hoboken, nj"@en , "Hoboken, N.J."@fr , "Hoboken, N.J."@de , "Hoboken, N.J."@en , "Hoboken Township, Hudson County, New Jersey"@fr , "Hoboken Township, Hudson County, New Jersey"@de , "Hoboken Township, Hudson County, New Jersey"@en , "Hoboken"@fr , "Hoboken"@de , "Hoboken"@en , "Hoboken Township, New Jersey"@fr , "Hoboken Township, New Jersey"@de , "Hoboken Township, New Jersey"@en , "Hoboken, New Jersey"@fr , "Hoboken, New Jersey"@de , "Hoboken, New Jersey"@en , "Hoboken City, New Jersey"@fr , "Hoboken City, New Jersey"@de , "Hoboken City, New Jersey"@en .

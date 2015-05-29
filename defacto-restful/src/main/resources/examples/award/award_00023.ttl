@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02rgr7>
+        rdfs:label         "Charles Édouard Guillaume"@en , "Charles Édouard Guillaume"@fr , "Charles Édouard Guillaume"@de ;
+        dbo:recievedAward  <http://rdf.freebase.com/ns/m.02rgr7__23> ;
+        owl:sameAs         <http://dbpedia.org/resource/Charles_%C3%89douard_Guillaume> ;
+        skos:altLabel      "Charles Edouard Guillaume"@en , "Charles Édouard Guillaume"@en .
+
+<http://rdf.freebase.com/ns/m.0dt39>
+        rdfs:label     "Nobel Prize in Physics"@en , "Prix Nobel de physique"@fr , "Nobelpreis für Physik"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Prix_Nobel_de_physique> , <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/Nobelpreis_für_Physik> , <http://dbpedia.org/resource/Nobel_Prize_in_Physics> , <http://de.dbpedia.org/resource/Liste_der_Nobelpreisträger_für_Physik> , <http://dbpedia.org/resource/List_of_Nobel_laureates_in_Physics> ;
+        skos:altLabel  "Nobel Physics Prize"@en , "Nobel laureates in physics"@fr , "Nobel laureates in physics"@en , "Nobel laureates in physics"@de , "Physik-Nobelpreis"@de , "Nobel prize in physics"@fr , "Nobel prize in physics"@en , "Nobel prize in physics"@de , "Nobel Prize for physics"@fr , "Nobel Prize for physics"@en , "Nobel Prize for physics"@de , "Prix Nobel de Physique"@fr , "Physics"@fr , "Physics"@en , "Physics"@de , "Nobel Prizes for Physics"@fr , "Nobel Prizes for Physics"@en , "Nobel Prizes for Physics"@de , "Liste der Physiknobelpreistrager"@de , "Liste des Prix Nobel de physique"@fr , "Liste der Nobelpreisträger für Physik"@de , "Nobelpreis fur Physik"@de , "Nobel prize for Physics"@fr , "Nobel prize for Physics"@de , "Nobel prize for Physics"@en , "Physiknobelpreis"@de , "Nobel Prize in Physics"@fr , "Nobel Prize in Physics"@de , "Nobel Prize in Physics"@en , "Prix nobel de physique"@fr , "PhysicS"@fr , "PhysicS"@en , "PhysicS"@de , "Nobel Prize For Physics - 2007"@fr , "Liste der Nobelpreistrager fur Physik"@de , "Nobel Prize For Physics - 2007"@en , "Nobel Prize For Physics - 2007"@de , "Prix Nobel de physique"@fr , "Physics nobel prize"@fr , "Physics nobel prize"@en , "Physics nobel prize"@de , "Noble prize in physics"@fr , "Noble prize in physics"@en , "Noble prize in physics"@de , "Liste der Physiknobelpreisträger"@de , "Nobel Prize for Physics"@fr , "Nobel prize physics"@fr , "Nobel Prize for Physics"@de , "Nobel Prize for Physics"@en , "Nobel prize physics"@de , "Nobel prize physics"@en , "Nobel Prize in physics"@fr , "Nobel Prize in physics"@en , "Nobel Prize in physics"@de , "Nobelpreis für Physik"@de , "Nobel Physics Prize"@fr , "Nobel Physics Prize"@de .
+
+<http://rdf.freebase.com/ns/m.02rgr7__23>
+        dbo:award  <http://rdf.freebase.com/ns/m.0dt39> ;
+        dbo:from   "1920"^^xsd:gYear ;
+        dbo:to     "1920"^^xsd:gYear .

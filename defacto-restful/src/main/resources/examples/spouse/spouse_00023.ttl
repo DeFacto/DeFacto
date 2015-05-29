@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0688bj2>
+        rdfs:label     "David W. Donoho"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.0688bj2__23> ;
+        skos:altLabel  "David William Donoho"@en .
+
+<http://rdf.freebase.com/ns/m.029q_y>
+        rdfs:label     "Holly Marie Combs"@en , "Holly Marie Combs"@de , "Holly Marie Combs"@fr ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Holly_Marie_Combs> , <http://dbpedia.org/resource/Holly_Marie_Combs> , <http://fr.dbpedia.org/resource/Holly_Marie_Combs> ;
+        skos:altLabel  "Holly Marie Combs Donoho"@fr , "Holly Marie Combs Donoho"@de , "Holly Marie Combs Donoho"@en , "Holly Marie Donoho"@fr , "Holly Marie Donoho"@de , "Holly Marie Donoho"@en , "Combs"@fr , "Combs"@de , "holly_marie_combs"@en , "Holl"@en , "Holly Marie Combs-Donoho"@en , "Holly Marie Combs"@fr , "Holly Marie Combs"@de , "Holly Marie Combs"@en , "Holly Combs"@en , "Holly marie combs"@fr , "Holly marie combs"@de , "Holly marie combs"@en , "Holly"@fr , "Holly"@de , "Holz"@en , "Holly Donoho"@en , "Holly Marie Smith"@en .
+
+<http://rdf.freebase.com/ns/m.0688bj2__23>
+        dbo:from    "2004-02-14"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.029q_y> ;
+        dbo:to      "2011-11-11"^^xsd:date .

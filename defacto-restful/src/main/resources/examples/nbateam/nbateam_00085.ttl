@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Minnesota_Timberwolves>
+        rdfs:label     "Minnesota Timberwolves"@de , "Minnesota Timberwolves"@en , "Minnesota Timberwolves"@fr ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Timberwolves_du_Minnesota> , <http://de.dbpedia.org/resource/Minnesota_Timberwolves> ;
+        skos:altLabel  "Minnesotatwolves"@fr , "Minnesotatwolves"@de , "Minnesotatwolves"@en , "Minnesota twolves"@fr , "Minnesota twolves"@de , "Minnesota twolves"@en , "Minnesota Timberwolves"@fr , "Minnesota Timberwolves"@de , "Minnesota Timberwolves"@en , "Timberwolves du minnesota"@fr , "T-wolves"@fr , "Minnesota Wolves"@fr , "Timberwolves du Minnessota"@fr , "Minnesota t-wolves"@fr , "Crunch"@fr , "T-wolves"@de , "Minnesota Wolves"@de , "Minnesota t-wolves"@de , "T-wolves"@en , "Crunch"@de , "Minnesota t-wolves"@en , "Minnesota Wolves"@en , "Crunch"@en , "Minnesota T Wolves"@fr , "Timberwolves du Minnesota"@fr , "Minnesota T Wolves"@de , "Minnesota T Wolves"@en .
+
+<http://dbpedia.org/resource/Luke_Ridnour__3>
+        dbo:from  "2010"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Minnesota_Timberwolves> ;
+        dbo:to    "2012"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Luke_Ridnour>
+        rdfs:label      "Luke Ridnour"@de , "Luke Ridnour"@en , "Luke Ridnour"@fr ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Luke_Ridnour__3> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Luke_Ridnour> , <http://fr.dbpedia.org/resource/Luke_Ridnour> ;
+        skos:altLabel   "Ridnour"@de , "Luke Ridnour"@de , "Luke Ridnour"@en , "Luke Ridnour"@fr .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/A_Hard_Day's_Night_(film)__1>
+        dbo:from      "1964-07-06"^^xsd:date ;
+        dbo:starring  <http://dbpedia.org/resource/George_Harrison> ;
+        dbo:to        "1964-07-06"^^xsd:date .
+
+<http://dbpedia.org/resource/George_Harrison>
+        rdfs:label     "George Harrison"@en , "George Harrison"@de , "George Harrison"@fr ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/George_Harrison> , <http://de.dbpedia.org/resource/George_Harrison> ;
+        skos:altLabel  "Goerge Harrison"@fr , "Goerge Harrison"@en , "Goerge Harrison"@de , "George Harrison MBE"@fr , "George Harrison MBE"@de , "George Harrison MBE"@en , "The silent Beatle"@fr , "Hari Georgeson"@fr , "Harrison"@fr , "Carl Harrison"@fr , "Hari Georgeson"@de , "Carl Harrison"@de , "Carl Harrison"@en , "Hari Georgeson"@en , "Bette Y El Mysterioso"@fr , "Bette Y El Mysterioso"@de , "Bette Y El Mysterioso"@en , "George Harrisson"@fr , "Beatle George"@fr , "Michael Abram"@fr , "The silent Beatle"@de , "George Harrisson"@de , "Beatle George"@de , "Michael Abram"@de , "The silent Beatle"@en , "George Harrisson"@en , "Beatle George"@en , "Michael Abram"@en , "George O'Hara"@fr , "George O'Hara"@en , "George O'Hara"@de , "George"@fr , "George"@de , "George"@en , "Georges Harrison"@fr , "P. Roducer"@fr , "P. Roducer"@en , "P. Roducer"@de , "Jai Raj Harisein"@fr , "Jai Raj Harisein"@en , "Jai Raj Harisein"@de , "George Harison"@fr , "George Harison"@en , "George Harison"@de , "Harrison, George"@fr , "Harrison, George"@de , "Harrison, George"@en , "George Harrison"@fr , "George Harrison"@de , "George Harrison"@en , "Nelson Wilbury"@fr , "George H."@fr , "Nelson Wilbury"@de , "George H."@en , "George H."@de , "Nelson Wilbury"@en , "George harrison"@fr , "The George O'Hara-Smith Singers"@fr , "Spike Wilbury"@fr , "Spike Wilbury"@en , "Spike Wilbury"@de , "George harrison"@de , "The George O'Hara-Smith Singers"@de , "George harrison"@en , "The George O'Hara-Smith Singers"@en , "George O'Hara-Smith"@fr , "George O'Hara-Smith"@de , "George O'Hara-Smith"@en , "Dark Horse Years 1976-1992"@fr , "L'Angelo Misterioso"@fr , "L'Angelo Misterioso"@de , "L'Angelo Misterioso"@en , "The quiet Beatle"@fr , "The quiet Beatle"@en , "The quiet Beatle"@de , "The dark horse"@fr , "The dark horse"@de , "The dark horse"@en , "Arthur Wax"@fr , "Arthur Wax"@de , "Arthur Wax"@en , "George Harrysong"@fr , "George Harrysong"@de , "George Harrysong"@en .
+
+<http://dbpedia.org/resource/A_Hard_Day's_Night_(film)>
+        rdfs:label      "A Hard Day's Night (film)"@en , "A Hard Day's Night (film)"@fr , "A Hard Day's Night (film)"@de ;
+        dbo:isStarring  <http://dbpedia.org/resource/A_Hard_Day's_Night_(film)__1> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/A_Hard_Day's_Night_(film)> , <http://de.dbpedia.org/resource/Yeah_Yeah_Yeah> ;
+        skos:altLabel   "Quatre garcons dans le vent"@fr , "A Hard Days Night"@fr , "A Hard Days Night"@en , "A Hard Days Night"@de , "Quatre Garçons dans le vent"@fr , "Quatre Garcons dans le vent"@fr , "A Hard Day's Night"@fr , "A Hard Day's Night"@de , "A Hard Day's Night"@en , "4 garcons dans le vent"@fr , "Quatre garçons dans le vent"@fr , "Yeah Yeah Yeah"@de , "Hard day's night"@fr , "Hard day's night"@de , "Hard day's night"@en , "4 garçons dans le vent"@fr .

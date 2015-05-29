@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Chad>
+        rdfs:label     "Chad"@de , "Chad"@fr , "Chad"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Tchad> , <http://de.dbpedia.org/resource/Tschad> ;
+        skos:altLabel  "Chad"@fr , "Chad"@en , "Chad"@de , "ISO 3166-1:TD"@en , "ISO 3166-1:TD"@de , "ISO 3166-1:TD"@fr , "Tsjad"@fr , "Jumhuriyyat Tshad"@fr , "Jumhuriyyat Tshad"@en , "Jumhuriyyat Tshad"@de , "Tchad"@fr , "Tsjad"@en , "Tsjad"@de , "Tchad"@en , "Tchad"@de , "République du Tchad"@fr , "République du Tchad"@en , "République du Tchad"@de , "Tchadien"@fr , "Culture of Chad"@fr , "Culture of Chad"@en , "Culture of Chad"@de , "Republik Tschad"@de , "Culture Du Tchad"@fr , "Tshād"@fr , "Republique du Tchad"@fr , "Republique du Tchad"@en , "Culture du tchad"@fr , "Republique du Tchad"@de , "Tshād"@en , "Tshād"@de , "Tshad"@fr , "Tshad"@en , "Tshad"@de , "Culture du Tchad"@fr , "Republic of Chad"@fr , "Republic of Chad"@en , "Republic of Chad"@de , "Jumhūriyyat Tshād"@en , "Jumhūriyyat Tshād"@de , "Jumhūriyyat Tshād"@fr , "Tschad"@de , "Chade"@en , "Chade"@de , "Chade"@fr , "The Chad"@en , "The Chad"@de , "The Chad"@fr .
+
+<http://dbpedia.org/resource/François_Tombalbaye__2>
+        dbo:from    "1959-03-26"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Chad> ;
+        dbo:to      "1960-08-11"^^xsd:date .
+
+<http://dbpedia.org/resource/François_Tombalbaye>
+        rdfs:label     "François Tombalbaye"@en , "François Tombalbaye"@fr , "François Tombalbaye"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/François_Tombalbaye__2> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/François_Tombalbaye> , <http://de.dbpedia.org/resource/François_Tombalbaye> ;
+        skos:altLabel  "Tombalbaye"@fr , "Tombalbaye"@de , "Ngarta Tombalbaye"@fr , "Ngarta Tombalbaye"@de , "Francois Tombalbaye"@fr , "François Tombalbaye"@fr , "Francois Tombalbaye"@de , "François Tombalbaye"@de .

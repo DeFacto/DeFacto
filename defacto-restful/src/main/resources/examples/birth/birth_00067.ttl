@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Lleyton_Hewitt__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Adelaide> ;
+        dbo:from        "1981-02-24"^^xsd:date ;
+        dbo:to          "1981-02-24"^^xsd:date .
+
+<http://dbpedia.org/resource/Adelaide>
+        rdfs:label     "Adelaide"@de , "Adelaide"@fr , "Adelaide"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Adélaïde_(Australie)> , <http://de.dbpedia.org/resource/Adelaide> ;
+        skos:altLabel  "Adélaïde"@fr , "Adelaide"@fr , "Adelaide"@en , "Adelaide"@de , "Adelaidean"@fr , "Adelaide, AU"@fr , "Capital of South Australia"@fr , "Adelaidean"@de , "Adelaide, AU"@en , "Adelaide, AU"@de , "Capital of South Australia"@en , "Capital of South Australia"@de , "Adelaidean"@en , "City of Squares"@fr , "City of Squares"@en , "City of Squares"@de , "Radelaide"@fr , "Radelaide"@en , "Radelaide"@de , "Adelaide Australia"@fr , "Adelaide Australia"@en , "Adelaide Australia"@de , "Adelaide, Australia"@fr , "Adelaide, Australia"@en , "Adelaide, Australia"@de , "Light's City"@fr , "Adelaide, AU-SA"@fr , "Light's City"@en , "Light's City"@de , "Adelaide, AU-SA"@en , "Adelaide, AU-SA"@de , "Adelaide, South Australia"@fr , "Adelaide, South Australia"@en , "Adelaide, South Australia"@de , "Adelaide,South Australia"@fr , "Adelaide South Australia"@fr , "Adelaide,South Australia"@en , "Adelaide,South Australia"@de , "Adelaide South Australia"@en , "Adelaide South Australia"@de , "Adelaide, South Australia, Australia"@fr , "Henley Beach South"@fr , "Adelaide, South Australia, Australia"@en , "Adelaide, South Australia, Australia"@de , "Henley Beach South"@en , "Henley Beach South"@de , "LOCODE:AUADL"@fr , "LOCODE:AUADL"@en , "LOCODE:AUADL"@de , "Adeliade"@fr , "Athens of the South"@fr , "Adeliade"@en , "Adeliade"@de , "Athens of the South"@en , "Athens of the South"@de .
+
+<http://dbpedia.org/resource/Lleyton_Hewitt>
+        rdfs:label     "Lleyton Hewitt"@en , "Lleyton Hewitt"@fr , "Lleyton Hewitt"@de ;
+        dbo:birth      <http://dbpedia.org/resource/Lleyton_Hewitt__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Lleyton_Hewitt> , <http://de.dbpedia.org/resource/Lleyton_Hewitt> ;
+        skos:altLabel  "LleytonHewitt"@fr , "LleytonHewitt"@de , "LleytonHewitt"@en , "Lleyton Hewitt"@fr , "Lleyton Hewitt"@de , "Lleyton Hewitt"@en , "Hewitt"@fr , "Hewitt"@de , "Hewitt"@en , "Leyton hewitt"@fr , "Leyton hewitt"@de , "Leyton hewitt"@en , "Lleyton Glynn Hewitt"@fr , "Leyton Hewitt"@fr , "Lleyton Glynn Hewitt"@de , "Leyton Hewitt"@de , "Leyton Hewitt"@en , "Lleyton Glynn Hewitt"@en .

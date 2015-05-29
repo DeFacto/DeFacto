@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/William_Ewart_Gladstone__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Liverpool> ;
+        dbo:from        "1809-12-29"^^xsd:date ;
+        dbo:to          "1809-12-29"^^xsd:date .
+
+<http://dbpedia.org/resource/William_Ewart_Gladstone>
+        rdfs:label     "William Ewart Gladstone"@de , "William Ewart Gladstone"@fr , "William Ewart Gladstone"@en ;
+        dbo:birth      <http://dbpedia.org/resource/William_Ewart_Gladstone__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/William_Ewart_Gladstone> , <http://de.dbpedia.org/resource/William_Ewart_Gladstone> ;
+        skos:altLabel  "W E Gladstone"@fr , "W E Gladstone"@en , "W E Gladstone"@de , "Gladstone"@en , "Gladstone"@de , "Gladstone"@fr , "W.E. Gladstone"@en , "W.E. Gladstone"@de , "W.E. Gladstone"@fr , "William E Gladstone"@en , "William E Gladstone"@de , "William E Gladstone"@fr , "William Ewart Gladstone"@fr , "William Ewart Gladstone"@en , "William Ewart Gladstone"@de , "Ewart Gladstone"@en , "Ewart Gladstone"@de , "Ewart Gladstone"@fr , "Gladstone's"@en , "Gladstone's"@de , "Gladstone's"@fr , "WE Gladstone"@fr , "WE Gladstone"@en , "WE Gladstone"@de , "W. E. Gladstone"@fr , "W. E. Gladstone"@en , "W. E. Gladstone"@de , "Mr Gladstone"@en , "Mr Gladstone"@de , "Mr Gladstone"@fr , "William E. Gladstone"@en , "William E. Gladstone"@de , "William E. Gladstone"@fr , "Ewart"@fr , "Ewart"@en , "Ewart"@de , "William Gladstone"@en , "William Gladstone"@de , "William Gladstone"@fr .
+
+<http://dbpedia.org/resource/Liverpool>
+        rdfs:label     "Liverpool"@de , "Liverpool"@fr , "Liverpool"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Liverpool> , <http://fr.dbpedia.org/resource/Liverpool> ;
+        skos:altLabel  "Palthania"@fr , "Palthania"@en , "Palthania"@de , "Archive 1"@fr , "Archive 1"@en , "Archive 1"@de , "Liverpool, UK"@fr , "Liverpool, UK"@en , "Liverpool, UK"@de , "Liverpool, Britain"@fr , "Liverpool, Britain"@en , "Liverpool, Britain"@de , "Palfania"@fr , "Palfania"@en , "Palfania"@de , "Scouseland"@fr , "Scouseland"@de , "Scouseland"@en , "Palvania"@fr , "Palvania"@de , "Palvania"@en , "County Borough of Liverpool"@fr , "County Borough of Liverpool"@en , "County Borough of Liverpool"@de , "GB-LIV"@de , "Liverpool"@fr , "Landmarks in Liverpool"@fr , "Landmarks in Liverpool"@en , "Landmarks in Liverpool"@de , "Liverpool"@en , "Liverpool"@de , "Liverpool, England"@fr , "Liverpool, England"@en , "Liverpool, England"@de , "Liverpool, Merseyside"@fr , "Liverpool, Merseyside"@de , "Liverpool, Merseyside"@en , "Liverpool – Maritime Mercantile City"@fr , "Liverpool – Maritime Mercantile City"@en , "Liverpool – Maritime Mercantile City"@de , "Metropolitan Borough of Liverpool"@fr , "Metropolitan Borough of Liverpool"@de , "Metropolitan Borough of Liverpool"@en , "The weather in Liverpool"@fr , "The weather in Liverpool"@de , "The weather in Liverpool"@en , "Lerpwl"@fr , "Lerpwl"@en , "Lerpwl"@de , "Liverpudlians"@fr , "Liverpudlians"@de , "Liverpudlians"@en , "Liverpudlian"@fr , "Liverpudlian"@en , "Liverpudlian"@de , "L'POOL"@fr , "L'POOL"@en , "L'POOL"@de .

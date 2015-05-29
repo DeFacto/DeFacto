@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.01x1lf>
+        rdfs:label     "Deryck Whibley"@en , "Deryck Whibley"@de , "Deryck Whibley"@fr ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.01x1lf__117> ;
+        owl:sameAs     <http://dbpedia.org/resource/Deryck_Whibley> , <http://fr.dbpedia.org/resource/Deryck_Whibley> , <http://de.dbpedia.org/resource/Deryck_Whibley> ;
+        skos:altLabel  "Deryck Wibley"@en , "Deryck Wibley"@de , "Deryck Wibley"@fr , "Deryck Jayson Whibley"@en , "Deryck Jayson Whibley"@de , "Deryck Jayson Whibley"@fr , "Deryck whibley"@fr , "Derek Wibley"@en , "Derek Wibley"@de , "Derek Wibley"@fr , "Derzhik Wibly"@en , "Deryck Whibley"@en , "Deryck Whibley"@de , "Deryck Whibley"@fr , "Gunner"@en , "Deryk Wibley"@fr , "Deryk Wibley"@en , "Deryk Wibley"@de , "Whibley"@en , "Whibley"@de , "Whibley"@fr , "Derrick Whibley"@en , "Derrick Whibley"@de , "Derrick Whibley"@fr , "Derik Uibli"@en , "Bizzy D"@en , "Bizzy D"@de , "Bizzy D"@fr , "Dereck Wibley"@en , "Dereck Wibley"@de , "Dereck Wibley"@fr , "Derek Whibley"@en , "Derek Whibley"@de , "Derek Whibley"@fr .
+
+<http://rdf.freebase.com/ns/m.01x1lf__117>
+        dbo:from    "2006-07-15"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.0161c2> ;
+        dbo:to      "2010-11-16"^^xsd:date .
+
+<http://rdf.freebase.com/ns/m.0161c2>
+        rdfs:label     "Avril Lavigne"@fr , "Avril Lavigne"@en , "Avril Lavigne"@de ;
+        owl:sameAs     <http://dbpedia.org/resource/Avril_Lavigne> , <http://de.dbpedia.org/resource/Avril_Lavigne> , <http://fr.dbpedia.org/resource/Avril_Lavigne> ;
+        skos:altLabel  "Avril"@fr , "Avril"@de , "Avril"@en , "Lavigne"@fr , "Lavigne"@de , "Lavigne"@en , "Avril Whibley"@fr , "Skater girl"@fr , "Black Star"@fr , "Skater girl"@de , "Black Star"@en , "Black Star"@de , "Skater girl"@en , "Avril Whibley"@de , "Avril Whibley"@en , "Avril Lavgine"@fr , "Avril Lavine"@fr , "Avril Lavgine"@de , "Avril Lavgine"@en , "Avril Lavigne-Whibley"@fr , "Avril Lavine"@de , "Avril Lavine"@en , "Avril Lavigne-Whibley"@de , "Avril Lavigne-Whibley"@en , "Lavigne, Avril"@fr , "Lavigne, Avril"@de , "Lavigne, Avril"@en , "Showtime"@fr , "Avril Lavigne Whibley"@fr , "Showtime"@de , "Avril Lavigne Whibley"@de , "Avril Lavigne Whibley"@en , "Showtime"@en , "Averil Lavigne"@fr , "Averil Lavigne"@de , "Averil Lavigne"@en , "Awards and Nominations earned by Avril Lavigne"@fr , "Awards and Nominations earned by Avril Lavigne"@de , "Awards and Nominations earned by Avril Lavigne"@en , "Avrillavigne.com"@fr , "Avrillavigne.com"@de , "Avrillavigne.com"@en , "April Lavigne"@fr , "April Lavigne"@en , "April Lavigne"@de , "Whibley"@fr , "Whibley"@en , "Whibley"@de , "Avril lavine"@fr , "Avril lavine"@de , "Avril lavine"@en , "Avril lagvine"@fr , "Avril lagvine"@de , "Avril lagvine"@en , "Avril Lavigne"@fr , "Avril Lavigne"@de , "Avril Lavigne"@en , "Pink Crust"@fr , "Arvil lavigne"@fr , "Arvil lavigne"@en , "Arvil lavigne"@de , "Avril Lavinge"@fr , "Avril Lavinge"@de , "Avril Lavinge"@en , "Avril Ramona Lavigne"@fr , "Avril Ramona Lavigne"@de , "Avril Ramona Lavigne"@en , "Avril Ramona Lavigne Whibley"@fr , "Avril Ramona Lavigne Whibley"@de , "Avril Ramona Lavigne Whibley"@en , "avril  lavigne"@en , "Avril Lavene"@fr , "Avril Lavene"@en , "Avril Lavene"@de , "Avril lavigne"@fr , "Avril lavigne"@de , "Avril lavigne"@en , "List of Avril Lavigne's Concert Tours"@fr , "List of Avril Lavigne's Concert Tours"@de , "List of Avril Lavigne's Concert Tours"@en , "avril_lavigne"@en .

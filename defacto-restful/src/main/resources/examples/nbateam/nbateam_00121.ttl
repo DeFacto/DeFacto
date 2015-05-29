@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Samuel_Dalembert__3>
+        dbo:from  "2011"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Houston_Rockets> ;
+        dbo:to    "2011"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Houston_Rockets>
+        rdfs:label     "Houston Rockets"@en , "Houston Rockets"@fr , "Houston Rockets"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Rockets_de_Houston> , <http://de.dbpedia.org/resource/Houston_Rockets> ;
+        skos:altLabel  "Rockets de houston"@fr , "Rockets de San Diego"@fr , "San Diego Rockets"@fr , "San Diego Rockets"@de , "San Diego Rockets"@en , "Houston Rockets"@fr , "Houston"@fr , "Houston Rockets"@de , "Houston"@de , "Houston Rockets"@en , "Houston"@en , "Rocket"@fr , "Rocket"@de , "Rocket"@en , "Twin Towers"@fr , "Rockets de Houston"@fr , "Twin Towers"@de , "Twin Towers"@en .
+
+<http://dbpedia.org/resource/Samuel_Dalembert>
+        rdfs:label      "Samuel Dalembert"@en , "Samuel Dalembert"@fr , "Samuel Dalembert"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Samuel_Dalembert__3> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Samuel_Dalembert> , <http://de.dbpedia.org/resource/Samuel_Dalembert> ;
+        skos:altLabel   "Samuel Davis Dalembert"@fr , "Samuel Davis Dalembert"@de , "Samuel Davis Dalembert"@en , "Sam Dalembert"@fr , "Samuel Dalembert"@fr , "Sam Dalembert"@de , "Samuel Dalembert"@de , "Sam Dalembert"@en , "Samuel Dalembert"@en , "Dalembert"@de .

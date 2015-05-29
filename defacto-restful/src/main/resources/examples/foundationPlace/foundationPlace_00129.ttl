@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Epic_Systems>
+        skos:altLabel  "Epic"@en , "Epic Systems Corporation"@en , "Epic Systems"@en , "Epic software"@en .
+
+<http://rdf.freebase.com/ns/m.0bgrmg>
+        rdfs:label      "Epic Systems"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.0bgrmg__129> ;
+        owl:sameAs      <http://dbpedia.org/resource/Epic_Systems> .
+
+<http://rdf.freebase.com/ns/m.0fw2y>
+        rdfs:label     "Madison"@en , "Madison"@fr , "Madison"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Madison_(Wisconsin)> , <http://fr.dbpedia.org/resource/Madison_(Wisconsin)> , <http://dbpedia.org/resource/Madison,_Wisconsin> ;
+        skos:altLabel  "Madison (city), Dane County, Wisconsin"@fr , "Madison (city), Dane County, Wisconsin"@en , "Madison (city), Dane County, Wisconsin"@de , "LOCODE:USMSN"@fr , "LOCODE:USMSN"@en , "LOCODE:USMSN"@de , "Madison (city), WI"@fr , "Madison Wisconsin"@fr , "Madison (city), WI"@en , "Madison (city), WI"@de , "Madison Wisconsin"@en , "Madison Wisconsin"@de , "Madison WI"@fr , "Madison WI"@en , "Madison WI"@de , "Madison (city), Dane County, WI"@fr , "Madison (city), Dane County, WI"@en , "Madison (city), Dane County, WI"@de , "Madison Area Music Awards"@fr , "Madison Area Music Awards"@en , "Madison Area Music Awards"@de , "Madison, WI"@fr , "Madison, WI"@en , "Madison, WI"@de , "Madison, Wisconsin"@fr , "Madison, Wisconsin"@en , "Capital of Wisconsin"@en , "Capital of Wisconsin"@de , "Capital of Wisconsin"@fr , "Madison, Wisconsin"@de , "Madison, wi"@fr , "Madison"@fr , "Madison, wi"@en , "Madison, wi"@de , "Madison"@en , "Madison"@de , "Madison wisconsin"@fr , "Madison wisconsin"@en , "Madison wisconsin"@de , "Madison,Wisconsin"@fr , "Madison, Wi"@fr , "Madison (city), Wisconsin"@fr , "Madison (city), Wisconsin"@en , "Madison (city), Wisconsin"@de , "Madison, Wi"@en , "Madison,Wisconsin"@en , "Madison,Wisconsin"@de , "Madison, Wi"@de , "Dane County / Madison city"@en .
+
+<http://rdf.freebase.com/ns/m.0bgrmg__129>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0fw2y> ;
+        dbo:from             "1979"^^xsd:gYear ;
+        dbo:to               "1979"^^xsd:gYear .

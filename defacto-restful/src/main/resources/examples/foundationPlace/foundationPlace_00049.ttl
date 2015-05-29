@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0d9jr>
+        rdfs:label     "Seattle"@en , "Seattle"@fr , "Seattle"@de ;
+        owl:sameAs     <http://dbpedia.org/resource/Seattle> , <http://fr.dbpedia.org/resource/Seattle> , <http://de.dbpedia.org/resource/Seattle> ;
+        skos:altLabel  "Seattle, US-WA"@de , "Seattle, US-WA"@en , "Alki"@de , "The Emerald City"@de , "Seattle, Washington Territory"@fr , "Seattle, Washington Territory"@en , "Seattle, Washington Territory"@de , "Seattle, WA"@fr , "Seattle, Washington"@fr , "Seattle, WA"@de , "Seattle, WA"@en , "Seattle, Washington"@de , "Seattle, Washington"@en , "Seattle, wa"@fr , "Seattle, wa"@de , "Seattle, wa"@en , "King County / Seattle city"@en , "Seattleites"@fr , "Seattleites"@de , "Seattleites"@en , "Jet City"@fr , "The weather in Seattle"@fr , "Jet City"@en , "Jet City"@de , "The weather in Seattle"@de , "The weather in Seattle"@en , "Seattle, USA"@fr , "Seattle, USA"@de , "Seattle, USA"@en , "Seattleans"@fr , "Seattle"@fr , "Seattle"@en , "Seattle"@de , "Seattleans"@en , "Seattleans"@de , "Seattle, United States"@fr , "Seattle, United States"@de , "Seattle, United States"@en , "Seatle"@fr , "Seatle"@de , "Seatle"@en , "Rain City"@de , "LOCODE:USSEA"@fr , "LOCODE:USSEA"@de , "LOCODE:USSEA"@en , "Emerald City, Washington"@fr , "Emerald City, Washington"@en , "Emerald City, Washington"@de , "Die Smaragdstadt"@de , "Duwamps"@fr , "Duwamps"@de , "Duwamps"@en , "Seattle, Wash."@fr , "Seattle, Wash."@de , "Seattle, Wash."@en , "Seattle's"@fr , "Seattle's"@en , "Seattle's"@de , "City of Seattle"@fr , "City of Seattle"@de , "City of Seattle"@en , "Alki Point"@de , "Seattle Washington"@fr , "Seattle Washington"@de , "Seattle Washington"@en , "Emerald City"@en , "Seattle, United States of America"@fr , "Seattle, United States of America"@de , "Seattle, United States of America"@en , "Seattle WA"@fr , "Seattle WA"@de , "Seattle WA"@en , "Seattle, Wa"@fr , "Seattle, Wa"@de , "Seattle, Wa"@en , "Seattle, WA, USA"@fr , "Seattle, US-WA"@fr , "Seattle, WA, USA"@en , "Seattle, WA, USA"@de .
+
+<http://rdf.freebase.com/ns/m.0g1bcq>
+        rdfs:label      "Rogue Wave Software"@en , "Rogue Wave"@fr ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.0g1bcq__49> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/Rogue_Wave_(société)> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Rogue_Wave_Software> ;
+        skos:altLabel   "Rogue Wave Software"@fr , "Rogue Wave"@fr , "RogueWave"@fr , "Rogue wave"@fr .
+
+<http://rdf.freebase.com/ns/m.0g1bcq__49>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0d9jr> ;
+        dbo:from             "1989"^^xsd:gYear ;
+        dbo:to               "1989"^^xsd:gYear .

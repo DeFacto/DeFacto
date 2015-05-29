@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.02z6v8l>
+        rdfs:label      "OpenLink Software"@en ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.02z6v8l__113> ;
+        owl:sameAs      <http://dbpedia.org/resource/OpenLink_Software> .
+
+<http://dbpedia.org/resource/OpenLink_Software>
+        skos:altLabel  "OpenLink Software"@en , "Openlink"@en .
+
+<http://rdf.freebase.com/ns/m.02jx1>
+        rdfs:label     "England"@en , "England"@de , "Angleterre"@fr ;
+        owl:sameAs     <http://dbpedia.org/resource/England> , <http://fr.dbpedia.org/resource/Angleterre> , <http://de.dbpedia.org/resource/England> ;
+        skos:altLabel  "English Nation"@de , "English Nation"@en , "List of England-related topics"@fr , "List of England-related topics"@de , "List of England-related topics"@en , "Engeland"@fr , "Engeland"@de , "Engeland"@en , "England's"@fr , "England's"@de , "England's"@en , "Name of England"@fr , "Name of England"@de , "Name of England"@en , "Engelond"@fr , "England"@fr , "Engelond"@de , "Engelond"@en , "Albion"@en , "England"@en , "England"@de , "Life in England"@fr , "Life in England"@de , "Life in England"@en , "Land of the Angles"@fr , "Land of the Angles"@en , "Land of the Angles"@de , "Aengland"@fr , "Aengland"@de , "Aengland"@en , "Loegria"@en , "Sasainn"@fr , "Sasainn"@de , "Sasainn"@en , "Ingland"@fr , "Ingland"@de , "Ingland"@en , "Englaland"@fr , "Englaland"@de , "Englaland"@en , "Ængland"@fr , "Ængland"@de , "Ængland"@en , "Etymology of England"@fr , "Etymology of England"@de , "Etymology of England"@en , "Anglica"@fr , "Anglica"@de , "Anglica"@en , "The land of the Angles"@fr , "The land of the Angles"@de , "The land of the Angles"@en , "England, United Kingdom"@fr , "England, United Kingdom"@de , "England, United Kingdom"@en , "Angleterre"@fr , "ENGLAND"@fr , "ENGLAND"@de , "ENGLAND"@en , "Terre des Angles"@fr , "Communications in England"@fr , "Ænglaland"@fr , "Communications in England"@de , "Communications in England"@en , "Ænglaland"@de , "Ænglaland"@en , "Ange"@fr , "Ængla land"@fr , "Ængla land"@en , "Ængla land"@de , "GB-ENG"@de , "Pow Sows"@fr , "Englnad"@fr , "Engla land"@fr , "Pow Sows"@de , "Pow Sows"@en , "England, UK"@fr , "Aenglaland"@fr , "England, UK"@de , "Aenglaland"@en , "Aenglaland"@de , "England, UK"@en , "Engla land"@de , "Engla land"@en , "Englnad"@de , "Englnad"@en , "English Nation"@fr .
+
+<http://rdf.freebase.com/ns/m.02z6v8l__113>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.02jx1> ;
+        dbo:from             "1992"^^xsd:gYear ;
+        dbo:to               "1992"^^xsd:gYear .

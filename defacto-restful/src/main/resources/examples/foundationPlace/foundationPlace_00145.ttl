@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0154j>
+        rdfs:label     "Belgique"@fr , "Belgien"@de , "Belgium"@en ;
+        owl:sameAs     <http://dbpedia.org/resource/Belgium> , <http://de.dbpedia.org/resource/Belgien> , <http://fr.dbpedia.org/resource/Belgique> ;
+        skos:altLabel  "Beligum"@fr , "Koninkrijk België"@fr , "Koninkrijk België"@de , "Koninkrijk België"@en , "Beligum"@de , "Beligum"@en , "Koenigreich Belgien"@fr , "Koenigreich Belgien"@de , "Koenigreich Belgien"@en , "Gelbique"@fr , "Belgian Government"@fr , "Belgian Government"@de , "Belgian Government"@en , "Beljam"@fr , "Beljam"@de , "Beljam"@en , "Belgium facts"@fr , "Belgium facts"@de , "Belgium facts"@en , "Belgien"@fr , "Belgien"@de , "Belgien"@en , "Belguim"@fr , "Belgium"@fr , "Belguim"@de , "Belgium"@de , "Belgium"@en , "Belguim"@en , "Belgique"@fr , "Belgique"@de , "Belgique"@en , "People of Belgium"@fr , "Belgio"@fr , "People of Belgium"@de , "Belgio"@de , "People of Belgium"@en , "Belgio"@en , "Belge"@fr , "Belge"@de , "The Quebec of Europe"@fr , "The Quebec of Europe"@en , "The Quebec of Europe"@de , "Königreich Belgien"@fr , "Königreich Belgien"@de , "Königreich Belgien"@en , "Konigreich Belgien"@fr , "Kingdom of Belgium"@fr , "Konigreich Belgien"@de , "Kingdom of Belgium"@de , "Kingdom of Belgium"@en , "Konigreich Belgien"@en , "Koninkrijk Belgie"@fr , "Koninkrijk Belgie"@de , "Koninkrijk Belgie"@en , "Belgie"@fr , "Kingdom Of Belgium"@fr , "Kingdom Of Belgium"@de , "Kingdom Of Belgium"@en , "facts"@fr , "Beldjike"@fr , "Belgie"@de , "facts"@de , "Belgie"@en , "Beldjike"@de , "facts"@en , "Beldjike"@en , "Royaume de Belgique"@fr , "Royaume de Belgique"@de , "Royaume de Belgique"@en , "Kingdom of the Belgians"@fr , "Kingdom of the Belgians"@en , "Kingdom of the Belgians"@de , "Begium"@fr , "Begium"@de , "Begium"@en , "Belgum"@fr , "Belgum"@de , "Belgum"@en , "Cockpit of Europe"@fr , "Beljum"@fr , "Cockpit of Europe"@de , "Cockpit of Europe"@en , "Beljum"@de , "Beljum"@en , "Belgian"@fr , "Belgian"@en , "Belgian"@de , "België"@fr , "België"@de , "België"@en , "ISO 3166-1:BE"@fr , "ISO 3166-1:BE"@de , "ISO 3166-1:BE"@en , "Belgier"@de , "Blegium"@fr , "Blegium"@de , "Blegium"@en .
+
+<http://rdf.freebase.com/ns/m.0350kw>
+        rdfs:label      "Hyperion Entertainment"@en , "Hyperion Entertainment"@de ;
+        dbo:foundation  <http://rdf.freebase.com/ns/m.0350kw__145> ;
+        owl:sameAs      <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/Hyperion_Entertainment> , <http://dbpedia.org/resource/Hyperion_Entertainment> ;
+        skos:altLabel   "Hyperion Entertainment"@de , "Hyperion"@de .
+
+<http://rdf.freebase.com/ns/m.0350kw__145>
+        dbo:foundationPlace  <http://rdf.freebase.com/ns/m.0154j> ;
+        dbo:from             "1999"^^xsd:gYear ;
+        dbo:to               "1999"^^xsd:gYear .

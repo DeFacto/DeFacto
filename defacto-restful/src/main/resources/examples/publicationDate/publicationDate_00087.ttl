@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.01j2f2__87>
+        dbo:author  <http://rdf.freebase.com/ns/m.01j2f2> ;
+        dbo:from    "1938"^^xsd:gYear ;
+        dbo:to      "1938"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.0h25>
+        rdfs:label       "Ayn Rand"@de , "Ayn Rand"@fr , "Ayn Rand"@en ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.01j2f2__87> ;
+        owl:sameAs       <http://dbpedia.org/resource/Ayn_Rand> , <http://fr.dbpedia.org/resource/Ayn_Rand> , <http://de.dbpedia.org/resource/Ayn_Rand> ;
+        skos:altLabel    "Ayn Rand"@fr , "Ayn Rand"@en , "Ayn Rand"@de , "Alyssa Rosenbaum"@fr , "Alyssa Rosenbaum"@de , "Alyssa Rosenbaum"@en , "Zinovievna Rosenbaum"@fr , "Zinovievna Rosenbaum"@de , "Zinovievna Rosenbaum"@en , "AynRand"@fr , "Randisme"@fr , "AynRand"@de , "AynRand"@en , "Frank o'connor"@fr , "Frank o'connor"@en , "Frank o'connor"@de , "Alisa Rosenbaum"@fr , "Alisa Rosenbaum"@en , "Alisa Rosenbaum"@de , "Alissa Zinovievina"@fr , "Alissa Zinovievina"@de , "Alissa Zinovievina"@en , "Rand"@fr , "Rand"@de , "Rand"@en , "Alissa Zinovievna"@fr , "Alissa Zinovievna"@de , "Alissa Zinovievna"@en , "O'Connor"@fr , "O'Connor"@de , "O'Connor"@en , "ayn_rand"@en , "Alisa Zinov'yevna Rosenbaum"@fr , "Alisa Zinov'yevna Rosenbaum"@en , "Alisa Zinov'yevna Rosenbaum"@de , "Zinovievina Rosenbaum"@fr , "Ayn Rand O'Connor"@fr , "Zinovievina Rosenbaum"@de , "Ayn Rand O'Connor"@de , "Ayn Rand O'Connor"@en , "Zinovievina Rosenbaum"@en , "Ayb rand"@fr , "Alisha Rosenbaum"@en , "Ayb rand"@de , "Ayb rand"@en , "Alissa Zinovievna Rosenbaum"@fr , "Alissa Zinovievna Rosenbaum"@en , "Alissa Zinovievna Rosenbaum"@de , "Alice Rosenbaum"@fr , "Ann Rand"@fr , "Alice Rosenbaum"@de , "Ann Rand"@de , "Alissa Sinowjewna Rosenbaum"@de , "Alice Rosenbaum"@en , "Ann Rand"@en , "Rand, Ayn"@en , "Randian"@fr , "Randian"@de , "Randian"@en , "Alissa Rosenbaum"@fr , "Alissa Rosenbaum"@de , "Alissa Rosenbaum"@en , "An rayn"@fr , "An rayn"@de , "An rayn"@en , "Ayn O'Connor"@fr , "Ayn O'Connor"@de , "Ayn O'Connor"@en , "Frank O'Connor"@fr , "Frank O'Connor"@en , "Frank O'Connor"@de , "Ayn rand"@fr , "Alisa Zinovyevna Rosenbaum"@fr , "Ayn rand"@de , "Ayn rand"@en , "Alisa Zinovyevna Rosenbaum"@de , "Alisa Zinovyevna Rosenbaum"@en .
+
+<http://rdf.freebase.com/ns/m.01j2f2>
+        rdfs:label     "Hymne"@fr , "Anthem"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Hymne_(livre)> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Anthem_(novella)> ;
+        skos:altLabel  "Anthem"@fr , "Hymne"@fr , "Anthem"@en .

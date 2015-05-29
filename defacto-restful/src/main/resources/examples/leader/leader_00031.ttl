@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Hafez_al-Assad>
+        rdfs:label     "Hafez al-Assad"@de , "Hafez al-Assad"@fr , "Hafez al-Assad"@en ;
+        dbo:inOffice   <http://dbpedia.org/resource/Hafez_al-Assad__2> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Hafez_el-Assad> , <http://de.dbpedia.org/resource/Hafiz_al-Assad> ;
+        skos:altLabel  "Hafez el-Assad"@fr , "Hafez al-assad"@fr , "Hafez Assad"@fr , "Hafez el-Assad"@de , "Hafez al-assad"@en , "Hafez al-assad"@de , "Hafez el-Assad"@en , "Hafez Assad"@en , "Hafez Assad"@de , "Hafez al Assad"@fr , "Hafez al Assad"@de , "Hafez al Assad"@en , "Hafiz al-Assad"@fr , "Hafiz al-Assad"@en , "Hafiz al-Assad"@de , "Hafiz Al-Asad"@fr , "Hafiz Al-Asad"@de , "Hafiz Al-Asad"@en , "Hafez Al-Asad"@fr , "Hafez Al-Asad"@de , "Hafez Al-Asad"@en , "Hafis al-Assad"@fr , "Hafis al-Assad"@en , "Hafis al-Assad"@de , "Hafid al-Assad"@fr , "Hafid al-Assad"@en , "Hafid al-Assad"@de , "Hafez el-assad"@fr , "Hafez al-Asad"@fr , "Hafez al-Asad"@en , "Hafez al-Asad"@de , "Hafez al- Assad"@fr , "Hafez al- Assad"@de , "Hafez al- Assad"@en , "Assad"@fr , "Hafez El-Assad"@fr , "Hafez al assad"@fr , "Hafez Al-Assad"@fr , "Hafez Al-Assad"@de , "Hafez Al-Assad"@en , "Hafed al-Assad"@fr , "Hafed al-Assad"@en , "Hafed al-Assad"@de , "Hafiz Al-Assad"@de , "Hafiz"@de , "Hafez Asad"@fr , "Hafez Asad"@en , "Hafez Asad"@de , "Hafez Al Assad"@fr , "Hafez Al Assad"@en , "Hafez Al Assad"@de , "Hafez al Asaad"@fr , "Hafez al Asaad"@en , "Hafez al Asaad"@de , "Hafez-el-Assad"@fr , "Hafiz Asad"@fr , "Hafez el Assad"@fr , "Hafiz Asad"@en , "Hafiz Asad"@de , "Hafez el Assad"@en , "Hafez el Assad"@de , "Hafiz al-Asad"@fr , "Hafiz al-Asad"@de , "Hafiz al-Asad"@en , "Hafez al-Assad"@fr , "Hafez al-Assad"@en , "Hafez al-Assad"@de .
+
+<http://dbpedia.org/resource/Syria>
+        rdfs:label     "Syria"@de , "Syria"@fr , "Syria"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Syrie> , <http://de.dbpedia.org/resource/Syrien> ;
+        skos:altLabel  "Syria related external links"@fr , "Syria related external links"@en , "Syria related external links"@de , "Sport in Syria"@fr , "Sport in Syria"@de , "Sport in Syria"@en , "Amorrhitis"@fr , "Amorrhitis"@en , "Amorrhitis"@de , "Souria"@fr , "Souria"@de , "Souria"@en , "Subdivisions of Syria"@fr , "Subdivisions of Syria"@en , "Subdivisions of Syria"@de , "Suriyah"@fr , "Suriyah"@en , "Suriyah"@de , "Sūriyā"@fr , "Sūriyā"@en , "Sūriyā"@de , "Republique arabe syrienne"@fr , "ISO 3166-1:SY"@fr , "Syria"@fr , "ISO 3166-1:SY"@en , "ISO 3166-1:SY"@de , "Syria"@en , "Syria"@de , "Northern Syria"@fr , "Northern Syria"@en , "Northern Syria"@de , "Culture of Syria"@fr , "Culture of Syria"@en , "Culture of Syria"@de , "Arabische Republik Syrien"@de , "Arab Republic"@fr , "Arab Republic"@de , "Arab Republic"@en , "Nordsyrien"@de , "Syrischer Dichter"@de , "Syrian Arab Republic"@fr , "Syrian Arab Republic"@en , "Syrian Arab Republic"@de , "Etymology of Syria"@fr , "Etymology of Syria"@en , "Etymology of Syria"@de , "Syrien"@fr , "Syrien"@de , "Syrien"@en , "Administrative divisions of Syria"@fr , "Administrative divisions of Syria"@en , "Administrative divisions of Syria"@de , "Languages of Syria"@fr , "Languages of Syria"@en , "Languages of Syria"@de , "République arabe syrienne"@fr , "Syriens"@fr , "Syrie"@fr , "Syrie"@en , "Syrie"@de , "Suriya"@fr , "Suriya"@de , "Suriya"@en , "Syrian"@fr , "Syrian"@de , "Syrian"@en .
+
+<http://dbpedia.org/resource/Hafez_al-Assad__2>
+        dbo:from    "1970-11-21"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Syria> ;
+        dbo:to      "1971-04-03"^^xsd:date .

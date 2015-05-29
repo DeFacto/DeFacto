@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0fxpt1__49>
+        dbo:author  <http://rdf.freebase.com/ns/m.0fxpt1> ;
+        dbo:from    "1974"^^xsd:gYear ;
+        dbo:to      "1974"^^xsd:gYear .
+
+<http://dbpedia.org/resource/The_Bladerunner>
+        skos:altLabel  "The Bladerunner"@en , "Bladerunner"@en .
+
+<http://rdf.freebase.com/ns/m.0fxpt1>
+        rdfs:label  "The Bladerunner"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/The_Bladerunner> .
+
+<http://rdf.freebase.com/ns/m.03sr18>
+        rdfs:label       "Alan E. Nourse"@de , "Alan E. Nourse"@en , "Alan E. Nourse"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.0fxpt1__49> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/Alan_E._Nourse> , <http://fr.dbpedia.org/resource/Alan_E._Nourse> , <http://dbpedia.org/resource/Alan_E._Nourse> ;
+        skos:altLabel    "Alan Edward Nourse"@fr , "Alan Edward Nourse"@de , "Alan Edward Nourse"@en , "Alan E. Nourse"@fr , "Al Edwards"@fr , "Alan E. Nourse"@de , "Alan Nourse"@fr , "Alan Nourse"@de , "Alan Nourse"@en , "Dr. Alan E. Nourse"@en , "Nourse"@fr , "Nourse"@de , "Doctor X"@fr , "Doctor X"@en .

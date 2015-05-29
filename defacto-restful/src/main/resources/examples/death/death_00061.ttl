@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Johan_Christian_Fabricius>
+        rdfs:label     "Johan Christian Fabricius"@en , "Johan Christian Fabricius"@fr , "Johan Christian Fabricius"@de ;
+        dbo:death      <http://dbpedia.org/resource/Johan_Christian_Fabricius__1> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Johann_Christian_Fabricius> , <http://fr.dbpedia.org/resource/Johan_Christian_Fabricius> ;
+        skos:altLabel  "Fabricius"@fr , "Fabricius"@de , "Fabricius"@en , "Johan Christian"@fr , "J C Fabricius"@fr , "J C Fabricius"@de , "J C Fabricius"@en , "J.C. Fabricius"@fr , "J.C. Fabricius"@de , "J.C. Fabricius"@en , "Johan Christian"@de , "Johan Christian"@en , "J. C. Fabricius"@fr , "J. C. Fabricius"@de , "J. C. Fabricius"@en , "Johan Christian Fabricius"@fr , "Johan Christian Fabricius"@de , "Johan Christian Fabricius"@en , "Johann Christian Fabricius"@fr , "Johann Christian Fabricius"@de , "Johann Christian Fabricius"@en .
+
+<http://dbpedia.org/resource/Kiel>
+        rdfs:label     "Kiel"@en , "Kiel"@fr , "Kiel"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Kiel> , <http://de.dbpedia.org/resource/Kiel> ;
+        skos:altLabel  "Kilonia"@fr , "LOCODE:DEKEL"@de , "LOCODE:DEKEL"@en , "Kilonia"@en , "Kilonia"@de , "Kiel, Germany"@fr , "Kiel, Germany"@de , "Kiel, Germany"@en , "Kiel"@fr , "Kiel"@de , "Kiel"@en , "LOCODE:DEKEL"@fr .
+
+<http://dbpedia.org/resource/Johan_Christian_Fabricius__1>
+        dbo:deathPlace  <http://dbpedia.org/resource/Kiel> ;
+        dbo:from        "1808-04-03"^^xsd:date ;
+        dbo:to          "1808-04-03"^^xsd:date .

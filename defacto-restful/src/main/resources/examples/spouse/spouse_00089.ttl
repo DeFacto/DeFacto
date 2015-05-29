@@ -1,0 +1,20 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.08yg70>
+        rdfs:label     "Christian Brando"@en ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/> , <http://de.dbpedia.org/resource/> , <http://dbpedia.org/resource/Christian_Brando> ;
+        skos:altLabel  "Brando"@en , "Christian Brando"@en , "Gary Brown"@en , "Christian Devi Brando"@en .
+
+<http://rdf.freebase.com/ns/m.0pdhy0p__89>
+        dbo:from    "2004-10-16"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.08yg70> ;
+        dbo:to      "2005-06"^^xsd:gYearMonth .
+
+<http://rdf.freebase.com/ns/m.0pdhy0p>
+        rdfs:label    "Deborah Presley"@en ;
+        dbo:marriage  <http://rdf.freebase.com/ns/m.0pdhy0p__89> .

@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0794g>
+        rdfs:label     "Sandra Bullock"@de , "Sandra Bullock"@en , "Sandra Bullock"@fr ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Sandra_Bullock> , <http://fr.dbpedia.org/resource/Sandra_Bullock> , <http://dbpedia.org/resource/Sandra_Bullock> ;
+        skos:altLabel  "Sandy"@en , "Sandra bulock"@fr , "Sandra bulock"@de , "Sandra bulock"@en , "Sandra Bullock"@fr , "Sandy Bullock"@fr , "The Girl Next Door"@en , "Sandra Bullock"@de , "Sandy Bullock"@de , "Sandra Bullock"@en , "Sandy Bullock"@en , "America's Sweetheart"@en , "Bullock"@fr , "Bullock"@de , "Bullock"@en , "Fortis Films"@fr , "Fortis Films"@de , "Fortis Films"@en , "Sandra Annette Bullock"@de , "Sandra Annette Bullock"@fr , "Sandra Annette Bullock"@en .
+
+<http://rdf.freebase.com/ns/m.02khjc>
+        rdfs:label     "Jesse James"@en , "Jesse G. James"@fr , "Jesse G. James"@de ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.02khjc__53> ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Jesse_G._James> , <http://dbpedia.org/resource/Jesse_James_(customizer)> , <http://fr.dbpedia.org/resource/Jesse_G._James> ;
+        skos:altLabel  "Michelle 'Bombshell' McGee"@fr , "Jesse G. James"@fr , "Jesse G. James"@de , "Michelle 'Bombshell' McGee"@de , "Jesse Gregory James"@en , "James"@fr , "Jesse James 1969"@fr , "Jesse James 1969"@de , "Jesse James"@fr , "Jesse James"@de .
+
+<http://rdf.freebase.com/ns/m.02khjc__53>
+        dbo:from    "2005-07-16"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.0794g> ;
+        dbo:to      "2010-06-28"^^xsd:date .

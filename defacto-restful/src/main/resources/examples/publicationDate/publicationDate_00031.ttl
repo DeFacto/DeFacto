@@ -1,0 +1,24 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/The_Outward_Urge>
+        skos:altLabel  "Urge"@en , "The Outward Urge"@en .
+
+<http://rdf.freebase.com/ns/m.058zxf>
+        rdfs:label  "The Outward Urge"@en ;
+        owl:sameAs  <http://dbpedia.org/resource/The_Outward_Urge> .
+
+<http://rdf.freebase.com/ns/m.058zxf__31>
+        dbo:author  <http://rdf.freebase.com/ns/m.058zxf> ;
+        dbo:from    "1959"^^xsd:gYear ;
+        dbo:to      "1959"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.03_pq>
+        rdfs:label       "John Wyndham"@en , "John Wyndham"@de , "John Wyndham"@fr ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.058zxf__31> ;
+        owl:sameAs       <http://de.dbpedia.org/resource/John_Wyndham> , <http://dbpedia.org/resource/John_Wyndham> , <http://fr.dbpedia.org/resource/John_Wyndham> ;
+        skos:altLabel    "Wyndham Parkes"@en , "Wyndham"@fr , "Wyndham"@de , "John Beynon"@en , "John Wyndham"@fr , "John Wyndham"@de , "John Wyndham"@en , "John Benyon"@en , "John Wyndham Parkes Lucas Beynon Harris"@fr , "John Beynon Harris"@en , "John Wyndham Parkes Lucas Beynon Harris"@de , "John Wyndham Parkes Lucas Beynon Harris"@en , "Lucas Benyon"@en , "John B. Harris"@en , "Johnson Harris"@en , "John Benyon Harris"@fr , "John Harris"@en , "Lucas Parkes"@fr , "John Benyon Harris"@de , "John Benyon Harris"@en , "Lucas Parkes"@de , "Lucas Parkes"@en .

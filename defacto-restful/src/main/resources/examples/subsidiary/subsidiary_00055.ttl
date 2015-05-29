@@ -1,0 +1,19 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03bnjcr>
+        rdfs:label       "NABI Biopharmaceuticals"@en ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.03bnjcr__55> ;
+        skos:altLabel    "NABI"@en , "NABI BIOPHARMACEUTICALS"@en , "NORTH AMERICAN BIOLOGICALS INC"@en .
+
+<http://rdf.freebase.com/ns/m.03bnjcr__55>
+        dbo:from        "1995"^^xsd:gYear ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.02h6mqp> ;
+        dbo:to          "1995"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.02h6mqp>
+        rdfs:label  "Univax"@en .

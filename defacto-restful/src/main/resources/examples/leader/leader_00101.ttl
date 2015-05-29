@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Anders_Fogh_Rasmussen>
+        rdfs:label     "Anders Fogh Rasmussen"@en , "Anders Fogh Rasmussen"@fr , "Anders Fogh Rasmussen"@de ;
+        dbo:inOffice   <http://dbpedia.org/resource/Anders_Fogh_Rasmussen__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Anders_Fogh_Rasmussen> , <http://de.dbpedia.org/resource/Anders_Fogh_Rasmussen> ;
+        skos:altLabel  "Anders Fogh"@fr , "Rasmussen, Anders Fogh"@fr , "Anders Fogh"@de , "Anders Fogh"@en , "Rasmussen, Anders Fogh"@de , "Rasmussen, Anders Fogh"@en , "Rasmussen"@fr , "Rasmussen"@de , "Rasmussen"@en , "Fogh"@fr , "Fogh"@de , "Fogh"@en , "Anders"@fr , "Anders Rasmussen"@de , "Anders"@de , "Anders"@en , "Fogh Rasmussen"@fr , "Fogh Rasmussen"@de , "Fogh Rasmussen"@en , "Anders Fogh Rasmussen"@fr , "Anders Fogh Rasmussen"@de , "Anders Fogh Rasmussen"@en .
+
+<http://dbpedia.org/resource/Anders_Fogh_Rasmussen__1>
+        dbo:from    "2001-11-27"^^xsd:date ;
+        dbo:office  <http://dbpedia.org/resource/Denmark> ;
+        dbo:to      "2009-04-05"^^xsd:date .
+
+<http://dbpedia.org/resource/Denmark>
+        rdfs:label     "Denmark"@de , "Denmark"@fr , "Denmark"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Dänemark> , <http://fr.dbpedia.org/resource/Danemark> ;
+        skos:altLabel  "Königreich Dänemark"@de , "Dänemark"@fr , "Dänemark"@de , "Dänemark"@en , "Denmarc"@fr , "Denmarc"@de , "Denmarc"@en , "Denemarke"@fr , "Denemarke"@de , "Denemarke"@en , "Subdivisions of Denmark"@fr , "Subdivisions of Denmark"@de , "Subdivisions of Denmark"@en , "Royaume du Danemark"@fr , "Kongeriget Danmark"@fr , "Kongeriget Danmark"@en , "Kongeriget Danmark"@de , "Royaume de Danemark"@fr , "Denmark"@fr , "Daenemark"@fr , "Denmark"@de , "Denmark"@en , "Daenemark"@de , "Daenemark"@en , "Eastern Denmark"@fr , "Danimarca"@fr , "Danimarca"@en , "Danimarca"@de , "Eastern Denmark"@de , "Eastern Denmark"@en , "Danemark"@fr , "Danska"@fr , "Danemark"@de , "Konigreich Danemark"@de , "Danska"@de , "Danemark"@en , "Danska"@en , "Danish archipelago"@fr , "Danish archipelago"@de , "Danish archipelago"@en , "Danmörk"@fr , "Danmörk"@de , "Danmörk"@en , "Kingdom of Denmark"@fr , "Kingdom of Denmark"@en , "Kingdom of Denmark"@de , "Danish kingdom"@fr , "Danish kingdom"@de , "Danish kingdom"@en , "ISO 3166-1:DK"@fr , "ISO 3166-1:DK"@de , "ISO 3166-1:DK"@en , "KingdomOfDenmark"@fr , "KingdomOfDenmark"@de , "KingdomOfDenmark"@en , "DENMARK"@fr , "DENMARK"@de , "DENMARK"@en , "Administrative divisions of denmark"@fr , "Administrative divisions of denmark"@en , "Administrative divisions of denmark"@de , "Name of Denmark"@fr , "Name of Denmark"@de , "Name of Denmark"@en , "Etymology of Denmark"@fr , "Denmarke"@fr , "Administrative divisions of Denmark"@fr , "Etymology of Denmark"@de , "Denmarke"@de , "Denmarke"@en , "Administrative divisions of Denmark"@en , "Etymology of Denmark"@en , "Administrative divisions of Denmark"@de , "Danmark"@fr , "Danmark"@de , "Danmoerk"@fr , "Danmoerk"@de , "Danmoerk"@en , "Danmork"@fr , "Danmork"@en , "Danmork"@de , "Danish Kingdom"@fr , "Denmark proper"@fr , "Danish Kingdom"@de , "Denmark proper"@en , "Denmark proper"@de , "Danish Kingdom"@en , "Philosophy of Denmark"@fr , "Philosophy of Denmark"@de , "Philosophy of Denmark"@en .

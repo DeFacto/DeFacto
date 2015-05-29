@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.01zc_3>
+        rdfs:label     "New York, New Haven and Hartford Railroad"@de , "New York, New Haven and Hartford Railroad"@fr , "New York, New Haven and Hartford Railroad"@en ;
+        owl:sameAs     <http://de.dbpedia.org/resource/New_York,_New_Haven_and_Hartford_Railroad> , <http://fr.dbpedia.org/resource/New_York,_New_Haven_and_Hartford_Railroad> , <http://dbpedia.org/resource/New_York,_New_Haven_and_Hartford_Railroad> ;
+        skos:altLabel  "Boston and New York Air-Line Railroad"@de , "New York, New Haven & Hartford"@fr , "New Haven System"@fr , "New York, New Haven, and Hartford Railroad"@fr , "New York, New Haven & Hartford"@de , "New York, New Haven and Hartford"@de , "New York, New Haven, and Hartford Railroad"@de , "New Haven System"@de , "New York, New Haven and Hartford Railroad"@fr , "New York, New Haven and Hartford Railroad"@de , "NYNH&H"@fr , "NYNH&H"@de , "New York, New Haven and Hartford Railroad Company"@fr , "New York, New Haven and Hartford Railroad Company"@de , "New Haven Railroad"@fr , "New Haven Railroad"@de , "New York, New Haven, & Hartford"@fr , "New York, New Haven, & Hartford"@de , "New Haven and Hartford Railroad Company New York"@fr , "New Haven and Hartford Railroad Company New York"@de , "New York and Boston Air Line Railroad"@fr , "New York and Boston Air Line Railroad"@de , "New Haven, Middletown and Willimantic Railroad"@fr , "New Haven"@fr , "New York, New Haven & Hartford Railroad"@fr , "New Haven, Middletown and Willimantic Railroad"@de , "New York, New Haven & Hartford Railroad"@de , "New Haven"@de , "Boston and New York Air-Line Railroad"@fr , "New York, New Haven and Hartford"@fr .
+
+<http://rdf.freebase.com/ns/m.01j59s__13>
+        dbo:from        "1969-01-01"^^xsd:date ;
+        dbo:subsidiary  <http://rdf.freebase.com/ns/m.01zc_3> ;
+        dbo:to          "1969-01-01"^^xsd:date .
+
+<http://rdf.freebase.com/ns/m.01j59s>
+        rdfs:label       "Penn Central Transportation Company"@en , "Penn Central Transportation Company"@fr , "Penn Central"@de ;
+        dbo:acquisition  <http://rdf.freebase.com/ns/m.01j59s__13> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/Penn_Central_Transportation_Company> , <http://de.dbpedia.org/resource/Penn_Central> , <http://dbpedia.org/resource/Penn_Central_Transportation_Company> ;
+        skos:altLabel    "Penn Central"@fr , "Penn Central"@de , "PCRR"@fr , "PCRR"@de , "Penn Central Holding Company"@fr , "Penn Central Holding Company"@de , "Penn Central Transportation Company"@fr , "Penn Central Company"@fr , "Penn Central Company"@de , "Penn Central Transportation Company"@de , "Penn Central Railroad Company"@fr , "Penn Central Railroad Company"@de , "Pennsylvania New York Central Transportation"@fr , "Pennsylvania New York Central Transportation"@de , "Penn Central Transportation"@fr , "Penn Central Transportation"@de , "Penn Central Railroad"@fr , "Penn Central Railroad"@de .

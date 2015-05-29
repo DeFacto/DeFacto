@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Santa_Barbara,_California>
+        rdfs:label     "Santa Barbara, California"@en , "Santa Barbara, California"@fr , "Santa Barbara, California"@de ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Santa_Barbara_(Kalifornien)> , <http://fr.dbpedia.org/resource/Santa_Barbara_(Californie)> ;
+        skos:altLabel  "Westside Projects Barrio"@fr , "Downtown Santa Barbara, California"@de , "Downtown Santa Barbara, California"@en , "Westside Projects Barrio"@de , "Westside Projects Barrio"@en , "American Riviera"@fr , "Santa Barbara, Ca"@fr , "American Riviera"@de , "Santa Barbara, Ca"@de , "American Riviera"@en , "Santa Barbara, Ca"@en , "LOCODE:USSBA"@fr , "Santa barbara, ca"@fr , "Barbara"@fr , "LOCODE:USSBA"@de , "Santa barbara, ca"@de , "Barbara"@de , "LOCODE:USSBA"@en , "Barbara"@en , "Santa barbara, ca"@en , "Santa Barbara"@fr , "Santa Barbara"@de , "Santa Barbara"@en , "Santa Barbara, CA"@fr , "Santa Barbara, CA"@de , "Santa Barbara, CA"@en , "Santa Barbara, Calif."@fr , "Santa Barbara, Calif."@de , "Santa Barbara, Calif."@en , "Santa Barbara, California"@fr , "Santa Barbara, California"@de , "Santa Barbara, California"@en , "Downtown Santa Barbara, California"@fr .
+
+<http://dbpedia.org/resource/Katy_Perry__1>
+        dbo:birthPlace  <http://dbpedia.org/resource/Santa_Barbara,_California> ;
+        dbo:from        "1984-10-25"^^xsd:date ;
+        dbo:to          "1984-10-25"^^xsd:date .
+
+<http://dbpedia.org/resource/Katy_Perry>
+        rdfs:label     "Katy Perry"@en , "Katy Perry"@de , "Katy Perry"@fr ;
+        dbo:birth      <http://dbpedia.org/resource/Katy_Perry__1> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Katy_Perry> , <http://de.dbpedia.org/resource/Katy_Perry> ;
+        skos:altLabel  "Ageega"@fr , "Ageega"@en , "Ageega"@de , "Katherine perry"@fr , "Katie Perry"@fr , "Kathy Perry"@fr , "Kathryn Hudson"@fr , "Kathryn Hudson"@en , "Kathryn Hudson"@de , "Katy Hudson"@fr , "Katy Perrie"@en , "Katy Perrie"@de , "Katy Perrie"@fr , "Katy Hudson"@en , "Katy Hudson"@de , "Katy pery"@fr , "Katy pery"@en , "Katy pery"@de , "Katy Elizabeth Hudson"@de , "Perry"@fr , "Katheryn Elizabeth Hudson"@fr , "(A) Katy Perry"@fr , "(A) Katy Perry"@en , "(A) Katy Perry"@de , "Kate Perry"@fr , "Kate Perry"@en , "Kate Perry"@de , "Katheryn Elizabeth Hudson"@en , "Katheryn Elizabeth Hudson"@de , "Katherine Perry"@fr , "Katie Perrie"@fr , "Katie Perrie"@en , "Katy perry"@en , "Katy perry"@de , "Katy perry"@fr , "Katie Perrie"@de , "Katty Perry"@fr , "Katty Perry"@en , "Katty Perry"@de , "Kathryn Elizabeth Hudson"@fr , "Kathryn Elizabeth Hudson"@en , "Kathryn Elizabeth Hudson"@de , "Katheryn Hudson"@fr , "Katheryn Hudson"@en , "Katheryn Hudson"@de , "List of songs recorded by Katy Perry"@fr , "List of songs recorded by Katy Perry"@en , "List of songs recorded by Katy Perry"@de , "Katy Perry"@fr , "Katy Perry"@en , "Katy Perry"@de .

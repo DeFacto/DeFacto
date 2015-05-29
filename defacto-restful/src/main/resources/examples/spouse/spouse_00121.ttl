@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03z85w>
+        rdfs:label     "Brian McFadden"@fr , "Brian McFadden"@en , "Brian McFadden"@de ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.03z85w__121> ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Brian_McFadden> , <http://de.dbpedia.org/resource/Brian_McFadden> , <http://dbpedia.org/resource/Brian_McFadden> ;
+        skos:altLabel  "McFadden, Brian"@en , "Brian Nicholas McFadden"@en , "Brain McFadden"@en , "brian_mcfadden"@en , "Bryan McFadden"@fr , "Brian mcfadden"@fr , "Bryan McFadden"@de , "Brian mcfadden"@de , "Brian mcfadden"@en , "Bryan McFadden"@en , "McFadden"@fr , "McFadden"@de , "Brian McFadden"@fr , "Brian McFadden"@de , "Brian McFadden"@en .
+
+<http://rdf.freebase.com/ns/m.01sttz>
+        rdfs:label     "Delta Goodrem"@de , "Delta Goodrem"@en , "Delta Goodrem"@fr ;
+        owl:sameAs     <http://de.dbpedia.org/resource/Delta_Goodrem> , <http://fr.dbpedia.org/resource/Delta_Goodrem> , <http://dbpedia.org/resource/Delta_Goodrem> ;
+        skos:altLabel  "Delta Groodem"@en , "Delma Goodrem"@en , "Delta Goodrem"@en , "Delta Goodrem"@de , "Delta Goodrem"@fr , "Innocent Mistakes"@en , "Innocent Mistakes"@de , "Innocent Mistakes"@fr , "delta_goodrem"@en , "List of Delta Goodrem tours and concerts"@en , "Delts"@en , "List of Delta Goodrem tours and concerts"@de , "List of Delta Goodrem tours and concerts"@fr , "Delta Godream"@en , "Goodrem"@de , "Delta Goodrum"@fr , "Delta Goodrum"@en , "Delta Goodrum"@de , "Delta"@en , "Delta"@de , "Delta"@fr , "Delta Lea Goodrem"@fr , "Delta goodrem"@fr , "Delta Goodram"@en , "Delta goodrem"@en , "Delta goodrem"@de , "Delta Goodram"@de , "Delta Goodram"@fr , "Delta Lea Goodrem"@en , "Delta Lea Goodrem"@de , "Delta Goodrem filmography"@en , "Delta Goodream"@en , "Delta Goodrem filmography"@de , "Goodrem, Delta"@en , "Goodrem, Delta"@de , "Goodrem, Delta"@fr , "Delta Goodrem filmography"@fr .
+
+<http://rdf.freebase.com/ns/m.03z85w__121>
+        dbo:from    "2004"^^xsd:gYear ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.01sttz> ;
+        dbo:to      "2011"^^xsd:gYear .

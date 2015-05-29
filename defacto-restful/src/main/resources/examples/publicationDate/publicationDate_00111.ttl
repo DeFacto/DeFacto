@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.03jht>
+        rdfs:label       "Hermann Hesse"@fr , "Hermann Hesse"@en , "Hermann Hesse"@de ;
+        dbo:publication  <http://rdf.freebase.com/ns/m.02f92___111> ;
+        owl:sameAs       <http://fr.dbpedia.org/resource/Hermann_Hesse> , <http://dbpedia.org/resource/Hermann_Hesse> , <http://de.dbpedia.org/resource/Hermann_Hesse> ;
+        skos:altLabel    "Hermann Hesse"@fr , "Hermann Hesse"@en , "Hermann Hesse"@de , "Hermann Karl Hesse"@de , "Herman Hesse"@en , "Herman Hesse"@de , "Herman Hesse"@fr , "Hermann Hess"@en , "Hermann Hess"@de , "Hermann Hess"@fr , "Hermman Hesse"@de , "Hermman Hesse"@fr , "Hermman Hesse"@en , "hermann_hesse"@en , "Hesse"@en , "Hesse"@de , "Hesse"@fr , "Hesse, Hermann"@en , "Hesse, Hermann"@de , "Hesse, Hermann"@fr , "Hermann hesse"@fr , "Herman Hess"@fr , "Herman Hess"@en , "Herman Hess"@de , "Hermann"@en , "Hermann"@de , "Hermann"@fr , "Emil Sinclair"@en , "Emil Sinclair"@de , "Emil Sinclair"@fr , "Maria Bernoulli"@en , "Maria Bernoulli"@de , "Maria Bernoulli"@fr .
+
+<http://rdf.freebase.com/ns/m.02f92___111>
+        dbo:author  <http://rdf.freebase.com/ns/m.02f92_> ;
+        dbo:from    "1943"^^xsd:gYear ;
+        dbo:to      "1943"^^xsd:gYear .
+
+<http://rdf.freebase.com/ns/m.02f92_>
+        rdfs:label     "Le Jeu des perles de verre"@fr , "The Glass Bead Game"@en , "Das Glasperlenspiel"@de ;
+        owl:sameAs     <http://dbpedia.org/resource/The_Glass_Bead_Game> , <http://de.dbpedia.org/resource/Das_Glasperlenspiel> , <http://fr.dbpedia.org/resource/Le_Jeu_des_perles_de_verre> ;
+        skos:altLabel  "The Glass Bead Game - Magister Ludi"@en , "Magister"@fr , "Magister"@en , "Magister"@de , "Le jeu des perles de verre"@fr , "Le Jeu Des Perles De Verre"@fr , "Joseph Knecht"@fr , "Joseph Knecht"@en , "Joseph Knecht"@de , "Glass Bead Game"@fr , "Das Glasperlenspiel"@fr , "Magister Ludi"@fr , "Das Glasperlenspiel"@en , "Glass Bead Game"@en , "Glass Bead Game"@de , "Das Glasperlenspiel"@de , "Magister Ludi"@en , "Magister Ludi"@de , "Digital bead game"@fr , "Digital bead game"@en , "The Glass Bead Game"@en , "The Glass Bead Game"@de , "The Glass Bead Game"@fr , "Digital bead game"@de , "Le Jeu des perles de verre"@fr , "The Glass-Bead game"@fr , "The Glass-Bead game"@en , "The Glass-Bead game"@de , "Efforts to Create A Glass Bead Game"@fr , "Efforts to Create A Glass Bead Game"@en , "Efforts to Create A Glass Bead Game"@de , "Glass bead game"@en , "Glass bead game"@de , "Glass bead game"@fr , "Glasperlenspiel"@en , "Glasperlenspiel"@de , "Glasperlenspiel"@fr , "Das glasperlenspiel"@en , "Das glasperlenspiel"@de , "Das glasperlenspiel"@fr , "Kastalien"@de , "Bead game"@fr , "Bead game"@en , "Bead game"@de .

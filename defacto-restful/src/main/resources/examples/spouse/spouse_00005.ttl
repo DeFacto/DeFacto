@@ -1,0 +1,21 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://rdf.freebase.com/ns/m.0h0zx_y>
+        rdfs:label     "Harmoni Everett"@en ;
+        dbo:marriage   <http://rdf.freebase.com/ns/m.0h0zx_y__5> ;
+        skos:altLabel  "Harmonie Everett"@en .
+
+<http://rdf.freebase.com/ns/m.0h0zx_y__5>
+        dbo:from    "2003-06-07"^^xsd:date ;
+        dbo:spouse  <http://rdf.freebase.com/ns/m.03z1j_> ;
+        dbo:to      "2009-10-30"^^xsd:date .
+
+<http://rdf.freebase.com/ns/m.03z1j_>
+        rdfs:label     "Kerr Smith"@de , "Kerr Smith"@fr , "Kerr Smith"@en ;
+        owl:sameAs     <http://dbpedia.org/resource/Kerr_Smith> , <http://fr.dbpedia.org/resource/Kerr_Smith> , <http://de.dbpedia.org/resource/Kerr_Smith> ;
+        skos:altLabel  "Kerr Van Cleve Smith"@en , "Kerr Smith"@de , "Kerr Smith"@en , "Kerr Smith"@fr .

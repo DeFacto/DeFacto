@@ -1,0 +1,22 @@
+@prefix fbase: <http://rdf.freebase.com/ns> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbo:   <http://dbpedia.org/ontology/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://dbpedia.org/resource/Denver_Nuggets>
+        rdfs:label     "Denver Nuggets"@en , "Denver Nuggets"@fr , "Denver Nuggets"@de ;
+        owl:sameAs     <http://fr.dbpedia.org/resource/Nuggets_de_Denver> , <http://de.dbpedia.org/resource/Denver_Nuggets> ;
+        skos:altLabel  "Colorado nuggets"@fr , "Colorado nuggets"@de , "Colorado nuggets"@en , "Denver nuggets"@fr , "Nuggets"@fr , "Denver nuggets"@de , "Denver nuggets"@en , "Nuggets"@de , "Nuggets"@en , "Jonathon Herrera"@fr , "Denver Rockets"@fr , "Jonathon Herrera"@de , "Denver Rockets"@de , "Denver Rockets"@en , "Jonathon Herrera"@en , "Nuggets de Denver"@fr , "Rockets de Denver"@fr , "Denver nuggetts"@fr , "Denver nuggetts"@de , "Denver nuggetts"@en , "Denver"@de , "Denver Nuggets"@fr , "Denver Nuggets"@de , "Denver Nuggets"@en , "Denver Larks"@fr , "Denver Larks"@de , "Denver Larks"@en , "Nuggets de denver"@fr .
+
+<http://dbpedia.org/resource/Raymond_Felton__3>
+        dbo:from  "2010"^^xsd:gYear ;
+        dbo:team  <http://dbpedia.org/resource/Denver_Nuggets> ;
+        dbo:to    "2010"^^xsd:gYear .
+
+<http://dbpedia.org/resource/Raymond_Felton>
+        rdfs:label      "Raymond Felton"@en , "Raymond Felton"@fr , "Raymond Felton"@de ;
+        dbo:playedTeam  <http://dbpedia.org/resource/Raymond_Felton__3> ;
+        owl:sameAs      <http://de.dbpedia.org/resource/Raymond_Felton> , <http://fr.dbpedia.org/resource/Raymond_Felton> ;
+        skos:altLabel   "Felton"@fr , "Felton"@de , "Felton"@en , "Raymond Bernard Felton"@fr , "Raymond Bernard Felton"@de , "Raymond Bernard Felton"@en , "Raymond Bernard Felton junior"@de , "Ray Felton"@fr , "Ray Felton"@de , "Ray Felton"@en , "Raymond Felton"@fr , "Raymond Felton"@de , "Raymond Felton"@en .
