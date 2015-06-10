@@ -1,5 +1,5 @@
 [eval]
-data-directory = /home/user/DeFacto/data/
+data-directory = /home/user/Repos/DeFacto/data/
 train-directory = eval/train
 test-directory = eval/test
 
@@ -79,7 +79,7 @@ CONFIRMATION_THRESHOLD = 0.5
 ;return all websites even the website has no proof
 DISPLAY_WEBSITES_WITH_NO_PROOF = false
 
-WORDNET_DICTIONARY = /home/user/DeFacto/data/wordnet/dict
+WORDNET_DICTIONARY = /home/user/Repos/DeFacto/data/wordnet/dict
 
 [settings]
 ; this is used to get the labels of the resources from the training models
