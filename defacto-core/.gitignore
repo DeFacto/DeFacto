@@ -1,7 +1,21 @@
-defacto.ini
 .classpath
 .project
 .settings
-resources/cache/websites/defacto.h2.db
-resources/cache/websites/defacto.trace.db
+.directory
 
+/src/main/resources/defacto.ini
+
+/src/main/resources/training/arff/evidence/40%_false_all.arff
+/src/main/resources/training/arff/evidence/50-50_random_defacto_evidence.arff
+/src/main/resources/training/arff/evidence/all_defacto_evidence.arff
+/src/main/resources/training/arff/evidence/domain_defacto_evidence.arff
+/src/main/resources/training/arff/evidence/domain_range_defacto_evidence.arff
+/src/main/resources/training/arff/evidence/numeric_50-50_random_defacto_evidence.arff
+/src/main/resources/training/arff/evidence/property_defacto_evidence.arff
+/src/main/resources/training/arff/evidence/random_defacto_evidence.arff
+/src/main/resources/training/arff/evidence/range_defacto_evidence copy.arff
+/src/main/resources/cache
+
+/cache/sparql
+/target
+/log
