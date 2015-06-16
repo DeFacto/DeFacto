@@ -1,0 +1,10 @@
+<div class="well"data-ng-hide="!fact">
+    <div data-ng-hide="!facts.id">id: {{facts.id}}</div>
+    <h2>Overall DeFacto Score: {{fact.score}}</h2>
+    <h3>This fact holds for the year {{fact.from}} - {{fact.to}}</h3>
+    <h4>{{fact.websitesSize}} websites containing the fact</h4>
+</div>
+
+<div data-ng-repeat="website in fact.websites">
+   <div data-ng-include="'templates/partials/website.html'"></div>
+</div>   

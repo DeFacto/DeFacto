@@ -1,0 +1,26 @@
+<hr />
+<div class="well">
+
+    <div class="row">
+        <div class="col-xs-6"><a href="{{website.url}}">{{website.title}}</a></div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+        <progressbar max="fact.maxScore" value="website.score" type="success"> <i> {{website.score*100|number:2}} / {{fact.maxScore*100|number:2}} </i></progressbar>
+        </div><div class="col-xs-12 "> </div>
+        <div class="col-xs-6">
+        <progressbar max="fact.maxCoverage" value="website.coverage" type="info"> <i> {{website.coverage|number:2}} / {{fact.maxCoverage|number:2}} </i></progressbar>
+        </div><div class="col-xs-12 "> </div>
+        <div class="col-xs-6">
+        <progressbar max="fact.maxSearch" value="website.search" type="warning"> <i> {{website.search*100|number:2}} / {{fact.maxSearch*100|number:2}} </i></progressbar>
+        </div><div class="col-xs-12 "> </div>
+        <div class="col-xs-6">
+        <progressbar max="fact.maxWeb" value="website.web" type="danger"> <i> {{website.web|number:2}} / {{fact.maxWeb|number:2}} </i></progressbar>
+        </div><div class="col-xs-12 "> </div>
+    </div>
+
+    <div data-ng-repeat="proof in website.proofs">
+        <div data-ng-init="html=replaceKeywords(proof)">{{proof.label}}. <span data-ng-bind-html="html">..</span></div>
+    </div>
+</div>

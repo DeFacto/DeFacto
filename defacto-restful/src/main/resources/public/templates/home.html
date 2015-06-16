@@ -1,0 +1,20 @@
+<div class="container">
+    <div data-ng-hide="fact || !requested" class="progress">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            <span class="sr-only">Wait...</span>
+        </div>
+    </div>
+    <br />
+    Examples
+    <input type="text" data-ng-model="input" /> <span class="badge">{{filtered.length}}</span>
+    <br />
+    <br />
+    <ul class="list-group">
+        <li class="list-group-item" data-ng-repeat="exam in filtered | startFrom:(currentPage - 1)*pageSize | limitTo:pageSize">
+            <button data-ng-click="getFact(exam)" class="btn btn-link">{{exam.fact}}</button>
+        </li>
+    </ul>
+    <pagination total-items="bigTotalItems" data-ng-model="currentPage" ng-change="setPage(currentPage)" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+
+    <div data-ng-include="'templates/partials/fact.html'"></div>  
+</div>
