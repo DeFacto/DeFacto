@@ -3,18 +3,11 @@
  */
 package org.aksw.defacto.util;
 
-import java.io.IOException;
 import java.io.StringWriter;
 
-import org.aksw.commons.collections.Pair;
-import org.aksw.defacto.Defacto;
-import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
-import org.aksw.defacto.model.DefactoModel;
-import org.ini4j.Ini;
-import org.ini4j.InvalidFileFormatException;
 import org.nlp2rdf.core.Span;
 import org.nlp2rdf.core.Text2RDF;
 import org.nlp2rdf.core.urischemes.ContextHashBasedString;
@@ -71,6 +64,7 @@ public class NIFExport {
         return out.toString();
     }
 
+    /*
     public static void main(String[] args) throws Exception {
         try {
             Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(Defacto.class.getClassLoader().getResourceAsStream("defacto.ini")));
@@ -92,6 +86,6 @@ public class NIFExport {
             }
         }
 
-    }
+    }*/
 
 }
