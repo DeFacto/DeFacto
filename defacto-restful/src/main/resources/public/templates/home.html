@@ -5,9 +5,10 @@
         </div>
     </div>
     <br />
-    Examples
-    <input type="text" data-ng-model="input" /> <span class="badge">{{filtered.length}}</span>
+    <input type="text" data-ng-model="input" placeholder="example search"/> <span class="badge">{{filtered.length}}</span>
     <br />
+    <br />
+    Examples
     <br />
     <ul class="list-group">
         <li class="list-group-item" data-ng-repeat="exam in filtered | startFrom:(currentPage - 1)*pageSize | limitTo:pageSize">
