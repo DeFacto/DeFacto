@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AKSW/DeFacto.svg?branch=fusion)](https://travis-ci.org/AKSW/DeFacto)
+
 DeFacto (Deep Fact Validation)
 ==============================
 
