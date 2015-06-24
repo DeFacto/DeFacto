@@ -87,7 +87,7 @@ RESOURCE_LABEL = http://www.w3.org/2000/01/rdf-schema#label
 ; training mode or demo mode (training generates arff files, demo mode outputs confidence scores)
 TRAINING_MODE = false
 ; time period searcher: occurrence, global, domain
-TIME_PERIOD_SEARCHER = occurrence
+TIME_PERIOD_SEARCHER = domain
 ; tiny, small, medium, large
 context-size = tiny
 ; frequency or pattern
