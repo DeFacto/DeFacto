@@ -30,9 +30,11 @@ import org.aksw.defacto.util.FactBenchExamplesLoader;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.bson.types.ObjectId;
 import org.ini4j.Ini;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,7 +64,7 @@ public class Controller {
     protected RestModel  restModel = null;
 
     /**
-     * 
+     * Defacto config and example data loading.
      */
     @PostConstruct
     protected void init() {
@@ -88,6 +90,7 @@ public class Controller {
     }
 
     /**
+     * method GET<br>
      * service path: examples/<br>
      * 
      * Example facts and triples.
@@ -99,13 +102,14 @@ public class Controller {
             value = "/examples",
             headers = "Accept=application/json",
             produces = "application/json",
-            method = RequestMethod.GET
-            )
-            public @ResponseBody String examples() {
+            method = RequestMethod.GET)
+    @ResponseBody
+    public String examples() {
         return examples.toString();
     }
 
     /**
+     * method GET<br>
      * service path: exampleinput/<br>
      * 
      * @return json object
@@ -116,7 +120,7 @@ public class Controller {
             produces = "application/json",
             method = RequestMethod.GET)
     @ResponseBody
-    String inputExample(HttpServletResponse response) {
+    public String exampleinput(HttpServletResponse response) {
         Triple t = DummyData.getDummyTriple();
         return input(new JSONObject()
                 .put("s", t.getSubject().getURI().toString())
@@ -128,7 +132,118 @@ public class Controller {
     }
 
     /**
+     * method POST<br>
+     * service path: inputs/<br>
      * 
+     * Adds an id to each object in the array and stores the objects in the DB.
+     * 
+     * @param jsonArray
+     *            with json objects
+     * @param response
+     * @return DB id
+     */
+    @RequestMapping(
+            value = "/inputs",
+            headers = "Accept=application/json",
+            produces = "application/json",
+            method = RequestMethod.POST)
+    @ResponseBody
+    public String inputs(
+            @RequestBody String jsonArray, HttpServletResponse response
+            ) {
+
+        String id = "";
+        try
+        {
+            id = ObjectId.get().toString();
+            JSONArray ja = new JSONArray(jsonArray);
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject jo = ja.getJSONObject(i);
+                jo.put("id", id);
+
+                insert(jo);
+            }
+        } catch (Exception e) {
+            LOG.error(e.getLocalizedMessage(), e);
+        }
+        return new JSONObject().put("id", id).toString();
+    }
+
+    /**
+     * method POST<br>
+     * service path: vote/<br>
+     * 
+     * @param json
+     * @param response
+     * @return
+     */
+    @RequestMapping(
+            value = "/vote",
+            headers = "Accept=application/json",
+            produces = "application/json",
+            method = RequestMethod.POST)
+    @ResponseBody
+    public String votePost(
+            @RequestBody String json, HttpServletResponse response
+            ) {
+        LOG.info("voting");
+        JSONObject jo = new JSONObject(json);
+        if (jo.has("dir")) {
+            LOG.info(jo.getString("dir"));
+        }
+
+        return new JSONObject().toString();
+    }
+
+    /**
+     * method GET<br>
+     * service path: vote/<br>
+     * 
+     * Reads database data and creates checks facts.
+     * 
+     * @param id
+     *            ObjectId
+     * @param response
+     * @return
+     */
+    @RequestMapping(
+            value = "/vote/{id:^[0-9a-fA-F]{24}$}",
+            produces = "application/json",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public String voteGet(
+            @PathVariable("id") String id, HttpServletResponse response
+            ) {
+
+        JSONArray returnArray = new JSONArray();
+        try {
+            Iterator<DBObject> iter = search(new JSONObject().put("id", id));
+            while (iter.hasNext()) {
+
+                DBObject dbo = iter.next();
+                String subject = (String) dbo.get("s");
+                String predicate = (String) dbo.get("p");
+                String object = (String) dbo.get("o");
+
+                JSONObject jo = new JSONObject();
+                jo.put("s", subject);
+                jo.put("p", predicate);
+                jo.put("o", object);
+
+                JSONObject out;
+                out = new JSONObject(input(jo.toString(), response));
+                out.put("input", jo);
+
+                returnArray.put(out);
+            }
+        } catch (Exception e) {
+            LOG.error(e.getLocalizedMessage(), e);
+        }
+        return returnArray.toString();
+    }
+
+    /**
+     * method POST<br>
      * service path: input/<br>
      * 
      * @param s
@@ -144,7 +259,7 @@ public class Controller {
             produces = "application/json",
             method = RequestMethod.POST)
     @ResponseBody
-    String input(
+    public String input(
             @RequestBody String json, HttpServletResponse response
             ) {
 
@@ -156,8 +271,10 @@ public class Controller {
         } catch (Exception e) {
             LOG.error(e.getLocalizedMessage(), e);
             try {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Wrong input.");
-                response.flushBuffer();
+                if (response != null) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Wrong input.");
+                    response.flushBuffer();
+                }
             } catch (IOException ee) {
                 LOG.error(ee.getLocalizedMessage(), ee);
             }
@@ -178,6 +295,10 @@ public class Controller {
 
         // user input
         if (defactoModel == null) {
+
+            String from = in.has("from") && in.getString("from") != null ? in.getString("from") : "";
+            String to = in.has("to") && in.getString("to") != null ? in.getString("to") : "";
+
             defactoModel = restModel
                     .getModel(
                             new Triple(
@@ -185,8 +306,8 @@ public class Controller {
                                     NodeFactory.createURI(in.getString("p")),
                                     NodeFactory.createURI(in.getString("o"))
                             ),
-                            in.getString("from") == null ? "" : in.getString("from"),
-                            in.getString("to") == null ? "" : in.getString("to")
+                            from,
+                            to
                     );
         }
         // call of DeFacto
@@ -202,11 +323,13 @@ public class Controller {
         //
 
         // output:
-        response.setStatus(HttpServletResponse.SC_OK);
+        if (response != null)
+            response.setStatus(HttpServletResponse.SC_OK);
         return out(evidence);
     }
 
     protected String out(Evidence evidence) {
+
         // sort websites bei defacto score
         List<WebSite> webSites = evidence.getAllWebSites();
         Collections.sort(webSites, new Comparator<WebSite>() {
@@ -220,6 +343,7 @@ public class Controller {
         });
 
         JSONArray jaWebSites = new JSONArray();
+        double maxScore = 0, maxCoverage = 0, maxSearch = 0, maxWeb = 0;
         for (final WebSite website : webSites) {
             JSONArray jaProofs = new JSONArray();
             int cnt = 1;
@@ -249,6 +373,11 @@ public class Controller {
                 }
             }// all proofs
 
+            maxScore = website.getScore() > maxScore ? website.getScore() : maxScore;
+            maxCoverage = website.getTopicCoverageScore() > maxCoverage ? website.getTopicCoverageScore() : maxCoverage;
+            maxSearch = website.getTopicMajoritySearchFeature() > maxSearch ? website.getTopicMajoritySearchFeature() : maxSearch;
+            maxWeb = website.getTopicMajorityWebFeature() > maxWeb ? website.getTopicMajorityWebFeature() : maxWeb;
+
             jaWebSites.put(new JSONObject()
                     .put("url", website.getUrl())
                     .put("title", website.getTitle())
@@ -259,13 +388,30 @@ public class Controller {
                     .put("score", website.getScore())
                     );
 
-        } // all weSites
+        } // all webSites
+
         return new JSONObject()
+                // TODO:
+                // add votes
+                //
+                .put("maxScore", maxScore)
+                .put("maxCoverage", maxCoverage)
+                .put("maxSearch", maxSearch)
+                .put("maxWeb", maxWeb)
+                .put("sl", evidence.getModel().getSubject().getLabels().iterator().next())
+                .put("pl", evidence.getModel().getPredicate().getLocalName())
+                .put("ol", evidence.getModel().getObject().getLabels().iterator().next())
+                .put("s", evidence.getModel().getSubject().getUri())
+                .put("p", evidence.getModel().getPredicate().getURI())
+                .put("o", evidence.getModel().getObject().getUri())
+                //
+
                 .put("score", DecimalFormat.getPercentInstance(Locale.ENGLISH).format(evidence.getDeFactoScore()))
                 .put("from", evidence.defactoTimePeriod == null ? "" : evidence.defactoTimePeriod.getFrom())
                 .put("to", evidence.defactoTimePeriod == null ? "" : evidence.defactoTimePeriod.getTo())
                 .put("websitesSize", evidence.getAllWebSites().size())
                 .put("websites", jaWebSites)
+
                 .toString();
 
     }
