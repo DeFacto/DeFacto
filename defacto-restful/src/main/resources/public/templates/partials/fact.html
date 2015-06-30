@@ -1,10 +1,28 @@
-<div class="well"data-ng-hide="!fact">
-    <div data-ng-hide="!facts.id">id: {{facts.id}}</div>
-    <h2>Overall DeFacto Score: {{fact.score}}</h2>
-    <h3>This fact holds for the year {{fact.from}} - {{fact.to}}</h3>
-    <h4>{{fact.websitesSize}} websites containing the fact</h4>
+<div class="well" data-ng-hide="!fact">
+  <a href="{{fact.s}}" target="_blank">{{fact.sl}}</a>
+  <a href="{{fact.p}}" target="_blank">{{fact.pl}}</a>
+  <a href="{{fact.o}}" target="_blank">{{fact.ol}}</a>
+  <span data-ng-hide="!facts.id">id: {{facts.id}}</span>
+  <br>
+  <span class="badge">{{fact.score}}</span> overall DeFacto score,
+  <span data-ng-hide="fact.from==fact.to">fact holds for the year {{fact.from}} - {{fact.to}}.</span>
+  <span data-ng-hide="fact.from!=fact.to">fact holds for the year {{fact.to}}.</span>
+  <br>
+  <span class="badge">{{fact.websitesSize}}</span> websites containing the fact.<br>
+  <br>
+  <button data-ng-hide="show || !fact.websitesSize" data-ng-click="show=!show" class="btn btn-sm btn-default">open proofs</button>
+  <button data-ng-hide="!show" data-ng-click="show=!show" class="btn btn-sm btn-default">close proofs</button>
+  <!-- vote -->
+  <span data-ng-hide="!facts.id" data-ng-init="show=false">
+    <button type="submit" class="btn btn-primary" data-ng-click="upvote(fact)" data-ng-hide="!fact.websitesSize">
+      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+    </button>
+    <button type="submit" class="btn btn-primary" data-ng-click="downvote(fact)">
+      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+    </button>
+  </span>
 </div>
 
-<div data-ng-repeat="website in fact.websites">
-   <div data-ng-include="'templates/partials/website.html'"></div>
-</div>   
+<div data-ng-hide="!show" data-ng-repeat="website in fact.websites">
+  <div data-ng-include="'templates/partials/website.html'"></div>
+</div>

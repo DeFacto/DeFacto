@@ -1,10 +1,32 @@
 <div class="container">
-    <div data-ng-hide="fact || !requested" class="progress">
-        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-            <span class="sr-only">Wait...</span>
-        </div>
-    </div>
-    
-    <div data-ng-include="'templates/partials/fact.html'"></div>  
-</div>
 
+  <div data-ng-hide="facts || !requested" class="progress">
+    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+      <span class="sr-only">Wait...</span>
+    </div>
+  </div>
+
+  <!-- example input -->
+  <br>
+  <br>
+  <a data-ng-href="#/facts/{{input.id}}" class="btn-link"> {{input.id}}</a>
+  <button ng-hide="requested" data-ng-click="sendExampleInput()">Insert data</button>
+  <br>
+  <br>
+  <br> {{exampleinput}}
+  <!-- example input end-->
+
+  <div data-ng-hide="!facts" class="row">
+    <!-- accordion -->
+    <accordion close-others="false">
+      <div data-ng-repeat="fact in facts.fact">
+        <accordion-group is-open="true" is-disabled="false">
+          <accordion-heading>
+            <span class="badge">{{fact.score}}</span> {{fact.sl}} {{fact.pl}} {{fact.ol}}
+          </accordion-heading>
+          <div data-ng-include="'templates/partials/fact.html'"></div>
+        </accordion-group>
+      </div>
+    </accordion>
+  </div>
+</div>
