@@ -4,11 +4,12 @@
   <a href="{{fact.o}}" target="_blank">{{fact.ol}}</a>
   <span data-ng-hide="!facts.id">id: {{facts.id}}</span>
   <br>
-  <span class="badge">{{fact.score}}</span> overall DeFacto score,
+  <span class="badge">{{fact.score*100|number:2}}%</span> overall DeFacto score,
   <span data-ng-hide="fact.from==fact.to">fact holds for the year {{fact.from}} - {{fact.to}}.</span>
-  <span data-ng-hide="fact.from!=fact.to">fact holds for the year {{fact.to}}.</span>
+  <span data-ng-hide="fact.from == ''||fact.from!=fact.to">fact holds for the year {{fact.to}}.</span>
   <br>
-  <span class="badge">{{fact.websitesSize}}</span> websites containing the fact.<br>
+  <span class="badge">{{fact.websitesSize}}</span> websites containing the fact.
+  <br>
   <br>
   <button data-ng-hide="show || !fact.websitesSize" data-ng-click="show=!show" class="btn btn-sm btn-default">open proofs</button>
   <button data-ng-hide="!show" data-ng-click="show=!show" class="btn btn-sm btn-default">close proofs</button>
@@ -22,7 +23,6 @@
     </button>
   </span>
 </div>
-
-<div data-ng-hide="!show" data-ng-repeat="website in fact.websites">
+<div data-ng-hide="!show" data-ng-repeat="(key, website) in fact.websites">
   <div data-ng-include="'templates/partials/website.html'"></div>
 </div>

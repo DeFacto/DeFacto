@@ -1,14 +1,24 @@
 'use strict';
 var controllers = angular.module('defacto.controllers', []);
+var directives = angular.module('defacto.directives', []);
 
 var dependencies = [
   'ngRoute',
   'ngSanitize',
   'ui.bootstrap',
-  'defacto.controllers'
+  'defacto.controllers',
+  'defacto.directives'
 ];
 
 var Defacto = angular.module('Defacto', dependencies);
+/*
+google.setOnLoadCallback(function() {
+  angular.bootstrap(document.body, ['Defacto']);
+});
+*/
+google.load('visualization', '1', {
+  packages: ['corechart']
+});
 
 Defacto.constant('pages', [{
   routeName: 'home',

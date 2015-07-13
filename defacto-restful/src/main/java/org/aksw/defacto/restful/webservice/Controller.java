@@ -1,14 +1,12 @@
 package org.aksw.defacto.restful.webservice;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -20,6 +18,7 @@ import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.restful.core.DummyData;
 import org.aksw.defacto.restful.core.RestModel;
@@ -90,8 +89,8 @@ public class Controller {
     }
 
     /**
-     * method GET<br>
-     * service path: examples/<br>
+     * method: GET<br>
+     * path: examples/<br>
      * 
      * Example facts and triples.
      * 
@@ -109,8 +108,8 @@ public class Controller {
     }
 
     /**
-     * method GET<br>
-     * service path: exampleinput/<br>
+     * method: GET<br>
+     * path: exampleinput/<br>
      * 
      * @return json object
      */
@@ -132,8 +131,8 @@ public class Controller {
     }
 
     /**
-     * method POST<br>
-     * service path: inputs/<br>
+     * method: POST<br>
+     * path: inputs/<br>
      * 
      * Adds an id to each object in the array and stores the objects in the DB.
      * 
@@ -170,8 +169,8 @@ public class Controller {
     }
 
     /**
-     * method POST<br>
-     * service path: vote/<br>
+     * method: POST<br>
+     * path: vote/<br>
      * 
      * @param json
      * @param response
@@ -196,8 +195,8 @@ public class Controller {
     }
 
     /**
-     * method GET<br>
-     * service path: vote/<br>
+     * method: GET<br>
+     * path: vote/<br>
      * 
      * Reads database data and creates checks facts.
      * 
@@ -243,8 +242,8 @@ public class Controller {
     }
 
     /**
-     * method POST<br>
-     * service path: input/<br>
+     * method: POST<br>
+     * path: input/<br>
      * 
      * @param s
      * @param p
@@ -343,7 +342,6 @@ public class Controller {
         });
 
         JSONArray jaWebSites = new JSONArray();
-        double maxScore = 0, maxCoverage = 0, maxSearch = 0, maxWeb = 0;
         for (final WebSite website : webSites) {
             JSONArray jaProofs = new JSONArray();
             int cnt = 1;
@@ -373,47 +371,46 @@ public class Controller {
                 }
             }// all proofs
 
-            maxScore = website.getScore() > maxScore ? website.getScore() : maxScore;
-            maxCoverage = website.getTopicCoverageScore() > maxCoverage ? website.getTopicCoverageScore() : maxCoverage;
-            maxSearch = website.getTopicMajoritySearchFeature() > maxSearch ? website.getTopicMajoritySearchFeature() : maxSearch;
-            maxWeb = website.getTopicMajorityWebFeature() > maxWeb ? website.getTopicMajorityWebFeature() : maxWeb;
-
-            jaWebSites.put(new JSONObject()
-                    .put("url", website.getUrl())
-                    .put("title", website.getTitle())
-                    .put("proofs", jaProofs)
-                    .put("coverage", website.getTopicCoverageScore())
-                    .put("search", website.getTopicMajoritySearchFeature())
-                    .put("web", website.getTopicMajorityWebFeature())
-                    .put("score", website.getScore())
+            jaWebSites.put(
+                    new JSONObject()
+                            .put("url", website.getUrl())
+                            .put("title", website.getTitle())
+                            .put("proofs", jaProofs)
+                            .put("coverage", website.getTopicCoverageScore())
+                            .put("search", website.getTopicMajoritySearchFeature())
+                            .put("web", website.getTopicMajorityWebFeature())
+                            .put("score", website.getScore())
                     );
 
         } // all webSites
 
         return new JSONObject()
-                // TODO:
-                // add votes
-                //
-                .put("maxScore", maxScore)
-                .put("maxCoverage", maxCoverage)
-                .put("maxSearch", maxSearch)
-                .put("maxWeb", maxWeb)
+                .put("maxScore", 1)
+
+                .put("sumCoverage", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_COVERAGE_SUM))
+                .put("maxCoverage", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_COVERAGE_MAX))
+
+                .put("sumSearch", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_SEARCH_RESULT_SUM))
+                .put("maxSearch", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_SEARCH_RESULT_MAX))
+
+                .put("sumWeb", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_WEB_SUM))
+                .put("maxWeb", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_WEB_MAX))
+
                 .put("sl", evidence.getModel().getSubject().getLabels().iterator().next())
                 .put("pl", evidence.getModel().getPredicate().getLocalName())
                 .put("ol", evidence.getModel().getObject().getLabels().iterator().next())
+
                 .put("s", evidence.getModel().getSubject().getUri())
                 .put("p", evidence.getModel().getPredicate().getURI())
                 .put("o", evidence.getModel().getObject().getUri())
-                //
 
-                .put("score", DecimalFormat.getPercentInstance(Locale.ENGLISH).format(evidence.getDeFactoScore()))
+                .put("score", evidence.getDeFactoScore())
                 .put("from", evidence.defactoTimePeriod == null ? "" : evidence.defactoTimePeriod.getFrom())
                 .put("to", evidence.defactoTimePeriod == null ? "" : evidence.defactoTimePeriod.getTo())
                 .put("websitesSize", evidence.getAllWebSites().size())
                 .put("websites", jaWebSites)
 
                 .toString();
-
     }
 
     // -- MONGO

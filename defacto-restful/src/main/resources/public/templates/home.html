@@ -1,14 +1,16 @@
 <div class="container">
 
 
+
+
   <div data-ng-hide="fact || !requested" class="progress">
     <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
       <span class="sr-only">Wait...</span>
     </div>
   </div>
-  <br />
+  <br>
   <div data-ng-include="'templates/partials/fact.html'"></div>
-  <br />
+  <br>
   <input type="text" data-ng-model="input" placeholder="example search" />
   <span class="badge">{{filtered.length}}</span>
   <br>
