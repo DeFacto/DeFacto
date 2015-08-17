@@ -1,13 +1,13 @@
 'use strict';
-var controllers = angular.module('defacto.controllers', []);
-var directives = angular.module('defacto.directives', []);
 
 var dependencies = [
   'ngRoute',
   'ngSanitize',
   'ui.bootstrap',
-  'defacto.controllers',
-  'defacto.directives'
+  'defacto.directives.chart',
+  'defacto.factories.chart',
+  'defacto.controllers.home',
+  'defacto.controllers.facts'
 ];
 
 var Defacto = angular.module('Defacto', dependencies);

@@ -1,6 +1,7 @@
 "use strict";
 
-directives.directive("chart", function() {
+angular.module('defacto.directives.chart', [])
+.directive('chart', function() {
   return {
     restrict: "A",
     link: function($scope, $elem, $attr) {

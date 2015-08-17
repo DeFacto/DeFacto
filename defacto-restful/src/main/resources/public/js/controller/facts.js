@@ -1,6 +1,7 @@
 'use strict';
 
-controllers.controller('FactsCtrl', function($location, $routeParams, $scope, $http) {
+angular.module('defacto.controllers.facts', [])
+.controller('FactsCtrl', function($location, $routeParams, $scope, $http, ChartFactory) {
   $scope.requested = 0;
 
   if ($routeParams.name) {
@@ -14,38 +15,10 @@ controllers.controller('FactsCtrl', function($location, $routeParams, $scope, $h
           id: $routeParams.name,
           fact: []
         };
-
         if (datas && typeof datas === 'object' && datas !== null && datas.length) {
-
-          var options = {
-            legend: 'none',
-            hAxis: {
-              viewWindow: {
-                min: 0,
-                max: 1
-              }
-            }
-          };
           angular.forEach(datas, function(data) {
-            angular.forEach(data.websites, function(value, key) {
-              var dataTable = new google.visualization.arrayToDataTable([
-                ['Name', 'Score', {
-                  role: 'style'
-                }],
-                ['Defacto', value.score / data.maxScore, '#4daf4a'],
-                ['Topic Score', value.coverage / data.maxCoverage, '#984ea3'],
-                ['TM in SF', value.search / data.maxSearch, '#377eb8'],
-                ['TM in WF', value.web / data.maxWeb, '#e41a1c']
-              ]);
-
-              data.websites[key].chartdata = {
-                options: options,
-                dataTable: dataTable
-              };
-            }); // for each
-            $scope.facts.fact.push(data);
-          }); // for each
-
+            $scope.facts.fact.push(new ChartFactory().initialize(data));
+          });
         } else {
           $scope.status = 'No valid data!';
         }
@@ -86,9 +59,7 @@ controllers.controller('FactsCtrl', function($location, $routeParams, $scope, $h
     $http
       .post('/fusion/inputs/', postdata)
       .success(function(data) {
-
         $scope.input = data;
-
       })
       .error(function(err) {
         $scope.status = err;
@@ -96,18 +67,18 @@ controllers.controller('FactsCtrl', function($location, $routeParams, $scope, $h
   };
 
   $scope.downvote = function(fact) {
-    vote(fact, 'down');
+    vote(fact, 1);
   };
   $scope.upvote = function(fact) {
-    vote(fact, 'up');
+    vote(fact, -1);
   };
   //
-  var vote = function(fact, dir) {
+  var vote = function(fact, score) {
     $http
       .post('/fusion/vote/', {
         id: $scope.facts.id,
         fact: fact,
-        dir: dir
+        score: score
       })
       .success(function(data) {
         $scope.input = data;
