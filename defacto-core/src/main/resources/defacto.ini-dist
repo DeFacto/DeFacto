@@ -10,6 +10,12 @@ NUMBER_OF_BOA_PATTERNS = 10
 PATTERN_SCORE_THRESHOLD = 0.5
 languages = de,en,fr
 
+[local_corpora]
+; the set of indexed (input) fields
+FIELDS_INPUT = titleText,text
+; the set of indexed (output) fields
+FIELDS_OUTPUT = id,titleText
+
 [crawl]
 ; the bing api key get your own at: 
 ; BING_API_KEY = vm+K+uxrwn3oRap0Ou87KePKjGzH3gLGFM1vMw776wc=
@@ -26,6 +32,10 @@ NUMBER_OF_SEARCH_THREADS = 10
 GOOGLE_WAIT_TIME = 2000
 ; get the page rank or not
 getPageRank = true
+; folder where intermediate crawl data is stored
+CRAWL_STORAGE_FOLDER = //media/esteves/DROPBOX/Dropbox/github/deepfact/data/crawl/
+; number of crawlers
+NUMBER_OF_CRAWLERS = 7
 
 solr_searchresults	= http://139.18.2.164:8080/solr/factbench_searchresults/
 solr_topicterms	    = http://139.18.2.164:8080/solr/factbench_topicterms/
