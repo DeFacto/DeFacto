@@ -33,7 +33,7 @@ GOOGLE_WAIT_TIME = 2000
 ; get the page rank or not
 getPageRank = true
 ; folder where intermediate crawl data is stored
-CRAWL_STORAGE_FOLDER = //media/esteves/DROPBOX/Dropbox/github/deepfact/data/crawl/
+CRAWL_STORAGE_FOLDER = /home/user/Repos/DeFacto/data/crawl_repo
 ; number of crawlers
 NUMBER_OF_CRAWLERS = 7
 
