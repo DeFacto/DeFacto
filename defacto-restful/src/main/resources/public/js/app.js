@@ -30,7 +30,6 @@ Defacto.constant('pages', [{
   description: ''
 }]);
 
-
 Defacto.config(['$routeProvider', 'pages', function($routeProvider, pages) {
   angular.forEach(pages, function(config) {
     $routeProvider.when('/' + config.routeName, {
