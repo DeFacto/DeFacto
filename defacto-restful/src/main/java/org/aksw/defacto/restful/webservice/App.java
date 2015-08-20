@@ -3,12 +3,16 @@ package org.aksw.defacto.restful.webservice;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 
+import org.aksw.defacto.Defacto;
+import org.aksw.defacto.config.DefactoConfig;
 import org.aksw.defacto.restful.utils.Cfg;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.ini4j.Ini;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -31,6 +35,15 @@ public class App {
     public static void main(String[] args) {
 
         writeShutDownFile("stop");
+
+        try {
+            Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(Defacto.class.getClassLoader().getResourceAsStream("defacto.ini")));
+            // config test, try to get a nullpointer exception
+            Defacto.DEFACTO_CONFIG.getStringSetting("evidence", "WORDNET_DICTIONARY").trim();
+        } catch (IOException e) {
+            LOG.error(e.getLocalizedMessage(), e);
+        }
+
         SpringApplication.run(App.class, args);
 
         // shutdown hook
