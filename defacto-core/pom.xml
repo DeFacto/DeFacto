@@ -205,5 +205,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>edu.uci.ics</groupId>
+            <artifactId>crawler4j</artifactId>
+            <version>4.1</version>
+        </dependency>
     </dependencies>
 </project>
