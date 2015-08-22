@@ -16,6 +16,11 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
  */
 public class Constants {
 
+	/* esteves: adding indexed wikipedia */
+	public static final String LUCENE_WIKI_PAGEID_FIELD				= "id";
+	public static final String LUCENE_WIKI_TITLE_FIELD 				= "titleText";
+	public static final String LUCENE_WIKI_PAGETEXT_FIELD 			= "text";
+
 	public static final String LUCENE_SEARCH_RESULT_ID_FIELD		= "id";
 	public static final String LUCENE_SEARCH_RESULT_QUERY_FIELD		= "query";
 	public static final String LUCENE_SEARCH_RESULT_HIT_COUNT_FIELD = "hits";
