@@ -101,7 +101,7 @@ public class TopicTermExtractor {
         if ( cache.contains(label) ) return cache.getEntry(label).relatedTopics;
 		
     	List<Word> potentialTopicTerms = new ArrayList<Word>();
-        potentialTopicTerms.addAll(queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipedia(label, language)));
+        potentialTopicTerms.addAll(queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipediaViaAPI(label, language)));
         
         // the term that appears more than once is very likely to be a potential topic
         // so we should remove the other terms which are not repeated 

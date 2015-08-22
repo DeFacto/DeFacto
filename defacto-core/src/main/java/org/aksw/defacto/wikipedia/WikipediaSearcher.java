@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import org.aksw.defacto.Defacto;
 import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.impl.BinaryRequestWriter;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.xml.sax.SAXException;
 
 
@@ -21,7 +23,7 @@ import org.xml.sax.SAXException;
  * Date: 2/27/12
  * Time: 8:50 PM
  * Searches Wikipedia for certain search query
- * 
+ *
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
  * @author Mohamed Morsey <morsey@informatik.uni-leipzig.de>
  */
@@ -34,7 +36,7 @@ public class WikipediaSearcher {
      * @param searchQuery   The query to search Wikipedia with
      * @return A list of results obtained from Wikipedia
      */
-    public static ArrayList<WikipediaSearchResult> queryWikipedia(String searchQuery, String language) {
+    public static ArrayList<WikipediaSearchResult> queryWikipediaViaAPI(String searchQuery, String language) {
 
         ArrayList<WikipediaSearchResult> searchResults = new ArrayList<WikipediaSearchResult>();
         User user = new User("", "", "http://"+language+".wikipedia.org/w/api.php");
@@ -104,4 +106,6 @@ public class WikipediaSearcher {
             throw new RuntimeException("Wikipedia page: " + pageTitle +" cannot be encoded due to " + exp.getMessage());
         }
     }
+
+
 }
