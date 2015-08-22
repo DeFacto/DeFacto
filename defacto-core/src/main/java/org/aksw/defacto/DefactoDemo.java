@@ -4,14 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
+import com.hp.hpl.jena.graph.Triple;
 import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
+import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.ini4j.InvalidFileFormatException;
 
@@ -19,6 +19,10 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDFS;
+import org.json.JSONObject;
+import org.slf4j.LoggerFactory;
+
+
 
 /**
  * 
@@ -26,8 +30,7 @@ import com.hp.hpl.jena.vocabulary.RDFS;
  */
 public class DefactoDemo {
 
-    private static Logger logger = Logger.getLogger(DefactoDemo.class);
-    
+    public static Logger LOG       = LogManager.getLogger(DefactoDemo.class);
     /**
      * @param args
      * @throws IOException 
@@ -35,9 +38,23 @@ public class DefactoDemo {
      */
     public static void main(String[] args) throws InvalidFileFormatException, IOException {
 
-        org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
-        Defacto.checkFacts(getSampleData(), TIME_DISTRIBUTION_ONLY.NO);
-//        Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getTrainingData());
+        try{
+            System.out.println("DeFacto: starting the demonstration process");
+
+            final Calendar startTime = Calendar.getInstance();
+            LOG.info(startTime);
+            final Evidence evidence = Defacto.checkFact(getOneExample(), TIME_DISTRIBUTION_ONLY.NO);
+            final Calendar endTime = Calendar.getInstance();
+            LOG.info(endTime);
+
+            System.out.println("DeFacto: alright! DeFacto's score: " + evidence.getDeFactoScore());
+
+        }catch (Exception e){
+            System.out.println("Error: " + e.toString());
+        }
+
+        //Defacto.checkFacts(getSampleData(), TIME_DISTRIBUTION_ONLY.NO);
+
     }
     
     public static List<DefactoModel> getTrainingData() {
@@ -74,7 +91,7 @@ public class DefactoDemo {
                     boolean isCorrect = false;
 
                     if ( mappingFile.getAbsolutePath().contains("data/true") ) isCorrect = true;
-                    logger.info("Loading "+isCorrect+" triple from file: " + mappingFile.getName());
+                    LOG.info("Loading "+isCorrect+" triple from file: " + mappingFile.getName());
                         
                     models.add(new DefactoModel(model, name, isCorrect, Arrays.asList("en")));
                 }
@@ -141,5 +158,13 @@ public class DefactoDemo {
 //        models.add(new DefactoModel(model5, "ronaldo", true));
         
         return models;
+    }
+
+    private static DefactoModel getOneExample(){
+
+        Model model = ModelFactory.createDefaultModel();
+        model.read(DefactoModel.class.getClassLoader().getResourceAsStream("Einstein.ttl"), null, "TURTLE");
+        return new DefactoModel(model, "Einstein Model", true, Arrays.asList("en", "fr", "de"));
+
     }
 }
