@@ -3,16 +3,24 @@ package org.aksw.defacto.restful.core;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.config.DefactoConfig;
+import org.aksw.defacto.evidence.ComplexProof;
+import org.aksw.defacto.evidence.Evidence;
+import org.aksw.defacto.evidence.WebSite;
+import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.restful.utils.Cfg;
 import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
@@ -22,7 +30,10 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.dllearner.kb.sparql.SparqlEndpoint;
 import org.ini4j.Ini;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import com.google.common.collect.ComparisonChain;
 import com.hp.hpl.jena.graph.NodeFactory;
 import com.hp.hpl.jena.graph.Triple;
 import com.hp.hpl.jena.query.QueryExecution;
@@ -232,5 +243,89 @@ public class RestModel {
         subjectRes.addProperty(model.createProperty(subjectProperty), blank.asResource());
 
         return model;
+    }
+
+    public JSONObject out(Evidence evidence) {
+
+        // sort websites bei defacto score
+        List<WebSite> webSites = evidence.getAllWebSites();
+        Collections.sort(webSites, new Comparator<WebSite>() {
+            @Override
+            public int compare(WebSite o1, WebSite o2) {
+                return ComparisonChain.start()
+                        .compare(o2.getScore(), o1.getScore())
+                        .compare(o1.getTitle(), o2.getTitle())
+                        .result();
+            }
+        });
+
+        JSONArray jaWebSites = new JSONArray();
+        for (final WebSite website : webSites) {
+            JSONArray jaProofs = new JSONArray();
+            int cnt = 1;
+            List<Pattern> boaPatterns = evidence.getBoaPatterns();
+            for (ComplexProof proof : evidence.getComplexProofs(website)) {
+
+                for (Pattern pattern : boaPatterns) {
+                    if (!pattern.getNormalized().trim().isEmpty() && proof.getProofPhrase().toLowerCase().contains(pattern.getNormalized().toLowerCase())) {
+                        break;
+                    }
+                }
+                if (!proof.getTinyContext().contains("http:") && !proof.getTinyContext().contains("ftp:")) {
+                    JSONArray jaLabels = new JSONArray();
+                    Set<String> labels = new HashSet<String>();
+                    labels.add(website.getQuery().getSubjectLabel());
+                    labels.add(website.getQuery().getObjectLabel());
+                    for (String label : labels)
+                        jaLabels.put(label);
+
+                    jaProofs.put(new JSONObject()
+                            .put("label", cnt++)
+                            .put("tinyContext", proof.getTinyContext())
+                            .put("keywords", jaLabels)
+                            );
+                } else {
+                    LOG.warn("TINY:" + proof.getTinyContext());
+                }
+            }// all proofs
+
+            jaWebSites.put(
+                    new JSONObject()
+                            .put("url", website.getUrl())
+                            .put("title", website.getTitle())
+                            .put("proofs", jaProofs)
+                            .put("coverage", website.getTopicCoverageScore())
+                            .put("search", website.getTopicMajoritySearchFeature())
+                            .put("web", website.getTopicMajorityWebFeature())
+                            .put("score", website.getScore())
+                    );
+
+        } // all webSites
+
+        return new JSONObject()
+                .put("maxScore", 1)
+
+                .put("sumCoverage", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_COVERAGE_SUM))
+                .put("maxCoverage", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_COVERAGE_MAX))
+
+                .put("sumSearch", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_SEARCH_RESULT_SUM))
+                .put("maxSearch", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_SEARCH_RESULT_MAX))
+
+                .put("sumWeb", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_WEB_SUM))
+                .put("maxWeb", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_WEB_MAX))
+
+                .put("sl", evidence.getModel().getSubject().getLabels().iterator().next())
+                .put("pl", evidence.getModel().getPredicate().getLocalName())
+                .put("ol", evidence.getModel().getObject().getLabels().iterator().next())
+
+                .put("s", evidence.getModel().getSubject().getUri())
+                .put("p", evidence.getModel().getPredicate().getURI())
+                .put("o", evidence.getModel().getObject().getUri())
+
+                .put("score", evidence.getDeFactoScore())
+                .put("from", evidence.defactoTimePeriod == null ? "" : evidence.defactoTimePeriod.getFrom())
+                .put("to", evidence.defactoTimePeriod == null ? "" : evidence.defactoTimePeriod.getTo())
+                .put("websitesSize", evidence.getAllWebSites().size())
+                .put("websites", jaWebSites);
     }
 }
