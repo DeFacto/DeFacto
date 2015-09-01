@@ -26,6 +26,7 @@ import org.aksw.defacto.search.cache.solr.Solr4SearchResultCache;
 import org.aksw.defacto.search.concurrent.HtmlCrawlerCallable;
 import org.aksw.defacto.search.concurrent.RegexParseCallable;
 import org.aksw.defacto.search.concurrent.WebSiteScoreCallable;
+import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
 import org.aksw.defacto.topic.TopicTermExtractor;
@@ -157,7 +158,7 @@ public class EvidenceCrawler {
         // collect the urls for a particular pattern
         // could be done in parallel 
         for ( Map.Entry<Pattern, MetaQuery> entry : this.patternToQueries.entrySet())
-            searchResultCallables.add(new SearchResultCallable(entry.getValue(), entry.getKey()));
+            searchResultCallables.add(new SearchResultCallable(entry.getValue(), entry.getKey(), new AzureBingSearchEngine()));
         
         LOGGER.info("Starting to crawl/get from cache " + searchResultCallables.size() + " search results with " +
         		Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS") + " threads.");
