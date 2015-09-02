@@ -22,7 +22,13 @@ public class BingQuery implements Query {
             // since we don't get any results if we use the near operator we skip it 
             // if ( query.getPropertyLabel().equals("??? NONE ???") ) queryString = String.format("\"%s\" near:%s \"%s\"", subject, 15, object);
             if ( query.getPropertyLabel().equals("??? NONE ???") ) queryString = String.format("\"%s\" AND \"%s\"", subject, object);
-            else queryString = String.format("\"%s\" AND \"%s\" AND \"%s\"", subject, property, object);
+            else {
+                if (property.equals("NONE")) {
+                    queryString = String.format("\"%s\" AND \"%s\"", subject, object);
+                }else {
+                    queryString = String.format("\"%s\" AND \"%s\" AND \"%s\"", subject, property, object);
+                }
+            }
         }
         else {
             
