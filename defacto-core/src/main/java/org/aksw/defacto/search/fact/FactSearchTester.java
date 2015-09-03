@@ -18,6 +18,7 @@ import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
+import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.query.QueryGenerator;
 import org.aksw.defacto.util.CSVWriter;
@@ -72,7 +73,7 @@ public class FactSearchTester {
         long startCrawl = System.currentTimeMillis();
         EvidenceCrawler crawler = new EvidenceCrawler(model, queries);
         MetaQuery query = queries.values().iterator().next();
-        Evidence evidence = crawler.crawlEvidence();
+        Evidence evidence = crawler.crawlEvidence(new AzureBingSearchEngine());
         logger.info("Crawling evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
 
         // loop over all patterns

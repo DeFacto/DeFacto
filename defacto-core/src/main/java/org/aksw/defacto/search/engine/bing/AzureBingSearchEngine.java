@@ -139,4 +139,5 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
 
         return new BingQuery().generateQuery(query);
     }
+
 }

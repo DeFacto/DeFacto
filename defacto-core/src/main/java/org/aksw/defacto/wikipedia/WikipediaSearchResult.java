@@ -1,5 +1,7 @@
 package org.aksw.defacto.wikipedia;
 
+import java.util.ArrayList;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Mohamed Morsey
@@ -13,6 +15,8 @@ public class WikipediaSearchResult {
     private String pageTitle;
     private String pageURL;
     private String searchSnippet;
+    private String pageID;
+    private ArrayList<String> externalLinks;
 
     /**
      * 
@@ -26,27 +30,42 @@ public class WikipediaSearchResult {
         this.searchSnippet = searchSnippet;
     }
 
-    /**
-     * 
-     * @return
-     */
+    public WikipediaSearchResult(){
+
+    }
+
+    public ArrayList<String> getExternalLinksfromDBPedia(){
+        return externalLinks;
+    }
+
+    public void setPageID(String id){
+        this.pageID = id;
+    }
+
+    public void setPageTitle(String title){
+        this.pageTitle = title;
+    }
+
+    public void addExternalLink(String link){
+        this.externalLinks.add(link);
+    }
+
+    public String getPageID(){
+        return pageID;
+    }
+
     public String getPageTitle() {
         return pageTitle;
     }
 
-    /**
-     * 
-     * @return
-     */
+
     public String getPageURL() {
         return pageURL;
     }
 
-    /**
-     * 
-     * @return
-     */
     public String getSearchSnippet() {
         return searchSnippet;
     }
+
+
 }

@@ -26,6 +26,7 @@ import org.aksw.defacto.search.cache.solr.Solr4SearchResultCache;
 import org.aksw.defacto.search.concurrent.HtmlCrawlerCallable;
 import org.aksw.defacto.search.concurrent.RegexParseCallable;
 import org.aksw.defacto.search.concurrent.WebSiteScoreCallable;
+import org.aksw.defacto.search.engine.SearchEngine;
 import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.SearchResult;
@@ -66,7 +67,7 @@ public class EvidenceCrawler {
      * 
      * @return
      */
-    public Evidence crawlEvidence() {
+    public Evidence crawlEvidence(SearchEngine engine) {
     	
     	Evidence evidence = null;
     	
@@ -74,7 +75,7 @@ public class EvidenceCrawler {
     		
     		long start = System.currentTimeMillis();
         	LOGGER.info("Start getting search results");
-            Set<SearchResult> searchResults = this.generateSearchResultsInParallel();
+            Set<SearchResult> searchResults = this.generateSearchResultsInParallel(engine);
             LOGGER.info("Finished getting search results in " + (System.currentTimeMillis() - start));
             
             // multiple pattern bring the same results but we dont want that
@@ -150,15 +151,16 @@ public class EvidenceCrawler {
      * 
      * @return
      */
-	private Set<SearchResult> generateSearchResultsInParallel() {
+	private Set<SearchResult> generateSearchResultsInParallel(SearchEngine engine) {
 
         Set<SearchResult> results = new HashSet<SearchResult>();
         Set<SearchResultCallable> searchResultCallables = new HashSet<SearchResultCallable>();
+
         
         // collect the urls for a particular pattern
         // could be done in parallel 
         for ( Map.Entry<Pattern, MetaQuery> entry : this.patternToQueries.entrySet())
-            searchResultCallables.add(new SearchResultCallable(entry.getValue(), entry.getKey(), new AzureBingSearchEngine()));
+            searchResultCallables.add(new SearchResultCallable(entry.getValue(), entry.getKey(), engine));
         
         LOGGER.info("Starting to crawl/get from cache " + searchResultCallables.size() + " search results with " +
         		Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS") + " threads.");

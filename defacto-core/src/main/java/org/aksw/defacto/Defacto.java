@@ -27,6 +27,9 @@ import org.aksw.defacto.ml.feature.fact.FactScorer;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.search.concurrent.NlpModelManager;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
+import org.aksw.defacto.search.engine.SearchEngine;
+import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
+import org.aksw.defacto.search.engine.wikipedia.WikiSearchEngine;
 import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.query.QueryGenerator;
@@ -93,7 +96,11 @@ public class Defacto {
         // 2. download the search results in parallel
         long startCrawl = System.currentTimeMillis();
         EvidenceCrawler crawler = new EvidenceCrawler(model, queries);
-        Evidence evidence = crawler.crawlEvidence();
+        // crawl evidence using a defined search engine designed for a corpora (internet or local corpora)
+        SearchEngine engine = new AzureBingSearchEngine();
+        SearchEngine engine2 = new WikiSearchEngine();
+
+        Evidence evidence = crawler.crawlEvidence(engine2);
         LOGGER.info("Crawling evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
         
         // short cut to avoid unnecessary computation
