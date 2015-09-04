@@ -10,17 +10,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.Iterator;
-import java.util.List;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import org.apache.commons.io.IOUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/*
+        helper for JSON
+ */
 public class JsonReader {
 
 
@@ -45,19 +40,45 @@ public class JsonReader {
         }
     }
 
+    /*
+        this function will return the value of a JSON element (last in the path) from a JSON object obtained from a URL
+        the "path" must have at least 2 strings, the first one for the object and the second one for representing the key
+        that you want to get the value from
+     */
+    public static String getElementValueFromURL(String url, String path){
+        String ret ="";
+        try{
+
+            if (!path.contains(";")){
+                throw new Exception("Please use ';' to split the values from a nested json structure ");
+            }else {
+
+                JSONObject json = readJsonFromUrl(url);
+
+                String[] objects = path.split(";");
+                JSONObject temp;
+
+                temp = json.getJSONObject(objects[0]);
+                if (objects.length > 2) {
+                    for (int i = 1; i < objects.length - 1; i++) {
+                        JSONObject aux = temp;
+                        temp = aux.getJSONObject(objects[i]);
+                    }
+                }
+                ret = temp.get(objects[objects.length - 1]).toString();
+            }
+        }catch (Exception e){
+            return "";
+        }
+        return ret;
+    }
+
 
     public static void main(String[] args) throws IOException, JSONException {
 
-        try{
-            String url = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=info&pageids=11727563&inprop=url";
-            JSONObject json = readJsonFromUrl(url);
-
-            System.out.println(json.getJSONObject("query").getJSONObject("pages").getJSONObject("11727563").get("fullurl").toString());
-
-        }catch (Exception e){
-            System.out.println(e.toString());
-        }
-
+        String ret = getElementValueFromURL("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=info&pageids=11727563&inprop=url",
+                "query;pages;11727563;fullurl");
+        System.out.println(ret);
 
     }
 }
