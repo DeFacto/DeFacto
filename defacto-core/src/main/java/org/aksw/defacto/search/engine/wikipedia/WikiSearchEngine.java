@@ -4,6 +4,7 @@ package org.aksw.defacto.search.engine.wikipedia;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.sparql.core.ResultBinding;
 import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
 import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
@@ -16,6 +17,7 @@ import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.query.SolrWikiQuery;
 import org.aksw.defacto.search.result.DefaultSearchResult;
 import org.aksw.defacto.search.result.SearchResult;
+import org.aksw.defacto.util.JsonReader;
 import org.aksw.defacto.wikipedia.WikipediaSearchResult;
 
 import org.apache.log4j.Logger;
@@ -33,6 +35,7 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrException;
 import org.apache.solr.common.SolrInputDocument;
 
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -116,6 +119,10 @@ public class WikiSearchEngine extends DefaultSearchEngine {
                 WikipediaSearchResult wsr = new WikipediaSearchResult();
                 wsr.setPageID((String) doc.get("id"));
                 wsr.setPageTitle((String) doc.get("titleText"));
+
+                //not so performatic though, better sparql query...will change it later
+                wsr.setPageURL(JsonReader.getElementValueFromURL("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=info&pageids=" + wsr.getPageID().toString() + "&inprop=url",
+                        "query;pages;"+ wsr.getPageID().toString() +";fullurl"));
                 lc_results.put((String)doc.get("id"), wsr);
 
                 ids+=doc.get("id") + ",";
@@ -177,9 +184,20 @@ public class WikiSearchEngine extends DefaultSearchEngine {
             ResultSet rs = qexec.execSelect();
             List<QuerySolution> resultSetList = new ArrayList<QuerySolution>();
 
+            QuerySolution qs_ = rs.next();
+            Object id = qs_.getLiteral("o").getValue();
+            Object wiki_url = qs_.getResource("x").getURI();
+            Object external_url = qs_.getResource("z").getURI();
+
+
             while (rs.hasNext()) {
                 QuerySolution qs = rs.next();
                 String uri = qs.getResource("wikiurl").getURI();
+
+
+
+
+
             }
 
             /*****************************************************
@@ -188,18 +206,28 @@ public class WikiSearchEngine extends DefaultSearchEngine {
 
 
             /*****************************************************
-             adding all to websites
+             adding all to websites (wiki and external links)
              *****************************************************/
-
-
             for (WikipediaSearchResult r: lc_results.values()) {
 
-                //adding local corpora sources
                 WebSite website = new WebSite(query, r.getPageURL());
                 website.setTitle(r.getPageTitle());
                 website.setRank(iaux++);
                 website.setLanguage(query.getLanguage());
                 results.add(website);
+
+                for (String externalLink: r.getExternalLinksfromDBPedia())
+                {
+                    URL aURL = new URL(externalLink);
+
+                    WebSite website2 = new WebSite(query, externalLink);
+                    website2.setTitle(aURL.getHost());
+                    website2.setRank(iaux++);
+                    website2.setLanguage(query.getLanguage());
+                    results.add(website2);
+
+                }
+
             }
 
             return new DefaultSearchResult(results, response.getResults().getNumFound(), query, pattern, false);

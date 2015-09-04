@@ -42,6 +42,10 @@ public class WikipediaSearchResult {
         this.pageID = id;
     }
 
+    public void setPageURL(String id){
+        this.pageURL = id;
+    }
+
     public void setPageTitle(String title){
         this.pageTitle = title;
     }
