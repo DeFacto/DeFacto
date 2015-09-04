@@ -52,7 +52,7 @@ public class WikiSearchEngine extends DefaultSearchEngine {
     public static void main(String[] args) {
         Defacto.init();
 
-        MetaQuery q = new MetaQuery("Ghostbusters II|-|?D? NONE ?R?|-|Bill Murray|-|fr");
+        MetaQuery q = new MetaQuery("Ghostbusters II|-|?D? NONE ?R?|-|Bill Murray|-|en");
         WikiSearchEngine engine = new WikiSearchEngine();
         System.out.println(engine.query(q, null).getTotalHitCount());
     }
@@ -84,153 +84,167 @@ public class WikiSearchEngine extends DefaultSearchEngine {
 
         try {
 
-            if (query.getLanguage().equals("en")) {
-
-            }
-            else if (query.getLanguage().equals("de")){
-
-            }
-            else {
-
-            }
-
             String _query = this.generateQuery(query);
             System.out.println(_query);
 
+            if (query.getLanguage().equals("en")) {
 
-            /*****************************************************
-             query indexed wikipedia (_query)
-             *****************************************************/
+                /*****************************************************
+                 query indexed wikipedia (_query)
+                 *****************************************************/
 
-            HttpSolrServer solr2 = new HttpSolrServer("http://localhost:8123/solr/wiki");
+                HttpSolrServer solr2 = new HttpSolrServer("http://localhost:8123/solr/wiki_" + query.getLanguage());
 
-            SolrQuery solrqry = new SolrQuery("text" + ":\"" + "Ghostbusters II" + "\"").setRows(1000);
-            solrqry.setFields("id", "titleText");
-            QueryResponse response = solr2.query(solrqry);
+                SolrQuery solrqry = new SolrQuery("text" + ":\"" + "Ghostbusters II" + "\"").setRows(1000);
+                solrqry.setFields("id", "titleText");
+                QueryResponse response = solr2.query(solrqry);
 
-            int iaux = 1;
-            String siteurl = "";
-            String ids = "";
-            List<WebSite> results = new ArrayList<WebSite>();
+                int iaux = 1;
+                String siteurl = "";
+                String ids = "";
+                List<WebSite> results = new ArrayList<WebSite>();
 
-            for (SolrDocument doc : response.getResults()) {
-                System.out.println(doc.toString());
+                for (SolrDocument doc : response.getResults()) {
+                    System.out.println(doc.toString());
 
-                WikipediaSearchResult wsr = new WikipediaSearchResult();
-                wsr.setPageID((String) doc.get("id"));
-                wsr.setPageTitle((String) doc.get("titleText"));
+                    WikipediaSearchResult wsr = new WikipediaSearchResult();
+                    wsr.setPageID((String) doc.get("id"));
+                    wsr.setPageTitle((String) doc.get("titleText"));
 
-                //not so performatic though, better sparql query...will change it later
-                wsr.setPageURL(JsonReader.getElementValueFromURL("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=info&pageids=" + wsr.getPageID().toString() + "&inprop=url",
-                        "query;pages;"+ wsr.getPageID().toString() +";fullurl"));
-                lc_results.put((String)doc.get("id"), wsr);
+                    //not so performatic though, better sparql query...will change it later
+                    wsr.setPageURL(JsonReader.getElementValueFromURL("https://" + query.getLanguage() + ".wikipedia.org/w/api.php?action=query&format=json&prop=info&pageids=" + wsr.getPageID().toString() + "&inprop=url",
+                            "query;pages;" + wsr.getPageID().toString() + ";fullurl"));
+                    lc_results.put((String) doc.get("id"), wsr);
 
-                ids+=doc.get("id") + ",";
-            }
+                    ids += doc.get("id") + ",";
+                }
 
-            ids = ids.substring(0,ids.length()-1); //removing last character
+                ids = ids.substring(0, ids.length() - 1);
 
+                /*****************************************************
+                 get the wikipedia page url and related dbpedia external
+                 links based on the wikipedia IDs
+                 *****************************************************/
 
-            //WikipediaSearchResult x = lc_results.get("41227847");
+                //https://en.wikipedia.org/w/api.php?action=query&prop=info&pageids=41227847&inprop=url
 
-            /*****************************************************
-             get the wikipedia page url and related dbpedia external
-             links based on the wikipedia IDs
-             *****************************************************/
+                /*String sparqlQuery = "" +
+                        "prefix foaf: <http://xmlns.com/foaf/0.1/>\n" +
+                        "prefix dbpedia-owl: <http://dbpedia.org/ontology/>" +
+                        "SELECT ?s ?wikiurl \n" +
+                        "WHERE { \n" +
+                        "?s dbpedia-owl:wikiPageID " + wikiid + ". \n" +
+                        "?s foaf:isPrimaryTopicOf ?wikiurl . \n" +
+                        "} \n" +
+                        "LIMIT 1";
+                */
 
-            //https://en.wikipedia.org/w/api.php?action=query&prop=info&pageids=41227847&inprop=url
+                /*String sparqlQuery = "" +
+                        "prefix foaf: <http://xmlns.com/foaf/0.1/>\n" +
+                        "prefix dbpedia-owl: <http://dbpedia.org/ontology/>" +
+                        "select ?o ?x \n" +
+                        "WHERE { \n" +
+                        "?s dbpedia-owl:wikiPageID ?o . \n" +
+                        "?s foaf:isPrimaryTopicOf ?x . \n" +
+                        " FILTER(?o IN (" + ids + ")) . \n" +
+                        "} \n" +
+                        "LIMIT 1000";
+                */
 
-            /*String sparqlQuery = "" +
-                    "prefix foaf: <http://xmlns.com/foaf/0.1/>\n" +
-                    "prefix dbpedia-owl: <http://dbpedia.org/ontology/>" +
-                    "SELECT ?s ?wikiurl \n" +
-                    "WHERE { \n" +
-                    "?s dbpedia-owl:wikiPageID " + wikiid + ". \n" +
-                    "?s foaf:isPrimaryTopicOf ?wikiurl . \n" +
-                    "} \n" +
-                    "LIMIT 1";
-            */
+                String sparqlQuery = "" +
+                        "prefix foaf: <http://xmlns.com/foaf/0.1/>\n" +
+                        "prefix dbpedia-owl: <http://dbpedia.org/ontology/>" +
+                        "select ?o ?x ?z \n" +
+                        "WHERE { \n" +
+                        "?s dbpedia-owl:wikiPageID ?o . \n" +
+                        "?s foaf:isPrimaryTopicOf ?x . \n" +
+                        "OPTIONAL {?s dbpedia-owl:wikiPageExternalLink ?z .} \n" +
+                        " FILTER(?o IN (" + ids + ")) . \n" +
+                        "} \n" +
+                        "LIMIT 1000000";
 
-            /*String sparqlQuery = "" +
-                    "prefix foaf: <http://xmlns.com/foaf/0.1/>\n" +
-                    "prefix dbpedia-owl: <http://dbpedia.org/ontology/>" +
-                    "select ?o ?x \n" +
-                    "WHERE { \n" +
-                    "?s dbpedia-owl:wikiPageID ?o . \n" +
-                    "?s foaf:isPrimaryTopicOf ?x . \n" +
-                    " FILTER(?o IN (" + ids + ")) . \n" +
-                    "} \n" +
-                    "LIMIT 1000";
-            */
+                // && (langMatches(lang(?s),"en"))
 
-            String sparqlQuery = "" +
-                    "prefix foaf: <http://xmlns.com/foaf/0.1/>\n" +
-                    "prefix dbpedia-owl: <http://dbpedia.org/ontology/>" +
-                    "select ?o ?x ?z \n" +
-                    "WHERE { \n" +
-                    "?s dbpedia-owl:wikiPageID ?o . \n" +
-                    "?s foaf:isPrimaryTopicOf ?x . \n" +
-                    "?s dbpedia-owl:wikiPageExternalLink ?z . \n" +
-                    " FILTER(?o IN (" + ids + ")) . \n" +
-                    "} \n" +
-                    "LIMIT 1000";
+                System.out.println(sparqlQuery);
 
+                QueryExecution qexec = null;
 
-            QueryExecution qexec = null;
+                qexec = new QueryEngineHTTP("http://dbpedia.org/sparql", sparqlQuery);
+                ((QueryEngineHTTP) qexec).addDefaultGraph("http://dbpedia.org");
 
-            qexec = new QueryEngineHTTP("http://dbpedia.org/sparql", sparqlQuery);
-            ((QueryEngineHTTP) qexec).addDefaultGraph("http://dbpedia.org");
+                ResultSet rs = qexec.execSelect();
 
-            ResultSet rs = qexec.execSelect();
-            List<QuerySolution> resultSetList = new ArrayList<QuerySolution>();
+                Integer _id;
+                String _wiki_url, _external_url;
 
-            QuerySolution qs_ = rs.next();
-            Object id = qs_.getLiteral("o").getValue();
-            Object wiki_url = qs_.getResource("x").getURI();
-            Object external_url = qs_.getResource("z").getURI();
+                if (rs.hasNext()) {
 
+                    QuerySolution _qs = rs.next();
 
-            while (rs.hasNext()) {
-                QuerySolution qs = rs.next();
-                String uri = qs.getResource("wikiurl").getURI();
-
+                    _id = (Integer) _qs.getLiteral("o").getValue();
 
 
+                    WikipediaSearchResult _wsr = lc_results.get(_id.toString());
+                    if (_wsr != null){
+                        _wsr.setPageURL(_qs.getResource("x").getURI());
+                        if (_qs.getResource("z") != null){
+                            _wsr.addExternalLink(_qs.getResource("z").getURI());
+                        }
+
+                        while (rs.hasNext()) {
+                            QuerySolution qs = rs.next();
+
+                            if (qs.getLiteral("o").getValue() != _id) {
+                                _wsr = lc_results.get(qs.getLiteral("o").getValue().toString());
+                                _wsr.setPageURL(qs.getResource("x").getURI());
+                            }
 
 
-            }
+                            if (qs.getResource("z") != null) {
+                                _wsr.addExternalLink(qs.getResource("z").getURI());
+                            }
 
-            /*****************************************************
-             scraping external links
-             *****************************************************/
+                            _id = (Integer) qs.getLiteral("o").getValue();
 
+                        }
 
-            /*****************************************************
-             adding all to websites (wiki and external links)
-             *****************************************************/
-            for (WikipediaSearchResult r: lc_results.values()) {
-
-                WebSite website = new WebSite(query, r.getPageURL());
-                website.setTitle(r.getPageTitle());
-                website.setRank(iaux++);
-                website.setLanguage(query.getLanguage());
-                results.add(website);
-
-                for (String externalLink: r.getExternalLinksfromDBPedia())
-                {
-                    URL aURL = new URL(externalLink);
-
-                    WebSite website2 = new WebSite(query, externalLink);
-                    website2.setTitle(aURL.getHost());
-                    website2.setRank(iaux++);
-                    website2.setLanguage(query.getLanguage());
-                    results.add(website2);
+                    }else
+                    {
+                        throw new Exception("Error: id " + _id.toString() + " has not been found");
+                    }
 
                 }
 
-            }
+                /*****************************************************
+                 adding all to websites (wiki and external links)
+                 *****************************************************/
+                for (WikipediaSearchResult r : lc_results.values()) {
 
-            return new DefaultSearchResult(results, response.getResults().getNumFound(), query, pattern, false);
+                    WebSite website = new WebSite(query, r.getPageURL());
+                    website.setTitle(r.getPageTitle());
+                    website.setRank(iaux++);
+                    website.setLanguage(query.getLanguage());
+                    results.add(website);
+
+                    for (String externalLink : r.getExternalLinksfromDBPedia()) {
+                        URL aURL = new URL(externalLink);
+
+                        WebSite website2 = new WebSite(query, externalLink);
+                        website2.setTitle(aURL.getHost());
+                        website2.setRank(iaux++);
+                        website2.setLanguage(query.getLanguage());
+                        results.add(website2);
+
+                    }
+
+                }
+
+                return new DefaultSearchResult(results, response.getResults().getNumFound(), query, pattern, false);
+
+            }
+            else{
+                return new DefaultSearchResult(new ArrayList<WebSite>(), 0L, query, pattern, false);
+            }
         }
         catch (Exception e) {
 

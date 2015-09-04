@@ -28,10 +28,11 @@ public class WikipediaSearchResult {
         this.pageTitle = pageTitle;
         this.pageURL = pageURL;
         this.searchSnippet = searchSnippet;
+        this.externalLinks = new ArrayList<>();
     }
 
     public WikipediaSearchResult(){
-
+        this.externalLinks = new ArrayList<>();
     }
 
     public ArrayList<String> getExternalLinksfromDBPedia(){
