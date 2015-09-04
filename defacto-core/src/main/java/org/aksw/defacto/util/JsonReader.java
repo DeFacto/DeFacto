@@ -46,7 +46,6 @@ public class JsonReader {
     }
 
 
-
     public static void main(String[] args) throws IOException, JSONException {
 
         try{
