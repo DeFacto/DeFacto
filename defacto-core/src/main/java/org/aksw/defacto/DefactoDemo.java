@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 import com.hp.hpl.jena.graph.Triple;
+import com.hp.hpl.jena.rdf.model.Property;
 import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
@@ -163,8 +164,11 @@ public class DefactoDemo {
     private static DefactoModel getOneExample(){
 
         Model model = ModelFactory.createDefaultModel();
-        model.read(DefactoModel.class.getClassLoader().getResourceAsStream("Einstein.ttl"), null, "TURTLE");
-        return new DefactoModel(model, "Einstein Model", true, Arrays.asList("en", "fr", "de"));
+        model.read(DefactoModel.class.getClassLoader().getResourceAsStream("GhostbusterII.ttl"), null, "TURTLE");
+        return new DefactoModel(model, "Ghostbuster II Model", true, Arrays.asList("en", "fr", "de"));
+
+        //model.read(DefactoModel.class.getClassLoader().getResourceAsStream("Einstein.ttl"), null, "TURTLE");
+        //return new DefactoModel(model, "Einstein Model", true, Arrays.asList("en", "fr", "de"));
 
     }
 }

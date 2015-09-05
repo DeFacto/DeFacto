@@ -88,10 +88,11 @@ public class Defacto {
         long startCrawl = System.currentTimeMillis();
         EvidenceCrawler crawler = new EvidenceCrawler(model, queries);
         // crawl evidence using a defined search engine designed for a corpora (internet or local corpora)
+
         SearchEngine engine = new AzureBingSearchEngine();
         SearchEngine engine2 = new WikiSearchEngine();
 
-        Evidence evidence = crawler.crawlEvidence(engine2);
+        Evidence evidence = crawler.crawlEvidence(engine);
         LOGGER.info("Crawling evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
         
         // short cut to avoid unnecessary computation

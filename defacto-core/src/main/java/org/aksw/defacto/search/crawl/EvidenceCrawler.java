@@ -70,6 +70,8 @@ public class EvidenceCrawler {
     public Evidence crawlEvidence(SearchEngine engine) {
     	
     	Evidence evidence = null;
+
+        System.out.println("SearchEngineClass: " + engine.getClass().toString());
     	
     	if ( !evidenceCache.containsKey(this.model) ) {
     		

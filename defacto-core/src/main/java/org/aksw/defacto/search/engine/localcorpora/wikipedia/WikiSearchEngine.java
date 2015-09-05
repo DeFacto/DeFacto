@@ -97,7 +97,6 @@ public class WikiSearchEngine implements SearchEngine {
     @Override
     public SearchResult query(MetaQuery query, Pattern pattern){
 
-
         Map<String, WikipediaSearchResult> lc_results = new HashMap<>();
         List<WebSite> websites = new ArrayList<>();
         String language = query.getLanguage().toString();
@@ -120,6 +119,7 @@ public class WikiSearchEngine implements SearchEngine {
             solrGeneratedStringQuery = generateQuery(query);
             System.out.println("Solr generated query: " + solrGeneratedStringQuery);
 
+            //delete ir after fix the generation process for solr
             solrGeneratedStringQuery = "Ghostbusters II";
 
             //exclude it as I finish the de and fr indexing from wikipedia!
@@ -131,6 +131,9 @@ public class WikiSearchEngine implements SearchEngine {
 
                 SolrQuery solrqry = new SolrQuery("text" + ":\"" + solrGeneratedStringQuery + "\"").setRows(Integer.parseInt(NUMBER_OF_SEARCH_RESULTS_LC));
                 solrqry.setFields("id", "titleText");
+
+                System.out.println("Solr query:" + solrqry);
+
                 QueryResponse response = server.query(solrqry);
 
                 int iaux = 1;
@@ -145,9 +148,14 @@ public class WikiSearchEngine implements SearchEngine {
                     wsr.setPageID((String) doc.get("id"));
                     wsr.setPageTitle((String) doc.get("titleText"));
 
-                    //not so performatic though, better sparql query...will change it later
+                    /*
+                    not so performatic though, better sparql query...will change it later
+                    this is not necessary anymore, since we get the wiki url from dbpedia query
+
                     wsr.setPageURL(JsonReader.getElementValueFromURL("https://" + language + ".wikipedia.org/w/api.php?action=query&format=json&prop=info&pageids=" + wsr.getPageID().toString() + "&inprop=url",
                             "query;pages;" + wsr.getPageID().toString() + ";fullurl"));
+                    */
+
                     lc_results.put((String) doc.get("id"), wsr);
 
                     ids += doc.get("id") + ",";
@@ -209,7 +217,7 @@ public class WikiSearchEngine implements SearchEngine {
                 ResultSet rs = qexec.execSelect();
 
                 Integer _id;
-                String _wiki_url, _external_url;
+
 
                 if (rs.hasNext()) {
 
@@ -220,6 +228,9 @@ public class WikiSearchEngine implements SearchEngine {
                     WikipediaSearchResult _wsr = lc_results.get(_id.toString());
                     if (_wsr != null){
                         _wsr.setPageURL(_qs.getResource("x").getURI());
+
+
+
                         if (_qs.getResource("z") != null){
                             _wsr.addExternalLink(_qs.getResource("z").getURI());
                         }
@@ -230,6 +241,7 @@ public class WikiSearchEngine implements SearchEngine {
                             if (qs.getLiteral("o").getValue() != _id) {
                                 _wsr = lc_results.get(qs.getLiteral("o").getValue().toString());
                                 _wsr.setPageURL(qs.getResource("x").getURI());
+
                             }
 
 
@@ -267,6 +279,8 @@ public class WikiSearchEngine implements SearchEngine {
                     website.setLanguage(language);
                     websites.add(website);
 
+                    System.out.println("website: " + r.getPageURL());
+
                     for (String externalLink : r.getExternalLinksfromDBPedia()) {
                         URL aURL = new URL(externalLink);
 
@@ -275,6 +289,8 @@ public class WikiSearchEngine implements SearchEngine {
                         website2.setRank(iaux++);
                         website2.setLanguage(language);
                         websites.add(website2);
+
+                        System.out.println("website: " + externalLink);
 
                     }
 

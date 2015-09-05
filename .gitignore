@@ -4,6 +4,7 @@
 .classpath
 .directory
 
+cache/
 *.log
 *.iml
 *.settings
@@ -13,3 +14,5 @@ test.h2.db
 /logs
 /target
 /bin
+
+/data/crawl/*.*
