@@ -1,90 +1,69 @@
 'use strict';
 
 angular.module('defacto.controllers.facts', [])
-.controller('FactsCtrl', function($location, $routeParams, $scope, $http, ChartFactory) {
-  $scope.requested = 0;
+  .controller('FactsCtrl', function($location, $routeParams, $scope, $http, ChartFactory) {
+    $scope.requested = 0;
 
-  if ($routeParams.name) {
-    // call backend with given id
-    $scope.requested = 1;
-    $http
-      .get('/fusion/vote/' + $routeParams.name + '/')
-      .success(function(datas) {
+    if ($routeParams.name) {
+      // call backend with given id
+      $scope.requested = 1;
+      $http
+        .get('/fusion/id/' + $routeParams.name + '/input')
+        .success(function(datas) {
+              if (datas && typeof datas === 'object' && datas !== null && datas.length) {
+                $scope.facts = {
+                  id: $routeParams.name,
+                  fact: []
+                };
+                angular.forEach(datas, function(data) {
+                  $scope.facts.fact.push(new ChartFactory().initialize(data));
+                });
+              } else {
+                $scope.status = 'No valid data!';
+              }
+        }).error(function(err) {
+          $scope.status = err;
+        });
+    }
 
-        $scope.facts = {
-          id: $routeParams.name,
-          fact: []
-        };
-        if (datas && typeof datas === 'object' && datas !== null && datas.length) {
-          angular.forEach(datas, function(data) {
-            $scope.facts.fact.push(new ChartFactory().initialize(data));
-          });
-        } else {
-          $scope.status = 'No valid data!';
-        }
-      })
-      .error(function(err) {
-        $scope.status = err;
-      });
-  }
+    $scope.sendExampleInput = function() {
+      $http
+        .get('/examples/triples')
+        .success(function(postdata) {
+          $scope.exampleinput = postdata;
+          $http
+            .post('/fusion/insert/', postdata)
+            .success(function(data) {
+              $scope.input = data;
+            })
+            .error(function(err) {
+              $scope.status = err;
+            });
+        }).error(function(err) {
+          $scope.status = err;
+        });
+    };
 
-  $scope.sendExampleInput = function() {
+    // voting
+    $scope.upvote = function(fact) {
+      vote(fact, 1);
+    };
+    $scope.downvote = function(fact) {
+      vote(fact, -1);
+    };
 
-    var postdata = [{
-      s: 'http://dbpedia.org/resource/Albert_Einstein',
-      p: 'http://dbpedia.org/ontology/award',
-      o: 'http://dbpedia.org/resource/Nobel_Prize_in_Physics'
-    }, {
-      s: 'http://dbpedia.org/resource/Albert_Einstein',
-      p: 'http://dbpedia.org/ontology/award',
-      o: 'http://dbpedia.org/resource/AFL_Rising_Star'
-    }, {
-      s: 'http://dbpedia.org/resource/Albert_Einstein',
-      p: 'http://dbpedia.org/ontology/award',
-      o: 'http://dbpedia.org/resource/Academy_Award_for_Best_Original_Song'
-    }, {
-      s: 'http://dbpedia.org/resource/Albert_Einstein',
-      p: 'http://dbpedia.org/ontology/award',
-      o: 'http://dbpedia.org/resource/World_Food_Prize'
-    }];
-    /*
-    var postdata = [{
-      s: 'http://dbpedia.org/resource/Albert_Einstein',
-      p: 'http://dbpedia.org/ontology/award',
-      o: 'http://dbpedia.org/resource/Nobel_Prize_in_Physics'
-    }];
-    */
-    $scope.exampleinput = postdata;
-
-    $http
-      .post('/fusion/inputs/', postdata)
-      .success(function(data) {
-        $scope.input = data;
-      })
-      .error(function(err) {
-        $scope.status = err;
-      });
-  };
-
-  $scope.downvote = function(fact) {
-    vote(fact, 1);
-  };
-  $scope.upvote = function(fact) {
-    vote(fact, -1);
-  };
-  //
-  var vote = function(fact, score) {
-    $http
-      .post('/fusion/vote/', {
-        id: $scope.facts.id,
-        fact: fact,
-        score: score
-      })
-      .success(function(data) {
-        $scope.input = data;
-      })
-      .error(function(err) {
-        $scope.status = err;
-      });
-  };
-});
+    var vote = function(fact, score) {
+      $http
+        .post('/fusion/vote/', {
+          factId: $scope.facts.id,
+          id: fact.id,
+          score: score
+        })
+        .success(function(data) {
+          $scope.input = data;
+        })
+        .error(function(err) {
+          $scope.status = err;
+        });
+    };
+  });
