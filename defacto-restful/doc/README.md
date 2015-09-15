@@ -11,7 +11,7 @@
 curl -v -H "Content-Type: application/json" -X POST -d '{"s":"http://dbpedia.org/resource/Albert_Einstein", "p":"http://dbpedia.org/ontology/award", "o":"http://dbpedia.org/resource/Nobel_Prize_in_Physics"}' http://localhost:4441/fusion/download > out.ttl
 
 ```
-
+---
 ##### resource:
     method: POST
     path: /fusion/input
@@ -23,3 +23,8 @@ curl -v -H "Content-Type: application/json" -X POST -d '{"s":"http://dbpedia.org
 curl -v -H "Content-Type: application/json" -X POST -d '{"s":"http://dbpedia.org/resource/Albert_Einstein", "p":"http://dbpedia.org/ontology/award", "o":"http://dbpedia.org/resource/Nobel_Prize_in_Physics"}' http://localhost:4441/fusion/input > out.json
 
 ```
+---
+##### resource:
+    method: GET
+    path: /examples/all
+    response:JSON Array
