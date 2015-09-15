@@ -1,8 +1,6 @@
 package org.aksw.defacto.restful.webservice;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -28,6 +26,7 @@ import org.bson.BsonObjectId;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +39,7 @@ import com.hp.hpl.jena.graph.Triple;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
+// TODO: Refactor download and input method
 /**
  * 
  * @author rspeck
@@ -75,6 +75,79 @@ public class Fusion {
         mongoTriples = MongoManager.getMongoManager().setCollection(collectionTriples);
         mongoResults = MongoManager.getMongoManager().setCollection(collectionResults);
         mongoFacts = MongoManager.getMongoManager().setCollection(collectionFacts);
+    }
+
+    /**
+     * method: POST<br>
+     * path: download/<br>
+     *
+     * @param response
+     */
+    @RequestMapping(
+            value = "/download",
+            // produces = MediaType.APPLICATION_OCTET_STREAM_VALUE,
+            method = RequestMethod.POST)
+    public void download(@RequestBody String jsonObject, HttpServletResponse response) {
+
+        LOG.info("input: " + jsonObject);
+        // TODO: check input, clean
+        JSONObject in = null;
+        try {
+            in = new JSONObject(jsonObject);
+
+            DefactoModel defactoModel = null;
+            Triple triple = null;
+
+            // fact is set if input is an example fact
+            if (in.has("fact")) {
+                for (FactBenchExample example : FactBenchExamplesLoader.loadExamples()) {
+                    if (example.getFact().equals(in.getString("fact"))) {
+                        LOG.info("Found example fact.");
+                        defactoModel = example.getModel();
+                        triple = example.getTriple();
+                        break;
+                    }
+                }
+            }
+
+            if (defactoModel == null || triple == null) {
+                LOG.info("A new fact.");
+                // no example fact, so new input
+                triple = new Triple(
+                        NodeFactory.createURI(in.getString("s")),
+                        NodeFactory.createURI(in.getString("p")),
+                        NodeFactory.createURI(in.getString("o"))
+                        );
+                String from = in.has("from") && in.getString("from") != null ? in.getString("from") : "";
+                String to = in.has("to") && in.getString("to") != null ? in.getString("to") : "";
+                defactoModel = model.getModel(triple, from, to);
+            }
+
+            LOG.info("Calls defacto ...");
+            final Calendar startTime = Calendar.getInstance();
+            final Evidence evidence = Defacto.checkFact(defactoModel, Defacto.TIME_DISTRIBUTION_ONLY.NO);
+            final Calendar endTime = Calendar.getInstance();
+
+            try {
+                String info = EvidenceRDFGenerator.getProvenanceInformationAsString(triple, evidence, startTime, endTime, "TURTLE");
+                FileCopyUtils.copy(info.getBytes(), response.getOutputStream());
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("text/turtle");
+                response.flushBuffer();
+
+            } catch (IOException ex) {
+                LOG.error("Error writing file to output stream.", ex);
+            }
+        } catch (Exception e) {
+            LOG.error(e.getLocalizedMessage(), e);
+            try {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Wrong input.");
+                response.flushBuffer();
+            } catch (IOException ee) {
+                LOG.error(ee.getLocalizedMessage(), ee);
+            }
+        }
+
     }
 
     /**
@@ -144,10 +217,6 @@ public class Fusion {
             final Calendar startTime = Calendar.getInstance();
             final Evidence evidence = Defacto.checkFact(defactoModel, Defacto.TIME_DISTRIBUTION_ONLY.NO);
             final Calendar endTime = Calendar.getInstance();
-
-            // TODO: download rdf option
-            String rdf = EvidenceRDFGenerator.getProvenanceInformationAsString(triple, evidence, startTime, endTime, "TURTLE");
-            InputStream is = new ByteArrayInputStream(rdf.getBytes());
 
             // output
             jo = model.out(evidence);
