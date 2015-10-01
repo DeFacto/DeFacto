@@ -1,9 +1,14 @@
 package org.aksw.defacto.restful.webservice;
 
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -51,20 +56,25 @@ public class Fusion {
     static {
         PropertyConfigurator.configure(Cfg.LOG_FILE);
     }
-    public static Logger       LOG               = LogManager.getLogger(Fusion.class);
+    public static Logger          LOG                   = LogManager.getLogger(Fusion.class);
 
-    public static final String collectionResults = "results";
-    public static final String collectionTriples = "triples";
-    public static final String collectionFacts   = "facts";
+    public static final String    collectionResults     = "results";
+    public static final String    collectionTriples     = "triples";
+    public static final String    collectionFacts       = "facts";
 
-    protected MongoManager     mongoTriples      = null;
-    protected MongoManager     mongoResults      = null;
-    protected MongoManager     mongoFacts        = null;
+    protected MongoManager        mongoTriples          = null;
+    protected MongoManager        mongoResults          = null;
+    protected MongoManager        mongoFacts            = null;
 
-    protected RestModel        model             = null;
+    protected RestModel           model                 = null;
 
-    private final String       factsId           = "factId";
-    private final String       idKey             = "_id";
+    private final String          factsId               = "factId";
+    private final String          idKey                 = "_id";
+
+    private String                supportedRelations    = "supported_relations.txt";
+
+    /* uri to label */
+    protected Map<String, String> supportedRelationsMap = new HashMap<>();
 
     /**
      * Defacto config and example data loading.
@@ -75,6 +85,32 @@ public class Fusion {
         mongoTriples = MongoManager.getMongoManager().setCollection(collectionTriples);
         mongoResults = MongoManager.getMongoManager().setCollection(collectionResults);
         mongoFacts = MongoManager.getMongoManager().setCollection(collectionFacts);
+        try {
+            Files.lines(
+                    Paths.get(
+                            Fusion.class.getClassLoader().getResource(supportedRelations).getPath()
+                            )
+                    ).forEach(line -> {
+                        try {
+                            String[] split = line.split(",");
+                            supportedRelationsMap.put(new URI(split[1]).toString(), split[0]);
+                        } catch (Exception e) {
+                            LOG.error(e.getLocalizedMessage(), e);
+                        }
+                    });
+        } catch (Exception e) {
+            LOG.error(e.getLocalizedMessage(), e);
+        }
+    }
+
+    protected boolean isSupportedRelation(URI relation) {
+        try {
+            if (supportedRelationsMap.containsKey(relation.toString()))
+                return true;
+        } catch (Exception e) {
+            LOG.error(e.getLocalizedMessage(), e);
+        }
+        return false;
     }
 
     /**
@@ -112,10 +148,21 @@ public class Fusion {
 
             if (defactoModel == null || triple == null) {
                 LOG.info("A new fact.");
+                String p = in.getString("p");
+                if (!isSupportedRelation(new URI(p))) {
+                    try {
+                        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Relation (" + p + ") is not supported!");
+                        response.flushBuffer();
+                        return;
+                    } catch (IOException ee) {
+                        LOG.error(ee.getLocalizedMessage(), ee);
+                    }
+                }
+
                 // no example fact, so new input
                 triple = new Triple(
                         NodeFactory.createURI(in.getString("s")),
-                        NodeFactory.createURI(in.getString("p")),
+                        NodeFactory.createURI(p),
                         NodeFactory.createURI(in.getString("o"))
                         );
                 String from = in.has("from") && in.getString("from") != null ? in.getString("from") : "";
@@ -147,7 +194,6 @@ public class Fusion {
                 LOG.error(ee.getLocalizedMessage(), ee);
             }
         }
-
     }
 
     /**
@@ -203,9 +249,19 @@ public class Fusion {
             } else if (defactoModel == null || triple == null) {
                 LOG.info("A new fact.");
                 // no example fact, so new input
+                String p = in.getString("p");
+                if (!isSupportedRelation(new URI(p))) {
+                    try {
+                        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Relation (" + p + ") is not supported!");
+                        response.flushBuffer();
+                        return new JSONObject().toString();
+                    } catch (IOException ee) {
+                        LOG.error(ee.getLocalizedMessage(), ee);
+                    }
+                }
                 triple = new Triple(
                         NodeFactory.createURI(in.getString("s")),
-                        NodeFactory.createURI(in.getString("p")),
+                        NodeFactory.createURI(p),
                         NodeFactory.createURI(in.getString("o"))
                         );
                 String from = in.has("from") && in.getString("from") != null ? in.getString("from") : "";
