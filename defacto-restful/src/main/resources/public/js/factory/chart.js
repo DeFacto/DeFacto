@@ -19,10 +19,10 @@ angular.module('defacto.factories.chart', [])
             ['Name', 'Score', {
               role: 'style'
             }],
-            ['Defacto', value.score / data.maxScore, '#4daf4a'],
-            ['Topic Score', value.coverage / data.maxCoverage, '#984ea3'],
-            ['TM in SF', value.search / data.maxSearch, '#377eb8'],
-            ['TM in WF', value.web / data.maxWeb, '#e41a1c']
+            ['Defacto', Math.round(value.score/data.maxScore*100)/100, '#4daf4a'],
+            ['Topic Score', Math.round(value.coverage/data.maxCoverage*100)/100, '#984ea3'],
+            ['TM in SF', Math.round(value.search/data.maxSearch*100)/100, '#377eb8'],
+            ['TM in WF', Math.round(value.web/data.maxWeb*100)/100, '#e41a1c']
           ]);
           data.websites[key].chartdata = {
             options: options,
