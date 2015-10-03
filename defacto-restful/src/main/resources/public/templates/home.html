@@ -1,17 +1,68 @@
 <div class="container">
+
+  <!-- navi -->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li><a href="">Demo<span class="sr-only">(current)</span></a></li>
+        <li><a href="http://aksw.org/Projects/DeFacto.html" target="_blank">DeFacto Project</a></li>
+        <li><a href="https://github.com/AKSW/DeFacto" target="_blank">Source Code</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- progress-bar -->
   <div data-ng-hide="fact || !requested" class="progress">
     <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
       <span class="sr-only">Wait...</span>
     </div>
   </div>
-  <br>
+
+  <!-- error -->
+  <div ng-hide="!error">
+    {{error.status}} {{error.data.error}}</br>
+    {{error.data.message}}</br>
+  </div>
+
+  <!-- fact list -->
   <div data-ng-include="'templates/partials/fact.html'"></div>
-  <br>
-  <input type="text" data-ng-model="input" placeholder="example search" />
-  <span class="badge">{{filtered.length}}</span>
-  <br>
-  <br> Examples
-  <br>
+
+  <h3>Send Input</h3>
+  <!-- input -->
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label for="subject" class="col-md-1 control-label">Subject</label>
+      <div class="col-md-3">
+        <input data-ng-model="example.s" type="text" id="subject" class="form-control" placeholder="http://dbpedia.org/resource/Albert_Einstein">
+      </div>
+      <label for="predicate" class="col-md-1 control-label">Predicate</label>
+      <div class="col-md-3">
+        <input data-ng-model="example.p" id="predicate" type="text" class="form-control" placeholder="http://dbpedia.org/ontology/award">
+      </div>
+      <label for="object" class="col-md-1 control-label">Object</label>
+      <div class="col-md-3">
+        <input data-ng-model="example.o" id="object" type="text" class="form-control" placeholder="http://dbpedia.org/resource/Nobel_Prize_in_Physics">
+      </div>
+    </div>
+    <div class="pull-right">
+      <label for="send" class="">Send</label>
+      <button class="btn btn-default" data-ng-click="getFact(example)" id="send">
+        <span class="glyphicon glyphicon-search"></span>
+      </button>
+    </div>
+  </form>
+
+  <!-- example list -->
+  <h3>Search Examples</h3>
+  <!-- search -->
+  <form class="form-inline">
+    <div class="input-append span6">
+      <input type="text" class="form-control span5" placeholder="Search examples &hellip;" data-ng-model="input">
+      <a class="btn btn-default btn-xs" data-ng-hide="!input.length" data-ng-click="input=''" style="border-radius:1.5em;position:relative;top:.0em;right:3.0em">✖︎</a>
+      <span class="badge">{{filtered.length}}</span>
+    </div>
+  </form>
+  </br>
   <ul class="list-group">
     <li class="list-group-item" data-ng-repeat="exam in filtered | startFrom:(currentPage - 1)*pageSize | limitTo:pageSize">
       <button data-ng-click="getFact(exam)" class="btn btn-link">{{exam.fact}}</button>

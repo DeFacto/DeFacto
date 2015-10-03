@@ -28,6 +28,13 @@ angular.module('defacto.controllers.home', [])
         $scope.noOfPages = $scope.filtered.length / $scope.pageSize;
         $scope.bigTotalItems = $scope.filtered.length;
       });
+    }).error(function(data, status, headers, config) {
+      $scope.error = {
+        data: data,
+        status: status,
+        headers: headers,
+        config: config
+      };
     });
 
     $scope.setPage = function(pageNo) {
@@ -35,13 +42,22 @@ angular.module('defacto.controllers.home', [])
     };
 
     $scope.getFact = function(example) {
-      $scope.requested = 1;
-      delete $scope.fact;
-
-      $http.post('fusion/input', {
-        fact: example.fact
-      }).success(function(data) {
-        $scope.fact = new ChartFactory().initialize(data);
-      });
+      if (example) {
+        $scope.requested = 1;
+        delete $scope.error;
+        delete $scope.fact;
+        $http.post('fusion/input', example).success(function(data) {
+          $scope.fact = new ChartFactory().initialize(data);
+          $scope.requested = 0;
+        }).error(function(data, status, headers, config) {
+          $scope.error = {
+            data: data,
+            status: status,
+            headers: headers,
+            config: config
+          };
+          $scope.requested = 0;
+        });
+      }
     };
   });
