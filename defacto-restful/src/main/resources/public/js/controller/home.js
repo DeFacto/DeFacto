@@ -26,6 +26,7 @@ angular.module('defacto.controllers.home', [])
         $scope.currentPage = 1;
         $scope.filtered = $filter('filter')($scope.searchFacts, input);
         $scope.noOfPages = $scope.filtered.length / $scope.pageSize;
+        $scope.bigTotalItems = $scope.filtered.length;
       });
     });
 
