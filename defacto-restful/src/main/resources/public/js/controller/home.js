@@ -3,6 +3,11 @@ angular.module('defacto.controllers.home', [])
   .controller('HomeCtrl', function($location, $scope, $http, $filter, ChartFactory) {
 
     $scope.requested = 0;
+    $scope.example = {};
+
+    $http.get('fusion/supportedrelations').success(function(data) {
+      $scope.supportedrelations = data;
+    });
 
     // load examples and page
     $http.get('examples/all').success(function(data) {

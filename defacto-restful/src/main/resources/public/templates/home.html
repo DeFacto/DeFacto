@@ -26,7 +26,6 @@
 
   <!-- fact list -->
   <div data-ng-include="'templates/partials/fact.html'"></div>
-
   <h3>Send Input</h3>
   <!-- input -->
   <form class="form-horizontal" role="form">
@@ -35,10 +34,20 @@
       <div class="col-md-3">
         <input data-ng-model="example.s" type="text" id="subject" class="form-control" placeholder="http://dbpedia.org/resource/Albert_Einstein">
       </div>
+
       <label for="predicate" class="col-md-1 control-label">Predicate</label>
       <div class="col-md-3">
-        <input data-ng-model="example.p" id="predicate" type="text" class="form-control" placeholder="http://dbpedia.org/ontology/award">
+        <div class="btn-group" dropdown is-open="status.isopen">
+          <button data-ng-model="example.p" id="single-button" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+            <span data-ng-hide="example.p">Select</span> {{example.p}}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+            <li data-ng-repeat="r in supportedrelations" role="menuitem"><a data-ng-click="example.p=r.key">{{r.key}}</a></li>
+          </ul>
+        </div>
       </div>
+
       <label for="object" class="col-md-1 control-label">Object</label>
       <div class="col-md-3">
         <input data-ng-model="example.o" id="object" type="text" class="form-control" placeholder="http://dbpedia.org/resource/Nobel_Prize_in_Physics">

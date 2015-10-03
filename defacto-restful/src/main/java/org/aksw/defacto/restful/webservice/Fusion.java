@@ -103,7 +103,7 @@ public class Fusion {
     }
 
     @RequestMapping(
-            value = "/supportedRelations",
+            value = "/supportedrelations",
             headers = "Accept=application/json",
             produces = "application/json",
             method = RequestMethod.GET)
@@ -111,7 +111,7 @@ public class Fusion {
     protected String getSupportedRelation() {
         JSONArray o = new JSONArray();
         supportedRelationsMap.forEach((k, v) -> {
-            o.put(new JSONObject().put(k, v));
+            o.put(new JSONObject().put("key", k).put("value", v));
         });
         return o.toString();
     }
