@@ -44,7 +44,6 @@ import com.hp.hpl.jena.graph.Triple;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
-// TODO: Refactor download and input method
 /**
  * 
  * @author rspeck
@@ -101,6 +100,20 @@ public class Fusion {
         } catch (Exception e) {
             LOG.error(e.getLocalizedMessage(), e);
         }
+    }
+
+    @RequestMapping(
+            value = "/supportedRelations",
+            headers = "Accept=application/json",
+            produces = "application/json",
+            method = RequestMethod.GET)
+    @ResponseBody
+    protected String getSupportedRelation() {
+        JSONArray o = new JSONArray();
+        supportedRelationsMap.forEach((k, v) -> {
+            o.put(new JSONObject().put(k, v));
+        });
+        return o.toString();
     }
 
     protected boolean isSupportedRelation(URI relation) {
