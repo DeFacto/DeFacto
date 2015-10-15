@@ -42,7 +42,7 @@ public class Fusion {
     }
     public static Logger       LOG               = LogManager.getLogger(Fusion.class);
 
-    public static String       redirecturl       = "http://localhost:4441/#/facts/";
+    public static String       redirecturl       = "http://defacto.aksw.org/#/facts/";
 
     public static final String collectionData    = "data-mappingbased-properties";
     public static final String collectionResults = "results";
