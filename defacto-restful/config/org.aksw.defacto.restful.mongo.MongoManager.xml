@@ -3,8 +3,7 @@
     <db>
         <host>localhost</host>
         <port>27017</port>
-        <name>defacto</name>
-        <collection>feedback</collection>
+        <name>fusion</name>
     </db>
 </config>
  

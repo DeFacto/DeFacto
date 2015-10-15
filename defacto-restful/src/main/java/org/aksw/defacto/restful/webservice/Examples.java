@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.aksw.defacto.restful.core.DummyData;
 import org.aksw.defacto.restful.utils.Cfg;
+import org.aksw.defacto.restful.utils.SupportedRelations;
 import org.aksw.defacto.util.FactBenchExample;
 import org.aksw.defacto.util.FactBenchExamplesLoader;
 import org.apache.log4j.LogManager;
@@ -45,6 +46,16 @@ public class Examples {
                             .put("s", example.getTriple().getSubject().getURI())
                             .put("p", example.getTriple().getPredicate().getURI())
                             .put("o", example.getTriple().getObject().getURI()));
+    }
+
+    @RequestMapping(
+            value = "/supportedrelations",
+            headers = "Accept=application/json",
+            produces = "application/json",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public String supportedRelation() {
+        return SupportedRelations.getSupportedRelation();
     }
 
     /**
