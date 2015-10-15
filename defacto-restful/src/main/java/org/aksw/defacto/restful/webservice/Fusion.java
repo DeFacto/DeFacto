@@ -154,6 +154,16 @@ public class Fusion {
                 handleDBResults(ja.getJSONObject(0));
                 id = ja.getJSONObject(0).getJSONObject("_id").getString("$oid").toString();
             }
+            // redirect
+            HttpHeaders httpHeaders = new HttpHeaders();
+            URI uri;
+            try {
+                uri = new URI(redirecturl + id);
+                httpHeaders.setLocation(uri);
+            } catch (URISyntaxException e) {
+                LOG.error(e.getLocalizedMessage(), e);
+            }
+            return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
 
         } catch (Exception e) {
             LOG.error(e.getLocalizedMessage(), e);
@@ -164,17 +174,9 @@ public class Fusion {
                 LOG.error(ee.getLocalizedMessage(), ee);
             }
         }
+        // TODO
+        return new ResponseEntity<>("", HttpStatus.ACCEPTED);
 
-        // redirect
-        HttpHeaders httpHeaders = new HttpHeaders();
-        URI uri;
-        try {
-            uri = new URI(redirecturl + id);
-            httpHeaders.setLocation(uri);
-        } catch (URISyntaxException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-        }
-        return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
     }
 
     private void handleDBResults(JSONObject jo) {
