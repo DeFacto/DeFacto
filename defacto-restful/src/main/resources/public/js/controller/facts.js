@@ -4,45 +4,31 @@ angular.module('defacto.controllers.facts', [])
   .controller('FactsCtrl', function($location, $routeParams, $scope, $http, ChartFactory) {
     $scope.requested = 0;
 
-    if ($routeParams.name) {
-      // call backend with given id
-      $scope.requested = 1;
-      $http
-        .get('/fusion/id/' + $routeParams.name + '/input')
-        .success(function(datas) {
-              if (datas && typeof datas === 'object' && datas !== null && datas.length) {
-                $scope.facts = {
-                  id: $routeParams.name,
-                  fact: []
-                };
-                angular.forEach(datas, function(data) {
-                  $scope.facts.fact.push(new ChartFactory().initialize(data));
-                });
-              } else {
-                $scope.status = 'No valid data!';
-              }
-        }).error(function(err) {
-          $scope.status = err;
-        });
+    function fetchdata() {
+      if ($routeParams.name) {
+        // call backend with given id
+        $scope.requested = 1;
+        $http
+          .get('/fusion/id/' + $routeParams.name)
+          .success(function(datas) {
+            console.log(datas);
+            if (datas && typeof datas === 'object' && datas !== null && datas.length) {
+              $scope.facts = {
+                id: $routeParams.name,
+                fact: []
+              };
+              angular.forEach(datas, function(data) {
+                $scope.facts.fact.push(new ChartFactory().initialize(data));
+              });
+            } else {
+              $scope.status = 'No valid data!';
+            }
+          }).error(function(err) {
+            $scope.status = err;
+          });
+      }
     }
-
-    $scope.sendExampleInput = function() {
-      $http
-        .get('/examples/triples')
-        .success(function(postdata) {
-          $scope.exampleinput = postdata;
-          $http
-            .post('/fusion/insert/', postdata)
-            .success(function(data) {
-              $scope.input = data;
-            })
-            .error(function(err) {
-              $scope.status = err;
-            });
-        }).error(function(err) {
-          $scope.status = err;
-        });
-    };
+    fetchdata();
 
     // voting
     $scope.upvote = function(fact) {
@@ -56,11 +42,13 @@ angular.module('defacto.controllers.facts', [])
       $http
         .post('/fusion/vote/', {
           factId: $scope.facts.id,
-          id: fact.id,
-          score: score
+          votes: score,
+          s: fact.s,
+          p: fact.p,
+          o: fact.o
         })
         .success(function(data) {
-          $scope.input = data;
+            fetchdata();
         })
         .error(function(err) {
           $scope.status = err;

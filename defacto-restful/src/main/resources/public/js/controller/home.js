@@ -5,7 +5,7 @@ angular.module('defacto.controllers.home', [])
     $scope.requested = 0;
     $scope.example = {};
 
-    $http.get('fusion/supportedrelations').success(function(data) {
+    $http.get('examples/supportedrelations').success(function(data) {
       $scope.supportedrelations = data;
     });
 
@@ -51,7 +51,7 @@ angular.module('defacto.controllers.home', [])
         $scope.requested = 1;
         delete $scope.error;
         delete $scope.fact;
-        $http.post('fusion/input', example).success(function(data) {
+        $http.post('demo/input', example).success(function(data) {
           $scope.fact = new ChartFactory().initialize(data);
           $scope.requested = 0;
         }).error(function(data, status, headers, config) {
