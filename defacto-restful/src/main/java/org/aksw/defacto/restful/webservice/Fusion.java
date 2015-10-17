@@ -3,7 +3,10 @@ package org.aksw.defacto.restful.webservice;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +17,8 @@ import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.restful.core.RestModel;
 import org.aksw.defacto.restful.mongo.MongoManager;
-import org.aksw.defacto.restful.utils.Cfg;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
@@ -33,26 +34,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hp.hpl.jena.graph.NodeFactory;
 import com.hp.hpl.jena.graph.Triple;
 import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
 
 @RestController
 @RequestMapping("/fusion")
 public class Fusion {
-    static {
-        PropertyConfigurator.configure(Cfg.LOG_FILE);
-    }
-    public static Logger       LOG               = LogManager.getLogger(Fusion.class);
+    public static Logger          LOG               = LogManager.getLogger(App.class);
 
-    public static String       redirecturl       = "http://defacto.aksw.org/#/facts/";
+    public static final String    collectionTriple  = "triple";
+    public static final String    collectionData    = "data";
+    public static final String    collectionResults = "results";
 
-    public static final String collectionData    = "data-mappingbased-properties";
-    public static final String collectionResults = "results";
+    protected static final String resultId          = "resultId";
 
-    protected MongoManager     mongoData         = null;
-    protected MongoManager     mongoResults      = null;
+    protected MongoManager        mongoTriple       = null;
+    protected MongoManager        mongoData         = null;
+    protected MongoManager        mongoResults      = null;
 
-    protected RestModel        model             = null;
-
-    Vote                       vote              = new Vote();
+    protected RestModel           model             = null;
 
     /**
      * Defacto config and example data loading.
@@ -60,11 +59,10 @@ public class Fusion {
     @PostConstruct
     protected void init() {
         model = new RestModel();
+        mongoTriple = MongoManager.getMongoManager().setCollection(collectionTriple);
         mongoData = MongoManager.getMongoManager().setCollection(collectionData);
         mongoResults = MongoManager.getMongoManager().setCollection(collectionResults);
     }
-
-    // ----
 
     /**
      * method: GET<br>
@@ -80,39 +78,26 @@ public class Fusion {
             produces = "application/json",
             method = RequestMethod.GET)
     @ResponseBody
-    public String id(@PathVariable("id") String id, HttpServletResponse response) {
-        JSONArray votes = vote.getVotes(id);
-
-        JSONArray ja = new JSONArray();
-        // find triple in db
-        DBObject ob = mongoData.findDocumentById(id);
-        JSONObject jo = new JSONObject(ob.toString());
-        String s = jo.getString("s_dbpedia");
-        String p = jo.getString("p");
-        JSONArray context = jo.getJSONArray("context");
-        // for each context get stored results
-        for (int i = 0; i < context.length(); i++) {
-            if (!context.getJSONObject(i).getString("dataset").equals("mappingbased-properties"))
-                continue;
-
-            String o = context.getJSONObject(i).getString("value_dbpedia");
-            // find result
-            Iterator<DBObject> iter = mongoResults.find(new JSONObject().put("s", s).put("p", p).put("o", o).toString());
-            while (iter.hasNext()) {
-                JSONObject joo = new JSONObject(iter.next().toString());
-                if (votes.length() > 0) {
-                    for (int ii = 0; ii < votes.length(); ii++) {
-                        JSONObject vote = votes.getJSONObject(ii);
-                        if (vote.getString("s").equals(s) && vote.getString("p").equals(p) && vote.getString("o").equals(o)) {
-                            joo.put("votes", vote.getInt("votes"));
-                            break;
-                        }
-                    }
+    public String id(@PathVariable("id") String id) {
+        try {
+            JSONObject triple = new JSONObject(mongoTriple.findDocumentById(id).toString());
+            LOG.info(triple.toString(2));
+            Iterator<DBObject> datas = mongoData.find(new JSONObject().put("id", id).toString());
+            while (datas.hasNext()) {
+                JSONObject data = new JSONObject(datas.next().toString());
+                if (data.has(resultId)) {
+                    data.put("result", new JSONObject(mongoResults.findDocumentById(data.getString(resultId)).toString()));
                 }
-                ja.put(joo);
+                if (!triple.has("data"))
+                    triple.put("data", new JSONArray());
+                triple.getJSONArray("data").put(data);
             }
+            LOG.info(triple.toString(2));
+            return triple.toString(2);
+        } catch (Exception e) {
+            LOG.error(e.getLocalizedMessage(), e);
         }
-        return ja.toString(2);
+        return null;
     }
 
     // ----
@@ -131,7 +116,7 @@ public class Fusion {
             value = "/insert",
             method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Object> input(@RequestParam String s, @RequestParam String p, @RequestParam String o, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<Object> insert(@RequestParam String s, @RequestParam String p, @RequestParam String o, HttpServletRequest request, HttpServletResponse response) {
         String id = "";
         try {
             new URI(s);
@@ -140,8 +125,7 @@ public class Fusion {
 
             String q = new JSONObject()
                     .put("s", s).put("p", p).put("o", o).toString();
-            Iterator<DBObject> iter = mongoData.find(q);
-
+            Iterator<DBObject> iter = mongoTriple.find(q);
             JSONArray ja = new JSONArray();
             while (iter.hasNext())
                 ja.put(new JSONObject(iter.next().toString()));
@@ -151,19 +135,23 @@ public class Fusion {
 
             // we expect to have just one result for a given s,p,o
             if (ja.length() > 0) {
-                handleDBResults(ja.getJSONObject(0));
                 id = ja.getJSONObject(0).getJSONObject("_id").getString("$oid").toString();
+                triple(id, ja.getJSONObject(0));
+                // redirect
+                HttpHeaders httpHeaders = new HttpHeaders();
+                URI uri;
+                try {
+                    URL url = new URL(request.getRequestURL().toString());
+                    String redirecturl = url.getProtocol() + "://" + url.getHost() + (url.getPort() > -1 ? ":" + url.getPort() : "");
+                    uri = new URI(redirecturl + "/#/facts/" + id);
+                    httpHeaders.setLocation(uri);
+                } catch (URISyntaxException e) {
+                    LOG.error(e.getLocalizedMessage(), e);
+                }
+                return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
+            } else {
+                return new ResponseEntity<>("Triple not found in db: " + q, HttpStatus.ACCEPTED);
             }
-            // redirect
-            HttpHeaders httpHeaders = new HttpHeaders();
-            URI uri;
-            try {
-                uri = new URI(redirecturl + id);
-                httpHeaders.setLocation(uri);
-            } catch (URISyntaxException e) {
-                LOG.error(e.getLocalizedMessage(), e);
-            }
-            return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
 
         } catch (Exception e) {
             LOG.error(e.getLocalizedMessage(), e);
@@ -176,50 +164,64 @@ public class Fusion {
         }
         // TODO
         return new ResponseEntity<>("", HttpStatus.ACCEPTED);
-
     }
 
-    private void handleDBResults(JSONObject jo) {
+    private void triple(String id, JSONObject jo) {
+        Iterator<DBObject> data = mongoData.find(new JSONObject().put("id", id).toString());
+        List<JSONObject> list = new ArrayList<>();
+        while (data.hasNext())
+            list.add(new JSONObject(data.next().toString()));
 
         String s = jo.getString("s_dbpedia");
         String p = jo.getString("p");
-
-        JSONArray ja = jo.getJSONArray("context");
-        for (int i = 0; i < ja.length(); i++) {
-            JSONObject joo = ja.getJSONObject(i);
-            String v = joo.getString("value_dbpedia");
-            callDefacto(s, p, v);
+        for (JSONObject o : list) {
+            if (!o.has(resultId)) {
+                String resultId = defacto(s, p, o.getString("value_dbpedia"));
+                if (!resultId.isEmpty()) {
+                    mongoData.coll.update(
+                            (DBObject) JSON.parse(o.toString()),
+                            (DBObject) JSON.parse(o.put(resultId, resultId).toString()),
+                            false, false);
+                }
+            }
         }
     }
 
-    protected JSONObject callDefacto(String s, String p, String o) {
+    protected String defacto(String s, String p, String o) {
         // find results in db
+        JSONObject find = results(s, p, o);
+        if (find == null) {
+            // call defacto
+            Triple triple = new Triple(
+                    NodeFactory.createURI(s),
+                    NodeFactory.createURI(p),
+                    NodeFactory.createURI(o)
+                    );
+
+            DefactoModel defactoModel = model.getModel(triple, "", "");
+            final Evidence evidence = Defacto.checkFact(defactoModel, Defacto.TIME_DISTRIBUTION_ONLY.NO);
+            JSONObject jo = model.out(evidence)
+                    .put("s", s)
+                    .put("p", p)
+                    .put("o", o);
+            // store results in db
+            mongoResults.insert(jo.toString());
+            find = results(s, p, o);
+        }
+        if (find != null)
+            return find.getJSONObject("_id").getString("$oid").toString();
+        return "";
+    }
+
+    private JSONObject results(String s, String p, String o) {
         Iterator<DBObject> iter = mongoResults
                 .find(new JSONObject()
                         .put("s", s)
                         .put("p", p)
                         .put("o", o)
                         .toString());
-
         while (iter.hasNext())
             return new JSONObject(iter.next().toString());
-
-        // call defacto
-        Triple triple = new Triple(
-                NodeFactory.createURI(s),
-                NodeFactory.createURI(p),
-                NodeFactory.createURI(o)
-                );
-
-        DefactoModel defactoModel = model.getModel(triple, "", "");
-        final Evidence evidence = Defacto.checkFact(defactoModel, Defacto.TIME_DISTRIBUTION_ONLY.NO);
-        JSONObject jo = model.out(evidence)
-                .put("s", s)
-                .put("p", p)
-                .put("o", o);
-
-        // store results in db
-        mongoResults.insert(jo.toString());
-        return jo;
+        return null;
     }
 }

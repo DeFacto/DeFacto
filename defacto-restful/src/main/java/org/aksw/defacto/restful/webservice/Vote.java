@@ -33,7 +33,7 @@ public class Vote {
         PropertyConfigurator.configure(Cfg.LOG_FILE);
     }
     public static Logger       LOG        = LogManager.getLogger(Vote.class);
-    public static final String collection = "vote";
+    public static final String collection = "data";
     protected MongoManager     db         = null;
 
     // max and min (-1*mavote) vote score
@@ -51,8 +51,7 @@ public class Vote {
     public JSONArray getVotes(String id) {
         if (db == null)
             init();
-        Iterator<DBObject> iter = db.find(new JSONObject().put("factid", id).toString());
-
+        Iterator<DBObject> iter = db.find(new JSONObject().put("id", id).toString());
         JSONArray ja = new JSONArray();
         while (iter.hasNext())
             ja.put(new JSONObject(iter.next().toString()));
@@ -80,21 +79,19 @@ public class Vote {
         JSONObject in = new JSONObject(json);
         LOG.info("vote: " + in.toString(2));
 
-        JSONObject query = new JSONObject()
-                .put("factid", in.getString("factId"))
-                .put("s", in.getString("s"))
-                .put("p", in.getString("p"))
-                .put("o", in.getString("o"));
+        DBObject doc = db.findDocumentById(in.getString("id"));
+        doc.removeField("upvotes");
+        doc.removeField("downvotes");
 
-        JSONObject update = new JSONObject(query)
+        // TODO: set a vote limit
+        JSONObject update = new JSONObject()
                 .put("$inc",
-                        new JSONObject().put("votes", in.getInt("votes") > 0 ? 1 : -1)
+                        new JSONObject().put(in.getInt("votes") > 0 ? "upvotes" : "downvotes", 1)
                 );
 
         db.coll.update(
-                (DBObject) JSON.parse(query.toString()),
+                doc,
                 (DBObject) JSON.parse(update.toString()),
                 true, true);
-
     }
 }
