@@ -22,10 +22,10 @@
   <!-- vote -->
   <span data-ng-hide="!triple.name" data-ng-init="show=false">
     <button type="submit" class="btn btn-primary" data-ng-click="upvote(data)">
-      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"> {{data.upvotes}}</span>
+      <span class="glyphicon glyphicon-thumbs-up" data-ng-init="data.upvotes= data.upvotes||0" aria-hidden="true"> {{data.upvotes}}</span>
     </button>
     <button type="submit" class="btn btn-primary" data-ng-click="downvote(data)">
-      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"> {{data.downvotes}}</span>
+      <span class="glyphicon glyphicon-thumbs-down"  data-ng-init="data.downvotes= data.downvotes||0" aria-hidden="true"> {{data.downvotes}}</span>
     </button>
   </span>
 </div>
