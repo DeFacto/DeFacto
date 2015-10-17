@@ -174,11 +174,11 @@ public class Fusion {
         String p = jo.getString("p");
         for (JSONObject o : list) {
             if (!o.has(resultId)) {
-                String resultId = defacto(s, p, o.getString("value_dbpedia"));
-                if (!resultId.isEmpty()) {
+                String rId = defacto(s, p, o.getString("value_dbpedia"));
+                if (!rId.isEmpty()) {
                     mongoData.coll.update(
                             (DBObject) JSON.parse(o.toString()),
-                            (DBObject) JSON.parse(o.put(resultId, resultId).toString()),
+                            (DBObject) JSON.parse(o.put(resultId, rId).toString()),
                             false, false);
                 }
             }
