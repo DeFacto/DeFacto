@@ -1,23 +1,21 @@
 <div class="container">
-
   <br>
-  <div data-ng-hide="facts || !requested" class="progress">
+  <div data-ng-hide="triple || !requested" class="progress">
     <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
       <span class="sr-only">Wait...</span>
     </div>
   </div>
-
   <br>
   <!-- example input end-->
-  <div data-ng-hide="!facts" class="row">
+  <div data-ng-hide="!triple" class="row">
     <!-- accordion -->
     <accordion close-others="false">
-      <div data-ng-repeat="fact in facts.fact">
+      <div data-ng-repeat="data in triple.data">
         <accordion-group is-open="true" is-disabled="false">
           <accordion-heading>
-            <span class="badge">{{fact.score*100|number:2}}%</span> {{fact.sl}} {{fact.pl}} {{fact.ol}}
+            <span class="badge">{{data.result.score*100|number:2}}%</span> {{data.result.sl}} {{data.result.pl}} {{data.result.ol}} ({{data.language}},{{data.type}},{{data.dataset}})
           </accordion-heading>
-          <div data-ng-include="'templates/partials/fact.html'"></div>
+          <div data-ng-init="fact=data.result" data-ng-include="'templates/partials/fact.html'"></div>
         </accordion-group>
       </div>
     </accordion>

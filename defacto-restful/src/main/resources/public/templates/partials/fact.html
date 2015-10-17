@@ -12,18 +12,20 @@
   <br>
   <span class="badge">{{fact.websitesSize}}</span> websites containing the fact.
   <br>
-  <span class="badge">{{fact.votes}}</span> current vote.
+  <!--
+  <span class="badge">{{data.current}}</span> current vote.
+-->
 
   <br>
   <button data-ng-hide="show || !fact.websitesSize" data-ng-click="show=!show" class="btn btn-sm btn-default">open proofs</button>
   <button data-ng-hide="!show" data-ng-click="show=!show" class="btn btn-sm btn-default">close proofs</button>
   <!-- vote -->
-  <span data-ng-hide="!facts.id" data-ng-init="show=false">
-    <button type="submit" class="btn btn-primary" data-ng-click="upvote(fact)">
-      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+  <span data-ng-hide="!triple.name" data-ng-init="show=false">
+    <button type="submit" class="btn btn-primary" data-ng-click="upvote(data)">
+      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"> {{data.upvotes}}</span>
     </button>
-    <button type="submit" class="btn btn-primary" data-ng-click="downvote(fact)">
-      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+    <button type="submit" class="btn btn-primary" data-ng-click="downvote(data)">
+      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"> {{data.downvotes}}</span>
     </button>
   </span>
 </div>
