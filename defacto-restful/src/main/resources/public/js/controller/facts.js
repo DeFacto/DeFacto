@@ -3,8 +3,8 @@
 angular.module('defacto.controllers.facts', [])
   .controller('FactsCtrl', function($location, $routeParams, $scope, $http, ChartFactory) {
     $scope.requested = 0;
+
     if ($routeParams.name) {
-      // call backend with given id
       $scope.requested = 1;
       $http
         .get('/fusion/id/' + $routeParams.name)
@@ -37,14 +37,14 @@ angular.module('defacto.controllers.facts', [])
     var vote = function(data, dir) {
       $http
         .post('/fusion/vote/', {
-          id:data._id.$oid,
+          id: data._id.$oid,
           votes: dir
         })
         .success(function(d) {
-          if(dir>0){
+          if (dir > 0) {
             data.upvotes++;
-          }else {
-              data.downvotes++;
+          } else {
+            data.downvotes++;
           }
         })
         .error(function(err) {

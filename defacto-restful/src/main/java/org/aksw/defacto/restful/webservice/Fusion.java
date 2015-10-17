@@ -43,7 +43,7 @@ public class Fusion {
 
     public static final String    collectionTriple  = "triple";
     public static final String    collectionData    = "data";
-    public static final String    collectionResults = "results";
+    public static final String    collectionResults = "result";
 
     protected static final String resultId          = "resultId";
 
@@ -96,11 +96,9 @@ public class Fusion {
             return triple.toString(2);
         } catch (Exception e) {
             LOG.error(e.getLocalizedMessage(), e);
+            return new JSONObject().put("error", e.getLocalizedMessage()).toString(2);
         }
-        return null;
     }
-
-    // ----
 
     /**
      * <code>
