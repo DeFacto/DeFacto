@@ -3,6 +3,8 @@
 DeFacto (Deep Fact Validation)
 ==============================
 
+[![Join the chat at https://gitter.im/AKSW/DeFacto](https://badges.gitter.im/AKSW/DeFacto.svg)](https://gitter.im/AKSW/DeFacto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 An explanation of the project is available at:
 
 http://aksw.org/projects/DeFacto
