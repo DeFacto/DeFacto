@@ -3,11 +3,8 @@
  */
 package org.aksw.defacto.ml.feature.evidence.impl;
 
-import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
-import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
-import org.aksw.defacto.ml.feature.fact.FactFeature;
 import org.aksw.sparql.metrics.DatabaseBackedSPARQLEndpointMetrics;
 import org.dllearner.core.owl.Individual;
 import org.dllearner.core.owl.ObjectProperty;
@@ -34,8 +31,8 @@ public class GoodnessFeature extends AbstractEvidenceFeature {
 			String dbHost = "localhost";
 			String dbPort = "3306";
 			String database = "dbpedia_metrics";
-			String dbUser = "root";
-            String pw = ""; 
+			String dbUser = "defacto";
+            String pw = "123456";
             Connection conn = DriverManager.getConnection("jdbc:mysql://" + dbHost + ":" + dbPort + "/" + database + "?" + "user=" + dbUser + "&password=" + pw);
 			metric = new DatabaseBackedSPARQLEndpointMetrics(endpoint, "pmi-cache", conn);
 		} catch (ClassNotFoundException e1) {
