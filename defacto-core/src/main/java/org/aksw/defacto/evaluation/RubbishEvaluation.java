@@ -4,29 +4,18 @@ package org.aksw.defacto.evaluation;
  * Created by dnes on 04/01/16.
  */
 
-import com.hp.hpl.jena.assembler.Mode;
-import com.hp.hpl.jena.graph.NodeFactory;
-import com.hp.hpl.jena.graph.Triple;
-import com.hp.hpl.jena.query.QueryExecution;
+
 import com.hp.hpl.jena.rdf.model.*;
-import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.model.*;
 import org.aksw.defacto.reader.DefactoModelReader;
-import org.aksw.defacto.restful.core.RestModel;
-import org.aksw.jena_sparql_api.core.QueryExecutionFactory;
-import org.aksw.jena_sparql_api.http.QueryExecutionFactoryHttp;
-import org.apache.solr.common.util.Hash;
-import org.dllearner.kb.sparql.SparqlEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
