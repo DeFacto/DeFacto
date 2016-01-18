@@ -12,6 +12,7 @@ public class PropertyConfigurationSingleton {
     private static PropertyConfigurationSingleton instance = null;
 
     protected PropertyConfigurationSingleton() {
+
         configuration = new HashMap<>();
         configuration.put("award", new PropertyConfiguration("http://dbpedia.org/ontology/award", "PERSON", "PRIZE", false, ""));
         configuration.put("birth", new PropertyConfiguration("http://dbpedia.org/ontology/birthDate", "PERSON", "LOCATION", true, "O"));
@@ -23,6 +24,7 @@ public class PropertyConfigurationSingleton {
         configuration.put("spouse", new PropertyConfiguration("http://dbpedia.org/ontology/spouse", "PERSON", "PERSON", true, "S"));
         configuration.put("subsidiary", new PropertyConfiguration("http://dbpedia.org/ontology/subsidiary", "COMPANY", "COMPANY", false, ""));
         configuration.put("starring", new PropertyConfiguration("http://dbpedia.org/ontology/starring", "MOVIE", "PERSON", false, ""));
+
     }
     public static PropertyConfigurationSingleton getInstance() {
         if(instance == null) {
