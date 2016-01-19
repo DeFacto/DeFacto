@@ -39,12 +39,17 @@ public class RubbishEvaluation {
     private static int nrModelsToCompare = 4;  //the number of models to be computed
     private static File randomFolder;
 
-    private static String header = "score;model;subject;subject_label;predicate;object;object_label;model_type;random_source_folder;random_source_file";
-    private static String fileName = "EVAL1_RB1_NEW_INDEX.txt";
+    private static String header = "score;model;subject;subject_label;predicate;object;object_label;model_type;random_source_folder;random_source_file;tmp_model_file_name";
+    private static String fileName = "EVAL01_META_B.txt";
+    private static String newRandomFileName = "";
+
+    private static List<PropertyConfiguration> cacheEvaluation = new ArrayList<>();
 
     public static void main(String[] args) {
 
         LOGGER.info("Starting the process");
+
+        startCache();
 
         long startTimeOverallProcess = System.currentTimeMillis();
 
@@ -103,24 +108,28 @@ public class RubbishEvaluation {
                                 "] [" + models.get(i).getPredicate().getLocalName() + "] ["
                                 + models.get(i).getObjectLabel("en") + "]");
 
-                        Double score = Defacto.checkFact(models.get(i), Defacto.TIME_DISTRIBUTION_ONLY.NO).getDeFactoScore();
-                        LOGGER.info("...done! Score = " + score.toString());
+                        if (!cacheEvaluation.contains(new PropertyConfiguration(models.get(i).getSubjectUri(), models.get(i).getPredicate().getURI(), models.get(i).getObjectUri()))) {
 
-                        //compute the score for main model
-                        writer.println(score.toString() +
-                                ";" + models.get(i).getName() +
-                                ";" + models.get(i).getSubjectUri() +
-                                ";" + models.get(i).getSubjectLabel("en") +
-                                ";" + models.get(i).getPredicate().getLocalName() +
-                                ";" + models.get(i).getObjectUri() +
-                                ";" + models.get(i).getObjectLabel("en") +
-                                ";" + "O" +
-                                ";" + "" +
-                                ";" + "");
-                        writer.flush();
+                            Double score = Defacto.checkFact(models.get(i), Defacto.TIME_DISTRIBUTION_ONLY.NO).getDeFactoScore();
+                            LOGGER.info("...done! Score = " + score.toString());
 
-                        LOGGER.info("Model " + models.get(i).getName() + " has been processed");
+                            //compute the score for main model
+                            writer.println(score.toString() +
+                                    ";" + models.get(i).getName() +
+                                    ";" + models.get(i).getSubjectUri() +
+                                    ";" + models.get(i).getSubjectLabel("en") +
+                                    ";" + models.get(i).getPredicate().getLocalName() +
+                                    ";" + models.get(i).getObjectUri() +
+                                    ";" + models.get(i).getObjectLabel("en") +
+                                    ";" + "O" +
+                                    ";" + "" +
+                                    ";" + "");
+                            writer.flush();
 
+                            LOGGER.info("Model " + models.get(i).getName() + " has been processed");
+                        }else{
+                            LOGGER.info("Model already processed");
+                        }
                         /*********************************************************************************************************************************/
 
                         ArrayList<File> selectedFiles = null;
@@ -177,22 +186,32 @@ public class RubbishEvaluation {
                             LOGGER.info("Random: Starting DeFacto for [" + tempModel.getSubjectLabel("en") +
                                     "] [" + tempModel.getPredicate().getLocalName() + "] [" + tempModel.getObjectLabel("en") + "]");
 
-                            Double scoreTemp = Defacto.checkFact(tempModel, Defacto.TIME_DISTRIBUTION_ONLY.NO).getDeFactoScore();
-                            LOGGER.info("...done! Score = " + scoreTemp.toString());
 
-                            writer.println(scoreTemp.toString() +
-                                            ";" + tempModel.getName() +
-                                            ";" + tempModel.getSubjectUri() +
-                                            ";" + tempModel.getSubjectLabel("en") +
-                                            ";" + tempModel.getPredicate().getLocalName() +
-                                            ";" + tempModel.getObjectUri() +
-                                            ";" + tempModel.getObjectLabel("en") +
-                                            ";" + "C" +
-                                            ";" + randomFolder.getName() +
-                                            ";" + modelsRandom.get(auxIndex).name);
+                            if (!cacheEvaluation.contains(new PropertyConfiguration(tempModel.getSubjectUri(),tempModel.getPredicate().getURI(),tempModel.getObjectUri()))) {
 
-                            LOGGER.info("Changed Model '" + tempModel.getName() + "' has been processed");
-                            writer.flush();
+                                Double scoreTemp = Defacto.checkFact(tempModel, Defacto.TIME_DISTRIBUTION_ONLY.NO).getDeFactoScore();
+                                LOGGER.info("...done! Score = " + scoreTemp.toString());
+
+                                writer.println(scoreTemp.toString() +
+                                                ";" + tempModel.getName() +
+                                                ";" + tempModel.getSubjectUri() +
+                                                ";" + tempModel.getSubjectLabel("en") +
+                                                ";" + tempModel.getPredicate().getLocalName() +
+                                                ";" + tempModel.getObjectUri() +
+                                                ";" + tempModel.getObjectLabel("en") +
+                                                ";" + "C" +
+                                                ";" + randomFolder.getName() +
+                                                ";" + modelsRandom.get(auxIndex).name +
+                                                ";" + newRandomFileName);
+
+                                LOGGER.info("Changed Model '" + tempModel.getName() + "' has been processed");
+                                writer.flush();
+
+                            }
+                            else{
+                                LOGGER.info("Model already processed");
+                            }
+
 
                         }
 
@@ -231,6 +250,150 @@ public class RubbishEvaluation {
         }
 
     }
+
+
+    private static void startCache(){
+
+        PropertyConfiguration p1 = new PropertyConfiguration("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hope,_Arkansas");
+        PropertyConfiguration p2 = new PropertyConfiguration("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.018f94");
+        PropertyConfiguration p3 = new PropertyConfiguration("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Beverly_Hills,_California");
+        PropertyConfiguration p4 = new PropertyConfiguration("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Setagaya,_Tokyo");
+        PropertyConfiguration p5 = new PropertyConfiguration("http://dbpedia.org/resource/Chris_Kaman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hope,_Arkansas");
+        PropertyConfiguration p6 = new PropertyConfiguration("http://dbpedia.org/resource/Michael_Jackson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
+        PropertyConfiguration p7 = new PropertyConfiguration("http://dbpedia.org/resource/Ferdinand_von_Mueller","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
+        PropertyConfiguration p8 = new PropertyConfiguration("http://dbpedia.org/resource/James_Buchanan","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
+        PropertyConfiguration p9 = new PropertyConfiguration("http://dbpedia.org/resource/Richard_Jefferson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
+        PropertyConfiguration p10 = new PropertyConfiguration("http://dbpedia.org/resource/Michael_Jackson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/West_Hollywood,_California");
+        PropertyConfiguration p11 = new PropertyConfiguration("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
+        PropertyConfiguration p12 = new PropertyConfiguration("http://dbpedia.org/resource/Tayshaun_Prince","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
+        PropertyConfiguration p13 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.01t_54y","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
+        PropertyConfiguration p14 = new PropertyConfiguration("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Nashville,_Tennessee");
+        PropertyConfiguration p15 = new PropertyConfiguration("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Santa_Barbara,_California");
+        PropertyConfiguration p16 = new PropertyConfiguration("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
+        PropertyConfiguration p17 = new PropertyConfiguration("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kiel");
+        PropertyConfiguration p18 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.07j9cs","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
+        PropertyConfiguration p19 = new PropertyConfiguration("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.03spz");
+        PropertyConfiguration p20 = new PropertyConfiguration("http://dbpedia.org/resource/Gerald_Ford","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
+        PropertyConfiguration p21 = new PropertyConfiguration("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Denison,_Texas");
+        PropertyConfiguration p22 = new PropertyConfiguration("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0gp66n");
+        PropertyConfiguration p23 = new PropertyConfiguration("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.04swd");
+        PropertyConfiguration p24 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.02wk4d","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Denison,_Texas");
+        PropertyConfiguration p25 = new PropertyConfiguration("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0r6ff");
+        PropertyConfiguration p26 = new PropertyConfiguration("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Atlanta");
+        PropertyConfiguration p27 = new PropertyConfiguration("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Cairo");
+        PropertyConfiguration p28 = new PropertyConfiguration("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.01z645");
+        PropertyConfiguration p29 = new PropertyConfiguration("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
+        PropertyConfiguration p30 = new PropertyConfiguration("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
+        PropertyConfiguration p31 = new PropertyConfiguration("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
+        PropertyConfiguration p32 = new PropertyConfiguration("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Cambridge,_Massachusetts");
+        PropertyConfiguration p33 = new PropertyConfiguration("http://dbpedia.org/resource/Hubert_Humphrey","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
+        PropertyConfiguration p34 = new PropertyConfiguration("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chennai");
+        PropertyConfiguration p35 = new PropertyConfiguration("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Oxford");
+        PropertyConfiguration p36 = new PropertyConfiguration("http://dbpedia.org/resource/Harry_S._Truman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
+        PropertyConfiguration p37 = new PropertyConfiguration("http://dbpedia.org/resource/Harry_S._Truman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Beverly_Hills,_California");
+        PropertyConfiguration p38 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.0qs4h8r","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
+        PropertyConfiguration p39 = new PropertyConfiguration("http://dbpedia.org/resource/Gerald_Wallace","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
+        PropertyConfiguration p40 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.030xfx","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
+        PropertyConfiguration p41 = new PropertyConfiguration("http://dbpedia.org/resource/Lady_Gaga","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
+        PropertyConfiguration p42 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.02wc72n","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
+        PropertyConfiguration p43 = new PropertyConfiguration("http://dbpedia.org/resource/Saddam_Hussein","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
+        PropertyConfiguration p44 = new PropertyConfiguration("http://dbpedia.org/resource/Saddam_Hussein","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
+        PropertyConfiguration p45 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.08623t","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
+        PropertyConfiguration p46 = new PropertyConfiguration("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
+        PropertyConfiguration p47 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.0j11784","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
+        PropertyConfiguration p48 = new PropertyConfiguration("http://dbpedia.org/resource/Raymond_Felton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
+        PropertyConfiguration p49 = new PropertyConfiguration("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
+        PropertyConfiguration p50 = new PropertyConfiguration("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
+        PropertyConfiguration p51 = new PropertyConfiguration("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
+        PropertyConfiguration p52 = new PropertyConfiguration("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Springfield,_Missouri");
+        PropertyConfiguration p53 = new PropertyConfiguration("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Waverly,_Minnesota");
+        PropertyConfiguration p54 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.0qs4h8r","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
+        PropertyConfiguration p55 = new PropertyConfiguration("http://dbpedia.org/resource/Andrei_Kirilenko","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
+        PropertyConfiguration p56 = new PropertyConfiguration("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
+        PropertyConfiguration p57 = new PropertyConfiguration("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
+        PropertyConfiguration p58 = new PropertyConfiguration("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0fw2y");
+        PropertyConfiguration p59 = new PropertyConfiguration("http://dbpedia.org/resource/Gottfried_Wilhelm_Leibniz","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
+        PropertyConfiguration p60 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.06y9c2","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
+        PropertyConfiguration p61 = new PropertyConfiguration("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Saginaw,_Michigan");
+        PropertyConfiguration p62 = new PropertyConfiguration("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.02_286");
+        PropertyConfiguration p63 = new PropertyConfiguration("http://dbpedia.org/resource/James_Buchanan","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Saginaw,_Michigan");
+        PropertyConfiguration p64 = new PropertyConfiguration("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.01jr6");
+        PropertyConfiguration p65 = new PropertyConfiguration("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0154j");
+        PropertyConfiguration p66 = new PropertyConfiguration("http://dbpedia.org/resource/Daniel_Nestor","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
+        PropertyConfiguration p67 = new PropertyConfiguration("http://dbpedia.org/resource/J._R._Smith","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
+        PropertyConfiguration p68 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.0202l6","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
+
+        cacheEvaluation.add(p1);
+        cacheEvaluation.add(p2);
+        cacheEvaluation.add(p3);
+        cacheEvaluation.add(p4);
+        cacheEvaluation.add(p5);
+        cacheEvaluation.add(p6);
+        cacheEvaluation.add(p7);
+        cacheEvaluation.add(p8);
+        cacheEvaluation.add(p9);
+        cacheEvaluation.add(p10);
+        cacheEvaluation.add(p11);
+        cacheEvaluation.add(p12);
+        cacheEvaluation.add(p13);
+        cacheEvaluation.add(p14);
+        cacheEvaluation.add(p15);
+        cacheEvaluation.add(p16);
+        cacheEvaluation.add(p17);
+        cacheEvaluation.add(p18);
+        cacheEvaluation.add(p19);
+        cacheEvaluation.add(p20);
+        cacheEvaluation.add(p21);
+        cacheEvaluation.add(p22);
+        cacheEvaluation.add(p23);
+        cacheEvaluation.add(p24);
+        cacheEvaluation.add(p25);
+        cacheEvaluation.add(p26);
+        cacheEvaluation.add(p27);
+        cacheEvaluation.add(p28);
+        cacheEvaluation.add(p29);
+        cacheEvaluation.add(p30);
+        cacheEvaluation.add(p31);
+        cacheEvaluation.add(p32);
+        cacheEvaluation.add(p33);
+        cacheEvaluation.add(p34);
+        cacheEvaluation.add(p35);
+        cacheEvaluation.add(p36);
+        cacheEvaluation.add(p37);
+        cacheEvaluation.add(p38);
+        cacheEvaluation.add(p39);
+        cacheEvaluation.add(p40);
+        cacheEvaluation.add(p41);
+        cacheEvaluation.add(p42);
+        cacheEvaluation.add(p43);
+        cacheEvaluation.add(p44);
+        cacheEvaluation.add(p45);
+        cacheEvaluation.add(p46);
+        cacheEvaluation.add(p47);
+        cacheEvaluation.add(p48);
+        cacheEvaluation.add(p49);
+        cacheEvaluation.add(p50);
+        cacheEvaluation.add(p51);
+        cacheEvaluation.add(p52);
+        cacheEvaluation.add(p53);
+        cacheEvaluation.add(p54);
+        cacheEvaluation.add(p55);
+        cacheEvaluation.add(p56);
+        cacheEvaluation.add(p57);
+        cacheEvaluation.add(p58);
+        cacheEvaluation.add(p59);
+        cacheEvaluation.add(p60);
+        cacheEvaluation.add(p61);
+        cacheEvaluation.add(p62);
+        cacheEvaluation.add(p63);
+        cacheEvaluation.add(p64);
+        cacheEvaluation.add(p65);
+        cacheEvaluation.add(p66);
+        cacheEvaluation.add(p67);
+        cacheEvaluation.add(p68);
+
+    }
+
     /**
      *
      * @param m1 the first model
@@ -277,13 +440,15 @@ public class RubbishEvaluation {
                 //S
                 if (stmt.getSubject().getURI().equals(sURI)) {
                     m.add(stmt);
+                    if (stmt.getObject().isResource() && stmt.getObject().asResource().getURI().matches("^.*__[0-9]*$")) {
+                        auxPredicate = stmt.getPredicate(); //just to naming and save the file correctly
+                    }
                 }
                 //P
                 if (stmt.getSubject().getURI().matches("^.*__[0-9]*$")) {
                     //change this statement
                     if (stmt.getObject().isResource()) {
                         m.add(stmt.getSubject(), stmt.getPredicate(), auxObject);
-                        auxPredicate = stmt.getPredicate(); //just to naming and save the file correctly
                     } else {
                         m.add(stmt);
                     }
@@ -322,9 +487,11 @@ public class RubbishEvaluation {
             }
         }
 
-        String fileName = "C:\\DNE5\\github\\DeFacto\\data\\factbench\\v1_2013\\test\\unknown\\out_" + auxPredicate.getLocalName() + "_" + index + ".ttl";
-        FileWriter out = new FileWriter(fileName);
+        newRandomFileName = "C:\\DNE5\\github\\DeFacto\\data\\factbench\\v1_2013\\test\\unknown\\out_" + auxPredicate.getLocalName() + "_" + index + ".ttl";
+        FileWriter out = new FileWriter(newRandomFileName);
         m.write(out, "TTL");
+
+        LOGGER.info(":: New file model has been generated: " + newRandomFileName);
 
         //setting DeFacto Model
         finalModel = new DefactoModel(m, "Unknown " + index, false, Arrays.asList("en", "de", "fr"));
@@ -346,6 +513,7 @@ public class RubbishEvaluation {
 
         String subjectURI = original.getSubjectUri();
         String objectURI = original.getObjectUri();
+        newRandomFileName= "";
 
         //DefactoModel finalModel = (DefactoModel) original.clone();
         DefactoModel finalModel;
