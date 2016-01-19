@@ -5,15 +5,16 @@ package org.aksw.defacto.evaluation;
  */
 
 
+import com.csvreader.CsvReader;
+import com.csvreader.CsvWriter;
 import com.hp.hpl.jena.rdf.model.*;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.model.*;
 import org.aksw.defacto.reader.DefactoModelReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -22,10 +23,9 @@ import java.util.stream.Collectors;
 /**
  * A naive strategy to generate metadata for correct triples x changed ones
  */
-public class RubbishEvaluation {
+public class MetaEvaluation {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RubbishEvaluation.class);
-    private static PrintWriter writer;
+    private static final Logger LOGGER = LoggerFactory.getLogger(MetaEvaluation.class);
 
     private static String getWhichPartFromRandom = ""; //get the resource to update -> TO
     private static String resourceToBeChanged; //select which resource should be swapped -> FROM
@@ -40,16 +40,14 @@ public class RubbishEvaluation {
     private static File randomFolder;
 
     private static String header = "score;model;subject;subject_label;predicate;object;object_label;model_type;random_source_folder;random_source_file;tmp_model_file_name";
-    private static String fileName = "EVAL01_META_B.txt";
+    private static String fileName = "EVAL01_META_B2.csv";
     private static String newRandomFileName = "";
 
-    private static List<PropertyConfiguration> cacheEvaluation = new ArrayList<>();
+    private static List<MetaEvaluationCache> cacheEvaluation;
 
     public static void main(String[] args) {
 
         LOGGER.info("Starting the process");
-
-        startCache();
 
         long startTimeOverallProcess = System.currentTimeMillis();
 
@@ -57,8 +55,7 @@ public class RubbishEvaluation {
 
             Defacto.init();
 
-            writer = new PrintWriter(fileName, "UTF-8");
-            writer.println(header);
+            cacheEvaluation = readFromCSV();
 
             List<String> languages = Arrays.asList("en");
             List<DefactoModel> models = new ArrayList<>(); //the list of true models
@@ -108,23 +105,16 @@ public class RubbishEvaluation {
                                 "] [" + models.get(i).getPredicate().getLocalName() + "] ["
                                 + models.get(i).getObjectLabel("en") + "]");
 
-                        if (!cacheEvaluation.contains(new PropertyConfiguration(models.get(i).getSubjectUri(), models.get(i).getPredicate().getURI(), models.get(i).getObjectUri()))) {
+                        if (!cacheEvaluation.contains(new MetaEvaluationCache(models.get(i).getSubjectUri(),
+                                models.get(i).getPredicate().getURI(),
+                                models.get(i).getObjectUri()))) {
 
                             Double score = Defacto.checkFact(models.get(i), Defacto.TIME_DISTRIBUTION_ONLY.NO).getDeFactoScore();
                             LOGGER.info("...done! Score = " + score.toString());
-
-                            //compute the score for main model
-                            writer.println(score.toString() +
-                                    ";" + models.get(i).getName() +
-                                    ";" + models.get(i).getSubjectUri() +
-                                    ";" + models.get(i).getSubjectLabel("en") +
-                                    ";" + models.get(i).getPredicate().getLocalName() +
-                                    ";" + models.get(i).getObjectUri() +
-                                    ";" + models.get(i).getObjectLabel("en") +
-                                    ";" + "O" +
-                                    ";" + "" +
-                                    ";" + "");
-                            writer.flush();
+                            
+                            cacheEvaluation.add(new MetaEvaluationCache(score, models.get(i).getName(),models.get(i).getSubjectUri(),
+                                    models.get(i).getSubjectLabel("en"), models.get(i).getPredicate().getURI(), models.get(i).getPredicate().getLocalName(),
+                                    models.get(i).getObjectUri(), models.get(i).getObjectLabel("en"), "O", "","", ""));
 
                             LOGGER.info("Model " + models.get(i).getName() + " has been processed");
                         }else{
@@ -187,25 +177,17 @@ public class RubbishEvaluation {
                                     "] [" + tempModel.getPredicate().getLocalName() + "] [" + tempModel.getObjectLabel("en") + "]");
 
 
-                            if (!cacheEvaluation.contains(new PropertyConfiguration(tempModel.getSubjectUri(),tempModel.getPredicate().getURI(),tempModel.getObjectUri()))) {
+                            if (!cacheEvaluation.contains(new MetaEvaluationCache(tempModel.getSubjectUri(),tempModel.getPredicate().getURI(),tempModel.getObjectUri()))) {
 
                                 Double scoreTemp = Defacto.checkFact(tempModel, Defacto.TIME_DISTRIBUTION_ONLY.NO).getDeFactoScore();
                                 LOGGER.info("...done! Score = " + scoreTemp.toString());
 
-                                writer.println(scoreTemp.toString() +
-                                                ";" + tempModel.getName() +
-                                                ";" + tempModel.getSubjectUri() +
-                                                ";" + tempModel.getSubjectLabel("en") +
-                                                ";" + tempModel.getPredicate().getLocalName() +
-                                                ";" + tempModel.getObjectUri() +
-                                                ";" + tempModel.getObjectLabel("en") +
-                                                ";" + "C" +
-                                                ";" + randomFolder.getName() +
-                                                ";" + modelsRandom.get(auxIndex).name +
-                                                ";" + newRandomFileName);
+                                cacheEvaluation.add(new MetaEvaluationCache(scoreTemp, tempModel.getName(),tempModel.getSubjectUri(),
+                                        tempModel.getSubjectLabel("en"), tempModel.getPredicate().getURI(), tempModel.getPredicate().getLocalName(),
+                                        tempModel.getObjectUri(), tempModel.getObjectLabel("en"), "C", randomFolder.getName(),modelsRandom.get(auxIndex).name, newRandomFileName));
+                                
 
                                 LOGGER.info("Changed Model '" + tempModel.getName() + "' has been processed");
-                                writer.flush();
 
                             }
                             else{
@@ -221,15 +203,15 @@ public class RubbishEvaluation {
                             selectedFiles.clear();
 
                         LOGGER.info("File " +  models.get(i).getName() + " has been processed");
-                        writer.flush();
+
                 }
 
                 LOGGER.info("The folder " + currentFolder.getName() + " has been processed successfully");
-                writer.flush();
+
             }
 
             //Collections.shuffle(models, new Random(100));
-            writer.close();
+
 
             long stopTimeOverallProcess = System.currentTimeMillis();
             long elapsedTime = stopTimeOverallProcess - startTimeOverallProcess;
@@ -247,81 +229,88 @@ public class RubbishEvaluation {
 
         }catch (Exception e){
             LOGGER.error(e.toString());
+        }finally {
+            try{
+                for(MetaEvaluationCache m: cacheEvaluation){
+                    writeToCSV(m);
+                }
+            }catch (Exception e2){
+                LOGGER.error(e2.toString());
+            }
         }
 
     }
 
-
     private static void startCache(){
 
-        PropertyConfiguration p1 = new PropertyConfiguration("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hope,_Arkansas");
-        PropertyConfiguration p2 = new PropertyConfiguration("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.018f94");
-        PropertyConfiguration p3 = new PropertyConfiguration("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Beverly_Hills,_California");
-        PropertyConfiguration p4 = new PropertyConfiguration("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Setagaya,_Tokyo");
-        PropertyConfiguration p5 = new PropertyConfiguration("http://dbpedia.org/resource/Chris_Kaman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hope,_Arkansas");
-        PropertyConfiguration p6 = new PropertyConfiguration("http://dbpedia.org/resource/Michael_Jackson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
-        PropertyConfiguration p7 = new PropertyConfiguration("http://dbpedia.org/resource/Ferdinand_von_Mueller","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
-        PropertyConfiguration p8 = new PropertyConfiguration("http://dbpedia.org/resource/James_Buchanan","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
-        PropertyConfiguration p9 = new PropertyConfiguration("http://dbpedia.org/resource/Richard_Jefferson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
-        PropertyConfiguration p10 = new PropertyConfiguration("http://dbpedia.org/resource/Michael_Jackson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/West_Hollywood,_California");
-        PropertyConfiguration p11 = new PropertyConfiguration("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
-        PropertyConfiguration p12 = new PropertyConfiguration("http://dbpedia.org/resource/Tayshaun_Prince","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
-        PropertyConfiguration p13 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.01t_54y","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
-        PropertyConfiguration p14 = new PropertyConfiguration("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Nashville,_Tennessee");
-        PropertyConfiguration p15 = new PropertyConfiguration("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Santa_Barbara,_California");
-        PropertyConfiguration p16 = new PropertyConfiguration("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
-        PropertyConfiguration p17 = new PropertyConfiguration("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kiel");
-        PropertyConfiguration p18 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.07j9cs","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
-        PropertyConfiguration p19 = new PropertyConfiguration("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.03spz");
-        PropertyConfiguration p20 = new PropertyConfiguration("http://dbpedia.org/resource/Gerald_Ford","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
-        PropertyConfiguration p21 = new PropertyConfiguration("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Denison,_Texas");
-        PropertyConfiguration p22 = new PropertyConfiguration("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0gp66n");
-        PropertyConfiguration p23 = new PropertyConfiguration("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.04swd");
-        PropertyConfiguration p24 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.02wk4d","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Denison,_Texas");
-        PropertyConfiguration p25 = new PropertyConfiguration("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0r6ff");
-        PropertyConfiguration p26 = new PropertyConfiguration("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Atlanta");
-        PropertyConfiguration p27 = new PropertyConfiguration("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Cairo");
-        PropertyConfiguration p28 = new PropertyConfiguration("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.01z645");
-        PropertyConfiguration p29 = new PropertyConfiguration("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
-        PropertyConfiguration p30 = new PropertyConfiguration("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
-        PropertyConfiguration p31 = new PropertyConfiguration("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
-        PropertyConfiguration p32 = new PropertyConfiguration("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Cambridge,_Massachusetts");
-        PropertyConfiguration p33 = new PropertyConfiguration("http://dbpedia.org/resource/Hubert_Humphrey","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
-        PropertyConfiguration p34 = new PropertyConfiguration("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chennai");
-        PropertyConfiguration p35 = new PropertyConfiguration("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Oxford");
-        PropertyConfiguration p36 = new PropertyConfiguration("http://dbpedia.org/resource/Harry_S._Truman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
-        PropertyConfiguration p37 = new PropertyConfiguration("http://dbpedia.org/resource/Harry_S._Truman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Beverly_Hills,_California");
-        PropertyConfiguration p38 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.0qs4h8r","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
-        PropertyConfiguration p39 = new PropertyConfiguration("http://dbpedia.org/resource/Gerald_Wallace","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
-        PropertyConfiguration p40 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.030xfx","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
-        PropertyConfiguration p41 = new PropertyConfiguration("http://dbpedia.org/resource/Lady_Gaga","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
-        PropertyConfiguration p42 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.02wc72n","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
-        PropertyConfiguration p43 = new PropertyConfiguration("http://dbpedia.org/resource/Saddam_Hussein","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
-        PropertyConfiguration p44 = new PropertyConfiguration("http://dbpedia.org/resource/Saddam_Hussein","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
-        PropertyConfiguration p45 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.08623t","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
-        PropertyConfiguration p46 = new PropertyConfiguration("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
-        PropertyConfiguration p47 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.0j11784","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
-        PropertyConfiguration p48 = new PropertyConfiguration("http://dbpedia.org/resource/Raymond_Felton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
-        PropertyConfiguration p49 = new PropertyConfiguration("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
-        PropertyConfiguration p50 = new PropertyConfiguration("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
-        PropertyConfiguration p51 = new PropertyConfiguration("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
-        PropertyConfiguration p52 = new PropertyConfiguration("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Springfield,_Missouri");
-        PropertyConfiguration p53 = new PropertyConfiguration("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Waverly,_Minnesota");
-        PropertyConfiguration p54 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.0qs4h8r","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
-        PropertyConfiguration p55 = new PropertyConfiguration("http://dbpedia.org/resource/Andrei_Kirilenko","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
-        PropertyConfiguration p56 = new PropertyConfiguration("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
-        PropertyConfiguration p57 = new PropertyConfiguration("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
-        PropertyConfiguration p58 = new PropertyConfiguration("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0fw2y");
-        PropertyConfiguration p59 = new PropertyConfiguration("http://dbpedia.org/resource/Gottfried_Wilhelm_Leibniz","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
-        PropertyConfiguration p60 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.06y9c2","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
-        PropertyConfiguration p61 = new PropertyConfiguration("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Saginaw,_Michigan");
-        PropertyConfiguration p62 = new PropertyConfiguration("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.02_286");
-        PropertyConfiguration p63 = new PropertyConfiguration("http://dbpedia.org/resource/James_Buchanan","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Saginaw,_Michigan");
-        PropertyConfiguration p64 = new PropertyConfiguration("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.01jr6");
-        PropertyConfiguration p65 = new PropertyConfiguration("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0154j");
-        PropertyConfiguration p66 = new PropertyConfiguration("http://dbpedia.org/resource/Daniel_Nestor","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
-        PropertyConfiguration p67 = new PropertyConfiguration("http://dbpedia.org/resource/J._R._Smith","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
-        PropertyConfiguration p68 = new PropertyConfiguration("http://rdf.freebase.com/ns/m.0202l6","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
+        MetaEvaluationCache p1 = new MetaEvaluationCache("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hope,_Arkansas");
+        MetaEvaluationCache p2 = new MetaEvaluationCache("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.018f94");
+        MetaEvaluationCache p3 = new MetaEvaluationCache("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Beverly_Hills,_California");
+        MetaEvaluationCache p4 = new MetaEvaluationCache("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Setagaya,_Tokyo");
+        MetaEvaluationCache p5 = new MetaEvaluationCache("http://dbpedia.org/resource/Chris_Kaman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hope,_Arkansas");
+        MetaEvaluationCache p6 = new MetaEvaluationCache("http://dbpedia.org/resource/Michael_Jackson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
+        MetaEvaluationCache p7 = new MetaEvaluationCache("http://dbpedia.org/resource/Ferdinand_von_Mueller","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
+        MetaEvaluationCache p8 = new MetaEvaluationCache("http://dbpedia.org/resource/James_Buchanan","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
+        MetaEvaluationCache p9 = new MetaEvaluationCache("http://dbpedia.org/resource/Richard_Jefferson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
+        MetaEvaluationCache p10 = new MetaEvaluationCache("http://dbpedia.org/resource/Michael_Jackson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/West_Hollywood,_California");
+        MetaEvaluationCache p11 = new MetaEvaluationCache("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
+        MetaEvaluationCache p12 = new MetaEvaluationCache("http://dbpedia.org/resource/Tayshaun_Prince","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
+        MetaEvaluationCache p13 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.01t_54y","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
+        MetaEvaluationCache p14 = new MetaEvaluationCache("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Nashville,_Tennessee");
+        MetaEvaluationCache p15 = new MetaEvaluationCache("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Santa_Barbara,_California");
+        MetaEvaluationCache p16 = new MetaEvaluationCache("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
+        MetaEvaluationCache p17 = new MetaEvaluationCache("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kiel");
+        MetaEvaluationCache p18 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.07j9cs","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
+        MetaEvaluationCache p19 = new MetaEvaluationCache("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.03spz");
+        MetaEvaluationCache p20 = new MetaEvaluationCache("http://dbpedia.org/resource/Gerald_Ford","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
+        MetaEvaluationCache p21 = new MetaEvaluationCache("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Denison,_Texas");
+        MetaEvaluationCache p22 = new MetaEvaluationCache("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0gp66n");
+        MetaEvaluationCache p23 = new MetaEvaluationCache("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.04swd");
+        MetaEvaluationCache p24 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.02wk4d","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Denison,_Texas");
+        MetaEvaluationCache p25 = new MetaEvaluationCache("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0r6ff");
+        MetaEvaluationCache p26 = new MetaEvaluationCache("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Atlanta");
+        MetaEvaluationCache p27 = new MetaEvaluationCache("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Cairo");
+        MetaEvaluationCache p28 = new MetaEvaluationCache("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.01z645");
+        MetaEvaluationCache p29 = new MetaEvaluationCache("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
+        MetaEvaluationCache p30 = new MetaEvaluationCache("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
+        MetaEvaluationCache p31 = new MetaEvaluationCache("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
+        MetaEvaluationCache p32 = new MetaEvaluationCache("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Cambridge,_Massachusetts");
+        MetaEvaluationCache p33 = new MetaEvaluationCache("http://dbpedia.org/resource/Hubert_Humphrey","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
+        MetaEvaluationCache p34 = new MetaEvaluationCache("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chennai");
+        MetaEvaluationCache p35 = new MetaEvaluationCache("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Oxford");
+        MetaEvaluationCache p36 = new MetaEvaluationCache("http://dbpedia.org/resource/Harry_S._Truman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
+        MetaEvaluationCache p37 = new MetaEvaluationCache("http://dbpedia.org/resource/Harry_S._Truman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Beverly_Hills,_California");
+        MetaEvaluationCache p38 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.0qs4h8r","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
+        MetaEvaluationCache p39 = new MetaEvaluationCache("http://dbpedia.org/resource/Gerald_Wallace","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
+        MetaEvaluationCache p40 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.030xfx","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
+        MetaEvaluationCache p41 = new MetaEvaluationCache("http://dbpedia.org/resource/Lady_Gaga","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
+        MetaEvaluationCache p42 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.02wc72n","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
+        MetaEvaluationCache p43 = new MetaEvaluationCache("http://dbpedia.org/resource/Saddam_Hussein","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
+        MetaEvaluationCache p44 = new MetaEvaluationCache("http://dbpedia.org/resource/Saddam_Hussein","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
+        MetaEvaluationCache p45 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.08623t","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
+        MetaEvaluationCache p46 = new MetaEvaluationCache("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
+        MetaEvaluationCache p47 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.0j11784","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
+        MetaEvaluationCache p48 = new MetaEvaluationCache("http://dbpedia.org/resource/Raymond_Felton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
+        MetaEvaluationCache p49 = new MetaEvaluationCache("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
+        MetaEvaluationCache p50 = new MetaEvaluationCache("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
+        MetaEvaluationCache p51 = new MetaEvaluationCache("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
+        MetaEvaluationCache p52 = new MetaEvaluationCache("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Springfield,_Missouri");
+        MetaEvaluationCache p53 = new MetaEvaluationCache("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Waverly,_Minnesota");
+        MetaEvaluationCache p54 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.0qs4h8r","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
+        MetaEvaluationCache p55 = new MetaEvaluationCache("http://dbpedia.org/resource/Andrei_Kirilenko","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
+        MetaEvaluationCache p56 = new MetaEvaluationCache("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
+        MetaEvaluationCache p57 = new MetaEvaluationCache("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
+        MetaEvaluationCache p58 = new MetaEvaluationCache("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0fw2y");
+        MetaEvaluationCache p59 = new MetaEvaluationCache("http://dbpedia.org/resource/Gottfried_Wilhelm_Leibniz","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
+        MetaEvaluationCache p60 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.06y9c2","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
+        MetaEvaluationCache p61 = new MetaEvaluationCache("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Saginaw,_Michigan");
+        MetaEvaluationCache p62 = new MetaEvaluationCache("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.02_286");
+        MetaEvaluationCache p63 = new MetaEvaluationCache("http://dbpedia.org/resource/James_Buchanan","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Saginaw,_Michigan");
+        MetaEvaluationCache p64 = new MetaEvaluationCache("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.01jr6");
+        MetaEvaluationCache p65 = new MetaEvaluationCache("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0154j");
+        MetaEvaluationCache p66 = new MetaEvaluationCache("http://dbpedia.org/resource/Daniel_Nestor","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
+        MetaEvaluationCache p67 = new MetaEvaluationCache("http://dbpedia.org/resource/J._R._Smith","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
+        MetaEvaluationCache p68 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.0202l6","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
 
         cacheEvaluation.add(p1);
         cacheEvaluation.add(p2);
@@ -708,6 +697,91 @@ public class RubbishEvaluation {
             LOGGER.error(e.toString());
         }
         return selected;
+    }
+
+
+
+    private static List<MetaEvaluationCache> readFromCSV() throws Exception{
+
+        List<MetaEvaluationCache> cache = new ArrayList<>();
+        try {
+
+            CsvReader data = new CsvReader(fileName);
+
+            data.readHeaders();
+            data.setDelimiter(';');
+
+            while (data.readRecord())
+            {
+                /* MetaEvaluationCache item = new MetaEvaluationCache(Double.valueOf(data.get("score")), data.get("model"), data.get("subject"),
+                        data.get("subject_label"), data.get("predicate"), data.get("predicate_label"), data.get("object"), data.get("object_label"),
+                        data.get("model_type"), data.get("random_source_folder"), data.get("random_source_file"), data.get("tmp_model_file_name")); */
+
+                MetaEvaluationCache item = new MetaEvaluationCache(Double.valueOf(data.get(0)), data.get(1), data.get(2),
+                        data.get(3), data.get(4), data.get(5), data.get(6), data.get(7),
+                        data.get(8), data.get(9), data.get(10), data.get(11));
+
+                cache.add(item);
+
+            }
+
+            data.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return cache;
+
+    }
+
+
+    private static void writeToCSV(MetaEvaluationCache item) throws IOException {
+
+        boolean alreadyExists = new File(fileName).exists();
+
+        try {
+
+            CsvWriter csvOutput = new CsvWriter(new FileWriter(fileName, true), ';');
+            if (!alreadyExists)
+            {
+                csvOutput.write("score");
+                csvOutput.write("model");
+                csvOutput.write("subject");
+                csvOutput.write("subject_label");
+                csvOutput.write("predicate");
+                csvOutput.write("predicate_label");
+                csvOutput.write("object");
+                csvOutput.write("object_label");
+                csvOutput.write("model_type");
+                csvOutput.write("random_source_folder");
+                csvOutput.write("random_source_file");
+                csvOutput.write("tmp_model_file_name");
+                csvOutput.endRecord();
+            }
+
+            // write out a few records
+            csvOutput.write(String.valueOf(item.getOverallScore()));
+            csvOutput.write(item.getSourceModelFileName());
+            csvOutput.write(item.getSubjectURI());
+            csvOutput.write(item.getSubjectLabel());
+            csvOutput.write(item.getPredicateURI());
+            csvOutput.write(item.getPredicateLabel());
+            csvOutput.write(item.getObjectURI());
+            csvOutput.write(item.getObjectLabel());
+            csvOutput.write(item.getType());
+            csvOutput.write(item.getRandomPropertyLabel());
+            csvOutput.write(item.getRandomSourceModelFileName());
+            csvOutput.write(item.getNewModelFileName());
+
+            csvOutput.endRecord();
+            csvOutput.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

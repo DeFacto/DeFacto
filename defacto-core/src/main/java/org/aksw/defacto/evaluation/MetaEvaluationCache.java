@@ -20,6 +20,42 @@ public class MetaEvaluationCache {
     private String randomSourceModelFileName;
     private String newModelFileName;
 
+    public double getOverallScore() {
+        return overallScore;
+    }
+
+    public String getNewModelFileName() {
+        return newModelFileName;
+    }
+
+    public String getRandomSourceModelFileName() {
+        return randomSourceModelFileName;
+    }
+
+    public String getRandomPropertyLabel() {
+        return randomPropertyLabel;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getSourceModelFileName() {
+        return sourceModelFileName;
+    }
+
+    public String getObjectLabel() {
+        return objectLabel;
+    }
+
+    public String getPredicateLabel() {
+        return predicateLabel;
+    }
+
+    public String getSubjectLabel() {
+        return subjectLabel;
+    }
+
     private double overallScore;
 
     public MetaEvaluationCache(String sURI, String pURI, String oURI, double overallScore){
@@ -29,10 +65,15 @@ public class MetaEvaluationCache {
         this.overallScore = overallScore;
     }
 
-    public MetaEvaluationCache(String subjectUri, String subjectLabel, String predicateUri, String predicateLabel,
-                               String objectUri, String objectLabel, String sourceModelFileName, String type,
-                               String randomPropertyLabel, String randomSourceModelFileName, String newModelFileName,
-                               double overallScore){
+    public MetaEvaluationCache(String sURI, String pURI, String oURI){
+        this.subjectUri = sURI;
+        this.predicateUri = pURI;
+        this.objectUri = oURI;
+    }
+
+    public MetaEvaluationCache(double overallScore, String sourceModelFileName, String subjectUri, String subjectLabel, String predicateUri, String predicateLabel,
+                               String objectUri, String objectLabel, String type,
+                               String randomPropertyLabel, String randomSourceModelFileName, String newModelFileName){
         this.subjectUri = subjectUri;
         this.subjectLabel = subjectLabel;
         this.predicateUri = predicateUri;
