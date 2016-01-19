@@ -1,5 +1,6 @@
 package org.aksw.defacto.model;
 
+
 /**
  * Created by dnes on 05/01/16.
  */
@@ -23,10 +24,6 @@ public class PropertyConfiguration {
         return this.subjectClass;
     }
 
-    public String getPredicateUri(){
-        return this.predicateUri;
-    }
-
     public String getObjectClass(){
         return this.objectClass;
     }
@@ -38,4 +35,5 @@ public class PropertyConfiguration {
     public String getResourceToBeChangedForRubbish(){
         return this.resourceToBeChangedForRubbish;
     }
+
 }
