@@ -316,7 +316,7 @@ public class Defacto {
     		min = Math.min(min, j);
     	}
 
-        LOGGER.debug(("MAX: " + max);
-        LOGGER.debug(("MIN: " + min);
+        LOGGER.debug(("MAX: " + max));
+        LOGGER.debug(("MIN: " + min));
 	}
 }
