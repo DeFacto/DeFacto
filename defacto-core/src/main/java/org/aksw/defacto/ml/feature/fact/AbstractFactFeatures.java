@@ -3,6 +3,7 @@
  */
 package org.aksw.defacto.ml.feature.fact;
 
+import org.slf4j.LoggerFactory;
 import weka.core.Attribute;
 import weka.core.FastVector;
 import weka.core.Instances;
@@ -53,6 +54,9 @@ public class AbstractFactFeatures {
     public static Attribute CLASS                                   		= new Attribute("clazz");
     public static Attribute LANGUAGE                   						= new Attribute("language");
     public static Attribute PROPERTY_NAME                     				= new Attribute("property_name");
+
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AbstractFactFeatures.class);
     
     static {
 
@@ -128,6 +132,6 @@ public class AbstractFactFeatures {
     }
     
     public static void main(String[] args) {
-    	System.out.println(AbstractFactFeatures.factFeatures.toString());
+        LOGGER.info(AbstractFactFeatures.factFeatures.toString());
 	}
 }

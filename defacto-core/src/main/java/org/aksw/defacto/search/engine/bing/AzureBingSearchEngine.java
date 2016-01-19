@@ -60,8 +60,8 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
         
         MetaQuery q = new MetaQuery("Ghostbusters II|-|?D? NONE ?R?|-|Bill Murray|-|fr");
         AzureBingSearchEngine engine = new AzureBingSearchEngine();
-        System.out.println(BING_API_KEY);
-        System.out.println(engine.query(q, null).getTotalHitCount());
+        logger.info(BING_API_KEY);
+        logger.info(engine.query(q, null).getTotalHitCount());
 //        System.out.println(engine.query(query, null).getWebSites().size());
         
 //        URI uri;
@@ -103,7 +103,7 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
             aq.setSources(new AZURESEARCH_QUERYTYPE[] { AZURESEARCH_QUERYTYPE.WEB });
             
             aq.setQuery(this.generateQuery(query));
-            System.out.println(this.generateQuery(query));
+            logger.info(this.generateQuery(query));
             aq.doQuery();
             
             AzureSearchResultSet<AbstractAzureSearchResult> ars = aq.getQueryResult();

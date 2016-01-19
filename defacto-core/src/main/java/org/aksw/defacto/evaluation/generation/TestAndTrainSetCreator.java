@@ -27,6 +27,7 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
@@ -34,6 +35,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
  */
 public class TestAndTrainSetCreator {
 
+	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(TestAndTrainSetCreator.class);
 	private static Map<String, List<DefactoResource>> subjectsForRelation = new HashMap<String, List<DefactoResource>>();
 	private static Map<String, List<DefactoResource>> objectsForRelation = new HashMap<String, List<DefactoResource>>();
 	private static Map<String, List<String>> relationToFact = new HashMap<String,List<String>>();
@@ -297,7 +299,7 @@ public class TestAndTrainSetCreator {
 		while ( relationToFact.get(relation).contains(model.getSubjectUri() + " " + newPropertyUri + " " + model.getObjectUri()) ) {
 			
 			newPropertyUri = properties.get(new Random().nextInt(properties.size()));
-			System.out.println("Picked already contained property!");
+			LOGGER.info("Picked already contained property!");
 		}
 		
 		return model.model.createProperty(newPropertyUri);
@@ -308,7 +310,7 @@ public class TestAndTrainSetCreator {
 		while ( facts.contains(model.getSubjectUri() + " " + model.getPropertyUri() + " " + newObject.getUri()) ) {
 			
 			newObject = objects.get(new Random().nextInt(objects.size()));
-			System.out.println("Picked already contained object");
+			LOGGER.info("Picked already contained object");
 		}
 		
 		return newObject;
@@ -320,7 +322,7 @@ public class TestAndTrainSetCreator {
 		while ( facts.contains(newSubject.getUri() + " " + model.getPropertyUri() + " " + model.getObjectUri()) ) {
 			
 			newSubject = subjects.get(new Random().nextInt(subjects.size()));
-			System.out.println("Picked already contained subject");
+			LOGGER.info("Picked already contained subject");
 		}
 		
 		return newSubject;
@@ -340,7 +342,7 @@ public class TestAndTrainSetCreator {
 		while ( relationToFact.get(relation).contains(model.getSubjectUri() + " " + model.getPropertyUri() + " " + newObject.getUri()) ) {
 			
 			newObject = objectsForRelation.get(relation).get(new Random().nextInt(objectsForRelation.get(relation).size()));
-			System.out.println("Picked already contained object");
+			LOGGER.info("Picked already contained object");
 		}
 		
 		return newObject;
@@ -360,7 +362,7 @@ public class TestAndTrainSetCreator {
 		while ( relationToFact.get(relation).contains(newSubject.getUri() + " " + model.getPropertyUri() + " " + model.getObjectUri()) ) {
 			
 			newSubject = subjectsForRelation.get(relation).get(new Random().nextInt(subjectsForRelation.get(relation).size()));
-			System.out.println("Picked already contained subject");
+			LOGGER.info("Picked already contained subject");
 		}
 		
 		return newSubject;
@@ -374,7 +376,7 @@ public class TestAndTrainSetCreator {
 	private static void generatePositiveExample(String relation) throws IOException {
 		
 		File[] files = new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "eval/correct/"+relation+"/").listFiles();
-		System.out.println("Relation " + relation + " with " + files.length + " model files.");
+		LOGGER.info("Relation " + relation + " with " + files.length + " model files.");
 		
 		int train = 0, test = 0;
 		for (File file : files) {

@@ -48,7 +48,7 @@ public abstract class DefaultSearchEngine implements SearchEngine {
     	SearchResult result = searchResultsCache.getEntry(new MetaQuery("Philipp Lenard|-|?D? won the ?R?|-|Nobel Prize in Physics|-|en").toString());
     	
     	for ( WebSite site : result.getWebSites()) {
-    		System.out.println(site.getText());
+            LOGGER.info(site.getText());
     	}
 	}
 }

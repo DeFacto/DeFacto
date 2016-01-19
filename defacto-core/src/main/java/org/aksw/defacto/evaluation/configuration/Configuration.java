@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.aksw.defacto.model.DefactoModel;
+import org.apache.log4j.Logger;
 
 public class Configuration {
 
@@ -24,7 +25,9 @@ public class Configuration {
 	public String periodSearchMethod;
 	public int correctStart;
 	public int correctEnd;
-	
+
+	private static Logger logger = Logger.getLogger(Configuration.class);
+
 	public Configuration(String name, List<String> relationNames) {
 		
 		this.name = name;
@@ -44,6 +47,6 @@ public class Configuration {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(df.format(0.1145343234234 * 100).replace(",", "."));
+		logger.info(df.format(0.1145343234234 * 100).replace(",", "."));
 	}
 }

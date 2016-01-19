@@ -46,7 +46,7 @@ public class TopicTermExtractor {
     	
     	Defacto.init();
     	cache = new TopicTermSolr4Cache();
-        for ( Word w : getPotentialTopicTerms("Amazon", "Jeff Bezos"))  System.out.println(w + " " + w.getFrequency());;
+        for ( Word w : getPotentialTopicTerms("Amazon", "Jeff Bezos"))  logger.info(w + " " + w.getFrequency());;
     }
     
     /**

@@ -94,15 +94,15 @@ public class DataWebResultFinder {
 				ltriples.addAll(readLinkedDataLabeled(uri.toString()));
 		}
 		long duration = System.currentTimeMillis() - startTime;
-		System.out.println("number of all triples: " + numberOfTriples);
-		System.out.println("number of relevant triples: "
+		logger.info("number of all triples: " + numberOfTriples);
+		logger.info("number of relevant triples: "
 				+ numberOfRelevantTriples);
-		System.out.println("number of distinct relevant triples: "
+		logger.info("number of distinct relevant triples: "
 				+ relevantTriples.size());
-		System.out.println("number of distinct resources: "
+		logger.info("number of distinct resources: "
 				+ distinctResources.size());
-		System.out.println("Linked Data label calls: " + labelCalls);
-		System.out.println("time spend for retrieving resources: " + duration
+		logger.info("Linked Data label calls: " + labelCalls);
+		logger.info("time spend for retrieving resources: " + duration
 				+ " ms");
 
 		// score all triples, which we have obtained
@@ -123,7 +123,7 @@ public class DataWebResultFinder {
 			return ltriples;
 		}
 		numberOfTriples += m.size();
-		System.out.println("returned triples: " + m.size());
+		logger.info("returned triples: " + m.size());
 		StmtIterator it = m.listStatements();
 		int i = 0;
 		while (it.hasNext()) {
@@ -183,7 +183,7 @@ public class DataWebResultFinder {
 				ltriples.add(lt);
 			}
 		}
-		System.out.println("possibly relevant triples: " + i);
+		logger.info("possibly relevant triples: " + i);
 		return ltriples;
 	}
 
@@ -315,7 +315,7 @@ public class DataWebResultFinder {
 
 		for (Entry<LabeledTriple, Double> entry : similarTriples.entrySet()) {
 			if (entry.getValue() > 0.0) {
-				System.out.println(entry.getValue() + " " + entry.getKey());
+				logger.info(entry.getValue() + " " + entry.getKey());
 			}
 		}
 

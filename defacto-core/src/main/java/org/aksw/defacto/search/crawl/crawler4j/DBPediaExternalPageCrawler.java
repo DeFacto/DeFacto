@@ -6,6 +6,7 @@ import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -15,6 +16,7 @@ import java.util.regex.Pattern;
  */
 public class DBPediaExternalPageCrawler extends WebCrawler {
 
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(DBPediaExternalPageCrawler.class);
     private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg"
             + "|png|mp3|mp3|zip|gz))$");
 
@@ -50,9 +52,9 @@ public class DBPediaExternalPageCrawler extends WebCrawler {
             String html = htmlParseData.getHtml();
             Set<WebURL> links = htmlParseData.getOutgoingUrls();
 
-            System.out.println("Text length: " + text.length());
-            System.out.println("Html length: " + html.length());
-            System.out.println("Number of outgoing links: " + links.size());
+            LOGGER.info("Text length: " + text.length());
+            LOGGER.info("Html length: " + html.length());
+            LOGGER.info("Number of outgoing links: " + links.size());
         }
     }
 }

@@ -7,6 +7,7 @@ import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,6 +19,7 @@ public class CrawlerController {
 
     private static ArrayList<String> _seeds;
 
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(CrawlerController.class);
 
     public CrawlerController(ArrayList seeds){
         _seeds = seeds;
@@ -60,7 +62,7 @@ public class CrawlerController {
             controller.start(DBPediaExternalPageCrawler.class, numberOfCrawlers);
 
         }catch (Exception e){
-            System.out.println(e.toString());
+            LOGGER.error(e.toString());
         }
 
     }

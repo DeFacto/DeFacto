@@ -20,6 +20,12 @@ public class MetaEvaluationCache {
     private String randomSourceModelFileName;
     private String newModelFileName;
 
+    public int getHeader() {
+        return header;
+    }
+
+    private int header;
+
     public double getOverallScore() {
         return overallScore;
     }
@@ -73,7 +79,7 @@ public class MetaEvaluationCache {
 
     public MetaEvaluationCache(double overallScore, String sourceModelFileName, String subjectUri, String subjectLabel, String predicateUri, String predicateLabel,
                                String objectUri, String objectLabel, String type,
-                               String randomPropertyLabel, String randomSourceModelFileName, String newModelFileName){
+                               String randomPropertyLabel, String randomSourceModelFileName, String newModelFileName, int header){
         this.subjectUri = subjectUri;
         this.subjectLabel = subjectLabel;
         this.predicateUri = predicateUri;
@@ -86,6 +92,7 @@ public class MetaEvaluationCache {
         this.randomSourceModelFileName = randomSourceModelFileName;
         this.newModelFileName = newModelFileName;
         this.overallScore = overallScore;
+        this.header = header;
     }
 
     public String getObjectURI(){

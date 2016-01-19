@@ -68,7 +68,7 @@ public class QueryGenerator {
         	if ( !pattern.getNormalized().trim().isEmpty() ) {
         		
         		MetaQuery metaQuery = new MetaQuery(subjectLabel, pattern.getNormalized(), objectLabel, language, null);
-        		System.out.println(metaQuery);
+        		LOGGER.info(metaQuery.toString());
         		queryStrings.put(pattern, metaQuery);
         	}
         }

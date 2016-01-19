@@ -35,6 +35,7 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
 import com.hp.hpl.jena.tdb.TDBFactory;
+import org.slf4j.LoggerFactory;
 
 /**
  * Daniel Gerber <dgerber@informatik.uni-leipzig.de>
@@ -43,6 +44,8 @@ import com.hp.hpl.jena.tdb.TDBFactory;
 public class BenchmarkDataGeneration {
 
 	static String year;
+
+	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(BenchmarkDataGeneration.class);
 	
 	public static void dropEvalDirectory() throws IOException{
 		
@@ -80,7 +83,7 @@ public class BenchmarkDataGeneration {
 		Defacto.init();
 		BenchmarkPrerequisiteGeneration pre = new BenchmarkPrerequisiteGeneration();
 		
-		System.out.print("Start generating temporal facts ... ");
+		LOGGER.info("Start generating temporal facts ... ");
 		BenchmarkDataGeneration.dropEvalDirectory();
 		BenchmarkDataGeneration.loadSpouse();
 		BenchmarkDataGeneration.loadFoundationPlace();
@@ -91,8 +94,8 @@ public class BenchmarkDataGeneration {
 		BenchmarkDataGeneration.loadBirth();
 		BenchmarkDataGeneration.loadDeath();
 		BenchmarkDataGeneration.loadStarring();
-		BenchmarkDataGeneration.loadSubsidiary(); 
-		System.out.println("DONE!");
+		BenchmarkDataGeneration.loadSubsidiary();
+		LOGGER.info("DONE!");
 	}
 
 	public static void loadSubsidiary() throws JSONException, IOException {

@@ -29,7 +29,6 @@ public class MetaEvaluation {
 
     private static String getWhichPartFromRandom = ""; //get the resource to update -> TO
     private static String resourceToBeChanged; //select which resource should be swapped -> FROM
-    private static boolean applyLogicalRestriction = false; //true = check rule for swapping the resource (scenario 1), false = no rule, 100% random swapping (scenario 2)
 
     private static int totalFilesProcessed = 0;
     private static int totalFoldersProcessed = 0;
@@ -38,9 +37,8 @@ public class MetaEvaluation {
     private static int totalFoldersToBeProcessed = 0;
     private static int nrModelsToCompare = 4;  //the number of models to be computed
     private static File randomFolder;
-
-    private static String header = "score;model;subject;subject_label;predicate;object;object_label;model_type;random_source_folder;random_source_file;tmp_model_file_name";
-    private static String fileName = "EVAL01_META_B2.csv";
+    private static String fileName;
+    private static boolean applyLogicalRestriction = true; //true = check rule for swapping the resource (scenario 1), false = no rule, 100% random swapping (scenario 2)
     private static String newRandomFileName = "";
 
     private static List<MetaEvaluationCache> cacheEvaluation;
@@ -48,6 +46,11 @@ public class MetaEvaluation {
     public static void main(String[] args) {
 
         LOGGER.info("Starting the process");
+
+        if (applyLogicalRestriction){
+            fileName = "EVAL_META_02.csv";}
+        else {
+            fileName = "EVAL_META_01.csv";}
 
         long startTimeOverallProcess = System.currentTimeMillis();
 
@@ -64,13 +67,13 @@ public class MetaEvaluation {
             //the number of models for each property (folder)
             int sizePropertyFolder = 0;
 
-            String trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory")
+            String testDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory")
                     + Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory") + "correct/";
 
             LOGGER.info("Selecting folders which contain FP...");
             LOGGER.info("Apply logical restriction: " + applyLogicalRestriction);
 
-            File files = new File(trainDirectory);
+            File files = new File(testDirectory);
             //getting all folders (properties)
             ArrayList<File> folders = new ArrayList<>();
             for(File f : files.listFiles()){
@@ -114,7 +117,7 @@ public class MetaEvaluation {
                             
                             cacheEvaluation.add(new MetaEvaluationCache(score, models.get(i).getName(),models.get(i).getSubjectUri(),
                                     models.get(i).getSubjectLabel("en"), models.get(i).getPredicate().getURI(), models.get(i).getPredicate().getLocalName(),
-                                    models.get(i).getObjectUri(), models.get(i).getObjectLabel("en"), "O", "","", ""));
+                                    models.get(i).getObjectUri(), models.get(i).getObjectLabel("en"), "O", "","", "", totalFilesProcessed));
 
                             LOGGER.info("Model " + models.get(i).getName() + " has been processed");
                         }else{
@@ -184,7 +187,7 @@ public class MetaEvaluation {
 
                                 cacheEvaluation.add(new MetaEvaluationCache(scoreTemp, tempModel.getName(),tempModel.getSubjectUri(),
                                         tempModel.getSubjectLabel("en"), tempModel.getPredicate().getURI(), tempModel.getPredicate().getLocalName(),
-                                        tempModel.getObjectUri(), tempModel.getObjectLabel("en"), "C", randomFolder.getName(),modelsRandom.get(auxIndex).name, newRandomFileName));
+                                        tempModel.getObjectUri(), tempModel.getObjectLabel("en"), "C", randomFolder.getName(),modelsRandom.get(auxIndex).name, newRandomFileName, totalFilesProcessed));
                                 
 
                                 LOGGER.info("Changed Model '" + tempModel.getName() + "' has been processed");
@@ -193,7 +196,6 @@ public class MetaEvaluation {
                             else{
                                 LOGGER.info("Model already processed");
                             }
-
 
                         }
 
@@ -704,7 +706,10 @@ public class MetaEvaluation {
     private static List<MetaEvaluationCache> readFromCSV() throws Exception{
 
         List<MetaEvaluationCache> cache = new ArrayList<>();
+
         try {
+
+            createCacheFile();
 
             CsvReader data = new CsvReader(fileName);
 
@@ -719,7 +724,7 @@ public class MetaEvaluation {
 
                 MetaEvaluationCache item = new MetaEvaluationCache(Double.valueOf(data.get(0)), data.get(1), data.get(2),
                         data.get(3), data.get(4), data.get(5), data.get(6), data.get(7),
-                        data.get(8), data.get(9), data.get(10), data.get(11));
+                        data.get(8), data.get(9), data.get(10), data.get(11), Integer.valueOf(data.get(11)));
 
                 cache.add(item);
 
@@ -738,15 +743,14 @@ public class MetaEvaluation {
     }
 
 
-    private static void writeToCSV(MetaEvaluationCache item) throws IOException {
+    private static void createCacheFile() {
 
         boolean alreadyExists = new File(fileName).exists();
-
         try {
 
             CsvWriter csvOutput = new CsvWriter(new FileWriter(fileName, true), ';');
-            if (!alreadyExists)
-            {
+
+            if (!alreadyExists) {
                 csvOutput.write("score");
                 csvOutput.write("model");
                 csvOutput.write("subject");
@@ -759,8 +763,21 @@ public class MetaEvaluation {
                 csvOutput.write("random_source_folder");
                 csvOutput.write("random_source_file");
                 csvOutput.write("tmp_model_file_name");
+                csvOutput.write("header");
                 csvOutput.endRecord();
             }
+        }catch (Exception e){
+            LOGGER.error(e.toString());
+        }
+
+    }
+    private static void writeToCSV(MetaEvaluationCache item) throws IOException {
+
+        createCacheFile();
+
+        try {
+
+            CsvWriter csvOutput = new CsvWriter(new FileWriter(fileName, true), ';');
 
             // write out a few records
             csvOutput.write(String.valueOf(item.getOverallScore()));
@@ -775,6 +792,7 @@ public class MetaEvaluation {
             csvOutput.write(item.getRandomPropertyLabel());
             csvOutput.write(item.getRandomSourceModelFileName());
             csvOutput.write(item.getNewModelFileName());
+            csvOutput.write(String.valueOf(item.getHeader()));
 
             csvOutput.endRecord();
             csvOutput.close();

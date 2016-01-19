@@ -1,9 +1,14 @@
 package org.aksw.defacto.search.query;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Created by esteves on 02.09.15.
  */
 public class SolrWikiQuery implements Query {
+
+    private static final Logger logger = LoggerFactory.getLogger(SolrWikiQuery.class);
 
     @Override
     public String generateQuery(MetaQuery query) {
@@ -18,7 +23,7 @@ public class SolrWikiQuery implements Query {
 
     @Override
     public String normalizePredicate(String propertyLabel) {
-        System.out.println(propertyLabel);
+        logger.info(propertyLabel);
         return propertyLabel.replaceAll(",", "").replace("`", "").replace(" 's", "'s").replace("?R?", "").replace("?D?", "").replaceAll(" +", " ").replaceAll("'[^s]", "").replaceAll("&", "and").trim();
     }
 

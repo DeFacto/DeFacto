@@ -36,6 +36,7 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDFS;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
@@ -57,20 +58,22 @@ public class BenchmarkPrerequisiteGeneration {
 	public static Map<String,Integer> uriWithoutPrefix2OutboundLinksNumber = new HashMap<String,Integer>();
 	
 	private static int SURFACE_FORM_MIN_LENGTH = 4 ;
+
+	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(BenchmarkPrerequisiteGeneration.class);
 	
 	public BenchmarkPrerequisiteGeneration() throws JSONException, IOException {
-		
-		System.out.print("Start loading freebase-dbpedia mapping ... ");
+
+		LOGGER.info("Start loading freebase-dbpedia mapping ... ");
 		loadFreebaseToDbpediaMapping();
-		System.out.println("DONE!");
-		
-		System.out.print("Start loading dbpedia surface forms ... ");
+		LOGGER.info("DONE!");
+
+		LOGGER.info("Start loading dbpedia surface forms ... ");
 		loadDbpediaSurfaceForms();
-		System.out.println("DONE!");
-		
-		System.out.print("Start loading interlanguage links ... ");
+		LOGGER.info("DONE!");
+
+		LOGGER.info("Start loading interlanguage links ... ");
 		loadDbpediaInterlanguageLinks();
-		System.out.println("DONE!");
+		LOGGER.info("DONE!");
 	}
 	
 	public static void main(String[] args) throws JSONException, IOException {
@@ -103,8 +106,8 @@ public class BenchmarkPrerequisiteGeneration {
 	public static void loadUriScores() throws IOException{
 		
 		if ( new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "dbpedia/inbound_links_en.tsv").exists() ) {
-			
-			System.out.println("Reading inbound links!");
+
+			LOGGER.info("Reading inbound links!");
 			BufferedFileReader reader = new BufferedFileReader(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "dbpedia/inbound_links_en.tsv", Encoding.UTF_8);
 			String line;
 			while ( (line = reader.readLine()) != null ) {
@@ -116,12 +119,12 @@ public class BenchmarkPrerequisiteGeneration {
 		}
 		else {
 
-			System.out.println("Generating inbound links!");
+			LOGGER.info("Generating inbound links!");
 			for ( File file : new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "dbpedia/pagelinks/").listFiles(new FilenameFilter() { 
 				public boolean accept(File dir, String filename) { return filename.endsWith(".ttl"); }} )) {
 
 				NxParser nxp = new NxParser(new FileInputStream(file));
-				System.out.println("Processing file: " + file.getName());
+				LOGGER.info("Processing file: " + file.getName());
 				
 				while (nxp.hasNext()) {
 		        	
@@ -156,7 +159,7 @@ public class BenchmarkPrerequisiteGeneration {
 		}
 		else {
 
-			System.out.println("Generating outbound links!");
+			LOGGER.info("Generating outbound links!");
 			for ( File file : new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "dbpedia/pagelinks/").listFiles(new FilenameFilter() { 
 				public boolean accept(File dir, String filename) { return filename.endsWith(".ttl"); }} )) {
 
@@ -265,8 +268,8 @@ public class BenchmarkPrerequisiteGeneration {
 						for ( String label : EN_SURFACE_FORMS.get(uri)) model.add(r, model.createProperty(SKOS.NS + "altLabel"), label, "en");
 					}
 					else {
-						
-						System.out.println("No surface form for: <" + uri + "> found");
+
+						LOGGER.info("No surface form for: <" + uri + "> found");
 					}
 				}
 			}

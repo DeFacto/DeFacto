@@ -1,10 +1,14 @@
 package org.aksw.defacto.search.query;
 
+import org.apache.log4j.Logger;
+
 /**
  * 
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
  */
 public class BingQuery implements Query {
+
+    private static Logger logger =  Logger.getLogger(BingQuery.class);
 
     @Override
     public String generateQuery(MetaQuery query) {
@@ -13,8 +17,8 @@ public class BingQuery implements Query {
         String property = normalizePredicate(query.getPropertyLabel().trim());
         String object   = query.getObjectLabel().replace("&", "and");
         String queryString = "";
-        
-        System.out.println("METAQUERY: " +query );
+
+        logger.info("METAQUERY: " +query );
         
         // standard search engine query
         if ( query.getTopicTerms().isEmpty() ) {
@@ -48,7 +52,7 @@ public class BingQuery implements Query {
 
     @Override
     public String normalizePredicate(String propertyLabel) {
-        System.out.println(propertyLabel);
+        logger.info(propertyLabel);
         return propertyLabel.replaceAll(",", "").replace("`", "").replace(" 's", "'s").replace("?R?", "").replace("?D?", "").replaceAll(" +", " ").replaceAll("'[^s]", "").replaceAll("&", "and").trim();
     }
     
@@ -59,8 +63,8 @@ public class BingQuery implements Query {
         MetaQuery query3 = new MetaQuery("Mount Eccles National Park|-|?D? 's is a , ,, , '' stupid ?R?|-|Texas|-|fr");
         
         BingQuery bq = new BingQuery();
-        System.out.println(bq.generateQuery(query1));
-        System.out.println(bq.generateQuery(query2));
-        System.out.println(bq.generateQuery(query3));
+        logger.info(bq.generateQuery(query1));
+        logger.info(bq.generateQuery(query2));
+        logger.info(bq.generateQuery(query3));
     }
 }

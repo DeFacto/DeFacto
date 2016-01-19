@@ -19,6 +19,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -31,6 +32,8 @@ public class BoaPatternSearcher {
     private static HttpSolrServer frIndex;
     private Logger logger = Logger.getLogger(BoaPatternSearcher.class);
 	private Map<String,QueryResponse> queryCache = new HashMap<>();
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(BoaPatternSearcher.class);
 
     public BoaPatternSearcher(){
     	
@@ -147,7 +150,7 @@ public class BoaPatternSearcher {
         }
         catch (SolrServerException e) {
 
-            System.out.println("Could not execute query: " + e);
+            LOGGER.error("Could not execute query: " + e);
             e.printStackTrace();
         }
         
@@ -210,9 +213,9 @@ public class BoaPatternSearcher {
         Iterator<Pattern> iterator = sub.iterator();
         while ( iterator.hasNext()) {
 			Pattern pattern = iterator.next();
-			
-            System.out.println(pattern.naturalLanguageRepresentation + " --- " + pattern.normalize());
+
+            LOGGER.debug(pattern.naturalLanguageRepresentation + " --- " + pattern.normalize());
         }
-        System.out.println();
+
 	}
 }

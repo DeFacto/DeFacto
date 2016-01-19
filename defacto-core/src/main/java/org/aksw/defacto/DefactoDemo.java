@@ -35,7 +35,7 @@ public class DefactoDemo {
     public static void main(String[] args) throws InvalidFileFormatException, IOException {
 
         try{
-            System.out.println("DeFacto: starting the demonstration process");
+            LOG.info("DeFacto: starting the demonstration process");
 
             final Calendar startTime = Calendar.getInstance();
             LOG.info(startTime);
@@ -43,10 +43,10 @@ public class DefactoDemo {
             final Calendar endTime = Calendar.getInstance();
             LOG.info(endTime);
 
-            System.out.println("DeFacto: alright! DeFacto's score: " + evidence.getDeFactoScore());
+            LOG.info("DeFacto: alright! DeFacto's score: " + evidence.getDeFactoScore());
 
         }catch (Exception e){
-            System.out.println("Error: " + e.toString());
+            LOG.info("Error: " + e.toString());
         }
 
         //Defacto.checkFacts(getSampleData(), TIME_DISTRIBUTION_ONLY.NO);

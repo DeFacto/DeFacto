@@ -9,6 +9,7 @@ import org.aksw.sparql.metrics.DatabaseBackedSPARQLEndpointMetrics;
 import org.dllearner.core.owl.Individual;
 import org.dllearner.core.owl.ObjectProperty;
 import org.dllearner.kb.sparql.SparqlEndpoint;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,7 +23,8 @@ public class GoodnessFeature extends AbstractEvidenceFeature {
 
     private static DatabaseBackedSPARQLEndpointMetrics metric = null;
 	private static SparqlEndpoint endpoint = SparqlEndpoint.getEndpointDBpedia();
-	
+
+	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(GoodnessFeature.class);
 	static {
 		
 		try {
@@ -66,8 +68,8 @@ public class GoodnessFeature extends AbstractEvidenceFeature {
     	ObjectProperty property = new ObjectProperty("http://dbpedia.org/ontology/author");
 		Individual subject = new Individual("http://dbpedia.org/resource/The_Da_Vinci_Code");
 		Individual object = new Individual("http://dbpedia.org/resource/Dan_Brown");
-		
-		System.out.println(metric.getGoodness(subject, property, object));
-		System.out.println(metric.getGoodness(subject, new ObjectProperty("http://dbpedia.org/ontology/writer"), object));
+
+		LOGGER.info(String.valueOf(metric.getGoodness(subject, property, object)));
+		LOGGER.info(String.valueOf(metric.getGoodness(subject, new ObjectProperty("http://dbpedia.org/ontology/writer"), object)));
 	}
 }

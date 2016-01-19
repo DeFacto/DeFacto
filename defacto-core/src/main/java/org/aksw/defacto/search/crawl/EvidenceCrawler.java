@@ -71,7 +71,7 @@ public class EvidenceCrawler {
     	
     	Evidence evidence = null;
 
-        System.out.println("SearchEngineClass: " + engine.getClass().toString());
+        LOGGER.info("SearchEngineClass: " + engine.getClass().toString());
     	
     	if ( !evidenceCache.containsKey(this.model) ) {
     		
