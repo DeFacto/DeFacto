@@ -44,8 +44,8 @@ public class BingQuery implements Query {
                 // use the norelax option here because bing only includes first 4 terms as must contain
                 queryString += " AND norelax:\"" + query.getTopicTerms().get(i).getWord() + "\"";
         }
-        
-        System.out.println("QUERYSTRING: " + queryString);
+
+        logger.info("QUERYSTRING: " + queryString);
         
         return queryString;
     }

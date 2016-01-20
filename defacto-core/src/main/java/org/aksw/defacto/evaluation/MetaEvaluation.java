@@ -7,6 +7,7 @@ package org.aksw.defacto.evaluation;
 
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
+import com.google.common.collect.Multimap;
 import com.hp.hpl.jena.rdf.model.*;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.model.*;
@@ -41,6 +42,7 @@ public class MetaEvaluation {
     private static boolean applyLogicalRestriction = true; //true = check rule for swapping the resource (scenario 1), false = no rule, 100% random swapping (scenario 2)
     private static String newRandomFileName = "";
 
+    //private static Multimap<Integer, MetaEvaluationCache> cacheEvaluation;
     private static List<MetaEvaluationCache> cacheEvaluation;
 
     public static void main(String[] args) {
@@ -57,6 +59,7 @@ public class MetaEvaluation {
         try{
 
             Defacto.init();
+
 
             cacheEvaluation = readFromCSV();
 
@@ -108,9 +111,13 @@ public class MetaEvaluation {
                                 "] [" + models.get(i).getPredicate().getLocalName() + "] ["
                                 + models.get(i).getObjectLabel("en") + "]");
 
-                        if (!cacheEvaluation.contains(new MetaEvaluationCache(models.get(i).getSubjectUri(),
+                        MetaEvaluationCache oLookFor = new MetaEvaluationCache(models.get(i).getSubjectUri(),
                                 models.get(i).getPredicate().getURI(),
-                                models.get(i).getObjectUri()))) {
+                                models.get(i).getObjectUri());
+
+                        int headerValue = -1;
+
+                        if (!cacheEvaluation.contains(oLookFor)) {
 
                             Double score = Defacto.checkFact(models.get(i), Defacto.TIME_DISTRIBUTION_ONLY.NO).getDeFactoScore();
                             LOGGER.info("...done! Score = " + score.toString());
@@ -119,9 +126,13 @@ public class MetaEvaluation {
                                     models.get(i).getSubjectLabel("en"), models.get(i).getPredicate().getURI(), models.get(i).getPredicate().getLocalName(),
                                     models.get(i).getObjectUri(), models.get(i).getObjectLabel("en"), "O", "","", "", totalFilesProcessed));
 
+                            headerValue = totalFilesProcessed;
+
                             LOGGER.info("Model " + models.get(i).getName() + " has been processed");
                         }else{
                             LOGGER.info("Model already processed");
+                            int indexOf = cacheEvaluation.indexOf(oLookFor);
+                            headerValue = cacheEvaluation.get(indexOf).getHeader();
                         }
                         /*********************************************************************************************************************************/
 
@@ -187,7 +198,7 @@ public class MetaEvaluation {
 
                                 cacheEvaluation.add(new MetaEvaluationCache(scoreTemp, tempModel.getName(),tempModel.getSubjectUri(),
                                         tempModel.getSubjectLabel("en"), tempModel.getPredicate().getURI(), tempModel.getPredicate().getLocalName(),
-                                        tempModel.getObjectUri(), tempModel.getObjectLabel("en"), "C", randomFolder.getName(),modelsRandom.get(auxIndex).name, newRandomFileName, totalFilesProcessed));
+                                        tempModel.getObjectUri(), tempModel.getObjectLabel("en"), "C", randomFolder.getName(),modelsRandom.get(auxIndex).name, newRandomFileName, headerValue));
                                 
 
                                 LOGGER.info("Changed Model '" + tempModel.getName() + "' has been processed");
@@ -724,7 +735,7 @@ public class MetaEvaluation {
 
                 MetaEvaluationCache item = new MetaEvaluationCache(Double.valueOf(data.get(0)), data.get(1), data.get(2),
                         data.get(3), data.get(4), data.get(5), data.get(6), data.get(7),
-                        data.get(8), data.get(9), data.get(10), data.get(11), Integer.valueOf(data.get(11)));
+                        data.get(8), data.get(9), data.get(10), data.get(11), Integer.valueOf(data.get(12)));
 
                 cache.add(item);
 
