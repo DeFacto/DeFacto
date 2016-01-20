@@ -3,23 +3,19 @@ package org.aksw.defacto.evaluation;
 /**
  * Created by dnes on 04/01/16.
  */
-
-
-import com.csvreader.CsvReader;
-import com.csvreader.CsvWriter;
-import com.google.common.collect.Multimap;
+import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 import com.hp.hpl.jena.rdf.model.*;
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.*;
 import org.aksw.defacto.reader.DefactoModelReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
 
 /**
  * A naive strategy to generate metadata for correct triples x changed ones
@@ -27,67 +23,196 @@ import java.util.stream.Collectors;
 public class MetaEvaluation {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MetaEvaluation.class);
-
     private static String getWhichPartFromRandom = ""; //get the resource to update -> TO
     private static String resourceToBeChanged; //select which resource should be swapped -> FROM
-
     private static int totalFilesProcessed = 0;
     private static int totalFoldersProcessed = 0;
     private static int totalRandomFilesProcessed = 0;
-
     private static int totalFoldersToBeProcessed = 0;
     private static int nrModelsToCompare = 4;  //the number of models to be computed
     private static File randomFolder;
     private static String fileName;
-    private static boolean applyLogicalRestriction = true; //true = check rule for swapping the resource (scenario 1), false = no rule, 100% random swapping (scenario 2)
     private static String newRandomFileName = "";
+    private static double trainPercSize = 0.05;
 
-    //private static Multimap<Integer, MetaEvaluationCache> cacheEvaluation;
-    private static List<MetaEvaluationCache> cacheEvaluation;
+    private static boolean applyLogicalRestriction = false; //true = check rule for swapping the resource (scenario 1), false = no rule, 100% random swapping (scenario 2)
+    private static ArrayList<String> cache = new ArrayList<>(); //keeps in-memory cache and store into a csv file in order to restart the process
+    private static ArrayList<String> cacheBkp;
+    static PrintWriter out;
+    static boolean generateFiles = false;
+    static String cacheProcessingLog = "PROCESSING_QUEUE.csv";
+
+    /**
+     * create the files for meta evaluation
+     */
+    private static void createEvaluationFiles(String trainUnknown){
+
+        try {
+
+            Defacto.init();
+
+            List<String> languages = Arrays.asList("en");
+            List<DefactoModel> models = new ArrayList<>();
+            List<DefactoModel> modelsRandom = new ArrayList<>();
+
+            String FactBenchTestDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory") + "correct\\";
+            int sizePropertyFolder = 0;
+
+            LOGGER.info("Creating evaluation set for meta analysis");
+            for (File file: new File(trainUnknown).listFiles()) {
+                if (!file.isDirectory()) file.delete();
+            }
+
+            LOGGER.info("Cleaning up the 'unknown' directory");
+
+            ArrayList<File> folders = getFunctionalPropertyFolders(FactBenchTestDirectory);
+
+            LOGGER.info("Total of folders to be processed: " + String.valueOf(totalFoldersToBeProcessed));
+            LOGGER.info("=====================================================================================================");
+
+            for(File currentFolder : folders){
+                totalFoldersProcessed++;
+
+                models.clear();
+
+                sizePropertyFolder = currentFolder.listFiles().length;
+
+                LOGGER.info(":: reading the folder '" + currentFolder.getName() + "' which contains " + sizePropertyFolder + " models (files)");
+
+                models.addAll(DefactoModelReader.readModels(currentFolder.getAbsolutePath(), true, languages));
+
+                LOGGER.info(":: starting the process for " + models.size() + " models...");
+
+                for (int i=0; i < models.size(); i++){
+
+                    totalFilesProcessed++;
+                    ArrayList<File> selectedFiles = null;
+
+                    if (applyLogicalRestriction){
+
+                        resourceToBeChanged = PropertyConfigurationSingleton.getInstance().getConfigurations().get(currentFolder.getName()).getResourceToBeChangedForRubbish();
+
+                        //this folder will be used to collect new (random) resources
+                        randomFolder = getRandomFolder(folders, currentFolder, resourceToBeChanged);
+
+                        LOGGER.info(":: source: " + randomFolder.getName());
+
+                        //get inside the selected folder, N models
+                        selectedFiles = getNRandomFiles(nrModelsToCompare, randomFolder);
+
+                        //add all random selected models
+                        for (int j=0; j<selectedFiles.size(); j++){
+                            modelsRandom.add(DefactoModelReader.readModel(selectedFiles.get(j).getAbsolutePath()));
+                            LOGGER.info(":: source file " + selectedFiles.get(j).getAbsolutePath() + " has been selected as source for " + currentFolder.getName());
+                        }
+
+                    }else{
+                        LOGGER.info(":: logical restriction is not required...");
+                    }
+
+                    int auxIndex = 0;
+                    //compute the scores for aux models
+                    for ( int m = 0; m < nrModelsToCompare ; m++ ) {
+
+                        totalRandomFilesProcessed++;
+
+                        auxIndex = m;
+
+                        //what´s the evaluation method: EVAL1:RB1 or EVAL1:RB2
+                        if (!applyLogicalRestriction){
+
+                            modelsRandom.clear();
+                            resourceToBeChanged = getRandomResource();
+                            randomFolder = getRandomFolder(folders, currentFolder, resourceToBeChanged);
+                            LOGGER.info(":: source: " + randomFolder.getName());
+                            selectedFiles = getNRandomFiles(1, randomFolder);
+                            auxIndex = 0;
+
+                            //add all random selected models
+                            for (int j=0; j<selectedFiles.size(); j++){
+                                modelsRandom.add(DefactoModelReader.readModel(selectedFiles.get(j).getAbsolutePath()));
+                                LOGGER.info(":: source file " + selectedFiles.get(j).getAbsolutePath() + " has been selected as source for " + currentFolder.getName());
+                            }
+                        }
+
+                        LOGGER.info("Starting to compute random models...");
+
+                        mixModelsUpAndCreateFile(models.get(i), modelsRandom.get(auxIndex), m, (trainUnknown + currentFolder.getName() + "\\"));
+
+                    }
+
+                    if (modelsRandom!=null)
+                        modelsRandom.clear();
+                    if (selectedFiles!=null)
+                        selectedFiles.clear();
+
+                    LOGGER.info("File " +  models.get(i).getName() + " has been processed");
+
+                }
+                LOGGER.info("The folder " + currentFolder.getName() + " has been processed successfully");
+
+            }
+            /***********************************************************************************************************************************/
+
+        }catch (Exception e){
+            LOGGER.error(e.toString());
+        }
+
+    }
+
+    private static  ArrayList<File> getFunctionalPropertyFolders(String directory) throws Exception{
+        File files = new File(directory);
+        ArrayList<File> folders = new ArrayList<>();
+        for(File f : files.listFiles()){
+            if (f.isDirectory() && isFunctional(f.getName())){
+                folders.add(f); totalFoldersToBeProcessed++;
+                LOGGER.info("Folder '" + f.getName() + "' is functional and has been selected for evaluation");
+            }
+        }
+        return folders;
+    }
 
     public static void main(String[] args) {
 
         LOGGER.info("Starting the process");
 
-        if (applyLogicalRestriction){
-            fileName = "EVAL_META_02.csv";}
-        else {
-            fileName = "EVAL_META_01.csv";}
-
-        long startTimeOverallProcess = System.currentTimeMillis();
-
         try{
 
             Defacto.init();
 
-
-            cacheEvaluation = readFromCSV();
+            long startTimeOverallProcess = System.currentTimeMillis();
 
             List<String> languages = Arrays.asList("en");
-            List<DefactoModel> models = new ArrayList<>(); //the list of true models
-            List<DefactoModel> modelsRandom = new ArrayList<>(); //the aux models that will be used to generate different models
-
+            //the list of true models
+            List<DefactoModel> models = new ArrayList<>();
             //the number of models for each property (folder)
             int sizePropertyFolder = 0;
+            //current filename
+
+            String trainUnknown = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory") + "unknown\\random\\";
+            if (applyLogicalRestriction)
+                trainUnknown = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory") + "unknown\\rulebased\\";
+
+            if (generateFiles)
+                createEvaluationFiles(trainUnknown);
+
+            fileName = "EVAL_META_01.csv";
+            if (applyLogicalRestriction) fileName = "EVAL_META_02.csv";
+
+            out = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+
+            cache = readCacheFromCSV(cacheProcessingLog);
+            cacheBkp = (ArrayList<String>) cache.clone();
 
             String testDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory")
                     + Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory") + "correct/";
 
-            LOGGER.info("Selecting folders which contain FP...");
             LOGGER.info("Apply logical restriction: " + applyLogicalRestriction);
 
-            File files = new File(testDirectory);
-            //getting all folders (properties)
-            ArrayList<File> folders = new ArrayList<>();
-            for(File f : files.listFiles()){
-                //this test must be performed only for FP
-                if (f.isDirectory() && isFunctional(f.getName())){
-                    folders.add(f); totalFoldersToBeProcessed++;
-                    LOGGER.info("Folder '" + f.getName() + "' is functional and has been selected for evaluation");
-                }
-            }
-            LOGGER.info("Total of folders to be processed: " + String.valueOf(totalFoldersToBeProcessed));
-            LOGGER.info("------------------------------------------------------------------------------------------------------------");
+            LOGGER.info("Selecting folders which contain FP...");
+            ArrayList<File> folders = getFunctionalPropertyFolders(testDirectory);
+            LOGGER.info("Total of folders to be processed: " + String.valueOf(folders.size()));
+            LOGGER.info("==============================================================================================================");
 
             //start the process for each property (folder)
             for(File currentFolder : folders){
@@ -103,296 +228,143 @@ public class MetaEvaluation {
 
                     LOGGER.info(":: starting the process for " + models.size() + " models...");
 
+                    int totalTrainFiles = (int)Math.ceil(models.size() * trainPercSize);
+                    LOGGER.info("Total of training files: " + totalTrainFiles);
+
                     //starting computation for each model
-                    for (int i=0; i < models.size(); i++){
+                    for (int i=0; i < totalTrainFiles; i++){
+
                         totalFilesProcessed++;
 
-                        LOGGER.info("Main Model: Starting DeFacto for [" + models.get(i).getSubjectLabel("en") +
-                                "] [" + models.get(i).getPredicate().getLocalName() + "] ["
-                                + models.get(i).getObjectLabel("en") + "]");
+                        LOGGER.info("Main Model: Starting DeFacto for [" + models.get(i).getSubjectLabel("en") + "] [" + models.get(i).getPredicate().getLocalName() + "] [" + models.get(i).getObjectLabel("en") + "]");
 
-                        MetaEvaluationCache oLookFor = new MetaEvaluationCache(models.get(i).getSubjectUri(),
-                                models.get(i).getPredicate().getURI(),
-                                models.get(i).getObjectUri());
+                        if (!cache.contains(models.get(i).getFile().getAbsolutePath())){
+                            Evidence e = Defacto.checkFact(models.get(i), Defacto.TIME_DISTRIBUTION_ONLY.NO);
 
-                        int headerValue = -1;
+                            LOGGER.info("...done! Score = " + e.getDeFactoScore().toString());
 
-                        if (!cacheEvaluation.contains(oLookFor)) {
+                            Integer df_num_cp = 0;
+                            Integer df_num_tt = 0;
+                            Long df_num_hc = e.getTotalHitCount();
+                            Double df_score = e.getDeFactoScore();
 
-                            Double score = Defacto.checkFact(models.get(i), Defacto.TIME_DISTRIBUTION_ONLY.NO).getDeFactoScore();
-                            LOGGER.info("...done! Score = " + score.toString());
+                            if (e.getComplexProofs() != null)
+                                df_num_cp = e.getComplexProofs().size();
+
+                            if (e.getTopicTerms() != null)
+                                df_num_tt = e.getTopicTerms().size();
+
+                            out.println(models.get(i).getFile().getAbsolutePath() + ";" +
+                                    models.get(i).getFile().getAbsolutePath() + ";" + df_num_cp + ";" + df_num_tt + ";" + df_num_hc+ ";" + df_score+ ";" + models.get(i).getName()+ ";" +
+                                    models.get(i).getSubjectUri()+ ";" + models.get(i).getSubjectLabel("en")+ ";" +
+                                    models.get(i).getPredicate().getURI()+ ";" + models.get(i).getPredicate().getLocalName()+ ";" +
+                                    models.get(i).getObjectUri()+ ";" + models.get(i).getObjectLabel("en")+ ";" + "O");
+                            out.flush();
+
+                            cache.add(models.get(i).getFile().getAbsolutePath());
                             
-                            cacheEvaluation.add(new MetaEvaluationCache(score, models.get(i).getName(),models.get(i).getSubjectUri(),
-                                    models.get(i).getSubjectLabel("en"), models.get(i).getPredicate().getURI(), models.get(i).getPredicate().getLocalName(),
-                                    models.get(i).getObjectUri(), models.get(i).getObjectLabel("en"), "O", "","", "", totalFilesProcessed));
+                            LOGGER.debug("Model " + models.get(i).getName() + " has been processed");
 
-                            headerValue = totalFilesProcessed;
-
-                            LOGGER.info("Model " + models.get(i).getName() + " has been processed");
-                        }else{
-                            LOGGER.info("Model already processed");
-                            int indexOf = cacheEvaluation.indexOf(oLookFor);
-                            headerValue = cacheEvaluation.get(indexOf).getHeader();
                         }
-                        /*********************************************************************************************************************************/
-
-                        ArrayList<File> selectedFiles = null;
-
-                        if (applyLogicalRestriction){
-
-                            resourceToBeChanged = PropertyConfigurationSingleton.getInstance().getConfigurations().get(currentFolder.getName()).getResourceToBeChangedForRubbish();
-
-                            //this folder will be used to collect new (random) resources
-                            randomFolder = getRandomFolder(folders, currentFolder, resourceToBeChanged);
-                            LOGGER.info(":: source: " + randomFolder.getName());
-
-                            //get inside the selected folder, N models
-                            selectedFiles = getNRandomFiles(nrModelsToCompare, randomFolder);
-
-                            //add all random selected models
-                            for (int j=0; j<selectedFiles.size(); j++){
-                                modelsRandom.add(DefactoModelReader.readModel(selectedFiles.get(j).getAbsolutePath()));
-                                LOGGER.info(":: source file " + selectedFiles.get(j).getAbsolutePath() + " has been selected as source for " + currentFolder.getName());
-                            }
-
-                        }else{
-                            LOGGER.info(":: logical restriction is not required...");
+                        else{
+                            LOGGER.debug("Model already processed");
                         }
 
-                        int auxIndex = 0;
+                        LOGGER.info("Starting to compute random models...");
+
                         //compute the scores for aux models
                         for ( int m = 0; m < nrModelsToCompare ; m++ ) {
 
                             totalRandomFilesProcessed++;
 
-                            auxIndex = m;
+                            int auxIndex = m;
 
-                            //what´s the evaluation method: EVAL1:RB1 or EVAL1:RB2
-                            if (!applyLogicalRestriction){
-                                modelsRandom.clear();
-                                resourceToBeChanged = getRandomResource();
-                                randomFolder = getRandomFolder(folders, currentFolder, resourceToBeChanged);
-                                LOGGER.info(":: source: " + randomFolder.getName());
-                                selectedFiles = getNRandomFiles(1, randomFolder);
-                                auxIndex = 0;
-                                //add all random selected models
-                                for (int j=0; j<selectedFiles.size(); j++){
-                                    modelsRandom.add(DefactoModelReader.readModel(selectedFiles.get(j).getAbsolutePath()));
-                                    LOGGER.info(":: source file " + selectedFiles.get(j).getAbsolutePath() + " has been selected as source for " + currentFolder.getName());
-                                }
-                            }
-
-                            LOGGER.info("Starting to compute random models...");
-
-                            DefactoModel tempModel = mixModelsUp(models.get(i), modelsRandom.get(auxIndex), m);
-
+                            DefactoModel tempModel =
+                                  DefactoModelReader.readModel(trainUnknown + "/" +  currentFolder.getName() + "/" +  models.get(i).getFile().getName().substring(0,  models.get(i).getFile().getName().length() - 4) + "_" + m + ".ttl" , false, languages);
 
                             LOGGER.info("Random: Starting DeFacto for [" + tempModel.getSubjectLabel("en") +
                                     "] [" + tempModel.getPredicate().getLocalName() + "] [" + tempModel.getObjectLabel("en") + "]");
 
+                            if (!cache.contains(tempModel.getFile().getAbsolutePath())) {
 
-                            if (!cacheEvaluation.contains(new MetaEvaluationCache(tempModel.getSubjectUri(),tempModel.getPredicate().getURI(),tempModel.getObjectUri()))) {
+                                Evidence e = Defacto.checkFact(tempModel, Defacto.TIME_DISTRIBUTION_ONLY.NO);
 
-                                Double scoreTemp = Defacto.checkFact(tempModel, Defacto.TIME_DISTRIBUTION_ONLY.NO).getDeFactoScore();
-                                LOGGER.info("...done! Score = " + scoreTemp.toString());
+                                LOGGER.info("...done! Score = " + e.getDeFactoScore().toString());
 
-                                cacheEvaluation.add(new MetaEvaluationCache(scoreTemp, tempModel.getName(),tempModel.getSubjectUri(),
-                                        tempModel.getSubjectLabel("en"), tempModel.getPredicate().getURI(), tempModel.getPredicate().getLocalName(),
-                                        tempModel.getObjectUri(), tempModel.getObjectLabel("en"), "C", randomFolder.getName(),modelsRandom.get(auxIndex).name, newRandomFileName, headerValue));
-                                
+                                Integer df_num_cp = 0;
+                                Integer df_num_tt = 0;
+                                if (e.getComplexProofs() != null)
+                                    df_num_cp = e.getComplexProofs().size();
+
+                                if (e.getTopicTerms() != null)
+                                    df_num_tt = e.getTopicTerms().size();
+
+                                Long df_num_hc = e.getTotalHitCount();
+                                Double df_score = e.getDeFactoScore();
+
+                                out.println(models.get(i).getFile().getAbsolutePath() + ";" +
+                                        tempModel.getFile().getAbsolutePath() + ";" + df_num_cp + ";" +  df_num_tt + ";" + df_num_hc + ";" + df_score + ";" + tempModel.getName()+ ";" +
+                                        tempModel.getSubjectUri()+ ";" + tempModel.getSubjectLabel("en")+ ";" +
+                                        tempModel.getPredicate().getURI()+ ";" + tempModel.getPredicate().getLocalName()+ ";" +
+                                        tempModel.getObjectUri()+ ";" + tempModel.getObjectLabel("en")+ ";" + "C");
+                                out.flush();
+                                cache.add(tempModel.getFile().getAbsolutePath());
 
                                 LOGGER.info("Changed Model '" + tempModel.getName() + "' has been processed");
 
                             }
                             else{
-                                LOGGER.info("Model already processed");
+                                LOGGER.debug("Model already processed");
                             }
 
                         }
 
-                        if (modelsRandom!=null)
-                            modelsRandom.clear();
-                        if (selectedFiles!=null)
-                            selectedFiles.clear();
-
                         LOGGER.info("File " +  models.get(i).getName() + " has been processed");
 
+                        LOGGER.info(":: Synchronizing cache");
+                        for(String m: cache){
+                            if (!cacheBkp.contains(m))
+                                writeToCSV(cacheProcessingLog, m);
+                        }
+                        cache = readCacheFromCSV(cacheProcessingLog);
+                        cacheBkp = (ArrayList<String>) cache.clone();
+                        out.flush();
+
                 }
-
                 LOGGER.info("The folder " + currentFolder.getName() + " has been processed successfully");
-
             }
-
-            //Collections.shuffle(models, new Random(100));
-
 
             long stopTimeOverallProcess = System.currentTimeMillis();
             long elapsedTime = stopTimeOverallProcess - startTimeOverallProcess;
 
+            LOGGER.info("==============================================================================================================");
             LOGGER.info("Done!");
             LOGGER.info("Total folders processed: " + totalFilesProcessed);
             LOGGER.info("Total files processed: " + totalFilesProcessed);
             LOGGER.info("Total random files processed: " + totalFilesProcessed);
-
-            String.format("Processing Time: %02d hour, %02d min, %02d sec",
+            LOGGER.info(String.format("Processing Time: %02d hour, %02d min, %02d sec",
                     TimeUnit.MILLISECONDS.toHours(elapsedTime),
                     TimeUnit.MILLISECONDS.toMinutes(elapsedTime),
-                    TimeUnit.MILLISECONDS.toSeconds(elapsedTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedTime))
+                    TimeUnit.MILLISECONDS.toSeconds(elapsedTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedTime)))
             );
 
         }catch (Exception e){
             LOGGER.error(e.toString());
         }finally {
             try{
-                for(MetaEvaluationCache m: cacheEvaluation){
-                    writeToCSV(m);
+                LOGGER.info(":: Error -> Synchronizing cache");
+                for(String m: cache){
+                    if (!cacheBkp.contains(m))
+                        writeToCSV(cacheProcessingLog, m);
                 }
+                cache = readCacheFromCSV(cacheProcessingLog);
+                cacheBkp = cache;
+                out.flush();
+                out.close();
             }catch (Exception e2){
                 LOGGER.error(e2.toString());
             }
         }
-
-    }
-
-    private static void startCache(){
-
-        MetaEvaluationCache p1 = new MetaEvaluationCache("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hope,_Arkansas");
-        MetaEvaluationCache p2 = new MetaEvaluationCache("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.018f94");
-        MetaEvaluationCache p3 = new MetaEvaluationCache("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Beverly_Hills,_California");
-        MetaEvaluationCache p4 = new MetaEvaluationCache("http://dbpedia.org/resource/Bill_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Setagaya,_Tokyo");
-        MetaEvaluationCache p5 = new MetaEvaluationCache("http://dbpedia.org/resource/Chris_Kaman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hope,_Arkansas");
-        MetaEvaluationCache p6 = new MetaEvaluationCache("http://dbpedia.org/resource/Michael_Jackson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
-        MetaEvaluationCache p7 = new MetaEvaluationCache("http://dbpedia.org/resource/Ferdinand_von_Mueller","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
-        MetaEvaluationCache p8 = new MetaEvaluationCache("http://dbpedia.org/resource/James_Buchanan","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
-        MetaEvaluationCache p9 = new MetaEvaluationCache("http://dbpedia.org/resource/Richard_Jefferson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Gary,_Indiana");
-        MetaEvaluationCache p10 = new MetaEvaluationCache("http://dbpedia.org/resource/Michael_Jackson","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/West_Hollywood,_California");
-        MetaEvaluationCache p11 = new MetaEvaluationCache("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
-        MetaEvaluationCache p12 = new MetaEvaluationCache("http://dbpedia.org/resource/Tayshaun_Prince","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
-        MetaEvaluationCache p13 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.01t_54y","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Liverpool");
-        MetaEvaluationCache p14 = new MetaEvaluationCache("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Nashville,_Tennessee");
-        MetaEvaluationCache p15 = new MetaEvaluationCache("http://dbpedia.org/resource/Paul_McCartney","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Santa_Barbara,_California");
-        MetaEvaluationCache p16 = new MetaEvaluationCache("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
-        MetaEvaluationCache p17 = new MetaEvaluationCache("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kiel");
-        MetaEvaluationCache p18 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.07j9cs","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
-        MetaEvaluationCache p19 = new MetaEvaluationCache("http://dbpedia.org/resource/Frank_Sinatra","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.03spz");
-        MetaEvaluationCache p20 = new MetaEvaluationCache("http://dbpedia.org/resource/Gerald_Ford","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Hoboken,_New_Jersey");
-        MetaEvaluationCache p21 = new MetaEvaluationCache("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Denison,_Texas");
-        MetaEvaluationCache p22 = new MetaEvaluationCache("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0gp66n");
-        MetaEvaluationCache p23 = new MetaEvaluationCache("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.04swd");
-        MetaEvaluationCache p24 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.02wk4d","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Denison,_Texas");
-        MetaEvaluationCache p25 = new MetaEvaluationCache("http://dbpedia.org/resource/Dwight_D._Eisenhower","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0r6ff");
-        MetaEvaluationCache p26 = new MetaEvaluationCache("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Atlanta");
-        MetaEvaluationCache p27 = new MetaEvaluationCache("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Cairo");
-        MetaEvaluationCache p28 = new MetaEvaluationCache("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.01z645");
-        MetaEvaluationCache p29 = new MetaEvaluationCache("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
-        MetaEvaluationCache p30 = new MetaEvaluationCache("http://dbpedia.org/resource/Kanye_West","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
-        MetaEvaluationCache p31 = new MetaEvaluationCache("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
-        MetaEvaluationCache p32 = new MetaEvaluationCache("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Cambridge,_Massachusetts");
-        MetaEvaluationCache p33 = new MetaEvaluationCache("http://dbpedia.org/resource/Hubert_Humphrey","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
-        MetaEvaluationCache p34 = new MetaEvaluationCache("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chennai");
-        MetaEvaluationCache p35 = new MetaEvaluationCache("http://dbpedia.org/resource/BeyoncÃ©_Knowles","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Oxford");
-        MetaEvaluationCache p36 = new MetaEvaluationCache("http://dbpedia.org/resource/Harry_S._Truman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
-        MetaEvaluationCache p37 = new MetaEvaluationCache("http://dbpedia.org/resource/Harry_S._Truman","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Beverly_Hills,_California");
-        MetaEvaluationCache p38 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.0qs4h8r","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
-        MetaEvaluationCache p39 = new MetaEvaluationCache("http://dbpedia.org/resource/Gerald_Wallace","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
-        MetaEvaluationCache p40 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.030xfx","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Lamar,_Missouri");
-        MetaEvaluationCache p41 = new MetaEvaluationCache("http://dbpedia.org/resource/Lady_Gaga","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
-        MetaEvaluationCache p42 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.02wc72n","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
-        MetaEvaluationCache p43 = new MetaEvaluationCache("http://dbpedia.org/resource/Saddam_Hussein","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
-        MetaEvaluationCache p44 = new MetaEvaluationCache("http://dbpedia.org/resource/Saddam_Hussein","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
-        MetaEvaluationCache p45 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.08623t","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/New_York_City");
-        MetaEvaluationCache p46 = new MetaEvaluationCache("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
-        MetaEvaluationCache p47 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.0j11784","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
-        MetaEvaluationCache p48 = new MetaEvaluationCache("http://dbpedia.org/resource/Raymond_Felton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Chicago");
-        MetaEvaluationCache p49 = new MetaEvaluationCache("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
-        MetaEvaluationCache p50 = new MetaEvaluationCache("http://dbpedia.org/resource/Hillary_Rodham_Clinton","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Houston");
-        MetaEvaluationCache p51 = new MetaEvaluationCache("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
-        MetaEvaluationCache p52 = new MetaEvaluationCache("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Springfield,_Missouri");
-        MetaEvaluationCache p53 = new MetaEvaluationCache("http://dbpedia.org/resource/Prince_(musician)","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Waverly,_Minnesota");
-        MetaEvaluationCache p54 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.0qs4h8r","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
-        MetaEvaluationCache p55 = new MetaEvaluationCache("http://dbpedia.org/resource/Andrei_Kirilenko","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Minneapolis");
-        MetaEvaluationCache p56 = new MetaEvaluationCache("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
-        MetaEvaluationCache p57 = new MetaEvaluationCache("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Los_Angeles");
-        MetaEvaluationCache p58 = new MetaEvaluationCache("http://dbpedia.org/resource/Johnny_Cash","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0fw2y");
-        MetaEvaluationCache p59 = new MetaEvaluationCache("http://dbpedia.org/resource/Gottfried_Wilhelm_Leibniz","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
-        MetaEvaluationCache p60 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.06y9c2","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Kingsland,_Arkansas");
-        MetaEvaluationCache p61 = new MetaEvaluationCache("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Saginaw,_Michigan");
-        MetaEvaluationCache p62 = new MetaEvaluationCache("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.02_286");
-        MetaEvaluationCache p63 = new MetaEvaluationCache("http://dbpedia.org/resource/James_Buchanan","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Saginaw,_Michigan");
-        MetaEvaluationCache p64 = new MetaEvaluationCache("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.01jr6");
-        MetaEvaluationCache p65 = new MetaEvaluationCache("http://dbpedia.org/resource/Serena_Williams","http://dbpedia.org/ontology/birthPlace","http://rdf.freebase.com/ns/m.0154j");
-        MetaEvaluationCache p66 = new MetaEvaluationCache("http://dbpedia.org/resource/Daniel_Nestor","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
-        MetaEvaluationCache p67 = new MetaEvaluationCache("http://dbpedia.org/resource/J._R._Smith","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
-        MetaEvaluationCache p68 = new MetaEvaluationCache("http://rdf.freebase.com/ns/m.0202l6","http://dbpedia.org/ontology/birthPlace","http://dbpedia.org/resource/Belgrade");
-
-        cacheEvaluation.add(p1);
-        cacheEvaluation.add(p2);
-        cacheEvaluation.add(p3);
-        cacheEvaluation.add(p4);
-        cacheEvaluation.add(p5);
-        cacheEvaluation.add(p6);
-        cacheEvaluation.add(p7);
-        cacheEvaluation.add(p8);
-        cacheEvaluation.add(p9);
-        cacheEvaluation.add(p10);
-        cacheEvaluation.add(p11);
-        cacheEvaluation.add(p12);
-        cacheEvaluation.add(p13);
-        cacheEvaluation.add(p14);
-        cacheEvaluation.add(p15);
-        cacheEvaluation.add(p16);
-        cacheEvaluation.add(p17);
-        cacheEvaluation.add(p18);
-        cacheEvaluation.add(p19);
-        cacheEvaluation.add(p20);
-        cacheEvaluation.add(p21);
-        cacheEvaluation.add(p22);
-        cacheEvaluation.add(p23);
-        cacheEvaluation.add(p24);
-        cacheEvaluation.add(p25);
-        cacheEvaluation.add(p26);
-        cacheEvaluation.add(p27);
-        cacheEvaluation.add(p28);
-        cacheEvaluation.add(p29);
-        cacheEvaluation.add(p30);
-        cacheEvaluation.add(p31);
-        cacheEvaluation.add(p32);
-        cacheEvaluation.add(p33);
-        cacheEvaluation.add(p34);
-        cacheEvaluation.add(p35);
-        cacheEvaluation.add(p36);
-        cacheEvaluation.add(p37);
-        cacheEvaluation.add(p38);
-        cacheEvaluation.add(p39);
-        cacheEvaluation.add(p40);
-        cacheEvaluation.add(p41);
-        cacheEvaluation.add(p42);
-        cacheEvaluation.add(p43);
-        cacheEvaluation.add(p44);
-        cacheEvaluation.add(p45);
-        cacheEvaluation.add(p46);
-        cacheEvaluation.add(p47);
-        cacheEvaluation.add(p48);
-        cacheEvaluation.add(p49);
-        cacheEvaluation.add(p50);
-        cacheEvaluation.add(p51);
-        cacheEvaluation.add(p52);
-        cacheEvaluation.add(p53);
-        cacheEvaluation.add(p54);
-        cacheEvaluation.add(p55);
-        cacheEvaluation.add(p56);
-        cacheEvaluation.add(p57);
-        cacheEvaluation.add(p58);
-        cacheEvaluation.add(p59);
-        cacheEvaluation.add(p60);
-        cacheEvaluation.add(p61);
-        cacheEvaluation.add(p62);
-        cacheEvaluation.add(p63);
-        cacheEvaluation.add(p64);
-        cacheEvaluation.add(p65);
-        cacheEvaluation.add(p66);
-        cacheEvaluation.add(p67);
-        cacheEvaluation.add(p68);
 
     }
 
@@ -404,7 +376,7 @@ public class MetaEvaluation {
      * @param oURI the object URI of the selected object
      * @return Model
      */
-    private static DefactoModel mixModels(Model m1, Model m2, String sURI, String oURI, int index) throws Exception {
+    private static void mixModels(Model m1, Model m2, String sURI, String oURI, int index, String destinationFolder, String sourceFileName) throws Exception {
 
         LOGGER.info(":: starting the jena model generation");
 
@@ -489,18 +461,19 @@ public class MetaEvaluation {
             }
         }
 
-        newRandomFileName = "C:\\DNE5\\github\\DeFacto\\data\\factbench\\v1_2013\\test\\unknown\\out_" + auxPredicate.getLocalName() + "_" + index + ".ttl";
+        newRandomFileName = destinationFolder + sourceFileName.substring(0, sourceFileName.length() - 4) + "_" + index + ".ttl";
         FileWriter out = new FileWriter(newRandomFileName);
         m.write(out, "TTL");
 
         LOGGER.info(":: New file model has been generated: " + newRandomFileName);
 
         //setting DeFacto Model
-        finalModel = new DefactoModel(m, "Unknown " + index, false, Arrays.asList("en", "de", "fr"));
+        //finalModel = new DefactoModel(m, "Unknown " + index, false, Arrays.asList("en", "de", "fr"));
 
-        return finalModel;
+        //return finalModel;
 
     }
+
     /***
      * DeFacto´s model is built up over jena´s model representation. This function correctly mix things up.
      * @param original
@@ -510,7 +483,7 @@ public class MetaEvaluation {
      * @return
      * @throws Exception
      */
-    private static DefactoModel mixModelsUp(DefactoModel original, DefactoModel random, int index) throws Exception{
+    private static void mixModelsUpAndCreateFile(DefactoModel original, DefactoModel random, int index, String destinationFolder) throws Exception{
 
 
         String subjectURI = original.getSubjectUri();
@@ -552,7 +525,8 @@ public class MetaEvaluation {
         }
 
 
-        finalModel = mixModels(original.model, random.model, subjectURI, objectURI, index);
+         mixModels(original.model, random.model, subjectURI, objectURI, index, destinationFolder, new File(original.getName()).getName());
+        //finalModel = mixModels(original.model, random.model, subjectURI, objectURI, index, destinationFolder, new File(original.getName()).getName());
 
         /*
         //this code does not work for FreeBase
@@ -567,8 +541,9 @@ public class MetaEvaluation {
         finalModel.setName("temp" + index);
         finalModel.setCorrect(false);
         */
-        return finalModel;
+        //return finalModel;
     }
+
     /**
      * check whether the property is functional
      * @param propertyName
@@ -577,6 +552,7 @@ public class MetaEvaluation {
     private static boolean isFunctional(String propertyName) {
         return PropertyConfigurationSingleton.getInstance().getConfigurations().get(propertyName).isFunctionalProperty();
     }
+
     /***
      * get a random resource (subject or object)
      * @return
@@ -587,6 +563,7 @@ public class MetaEvaluation {
             return "S";
         return "O";
     }
+
     /***
      * TODO: test it
      * @param r
@@ -605,6 +582,7 @@ public class MetaEvaluation {
         return (HashMap)filter;
 
     }
+
     /***
      * returns a random folder (property) of FactBench to be used as source to the new model generation process based on the structure of the provided model
       * @param current
@@ -679,6 +657,7 @@ public class MetaEvaluation {
 
         return randomFolder;
     }
+
     /***
      * get randomly n files inside a folder
      * @param n
@@ -712,36 +691,21 @@ public class MetaEvaluation {
         return selected;
     }
 
+    private static ArrayList<String> readCacheFromCSV(String fn) throws Exception{
 
-
-    private static List<MetaEvaluationCache> readFromCSV() throws Exception{
-
-        List<MetaEvaluationCache> cache = new ArrayList<>();
+        ArrayList<String> cache = new ArrayList<>();
 
         try {
 
-            createCacheFile();
+            createCacheFile(fn);
 
-            CsvReader data = new CsvReader(fileName);
+            CSVReader reader = new CSVReader(new FileReader(fn), ',' , '\'' , '\t');
 
-            data.readHeaders();
-            data.setDelimiter(';');
-
-            while (data.readRecord())
-            {
-                /* MetaEvaluationCache item = new MetaEvaluationCache(Double.valueOf(data.get("score")), data.get("model"), data.get("subject"),
-                        data.get("subject_label"), data.get("predicate"), data.get("predicate_label"), data.get("object"), data.get("object_label"),
-                        data.get("model_type"), data.get("random_source_folder"), data.get("random_source_file"), data.get("tmp_model_file_name")); */
-
-                MetaEvaluationCache item = new MetaEvaluationCache(Double.valueOf(data.get(0)), data.get(1), data.get(2),
-                        data.get(3), data.get(4), data.get(5), data.get(6), data.get(7),
-                        data.get(8), data.get(9), data.get(10), data.get(11), Integer.valueOf(data.get(12)));
-
-                cache.add(item);
-
+            String [] nextLine;
+            while ((nextLine = reader.readNext()) != null) {
+                cache.add(nextLine[0]);
             }
-
-            data.close();
+            reader.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -753,60 +717,31 @@ public class MetaEvaluation {
 
     }
 
+    private static void createCacheFile(String fileName) {
 
-    private static void createCacheFile() {
-
-        boolean alreadyExists = new File(fileName).exists();
         try {
-
-            CsvWriter csvOutput = new CsvWriter(new FileWriter(fileName, true), ';');
-
-            if (!alreadyExists) {
-                csvOutput.write("score");
-                csvOutput.write("model");
-                csvOutput.write("subject");
-                csvOutput.write("subject_label");
-                csvOutput.write("predicate");
-                csvOutput.write("predicate_label");
-                csvOutput.write("object");
-                csvOutput.write("object_label");
-                csvOutput.write("model_type");
-                csvOutput.write("random_source_folder");
-                csvOutput.write("random_source_file");
-                csvOutput.write("tmp_model_file_name");
-                csvOutput.write("header");
-                csvOutput.endRecord();
+            File f = new File(fileName);
+            if(!f.exists()) {
+                f.createNewFile();
             }
+
         }catch (Exception e){
             LOGGER.error(e.toString());
         }
 
     }
-    private static void writeToCSV(MetaEvaluationCache item) throws IOException {
 
-        createCacheFile();
+    private static void writeToCSV(String fileName, String text) throws IOException {
+
+        createCacheFile(fileName);
 
         try {
 
-            CsvWriter csvOutput = new CsvWriter(new FileWriter(fileName, true), ';');
+            CSVWriter writer = new CSVWriter(new FileWriter(fileName, true), ',' , '\0' , '\t');
+            String[] t = new String[] {text};
+            writer.writeNext(t);
+            writer.close();
 
-            // write out a few records
-            csvOutput.write(String.valueOf(item.getOverallScore()));
-            csvOutput.write(item.getSourceModelFileName());
-            csvOutput.write(item.getSubjectURI());
-            csvOutput.write(item.getSubjectLabel());
-            csvOutput.write(item.getPredicateURI());
-            csvOutput.write(item.getPredicateLabel());
-            csvOutput.write(item.getObjectURI());
-            csvOutput.write(item.getObjectLabel());
-            csvOutput.write(item.getType());
-            csvOutput.write(item.getRandomPropertyLabel());
-            csvOutput.write(item.getRandomSourceModelFileName());
-            csvOutput.write(item.getNewModelFileName());
-            csvOutput.write(String.valueOf(item.getHeader()));
-
-            csvOutput.endRecord();
-            csvOutput.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

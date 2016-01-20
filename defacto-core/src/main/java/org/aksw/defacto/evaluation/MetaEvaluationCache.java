@@ -1,5 +1,7 @@
 package org.aksw.defacto.evaluation;
 
+import org.aksw.defacto.evidence.Evidence;
+
 /**
  * Created by Diego on 1/19/2016.
  */
@@ -19,15 +21,28 @@ public class MetaEvaluationCache {
     private String randomPropertyLabel;
     private String randomSourceModelFileName;
     private String newModelFileName;
+    private int header;
+
+    private Integer df_num_cp;
+    private Integer df_num_tt;
+    private Long df_num_hc;
+    private Double df_score;
 
     public int getHeader() {
         return header;
     }
 
-    private int header;
-
-    public double getOverallScore() {
-        return overallScore;
+    public Double getOverallScore() {
+        return this.df_score;
+    }
+    public Long getTotalHitCount(){
+        return this.df_num_hc;
+    }
+    public Integer getTotalTopicTerms() {
+        return this.df_num_tt;
+    }
+    public Integer getTotalComplexProofs() {
+        return this.df_num_cp;
     }
 
     public String getNewModelFileName() {
@@ -62,13 +77,15 @@ public class MetaEvaluationCache {
         return subjectLabel;
     }
 
-    private double overallScore;
-
-    public MetaEvaluationCache(String sURI, String pURI, String oURI, double overallScore){
+    public MetaEvaluationCache(String sURI, String pURI, String oURI, Integer df_num_cp,  Integer df_num_tt, Long df_num_hc, Double df_score){
         this.subjectUri = sURI;
         this.predicateUri = pURI;
         this.objectUri = oURI;
-        this.overallScore = overallScore;
+        this.df_num_cp = df_num_cp;
+        this.df_num_tt = df_num_tt;
+        this.df_num_hc = df_num_hc;
+        this.df_score = df_score;
+
     }
 
     public MetaEvaluationCache(String sURI, String pURI, String oURI){
@@ -77,7 +94,7 @@ public class MetaEvaluationCache {
         this.objectUri = oURI;
     }
 
-    public MetaEvaluationCache(double overallScore, String sourceModelFileName, String subjectUri, String subjectLabel, String predicateUri, String predicateLabel,
+    public MetaEvaluationCache(Integer df_num_cp,  Integer df_num_tt, Long df_num_hc, Double df_score, String sourceModelFileName, String subjectUri, String subjectLabel, String predicateUri, String predicateLabel,
                                String objectUri, String objectLabel, String type,
                                String randomPropertyLabel, String randomSourceModelFileName, String newModelFileName, int header){
         this.subjectUri = subjectUri;
@@ -91,7 +108,10 @@ public class MetaEvaluationCache {
         this.randomPropertyLabel = randomPropertyLabel;
         this.randomSourceModelFileName = randomSourceModelFileName;
         this.newModelFileName = newModelFileName;
-        this.overallScore = overallScore;
+        this.df_num_cp = df_num_cp;
+        this.df_num_tt = df_num_tt;
+        this.df_num_hc = df_num_hc;
+        this.df_score = df_score;
         this.header = header;
     }
 

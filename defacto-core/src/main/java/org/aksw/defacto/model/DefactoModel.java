@@ -41,6 +41,7 @@ public class DefactoModel {
     public DefactoResource object;
     public DefactoTimePeriod timePeriod = new DefactoTimePeriod("", "");
     public List<String> languages = new ArrayList<String>();
+	public File file;
     
     /**
      * Creates a new Defacto Model. This is a wrapper around a jena model. But with
@@ -60,6 +61,10 @@ public class DefactoModel {
         
         init(model);
     }
+
+	public File getFile(){
+		return this.file;
+	}
     
     /**
      * 
@@ -273,6 +278,9 @@ public class DefactoModel {
         this.correct = correct;
     }
 
+	public void setFile(File f){
+		this.file=f;
+	}
     
     /**
      * @return the name
