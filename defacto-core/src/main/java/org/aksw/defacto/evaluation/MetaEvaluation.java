@@ -40,137 +40,7 @@ public class MetaEvaluation {
     private static ArrayList<String> cacheBkp;
     static PrintWriter out;
     static boolean generateFiles = false;
-    static String cacheProcessingLog = "PROCESSING_QUEUE.csv";
-
-    /**
-     * create the files for meta evaluation
-     */
-    private static void createEvaluationFiles(String trainUnknown){
-
-        try {
-
-            Defacto.init();
-
-            List<String> languages = Arrays.asList("en");
-            List<DefactoModel> models = new ArrayList<>();
-            List<DefactoModel> modelsRandom = new ArrayList<>();
-
-            String FactBenchTestDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory") + "correct\\";
-            int sizePropertyFolder = 0;
-
-            LOGGER.info("Creating evaluation set for meta analysis");
-            for (File file: new File(trainUnknown).listFiles()) {
-                if (!file.isDirectory()) file.delete();
-            }
-
-            LOGGER.info("Cleaning up the 'unknown' directory");
-
-            ArrayList<File> folders = getFunctionalPropertyFolders(FactBenchTestDirectory);
-
-            LOGGER.info("Total of folders to be processed: " + String.valueOf(totalFoldersToBeProcessed));
-            LOGGER.info("=====================================================================================================");
-
-            for(File currentFolder : folders){
-                totalFoldersProcessed++;
-
-                models.clear();
-
-                sizePropertyFolder = currentFolder.listFiles().length;
-
-                LOGGER.info(":: reading the folder '" + currentFolder.getName() + "' which contains " + sizePropertyFolder + " models (files)");
-
-                models.addAll(DefactoModelReader.readModels(currentFolder.getAbsolutePath(), true, languages));
-
-                LOGGER.info(":: starting the process for " + models.size() + " models...");
-
-                for (int i=0; i < models.size(); i++){
-
-                    totalFilesProcessed++;
-                    ArrayList<File> selectedFiles = null;
-
-                    if (applyLogicalRestriction){
-
-                        resourceToBeChanged = PropertyConfigurationSingleton.getInstance().getConfigurations().get(currentFolder.getName()).getResourceToBeChangedForRubbish();
-
-                        //this folder will be used to collect new (random) resources
-                        randomFolder = getRandomFolder(folders, currentFolder, resourceToBeChanged);
-
-                        LOGGER.info(":: source: " + randomFolder.getName());
-
-                        //get inside the selected folder, N models
-                        selectedFiles = getNRandomFiles(nrModelsToCompare, randomFolder);
-
-                        //add all random selected models
-                        for (int j=0; j<selectedFiles.size(); j++){
-                            modelsRandom.add(DefactoModelReader.readModel(selectedFiles.get(j).getAbsolutePath()));
-                            LOGGER.info(":: source file " + selectedFiles.get(j).getAbsolutePath() + " has been selected as source for " + currentFolder.getName());
-                        }
-
-                    }else{
-                        LOGGER.info(":: logical restriction is not required...");
-                    }
-
-                    int auxIndex = 0;
-                    //compute the scores for aux models
-                    for ( int m = 0; m < nrModelsToCompare ; m++ ) {
-
-                        totalRandomFilesProcessed++;
-
-                        auxIndex = m;
-
-                        //what´s the evaluation method: EVAL1:RB1 or EVAL1:RB2
-                        if (!applyLogicalRestriction){
-
-                            modelsRandom.clear();
-                            resourceToBeChanged = getRandomResource();
-                            randomFolder = getRandomFolder(folders, currentFolder, resourceToBeChanged);
-                            LOGGER.info(":: source: " + randomFolder.getName());
-                            selectedFiles = getNRandomFiles(1, randomFolder);
-                            auxIndex = 0;
-
-                            //add all random selected models
-                            for (int j=0; j<selectedFiles.size(); j++){
-                                modelsRandom.add(DefactoModelReader.readModel(selectedFiles.get(j).getAbsolutePath()));
-                                LOGGER.info(":: source file " + selectedFiles.get(j).getAbsolutePath() + " has been selected as source for " + currentFolder.getName());
-                            }
-                        }
-
-                        LOGGER.info("Starting to compute random models...");
-
-                        mixModelsUpAndCreateFile(models.get(i), modelsRandom.get(auxIndex), m, (trainUnknown + currentFolder.getName() + "\\"));
-
-                    }
-
-                    if (modelsRandom!=null)
-                        modelsRandom.clear();
-                    if (selectedFiles!=null)
-                        selectedFiles.clear();
-
-                    LOGGER.info("File " +  models.get(i).getName() + " has been processed");
-
-                }
-                LOGGER.info("The folder " + currentFolder.getName() + " has been processed successfully");
-
-            }
-            /***********************************************************************************************************************************/
-
-        }catch (Exception e){
-            LOGGER.error(e.toString());
-        }
-
-    }
-
-    private static  ArrayList<File> getFunctionalPropertyFolders(String directory) throws Exception{
-        File files = new File(directory);
-        ArrayList<File> folders = new ArrayList<>();
-        for(File f : files.listFiles()){
-            if (f.isDirectory() && isFunctional(f.getName())){
-                folders.add(f); totalFoldersToBeProcessed++;
-                LOGGER.info("Folder '" + f.getName() + "' is functional and has been selected for evaluation");
-            }
-        }
-        return folders;
-    }
+    static String cacheProcessingLog;
 
     public static void main(String[] args) {
 
@@ -181,13 +51,10 @@ public class MetaEvaluation {
             Defacto.init();
 
             long startTimeOverallProcess = System.currentTimeMillis();
-
-            List<String> languages = Arrays.asList("en");
-            //the list of true models
-            List<DefactoModel> models = new ArrayList<>();
-            //the number of models for each property (folder)
             int sizePropertyFolder = 0;
-            //current filename
+            List<String> languages = Arrays.asList("en");
+            List<DefactoModel> models = new ArrayList<>();
+
 
             String trainUnknown = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory") + "unknown\\random\\";
             if (applyLogicalRestriction)
@@ -197,7 +64,12 @@ public class MetaEvaluation {
                 createEvaluationFiles(trainUnknown);
 
             fileName = "EVAL_META_01.csv";
-            if (applyLogicalRestriction) fileName = "EVAL_META_02.csv";
+            cacheProcessingLog = "PROCESSING_QUEUE_01.csv";
+
+            if (applyLogicalRestriction) {
+                fileName = "EVAL_META_02.csv";
+                cacheProcessingLog = "PROCESSING_QUEUE_02.csv";
+            }
 
             out = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
 
@@ -278,9 +150,18 @@ public class MetaEvaluation {
                             totalRandomFilesProcessed++;
 
                             int auxIndex = m;
+                            DefactoModel tempModel = null;
 
-                            DefactoModel tempModel =
-                                  DefactoModelReader.readModel(trainUnknown + "/" +  currentFolder.getName() + "/" +  models.get(i).getFile().getName().substring(0,  models.get(i).getFile().getName().length() - 4) + "_" + m + ".ttl" , false, languages);
+                            try{
+                                String filenameU = trainUnknown + "/" +  currentFolder.getName()  + "/" +  models.get(i).getFile().getName().substring(0,  models.get(i).getFile().getName().length() - 4) + "_" + m + ".ttl";
+                                LOGGER.info("reading: " + filenameU);
+                                tempModel=  DefactoModelReader.readModel(filenameU , false, languages);
+                                if (tempModel == null){
+                                    LOGGER.info("model is NULL!!!!");
+                                }
+                            }catch (Exception e){
+                                LOGGER.error(e.toString());
+                            }
 
                             LOGGER.info("Random: Starting DeFacto for [" + tempModel.getSubjectLabel("en") +
                                     "] [" + tempModel.getPredicate().getLocalName() + "] [" + tempModel.getObjectLabel("en") + "]");
@@ -349,7 +230,7 @@ public class MetaEvaluation {
             );
 
         }catch (Exception e){
-            LOGGER.error(e.toString());
+            e.printStackTrace();
         }finally {
             try{
                 LOGGER.info(":: Error -> Synchronizing cache");
@@ -368,6 +249,137 @@ public class MetaEvaluation {
 
     }
 
+    private static  ArrayList<File> getFunctionalPropertyFolders(String directory) throws Exception{
+        File files = new File(directory);
+        ArrayList<File> folders = new ArrayList<>();
+        for(File f : files.listFiles()){
+            if (f.isDirectory() && isFunctional(f.getName())){
+                folders.add(f); totalFoldersToBeProcessed++;
+                LOGGER.info("Folder '" + f.getName() + "' is functional and has been selected for evaluation");
+            }
+        }
+        return folders;
+    }
+
+    /**
+     * create the files for meta evaluation
+     */
+    private static void createEvaluationFiles(String trainUnknown){
+
+        try {
+
+            Defacto.init();
+
+            List<String> languages = Arrays.asList("en");
+            List<DefactoModel> models = new ArrayList<>();
+            List<DefactoModel> modelsRandom = new ArrayList<>();
+
+            String FactBenchTestDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory") + "correct/";
+            int sizePropertyFolder = 0;
+
+            LOGGER.info("Creating evaluation set for meta analysis");
+            for (File file: new File(trainUnknown).listFiles()) {
+                //        if (!file.isDirectory()) file.delete();
+            }
+
+            LOGGER.info("Cleaning up the 'unknown' directory");
+
+            ArrayList<File> folders = getFunctionalPropertyFolders(FactBenchTestDirectory);
+
+            LOGGER.info("Total of folders to be processed: " + String.valueOf(totalFoldersToBeProcessed));
+            LOGGER.info("=====================================================================================================");
+
+            for(File currentFolder : folders){
+
+                    totalFoldersProcessed++;
+
+                    models.clear();
+
+                    sizePropertyFolder = currentFolder.listFiles().length;
+
+                    LOGGER.info(":: reading the folder '" + currentFolder.getName() + "' which contains " + sizePropertyFolder + " models (files)");
+
+                    models.addAll(DefactoModelReader.readModels(currentFolder.getAbsolutePath(), true, languages));
+
+                    LOGGER.info(":: starting the process for " + models.size() + " models...");
+
+                    for (int i=0; i < models.size(); i++){
+
+                        totalFilesProcessed++;
+                        ArrayList<File> selectedFiles = null;
+
+                        if (applyLogicalRestriction){
+
+                            resourceToBeChanged = PropertyConfigurationSingleton.getInstance().getConfigurations().get(currentFolder.getName()).getResourceToBeChangedForRubbish();
+
+                            //this folder will be used to collect new (random) resources
+                            randomFolder = getRandomFolder(folders, currentFolder, resourceToBeChanged);
+
+                            LOGGER.info(":: source: " + randomFolder.getName());
+
+                            //get inside the selected folder, N models
+                            selectedFiles = getNRandomFiles(nrModelsToCompare, randomFolder);
+
+                            //add all random selected models
+                            for (int j=0; j<selectedFiles.size(); j++){
+                                modelsRandom.add(DefactoModelReader.readModel(selectedFiles.get(j).getAbsolutePath()));
+                                LOGGER.info(":: source file " + selectedFiles.get(j).getAbsolutePath() + " has been selected as source for " + currentFolder.getName());
+                            }
+
+                        }else{
+                            LOGGER.info(":: logical restriction is not required...");
+                        }
+
+                        int auxIndex = 0;
+                        //compute the scores for aux models
+                        for ( int m = 0; m < nrModelsToCompare ; m++ ) {
+
+                            totalRandomFilesProcessed++;
+
+                            auxIndex = m;
+
+                            //what´s the evaluation method: EVAL1:RB1 or EVAL1:RB2
+                            if (!applyLogicalRestriction){
+
+                                modelsRandom.clear();
+                                resourceToBeChanged = getRandomResource();
+                                LOGGER.debug(":: random resourceToBeChanged = " + resourceToBeChanged);
+                                randomFolder = getRandomFolder(folders, currentFolder, resourceToBeChanged);
+                                LOGGER.info(":: source: " + randomFolder.getName());
+                                selectedFiles = getNRandomFiles(1, randomFolder);
+                                auxIndex = 0;
+
+                                //add all random selected models
+                                for (int j=0; j<selectedFiles.size(); j++){
+                                    modelsRandom.add(DefactoModelReader.readModel(selectedFiles.get(j).getAbsolutePath()));
+                                    LOGGER.info(":: source file " + selectedFiles.get(j).getAbsolutePath() + " has been selected as source for " + currentFolder.getName());
+                                }
+                            }
+
+                            LOGGER.debug("Starting to compute random models...");
+
+                            mixModelsUpAndCreateFile(models.get(i), modelsRandom.get(auxIndex), m, (trainUnknown + currentFolder.getName() + "\\"));
+
+                        }
+
+                        if (modelsRandom!=null)
+                            modelsRandom.clear();
+                        if (selectedFiles!=null)
+                            selectedFiles.clear();
+
+                        LOGGER.info("File " +  models.get(i).getName() + " has been processed");
+
+                    }
+                    LOGGER.info("The folder " + currentFolder.getName() + " has been processed successfully");
+
+                /***********************************************************************************************************************************/
+            }
+        }catch (Exception e){
+            LOGGER.error(e.toString());
+        }
+
+    }
+
     /**
      *
      * @param m1 the first model
@@ -376,13 +388,14 @@ public class MetaEvaluation {
      * @param oURI the object URI of the selected object
      * @return Model
      */
-    private static void mixModels(Model m1, Model m2, String sURI, String oURI, int index, String destinationFolder, String sourceFileName) throws Exception {
+    private static void mixModels(Model m1, Model m2,
+                                  String S1, String O1,
+                                  String S2, String O2,
+                                  int index, String destinationFolder, String sourceFileName) throws Exception {
 
-        LOGGER.info(":: starting the jena model generation");
+        LOGGER.debug(":: starting the jena model generation");
 
         Model m = ModelFactory.createDefaultModel();
-
-        //Map<String, String> pref = m1.getNsPrefixMap();
 
         m.setNsPrefix("fbase", "http://rdf.freebase.com/ns");
         m.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
@@ -391,18 +404,101 @@ public class MetaEvaluation {
         m.setNsPrefix("xsd", "http://www.w3.org/2001/XMLSchema#");
         m.setNsPrefix("skos", "http://www.w3.org/2004/02/skos/core#");
 
-        RDFNode auxObject = null;
+
         Property auxPredicate = null;
+        RDFNode P1 = null;
+        Resource Stemp = null;
 
-        DefactoModel finalModel;
+        //OxS, SxS, OxO, SxO use cases
+        if (resourceToBeChanged.equals("S")) {
+            //O and P from M1 + P' from O' = P
+            StmtIterator listIter1 = m1.listStatements();
+            while (listIter1.hasNext()) {
+                Statement stmt = listIter1.next();
+                //adding O1
+                if (stmt.getSubject().getURI().equals(O1)) {
+                    m.add(stmt);
+                }
+                //adding P1
+                if (stmt.getSubject().getURI().matches("^.*__[0-9]*$")) {
+                    m.add(stmt);
+                    P1 = stmt.getSubject();
+                }
+                //reading S1
+                if (stmt.getSubject().getURI().equals(S1) && stmt.getObject().isResource() && stmt.getObject().asResource().getURI().matches("^.*__[0-9]*$")) {
+                    auxPredicate = stmt.getPredicate();
+                }
+            }
+            //adding S2
+            StmtIterator listIter2 = m2.listStatements();
+            while (listIter2.hasNext()) {
+                Statement stmt2 = listIter2.next();
+                if (getWhichPartFromRandom.equals("S")) {
+                    if (stmt2.getSubject().getURI().equals(S2)) {
+                        Stemp = stmt2.getSubject();
+                        if (stmt2.getObject().isResource() && stmt2.getObject().asResource().getURI().matches("^.*__[0-9]*$")) {
+                            m.add(stmt2.getSubject(), auxPredicate, P1);
+                        } else {
+                            m.add(stmt2);
+                        }
+                    }
+                } else if (getWhichPartFromRandom.equals("O")) {
+                    if (stmt2.getSubject().getURI().equals(O2)) {
+                        Stemp = stmt2.getSubject();
+                        m.add(stmt2);
+                    }
+                }
+                if (getWhichPartFromRandom.equals("O")) {
+                    m.add(Stemp, auxPredicate, P1);
+                }
+            }
+        }
+        else if (resourceToBeChanged.equals("O")) { //[O -> O] and //[O -> S]
 
 
+            //O2
+            StmtIterator listIter2 = m2.listStatements();
+            while (listIter2.hasNext()) {
+                Statement stmt2 = listIter2.next();
+                if (getWhichPartFromRandom.equals("O")) {
+                    if (stmt2.getSubject().getURI().equals(O2)) {
+                        m.add(stmt2);
+                        Stemp = stmt2.getSubject();
+                    }
+                } else if (getWhichPartFromRandom.equals("S")) {
+                    if (stmt2.getSubject().getURI().equals(S2)) {
+                        if (!(stmt2.getObject().isResource() &&
+                                stmt2.getObject().asResource().getURI().matches("^.*__[0-9]*$"))) {
+                            m.add(stmt2);
+                            Stemp = stmt2.getSubject();
+                        }
+                    }
+                }
+            }
+
+            //S1 and P1
+            StmtIterator listIter1 = m1.listStatements();
+            while (listIter1.hasNext()) {
+                Statement stmt1 = listIter1.next();
+                if (stmt1.getSubject().getURI().equals(S1)) {
+                    m.add(stmt1);
+                }
+                if (stmt1.getSubject().getURI().matches("^.*__[0-9]*$")) {
+                    if (stmt1.getObject().isResource()) {
+                        m.add(stmt1.getSubject(), stmt1.getPredicate(), Stemp);
+                    } else {
+                        m.add(stmt1);
+                    }
+                }
+            }
+        }
+/*
         if (getWhichPartFromRandom.equals("O")) {
             //O from M2
             StmtIterator listIter2 = m2.listStatements();
             while (listIter2.hasNext()) {
                 Statement stmt2 = listIter2.next();
-                if (stmt2.getSubject().getURI().equals(oURI)) {
+                if (stmt2.getSubject().getURI().equals(resourceToBeObject)) {
                     m.add(stmt2);
                     auxObject = stmt2.getSubject();
                 }
@@ -411,12 +507,16 @@ public class MetaEvaluation {
             StmtIterator listIter1 = m1.listStatements();
             while (listIter1.hasNext()) {
                 Statement stmt = listIter1.next();
-                //S
-                if (stmt.getSubject().getURI().equals(sURI)) {
+                //S from S
+                if (stmt.getSubject().getURI().equals(resourceToBeSubject)) {
                     m.add(stmt);
                     if (stmt.getObject().isResource() && stmt.getObject().asResource().getURI().matches("^.*__[0-9]*$")) {
                         auxPredicate = stmt.getPredicate(); //just to naming and save the file correctly
                     }
+                }
+                //S from O
+                else if (stmt.getObject().isResource() && stmt.getObject().asResource().getURI().equals(resourceToBeSubject)) {
+                    m.add(stmt);
                 }
                 //P
                 if (stmt.getSubject().getURI().matches("^.*__[0-9]*$")) {
@@ -436,7 +536,7 @@ public class MetaEvaluation {
             while (listIter.hasNext()) {
                 Statement stmt = listIter.next();
                 //get O and P
-                if (stmt.getSubject().getURI().equals(oURI) || stmt.getSubject().getURI().matches("^.*__[0-9]*$")) {
+                if (stmt.getSubject().getURI().equals(resourceToBeObject) || stmt.getSubject().getURI().matches("^.*__[0-9]*$")) {
                     m.add(stmt);
                 }
                 else {
@@ -451,7 +551,7 @@ public class MetaEvaluation {
             StmtIterator listIter2 = m2.listStatements();
             while (listIter2.hasNext()) {
                 Statement stmt2 = listIter2.next();
-                if (stmt2.getSubject().getURI().equals(sURI)){
+                if (stmt2.getSubject().getURI().equals(resourceToBeSubject)){
                     if (stmt2.getObject().isResource() && stmt2.getObject().asResource().getURI().matches("^.*__[0-9]*$")) {
                         m.add(stmt2.getSubject(), auxPredicate, auxObject);
                     }else{
@@ -461,16 +561,15 @@ public class MetaEvaluation {
             }
         }
 
+*/
+
         newRandomFileName = destinationFolder + sourceFileName.substring(0, sourceFileName.length() - 4) + "_" + index + ".ttl";
         FileWriter out = new FileWriter(newRandomFileName);
         m.write(out, "TTL");
 
         LOGGER.info(":: New file model has been generated: " + newRandomFileName);
 
-        //setting DeFacto Model
-        //finalModel = new DefactoModel(m, "Unknown " + index, false, Arrays.asList("en", "de", "fr"));
 
-        //return finalModel;
 
     }
 
@@ -486,12 +585,9 @@ public class MetaEvaluation {
     private static void mixModelsUpAndCreateFile(DefactoModel original, DefactoModel random, int index, String destinationFolder) throws Exception{
 
 
-        String subjectURI = original.getSubjectUri();
-        String objectURI = original.getObjectUri();
+        String sFinal = original.getSubjectUri();
+        String oFinal = original.getObjectUri();
         newRandomFileName= "";
-
-        //DefactoModel finalModel = (DefactoModel) original.clone();
-        DefactoModel finalModel;
 
         if (original == null || random ==null){
             throw new Exception("null error at model´s level (original / random)");
@@ -502,30 +598,38 @@ public class MetaEvaluation {
 
         if (resourceToBeChanged.equals("S") && getWhichPartFromRandom.equals("S")){
             LOGGER.info("S1: Swapping the subject from [" + original.getSubjectLabel("en") + "] to [" + random.getSubject().getLabel("en") + "]");
-            subjectURI = random.getSubjectUri();
-            //finalModel.setSubject(random.getSubject());
+            sFinal = random.getSubjectUri();
         }
         else if (resourceToBeChanged.equals("O") && (getWhichPartFromRandom.equals("S"))){
             LOGGER.info("S2: Swapping the object from [" + original.getObjectLabel("en") + "] to [" + random.getSubject().getLabel("en") + "]");
-            objectURI = random.getSubjectUri();
-            //finalModel.setObject(random.getSubject());
+            oFinal = random.getSubjectUri();
         }
         else if (resourceToBeChanged.equals("S") && getWhichPartFromRandom.equals("O")){
             LOGGER.info("S3: Swapping the subject from [" + original.getSubjectLabel("en") + "] to [" + random.getObject().getLabel("en") + "]");
-            subjectURI = random.getObjectUri();
-            //finalModel.setSubject(random.getObject());
+            sFinal = random.getObjectUri();
         }
         else if (resourceToBeChanged.equals("O") && getWhichPartFromRandom.equals("O")){
             LOGGER.info("S4: Swapping the object from [" + original.getObjectLabel("en") + "] to [" + random.getObject().getLabel("en") + "]");
-            objectURI = random.getObjectUri();
-            //finalModel.setObject(random.getObject());
+            oFinal = random.getObjectUri();
         }
         else{
             throw new Exception("Strange...it should not happen :/ getWhichPart = " + getWhichPartFromRandom);
         }
 
+        LOGGER.debug("final S =" + sFinal);
+        LOGGER.debug("final O =" + oFinal);
+        LOGGER.debug("index =" + index);
+        LOGGER.debug("destinationFolder =" + destinationFolder);
 
-         mixModels(original.model, random.model, subjectURI, objectURI, index, destinationFolder, new File(original.getName()).getName());
+        String f = new File(original.getName()).getName();
+
+        LOGGER.debug("sourceFileName=" + f);
+
+         mixModels(original.model, random.model,
+                 original.getSubject().getUri(), original.getObject().getUri(),
+                 random.getSubject().getUri(), random.getObject().getUri(),
+                 index, destinationFolder, f);
+
         //finalModel = mixModels(original.model, random.model, subjectURI, objectURI, index, destinationFolder, new File(original.getName()).getName());
 
         /*
