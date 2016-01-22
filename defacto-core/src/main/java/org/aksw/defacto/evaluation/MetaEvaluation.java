@@ -22,25 +22,34 @@ import java.util.stream.Collectors;
  */
 public class MetaEvaluation {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MetaEvaluation.class);
-    private static String getWhichPartFromRandom = ""; //get the resource to update -> TO
-    private static String resourceToBeChanged; //select which resource should be swapped -> FROM
-    private static int totalFilesProcessed = 0;
-    private static int totalFoldersProcessed = 0;
-    private static int totalRandomFilesProcessed = 0;
-    private static int totalFoldersToBeProcessed = 0;
-    private static int nrModelsToCompare = 4;  //the number of models to be computed
-    private static File randomFolder;
-    private static String fileName;
-    private static String newRandomFileName = "";
-    private static double trainPercSize = 0.05;
+    private static final Logger         LOGGER = LoggerFactory.getLogger(MetaEvaluation.class);
+    private static String               getWhichPartFromRandom = ""; //get the resource to update -> TO
+    private static String               resourceToBeChanged; //select which resource should be swapped -> FROM
+    private static int                  totalFilesProcessed = 0;
+    private static int                  totalFoldersProcessed = 0;
+    private static int                  totalRandomFilesProcessed = 0;
+    private static int                  totalFoldersToBeProcessed = 0;
+    private static int                  nrModelsToCompare = 4;  //the number of models to be computed
+    private static File                 randomFolder;
+    private static String               newRandomFileName = "";
+    private static double               trainPercSize = 0.5;
+    //true = check rule for swapping the resource (scenario 1), false = no rule, 100% random swapping (scenario 2)
+    private static boolean              applyLogicalRestriction = true;
+    private static boolean              generateFiles = false;
+    //cache for meta-analysis scores
+    private static ArrayList<String>    cache = new ArrayList<>(); //keeps in-memory cache and store into a csv file in order to restart the process
+    private static ArrayList<String>    cacheBkp;
+    private static String               fileName;
+    private static String               cacheProcessingLog;
+    private static PrintWriter          out;
+    //cache for root scores
+    private static boolean              onlyRootFiles = true;
+    private static ArrayList<String>    cacheRoot = new ArrayList<>(); //keeps in-memory cache and store into a csv file in order to restart the process
+    private static ArrayList<String>    cacheRootBkp;
+    private static String               fileNameRoot = "EVAL_META_ROOT.csv";
+    private static String               cacheRootProcessingLog = "PROCESSING_QUEUE_ROOT.csv";
+    private static PrintWriter          outRoot;
 
-    private static boolean applyLogicalRestriction = false; //true = check rule for swapping the resource (scenario 1), false = no rule, 100% random swapping (scenario 2)
-    private static ArrayList<String> cache = new ArrayList<>(); //keeps in-memory cache and store into a csv file in order to restart the process
-    private static ArrayList<String> cacheBkp;
-    static PrintWriter out;
-    static boolean generateFiles = false;
-    static String cacheProcessingLog;
 
     public static void main(String[] args) {
 
@@ -54,7 +63,6 @@ public class MetaEvaluation {
             int sizePropertyFolder = 0;
             List<String> languages = Arrays.asList("en");
             List<DefactoModel> models = new ArrayList<>();
-
 
             String trainUnknown = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory") + "unknown\\random\\";
             if (applyLogicalRestriction)
@@ -71,10 +79,16 @@ public class MetaEvaluation {
                 cacheProcessingLog = "PROCESSING_QUEUE_02.csv";
             }
 
+            //csv files for results
             out = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+            outRoot = new PrintWriter(new BufferedWriter(new FileWriter(fileNameRoot, true)));
 
+            //starting the in-memory caches
             cache = readCacheFromCSV(cacheProcessingLog);
             cacheBkp = (ArrayList<String>) cache.clone();
+
+            cacheRoot = readCacheFromCSV(cacheRootProcessingLog);
+            cacheRootBkp = (ArrayList<String>) cacheRoot.clone();
 
             String testDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory")
                     + Defacto.DEFACTO_CONFIG.getStringSetting("eval", "test-directory") + "correct/";
@@ -100,17 +114,17 @@ public class MetaEvaluation {
 
                     LOGGER.info(":: starting the process for " + models.size() + " models...");
 
-                    int totalTrainFiles = (int)Math.ceil(models.size() * trainPercSize);
-                    LOGGER.info("Total of training files: " + totalTrainFiles);
+                    int totalFiles = (int)Math.ceil(models.size() * trainPercSize);
+                    LOGGER.info("Total of training files: " + totalFiles);
 
                     //starting computation for each model
-                    for (int i=0; i < totalTrainFiles; i++){
+                    for (int i=0; i < totalFiles; i++){
 
                         totalFilesProcessed++;
 
                         LOGGER.info("Main Model: Starting DeFacto for [" + models.get(i).getSubjectLabel("en") + "] [" + models.get(i).getPredicate().getLocalName() + "] [" + models.get(i).getObjectLabel("en") + "]");
 
-                        if (!cache.contains(models.get(i).getFile().getAbsolutePath())){
+                        if (!cacheRoot.contains(models.get(i).getFile().getAbsolutePath())){
                             Evidence e = Defacto.checkFact(models.get(i), Defacto.TIME_DISTRIBUTION_ONLY.NO);
 
                             LOGGER.info("...done! Score = " + e.getDeFactoScore().toString());
@@ -126,16 +140,25 @@ public class MetaEvaluation {
                             if (e.getTopicTerms() != null)
                                 df_num_tt = e.getTopicTerms().size();
 
-                            out.println(models.get(i).getFile().getAbsolutePath() + ";" +
+                            outRoot.println(models.get(i).getFile().getAbsolutePath() + ";" +
                                     models.get(i).getFile().getAbsolutePath() + ";" + df_num_cp + ";" + df_num_tt + ";" + df_num_hc+ ";" + df_score+ ";" + models.get(i).getName()+ ";" +
                                     models.get(i).getSubjectUri()+ ";" + models.get(i).getSubjectLabel("en")+ ";" +
                                     models.get(i).getPredicate().getURI()+ ";" + models.get(i).getPredicate().getLocalName()+ ";" +
                                     models.get(i).getObjectUri()+ ";" + models.get(i).getObjectLabel("en")+ ";" + "O");
-                            out.flush();
 
-                            cache.add(models.get(i).getFile().getAbsolutePath());
+
+                            cacheRoot.add(models.get(i).getFile().getAbsolutePath());
                             
                             LOGGER.debug("Model " + models.get(i).getName() + " has been processed");
+
+                            LOGGER.info(":: Synchronizing root cache");
+                            for(String m: cacheRoot){
+                                if (!cacheRootBkp.contains(m))
+                                    writeToCSV(cacheRootProcessingLog, m);
+                            }
+                            cacheRoot = readCacheFromCSV(cacheRootProcessingLog);
+                            cacheRootBkp = (ArrayList<String>) cacheRoot.clone();
+                            outRoot.flush();
 
                         }
                         else{
@@ -144,58 +167,62 @@ public class MetaEvaluation {
 
                         LOGGER.info("Starting to compute random models...");
 
-                        //compute the scores for aux models
-                        for ( int m = 0; m < nrModelsToCompare ; m++ ) {
+                        if (!onlyRootFiles){
 
-                            totalRandomFilesProcessed++;
+                            //compute the scores for aux models
+                            for ( int m = 0; m < nrModelsToCompare ; m++ ) {
 
-                            int auxIndex = m;
-                            DefactoModel tempModel = null;
+                                totalRandomFilesProcessed++;
 
-                            try{
-                                String filenameU = trainUnknown + "/" +  currentFolder.getName()  + "/" +  models.get(i).getFile().getName().substring(0,  models.get(i).getFile().getName().length() - 4) + "_" + m + ".ttl";
-                                LOGGER.info("reading: " + filenameU);
-                                tempModel=  DefactoModelReader.readModel(filenameU , false, languages);
-                                if (tempModel == null){
-                                    LOGGER.info("model is NULL!!!!");
+                                int auxIndex = m;
+                                DefactoModel tempModel = null;
+
+                                try{
+                                    String filenameU = trainUnknown + "/" +  currentFolder.getName()  + "/" +  models.get(i).getFile().getName().substring(0,  models.get(i).getFile().getName().length() - 4) + "_" + m + ".ttl";
+                                    LOGGER.info("reading: " + filenameU);
+                                    tempModel=  DefactoModelReader.readModel(filenameU , false, languages);
+                                    if (tempModel == null){
+                                        LOGGER.info("model is NULL!!!!");
+                                    }
+                                }catch (Exception e){
+                                    LOGGER.error(e.toString());
                                 }
-                            }catch (Exception e){
-                                LOGGER.error(e.toString());
-                            }
 
-                            LOGGER.info("Random: Starting DeFacto for [" + tempModel.getSubjectLabel("en") +
-                                    "] [" + tempModel.getPredicate().getLocalName() + "] [" + tempModel.getObjectLabel("en") + "]");
+                                LOGGER.info("Random: Starting DeFacto for [" + tempModel.getSubjectLabel("en") +
+                                        "] [" + tempModel.getPredicate().getLocalName() + "] [" + tempModel.getObjectLabel("en") + "]");
 
-                            if (!cache.contains(tempModel.getFile().getAbsolutePath())) {
+                                if (!cache.contains(tempModel.getFile().getAbsolutePath())) {
 
-                                Evidence e = Defacto.checkFact(tempModel, Defacto.TIME_DISTRIBUTION_ONLY.NO);
+                                    Evidence e = Defacto.checkFact(tempModel, Defacto.TIME_DISTRIBUTION_ONLY.NO);
 
-                                LOGGER.info("...done! Score = " + e.getDeFactoScore().toString());
+                                    LOGGER.info("...done! Score = " + e.getDeFactoScore().toString());
 
-                                Integer df_num_cp = 0;
-                                Integer df_num_tt = 0;
-                                if (e.getComplexProofs() != null)
-                                    df_num_cp = e.getComplexProofs().size();
+                                    Integer df_num_cp = 0;
+                                    Integer df_num_tt = 0;
+                                    if (e.getComplexProofs() != null)
+                                        df_num_cp = e.getComplexProofs().size();
 
-                                if (e.getTopicTerms() != null)
-                                    df_num_tt = e.getTopicTerms().size();
+                                    if (e.getTopicTerms() != null)
+                                        df_num_tt = e.getTopicTerms().size();
 
-                                Long df_num_hc = e.getTotalHitCount();
-                                Double df_score = e.getDeFactoScore();
+                                    Long df_num_hc = e.getTotalHitCount();
+                                    Double df_score = e.getDeFactoScore();
 
-                                out.println(models.get(i).getFile().getAbsolutePath() + ";" +
-                                        tempModel.getFile().getAbsolutePath() + ";" + df_num_cp + ";" +  df_num_tt + ";" + df_num_hc + ";" + df_score + ";" + tempModel.getName()+ ";" +
-                                        tempModel.getSubjectUri()+ ";" + tempModel.getSubjectLabel("en")+ ";" +
-                                        tempModel.getPredicate().getURI()+ ";" + tempModel.getPredicate().getLocalName()+ ";" +
-                                        tempModel.getObjectUri()+ ";" + tempModel.getObjectLabel("en")+ ";" + "C");
-                                out.flush();
-                                cache.add(tempModel.getFile().getAbsolutePath());
+                                    out.println(models.get(i).getFile().getAbsolutePath() + ";" +
+                                            tempModel.getFile().getAbsolutePath() + ";" + df_num_cp + ";" +  df_num_tt + ";" + df_num_hc + ";" + df_score + ";" + tempModel.getName()+ ";" +
+                                            tempModel.getSubjectUri()+ ";" + tempModel.getSubjectLabel("en")+ ";" +
+                                            tempModel.getPredicate().getURI()+ ";" + tempModel.getPredicate().getLocalName()+ ";" +
+                                            tempModel.getObjectUri()+ ";" + tempModel.getObjectLabel("en")+ ";" + "C");
+                                    out.flush();
+                                    cache.add(tempModel.getFile().getAbsolutePath());
 
-                                LOGGER.info("Changed Model '" + tempModel.getName() + "' has been processed");
+                                    LOGGER.info("Changed Model '" + tempModel.getName() + "' has been processed");
 
-                            }
-                            else{
-                                LOGGER.debug("Model already processed");
+                                }
+                                else{
+                                    LOGGER.debug("Model already processed");
+                                }
+
                             }
 
                         }
@@ -233,7 +260,7 @@ public class MetaEvaluation {
             e.printStackTrace();
         }finally {
             try{
-                LOGGER.info(":: Error -> Synchronizing cache");
+                LOGGER.info(":: Synchronizing cache");
                 for(String m: cache){
                     if (!cacheBkp.contains(m))
                         writeToCSV(cacheProcessingLog, m);
@@ -242,6 +269,16 @@ public class MetaEvaluation {
                 cacheBkp = cache;
                 out.flush();
                 out.close();
+
+                LOGGER.info(":: Synchronizing root cache");
+                for(String m: cacheRoot){
+                    if (!cacheRootBkp.contains(m))
+                        writeToCSV(cacheRootProcessingLog, m);
+                }
+                cacheRoot = readCacheFromCSV(cacheRootProcessingLog);
+                cacheRootBkp = (ArrayList<String>) cacheRoot.clone();
+                outRoot.flush();
+
             }catch (Exception e2){
                 LOGGER.error(e2.toString());
             }
