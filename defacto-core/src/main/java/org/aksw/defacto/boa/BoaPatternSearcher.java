@@ -340,6 +340,17 @@ public class BoaPatternSearcher {
 
             } else if (propertyUri.equals("http://dbpedia.org/ontology/foundationPlace")) {
 
+                Pattern pattern1 = new Pattern();
+                pattern1.generalized = "?D? was not founded in ?R?";
+                pattern1.naturalLanguageRepresentation = "?D? was not founded in ?R?";
+                pattern1.naturalLanguageRepresentationWithoutVariables = "was not founded in";
+                pattern1.posTags = "VBD RB VBN IN";
+                pattern1.boaScore = 0d;
+                pattern1.language = language;
+                pattern1.inverseRelation = false;
+                patterns.put(pattern1.getNormalized(), pattern1);
+
+
             }  else if (propertyUri.equals("http://dbpedia.org/ontology/leaderName")) {
 
             } else if (propertyUri.equals("http://dbpedia.org/ontology/spouse")) {
