@@ -28,11 +28,12 @@ public class WebSiteScoreCallable implements Callable<WebSite> {
      * @param model
      * @param patterns 
      */
-    public WebSiteScoreCallable(WebSite website, Evidence evidence, DefactoModel model) {
+    public WebSiteScoreCallable(WebSite website, Evidence evidence, DefactoModel model, Pattern pattern) {
 
         this.website  = website;
         this.model    = model;
         this.evidence = evidence;
+        this.pattern  = pattern;
     }
 
     @Override

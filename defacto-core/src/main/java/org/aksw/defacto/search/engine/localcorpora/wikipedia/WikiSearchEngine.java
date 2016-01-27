@@ -8,26 +8,25 @@ import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.WebSite;
-
 import org.aksw.defacto.search.engine.SearchEngine;
 import org.aksw.defacto.search.query.MetaQuery;
-
 import org.aksw.defacto.search.query.SolrWikiQuery;
 import org.aksw.defacto.search.result.DefaultSearchResult;
 import org.aksw.defacto.search.result.SearchResult;
-import org.aksw.defacto.util.JsonReader;
 import org.aksw.defacto.wikipedia.WikipediaSearchResult;
-
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.BinaryRequestWriter;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
-import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by esteves on 01.09.15.
@@ -69,7 +68,11 @@ public class WikiSearchEngine implements SearchEngine {
 
         try{
             WikiSearchEngine engine = new WikiSearchEngine();
-            MetaQuery q = new MetaQuery("Ghostbusters II|-|?D? NONE ?R?|-|Bill Murray|-|en");
+
+            Pattern p = new Pattern();
+            p.naturalLanguageRepresentation = "";
+
+            MetaQuery q = new MetaQuery("Ghostbusters II|-|?D? NONE ?R?|-|Bill Murray|-|en", p);
             SearchResult result = engine.getSearchResults(q, null);
             System.out.println("done!");
 

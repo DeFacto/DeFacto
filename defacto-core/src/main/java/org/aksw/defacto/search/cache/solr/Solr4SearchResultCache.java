@@ -3,13 +3,9 @@
  */
 package org.aksw.defacto.search.cache.solr;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
+import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.cache.Cache;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.search.query.MetaQuery;
@@ -26,6 +22,11 @@ import org.apache.solr.common.SolrException;
 import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author gerb
@@ -72,8 +73,15 @@ public class Solr4SearchResultCache implements Cache<SearchResult> {
         QueryResponse response = this.querySolrServer(query);
         
         for ( SolrDocument doc : response.getResults()) {
-            
-            metaQuery = new MetaQuery((String) doc.get(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD));
+
+
+			String q = (String) doc.get(Constants.LUCENE_SEARCH_RESULT_QUERY_FIELD);
+            //the pattern should also be saved into the SOLR cache.
+			String[] qsplited = q.split("\\|-\\|");
+			Pattern p = new Pattern();
+			p.naturalLanguageRepresentation = qsplited[1];
+
+			metaQuery = new MetaQuery(q, p);
             hitCount = (Long) doc.get(Constants.LUCENE_SEARCH_RESULT_HIT_COUNT_FIELD);
             
             if ( !((String)doc.get(Constants.LUCENE_SEARCH_RESULT_URL_FIELD)).isEmpty() ) { // empty cache hits should not become a website

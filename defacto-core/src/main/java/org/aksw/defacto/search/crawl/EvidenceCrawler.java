@@ -46,11 +46,15 @@ import org.slf4j.LoggerFactory;
 public class EvidenceCrawler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EvidenceCrawler.class);
+    public static org.apache.log4j.Logger LOGDEV    = org.apache.log4j.Logger.getLogger("developer");
     java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("[0-9]{4}");
     private Map<Pattern,MetaQuery> patternToQueries;
     private DefactoModel model;
     
-    public static Map<DefactoModel,Evidence> evidenceCache = new HashMap<DefactoModel,Evidence>();
+    public Map<DefactoModel,Evidence> evidenceCache = new HashMap<DefactoModel,Evidence>();
+    public Map<DefactoModel,Evidence> counterEvidenceCache = new HashMap<DefactoModel,Evidence>();
+
+    private Constants.EvidenceType evidenceType;
     
     /**
      * 
@@ -58,9 +62,115 @@ public class EvidenceCrawler {
      * @param patternToQueries
      */
     public EvidenceCrawler(DefactoModel model, Map<Pattern, MetaQuery> queries) {
-
         this.patternToQueries = queries;
         this.model            = model;
+    }
+
+
+    private Evidence crawl(SearchEngine engine, Constants.EvidenceType evidenceType) {
+
+        Map<DefactoModel, Evidence> cache;
+        Evidence evidence = null;
+
+        this.evidenceType = evidenceType;
+
+        LOGDEV.debug(" -> starting crawling for " + evidenceType.toString() + " evidences" + "[SearchEngineClass: " + engine.getClass().toString() + "]");
+
+        if (evidenceType.equals(Constants.EvidenceType.POS)) {
+            cache = evidenceCache;
+        }else if (evidenceType.equals(Constants.EvidenceType.NEG)) {
+            cache = counterEvidenceCache;
+        }else {
+            LOGDEV.fatal(" -> evidence type value is not valid: " + evidenceType.toString());
+            return null;
+        }
+
+        if ( !cache.containsKey(this.model) ) {
+
+            LOGDEV.debug(" -> evidences not cached, starting caching...");
+
+            long start = System.currentTimeMillis();
+            LOGDEV.debug(" -> start getting search results");
+            Set<SearchResult> searchResults = this.generateSearchResultsInParallel(engine);
+            LOGDEV.debug(" -> finished getting search results in " + (System.currentTimeMillis() - start));
+
+            // multiple pattern bring the same results but we dont want that
+            this.filterSearchResults(searchResults);
+
+            Long totalHitCount = 0L; // sum over the n*m query results
+            for ( SearchResult result : searchResults ) {
+                totalHitCount += result.getTotalHitCount();
+            }
+
+            LOGDEV.debug(" -> total hint count = " + totalHitCount);
+
+            evidence = new Evidence(model, totalHitCount, patternToQueries.keySet());
+
+            // basically downloads all websites in parallel
+            LOGDEV.debug(" -> [1.1] starting crawling the search results...");
+            crawlSearchResults(searchResults, model, evidence);
+
+            // tries to find proofs and possible proofs and scores those
+            LOGDEV.debug(" -> [1.2] scoring the search results...");
+            scoreSearchResults(searchResults, model, evidence);
+
+            // put it in solr cache
+            LOGDEV.debug(" -> [1.3] caching search results...");
+            cacheSearchResults(searchResults);
+
+            // start multiple threads to download the text of the websites simultaneously
+            for ( SearchResult result : searchResults )
+                evidence.addWebSites(result.getPattern(), result.getWebSites());
+
+            cache.put(model, evidence);
+
+            if (evidenceType.equals(Constants.EvidenceType.POS)) {
+                evidenceCache = cache;
+                evidence.setEvidenceType(Constants.EvidenceType.POS);
+            }else if (evidenceType.equals(Constants.EvidenceType.NEG)) {
+                counterEvidenceCache = cache;
+                evidence.setEvidenceType(Constants.EvidenceType.NEG);
+            }
+
+        }
+
+        LOGDEV.debug(" -> getting cached evidence...");
+
+        evidence = cache.get(model);
+
+        // get the time frame or point
+        evidence.calculateDefactoTimePeriod();
+
+        long start = System.currentTimeMillis();
+        // save all the time we can get
+        if ( Defacto.onlyTimes.equals(TIME_DISTRIBUTION_ONLY.NO) ) {
+
+            for ( String language : model.getLanguages() ) {
+
+                String subjectLabel = evidence.getModel().getSubjectLabel(language);
+                String objectLabel = evidence.getModel().getObjectLabel(language);
+
+                if ( !subjectLabel.equals(Constants.NO_LABEL) && !objectLabel.equals(Constants.NO_LABEL) ) {
+
+                    List<Word> topicTerms = TopicTermExtractor.getTopicTerms(subjectLabel, objectLabel, language, evidence);
+                    evidence.setTopicTerms(language, topicTerms);
+                    evidence.setTopicTermVectorForWebsites(language);
+                }
+            }
+            evidence.calculateSimilarityMatrix();
+        }
+        LOGGER.info(String.format("  -> Extraction of topic terms took %s", TimeUtil.formatTime(System.currentTimeMillis() - start)));
+
+        return evidence;
+
+
+    }
+
+    public Evidence crawlCounterEvidence(SearchEngine engine) {
+
+        LOGDEV.info(" -> starting counter evidence (NEG) crawl process");
+        Evidence ret =  crawl(engine, Constants.EvidenceType.NEG);
+        return ret;
     }
 
     /**
@@ -68,66 +178,11 @@ public class EvidenceCrawler {
      * @return
      */
     public Evidence crawlEvidence(SearchEngine engine) {
-    	
-    	Evidence evidence = null;
 
-        LOGGER.info("SearchEngineClass: " + engine.getClass().toString());
-    	
-    	if ( !evidenceCache.containsKey(this.model) ) {
-    		
-    		long start = System.currentTimeMillis();
-        	LOGGER.info("Start getting search results");
-            Set<SearchResult> searchResults = this.generateSearchResultsInParallel(engine);
-            LOGGER.info("Finished getting search results in " + (System.currentTimeMillis() - start));
-            
-            // multiple pattern bring the same results but we dont want that
-            this.filterSearchResults(searchResults);
+        LOGDEV.info(" -> starting evidence (POS) crawl process");
+        Evidence ret =  crawl(engine, Constants.EvidenceType.POS);
+        return ret;
 
-            Long totalHitCount = 0L; // sum over the n*m query results        
-            for ( SearchResult result : searchResults ) {
-            	totalHitCount += result.getTotalHitCount();  
-            }
-                    
-            evidence = new Evidence(model, totalHitCount, patternToQueries.keySet());
-            // basically downloads all websites in parallel
-            crawlSearchResults(searchResults, model, evidence);
-            // tries to find proofs and possible proofs and scores those
-            scoreSearchResults(searchResults, model, evidence);
-            // put it in solr cache
-            cacheSearchResults(searchResults);
-                    
-            // start multiple threads to download the text of the websites simultaneously
-            for ( SearchResult result : searchResults ) 
-                evidence.addWebSites(result.getPattern(), result.getWebSites());
-            
-            evidenceCache.put(model, evidence);
-    	}
-    	evidence = evidenceCache.get(model);
-    	
-        // get the time frame or point
-        evidence.calculateDefactoTimePeriod();
-        
-        long start = System.currentTimeMillis();
-        // save all the time we can get
-        if ( Defacto.onlyTimes.equals(TIME_DISTRIBUTION_ONLY.NO) ) {
-
-        	for ( String language : model.getLanguages() ) {
-        		
-        		String subjectLabel = evidence.getModel().getSubjectLabel(language);
-        		String objectLabel = evidence.getModel().getObjectLabel(language);
-        		
-        		if ( !subjectLabel.equals(Constants.NO_LABEL) && !objectLabel.equals(Constants.NO_LABEL) ) {
-
-        			List<Word> topicTerms = TopicTermExtractor.getTopicTerms(subjectLabel, objectLabel, language, evidence);
-        			evidence.setTopicTerms(language, topicTerms);
-            		evidence.setTopicTermVectorForWebsites(language);
-        		}
-        	}
-            evidence.calculateSimilarityMatrix();
-        }
-        LOGGER.info(String.format("Extraction of topic terms took %s", TimeUtil.formatTime(System.currentTimeMillis() - start)));
-        
-        return evidence;
     }
     
     /**
@@ -146,7 +201,7 @@ public class EvidenceCrawler {
         		results.add(result);
         
         cache.addAll(results);
-        LOGGER.debug(String.format("Caching took %sms", System.currentTimeMillis()-start));
+        LOGGER.debug(String.format("  -> Caching took %sms", System.currentTimeMillis()-start));
 	}
 
     /**
@@ -161,18 +216,24 @@ public class EvidenceCrawler {
         
         // collect the urls for a particular pattern
         // could be done in parallel 
-        for ( Map.Entry<Pattern, MetaQuery> entry : this.patternToQueries.entrySet())
+        for ( Map.Entry<Pattern, MetaQuery> entry : this.patternToQueries.entrySet()) {
+            //set the evidence type for metaquery
+            entry.getValue().setEvidenceTypeRelation(this.evidenceType);
             searchResultCallables.add(new SearchResultCallable(entry.getValue(), entry.getKey(), engine));
-        
-        LOGGER.info("Starting to crawl/get from cache " + searchResultCallables.size() + " search results with " +
-        		Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS") + " threads.");
+        }
+
+        LOGDEV.debug(" -> Starting to crawl/get from cache " + searchResultCallables.size() + " search results with " +
+                Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS") + " threads.");
         
         try {
         	
         	ExecutorService executor = Executors.newFixedThreadPool(Defacto.DEFACTO_CONFIG.getIntegerSetting("crawl", "NUMBER_OF_SEARCH_RESULTS_THREADS"));
+            int i=1;
             for ( Future<SearchResult> result : executor.invokeAll(searchResultCallables)) {
 
                 results.add(result.get());
+                LOGDEV.debug(" query " + i + ": " + result.get().getQuery().toString() + ": nr. websites = " + result.get().getWebSites().size());
+                i++;
             }
             executor.shutdownNow();
         }
@@ -191,7 +252,7 @@ public class EvidenceCrawler {
         List<WebSiteScoreCallable> scoreCallables =  new ArrayList<WebSiteScoreCallable>();
         for ( SearchResult result : searchResults ) 
             for (WebSite site : result.getWebSites() )
-                scoreCallables.add(new WebSiteScoreCallable(site, evidence, model));
+                scoreCallables.add(new WebSiteScoreCallable(site, evidence, model, result.getPattern()));
         
         // nothing found, nothing to score
         if ( scoreCallables.isEmpty() ) return;
@@ -248,8 +309,10 @@ public class EvidenceCrawler {
         
         // prepare the crawlers for simultanous execution
         for ( SearchResult searchResult : searchResults)
-            for ( WebSite site : searchResult.getWebSites() )
-            	htmlCrawlers.add(new HtmlCrawlerCallable(site));
+            for ( WebSite site : searchResult.getWebSites() ) {
+                htmlCrawlers.add(new HtmlCrawlerCallable(site));
+                LOGDEV.debug(" -> adding returned website: " + site.getUrl() + " - query: " + site.getQuery().toString());
+            }
 
         // nothing found. nothing to crawl
         if ( !htmlCrawlers.isEmpty() ) {

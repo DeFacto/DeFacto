@@ -34,7 +34,7 @@ public class MetaEvaluation {
     private static String               newRandomFileName = "";
     private static double               trainPercSize = 0.5;
     //true = check rule for swapping the resource (scenario 1), false = no rule, 100% random swapping (scenario 2)
-    private static boolean              applyLogicalRestriction = true;
+    private static boolean              applyLogicalRestriction = false;
     private static boolean              generateFiles = false;
     //cache for meta-analysis scores
     private static ArrayList<String>    cache = new ArrayList<>(); //keeps in-memory cache and store into a csv file in order to restart the process
@@ -43,7 +43,7 @@ public class MetaEvaluation {
     private static String               cacheProcessingLog;
     private static PrintWriter          out;
     //cache for root scores
-    private static boolean              onlyRootFiles = true;
+    private static boolean              onlyRootFiles = false;
     private static ArrayList<String>    cacheRoot = new ArrayList<>(); //keeps in-memory cache and store into a csv file in order to restart the process
     private static ArrayList<String>    cacheRootBkp;
     private static String               fileNameRoot = "EVAL_META_ROOT.csv";
@@ -182,7 +182,7 @@ public class MetaEvaluation {
                                     LOGGER.info("reading: " + filenameU);
                                     tempModel=  DefactoModelReader.readModel(filenameU , false, languages);
                                     if (tempModel == null){
-                                        LOGGER.info("model is NULL!!!!");
+                                        LOGGER.error("model is NULL!!!!");
                                     }
                                 }catch (Exception e){
                                     LOGGER.error(e.toString());

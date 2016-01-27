@@ -1,14 +1,10 @@
 package org.aksw.defacto.search.engine.bing;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.billylieurance.azuresearch.AbstractAzureSearchQuery.AZURESEARCH_QUERYTYPE;
 import net.billylieurance.azuresearch.AbstractAzureSearchResult;
 import net.billylieurance.azuresearch.AzureSearchCompositeQuery;
 import net.billylieurance.azuresearch.AzureSearchResultSet;
 import net.billylieurance.azuresearch.AzureSearchWebResult;
-
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.WebSite;
@@ -18,6 +14,9 @@ import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.DefaultSearchResult;
 import org.aksw.defacto.search.result.SearchResult;
 import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Date: 2/6/12
@@ -33,7 +32,7 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
     private String NUMBER_OF_SEARCH_RESULTS;
     private static String BING_API_KEY;
     private static Logger logger =  Logger.getLogger(AzureBingSearchEngine.class);
-    
+
     public AzureBingSearchEngine() {
         
         if ( Defacto.DEFACTO_CONFIG != null ) {
@@ -57,11 +56,16 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
 //        MetaQuery query2 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Avram Hershko", "?D? is a component of ?R?", "United States Marine Corps", "en"));
         
         Defacto.init();
-        
-        MetaQuery q = new MetaQuery("Ghostbusters II|-|?D? NONE ?R?|-|Bill Murray|-|fr");
+
+        Pattern p = new Pattern();
+        p.naturalLanguageRepresentation = "?D? was not prizewinning ?R?";
+
+        MetaQuery q = new MetaQuery("Guglielmo Marconi|-| not prizewinning |-|Nobel Prize in Physics|-|en", p);
+
+        //MetaQuery q = new MetaQuery("Ghostbusters II|-|?D? NONE ?R?|-|Bill Murray|-|fr");
         AzureBingSearchEngine engine = new AzureBingSearchEngine();
-        logger.info(BING_API_KEY);
-        logger.info(engine.query(q, null).getTotalHitCount());
+        //System.out.println(BING_API_KEY);
+        //System.out.println(engine.query(q, null).getTotalHitCount());
 //        System.out.println(engine.query(query, null).getWebSites().size());
         
 //        URI uri;
@@ -101,9 +105,10 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
             else aq.setMarket("fr-FR");
             
             aq.setSources(new AZURESEARCH_QUERYTYPE[] { AZURESEARCH_QUERYTYPE.WEB });
-            
-            aq.setQuery(this.generateQuery(query));
-            logger.info(this.generateQuery(query));
+
+            String strQuery = this.generateQuery(query);
+            logger.debug("BING Query: " + strQuery);
+            aq.setQuery(strQuery);
             aq.doQuery();
             
             AzureSearchResultSet<AbstractAzureSearchResult> ars = aq.getQueryResult();
@@ -136,7 +141,6 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
 
     @Override
     public String generateQuery(MetaQuery query) {
-
         return new BingQuery().generateQuery(query);
     }
 

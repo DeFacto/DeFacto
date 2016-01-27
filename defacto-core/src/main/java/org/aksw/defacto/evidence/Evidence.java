@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
@@ -31,9 +32,12 @@ import weka.core.Instance;
 /**
  * 
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
+ * @author Diego Esteves <esteves@informatik.uni-leipzig.de>
  */
 public class Evidence {
 
+    private Constants.EvidenceType evidenceType; //defines the type of given evidence instance (POS or NEG)
+    private Evidence negative; //a link for a counter evidence (NEG)
     private DefactoModel model;
     private Map<Pattern,List<WebSite>> webSites         = new LinkedHashMap<Pattern,List<WebSite>>();
     private Map<String,List<Word>> topicTerms           = new HashMap<String,List<Word>>();
@@ -48,12 +52,23 @@ public class Evidence {
     private Instance features;
     private Long totalHitCount;
     private double deFactoScore;
+
+    //the score of the reversed fact function
+    private double deFactoCounterargumentScore;
+    //the score combining both deFactoScore and deFactoCounterargumentScore
+    private double deFactoCombinedScore;
     
     private Set<ComplexProof> complexProofs;
     private Map<String,List<Pattern>> boaPatterns = new HashMap<String,List<Pattern>>();
 	public List<Match> dates = new ArrayList<Match>();
 	public DefactoTimePeriod defactoTimePeriod;
 	public PatternTimePeriodSearcher tsSearcher = new PatternTimePeriodSearcher();
+
+    //stats
+    private int totalOfReturnedWebsites = 0;
+    private int totalOfComplexProofsLevel1 = 0;
+    private int totalOfComplexProofsLevel2 = 0;
+    private int totalOfComplexProofsLevel3 = 0;
 	
     
     /**
@@ -69,6 +84,7 @@ public class Evidence {
         this.model              = model;
         this.totalHitCount      = totalHitCount;
         this.complexProofs      = new HashSet<ComplexProof>();
+        this.evidenceType = Constants.EvidenceType.POS;
         
         boaPatterns.put("de", new ArrayList<Pattern>());
         boaPatterns.put("fr", new ArrayList<Pattern>());
@@ -82,6 +98,7 @@ public class Evidence {
         this.model              = model;
         this.totalHitCount      = 0L;
         this.complexProofs      = new HashSet<ComplexProof>();
+        this.evidenceType = Constants.EvidenceType.POS;
     }
     
     /**
@@ -97,6 +114,18 @@ public class Evidence {
         }
         
         return features;
+    }
+
+    public void setEvidenceType(Constants.EvidenceType type){
+        this.evidenceType = type;
+    }
+
+    public void setNegativeEvidenceObject(Evidence e){
+        this.negative = e;
+        this.negative.setEvidenceType(Constants.EvidenceType.NEG);
+    }
+    public Evidence getNegativeEvidenceObject(){
+        return this.negative;
     }
 
     /**
@@ -217,6 +246,41 @@ public class Evidence {
 //    }
 
     /**
+     *
+     * @param score
+     */
+    public void setDeFactoCounterargumentScore(double score) {
+
+        this.deFactoCounterargumentScore = score;
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Double getDeFactoCounterargumentScore() {
+
+        return this.deFactoCounterargumentScore;
+    }
+
+    public Double getDeFactoCombinedScore() {
+
+        try{
+
+            this.deFactoCombinedScore = (deFactoScore + (1 - deFactoCounterargumentScore)) / 2;
+
+            return deFactoCombinedScore;
+
+        }catch (Exception e){
+
+         return -1d;
+
+        }
+
+    }
+
+    /**
      * 
      * @param score
      */
@@ -287,6 +351,36 @@ public class Evidence {
             if ( proof.getWebSite().equals(website)) proofs.add(proof);
         return proofs;
     }
+
+    public List<ComplexProof> getComplexProofsPInBetween(WebSite website){
+        List<ComplexProof> proofs = new ArrayList<ComplexProof>();
+        for ( ComplexProof proof : this.complexProofs )
+            if ( proof.getWebSite().equals(website) && proof.getHasPatternInBetween()) {
+                proofs.add(proof);
+            }
+        return proofs;
+    }
+
+    public List<ComplexProof> getComplexProofsPInBetween(){
+        List<ComplexProof> proofs = new ArrayList<ComplexProof>();
+        for ( ComplexProof proof : this.complexProofs )
+            if ( proof.getHasPatternInBetween()) {
+                proofs.add(proof);
+            }
+        return proofs;
+    }
+
+    public List<ComplexProof> getComplexProofsPInBetween(Pattern p){
+        List<ComplexProof> proofs = new ArrayList<ComplexProof>();
+        for ( ComplexProof proof : this.complexProofs )
+        if (proof.getPattern().equals(p)){
+            if ( proof.getHasPatternInBetween()) {
+                proofs.add(proof);
+            }
+        }
+        return proofs;
+    }
+
     
     public List<WebSite> getAllWebSites(){
         boolean returnWebsitesWithNoProof = Defacto.DEFACTO_CONFIG.getBooleanSetting("evidence", "DISPLAY_WEBSITES_WITH_NO_PROOF");
@@ -299,6 +393,27 @@ public class Evidence {
                 else if(returnWebsitesWithNoProof)
                     websites.add(website);
 //            websites.addAll(websiteList);
+            }
+        }
+        return websites;
+    }
+
+    /**
+     * get all websites which have at least 1 proof with BOA pattern between S and O,
+     * @return
+     */
+    public List<WebSite> getAllWebSitesWithComplexProofAndAtLeastOneBOAPatternInBetween(){
+
+        List<WebSite> websites = new ArrayList<>();
+        for ( List<WebSite> websiteList : this.webSites.values() ){
+            for(WebSite website:websiteList){
+                outerloop:
+                for(ComplexProof proof : this.getComplexProofs(website)){
+                    if (proof.getHasPatternInBetween()){
+                        websites.add(website);
+                        break outerloop;
+                    }
+                }
             }
         }
         return websites;
@@ -366,4 +481,6 @@ public class Evidence {
 		
 		if ( this.defactoTimePeriod == null ) this.defactoTimePeriod = new DefactoTimePeriod(0,0);
 	}
+
+
 }

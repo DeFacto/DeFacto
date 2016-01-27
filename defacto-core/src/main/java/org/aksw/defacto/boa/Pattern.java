@@ -1,16 +1,9 @@
 package org.aksw.defacto.boa;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.aksw.defacto.Constants;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.*;
 
 /**
  * Only used inside this class to encapsulate the Solr query results.
@@ -27,6 +20,7 @@ public class Pattern {
     public String posTags = "";
 	private String normalizedPattern = null;
 	public String generalized ="";
+    public String NER = "";
     
     public Pattern(String naturalLanguageRepresentation, String language) {
     	
@@ -37,6 +31,10 @@ public class Pattern {
 	public Pattern() {
 		// TODO Auto-generated constructor stub
 	}
+
+    public Pattern(String nlr){
+        this.naturalLanguageRepresentation = nlr;
+    }
 
 	/* (non-Javadoc)
      * @see java.lang.Object#toString()

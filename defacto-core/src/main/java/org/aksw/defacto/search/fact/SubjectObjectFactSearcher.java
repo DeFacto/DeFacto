@@ -24,10 +24,12 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWaterman;
  * 
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
  * @author Jens Lehmann
+ * @author Diego Esteves <esteves@informatik.uni-leipzig.de>
  */
 public class SubjectObjectFactSearcher implements FactSearcher {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SubjectObjectFactSearcher.class);
+    public static org.apache.log4j.Logger LOGDEV    = org.apache.log4j.Logger.getLogger("developer");
     private static final Set<String> stopwords = new HashSet<String>(Arrays.asList("the", "of", "and"));
     
     private static SubjectObjectFactSearcher INSTANCE;
@@ -59,6 +61,8 @@ public class SubjectObjectFactSearcher implements FactSearcher {
     
     @Override
     public void generateProofs(Evidence evidence, WebSite website, DefactoModel model, Pattern pattern) {
+
+        LOGDEV.debug(" -> starting proof generation process");
 
         String websiteText  = website.getText().toLowerCase();
         
@@ -107,9 +111,9 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                 if (objectSubjectMatches != null) for ( String s : objectSubjectMatches) objectSubjectOccurrences.add(s);
                 
                 // direction: subject property object
-                createProofsForEvidence(evidence, subjectObjectOccurrences, subjectLabel, objectLabel, websiteText, website, surfaceForms);
+                createProofsForEvidence(evidence, subjectObjectOccurrences, subjectLabel, objectLabel, websiteText, website, surfaceForms, pattern);
                 // direction: object property subject 
-                createProofsForEvidence(evidence, objectSubjectOccurrences, objectLabel, subjectLabel, websiteText, website, surfaceForms);
+                createProofsForEvidence(evidence, objectSubjectOccurrences, objectLabel, subjectLabel, websiteText, website, surfaceForms, pattern);
             }
         }
         LOGGER.debug("#sLabels: "+  subjectLabels.size() + " #oLabels:" + objectLabels.size() + " #Proofs: " + evidence.getComplexProofs().size() + " #lang: " + model.getLanguages().size());
@@ -135,15 +139,25 @@ public class SubjectObjectFactSearcher implements FactSearcher {
      * @param secondLabel
      * @param site
      */
-    private void createProofsForEvidence(Evidence evidence, List<String> matches, String firstLabel, String secondLabel, String websiteTextLowerCase, WebSite site, Set<String> surfaceForms) {
-        
+    private void createProofsForEvidence(Evidence evidence, List<String> matches,
+                                         String firstLabel, String secondLabel,
+                                         String websiteTextLowerCase, WebSite site,
+                                         Set<String> surfaceForms,
+                                         Pattern pattern) {
+
+
+        LOGDEV.debug(" -> creating proofs for evidence: #first label = " + firstLabel +
+                " / #second label = " + secondLabel +
+                " / #website url = " + site.getUrl() +
+                " / #normalized pattern = " + pattern.getNormalized());
+
         for ( String occurrence : matches ) {
+
+            LOGDEV.debug(" #match = " + occurrence.toString());
             
             // it makes no sense to look at longer strings 
             if ( occurrence.split(" ").length < Defacto.DEFACTO_CONFIG.getIntegerSetting("extract", "NUMBER_OF_TOKENS_BETWEEN_ENTITIES") ) {
-                
-                String tinyContext = this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25);
-                
+
                 // first we check if we can find a boa pattern inside the mathing string
 //                for (Pattern boaPattern : evidence.getBoaPatterns()) { // go through all patterns and look if a non empty normalized pattern string is inside the match
                 	
@@ -154,15 +168,25 @@ public class SubjectObjectFactSearcher implements FactSearcher {
 //                	
                 	// this can only be if the patterns contains only garbage
 //                	if ( boaPattern.normalize().isEmpty() ) continue;
-                	
-                	ComplexProof proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, normalizeOccurrence(tinyContext,surfaceForms), site);
-                    proof.setTinyContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25));
-                    proof.setSmallContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 50));
-                    proof.setMediumContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 100));
-                    proof.setLargeContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 150));
-                    
-                    evidence.addComplexProof(proof);
-//                }
+
+                String tinyContext = this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25);
+
+                ComplexProof proof = new ComplexProof(evidence.getModel(), firstLabel, secondLabel, occurrence, normalizeOccurrence(tinyContext,surfaceForms), site, pattern);
+                proof.setTinyContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 25));
+                proof.setSmallContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 50));
+                proof.setMediumContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 100));
+                proof.setLargeContext(this.getLeftAndRightContext(site.getText(), websiteTextLowerCase, firstLabel + occurrence + secondLabel, 150));
+
+                //proof.setTaggedTinyContext();
+
+                //is there a pattern in between S1 and S2?
+                proof.setHasPatternInBetween(occurrence.contains(pattern.getNormalized()));
+
+                //continuar aqui, agora aplicando a regra de S ou O diferentes....
+                String[] rule = pattern.NER.split(";");
+
+                evidence.addComplexProof(proof);
+//              }
             }
         }
     }

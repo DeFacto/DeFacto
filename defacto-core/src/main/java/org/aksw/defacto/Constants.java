@@ -3,18 +3,20 @@
  */
 package org.aksw.defacto;
 
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
 
 /**
  * @author gerb
  *
  */
 public class Constants {
+
+	public enum EvidenceType {POS, NEG}; //pos -> positive claims / neg -> possible claims that could refute the pos ones
 
 	/* esteves: adding indexed wikipedia */
 	public static final String LUCENE_WIKI_PAGEID_FIELD				= "id";
@@ -32,6 +34,8 @@ public class Constants {
 	public static final String LUCENE_SEARCH_RESULT_CREATED_FIELD	= "created";
 	public static final String LUCENE_SEARCH_RESULT_TAGGED_FIELD	= "tagged";
 	public static final String LUCENE_SEARCH_RESULT_LANGUAGE		= "language";
+    //pattern suport
+    public static final String LUCENE_SEARCH_RESULT_PATTERN_FIELD		= "query";
 	
 	public static final String LUCENE_TOPIC_TERM_LABEL = "label";
 	public static final String LUCENE_TOPIC_TERM_RELATED_TERM = "related";
