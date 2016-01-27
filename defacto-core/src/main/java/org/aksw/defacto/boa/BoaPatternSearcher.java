@@ -165,17 +165,48 @@ public class BoaPatternSearcher {
 
         try {
 
-            if (propertyUri.equals("http://dbpedia.org/ontology/nflTeam")) {
+            if (language.equals("en")){
 
-            } else if (propertyUri.equals("http://dbpedia.org/ontology/publicationDate")) {
+                if (propertyUri.equals("http://dbpedia.org/ontology/nflTeam")) {
 
-            } else if (propertyUri.equals("http://dbpedia.org/ontology/starring")) {
+                    Pattern pattern1 = new Pattern();
+                    pattern1.generalized = "?D? not joined ?R?";
+                    pattern1.naturalLanguageRepresentation = "?D? not joined ?R?";
+                    pattern1.naturalLanguageRepresentationWithoutVariables = "not joined";
+                    pattern1.posTags = "RB JJ";
+                    pattern1.boaScore = 0d;
+                    pattern1.language = language;
+                    pattern1.inverseRelation = false;
+                    patterns.put(pattern1.getNormalized(), pattern1);
 
-            } else if (propertyUri.equals("http://dbpedia.org/ontology/award")) {
+                    Pattern pattern2 = new Pattern();
+                    pattern2.generalized = "?D? not signed for ?R?";
+                    pattern2.naturalLanguageRepresentation = "?D? not signed for ?R?";
+                    pattern2.naturalLanguageRepresentationWithoutVariables = "not signed for";
+                    pattern2.posTags = "RB VBN IN";
+                    pattern2.boaScore = 0d;
+                    pattern2.language = language;
+                    pattern2.inverseRelation = false;
+                    patterns.put(pattern2.getNormalized(), pattern2);
 
-                if (language.equals("en")){
+                    Pattern pattern3 = new Pattern();
+                    pattern3.generalized = "?D? not moved to ?R?";
+                    pattern3.naturalLanguageRepresentation = "?D? not moved to ?R?";
+                    pattern3.naturalLanguageRepresentationWithoutVariables = "not moved to";
+                    pattern3.posTags = "RB VBN TO";
+                    pattern3.boaScore = 0d;
+                    pattern3.language = language;
+                    pattern3.inverseRelation = false;
+                    patterns.put(pattern3.getNormalized(), pattern3);
 
-                    this.logger.debug("Starting loading counter patterns for dbo:award: ");
+
+
+                } else if (propertyUri.equals("http://dbpedia.org/ontology/publicationDate")) {
+
+                } else if (propertyUri.equals("http://dbpedia.org/ontology/starring")) {
+
+                } else if (propertyUri.equals("http://dbpedia.org/ontology/award")) {
+
 
                     Pattern pattern1 = new Pattern();
                     pattern1.generalized = "?D? _BE_ not awarded ?R?";
@@ -277,88 +308,87 @@ public class BoaPatternSearcher {
                     pattern10.inverseRelation = true;
                     patterns.put(pattern10.getNormalized(), pattern10);
 
+
+                } else if (propertyUri.equals("http://dbpedia.org/ontology/birthDate")) {
+
+
+                    Pattern pattern1 = new Pattern();
+                    pattern1.generalized = "?D? _BE_ not born in ?R?";
+                    pattern1.naturalLanguageRepresentation = "?D? was not born in ?R?";
+                    pattern1.naturalLanguageRepresentationWithoutVariables = "was not born in";
+                    pattern1.posTags = "VBD RB VBN IN";
+                    pattern1.boaScore = 0d;
+                    pattern1.language = language;
+                    pattern1.inverseRelation = false;
+                    patterns.put(pattern1.getNormalized(), pattern1);
+
+                    Pattern pattern2 = new Pattern();
+                    pattern2.generalized = "?D? _BE_ not born ?R?";
+                    pattern2.naturalLanguageRepresentation = "?D? was not born ?R?";
+                    pattern2.naturalLanguageRepresentationWithoutVariables = "was not born";
+                    pattern2.posTags = "VBD RB VBN IN";
+                    pattern2.boaScore = 0d;
+                    pattern2.language = language;
+                    pattern2.inverseRelation = false;
+                    patterns.put(pattern2.getNormalized(), pattern2);
+
+
+
+                } else if (propertyUri.equals("http://dbpedia.org/ontology/deathPlace")) {
+
+
+                    Pattern pattern1 = new Pattern();
+                    pattern1.generalized = "?D? did not die in ?R?";
+                    pattern1.naturalLanguageRepresentation = "?D? did not die in ?R?";
+                    pattern1.naturalLanguageRepresentationWithoutVariables = "did not die in";
+                    pattern1.posTags = "VBD RB VB RP";
+                    pattern1.boaScore = 0d;
+                    pattern1.language = language;
+                    pattern1.inverseRelation = false;
+                    patterns.put(pattern1.getNormalized(), pattern1);
+
+                    Pattern pattern2 = new Pattern();
+                    pattern2.generalized = "?D? not died in ?R?";
+                    pattern2.naturalLanguageRepresentation = "?D? not died in ?R?";
+                    pattern2.naturalLanguageRepresentationWithoutVariables = "not died in";
+                    pattern2.posTags = "RB VBD RP";
+                    pattern2.boaScore = 0d;
+                    pattern2.language = language;
+                    pattern2.inverseRelation = false;
+                    patterns.put(pattern2.getNormalized(), pattern2);
+
+                    Pattern pattern3 = new Pattern();
+                    pattern3.generalized = "?D? not died ?R?";
+                    pattern3.naturalLanguageRepresentation = "?D? not died ?R?";
+                    pattern3.naturalLanguageRepresentationWithoutVariables = "not died";
+                    pattern3.posTags = "RB VBD";
+                    pattern3.boaScore = 0d;
+                    pattern3.language = language;
+                    pattern3.inverseRelation = false;
+                    patterns.put(pattern3.getNormalized(), pattern3);
+
+                } else if (propertyUri.equals("http://dbpedia.org/ontology/foundationPlace")) {
+
+                    Pattern pattern1 = new Pattern();
+                    pattern1.generalized = "?D? was not founded in ?R?";
+                    pattern1.naturalLanguageRepresentation = "?D? was not founded in ?R?";
+                    pattern1.naturalLanguageRepresentationWithoutVariables = "was not founded in";
+                    pattern1.posTags = "VBD RB VBN IN";
+                    pattern1.boaScore = 0d;
+                    pattern1.language = language;
+                    pattern1.inverseRelation = false;
+                    patterns.put(pattern1.getNormalized(), pattern1);
+
+
+                }  else if (propertyUri.equals("http://dbpedia.org/ontology/leaderName")) {
+
+                } else if (propertyUri.equals("http://dbpedia.org/ontology/spouse")) {
+
+                } else if (propertyUri.equals("http://dbpedia.org/ontology/subsidiary")) {
+
                 }
 
-
-            } else if (propertyUri.equals("http://dbpedia.org/ontology/birthDate")) {
-
-
-                Pattern pattern1 = new Pattern();
-                pattern1.generalized = "?D? _BE_ not born in ?R?";
-                pattern1.naturalLanguageRepresentation = "?D? was not born in ?R?";
-                pattern1.naturalLanguageRepresentationWithoutVariables = "was not born in";
-                pattern1.posTags = "VBD RB VBN IN";
-                pattern1.boaScore = 0d;
-                pattern1.language = language;
-                pattern1.inverseRelation = false;
-                patterns.put(pattern1.getNormalized(), pattern1);
-
-                Pattern pattern2 = new Pattern();
-                pattern2.generalized = "?D? _BE_ not born ?R?";
-                pattern2.naturalLanguageRepresentation = "?D? was not born ?R?";
-                pattern2.naturalLanguageRepresentationWithoutVariables = "was not born";
-                pattern2.posTags = "VBD RB VBN IN";
-                pattern2.boaScore = 0d;
-                pattern2.language = language;
-                pattern2.inverseRelation = false;
-                patterns.put(pattern2.getNormalized(), pattern2);
-
-
-
-            } else if (propertyUri.equals("http://dbpedia.org/ontology/deathPlace")) {
-
-
-                Pattern pattern1 = new Pattern();
-                pattern1.generalized = "?D? did not die in ?R?";
-                pattern1.naturalLanguageRepresentation = "?D? did not die in ?R?";
-                pattern1.naturalLanguageRepresentationWithoutVariables = "did not die in";
-                pattern1.posTags = "VBD RB VB RP";
-                pattern1.boaScore = 0d;
-                pattern1.language = language;
-                pattern1.inverseRelation = false;
-                patterns.put(pattern1.getNormalized(), pattern1);
-
-                Pattern pattern2 = new Pattern();
-                pattern2.generalized = "?D? not died in ?R?";
-                pattern2.naturalLanguageRepresentation = "?D? not died in ?R?";
-                pattern2.naturalLanguageRepresentationWithoutVariables = "not died in";
-                pattern2.posTags = "RB VBD RP";
-                pattern2.boaScore = 0d;
-                pattern2.language = language;
-                pattern2.inverseRelation = false;
-                patterns.put(pattern2.getNormalized(), pattern2);
-
-                Pattern pattern3 = new Pattern();
-                pattern3.generalized = "?D? not died ?R?";
-                pattern3.naturalLanguageRepresentation = "?D? not died ?R?";
-                pattern3.naturalLanguageRepresentationWithoutVariables = "not died";
-                pattern3.posTags = "RB VBD";
-                pattern3.boaScore = 0d;
-                pattern3.language = language;
-                pattern3.inverseRelation = false;
-                patterns.put(pattern3.getNormalized(), pattern3);
-
-            } else if (propertyUri.equals("http://dbpedia.org/ontology/foundationPlace")) {
-
-                Pattern pattern1 = new Pattern();
-                pattern1.generalized = "?D? was not founded in ?R?";
-                pattern1.naturalLanguageRepresentation = "?D? was not founded in ?R?";
-                pattern1.naturalLanguageRepresentationWithoutVariables = "was not founded in";
-                pattern1.posTags = "VBD RB VBN IN";
-                pattern1.boaScore = 0d;
-                pattern1.language = language;
-                pattern1.inverseRelation = false;
-                patterns.put(pattern1.getNormalized(), pattern1);
-
-
-            }  else if (propertyUri.equals("http://dbpedia.org/ontology/leaderName")) {
-
-            } else if (propertyUri.equals("http://dbpedia.org/ontology/spouse")) {
-
-            } else if (propertyUri.equals("http://dbpedia.org/ontology/subsidiary")) {
-
             }
-
 
         }
         catch (Exception e){
