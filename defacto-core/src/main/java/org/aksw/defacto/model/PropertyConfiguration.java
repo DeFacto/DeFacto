@@ -12,10 +12,10 @@ public class PropertyConfiguration {
     private boolean isFunctional;
     private String resourceToBeChangedForRubbish;
 
-    public PropertyConfiguration(String predicate, String sClass, String oClass, boolean functional, String resourceToBeChangedForRubbish){
-        this.subjectClass = sClass;
+    public PropertyConfiguration(String predicate, String domainClass, String rangeClass, boolean functional, String resourceToBeChangedForRubbish){
+        this.subjectClass = domainClass;
         this.predicateUri = predicate;
-        this.objectClass = oClass;
+        this.objectClass = rangeClass;
         this.isFunctional = functional;
         this.resourceToBeChangedForRubbish = resourceToBeChangedForRubbish;
     }

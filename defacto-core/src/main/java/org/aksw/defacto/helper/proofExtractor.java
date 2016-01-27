@@ -15,6 +15,8 @@ import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.query.QueryGenerator;
 import org.aksw.defacto.util.TimeUtil;
 import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,11 +30,11 @@ import java.util.*;
  */
 public class proofExtractor {
 
-    public static org.apache.log4j.Logger LOGDEV    = org.apache.log4j.Logger.getLogger("developer");
+    private static final Logger LOGGER = LoggerFactory.getLogger(proofExtractor.class);
     public static PrintWriter writer;
     public static PrintWriter writer_overview;
     public static String separator = ";";
-    private static final File folder = new File("/Users/dnes/github/FactBench/v1/train/correct");
+    private static final File folder = new File("C:\\DNE5\\github\\DeFacto\\data\\factbench\\v1_2013\\test\\correct");
     private static List<String> files = new ArrayList<>();
 
     private static void setFilesModelFiles(final File folder) {
@@ -51,8 +53,6 @@ public class proofExtractor {
 
         Defacto.init();
 
-        setFilesModelFiles(folder);
-
         for(String f:files){
 
             Model m = null;
@@ -64,13 +64,13 @@ public class proofExtractor {
                 m.read(is, null, "TURTLE");
                 model = new DefactoModel(m, "Nobel Model", true, Arrays.asList("en"));
             }catch (Exception e){
-                LOGDEV.fatal(e.toString());
+                LOGGER.error(e.toString());
             }
 
-            LOGDEV.info("Extracting Proofs for: " + model);
+            LOGGER.info("Extracting Proofs for: " + model);
             Defacto.onlyTimes = onlyTimes;
 
-            LOGDEV.debug(" [1] starting generating the search engines queries for counter examples");
+            LOGGER.debug(" [1] starting generating the search engines queries for counter examples");
 
             long start = System.currentTimeMillis();
             QueryGenerator queryGenerator = new QueryGenerator(model);
@@ -80,9 +80,9 @@ public class proofExtractor {
                 queries.putAll(q);
             }
             if ( queries.size() <= 0 ) {
-                LOGDEV.debug(" -> none query has been generated for the model: " + model);
+                LOGGER.debug(" -> none query has been generated for the model: " + model);
             }
-            LOGDEV.debug(" -> Preparing queries took " + TimeUtil.formatTime(System.currentTimeMillis() - start));
+            LOGGER.debug(" -> Preparing queries took " + TimeUtil.formatTime(System.currentTimeMillis() - start));
 
             int i;
 
@@ -97,7 +97,7 @@ public class proofExtractor {
             long startCrawl = System.currentTimeMillis();
             EvidenceCrawler crawler = new EvidenceCrawler(model, queries);
             Evidence evidence = crawler.crawlCounterEvidence(engine);
-            LOGDEV.debug(" -> crawling counter evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
+            LOGGER.debug(" -> crawling counter evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
 
             String _uri;
             URI uri = null;
@@ -105,10 +105,10 @@ public class proofExtractor {
 
             List<Pattern> patterns = evidence.getBoaPatterns();
             for (Pattern p: patterns){
-                LOGDEV.debug(" -> Pattern: " + p.toString());
+                LOGGER.debug(" -> Pattern: " + p.toString());
             }
             if (patterns.size() == 0){
-                LOGDEV.debug(" -> No pattern has been found for the evidence!");
+                LOGGER.debug(" -> No pattern has been found for the evidence!");
             }
 
             List<WebSite> websites = evidence.getAllWebSites();
@@ -119,10 +119,10 @@ public class proofExtractor {
 
             List<ComplexProof> proofs;
 
-            LOGDEV.info("SUBJECT;OBJECT;PROPERTY;PATTERN;TOT WEBSITE;TOT CP [S->P<-O];TOT_COMPLEX_PROOFS;TOT_COMPLEX_PROOFS_IN_BETWEEN");
-            LOGDEV.info("**********************************************************************************************");
-            LOGDEV.info("Property: " + model.getPropertyUri());
-            LOGDEV.info("");
+            LOGGER.info("SUBJECT;OBJECT;PROPERTY;PATTERN;TOT WEBSITE;TOT CP [S->P<-O];TOT_COMPLEX_PROOFS;TOT_COMPLEX_PROOFS_IN_BETWEEN");
+            LOGGER.info("**********************************************************************************************");
+            LOGGER.info("Property: " + model.getPropertyUri());
+            LOGGER.info("");
             for ( Map.Entry<Pattern, List<WebSite>> patternToWebSites : evidence.getWebSites().entrySet()) {
 
                 int numberOfWebsitesWithComplexProofs = 0;
@@ -134,7 +134,7 @@ public class proofExtractor {
                 }
 
                 //LOGDEV.info(":: Pattern = " + patternToWebSites.getKey().naturalLanguageRepresentation.toString() + " - Total [S->P<-O] = " + evidence.getComplexProofsPInBetween(patternToWebSites.getKey()).size() );
-                LOGDEV.info(
+                LOGGER.info(
                                 model.getSubjectLabel("en") + ";" +
                                 model.getObjectLabel("en") + ";" +
                                 model.getPropertyUri() + ";" +
@@ -152,7 +152,7 @@ public class proofExtractor {
 
 
 
-            LOGDEV.info("**********************************************************************************************");
+            LOGGER.info("**********************************************************************************************");
             //LOGDEV.info("Statistics for Evidence => " + evidence.getModel().getName().toString());
             //LOGDEV.info("");
             //LOGDEV.info(":: Total of Websites = " + websites.size());
@@ -217,7 +217,7 @@ public class proofExtractor {
 
             */
 
-            LOGDEV.info(" -> process finished");
+            LOGGER.info(" -> process finished");
 
             m = null;
 

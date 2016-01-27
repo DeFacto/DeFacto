@@ -184,7 +184,7 @@ public class BoaPatternSearcher {
                     pattern1.posTags = "VBD RB VBN DT";
                     pattern1.boaScore = 0d;
                     pattern1.language = language;
-                    pattern1.NER = NER_AWARD;
+                    pattern1.inverseRelation = false;
                     patterns.put(pattern1.getNormalized(), pattern1);
 
                     Pattern pattern2 = new Pattern();
@@ -194,7 +194,7 @@ public class BoaPatternSearcher {
                     pattern2.posTags = "RB NN";
                     pattern2.boaScore = 0d;
                     pattern2.language = language;
-                    pattern2.NER = NER_AWARD_INV;
+                    pattern2.inverseRelation = true;
                     patterns.put(pattern2.getNormalized(), pattern2);
 
                     Pattern pattern3 = new Pattern();
@@ -204,7 +204,7 @@ public class BoaPatternSearcher {
                     pattern3.posTags = "NN";
                     pattern3.boaScore = 0d;
                     pattern3.language = language;
-                    pattern3.NER = NER_AWARD_INV;
+                    pattern2.inverseRelation = true;
                     patterns.put(pattern3.getNormalized(), pattern3);
 
                     Pattern pattern4 = new Pattern();
@@ -214,7 +214,7 @@ public class BoaPatternSearcher {
                     pattern4.posTags = "VBD RB VB";
                     pattern4.boaScore = 0d;
                     pattern4.language = language;
-                    pattern4.NER = NER_AWARD;
+                    pattern2.inverseRelation = false;
                     patterns.put(pattern4.getNormalized(), pattern4);
 
                     Pattern pattern5 = new Pattern();
@@ -224,7 +224,7 @@ public class BoaPatternSearcher {
                     pattern5.posTags = "VBD RB VB";
                     pattern5.boaScore = 0d;
                     pattern5.language = language;
-                    pattern5.NER = NER_AWARD;
+                    pattern2.inverseRelation = false;
                     patterns.put(pattern5.getNormalized(), pattern5);
 
                     Pattern pattern6 = new Pattern();
@@ -234,7 +234,7 @@ public class BoaPatternSearcher {
                     pattern6.posTags = "VB DT";
                     pattern6.boaScore = 0d;
                     pattern6.language = language;
-                    pattern6.NER = NER_AWARD;
+                    pattern2.inverseRelation = false;
                     patterns.put(pattern6.getNormalized(), pattern6);
 
                     Pattern pattern7 = new Pattern();
@@ -244,7 +244,7 @@ public class BoaPatternSearcher {
                     pattern7.posTags = "VBD DT";
                     pattern7.boaScore = 0d;
                     pattern7.language = language;
-                    pattern7.NER = NER_AWARD;
+                    pattern2.inverseRelation = false;
                     patterns.put(pattern7.getNormalized(), pattern7);
 
                     Pattern pattern8 = new Pattern();
@@ -254,7 +254,7 @@ public class BoaPatternSearcher {
                     pattern8.posTags = "VBD RB VBG";
                     pattern8.boaScore = 0d;
                     pattern8.language = language;
-                    pattern8.NER = NER_AWARD;
+                    pattern2.inverseRelation = false;
                     patterns.put(pattern8.getNormalized(), pattern8);
 
                     Pattern pattern9 = new Pattern();
@@ -264,7 +264,7 @@ public class BoaPatternSearcher {
                     pattern9.posTags = "VBD RB DT JJ IN";
                     pattern9.boaScore = 0d;
                     pattern9.language = language;
-                    pattern9.NER = NER_AWARD_INV;
+                    pattern2.inverseRelation = true;
                     patterns.put(pattern9.getNormalized(), pattern9);
 
                     Pattern pattern10 = new Pattern();
@@ -274,13 +274,36 @@ public class BoaPatternSearcher {
                     pattern10.posTags = "NNS";
                     pattern10.boaScore = 0d;
                     pattern10.language = language;
-                    pattern10.NER = NER_AWARD_INV;
+                    pattern2.inverseRelation = true;
                     patterns.put(pattern10.getNormalized(), pattern10);
 
                 }
 
 
             } else if (propertyUri.equals("http://dbpedia.org/ontology/birthDate")) {
+
+
+                Pattern pattern1 = new Pattern();
+                pattern1.generalized = "?D? _BE_ not born in ?R?";
+                pattern1.naturalLanguageRepresentation = "?D? was not born in ?R?";
+                pattern1.naturalLanguageRepresentationWithoutVariables = "was not born in";
+                pattern1.posTags = "VBD RB VBN IN";
+                pattern1.boaScore = 0d;
+                pattern1.language = language;
+                pattern1.inverseRelation = false;
+                patterns.put(pattern1.getNormalized(), pattern1);
+
+                Pattern pattern2 = new Pattern();
+                pattern2.generalized = "?D? _BE_ not born ?R?";
+                pattern2.naturalLanguageRepresentation = "?D? was not born ?R?";
+                pattern2.naturalLanguageRepresentationWithoutVariables = "was not born";
+                pattern2.posTags = "VBD RB VBN IN";
+                pattern2.boaScore = 0d;
+                pattern2.language = language;
+                pattern2.inverseRelation = false;
+                patterns.put(pattern1.getNormalized(), pattern2);
+
+
 
             } else if (propertyUri.equals("http://dbpedia.org/ontology/deathPlace")) {
 
