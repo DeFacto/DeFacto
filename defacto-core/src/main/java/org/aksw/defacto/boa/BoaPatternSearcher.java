@@ -199,8 +199,6 @@ public class BoaPatternSearcher {
                     pattern3.inverseRelation = false;
                     patterns.put(pattern3.getNormalized(), pattern3);
 
-
-
                 } else if (propertyUri.equals("http://dbpedia.org/ontology/publicationDate")) {
 
                 } else if (propertyUri.equals("http://dbpedia.org/ontology/starring")) {
@@ -383,6 +381,106 @@ public class BoaPatternSearcher {
                 }  else if (propertyUri.equals("http://dbpedia.org/ontology/leaderName")) {
 
                 } else if (propertyUri.equals("http://dbpedia.org/ontology/spouse")) {
+
+                    Pattern pattern1 = new Pattern();
+                    pattern1.generalized = "?R? 's ex-wife ?D?";
+                    pattern1.naturalLanguageRepresentation = "?R? 's ex-wife ?D?";
+                    pattern1.naturalLanguageRepresentationWithoutVariables = "'s ex-wife";
+                    pattern1.posTags = "NN";
+                    pattern1.boaScore = 0d;
+                    pattern1.language = language;
+                    pattern1.inverseRelation = true;
+                    patterns.put(pattern1.getNormalized(), pattern1);
+
+                    Pattern pattern2 = new Pattern();
+                    pattern2.generalized = "?R? , ex-wife ?D?";
+                    pattern2.naturalLanguageRepresentation = "?R? , ex-wife ?D?";
+                    pattern2.naturalLanguageRepresentationWithoutVariables = ", ex-wife";
+                    pattern2.posTags = "NN";
+                    pattern2.boaScore = 0d;
+                    pattern2.language = language;
+                    pattern2.inverseRelation = true;
+                    patterns.put(pattern2.getNormalized(), pattern2);
+
+                    Pattern pattern3 = new Pattern();
+                    pattern3.generalized = "?R? 's ex-wife , ?D?";
+                    pattern3.naturalLanguageRepresentation = "?R? 's ex-wife , ?D?";
+                    pattern3.naturalLanguageRepresentationWithoutVariables = "'s ex-wife ,";
+                    pattern3.posTags = "NN";
+                    pattern3.boaScore = 0d;
+                    pattern3.language = language;
+                    pattern3.inverseRelation = true;
+                    patterns.put(pattern3.getNormalized(), pattern3);
+
+                    Pattern pattern4 = new Pattern();
+                    pattern4.generalized = "?D? 's ex-wife , ?R?";
+                    pattern4.naturalLanguageRepresentation = "?D? 's ex-wife , ?R?";
+                    pattern4.naturalLanguageRepresentationWithoutVariables = "'s ex-wife ,";
+                    pattern4.posTags = "NN";
+                    pattern4.boaScore = 0d;
+                    pattern4.language = language;
+                    pattern4.inverseRelation = false;
+                    patterns.put(pattern4.getNormalized(), pattern4);
+
+                    Pattern pattern5 = new Pattern();
+                    pattern5.generalized = "?D? 's ex-wife ?R?";
+                    pattern5.naturalLanguageRepresentation = "?D? 's ex-wife ?R?";
+                    pattern5.naturalLanguageRepresentationWithoutVariables = "'s ex-wife";
+                    pattern5.posTags = "NN";
+                    pattern5.boaScore = 0d;
+                    pattern5.language = language;
+                    pattern5.inverseRelation = false;
+                    patterns.put(pattern5.getNormalized(), pattern5);
+
+                    Pattern pattern6 = new Pattern();
+                    pattern6.generalized = "?D? , the ex-wife ?R?";
+                    pattern6.naturalLanguageRepresentation = "?D? , the ex-wife ?R?";
+                    pattern6.naturalLanguageRepresentationWithoutVariables = ", the ex-wife";
+                    pattern6.posTags = "DT NN";
+                    pattern6.boaScore = 0d;
+                    pattern6.language = language;
+                    pattern6.inverseRelation = false;
+                    patterns.put(pattern6.getNormalized(), pattern6);
+
+                    Pattern pattern7 = new Pattern();
+                    pattern7.generalized = "?R? , the ex-wife ?D?";
+                    pattern7.naturalLanguageRepresentation = "?R? , the ex-wife ?D?";
+                    pattern7.naturalLanguageRepresentationWithoutVariables = ", the ex-wife";
+                    pattern7.posTags = "DT NN";
+                    pattern7.boaScore = 0d;
+                    pattern7.language = language;
+                    pattern7.inverseRelation = true;
+                    patterns.put(pattern7.getNormalized(), pattern7);
+
+                    Pattern pattern8 = new Pattern();
+                    pattern8.generalized = "?D? , ex-wife ?R?";
+                    pattern8.naturalLanguageRepresentation = "?D? , ex-wife ?R?";
+                    pattern8.naturalLanguageRepresentationWithoutVariables = ", ex-wife";
+                    pattern8.posTags = "NN";
+                    pattern8.boaScore = 0d;
+                    pattern8.language = language;
+                    pattern8.inverseRelation = false;
+                    patterns.put(pattern8.getNormalized(), pattern8);
+
+                    Pattern pattern9 = new Pattern();
+                    pattern9.generalized = "?D? not married ?R?";
+                    pattern9.naturalLanguageRepresentation = "?D? not married ?R?";
+                    pattern9.naturalLanguageRepresentationWithoutVariables = "not married";
+                    pattern9.posTags = "RB JJ";
+                    pattern9.boaScore = 0d;
+                    pattern9.language = language;
+                    pattern9.inverseRelation = false;
+                    patterns.put(pattern9.getNormalized(), pattern9);
+
+                    Pattern pattern10 = new Pattern();
+                    pattern10.generalized = "?R? not married ?D?";
+                    pattern10.naturalLanguageRepresentation = "?R? not married ?D?";
+                    pattern10.naturalLanguageRepresentationWithoutVariables = "not married";
+                    pattern10.posTags = "RB JJ";
+                    pattern10.boaScore = 0d;
+                    pattern10.language = language;
+                    pattern10.inverseRelation = true;
+                    patterns.put(pattern10.getNormalized(), pattern10);
 
                 } else if (propertyUri.equals("http://dbpedia.org/ontology/subsidiary")) {
 
