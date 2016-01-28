@@ -183,7 +183,7 @@ public class SubjectObjectFactSearcher implements FactSearcher {
                 proof.setHasPatternInBetween(occurrence.contains(pattern.getNormalized()));
 
                 //continuar aqui, agora aplicando a regra de S ou O diferentes....
-                String[] rule = pattern.NER.split(";");
+                //String[] rule = pattern.NER.split(";");
 
                 evidence.addComplexProof(proof);
 //              }

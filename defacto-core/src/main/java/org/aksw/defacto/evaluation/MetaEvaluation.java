@@ -3,11 +3,11 @@ package org.aksw.defacto.evaluation;
 /**
  * Created by dnes on 04/01/16.
  */
-import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
+
 import com.hp.hpl.jena.rdf.model.*;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.evidence.Evidence;
+import org.aksw.defacto.helper.DefactoUtils;
 import org.aksw.defacto.model.*;
 import org.aksw.defacto.reader.DefactoModelReader;
 import org.slf4j.Logger;
@@ -49,6 +49,7 @@ public class MetaEvaluation {
     private static String               fileNameRoot = "EVAL_META_ROOT.csv";
     private static String               cacheRootProcessingLog = "PROCESSING_QUEUE_ROOT.csv";
     private static PrintWriter          outRoot;
+    private static DefactoUtils         util;
 
 
     public static void main(String[] args) {
@@ -58,6 +59,8 @@ public class MetaEvaluation {
         try{
 
             Defacto.init();
+
+            util = new DefactoUtils();
 
             long startTimeOverallProcess = System.currentTimeMillis();
             int sizePropertyFolder = 0;
@@ -84,10 +87,10 @@ public class MetaEvaluation {
             outRoot = new PrintWriter(new BufferedWriter(new FileWriter(fileNameRoot, true)));
 
             //starting the in-memory caches
-            cache = readCacheFromCSV(cacheProcessingLog);
+            cache = util.readCacheFromCSV(cacheProcessingLog);
             cacheBkp = (ArrayList<String>) cache.clone();
 
-            cacheRoot = readCacheFromCSV(cacheRootProcessingLog);
+            cacheRoot = util.readCacheFromCSV(cacheRootProcessingLog);
             cacheRootBkp = (ArrayList<String>) cacheRoot.clone();
 
             String testDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory")
@@ -154,9 +157,9 @@ public class MetaEvaluation {
                             LOGGER.info(":: Synchronizing root cache");
                             for(String m: cacheRoot){
                                 if (!cacheRootBkp.contains(m))
-                                    writeToCSV(cacheRootProcessingLog, m);
+                                    util.writeToCSV(cacheRootProcessingLog, m);
                             }
-                            cacheRoot = readCacheFromCSV(cacheRootProcessingLog);
+                            cacheRoot = util.readCacheFromCSV(cacheRootProcessingLog);
                             cacheRootBkp = (ArrayList<String>) cacheRoot.clone();
                             outRoot.flush();
 
@@ -232,9 +235,9 @@ public class MetaEvaluation {
                         LOGGER.info(":: Synchronizing cache");
                         for(String m: cache){
                             if (!cacheBkp.contains(m))
-                                writeToCSV(cacheProcessingLog, m);
+                                util.writeToCSV(cacheProcessingLog, m);
                         }
-                        cache = readCacheFromCSV(cacheProcessingLog);
+                        cache = util.readCacheFromCSV(cacheProcessingLog);
                         cacheBkp = (ArrayList<String>) cache.clone();
                         out.flush();
 
@@ -263,9 +266,9 @@ public class MetaEvaluation {
                 LOGGER.info(":: Synchronizing cache");
                 for(String m: cache){
                     if (!cacheBkp.contains(m))
-                        writeToCSV(cacheProcessingLog, m);
+                        util.writeToCSV(cacheProcessingLog, m);
                 }
-                cache = readCacheFromCSV(cacheProcessingLog);
+                cache = util.readCacheFromCSV(cacheProcessingLog);
                 cacheBkp = cache;
                 out.flush();
                 out.close();
@@ -273,9 +276,9 @@ public class MetaEvaluation {
                 LOGGER.info(":: Synchronizing root cache");
                 for(String m: cacheRoot){
                     if (!cacheRootBkp.contains(m))
-                        writeToCSV(cacheRootProcessingLog, m);
+                        util.writeToCSV(cacheRootProcessingLog, m);
                 }
-                cacheRoot = readCacheFromCSV(cacheRootProcessingLog);
+                cacheRoot = util.readCacheFromCSV(cacheRootProcessingLog);
                 cacheRootBkp = (ArrayList<String>) cacheRoot.clone();
                 outRoot.flush();
 
@@ -832,61 +835,10 @@ public class MetaEvaluation {
         return selected;
     }
 
-    private static ArrayList<String> readCacheFromCSV(String fn) throws Exception{
 
-        ArrayList<String> cache = new ArrayList<>();
 
-        try {
 
-            createCacheFile(fn);
 
-            CSVReader reader = new CSVReader(new FileReader(fn), ',' , '\'' , '\t');
 
-            String [] nextLine;
-            while ((nextLine = reader.readNext()) != null) {
-                cache.add(nextLine[0]);
-            }
-            reader.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return cache;
-
-    }
-
-    private static void createCacheFile(String fileName) {
-
-        try {
-            File f = new File(fileName);
-            if(!f.exists()) {
-                f.createNewFile();
-            }
-
-        }catch (Exception e){
-            LOGGER.error(e.toString());
-        }
-
-    }
-
-    private static void writeToCSV(String fileName, String text) throws IOException {
-
-        createCacheFile(fileName);
-
-        try {
-
-            CSVWriter writer = new CSVWriter(new FileWriter(fileName, true), ',' , '\0' , '\t');
-            String[] t = new String[] {text};
-            writer.writeNext(t);
-            writer.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 }
