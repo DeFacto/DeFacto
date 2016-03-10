@@ -9,7 +9,7 @@
     <name>defacto</name>
     <modules>
         <module>defacto-core</module>
-        <module>defacto-evaluation</module>
+        <!--<module>defacto-evaluation</module>-->
         <!--<module>defacto-gui</module>-->
         <module>defacto-restful</module>
     </modules>
@@ -105,10 +105,11 @@
             <url>http://www.billylieurance.net/maven2</url>
             <layout>default</layout>
         </repository>
-        <repository>
+         <repository>
             <id>gerb_snapshots</id>
             <url>https://raw.github.com/gerbsen/maven-repo/master/snapshots/</url>
         </repository>
+
     </repositories>
     <dependencies>
         <dependency>
