@@ -1,4 +1,4 @@
-package org.aksw.defacto.restful.webservice;
+package org.aksw.defacto.restful;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,43 +23,47 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
-public class App {
-  static {
-    PropertyConfigurator.configure(Cfg.LOG_FILE);
-  }
-
-  public static Logger LOG = LogManager.getLogger(App.class);
+public class App extends WebSecurityAbstract {
+  public static Logger LOG;
 
   /**
    *
    * @param args
    */
   public static void main(final String[] args) {
-    try {
-      // write shut down file
-      writeShutDownFile("stop");
+    PropertyConfigurator.configure(Cfg.LOG_FILE);
+    LOG = LogManager.getLogger(App.class);
 
-      final InputStream stream = Defacto.class.getClassLoader().getResourceAsStream("defacto.ini");
-      if (stream == null) {
-        LOG.error("Could not load resource file \"defacto.ini\"");
-        return;
-      }
+    // write shut down file
+    writeShutDownFile("stop");
 
-      // load config
-      Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(stream));
+    // load config
+    if (checkCfg()) {
+
       // run app
       SpringApplication.run(App.class, args);
+
       // shutdown hook
       Runtime.getRuntime().addShutdownHook(new Thread((Runnable) () -> {
         // TODO: check data then shutdown the server
-        //
-        //
         LOG.info("Stopping server with shutdownHook.");
       } , "shutdownHook"));
-
-    } catch (final IOException e) {
-      LOG.error(e.getLocalizedMessage(), e);
     }
+  }
+
+  private static boolean checkCfg() {
+    try {
+      final InputStream stream = Defacto.class.getClassLoader().getResourceAsStream("defacto.ini");
+      if (stream == null) {
+        LOG.error("Could not load resource file \"defacto.ini\"");
+        return false;
+      }
+      Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(stream));
+    } catch (final IOException e) {
+      LOG.error("Could not init resource file \"defacto.ini\"");
+      return false;
+    }
+    return true;
   }
 
   /**
