@@ -30,7 +30,10 @@ Defacto.constant('pages', [{
   description: ''
 }]);
 
-Defacto.config(['$routeProvider', 'pages', function($routeProvider, pages) {
+Defacto.config(['$routeProvider','$httpProvider', 'pages', function($routeProvider,$httpProvider, pages) {
+
+$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
   angular.forEach(pages, function(config) {
     $routeProvider.when('/' + config.routeName, {
       templateUrl: 'templates/' + config.routeName + '.html',
@@ -43,6 +46,11 @@ Defacto.config(['$routeProvider', 'pages', function($routeProvider, pages) {
 
   $routeProvider.when('/404', {
     templateUrl: 'templates/404.html'
+  });
+
+  // facebook redirects to '_=_'
+  $routeProvider.when('/_=_', {
+    redirectTo: '/home'
   });
 
   $routeProvider.when('/', {

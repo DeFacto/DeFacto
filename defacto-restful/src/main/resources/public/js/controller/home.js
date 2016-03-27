@@ -2,6 +2,33 @@
 angular.module('defacto.controllers.home', [])
   .controller('HomeCtrl', function($location, $scope, $http, $filter, ChartFactory) {
 
+
+$scope.home = {};
+    // http get user
+    $http.get("/user").success(function(data) {
+      if (data.name) {
+        $scope.home.user = data;
+        $scope.home.authenticated = true;
+      } else {
+        $scope.home.user = "N/A";
+        $scope.home.authenticated = false;
+      }
+    }).error(function() {
+      $scope.home.user = "N/A";
+      $scope.home.authenticated = false;
+    });
+
+    // logout
+    $scope.home.logout = function() {
+      $http.post('logout', {}).success(function() {
+        $scope.home.authenticated = false;
+        $location.path("/");
+      }).error(function(data) {
+        console.log("Logout failed")
+        scope.home.authenticated = false;
+      });
+    };
+
     $scope.requested = 0;
     $scope.example = {};
 
