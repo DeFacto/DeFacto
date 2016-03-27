@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,290 +41,277 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 
 /**
- * 
+ *
  * @author rspeck
  *
  */
 public class RestModel {
 
-    public static Logger      LOG  = null;
-    public static Set<String> lang = null;
+  public static Logger LOG = null;
+  public static Set<String> lang = null;
 
-    // sets langs
-    static {
-        PropertyConfigurator.configure(Cfg.LOG_FILE);
-        LOG = LogManager.getLogger(RestModel.class);
-        try {
-            Defacto.DEFACTO_CONFIG = new DefactoConfig(new Ini(Defacto.class.getClassLoader().getResourceAsStream("defacto.ini")));
-            lang = new HashSet<>(Arrays.asList(Defacto.DEFACTO_CONFIG.getStringSetting("boa", "languages").split(",")));
-        } catch (IOException e) {
-            LOG.error(e.getLocalizedMessage(), e);
+  // sets langs
+  static {
+    PropertyConfigurator.configure(Cfg.LOG_FILE);
+    LOG = LogManager.getLogger(RestModel.class);
+    try {
+      Defacto.DEFACTO_CONFIG = new DefactoConfig(
+          new Ini(Defacto.class.getClassLoader().getResourceAsStream("defacto.ini")));
+      lang = new HashSet<>(
+          Arrays.asList(Defacto.DEFACTO_CONFIG.getStringSetting("boa", "languages").split(",")));
+    } catch (final IOException e) {
+      LOG.error(e.getLocalizedMessage(), e);
+    }
+    if (lang == null) {
+      lang = new HashSet<>(Arrays.asList(new String[] {"en"}));
+    }
+  }
+
+  private final Date date = new Date();
+
+  /**
+   * 
+   * @param triple
+   * @param from
+   * @param to
+   * @return
+   */
+  public DefactoModel getModel(final Triple triple, final String from, final String to) {
+
+    final String subjectURI = triple.getSubject().getURI().toString();
+    final String blankProperty = triple.getPredicate().getURI().toString();
+    final String objectURI = triple.getObject().getURI().toString();
+
+    // create labels
+    final Set<String> set = new HashSet<>();
+    set.add(subjectURI);
+    set.add(blankProperty);
+    set.add(objectURI);
+
+    final Model langModel = generateModel(set, lang);
+
+    return getDefactoModel(getModel(langModel, objectURI, subjectURI, blankProperty, from, to),
+        lang);
+  }
+
+  /**
+   * 
+   * @param model
+   * @param lang
+   * @return
+   */
+  public DefactoModel getDefactoModel(final Model model, final Set<String> lang) {
+    return getDefactoModel(model, "DefactoModel", false, lang);
+  }
+
+  /**
+   * 
+   * @param model
+   * @param modelName
+   * @param isCorrect
+   * @param lang
+   * @return
+   */
+  public DefactoModel getDefactoModel(final Model model, final String modelName,
+      final boolean isCorrect, final Set<String> lang) {
+    final DefactoModel defactoModel =
+        new DefactoModel(model, modelName, isCorrect, new ArrayList<String>(lang));
+    return defactoModel;
+  }
+
+  /**
+   * 
+   * @param model
+   * @param objectURI
+   * @param subjectURI
+   * @param blankProperty
+   * @param from
+   * @param to
+   * @return
+   */
+  public Model getModel(final Model model, final String objectURI, final String subjectURI,
+      final String blankProperty, final String from, final String to) {
+    final Map<String, String> empty = new HashMap<>();
+    return getModel(model, objectURI, subjectURI, empty, empty, blankProperty, from, to);
+  }
+
+  /**
+   * 
+   * 
+   * @param objectURI
+   * @param subjectURI
+   * @param blankURI
+   * @param objectLabels
+   * @param subjectLabels
+   * @param subjectProperty
+   * @param blankProperty
+   * @param from
+   * @param to
+   * @return
+   */
+  public Model getModel(final String objectURI, final String subjectURI,
+      final Map<String, String> objectLabels, final Map<String, String> subjectLabels,
+      final String blankProperty, final String from, final String to) {
+    return getModel(null, objectURI, subjectURI, objectLabels, subjectLabels, blankProperty, from,
+        to);
+  }
+
+  /**
+   * 
+   * @param uris
+   * @param languages
+   * @return
+   */
+  protected Model generateModel(final Set<String> uris, final Set<String> langs) {
+    final String rdfs_label = "http://www.w3.org/2000/01/rdf-schema#label";
+
+    final QueryExecutionFactory qef =
+        new QueryExecutionFactoryHttp(SparqlEndpoint.getEndpointDBpedia().getURL().toString(),
+            SparqlEndpoint.getEndpointDBpedia().getDefaultGraphURIs());
+
+    final Model model = ModelFactory.createDefaultModel();
+    for (final String uri : uris) {
+      String query = "CONSTRUCT {<" + uri + "> <" + rdfs_label + "> ?o} WHERE {<" + uri + "> <"
+          + rdfs_label + "> ?o.";
+      if (lang.size() > 0) {
+        query += "FILTER(";
+
+        int i = 0;
+        for (final String lang : langs) {
+          query += "LANGMATCHES(LANG(?o),'" + lang + "')";
+          if (i++ < (langs.size() - 1)) {
+            query += " || ";
+          }
         }
-        if (lang == null) {
-            lang = new HashSet<>(Arrays.asList(new String[] { "en" }));
+        query += ")";
+      }
+      query += "}";
+
+      final QueryExecution qe = qef.createQueryExecution(query);
+      qe.execConstruct(model);
+      qe.close();
+    }
+    return model;
+  }
+
+  /**
+   * 
+   * @param model
+   * @param objectURI
+   * @param subjectURI
+   * @param objectLabels
+   * @param subjectLabels
+   * @param blankProperty
+   * @param from
+   * @param to
+   * @return
+   */
+  protected Model getModel(Model model, final String objectURI, final String subjectURI,
+      final Map<String, String> objectLabels, final Map<String, String> subjectLabels,
+      final String blankProperty, final String from, final String to) {
+
+    final String time = Long.toString(date.getTime());
+    final String subjectProperty = "http://dbpedia.org/ontology/tmp".concat("_").concat(time);
+    final String blankURI = subjectURI.concat("__").concat(time);
+
+    // create model
+    if (model == null) {
+      model = ModelFactory.createDefaultModel();
+    }
+    // object
+    final Resource objectRes = model.createResource(objectURI);
+    for (final Entry<String, String> entry : objectLabels.entrySet()) {
+      objectRes.addProperty(Constants.RDFS_LABEL,
+          model.createLiteral(entry.getValue(), entry.getKey()));
+    }
+
+    // blank node
+    final Resource blank = model.createResource(blankURI);
+    blank.addProperty(Constants.DEFACTO_FROM,
+        model.createTypedLiteral(from, NodeFactory.getType(from)));
+    blank.addProperty(Constants.DEFACTO_TO, model.createTypedLiteral(to, NodeFactory.getType(to)));
+    blank.addProperty(model.createProperty(blankProperty), objectRes.asResource());
+
+    // subject
+    final Resource subjectRes = model.createResource(subjectURI);
+    for (final Entry<String, String> entry : subjectLabels.entrySet()) {
+      subjectRes.addProperty(Constants.RDFS_LABEL,
+          model.createLiteral(entry.getValue(), entry.getKey()));
+    }
+    subjectRes.addProperty(model.createProperty(subjectProperty), blank.asResource());
+
+    return model;
+  }
+
+  public JSONObject out(final Evidence evidence) {
+
+    // sort websites bei defacto score
+    final List<WebSite> webSites = evidence.getAllWebSites();
+    Collections.sort(webSites, (o1, o2) -> ComparisonChain.start()
+        .compare(o2.getScore(), o1.getScore()).compare(o1.getTitle(), o2.getTitle()).result());
+
+    final JSONArray jaWebSites = new JSONArray();
+    for (final WebSite website : webSites) {
+      final JSONArray jaProofs = new JSONArray();
+      int cnt = 1;
+      final List<Pattern> boaPatterns = evidence.getBoaPatterns();
+      for (final ComplexProof proof : evidence.getComplexProofs(website)) {
+
+        for (final Pattern pattern : boaPatterns) {
+          if (!pattern.getNormalized().trim().isEmpty() && proof.getProofPhrase().toLowerCase()
+              .contains(pattern.getNormalized().toLowerCase())) {
+            break;
+          }
         }
-    }
+        if (!proof.getTinyContext().contains("http:") && !proof.getTinyContext().contains("ftp:")) {
+          final JSONArray jaLabels = new JSONArray();
+          final Set<String> labels = new HashSet<String>();
+          labels.add(website.getQuery().getSubjectLabel());
+          labels.add(website.getQuery().getObjectLabel());
+          for (final String label : labels) {
+            jaLabels.put(label);
+          }
 
-    private Date              date = new Date();
-
-    /**
-     * 
-     * @param triple
-     * @param from
-     * @param to
-     * @return
-     */
-    public DefactoModel getModel(Triple triple, String from, String to) {
-
-        String subjectURI = triple.getSubject().getURI().toString();
-        String blankProperty = triple.getPredicate().getURI().toString();
-        String objectURI = triple.getObject().getURI().toString();
-
-        // create labels
-        Set<String> set = new HashSet<>();
-        set.add(subjectURI);
-        set.add(blankProperty);
-        set.add(objectURI);
-
-        Model langModel = generateModel(set, lang);
-
-        return getDefactoModel(
-                getModel(langModel, objectURI, subjectURI, blankProperty, from, to),
-                lang);
-    }
-
-    /**
-     * 
-     * @param model
-     * @param lang
-     * @return
-     */
-    public DefactoModel getDefactoModel(Model model, Set<String> lang) {
-        return getDefactoModel(model, "DefactoModel", false, lang);
-    }
-
-    /**
-     * 
-     * @param model
-     * @param modelName
-     * @param isCorrect
-     * @param lang
-     * @return
-     */
-    public DefactoModel getDefactoModel(Model model, String modelName, boolean isCorrect, Set<String> lang) {
-        DefactoModel defactoModel = new DefactoModel(model, modelName, isCorrect, new ArrayList<String>(lang));
-        return defactoModel;
-    }
-
-    /**
-     * 
-     * @param model
-     * @param objectURI
-     * @param subjectURI
-     * @param blankProperty
-     * @param from
-     * @param to
-     * @return
-     */
-    public Model getModel(Model model,
-            String objectURI, String subjectURI,
-            String blankProperty,
-            String from, String to
-            ) {
-        Map<String, String> empty = new HashMap<>();
-        return getModel(model, objectURI, subjectURI, empty, empty, blankProperty, from, to);
-    }
-
-    /**
-     * 
-     * 
-     * @param objectURI
-     * @param subjectURI
-     * @param blankURI
-     * @param objectLabels
-     * @param subjectLabels
-     * @param subjectProperty
-     * @param blankProperty
-     * @param from
-     * @param to
-     * @return
-     */
-    public Model getModel(
-            String objectURI, String subjectURI, Map<String, String> objectLabels, Map<String, String> subjectLabels,
-            String blankProperty, String from, String to
-            ) {
-        return getModel(
-                null, objectURI, subjectURI, objectLabels, subjectLabels,
-                blankProperty, from, to);
-    }
-
-    /**
-     * 
-     * @param uris
-     * @param languages
-     * @return
-     */
-    protected Model generateModel(Set<String> uris, Set<String> langs) {
-        String rdfs_label = "http://www.w3.org/2000/01/rdf-schema#label";
-
-        QueryExecutionFactory qef = new QueryExecutionFactoryHttp(
-                SparqlEndpoint.getEndpointDBpedia().getURL().toString(),
-                SparqlEndpoint.getEndpointDBpedia().getDefaultGraphURIs()
-                );
-
-        Model model = ModelFactory.createDefaultModel();
-        for (String uri : uris) {
-            String query = "CONSTRUCT {<" + uri + "> <" + rdfs_label + "> ?o} WHERE {<" + uri + "> <" + rdfs_label + "> ?o.";
-            if (lang.size() > 0) {
-                query += "FILTER(";
-
-                int i = 0;
-                for (String lang : langs) {
-                    query += "LANGMATCHES(LANG(?o),'" + lang + "')";
-                    if (i++ < langs.size() - 1)
-                        query += " || ";
-                }
-                query += ")";
-            }
-            query += "}";
-
-            QueryExecution qe = qef.createQueryExecution(query);
-            qe.execConstruct(model);
-            qe.close();
+          jaProofs.put(new JSONObject().put("label", cnt++)
+              .put("tinyContext", proof.getTinyContext()).put("keywords", jaLabels));
+        } else {
+          LOG.warn("TINY:" + proof.getTinyContext());
         }
-        return model;
-    }
+      } // all proofs
 
-    /**
-     * 
-     * @param model
-     * @param objectURI
-     * @param subjectURI
-     * @param objectLabels
-     * @param subjectLabels
-     * @param blankProperty
-     * @param from
-     * @param to
-     * @return
-     */
-    protected Model getModel(Model model,
-            String objectURI, String subjectURI,
-            Map<String, String> objectLabels, Map<String, String> subjectLabels,
-            String blankProperty,
-            String from, String to
-            ) {
+      jaWebSites.put(new JSONObject().put("url", website.getUrl()).put("title", website.getTitle())
+          .put("proofs", jaProofs).put("coverage", website.getTopicCoverageScore())
+          .put("search", website.getTopicMajoritySearchFeature())
+          .put("web", website.getTopicMajorityWebFeature()).put("score", website.getScore()));
 
-        String time = Long.toString(date.getTime());
-        String subjectProperty = "http://dbpedia.org/ontology/tmp".concat("_").concat(time);
-        String blankURI = subjectURI.concat("__").concat(time);
+    } // all webSites
 
-        // create model
-        if (model == null) {
-            model = ModelFactory.createDefaultModel();
-        }
-        // object
-        Resource objectRes = model.createResource(objectURI);
-        for (Entry<String, String> entry : objectLabels.entrySet()) {
-            objectRes.addProperty(Constants.RDFS_LABEL, model.createLiteral(entry.getValue(), entry.getKey()));
-        }
+    return new JSONObject().put("maxScore", 1)
 
-        // blank node
-        Resource blank = model.createResource(blankURI);
-        blank.addProperty(Constants.DEFACTO_FROM, model.createTypedLiteral(from, NodeFactory.getType(from)));
-        blank.addProperty(Constants.DEFACTO_TO, model.createTypedLiteral(to, NodeFactory.getType(to)));
-        blank.addProperty(model.createProperty(blankProperty), objectRes.asResource());
+        .put("sumCoverage",
+            evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_COVERAGE_SUM))
+        .put("maxCoverage",
+            evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_COVERAGE_MAX))
 
-        // subject
-        Resource subjectRes = model.createResource(subjectURI);
-        for (Entry<String, String> entry : subjectLabels.entrySet()) {
-            subjectRes.addProperty(Constants.RDFS_LABEL, model.createLiteral(entry.getValue(), entry.getKey()));
-        }
-        subjectRes.addProperty(model.createProperty(subjectProperty), blank.asResource());
+        .put("sumSearch",
+            evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_SEARCH_RESULT_SUM))
+        .put("maxSearch",
+            evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_SEARCH_RESULT_MAX))
 
-        return model;
-    }
+        .put("sumWeb", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_WEB_SUM))
+        .put("maxWeb", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_WEB_MAX))
 
-    public JSONObject out(Evidence evidence) {
+        .put("sl", evidence.getModel().getSubject().getLabels().iterator().next())
+        .put("pl", evidence.getModel().getPredicate().getLocalName())
+        .put("ol", evidence.getModel().getObject().getLabels().iterator().next())
 
-        // sort websites bei defacto score
-        List<WebSite> webSites = evidence.getAllWebSites();
-        Collections.sort(webSites, new Comparator<WebSite>() {
-            @Override
-            public int compare(WebSite o1, WebSite o2) {
-                return ComparisonChain.start()
-                        .compare(o2.getScore(), o1.getScore())
-                        .compare(o1.getTitle(), o2.getTitle())
-                        .result();
-            }
-        });
+        .put("s", evidence.getModel().getSubject().getUri())
+        .put("p", evidence.getModel().getPredicate().getURI())
+        .put("o", evidence.getModel().getObject().getUri())
 
-        JSONArray jaWebSites = new JSONArray();
-        for (final WebSite website : webSites) {
-            JSONArray jaProofs = new JSONArray();
-            int cnt = 1;
-            List<Pattern> boaPatterns = evidence.getBoaPatterns();
-            for (ComplexProof proof : evidence.getComplexProofs(website)) {
-
-                for (Pattern pattern : boaPatterns) {
-                    if (!pattern.getNormalized().trim().isEmpty() && proof.getProofPhrase().toLowerCase().contains(pattern.getNormalized().toLowerCase())) {
-                        break;
-                    }
-                }
-                if (!proof.getTinyContext().contains("http:") && !proof.getTinyContext().contains("ftp:")) {
-                    JSONArray jaLabels = new JSONArray();
-                    Set<String> labels = new HashSet<String>();
-                    labels.add(website.getQuery().getSubjectLabel());
-                    labels.add(website.getQuery().getObjectLabel());
-                    for (String label : labels)
-                        jaLabels.put(label);
-
-                    jaProofs.put(new JSONObject()
-                            .put("label", cnt++)
-                            .put("tinyContext", proof.getTinyContext())
-                            .put("keywords", jaLabels)
-                            );
-                } else {
-                    LOG.warn("TINY:" + proof.getTinyContext());
-                }
-            }// all proofs
-
-            jaWebSites.put(
-                    new JSONObject()
-                            .put("url", website.getUrl())
-                            .put("title", website.getTitle())
-                            .put("proofs", jaProofs)
-                            .put("coverage", website.getTopicCoverageScore())
-                            .put("search", website.getTopicMajoritySearchFeature())
-                            .put("web", website.getTopicMajorityWebFeature())
-                            .put("score", website.getScore())
-                    );
-
-        } // all webSites
-
-        return new JSONObject()
-                .put("maxScore", 1)
-
-                .put("sumCoverage", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_COVERAGE_SUM))
-                .put("maxCoverage", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_COVERAGE_MAX))
-
-                .put("sumSearch", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_SEARCH_RESULT_SUM))
-                .put("maxSearch", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_SEARCH_RESULT_MAX))
-
-                .put("sumWeb", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_WEB_SUM))
-                .put("maxWeb", evidence.getFeatures().value(AbstractEvidenceFeature.TOPIC_MAJORITY_WEB_MAX))
-
-                .put("sl", evidence.getModel().getSubject().getLabels().iterator().next())
-                .put("pl", evidence.getModel().getPredicate().getLocalName())
-                .put("ol", evidence.getModel().getObject().getLabels().iterator().next())
-
-                .put("s", evidence.getModel().getSubject().getUri())
-                .put("p", evidence.getModel().getPredicate().getURI())
-                .put("o", evidence.getModel().getObject().getUri())
-
-                .put("score", evidence.getDeFactoScore())
-                .put("from", evidence.defactoTimePeriod == null ? "" : evidence.defactoTimePeriod.getFrom())
-                .put("to", evidence.defactoTimePeriod == null ? "" : evidence.defactoTimePeriod.getTo())
-                .put("websitesSize", evidence.getAllWebSites().size())
-                .put("websites", jaWebSites);
-    }
+        .put("score", evidence.getDeFactoScore())
+        .put("from", evidence.defactoTimePeriod == null ? "" : evidence.defactoTimePeriod.getFrom())
+        .put("to", evidence.defactoTimePeriod == null ? "" : evidence.defactoTimePeriod.getTo())
+        .put("websitesSize", evidence.getAllWebSites().size()).put("websites", jaWebSites);
+  }
 }

@@ -29,157 +29,161 @@ import com.mongodb.util.JSON;
 
 public class MongoManager {
 
-    static {
-        PropertyConfigurator.configure(Cfg.LOG_FILE);
+  static {
+    PropertyConfigurator.configure(Cfg.LOG_FILE);
+  }
+
+  public static final Logger LOG = LogManager.getLogger(MongoManager.class);
+  public static XMLConfiguration config = CfgManager.getCfg(MongoManager.class);
+
+  public static String HOST = "db.host";
+  public static String PORT = "db.port";
+  public static String NAME = "db.name";
+  public static String COLLECTION = "db.collection";
+
+  protected final static MongoClient mc =
+      new MongoClient(config.getString(HOST), config.getInt(PORT));
+  protected DB db = null;
+  public DBCollection coll = null;
+
+  public String name = null;
+  public String collection = null;
+
+  private final String idKey = "_id";
+
+  public static MongoManager getMongoManager() {
+    return new MongoManager();
+  }
+
+  protected MongoManager() {
+    getDefaultConfig();
+  }
+
+  public MongoManager getDefaultConfig() {
+    name = config.getString(NAME);
+    collection = config.getString(COLLECTION);
+    return this;
+  }
+
+  public MongoManager setConfig(final String name, final String collection) {
+
+    disconnect();
+
+    this.name = name;
+    return setCollection(collection);
+  }
+
+  public MongoManager setCollection(final String collection) {
+    this.collection = collection;
+    coll = null;
+    return this;
+  }
+
+  public void disconnect() {
+    db = null;
+    coll = null;
+  }
+
+  public void connect() {
+    if (db == null) {
+      db = mc.getDB(name);
     }
-
-    public static final Logger         LOG        = LogManager.getLogger(MongoManager.class);
-    public static XMLConfiguration     config     = CfgManager.getCfg(MongoManager.class);
-
-    public static String               HOST       = "db.host";
-    public static String               PORT       = "db.port";
-    public static String               NAME       = "db.name";
-    public static String               COLLECTION = "db.collection";
-
-    protected final static MongoClient mc         = new MongoClient(config.getString(HOST), config.getInt(PORT));
-    protected DB                       db         = null;
-    public DBCollection                coll       = null;
-
-    public String                      name       = null;
-    public String                      collection = null;
-
-    private final String               idKey      = "_id";
-
-    public static MongoManager getMongoManager() {
-        return new MongoManager();
+    if (coll == null) {
+      try {
+        coll = db.getCollection(collection);
+      } catch (final Exception e) {
+        LOG.error(e.getLocalizedMessage(), e);
+        throw new RuntimeException(e);
+      }
     }
+  }
 
-    protected MongoManager() {
-        getDefaultConfig();
+  public String insert(final String json) {
+    connect();
+    try {
+      final DBObject o = (DBObject) JSON.parse(json);
+      final ObjectId id = ObjectId.get();
+      o.put(idKey, id);
+      coll.insert(o);
+      return id.toString();
+    } catch (final Exception e) {
+      LOG.error(e.getLocalizedMessage(), e);
+      return "";
     }
+  }
 
-    public MongoManager getDefaultConfig() {
-        name = config.getString(NAME);
-        collection = config.getString(COLLECTION);
-        return this;
+  public boolean findDoc(final String json) {
+    connect();
+    return coll.find((DBObject) JSON.parse(json)).length() > 0 ? true : false;
+  }
+
+  public Iterator<DBObject> find(final DBObject dbObject) {
+    connect();
+    return coll.find(dbObject).iterator();
+  }
+
+  public Iterator<DBObject> find(final String json) {
+    connect();
+    return coll.find((DBObject) JSON.parse(json)).iterator();
+  }
+
+  public DBObject findDocumentById(final String id) {
+    connect();
+    final BasicDBObject obj = new BasicDBObject();
+    obj.put(idKey, new ObjectId(id));
+    return coll.findOne(obj);
+  }
+
+  public boolean deleteDocumentById(final DBObject o) {
+    connect();
+    final WriteResult wr = coll.remove(o);
+    return wr.isUpdateOfExisting();
+  }
+
+  public boolean deleteDocumentById(final String id) {
+    connect();
+    final BasicDBObject obj = new BasicDBObject();
+    obj.put(idKey, new ObjectId(id));
+    return deleteDocumentById(obj);
+  }
+
+  public List<DBObject> getAll() {
+    connect();
+    final DBCursor cursorDoc = coll.find();
+    final List<DBObject> list = new ArrayList<>();
+    while (cursorDoc.hasNext()) {
+      list.add((cursorDoc.next()));
     }
+    cursorDoc.close();
+    return list;
+  }
 
-    public MongoManager setConfig(String name, String collection) {
-
-        disconnect();
-
-        this.name = name;
-        return setCollection(collection);
+  public void print() {
+    connect();
+    final DBCursor cursorDoc = coll.find();
+    while (cursorDoc.hasNext()) {
+      LOG.debug((cursorDoc.next()));
     }
+    cursorDoc.close();
+  }
 
-    public MongoManager setCollection(String collection) {
-        this.collection = collection;
-        this.coll = null;
-        return this;
-    }
+  public Iterator<DBObject> findOperation(final String key, final String op, final BsonArray ba) {
+    connect();
+    return find(new Document(key, new Document(op, ba)).toJson());
+  }
 
-    public void disconnect() {
-        db = null;
-        coll = null;
-    }
+  public static void main(final String[] a) throws ParseException {
 
-    public void connect() {
-        if (db == null) {
-            db = mc.getDB(name);
-        }
-        if (coll == null)
-            try {
-                coll = db.getCollection(collection);
-            } catch (Exception e) {
-                LOG.error(e.getLocalizedMessage(), e);
-                throw new RuntimeException(e);
-            }
-    }
+    final MongoManager db = MongoManager.getMongoManager().setCollection("test");
 
-    public String insert(String json) {
-        connect();
-        try {
-            DBObject o = (DBObject) JSON.parse(json);
-            ObjectId id = ObjectId.get();
-            o.put(idKey, id);
-            coll.insert(o);
-            return id.toString();
-        } catch (Exception e) {
-            LOG.error(e.getLocalizedMessage(), e);
-            return "";
-        }
-    }
+    String id = db.insert("123");
+    LOG.info(id == "" ? "Could not insert" : "inserted");
 
-    public boolean findDoc(String json) {
-        connect();
-        return coll.find((DBObject) JSON.parse(json)).length() > 0 ? true : false;
-    }
+    id = db.insert(new JSONObject().put("test", "haha").toString());
+    LOG.info(id == "" ? "Could not insert" : "inserted");
 
-    public Iterator<DBObject> find(DBObject dbObject) {
-        connect();
-        return coll.find(dbObject).iterator();
-    }
+    db.findOperation("_id", "$in", new BsonArray(Arrays.asList(new BsonObjectId(new ObjectId(id)))))
+        .forEachRemaining(LOG::info);
 
-    public Iterator<DBObject> find(String json) {
-        connect();
-        return coll.find((DBObject) JSON.parse(json)).iterator();
-    }
-
-    public DBObject findDocumentById(String id) {
-        connect();
-        BasicDBObject obj = new BasicDBObject();
-        obj.put(idKey, new ObjectId(id));
-        return coll.findOne(obj);
-    }
-
-    public boolean deleteDocumentById(DBObject o) {
-        connect();
-        WriteResult wr = coll.remove(o);
-        return wr.isUpdateOfExisting();
-    }
-
-    public boolean deleteDocumentById(String id) {
-        connect();
-        BasicDBObject obj = new BasicDBObject();
-        obj.put(idKey, new ObjectId(id));
-        return deleteDocumentById(obj);
-    }
-
-    public List<DBObject> getAll() {
-        connect();
-        DBCursor cursorDoc = coll.find();
-        List<DBObject> list = new ArrayList<>();
-        while (cursorDoc.hasNext())
-            list.add((cursorDoc.next()));
-        cursorDoc.close();
-        return list;
-    }
-
-    public void print() {
-        connect();
-        DBCursor cursorDoc = coll.find();
-        while (cursorDoc.hasNext())
-            LOG.debug((cursorDoc.next()));
-        cursorDoc.close();
-    }
-
-    public Iterator<DBObject> findOperation(String key, String op, BsonArray ba) {
-        connect();
-        return find(new Document(key, new Document(op, ba)).toJson());
-    }
-
-    public static void main(String[] a) throws ParseException {
-
-        MongoManager db = MongoManager.getMongoManager().setCollection("test");
-
-        String id = db.insert("123");
-        LOG.info(id == "" ? "Could not insert" : "inserted");
-
-        id = db.insert(new JSONObject().put("test", "haha").toString());
-        LOG.info(id == "" ? "Could not insert" : "inserted");
-
-        db.findOperation("_id", "$in", new BsonArray(Arrays.asList(new BsonObjectId(new ObjectId(id)))))
-                .forEachRemaining(LOG::info);
-
-    }
+  }
 }
