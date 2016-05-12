@@ -410,7 +410,7 @@ public class BenchmarkPrerequisiteGeneration {
 	 */
 	private void loadFreebaseToDbpediaMapping() throws FileNotFoundException {
 
-		NxParser nxp = new NxParser(new FileInputStream(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "freebase/freebase_links.nt"));
+		NxParser nxp = new NxParser(new FileInputStream(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "freebase/freebase_links_en.nt"));
 		
         while (nxp.hasNext()) {
         	

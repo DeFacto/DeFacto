@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 
 /**
@@ -151,52 +152,54 @@ public class ProofExtractor {
 
                 cache.add(f);
 
-                writer.println("uri" + separator + "domain" + separator + "total-proofs" + separator + "subject label" + separator + "property label" + separator + "object label" + separator + "language");
-                writer.flush();
-                writer_overview.println("uri" + separator + "domain" + separator + "total-proofs" + separator + "subject label" + separator + "property label" + separator + "object label" + separator + "language");
-                writer_overview.flush();
 
                 //System.out.println(":: nr. websites: " + evidence.getAllWebSites().size());
                 //List<WebSite> websitesWithproofsInBetween = evidence.getAllWebSitesWithComplexProofAndAtLeastOneBOAPatternInBetween();
                 //System.out.println(":: nr. websites with proofs with pattern in between S and O: " + websitesWithproofsInBetween.size());
 
-           /*
-            for (WebSite w: websites) {
 
+                String _uri;
+                URI uri = null;
+                String domain = null;
+                List<WebSite> websites = evidence.getAllWebSites();
+                List<ComplexProof> proofs;
+
+            for (WebSite w: websites) {
                 try {
                     uri = new URI(w.getUrl().toString());
                     domain = uri.getHost();
                 } catch (URISyntaxException e) {
-
+                    LOGGER.error(e.toString());
                 }
                 _uri = w.getUrl();
 
-                LOGDEV.debug(":: website: " + _uri);
-                LOGDEV.debug(":: website domain: " + domain);
+
                 proofs = evidence.getComplexProofs(w);
-                LOGDEV.debug(":: nr. proofs: " + proofs.size());
+
                 List<ComplexProof> proofsInBetween = evidence.getComplexProofsPInBetween(w);
-                LOGDEV.debug(":: nr. proofs with pattern in between: " + proofsInBetween.size());
-                LOGDEV.debug(":: query: " + w.getQuery().toString());
-                LOGDEV.debug("--------------------------------------------------------------------------");
-                writer_overview.println(_uri + separator + domain + separator + proofs.size() + separator + w.getQuery().getSubjectLabel() + separator + w.getQuery().getPropertyLabel() + separator + w.getQuery().getObjectLabel() + separator + w.getLanguage());
-                for (ComplexProof proof: proofs){
-                    writer.println(_uri + separator + domain + separator + proofs.size() + separator + proof.getWebSite().getLanguage() + separator + proof.getSmallContext());
-                    //System.out.println("Proof pattern: " + proof.getPattern().naturalLanguageRepresentation);
-
-                    LOGDEV.debug("Proof language: " + proof.getWebSite().getLanguage());
-                    LOGDEV.debug("Proof website url: " + proof.getWebSite().getUrl());
-                    //System.out.println("Proof tiny context: " + proof.getTinyContext());
-                    //System.out.println("Proof small context: " + proof.getSmallContext());
-                    //System.out.println("Proof medium context: " + proof.getMediumContext());
-                    LOGDEV.debug("Proof large context: " + proof.getLargeContext());
-                    LOGDEV.debug("website text:" + proof.getWebSite().getText());
-                    LOGDEV.debug("");
+                int totalProofsInBetween = 0;
+                if (proofsInBetween != null) {
+                    totalProofsInBetween = proofsInBetween.size();
                 }
-                LOGDEV.debug("--------------------------------------------------------------------------");
-            }
 
-            */
+
+                writer_overview.println(f + separator + _uri + separator + domain + separator + proofs.size() + separator + w.getQuery().getSubjectLabel() + separator + w.getQuery().getPropertyLabel() + separator + w.getQuery().getObjectLabel() + separator + w.getLanguage());
+                int i = 1;
+                for (ComplexProof proof: proofs){
+                    writer.println(f + separator +
+                            _uri + separator +
+                            domain + separator +
+                            i + separator +
+                            totalProofsInBetween + separator +
+                            proof.getWebSite().getLanguage() + separator +
+                            proof.getMediumContext() + separator +
+                            w.getQuery().toString()
+                    );
+                    i++;
+
+                }
+
+            }
 
             LOGGER.info(":: Synchronizing cache");
             for(String s: cache){
@@ -206,6 +209,8 @@ public class ProofExtractor {
             cache = util.readCacheFromCSV(cacheQueueProof);
             cacheBkp = (ArrayList<String>) cache.clone();
             out.flush();
+            writer.flush();
+            writer_overview.flush();
 
             }
         }
@@ -240,6 +245,11 @@ public class ProofExtractor {
 
         writer = new PrintWriter("proofs_neg.csv", "UTF-8");
         writer_overview = new PrintWriter("proofs_neg_stats.csv", "UTF-8");
+
+        writer.println("uri" + separator + "domain" + separator + "total-proofs" + separator + "subject label" + separator + "property label" + separator + "object label" + separator + "language");
+        writer.flush();
+        writer_overview.println("uri" + separator + "domain" + separator + "total-proofs" + separator + "subject label" + separator + "property label" + separator + "object label" + separator + "language");
+        writer_overview.flush();
 
         startProcess(Defacto.TIME_DISTRIBUTION_ONLY.NO);
 

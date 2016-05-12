@@ -46,6 +46,7 @@ public class BenchmarkDataGeneration {
 	static String year;
 
 	private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(BenchmarkDataGeneration.class);
+	private static final String dbpediastore = "C:\\DNE5\\github\\DeFacto\\data\\dbpedia\\store\\";
 	
 	public static void dropEvalDirectory() throws IOException{
 		
@@ -71,7 +72,50 @@ public class BenchmarkDataGeneration {
 		FileUtils.forceMkdir(new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "eval/correct/subsidiary/"));
 		FileUtils.forceMkdir(new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "eval/correct/starring/"));
 	}
-	
+
+
+	private static void createDataFromTriples(){
+
+	}
+
+
+	private static void test(){
+
+		try{
+
+			Dataset dataset = TDBFactory.createDataset(dbpediastore);
+			Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
+
+			String strQuery =  "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> \n" +
+							   "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+							   "SELECT ?person ?place ?date  \n" +
+					           "WHERE {   \n" +
+					           "   ?person dbpedia-owl:birthPlace ?place .  \n" +
+					           "   ?place rdf:type dbpedia-owl:City  .   \n" +
+					           "   ?person dbpedia-owl:birthDate ?date .  \n" +
+					           "   ?person dbpedia-owl:wikiPageExternalLink ?personInbound .  \n" +
+					           "   ?place dbpedia-owl:wikiPageExternalLink ?placeInbound .  \n" +
+					           "}  \n" +
+					           "ORDER BY DESC(?personInbound) DESC(?placeInbound) \n ";
+
+			Query query = QueryFactory.create(strQuery); //s2 = the query above
+			QueryExecution qExe = QueryExecutionFactory.sparqlService( "http://dbpedia.org/sparql", query );
+			ResultSet results = qExe.execSelect();
+			ResultSetFormatter.out(System.out, results, query) ;
+			int a = results.getRowNumber();
+			qExe.close();
+
+
+
+
+		}catch (Exception e){
+			LOGGER.error(e.toString());
+		}
+
+
+
+	}
+
 	/**
 	 * 
 	 * @param args
@@ -81,7 +125,9 @@ public class BenchmarkDataGeneration {
 	public static void main(String[] args) throws JSONException, IOException {
 		
 		Defacto.init();
+
 		BenchmarkPrerequisiteGeneration pre = new BenchmarkPrerequisiteGeneration();
+
 		
 		LOGGER.info("Start generating temporal facts ... ");
 		BenchmarkDataGeneration.dropEvalDirectory();
@@ -368,7 +414,7 @@ public class BenchmarkDataGeneration {
 	 */
 	public static void loadNBAPlayers() throws IOException {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dbpediastore);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String queryString = 
@@ -380,7 +426,7 @@ public class BenchmarkDataGeneration {
 
 //				"SELECT ?player ?playerLabel ?timePeriod ?team ?teamLabel ?from ?to WHERE {  " +
 				"SELECT ?player ?timePeriod ?team ?from ?to FROM <http://dbpedia.org> WHERE {  " +
-					"?player dbo:league	dbr:NBA  .  " +
+//					"?player dbo:league	dbr:NBA  .  " +
 //					"?player rdfs:label ?playerLabel .  " +
 					"?player dbo:termPeriod ?timePeriod .  " +
 					"?timePeriod dbo:team ?team .  " +
@@ -443,7 +489,7 @@ public class BenchmarkDataGeneration {
 	
 	public static void loadDeath() throws IOException {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dbpediastore);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String query =
@@ -456,8 +502,8 @@ public class BenchmarkDataGeneration {
 				"   ?person dbpedia-owl:deathPlace ?place . \n" +  
 				"   ?place rdf:type dbpedia-owl:City  .  \n" + 
 				"   ?person dbpedia-owl:deathDate ?date . \n" + 
-				"   ?person dbpedia-owl:numberOfInboundLinks ?personInbound . \n" +
-				"   ?place dbpedia-owl:numberOfInboundLinks ?placeInbound . \n" +
+				"   ?person dbpedia-owl:wikiPageExternalLink ?personInbound . \n" +
+				"   ?place dbpedia-owl:wikiPageExternalLink ?placeInbound . \n" +
 				"} \n" + 
 				"ORDER BY DESC(?personInbound) DESC(?placeInbound)\n";
 		
@@ -511,7 +557,7 @@ public class BenchmarkDataGeneration {
 	
 	public static void loadStarring() throws IOException {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dbpediastore);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String query =
@@ -523,7 +569,7 @@ public class BenchmarkDataGeneration {
 				"   ?film dbo:starring ?actor .  \n" +  
 				"   ?film rdf:type dbo:Film . \n" +  
 				"   ?film dbo:releaseDate ?date . \n " +  
-				"   ?film dbo:numberOfInboundLinks ?filmInbound .  \n" +
+				"   ?film dbo:wikiPageExternalLink ?filmInbound .  \n" +
 				"}  \n" +  
 				"ORDER BY DESC(?filmInbound) ASC(?date) \n ";
 		
@@ -619,7 +665,7 @@ public class BenchmarkDataGeneration {
 	 */
 	public static void loadBirth() throws IOException {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dbpediastore);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String query =
@@ -631,8 +677,8 @@ public class BenchmarkDataGeneration {
 				"   ?person dbpedia-owl:birthPlace ?place .  \n" +  
 				"   ?place rdf:type dbpedia-owl:City  .   \n" + 
 				"   ?person dbpedia-owl:birthDate ?date .  \n" + 
-				"   ?person dbpedia-owl:numberOfInboundLinks ?personInbound .  \n" +
-				"   ?place dbpedia-owl:numberOfInboundLinks ?placeInbound .  \n" +
+				"   ?person dbpedia-owl:wikiPageExternalLink ?personInbound .  \n" +
+				"   ?place dbpedia-owl:wikiPageExternalLink ?placeInbound .  \n" +
 				"}  \n" +  
 				"ORDER BY DESC(?personInbound) DESC(?placeInbound) \n ";
 		
@@ -690,7 +736,7 @@ public class BenchmarkDataGeneration {
 	 */
 	public static void loadPoliticians() throws IOException {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dbpediastore);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String defaultQuery = 
@@ -772,7 +818,7 @@ public class BenchmarkDataGeneration {
 	 */
 	private static String getCountryUri(String countryName) {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dbpediastore);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String queryString = 
@@ -807,7 +853,7 @@ public class BenchmarkDataGeneration {
 	 */
 	private static Map<String, Map<String, String>> getLanguageLabels(String playerUri, String teamUri) {
 
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dbpediastore);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String queryString = 
