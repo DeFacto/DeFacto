@@ -42,7 +42,8 @@ public class DefactoModel implements Cloneable {
     public DefactoTimePeriod timePeriod = new DefactoTimePeriod("", "");
     public List<String> languages = new ArrayList<String>();
 	public File file;
-    
+    //public Constants.EvidenceType evidenceType;
+
     /**
      * Creates a new Defacto Model. This is a wrapper around a jena model. But with
      * additional information for example if we know if the fact is correct or the name
