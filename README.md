@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/AKSW/DeFacto.svg?branch=fusion)](https://travis-ci.org/AKSW/DeFacto)
-
 DeFacto (Deep Fact Validation)
 ==============================
+[![Build Status](https://travis-ci.org/AKSW/DeFacto.svg?branch=fusion)](https://travis-ci.org/AKSW/DeFacto)
+[![Join the chat at https://gitter.im/AKSW/DeFacto](https://badges.gitter.im/AKSW/DeFacto.svg)](https://gitter.im/AKSW/DeFacto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 An explanation of the project is available at:
 

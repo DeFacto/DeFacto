@@ -141,10 +141,8 @@ public class RestModel {
      * 
      * @param objectURI
      * @param subjectURI
-     * @param blankURI
      * @param objectLabels
      * @param subjectLabels
-     * @param subjectProperty
      * @param blankProperty
      * @param from
      * @param to
@@ -162,7 +160,7 @@ public class RestModel {
     /**
      * 
      * @param uris
-     * @param languages
+     * @param langs
      * @return
      */
     protected Model generateModel(Set<String> uris, Set<String> langs) {
@@ -245,7 +243,7 @@ public class RestModel {
         return model;
     }
 
-    public JSONObject out(Evidence evidence) {
+    public JSONObject out(Evidence evidence) throws Exception {
 
         // sort websites bei defacto score
         List<WebSite> webSites = evidence.getAllWebSites();

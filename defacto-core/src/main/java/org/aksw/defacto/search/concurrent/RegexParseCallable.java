@@ -32,16 +32,16 @@ public class RegexParseCallable implements Callable<ComplexProof>, ParseCallable
 		
 //		for ( ComplexProof proof : this.proofs ) {
 			
-			String merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(dateTagger.getAnnotatedSentences(proof.getLargeContext())), "-=-");
+			String merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(dateTagger.getAnnotatedDateSentences(proof.getLargeContext())), "-=-");
 			proof.setTaggedLargeContext(merged);
 			
-			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(dateTagger.getAnnotatedSentences(proof.getMediumContext())), "-=-");
+			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(dateTagger.getAnnotatedDateSentences(proof.getMediumContext())), "-=-");
 			proof.setTaggedMediumContext(merged);
 			
-			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(dateTagger.getAnnotatedSentences(proof.getSmallContext())), "-=-");
+			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(dateTagger.getAnnotatedDateSentences(proof.getSmallContext())), "-=-");
 			proof.setTaggedSmallContext(merged);
 			
-			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(dateTagger.getAnnotatedSentences(proof.getTinyContext())), "-=-");
+			merged = StringUtils.join(NlpUtil.mergeConsecutiveNerTags(dateTagger.getAnnotatedDateSentences(proof.getTinyContext())), "-=-");
 			proof.setTaggedTinyContext(merged);
 //		}
 		

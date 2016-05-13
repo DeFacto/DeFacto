@@ -189,8 +189,7 @@ public class BenchmarkDataGeneration {
 	}
 	
 	/**
-	 * 
-	 * @param foldername
+	 *
 	 * @throws JSONException
 	 * @throws IOException
 	 */
@@ -242,8 +241,7 @@ public class BenchmarkDataGeneration {
 	}
 	
 	/**
-	 * 
-	 * @param foldername
+	 *
 	 * @throws JSONException
 	 * @throws IOException
 	 */
@@ -426,7 +424,7 @@ public class BenchmarkDataGeneration {
 
 //				"SELECT ?player ?playerLabel ?timePeriod ?team ?teamLabel ?from ?to WHERE {  " +
 				"SELECT ?player ?timePeriod ?team ?from ?to FROM <http://dbpedia.org> WHERE {  " +
-//					"?player dbo:league	dbr:NBA  .  " +
+					"?player dbo:league	dbr:NBA  .  " +
 //					"?player rdfs:label ?playerLabel .  " +
 					"?player dbo:termPeriod ?timePeriod .  " +
 					"?timePeriod dbo:team ?team .  " +
@@ -504,7 +502,9 @@ public class BenchmarkDataGeneration {
 				"   ?person dbpedia-owl:deathDate ?date . \n" + 
 				"   ?person dbpedia-owl:wikiPageExternalLink ?personInbound . \n" +
 				"   ?place dbpedia-owl:wikiPageExternalLink ?placeInbound . \n" +
-				"} \n" + 
+				//"   ?person dbpedia-owl:numberOfInboundLinks ?personInbound . \n" +
+				//"   ?place dbpedia-owl:numberOfInboundLinks ?placeInbound . \n" +
+				"} \n" +
 				"ORDER BY DESC(?personInbound) DESC(?placeInbound)\n";
 		
 		List<QuerySolution> results = getResults(query, dbpedia);
@@ -570,7 +570,8 @@ public class BenchmarkDataGeneration {
 				"   ?film rdf:type dbo:Film . \n" +  
 				"   ?film dbo:releaseDate ?date . \n " +  
 				"   ?film dbo:wikiPageExternalLink ?filmInbound .  \n" +
-				"}  \n" +  
+				//"   ?film dbo:numberOfInboundLinks ?filmInbound .  \n" +
+				"}  \n" +
 				"ORDER BY DESC(?filmInbound) ASC(?date) \n ";
 		
 		QueryExecution qexec = QueryExecutionFactory.create(QueryFactory.create(query, Syntax.syntaxARQ), dbpedia);
@@ -679,7 +680,9 @@ public class BenchmarkDataGeneration {
 				"   ?person dbpedia-owl:birthDate ?date .  \n" + 
 				"   ?person dbpedia-owl:wikiPageExternalLink ?personInbound .  \n" +
 				"   ?place dbpedia-owl:wikiPageExternalLink ?placeInbound .  \n" +
-				"}  \n" +  
+				//"   ?person dbpedia-owl:numberOfInboundLinks ?personInbound .  \n" +
+				//"   ?place dbpedia-owl:numberOfInboundLinks ?placeInbound .  \n" +
+				"}  \n" +
 				"ORDER BY DESC(?personInbound) DESC(?placeInbound) \n ";
 		
 		List<QuerySolution> results = getResults(query, dbpedia);
@@ -921,8 +924,6 @@ public class BenchmarkDataGeneration {
 	/**
 	 * 
 	 * @param query
-	 * @param limit
-	 * @param offset
 	 * @return
 	 */
     protected static List<QuerySolution> getResults(String query) {

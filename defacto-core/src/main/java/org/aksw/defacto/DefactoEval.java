@@ -49,7 +49,7 @@ public class DefactoEval {
             
             AbstractEvidenceFeature.provenance = new Instances("defacto", AbstractEvidenceFeature.attributes, 0);
             Defacto.DEFACTO_CONFIG.setStringSetting("evidence", "EVIDENCE_TRAINING_DATA_FILENAME", "resources/training/arff/evidence/" + falseDataDir + "_defacto_evidence.arff");
-            logger.debug("Checking facts for from: " + falseDataDir);
+            logger.info("Checking facts for from: " + falseDataDir);
             writer.write("Checking facts from: " + falseDataDir + " (" + (pathToFalseData.indexOf(falseDataDir) + 1) + " of " + pathToFalseData.size() + " testsets)\n");
             Defacto.checkFacts(getTrainingData(falseDataDir), TIME_DISTRIBUTION_ONLY.NO);
         }

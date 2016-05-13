@@ -16,8 +16,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -35,18 +38,72 @@ public class DefactoDemo {
     public static void main(String[] args) throws InvalidFileFormatException, IOException {
 
         try{
-            LOG.info("DeFacto: starting the demonstration process");
 
-            final Calendar startTime = Calendar.getInstance();
+            LOG.info("************************************************************************");
+            LOG.info("*                         Starting DeFacto                             *");
+            LOG.info("************************************************************************");
+
+            long startTime = System.currentTimeMillis();
             LOG.info(startTime);
             final Evidence evidence = Defacto.checkFact(getOneExample(), TIME_DISTRIBUTION_ONLY.NO);
-            final Calendar endTime = Calendar.getInstance();
-            LOG.info(endTime);
+            long endTime   = System.currentTimeMillis();
+            long totalTime = endTime - startTime;
 
-            LOG.info("DeFacto: alright! DeFacto's score: " + evidence.getDeFactoScore());
+            LOG.info("************************************************************************");
+            LOG.info("*                         Process Finished                             *");
+            LOG.info("************************************************************************");
+
+            String out = String.format("Processing Time: %02d hour, %02d min, %02d sec",
+                    TimeUnit.MILLISECONDS.toHours(totalTime),
+                    TimeUnit.MILLISECONDS.toMinutes(totalTime),
+                    TimeUnit.MILLISECONDS.toSeconds(totalTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))
+            );
+
+            LOG.info(out);
+            LOG.info("Overall Score: " + evidence.getDeFactoScore());
+            LOG.info("Overall Counterargument Score: " + evidence.getDeFactoCounterargumentScore());
+
+
+
+
+            /*List<WebSite> allWebSites = evidence.getAllWebSites();
+
+             System.out.println("All websites");
+            for (WebSite w: allWebSites){
+                System.out.println(w.getUrl());
+            }
+            System.out.println("********************************************************************");
+
+            System.out.println("Matched websites");
+            for ( Map.Entry<Pattern, List<WebSite>> patternToWebSites : evidence.getWebSites().entrySet()) {
+                for ( WebSite website : patternToWebSites.getValue() ) {
+                    System.out.println(website.getUrl());
+                }
+            }
+
+            System.out.println("********************************************************************");
+
+            List<WebSite> allWebSites2 = evidence.getNegativeEvidenceObject().getAllWebSites();
+
+            System.out.println("All websites (counterargument)");
+            for (WebSite w: allWebSites2){
+                System.out.println(w.getUrl());
+            }
+            System.out.println("********************************************************************");
+
+            System.out.println("Matched websites (counterargument)");
+            for ( Map.Entry<Pattern, List<WebSite>> patternToWebSites : evidence.getNegativeEvidenceObject().getWebSites().entrySet()) {
+                for ( WebSite website : patternToWebSites.getValue() ) {
+                    System.out.println(website.getUrl());
+                }
+            }
+
+            System.out.println("********************************************************************");
+
+            */
 
         }catch (Exception e){
-            LOG.info("Error: " + e.toString());
+            LOG.error("Error: " + e.toString());
         }
 
         //Defacto.checkFacts(getSampleData(), TIME_DISTRIBUTION_ONLY.NO);
@@ -159,8 +216,18 @@ public class DefactoDemo {
     private static DefactoModel getOneExample(){
 
         Model model = ModelFactory.createDefaultModel();
-        //model.read(DefactoModel.class.getClassLoader().getResourceAsStream("out_birthPlace_0.ttl"), null, "TURTLE");
+        //model.read(DefactoModel.class.getClassLoader().getResourceAsStream("GhostbusterII.ttl"), null, "TURTLE");
+
+        try{
+            model.read(new FileReader(new File("C:\\DNE5\\github\\DeFacto\\data\\factbench\\v1_2013\\test\\unknown\\old\\out_birth_0.ttl")), "", "TTL");
+        }catch (Exception e){
+            LOG.error(e.toString());
+        }
+
+       // model.read(DefactoModel.class.getClassLoader().getResourceAsStream("Nobel1909.ttl"), null, "TURTLE");
         //return new DefactoModel(model, "Ghostbuster II Model", true, Arrays.asList("en", "fr", "de"));
+        //return new DefactoModel(model, "Nobel Model", true, Arrays.asList("en", "fr", "de"));
+        //return new DefactoModel(model, "Nobel Model", true, Arrays.asList("en"));
 
         model.read(DefactoModel.class.getClassLoader().getResourceAsStream("Einstein.ttl"), null, "TURTLE");
         return new DefactoModel(model, "Einstein Model", true, Arrays.asList("en", "fr", "de"));

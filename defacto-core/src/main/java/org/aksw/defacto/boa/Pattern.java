@@ -20,7 +20,7 @@ public class Pattern {
     public String posTags = "";
 	private String normalizedPattern = null;
 	public String generalized ="";
-    public boolean inverseRelation = false;
+    public String NER = "";
     
     public Pattern(String naturalLanguageRepresentation, String language) {
     	

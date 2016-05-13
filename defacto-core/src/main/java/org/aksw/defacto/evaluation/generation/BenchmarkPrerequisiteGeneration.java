@@ -224,7 +224,7 @@ public class BenchmarkPrerequisiteGeneration {
 	/**
 	 * 
 	 * @param model
-	 * @param first
+	 * @param resource
 	 */
 	public static void addOwlSameAs(Model model, Resource resource) {
 		
@@ -411,7 +411,8 @@ public class BenchmarkPrerequisiteGeneration {
 	private void loadFreebaseToDbpediaMapping() throws FileNotFoundException {
 
 		NxParser nxp = new NxParser(new FileInputStream(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "freebase/freebase_links_en.nt"));
-		
+		//NxParser nxp = new NxParser(new FileInputStream(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "freebase/freebase_links.nt"));
+
         while (nxp.hasNext()) {
         	
         	Node[] next = nxp.next();

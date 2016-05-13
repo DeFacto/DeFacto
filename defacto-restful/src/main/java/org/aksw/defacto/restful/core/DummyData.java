@@ -74,7 +74,7 @@ public class DummyData {
                 objectLabels.keySet());
     }
 
-    public static JSONObject getInput() {
+    public static JSONObject getInput () throws Exception {
 
         String s = "http://wikidata.dbpedia.org/resource/Q1000008";
         String p = "http://dbpedia.org/ontology/timeZone";

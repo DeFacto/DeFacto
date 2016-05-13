@@ -16,3 +16,9 @@ test.h2.db
 /bin
 
 /data/crawl/*.*
+
+/log/*.*
+response.txt
+/proof
+
+/rubbish.txt
