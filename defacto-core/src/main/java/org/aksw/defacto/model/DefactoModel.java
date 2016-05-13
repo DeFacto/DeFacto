@@ -424,6 +424,10 @@ public class DefactoModel implements Cloneable {
 		this.subject = subject;
 	}
 
+    public void setModel(Model m){
+        this.model = m;
+    }
+
 	public void setProperty(Property property) {
 		
 		this.predicate = property;
@@ -444,4 +448,14 @@ public class DefactoModel implements Cloneable {
 		
 		return null;
 	}
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+	//public Constants.EvidenceType getEvidenceType(){
+	//	return this.evidenceType;
+	//}
+
 }
