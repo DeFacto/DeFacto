@@ -5,8 +5,8 @@
     <artifactId>defacto-restful</artifactId>
     <name>defacto-restful</name>
     <parent>
-        <groupId>org.aksw</groupId>
-        <artifactId>defacto</artifactId>
+        <groupId>org.aksw.defacto</groupId>
+        <artifactId>defacto-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <properties>
@@ -21,7 +21,6 @@
             <artifactId>guava</artifactId>
             <version>18.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.aksw</groupId>
             <artifactId>defacto-core</artifactId>
@@ -74,21 +73,6 @@
             <version>1.9</version>
         </dependency>
         <!-- defacto ui -->
-        <dependency>
-            <groupId>info.bliki.wiki</groupId>
-            <artifactId>bliki-core</artifactId>
-            <version>3.0.17</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-lang</artifactId>
-                    <groupId>commons-lang</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-compress</artifactId>
-                    <groupId>org.apache.commons</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <dependency>
             <groupId>org.nlp2rdf.software</groupId>
             <artifactId>jena</artifactId>

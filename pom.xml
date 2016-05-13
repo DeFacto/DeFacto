@@ -2,15 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.aksw</groupId>
-    <artifactId>defacto</artifactId>
+    <groupId>org.aksw.defacto</groupId>
+    <artifactId>defacto-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>defacto</name>
+    <name>DeFacto Parent POM</name>
     <modules>
         <module>defacto-core</module>
-        <module>defacto-evaluation</module>
-        <!--<module>defacto-gui</module>-->
         <module>defacto-restful</module>
     </modules>
     <build>
@@ -27,7 +25,7 @@
         </plugins>
     </build>
     <repositories>
-        <repository>
+        <!--<repository>
             <id>maven2-repository.dev.java.net</id>
             <name>Java.net Repository for Maven</name>
             <url>http://download.java.net/maven/2/</url>
@@ -44,7 +42,7 @@
             <id>repository.apache.org</id>
             <name>apache Repository</name>
             <url>http://repository.apache.org/snapshots</url>
-        </repository>
+        </repository>-->
         <repository>
             <id>maven.aksw.internal</id>
             <name>University Leipzig, AKSW Maven2 Repository</name>
@@ -64,7 +62,7 @@
             <id>tc-maven-repo</id>
             <url>https://github.com/tc/tc-maven-repo/raw/master/releases</url>
         </repository>
-        <repository>
+        <!--<repository>
             <id>sameas-4j-googlecode</id>
             <url>http://asmx-sameas4j.googlecode.com/svn/repo</url>
         </repository>
@@ -87,14 +85,10 @@
             <url>http://nxparser.googlecode.com/svn/snapshots</url>
         </repository>
         <repository>
-            <id>vaadin-addons</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
-        </repository>
-        <repository>
             <id>wordnet</id>
             <url>https://dev-iesl.cs.umass.edu/nexus/content/repositories/public/</url>
-        </repository>
-        <repository>
+        </repository>-->
+        <!--<repository>
             <releases>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
@@ -104,7 +98,7 @@
             <name>BillyLieuranceNet</name>
             <url>http://www.billylieurance.net/maven2</url>
             <layout>default</layout>
-        </repository>
+        </repository>-->
         <repository>
             <id>gerb_snapshots</id>
             <url>https://raw.github.com/gerbsen/maven-repo/master/snapshots/</url>
@@ -124,7 +118,7 @@
         <dependency>
             <groupId>info.bliki.wiki</groupId>
             <artifactId>bliki-core</artifactId>
-            <version>3.0.17</version>
+            <version>3.0.19</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-lang</artifactId>
