@@ -40,13 +40,13 @@ Java 7, Maven, Solr 4.5, MySQL 5.5, Wordnet, Weka 3.3.6 (in case you want to che
 Please see more information about related projects: [FactBench](https://github.com/AKSW/FactBench) and [BOA](http://aksw.org/Projects/BOA.html)
 
 ## Changelog
-### [v2.1]
+### [v2.1](https://github.com/AKSW/DeFacto/releases/tag/v2.1)
 	- HTTP service support
   
-### [v2.0]
+### [v2.0](https://github.com/AKSW/DeFacto/releases/tag/v2.0)
 	- Multilingual Deep Fact Validation Feature
 
-### [v1.0]
+### [v1.0](https://github.com/AKSW/DeFacto/releases/tag/v1.0)
 	- No support for http service
 	- Vaadin component required (user interface)
     - Uses FactBench v1.0
