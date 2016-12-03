@@ -53,11 +53,11 @@
             <name>University Leipzig, AKSW Maven2 Repository</name>
             <url>http://maven.aksw.org/archiva/repository/snapshots</url>
         </repository>
-        <repository>
+        <!--<repository>
             <id>scala-tools.org</id>
             <name>Scala-tools Maven2 Repository</name>
             <url>http://scala-tools.org/repo-releases/</url>
-        </repository>
+        </repository>-->
         <repository>
             <id>tc-maven-repo</id>
             <url>https://github.com/tc/tc-maven-repo/raw/master/releases</url>
