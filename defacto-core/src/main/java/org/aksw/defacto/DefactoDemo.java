@@ -219,7 +219,7 @@ public class DefactoDemo {
         //model.read(DefactoModel.class.getClassLoader().getResourceAsStream("GhostbusterII.ttl"), null, "TURTLE");
 
         try{
-            model.read(new FileReader(new File("C:\\DNE5\\github\\DeFacto\\data\\factbench\\v1_2013\\test\\unknown\\old\\out_birth_0.ttl")), "", "TTL");
+            //model.read(new FileReader(new File("C:\\DNE5\\github\\DeFacto\\data\\factbench\\v1_2013\\test\\unknown\\old\\out_birth_0.ttl")), "", "TTL");
         }catch (Exception e){
             LOG.error(e.toString());
         }
