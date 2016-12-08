@@ -33,7 +33,7 @@ public class ProofExtractor {
     public static PrintWriter           writer;
     public static PrintWriter           writer_overview;
     public static String                separator = ";";
-    private static final File           folder = new File("C:\\DNE5\\github\\DeFacto\\data\\factbench\\v1_2013\\test\\correct");
+    private static final File           folder = new File("/Users/dnes/Github/FactBench/test/correct/");
     private static List<String>         files = new ArrayList<>();
 
     private static String               cacheQueueProof = "PROCESSING_QUEUE_PROOFS.csv";
@@ -63,6 +63,7 @@ public class ProofExtractor {
 
         util = new DefactoUtils();
 
+        //Factbench dataset directory (correct)
         setFilesModelFiles(folder);
 
         cache = util.readCacheFromCSV(cacheQueueProof);

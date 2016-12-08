@@ -74,7 +74,7 @@ public class SQLiteHelper {
     public static boolean saveMetaQuery(String metaquery, String suri, String slen,
                                    String puri, String plen,
                                    String ouri, String olen,
-                                   Integer idlang, Long hits){
+                                   Integer idlang, Long hits, Integer sourcecandidate, String fname, String fpath){
         try{
             Statement stmt = null;
             String sql = "INSERT INTO TB_QUERY " +
@@ -82,12 +82,13 @@ public class SQLiteHelper {
                           "subject_uri, subject_label_en," +
                           "predicate_uri, predicate_label_en," +
                           "object_uri, object_label_en," +
-                          "id_language, processing_date, hits" +
-                          ") VALUES (" + metaquery + "," +
-                                 "'" + suri + "','" + slen + "'," +
-                                 "'" + puri + "','" + plen + "'," +
-                                 "'" + ouri + "','" + olen + "'," +
-                                       idlang + "," + hits + ");";
+                          "id_language, processing_date, hits, source_candidate, file_ref, file_ref_path)" +
+                          " VALUES (" + metaquery + ",'" +
+                                        suri  + "','" + slen + "','" +
+                                        puri  + "','" + plen + "','" +
+                                        ouri  + "','" + olen + "'," +
+                                        idlang + "," + hits  +  "," +
+                                        sourcecandidate + ",'" + fname + "','" + fpath + "');";
             stmt = c.createStatement();
             stmt.executeUpdate(sql);
         } catch (Exception e){
