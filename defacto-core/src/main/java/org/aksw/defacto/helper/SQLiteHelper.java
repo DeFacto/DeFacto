@@ -71,6 +71,38 @@ public class SQLiteHelper {
         return true;
     }
 
+    public static boolean setQueryProcessed(Integer idquery){
+        try{
+            Statement stmt = null;
+            String sql = "UPDATE TB_QUERY set processed = 1 " +
+                    "WHERE id_query = " + idquery + ";";
+            stmt = c.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean setSourceCandidate(Integer idquery, Integer idresult){
+        try{
+            Statement stmt = null;
+            String sql = "UPDATE TB_QUERY_RESULTS " +
+                    "set source_candidate = 1 WHERE id_query = " + idquery +
+                    " and " + "id_result = " + idresult + ";";
+            stmt = c.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
+        return true;
+    }
+
+
+
+
     public static boolean saveMetaQuery(String metaquery, String suri, String slen,
                                    String puri, String plen,
                                    String ouri, String olen,
@@ -82,13 +114,13 @@ public class SQLiteHelper {
                           "subject_uri, subject_label_en," +
                           "predicate_uri, predicate_label_en," +
                           "object_uri, object_label_en," +
-                          "id_language, processing_date, hits, source_candidate, file_ref, file_ref_path)" +
+                          "id_language, processing_date, hits, file_ref, file_ref_path)" +
                           " VALUES (" + metaquery + ",'" +
                                         suri  + "','" + slen + "','" +
                                         puri  + "','" + plen + "','" +
                                         ouri  + "','" + olen + "'," +
-                                        idlang + "," + hits  +  "," +
-                                        sourcecandidate + ",'" + fname + "','" + fpath + "');";
+                                        idlang + "," + hits  +  ",'" +
+                                        fname + "','" + fpath + "');";
             stmt = c.createStatement();
             stmt.executeUpdate(sql);
         } catch (Exception e){
