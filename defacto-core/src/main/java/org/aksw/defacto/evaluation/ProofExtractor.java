@@ -8,6 +8,7 @@ import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.helper.DefactoUtils;
+import org.aksw.defacto.helper.SQLiteHelper;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
 import org.aksw.defacto.search.engine.SearchEngine;
@@ -84,6 +85,8 @@ public class ProofExtractor {
                 } catch (Exception e) {
                     LOGGER.error(e.toString());
                 }
+
+                SQLiteHelper.getInstance().
 
                 LOGGER.info("Extracting Proofs for: " + model);
                 Defacto.onlyTimes = onlyTimes;

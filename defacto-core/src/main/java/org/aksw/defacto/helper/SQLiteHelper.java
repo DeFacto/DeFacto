@@ -3,6 +3,7 @@ package org.aksw.defacto.helper;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.List;
 
 /**
  * Created by dnes on 08/12/16.
@@ -15,7 +16,7 @@ public class SQLiteHelper {
         Connection c = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:defacto.db");
+            c = DriverManager.getConnection("jdbc:sqlite:/Volumes/DNE5SD/Dropbox/Doutorado_Alemanha/#Papers/#DeFacto Files/Counterarguments/defacto.db");
             c.setAutoCommit(false);
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -31,7 +32,37 @@ public class SQLiteHelper {
     }
 
 
-    public static boolean commitTransaction(){
+    public boolean executeQueriesInBatch(List<String> queries){
+
+        try{
+            if (c.getMetaData().supportsBatchUpdates()){
+                Statement stmt = c.createStatement();
+                for(String query: queries) {
+                    stmt.addBatch(query);
+                }
+                stmt.executeBatch();
+                return true;
+            }
+            else{
+                System.out.println("error: batch updates are not supported!");
+                return false;}
+        } catch (Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+
+    public boolean rollbackT(){
+        try{
+            c.rollback();
+            return true;
+        } catch (Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+
+    public boolean commitT(){
         try{
             c.commit();
             return true;
@@ -41,7 +72,7 @@ public class SQLiteHelper {
         }
     }
 
-    public static boolean addSearchResults(Integer idquery, String surl, String sdomain,
+    public boolean addSearchResults(Integer idquery, String surl, String sdomain,
                                        String stitle, String sbody,
                                        Integer irank, Integer ipagerank){
         try{
@@ -58,7 +89,7 @@ public class SQLiteHelper {
         return true;
     }
 
-    public static boolean assignQueryToResults(Integer idquery, Integer idresult){
+    public boolean assignQueryToResults(Integer idquery, Integer idresult){
         try{
             Statement stmt = null;
             String sql = "INSERT INTO TB_QUERY_RESULTS (id_query, id_result) VALUES (" + idquery + "," + idresult + ");";
@@ -71,7 +102,7 @@ public class SQLiteHelper {
         return true;
     }
 
-    public static boolean setQueryProcessed(Integer idquery){
+    public boolean setQueryProcessed(Integer idquery){
         try{
             Statement stmt = null;
             String sql = "UPDATE TB_QUERY set processed = 1 " +
@@ -85,7 +116,7 @@ public class SQLiteHelper {
         return true;
     }
 
-    public static boolean setSourceCandidate(Integer idquery, Integer idresult){
+    protected boolean setSourceCandidate(Integer idquery, Integer idresult){
         try{
             Statement stmt = null;
             String sql = "UPDATE TB_QUERY_RESULTS " +
@@ -101,9 +132,7 @@ public class SQLiteHelper {
     }
 
 
-
-
-    public static boolean saveMetaQuery(String metaquery, String suri, String slen,
+    public boolean saveMetaQuery(String metaquery, String suri, String slen,
                                    String puri, String plen,
                                    String ouri, String olen,
                                    Integer idlang, Long hits, Integer sourcecandidate, String fname, String fpath){
