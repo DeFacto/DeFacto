@@ -419,6 +419,40 @@ public class Evidence {
         return websites;
     }
 
+    /**
+     * get all websites which have NO proof
+     * @return
+     */
+    public List<WebSite> getAllWebSitesWithoutComplexProof(){
+
+        List<WebSite> websites = new ArrayList<>();
+        for ( List<WebSite> websiteList : this.webSites.values() ){
+            for(WebSite website:websiteList){
+                if (this.getComplexProofs(website).size() == 0){
+                    websites.add(website);
+                }
+            }
+        }
+        return websites;
+    }
+
+    /**
+     * get all websites which have proof
+     * @return
+     */
+    public List<WebSite> getAllWebSitesWithComplexProof(){
+
+        List<WebSite> websites = new ArrayList<>();
+        for ( List<WebSite> websiteList : this.webSites.values() ){
+            for(WebSite website:websiteList){
+                if (this.getComplexProofs(website).size() >= 1){
+                    websites.add(website);
+                }
+            }
+        }
+        return websites;
+    }
+
     public void setBoaPatterns(String language, List<Pattern> naturalLanguageRepresentations) {
 
         this.boaPatterns.put(language,naturalLanguageRepresentations);

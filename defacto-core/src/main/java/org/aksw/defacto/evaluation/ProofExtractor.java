@@ -103,13 +103,71 @@ public class ProofExtractor {
                 }
             }
 
+            List<ComplexProof> proofs = eaux.getComplexProofs();
+            eaux.get
+
+
+
+            a.getWebSite().getQuery().
+            String _uri;
+            URI uri = null;
+            String domain = null;
+            List<WebSite> websites = eaux.getAllWebSites();
+
+            //no proof
+
+
+
+            //1. get all websites, derived by proofs
+            Set<ComplexProof> setproofs = eaux.getComplexProofs();
+            Iterator<ComplexProof> iterator = setproofs.iterator();
+            while(iterator.hasNext()) {
+                ComplexProof pfr = iterator.next();
+
+            }
+
+            //2. get all websites without proofs (remaining)
+            eaux.getAllWebSitesWithoutComplexProof();
+
+
+            //has proof
+            List<String> websiteprocessed = new ArrayList<>();
+            List<WebSite> websiteswithproof = eaux.getAllWebSitesWithComplexProof();
+            for (WebSite w: websiteswithproof) {
+                websiteprocessed.add(w.getUrl());
+            }
+
+            //source candidate
+            eaux.getAllWebSitesWithComplexProofAndAtLeastOneBOAPatternInBetween();
+
+
+            for (WebSite w: websites) {
+                try {
+                    uri = new URI(w.getUrl().toString());
+                    domain = uri.getHost();
+                } catch (URISyntaxException e) {
+                    LOGGER.error(e.toString());
+                }
+                _uri = w.getUrl();
+
+
+
+            }
+
+
+
+
+
+
+
+
             /** tb_rel_pattern_evidence **/
             for (Pattern pat: eaux.getBoaPatterns()) {
                 SQLiteHelper.getInstance().savePattern(idevidence, pat.boaScore, pat.naturalLanguageRepresentationNormalized,
                         pat.naturalLanguageRepresentationWithoutVariables, pat.naturalLanguageRepresentation,
                         pat.language, pat.posTags, pat.NER, pat.generalized, pat.naturalLanguageScore);
             }
-            /** tb_rel_pattern_evidence **/
+            /** tb_rel_proofs_evidence **/
             for (ComplexProof profs: eaux.getComplexProofs()) {
 profs.
             }
