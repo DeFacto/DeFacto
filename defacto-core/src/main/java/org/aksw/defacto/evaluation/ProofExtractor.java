@@ -97,8 +97,10 @@ public class ProofExtractor {
                     LOGGER.error(e.toString());
                 }
 
-                // EXTRACTING: model
-                Integer id_model = SQLiteHelper.getInstance().saveModel(model.getName(), model.isCorrect() ? 1 : 0, filename, p1.getParent().toString(),
+                /***********************
+                 * EXTRACTING: tb_model
+                 * *********************/
+                Integer idmodel = SQLiteHelper.getInstance().saveModel(model.getName(), model.isCorrect() ? 1 : 0, filename, p1.getParent().toString(),
                         model.getSubjectUri(), model.getPredicate().getURI(), model.getObjectUri(),
                         model.getTimePeriod().getFrom().toString(), model.getTimePeriod().getTo().toString(),
                         model.getTimePeriod().isTimePoint() ? 1 : 0);
@@ -172,11 +174,9 @@ public class ProofExtractor {
 
                 cache.add(f);
 
-
                 //System.out.println(":: nr. websites: " + evidence.getAllWebSites().size());
                 //List<WebSite> websitesWithproofsInBetween = evidence.getAllWebSitesWithComplexProofAndAtLeastOneBOAPatternInBetween();
                 //System.out.println(":: nr. websites with proofs with pattern in between S and O: " + websitesWithproofsInBetween.size());
-
 
                 String _uri;
                 URI uri = null;
@@ -193,33 +193,41 @@ public class ProofExtractor {
                 }
                 _uri = w.getUrl();
 
-                // EXTRACTING: pattern
+                /*************************
+                 * EXTRACTING: tb_pattern
+                 * ***********************/
                 Pattern psite = w.getQuery().getPattern();
                 Integer idpattern = SQLiteHelper.getInstance().savePattern(psite.boaScore, psite.naturalLanguageRepresentationNormalized,
                         psite.naturalLanguageRepresentationWithoutVariables, psite.naturalLanguageRepresentation,
                         psite.language, psite.posTags, psite.NER, psite.generalized, psite.naturalLanguageScore);
 
-                // EXTRACTING: metaquery (w.getQuery().toString())
+                /***************************
+                 * EXTRACTING: tb_metaquery
+                 * *************************/
                 MetaQuery msite = w.getQuery();
                 Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idpattern, msite.toString(), msite.getSubjectLabel(),
                         msite.getPropertyLabel(), msite.getObjectLabel(), msite.getLanguage(),
                         msite.getEvidenceTypeRelation().toString());
 
-
-                // EXTRACTING: topicterm x metaquery
+                /*******************************************
+                 * EXTRACTING: tb_rel_metaquery_topicterm
+                 * *****************************************/
                 for (Word wordtt: msite.getTopicTerms()) {
-                    SQLiteHelper.getInstance().addTopicTermMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
+                    SQLiteHelper.getInstance().addTopicTermsMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
                             wordtt.isFromWikipedia() == true ? 1: 0);
                 }
 
-
-                // EXTRACTING: websites
+                /*************************
+                 * EXTRACTING: tb_website
+                 * ***********************/
                 Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(_uri, domain, w.getTitle(), w.getText(),
                         w.getSearchRank(), w.getPageRank(), w.getPageRankScore(), w.getScore(),
                         w.getTopicMajorityWebFeature(), w.getTopicMajoritySearchFeature(),
-                        w.getTopicCoverageScore(), w.getLanguage(), );
+                        w.getTopicCoverageScore(), w.getLanguage());
 
-                // EXTRACTING: topic terms per website
+                /***************************************
+                 * EXTRACTING: tb_rel_website_topicterm
+                 * *************************************/
                 for (Word word: w.getOccurringTopicTerms()){
                     SQLiteHelper.getInstance().addTopicTermsWebSite(idwebsite, word.getWord(), word.getFrequency(),
                             word.isFromWikipedia() == true ? 1: 0);
@@ -227,10 +235,16 @@ public class ProofExtractor {
 
                 List<ComplexProof> proofs = evidence.getComplexProofs(w);
 
+                /************************
+                 * EXTRACTING: tb_proof
+                 * **********************/
                 for (ComplexProof pro: proofs){
-                    SQLiteHelper.getInstance().addProof(pro.getWebSite().idwebsite, word.getFrequency(),
-                            word.isFromWikipedia() == true ? 1: 0);
+                    SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel,
+                            pro.getHasPatternInBetween() == true ? 1:0, pro.getTinyContext(),
+                            pro.getSmallContext(), pro.getMediumContext(), pro.getLargeContext(),
+                            pro.getProofPhrase(), pro.getNormalizedProofPhrase(), pro.getLanguage());
                 }
+
 
 
                 List<ComplexProof> proofsInBetween = evidence.getComplexProofsPInBetween(w);
