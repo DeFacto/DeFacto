@@ -28,6 +28,8 @@ import java.util.*;
  */
 public class proofExtractor {
 
+    //TODO: deletar?
+
     public static org.apache.log4j.Logger LOGDEV    = org.apache.log4j.Logger.getLogger("developer");
     public static PrintWriter writer;
     public static PrintWriter writer_overview;

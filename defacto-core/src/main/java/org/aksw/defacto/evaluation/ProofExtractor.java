@@ -15,6 +15,7 @@ import org.aksw.defacto.search.engine.SearchEngine;
 import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.query.QueryGenerator;
+import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.TimeUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -23,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -30,11 +33,14 @@ import java.util.*;
  */
 public class ProofExtractor {
 
+
+
     private static final Logger         LOGGER = LoggerFactory.getLogger(ProofExtractor.class);
     public static PrintWriter           writer;
     public static PrintWriter           writer_overview;
     public static String                separator = ";";
-    private static final File           folder = new File("/Users/dnes/Github/FactBench/test/correct/");
+    private static String               path = "/Users/dnes/Github/FactBench/test/correct/";
+    private static final File           folder = new File(path);
     private static List<String>         files = new ArrayList<>();
 
     private static String               cacheQueueProof = "PROCESSING_QUEUE_PROOFS.csv";
@@ -62,6 +68,8 @@ public class ProofExtractor {
 
         Defacto.init();
 
+        boolean correct = true;
+
         util = new DefactoUtils();
 
         //Factbench dataset directory (correct)
@@ -76,17 +84,25 @@ public class ProofExtractor {
 
             if (!cache.contains(f)) {
 
+                Path p1 = Paths.get(f);
+                String filename = p1.getFileName().toString();
+
                 DefactoModel model = null;
                 try {
                     Model m = ModelFactory.createDefaultModel();
                     InputStream is = new FileInputStream(f);
                     m.read(is, null, "TURTLE");
-                    model = new DefactoModel(m, "Nobel Model", true, Arrays.asList("en"));
+                    model = new DefactoModel(m, filename.replace(FilenameUtils.getExtension(f), ""), correct, Arrays.asList("en"));
                 } catch (Exception e) {
                     LOGGER.error(e.toString());
                 }
 
-                SQLiteHelper.getInstance().
+                // EXTRACTING: model
+                Integer id_model = SQLiteHelper.getInstance().saveModel(model.getName(), model.isCorrect() ? 1 : 0, filename, p1.getParent().toString(),
+                        model.getSubjectUri(), model.getPredicate().getURI(), model.getObjectUri(),
+                        model.getTimePeriod().getFrom().toString(), model.getTimePeriod().getTo().toString(),
+                        model.getTimePeriod().isTimePoint() ? 1 : 0);
+
 
                 LOGGER.info("Extracting Proofs for: " + model);
                 Defacto.onlyTimes = onlyTimes;
@@ -166,7 +182,7 @@ public class ProofExtractor {
                 URI uri = null;
                 String domain = null;
                 List<WebSite> websites = evidence.getAllWebSites();
-                List<ComplexProof> proofs;
+
 
             for (WebSite w: websites) {
                 try {
@@ -177,8 +193,45 @@ public class ProofExtractor {
                 }
                 _uri = w.getUrl();
 
+                // EXTRACTING: pattern
+                Pattern psite = w.getQuery().getPattern();
+                Integer idpattern = SQLiteHelper.getInstance().savePattern(psite.boaScore, psite.naturalLanguageRepresentationNormalized,
+                        psite.naturalLanguageRepresentationWithoutVariables, psite.naturalLanguageRepresentation,
+                        psite.language, psite.posTags, psite.NER, psite.generalized, psite.naturalLanguageScore);
 
-                proofs = evidence.getComplexProofs(w);
+                // EXTRACTING: metaquery (w.getQuery().toString())
+                MetaQuery msite = w.getQuery();
+                Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idpattern, msite.toString(), msite.getSubjectLabel(),
+                        msite.getPropertyLabel(), msite.getObjectLabel(), msite.getLanguage(),
+                        msite.getEvidenceTypeRelation().toString());
+
+
+                // EXTRACTING: topicterm x metaquery
+                for (Word wordtt: msite.getTopicTerms()) {
+                    SQLiteHelper.getInstance().addTopicTermMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
+                            wordtt.isFromWikipedia() == true ? 1: 0);
+                }
+
+
+                // EXTRACTING: websites
+                Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(_uri, domain, w.getTitle(), w.getText(),
+                        w.getSearchRank(), w.getPageRank(), w.getPageRankScore(), w.getScore(),
+                        w.getTopicMajorityWebFeature(), w.getTopicMajoritySearchFeature(),
+                        w.getTopicCoverageScore(), w.getLanguage(), );
+
+                // EXTRACTING: topic terms per website
+                for (Word word: w.getOccurringTopicTerms()){
+                    SQLiteHelper.getInstance().addTopicTermsWebSite(idwebsite, word.getWord(), word.getFrequency(),
+                            word.isFromWikipedia() == true ? 1: 0);
+                }
+
+                List<ComplexProof> proofs = evidence.getComplexProofs(w);
+
+                for (ComplexProof pro: proofs){
+                    SQLiteHelper.getInstance().addProof(pro.getWebSite().idwebsite, word.getFrequency(),
+                            word.isFromWikipedia() == true ? 1: 0);
+                }
+
 
                 List<ComplexProof> proofsInBetween = evidence.getComplexProofsPInBetween(w);
                 int totalProofsInBetween = 0;
@@ -217,6 +270,10 @@ public class ProofExtractor {
             writer_overview.flush();
 
             }
+
+            //commit transaction for model N
+            SQLiteHelper.getInstance().commitT();
+
         }
 
         }catch (Exception e){
