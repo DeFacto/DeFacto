@@ -49,8 +49,34 @@ public class SQLiteHelper {
 
     }
 
+    public Integer saveEvidence(Integer idmodel, Double score, Double combinedscore, Long tothitcount,
+                             String features, Integer evidencetype){
+        try {
+            int curid = existsRecord("select id from tb_evidence where id_model = '" + idmodel +
+                    "' and evidence_type = " + evidencetype);
+            if (curid < 1) {
+                Statement stmt = null;
+                String sql = "INSERT INTO TB_EVIDENCE (id_model, score, combined_score, total_hit_count, " +
+                        "features, evidence_type) VALUES (" + idmodel + "," + score + "," + combinedscore + "," +
+                        tothitcount + ",'" + features + "'," + evidencetype + ");";
+                stmt = c.createStatement();
+                System.out.print(sql);
+                Integer id = stmt.executeUpdate(sql);
+                stmt.close();
+                return id;
+            }
+            else{
+                throw new Exception("Err: evidence already exists for this model! Please check database for reprocessing");
+            }
+        } catch (Exception e){
+            System.out.println(e.toString());
+            return -1;
+        }
+    }
+
     public Integer saveModel(String name, int correct, String filename, String filepath,
                              String suri, String puri, String ouri, String from, String to, int isTimePoint){
+        Integer id = -1;
         try {
             int curid = existsRecord("select id from tb_model where file_name = '" + filename +
                     "' and file_path = '" + filepath + "'");
@@ -62,17 +88,18 @@ public class SQLiteHelper {
                         suri + "','" + puri + "','" + ouri + "','" + from + "','" + to + "'," + isTimePoint + ");";
                 stmt = c.createStatement();
                 System.out.print(sql);
-                Integer id = stmt.executeUpdate(sql);
+                id = stmt.executeUpdate(sql);
                 stmt.close();
-                return id;
             }
             else{
-                return curid;
+                throw new Exception("Err: model already exists! Please check database for reprocessing");
             }
+
         } catch (Exception e){
-            System.out.println(e.toString());
-            return -1;
+            e.printStackTrace();
+            System.exit(1);
         }
+        return id;
     }
 
     public boolean executeQueriesInBatch(List<String> queries){
@@ -197,20 +224,18 @@ public class SQLiteHelper {
 
     }
 
-    public boolean addTopicTermsEvidence(Integer idmetaquery, String word, Integer qtd, Integer isfromwiki){
+    public boolean addTopicTermsEvidence(Integer idevidence, String term, String word, Integer qtd, Integer isfromwiki){
 
         try{
             Statement stmt = null;
-            String sql = "INSERT INTO TB_REL_METAQUERT_TOPICTERM " +
-                    "(id_metaquery, topic_term, frequency, is_from_wikipedia)" +
-                    " VALUES (" + idmetaquery + ",'" +
-                    word  + "'," + qtd + "," +
-                    isfromwiki + ");";
+            String sql = "INSERT INTO TB_REL_TOPICTERM_EVIDENCE " +
+                    "(id_evidence, term, topicterm, frequency, is_from_wikipedia)" +
+                    " VALUES (" + idevidence + ",'" +
+                    term  + "','" + word + "'," + qtd + "," + isfromwiki + ");";
             stmt = c.createStatement();
             Integer id = stmt.executeUpdate(sql);
             stmt.close();
             return true;
-
         } catch (Exception e){
             System.out.println(e.toString());
             return false;
@@ -260,14 +285,14 @@ public class SQLiteHelper {
 
     }
 
-    public Integer savePattern(Double boa_score, String nlpn, String nlpnovar, String nlp, String ln, String pos,
+    public Integer savePattern(Integer idevidence, Double boa_score, String nlpn, String nlpnovar, String nlp, String ln, String pos,
                                String ner, String generalized, Double nlp_score){
 
         try{
             Statement stmt = null;
             String sql = "INSERT INTO TB_PATTERN " +
-                    "(score_boa, nlp_normalized, nlp_no_var, nlp, lang, nlp_score, pos, generalized, ner VALUES(" +
-                     boa_score + ",'" + nlpn  + "','" + nlpnovar + "','" + nlp + "','" + ln + "'," + nlp_score + ",'" +
+                    "(id_evidence, score_boa, nlp_normalized, nlp_no_var, nlp, lang, nlp_score, pos, generalized, ner VALUES(" +
+                     idevidence + "," + boa_score + ",'" + nlpn  + "','" + nlpnovar + "','" + nlp + "','" + ln + "'," + nlp_score + ",'" +
                     pos + "','" + generalized + "','" + ner + "');";
             stmt = c.createStatement();
             Integer id = stmt.executeUpdate(sql);

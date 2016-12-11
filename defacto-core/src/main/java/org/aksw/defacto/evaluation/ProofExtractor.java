@@ -2,6 +2,7 @@ package org.aksw.defacto.evaluation;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evidence.ComplexProof;
@@ -63,26 +64,54 @@ public class ProofExtractor {
         }
     }
 
-    private static void saveMetadata(Evidence evidence, String f){
+    private static void saveMetadata(Evidence _evidence, Constants.EvidenceType evidencetype, String f){
 
         try{
-            DefactoModel model = evidence.getModel();
+            Evidence eaux;
+            Integer eauxnum;
+
+            if (evidencetype.equals(Constants.EvidenceType.POS)) {
+                eaux = _evidence;
+                eauxnum = 1;
+            }else {
+                eaux = _evidence.getNegativeEvidenceObject();
+                eauxnum = 0;
+            }
+
+            DefactoModel model = eaux.getModel();
             Path p1 = Paths.get(f);
             String filename = p1.getFileName().toString();
 
+
             /** tb_model **/
-            Integer idmodel = SQLiteHelper.getInstance().saveModel(model.getName(), model.isCorrect() ? 1 : 0, filename, p1.getParent().toString(),
-                    model.getSubjectUri(), model.getPredicate().getURI(), model.getObjectUri(),
+            Integer idmodel = SQLiteHelper.getInstance().saveModel(model.getName(), model.isCorrect() ? 1 : 0, filename,
+                    p1.getParent().toString(), model.getSubjectUri(), model.getPredicate().getURI(), model.getObjectUri(),
                     model.getTimePeriod().getFrom().toString(), model.getTimePeriod().getTo().toString(),
                     model.getTimePeriod().isTimePoint() ? 1 : 0);
 
+            /** tb_evidence **/
+            Integer idevidence = SQLiteHelper.getInstance().saveEvidence(idmodel, eaux.getDeFactoScore(),
+                    eaux.getDeFactoCombinedScore(), eaux.getTotalHitCount(), eaux.getFeatures().toString(),
+                    eauxnum);
+
             /** tb_rel_topicterm_evidence **/
-            for (Map.Entry<String, List<Word>> entry : evidence.getTopicTerms().entrySet())
+            for (Map.Entry<String, List<Word>> entry : eaux.getTopicTerms().entrySet())
             {
                 for (Word wordtt: entry.getValue()) {
-                    SQLiteHelper.getInstance().addTopicTermsEvidence(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
-                            wordtt.isFromWikipedia() == true ? 1 : 0);
+                    SQLiteHelper.getInstance().addTopicTermsEvidence(idevidence, entry.getKey(), wordtt.getWord(),
+                            wordtt.getFrequency(), wordtt.isFromWikipedia() == true ? 1 : 0);
                 }
+            }
+
+            /** tb_rel_pattern_evidence **/
+            for (Pattern pat: eaux.getBoaPatterns()) {
+                SQLiteHelper.getInstance().savePattern(idevidence, pat.boaScore, pat.naturalLanguageRepresentationNormalized,
+                        pat.naturalLanguageRepresentationWithoutVariables, pat.naturalLanguageRepresentation,
+                        pat.language, pat.posTags, pat.NER, pat.generalized, pat.naturalLanguageScore);
+            }
+            /** tb_rel_pattern_evidence **/
+            for (ComplexProof profs: eaux.getComplexProofs()) {
+profs.
             }
 
 
