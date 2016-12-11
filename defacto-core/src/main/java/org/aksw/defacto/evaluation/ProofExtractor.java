@@ -27,6 +27,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by dnes on 30/10/15.
@@ -60,6 +61,123 @@ public class ProofExtractor {
                 }
             }
         }
+    }
+
+    private static void saveMetadata(Evidence evidence, String f){
+
+        try{
+            DefactoModel model = evidence.getModel();
+            Path p1 = Paths.get(f);
+            String filename = p1.getFileName().toString();
+
+            /** tb_model **/
+            Integer idmodel = SQLiteHelper.getInstance().saveModel(model.getName(), model.isCorrect() ? 1 : 0, filename, p1.getParent().toString(),
+                    model.getSubjectUri(), model.getPredicate().getURI(), model.getObjectUri(),
+                    model.getTimePeriod().getFrom().toString(), model.getTimePeriod().getTo().toString(),
+                    model.getTimePeriod().isTimePoint() ? 1 : 0);
+
+            /** tb_rel_topicterm_evidence **/
+            for (Map.Entry<String, List<Word>> entry : evidence.getTopicTerms().entrySet())
+            {
+                for (Word wordtt: entry.getValue()) {
+                    SQLiteHelper.getInstance().addTopicTermsEvidence(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
+                            wordtt.isFromWikipedia() == true ? 1 : 0);
+                }
+            }
+
+
+
+
+
+
+            /*************************
+             * EXTRACTING: tb_pattern
+             * ***********************/
+            Pattern psite = w.getQuery().getPattern();
+            Integer idpattern = SQLiteHelper.getInstance().savePattern(psite.boaScore, psite.naturalLanguageRepresentationNormalized,
+                    psite.naturalLanguageRepresentationWithoutVariables, psite.naturalLanguageRepresentation,
+                    psite.language, psite.posTags, psite.NER, psite.generalized, psite.naturalLanguageScore);
+
+            /***************************
+             * EXTRACTING: tb_metaquery
+             * *************************/
+            MetaQuery msite = w.getQuery();
+            Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idpattern, msite.toString(), msite.getSubjectLabel(),
+                    msite.getPropertyLabel(), msite.getObjectLabel(), msite.getLanguage(),
+                    msite.getEvidenceTypeRelation().toString());
+
+            /*******************************************
+             * EXTRACTING: tb_rel_metaquery_topicterm
+             * *****************************************/
+            for (Word wordtt: msite.getTopicTerms()) {
+                SQLiteHelper.getInstance().addTopicTermsMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
+                        wordtt.isFromWikipedia() == true ? 1: 0);
+            }
+
+            /*************************
+             * EXTRACTING: tb_website
+             * ***********************/
+            Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(_uri, domain, w.getTitle(), w.getText(),
+                    w.getSearchRank(), w.getPageRank(), w.getPageRankScore(), w.getScore(),
+                    w.getTopicMajorityWebFeature(), w.getTopicMajoritySearchFeature(),
+                    w.getTopicCoverageScore(), w.getLanguage());
+
+            /***************************************
+             * EXTRACTING: tb_rel_website_topicterm
+             * *************************************/
+            for (Word word: w.getOccurringTopicTerms()){
+                SQLiteHelper.getInstance().addTopicTermsWebSite(idwebsite, word.getWord(), word.getFrequency(),
+                        word.isFromWikipedia() == true ? 1: 0);
+            }
+
+            List<ComplexProof> proofs = evidence.getComplexProofs(w);
+
+            /************************
+             * EXTRACTING: tb_proof
+             * **********************/
+            for (ComplexProof pro: proofs){
+                SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel,
+                        pro.getHasPatternInBetween() == true ? 1:0, pro.getTinyContext(),
+                        pro.getSmallContext(), pro.getMediumContext(), pro.getLargeContext(),
+                        pro.getProofPhrase(), pro.getNormalizedProofPhrase(), pro.getLanguage());
+            }
+
+            //commit transaction for model N
+            SQLiteHelper.getInstance().commitT();
+
+        }catch (Exception e){
+            LOGGER.error(":: oops.." + e.toString());
+            SQLiteHelper.getInstance().rollbackT();
+        }
+
+    }
+
+    public static void exportMetadata(){
+
+        try{
+
+            long startTime = System.currentTimeMillis();
+            final Evidence evidence = Defacto.checkFact(getOneExample(), Defacto.TIME_DISTRIBUTION_ONLY.NO);
+            long endTime   = System.currentTimeMillis();
+            long totalTime = endTime - startTime;
+
+            String out = String.format("Processing Time: %02d hour, %02d min, %02d sec",
+                    TimeUnit.MILLISECONDS.toHours(totalTime),
+                    TimeUnit.MILLISECONDS.toMinutes(totalTime),
+                    TimeUnit.MILLISECONDS.toSeconds(totalTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))
+            );
+
+            LOGGER.info(out);
+            LOGGER.info(":: saving metadata...");
+            saveMetadata(evidence, "/Users/dnes/Github/DeFacto/defacto-core/src/main/resources/Nobel1909.ttl");
+            LOGGER.info(":: done...");
+
+
+        }catch (Exception e){
+            LOGGER.error(e.toString());
+        }
+
+
     }
 
     private static void startProcess(Defacto.TIME_DISTRIBUTION_ONLY onlyTimes){
@@ -97,13 +215,7 @@ public class ProofExtractor {
                     LOGGER.error(e.toString());
                 }
 
-                /***********************
-                 * EXTRACTING: tb_model
-                 * *********************/
-                Integer idmodel = SQLiteHelper.getInstance().saveModel(model.getName(), model.isCorrect() ? 1 : 0, filename, p1.getParent().toString(),
-                        model.getSubjectUri(), model.getPredicate().getURI(), model.getObjectUri(),
-                        model.getTimePeriod().getFrom().toString(), model.getTimePeriod().getTo().toString(),
-                        model.getTimePeriod().isTimePoint() ? 1 : 0);
+
 
 
                 LOGGER.info("Extracting Proofs for: " + model);
@@ -193,59 +305,8 @@ public class ProofExtractor {
                 }
                 _uri = w.getUrl();
 
-                /*************************
-                 * EXTRACTING: tb_pattern
-                 * ***********************/
-                Pattern psite = w.getQuery().getPattern();
-                Integer idpattern = SQLiteHelper.getInstance().savePattern(psite.boaScore, psite.naturalLanguageRepresentationNormalized,
-                        psite.naturalLanguageRepresentationWithoutVariables, psite.naturalLanguageRepresentation,
-                        psite.language, psite.posTags, psite.NER, psite.generalized, psite.naturalLanguageScore);
-
-                /***************************
-                 * EXTRACTING: tb_metaquery
-                 * *************************/
-                MetaQuery msite = w.getQuery();
-                Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idpattern, msite.toString(), msite.getSubjectLabel(),
-                        msite.getPropertyLabel(), msite.getObjectLabel(), msite.getLanguage(),
-                        msite.getEvidenceTypeRelation().toString());
-
-                /*******************************************
-                 * EXTRACTING: tb_rel_metaquery_topicterm
-                 * *****************************************/
-                for (Word wordtt: msite.getTopicTerms()) {
-                    SQLiteHelper.getInstance().addTopicTermsMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
-                            wordtt.isFromWikipedia() == true ? 1: 0);
-                }
-
-                /*************************
-                 * EXTRACTING: tb_website
-                 * ***********************/
-                Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(_uri, domain, w.getTitle(), w.getText(),
-                        w.getSearchRank(), w.getPageRank(), w.getPageRankScore(), w.getScore(),
-                        w.getTopicMajorityWebFeature(), w.getTopicMajoritySearchFeature(),
-                        w.getTopicCoverageScore(), w.getLanguage());
-
-                /***************************************
-                 * EXTRACTING: tb_rel_website_topicterm
-                 * *************************************/
-                for (Word word: w.getOccurringTopicTerms()){
-                    SQLiteHelper.getInstance().addTopicTermsWebSite(idwebsite, word.getWord(), word.getFrequency(),
-                            word.isFromWikipedia() == true ? 1: 0);
-                }
 
                 List<ComplexProof> proofs = evidence.getComplexProofs(w);
-
-                /************************
-                 * EXTRACTING: tb_proof
-                 * **********************/
-                for (ComplexProof pro: proofs){
-                    SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel,
-                            pro.getHasPatternInBetween() == true ? 1:0, pro.getTinyContext(),
-                            pro.getSmallContext(), pro.getMediumContext(), pro.getLargeContext(),
-                            pro.getProofPhrase(), pro.getNormalizedProofPhrase(), pro.getLanguage());
-                }
-
-
 
                 List<ComplexProof> proofsInBetween = evidence.getComplexProofsPInBetween(w);
                 int totalProofsInBetween = 0;
@@ -283,10 +344,19 @@ public class ProofExtractor {
             writer.flush();
             writer_overview.flush();
 
-            }
+            /**************************************
+             * EXTRACTING: exporting weka features
+             * ************************************/
+            //BufferedWriter writer2 = new BufferedWriter(new FileWriter(model.name + ".arff"));
+            //writer2.write(evidence.getFeatures().toString());
+            //writer2.flush();
+            //writer2.close();
 
-            //commit transaction for model N
-            SQLiteHelper.getInstance().commitT();
+
+
+            } //end caching (file)
+
+
 
         }
 

@@ -197,6 +197,27 @@ public class SQLiteHelper {
 
     }
 
+    public boolean addTopicTermsEvidence(Integer idmetaquery, String word, Integer qtd, Integer isfromwiki){
+
+        try{
+            Statement stmt = null;
+            String sql = "INSERT INTO TB_REL_METAQUERT_TOPICTERM " +
+                    "(id_metaquery, topic_term, frequency, is_from_wikipedia)" +
+                    " VALUES (" + idmetaquery + ",'" +
+                    word  + "'," + qtd + "," +
+                    isfromwiki + ");";
+            stmt = c.createStatement();
+            Integer id = stmt.executeUpdate(sql);
+            stmt.close();
+            return true;
+
+        } catch (Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
+
+    }
+
     public boolean addTopicTermsMetaQuery(Integer idmetaquery, String word, Integer qtd, Integer isfromwiki){
 
         try{
