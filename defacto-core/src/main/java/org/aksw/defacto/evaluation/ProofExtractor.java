@@ -64,7 +64,71 @@ public class ProofExtractor {
         }
     }
 
-    private static void saveMetadata(Evidence _evidence, Constants.EvidenceType evidencetype, String f){
+    private static void saveWebSiteAndRelated(WebSite w, Integer idevidence, Integer idmodel) throws Exception {
+
+        try{
+
+            URI uri = new URI(w.getUrl().toString());
+            String domain = uri.getHost();
+
+            /*************************
+             * EXTRACTING: tb_pattern
+             * ***********************/
+            Pattern psite = w.getQuery().getPattern();
+            Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, psite.boaScore, psite.naturalLanguageRepresentationNormalized,
+                    psite.naturalLanguageRepresentationWithoutVariables, psite.naturalLanguageRepresentation,
+                    psite.language, psite.posTags, psite.NER, psite.generalized, psite.naturalLanguageScore);
+
+            /***************************
+             * EXTRACTING: tb_metaquery
+             * *************************/
+            MetaQuery msite = w.getQuery();
+            Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idpattern, msite.toString(), msite.getSubjectLabel(),
+                    msite.getPropertyLabel(), msite.getObjectLabel(), msite.getLanguage(),
+                    msite.getEvidenceTypeRelation().toString());
+
+            /*******************************************
+             * EXTRACTING: tb_rel_metaquery_topicterm
+             * *****************************************/
+            for (Word wordtt: msite.getTopicTerms()) {
+                SQLiteHelper.getInstance().addTopicTermsMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
+                        wordtt.isFromWikipedia() == true ? 1: 0);
+            }
+
+            /*************************
+             * EXTRACTING: tb_website
+             * ***********************/
+            Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(w.getUrl(), domain, w.getTitle(), w.getText(),
+                    w.getSearchRank(), w.getPageRank(), w.getPageRankScore(), w.getScore(),
+                    w.getTopicMajorityWebFeature(), w.getTopicMajoritySearchFeature(),
+                    w.getTopicCoverageScore(), w.getLanguage());
+
+            /***************************************
+             * EXTRACTING: tb_rel_website_topicterm
+             * *************************************/
+            for (Word word: w.getOccurringTopicTerms()){
+                SQLiteHelper.getInstance().addTopicTermsWebSite(idwebsite, word.getWord(), word.getFrequency(),
+                        word.isFromWikipedia() == true ? 1: 0);
+            }
+
+            List<ComplexProof> proofs = evidence.getComplexProofs(w);
+
+            /************************
+             * EXTRACTING: tb_proof
+             * **********************/
+            for (ComplexProof pro: proofs){
+                SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel,
+                        pro.getHasPatternInBetween() == true ? 1:0, pro.getTinyContext(),
+                        pro.getSmallContext(), pro.getMediumContext(), pro.getLargeContext(),
+                        pro.getProofPhrase(), pro.getNormalizedProofPhrase(), pro.getLanguage());
+            }
+
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+    private static void saveMetadata(Evidence _evidence, Constants.EvidenceType evidencetype, String f) throws Exception{
 
         try{
             Evidence eaux;
@@ -103,138 +167,34 @@ public class ProofExtractor {
                 }
             }
 
-            List<ComplexProof> proofs = eaux.getComplexProofs();
-            eaux.get
+            Integer verification = 0;
+            //1. get all websites without proofs (remaining)
+            List<WebSite> websites =
+                    eaux.getAllWebSitesWithoutComplexProof();
+            for (WebSite wsnp: websites){
+                saveWebSiteAndRelated(wsnp, idevidence, idmodel); verification ++;
+            }
 
-
-
-            a.getWebSite().getQuery().
-            String _uri;
-            URI uri = null;
-            String domain = null;
-            List<WebSite> websites = eaux.getAllWebSites();
-
-            //no proof
-
-
-
-            //1. get all websites, derived by proofs
+            //2. get all websites, derived by proofs
             Set<ComplexProof> setproofs = eaux.getComplexProofs();
             Iterator<ComplexProof> iterator = setproofs.iterator();
             while(iterator.hasNext()) {
                 ComplexProof pfr = iterator.next();
-
+                WebSite wswp = pfr.getWebSite();
+                saveWebSiteAndRelated(wswp, idevidence, idmodel); verification ++;
             }
 
-            //2. get all websites without proofs (remaining)
-            eaux.getAllWebSitesWithoutComplexProof();
-
-
-            //has proof
-            List<String> websiteprocessed = new ArrayList<>();
-            List<WebSite> websiteswithproof = eaux.getAllWebSitesWithComplexProof();
-            for (WebSite w: websiteswithproof) {
-                websiteprocessed.add(w.getUrl());
-            }
-
-            //source candidate
-            eaux.getAllWebSitesWithComplexProofAndAtLeastOneBOAPatternInBetween();
-
-
-            for (WebSite w: websites) {
-                try {
-                    uri = new URI(w.getUrl().toString());
-                    domain = uri.getHost();
-                } catch (URISyntaxException e) {
-                    LOGGER.error(e.toString());
-                }
-                _uri = w.getUrl();
-
-
-
-            }
-
-
-
-
-
-
-
-
-            /** tb_rel_pattern_evidence **/
-            for (Pattern pat: eaux.getBoaPatterns()) {
-                SQLiteHelper.getInstance().savePattern(idevidence, pat.boaScore, pat.naturalLanguageRepresentationNormalized,
-                        pat.naturalLanguageRepresentationWithoutVariables, pat.naturalLanguageRepresentation,
-                        pat.language, pat.posTags, pat.NER, pat.generalized, pat.naturalLanguageScore);
-            }
-            /** tb_rel_proofs_evidence **/
-            for (ComplexProof profs: eaux.getComplexProofs()) {
-profs.
-            }
-
-
-
-
-
-
-            /*************************
-             * EXTRACTING: tb_pattern
-             * ***********************/
-            Pattern psite = w.getQuery().getPattern();
-            Integer idpattern = SQLiteHelper.getInstance().savePattern(psite.boaScore, psite.naturalLanguageRepresentationNormalized,
-                    psite.naturalLanguageRepresentationWithoutVariables, psite.naturalLanguageRepresentation,
-                    psite.language, psite.posTags, psite.NER, psite.generalized, psite.naturalLanguageScore);
-
-            /***************************
-             * EXTRACTING: tb_metaquery
-             * *************************/
-            MetaQuery msite = w.getQuery();
-            Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idpattern, msite.toString(), msite.getSubjectLabel(),
-                    msite.getPropertyLabel(), msite.getObjectLabel(), msite.getLanguage(),
-                    msite.getEvidenceTypeRelation().toString());
-
-            /*******************************************
-             * EXTRACTING: tb_rel_metaquery_topicterm
-             * *****************************************/
-            for (Word wordtt: msite.getTopicTerms()) {
-                SQLiteHelper.getInstance().addTopicTermsMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
-                        wordtt.isFromWikipedia() == true ? 1: 0);
-            }
-
-            /*************************
-             * EXTRACTING: tb_website
-             * ***********************/
-            Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(_uri, domain, w.getTitle(), w.getText(),
-                    w.getSearchRank(), w.getPageRank(), w.getPageRankScore(), w.getScore(),
-                    w.getTopicMajorityWebFeature(), w.getTopicMajoritySearchFeature(),
-                    w.getTopicCoverageScore(), w.getLanguage());
-
-            /***************************************
-             * EXTRACTING: tb_rel_website_topicterm
-             * *************************************/
-            for (Word word: w.getOccurringTopicTerms()){
-                SQLiteHelper.getInstance().addTopicTermsWebSite(idwebsite, word.getWord(), word.getFrequency(),
-                        word.isFromWikipedia() == true ? 1: 0);
-            }
-
-            List<ComplexProof> proofs = evidence.getComplexProofs(w);
-
-            /************************
-             * EXTRACTING: tb_proof
-             * **********************/
-            for (ComplexProof pro: proofs){
-                SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel,
-                        pro.getHasPatternInBetween() == true ? 1:0, pro.getTinyContext(),
-                        pro.getSmallContext(), pro.getMediumContext(), pro.getLargeContext(),
-                        pro.getProofPhrase(), pro.getNormalizedProofPhrase(), pro.getLanguage());
+            if (verification != _evidence.getAllWebSites().size()){
+                SQLiteHelper.getInstance().rollbackT();
+                throw new Exception(":: hum...something is not well modeled");
             }
 
             //commit transaction for model N
             SQLiteHelper.getInstance().commitT();
 
         }catch (Exception e){
-            LOGGER.error(":: oops.." + e.toString());
             SQLiteHelper.getInstance().rollbackT();
+            throw e;
         }
 
     }
