@@ -71,21 +71,24 @@ public class ProofExtractor {
             URI uri = new URI(w.getUrl().toString());
             String domain = uri.getHost();
 
-            /*************************
-             * EXTRACTING: tb_pattern
-             * ***********************/
+            /* EXTRACTING: tb_pattern */
             Pattern psite = w.getQuery().getPattern();
-            Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, psite.boaScore, psite.naturalLanguageRepresentationNormalized,
-                    psite.naturalLanguageRepresentationWithoutVariables, psite.naturalLanguageRepresentation,
-                    psite.language, psite.posTags, psite.NER, psite.generalized, psite.naturalLanguageScore);
+            Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, psite.boaScore,
+                    psite.naturalLanguageRepresentationNormalized, psite.naturalLanguageRepresentationWithoutVariables,
+                    psite.naturalLanguageRepresentation, psite.language, psite.posTags, psite.NER, psite.generalized,
+                    psite.naturalLanguageScore);
 
-            /***************************
-             * EXTRACTING: tb_metaquery
-             * *************************/
+            /* EXTRACTING: tb_metaquery */
             MetaQuery msite = w.getQuery();
             Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idpattern, msite.toString(), msite.getSubjectLabel(),
                     msite.getPropertyLabel(), msite.getObjectLabel(), msite.getLanguage(),
                     msite.getEvidenceTypeRelation().toString());
+
+            /* EXTRACTING: tb_website */
+            Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(idmetaquery, idpattern, w.getUrl(), domain,
+                    w.getTitle(), w.getText(), w.getSearchRank(), w.getPageRank(), w.getPageRankScore(), w.getScore(),
+                    w.getTopicMajorityWebFeature(), w.getTopicMajoritySearchFeature(),
+                    w.getTopicCoverageScore(), w.getLanguage());
 
             /*******************************************
              * EXTRACTING: tb_rel_metaquery_topicterm
@@ -95,13 +98,7 @@ public class ProofExtractor {
                         wordtt.isFromWikipedia() == true ? 1: 0);
             }
 
-            /*************************
-             * EXTRACTING: tb_website
-             * ***********************/
-            Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(w.getUrl(), domain, w.getTitle(), w.getText(),
-                    w.getSearchRank(), w.getPageRank(), w.getPageRankScore(), w.getScore(),
-                    w.getTopicMajorityWebFeature(), w.getTopicMajoritySearchFeature(),
-                    w.getTopicCoverageScore(), w.getLanguage());
+
 
             /***************************************
              * EXTRACTING: tb_rel_website_topicterm

@@ -327,18 +327,17 @@ public class SQLiteHelper {
 
     }
 
-    public Integer saveWebSite(String url, String urldomain, String title,
-                             String body, Integer rank,
-                             Integer pagerank, Double pagerankscore, Double ind_score,
+    public Integer saveWebSite(Integer idmetaquery, Integer idpattern, String url, String urldomain, String title,
+                             String body, Integer rank, Integer pagerank, Double pagerankscore, Double ind_score,
                              Double ind_topic_majority_web, Double ind_topic_majority_search,
                                Double ind_topic_coverage_score, String lang){
         try{
             Statement stmt = null;
             String sql = "INSERT INTO TB_WEBSITE " +
-                    "(url, url_domain, " +
-                    "title, body, rank, pagerank, pagerank_score ind_score, ind_topic_majority_web" +
+                    "(id_metaquery, id_pattern, url, url_domain, " +
+                    "title, body, rank, pagerank, pagerank_score, ind_score, ind_topic_majority_web," +
                     "ind_topic_majority_search, ind_topic_coverage_score, lang)" +
-                    " VALUES ('" + url + "','" +
+                    " VALUES (" + idmetaquery + "," + idpattern + ",'" + url + "','" +
                     urldomain  + "','" + title + "','" +
                     body  + "'," + rank + "," +
                     pagerank  + "," + pagerankscore + "," + ind_score + "," +
