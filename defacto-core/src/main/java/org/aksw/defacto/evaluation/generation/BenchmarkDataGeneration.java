@@ -75,6 +75,65 @@ public class BenchmarkDataGeneration {
                     "FILTER( xsd:gYear(?from) > \"2000\"^^xsd:gYear ) " +
                     "} ";
 
+    static String qs_rel001_politicians =
+            "PREFIX dbo: <http://dbpedia.org/ontology/> \n" +
+                    "PREFIX dbr: <http://dbpedia.org/resource/> \n" +
+                    "PREFIX yago: <http://dbpedia.org/class/yago/> \n" +
+                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
+                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n\n" +
+
+                    "SELECT * \n" +
+                    "FROM <http://dbpedia.org> \n" +
+                    "WHERE { \n" +
+                    "\t?person dbo:termPeriod ?timePeriod . \n" +
+                    "\t?timePeriod dbo:office ?office . \n" +
+                    "\t?timePeriod dbo:activeYearsStartDate ?from . \n" +
+                    "\t?timePeriod dbo:activeYearsEndDate ?to . \n" +
+                    "\tFILTER (regex(?office, \"^Prime Minister of.*\")) \n" +
+                    "}";
+
+    static String qs_rel002_birth =
+            "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> \n" +
+                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+
+                    "SELECT ?person ?place ?date  \n" +
+                    "WHERE {   \n" +
+                    "   ?person dbpedia-owl:birthPlace ?place .  \n" +
+                    "   ?place rdf:type dbpedia-owl:City  .   \n" +
+                    "   ?person dbpedia-owl:birthDate ?date .  \n" +
+                    "   ?person dbpedia-owl:numberOfInboundLinks ?personInbound .  \n" +
+                    "   ?place dbpedia-owl:numberOfInboundLinks ?placeInbound .  \n" +
+                    "}  \n" +
+                    "ORDER BY DESC(?personInbound) DESC(?placeInbound) \n ";
+
+    static String qs_rel003_starring =
+            "PREFIX dbo: <http://dbpedia.org/ontology/> \n" +
+                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+
+                    "SELECT DISTINCT ?film ?actor ?date \n" +
+                    "WHERE {   \n" +
+                    "   ?film dbo:starring ?actor .  \n" +
+                    "   ?film rdf:type dbo:Film . \n" +
+                    "   ?film dbo:releaseDate ?date . \n " +
+                    "   ?film dbo:numberOfInboundLinks ?filmInbound .  \n" +
+                    "}  \n" +
+                    "ORDER BY DESC(?filmInbound) ASC(?date) \n ";
+
+    static String qs_rel004_death =
+            "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> \n" +
+                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+
+                    "SELECT ?person ?place ?date \n" +
+                    "FROM <http://dbpedia.org> \n" +
+                    "WHERE {  \n" +
+                    "   ?person dbpedia-owl:deathPlace ?place . \n" +
+                    "   ?place rdf:type dbpedia-owl:City  .  \n" +
+                    "   ?person dbpedia-owl:deathDate ?date . \n" +
+                    "   ?person dbpedia-owl:numberOfInboundLinks ?personInbound . \n" +
+                    "   ?place dbpedia-owl:numberOfInboundLinks ?placeInbound . \n" +
+                    "} \n" +
+                    "ORDER BY DESC(?personInbound) DESC(?placeInbound)\n";
 
     public static void dropEvalDirectory() throws IOException{
 		
@@ -117,19 +176,20 @@ public class BenchmarkDataGeneration {
             System.out.print("Start generating temporal facts ... ");
             BenchmarkDataGeneration.dropEvalDirectory();
 
-            //FreeBase
-            //BenchmarkDataGeneration.loadSpouse();
-            //BenchmarkDataGeneration.loadFoundationPlace();
-            //BenchmarkDataGeneration.loadPublishDates();
-            //BenchmarkDataGeneration.loadAwards();
-            //BenchmarkDataGeneration.loadSubsidiary();
+            /* FreeBase */
+            BenchmarkDataGeneration.loadSpouse();
+            BenchmarkDataGeneration.loadFoundationPlace();
+            BenchmarkDataGeneration.loadPublishDates();
+            BenchmarkDataGeneration.loadAwards();
+            BenchmarkDataGeneration.loadSubsidiary();
 
-            //DBPedia
-            BenchmarkDataGeneration.loadNBAPlayers(1);
+            /* DBPedia */
+
             BenchmarkDataGeneration.loadPoliticians();
             BenchmarkDataGeneration.loadBirth();
-            BenchmarkDataGeneration.loadDeath();
             BenchmarkDataGeneration.loadStarring();
+            BenchmarkDataGeneration.loadDeath();
+            BenchmarkDataGeneration.loadNBAPlayers(1);
 
             System.out.println("DONE!");
         }catch (Exception e){
@@ -482,22 +542,9 @@ public class BenchmarkDataGeneration {
 		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
-		String query =
-				"PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> \n" + 
-				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
 
-				"SELECT ?person ?place ?date \n" +
-				"FROM <http://dbpedia.org> \n" +
-				"WHERE {  \n" + 
-				"   ?person dbpedia-owl:deathPlace ?place . \n" +  
-				"   ?place rdf:type dbpedia-owl:City  .  \n" + 
-				"   ?person dbpedia-owl:deathDate ?date . \n" + 
-				"   ?person dbpedia-owl:numberOfInboundLinks ?personInbound . \n" +
-				"   ?place dbpedia-owl:numberOfInboundLinks ?placeInbound . \n" +
-				"} \n" + 
-				"ORDER BY DESC(?personInbound) DESC(?placeInbound)\n";
 		
-		List<QuerySolution> results = getResults(query, dbpedia);
+		List<QuerySolution> results = getResults(qs_rel004_death, dbpedia);
 		
 		// we create 5 parts so that we take some very popular, some  
 		// popular, some not so popular... and not popular persons
@@ -550,20 +597,9 @@ public class BenchmarkDataGeneration {
 		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
-		String query =
-				"PREFIX dbo: <http://dbpedia.org/ontology/> \n" +
-				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
 
-				"SELECT DISTINCT ?film ?actor ?date \n" + 
-				"WHERE {   \n" + 
-				"   ?film dbo:starring ?actor .  \n" +  
-				"   ?film rdf:type dbo:Film . \n" +  
-				"   ?film dbo:releaseDate ?date . \n " +  
-				"   ?film dbo:numberOfInboundLinks ?filmInbound .  \n" +
-				"}  \n" +  
-				"ORDER BY DESC(?filmInbound) ASC(?date) \n ";
 		
-		QueryExecution qexec = QueryExecutionFactory.create(QueryFactory.create(query, Syntax.syntaxARQ), dbpedia);
+		QueryExecution qexec = QueryExecutionFactory.create(QueryFactory.create(qs_rel003_starring, Syntax.syntaxARQ), dbpedia);
 		ResultSet rs = qexec.execSelect();
         
 		List<QuerySolution> results = new ArrayList<QuerySolution>();
@@ -657,22 +693,8 @@ public class BenchmarkDataGeneration {
 		
 		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
-		
-		String query =
-				"PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> \n" +
-				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
 
-				"SELECT ?person ?place ?date  \n" + 
-				"WHERE {   \n" + 
-				"   ?person dbpedia-owl:birthPlace ?place .  \n" +  
-				"   ?place rdf:type dbpedia-owl:City  .   \n" + 
-				"   ?person dbpedia-owl:birthDate ?date .  \n" + 
-				"   ?person dbpedia-owl:numberOfInboundLinks ?personInbound .  \n" +
-				"   ?place dbpedia-owl:numberOfInboundLinks ?placeInbound .  \n" +
-				"}  \n" +  
-				"ORDER BY DESC(?personInbound) DESC(?placeInbound) \n ";
-		
-		List<QuerySolution> results = getResults(query, dbpedia);
+		List<QuerySolution> results = getResults(qs_rel002_birth, dbpedia);
 		
 		// we create 5 parts so that we take some very popular, some  
 		// popular, some not so popular... and not popular persons
@@ -728,26 +750,8 @@ public class BenchmarkDataGeneration {
 		
 		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
-		
-		String defaultQuery = 
-				"PREFIX dbo: <http://dbpedia.org/ontology/> \n" +
-				"PREFIX dbr: <http://dbpedia.org/resource/> \n" +
-				"PREFIX yago: <http://dbpedia.org/class/yago/> \n" +
-				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
-				"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
-				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n\n" +
-				
-				"SELECT * \n" +
-				"FROM <http://dbpedia.org> \n" +
-				"WHERE { \n" +
-					"\t?person dbo:termPeriod ?timePeriod . \n" + 
-					"\t?timePeriod dbo:office ?office . \n" + 
-					"\t?timePeriod dbo:activeYearsStartDate ?from . \n" + 
-					"\t?timePeriod dbo:activeYearsEndDate ?to . \n" +
-					"\tFILTER (regex(?office, \"^Prime Minister of.*\")) \n" +
-				"}";
-		
-		Query query = QueryFactory.create(defaultQuery, Syntax.syntaxARQ);
+
+		Query query = QueryFactory.create(qs_rel001_politicians, Syntax.syntaxARQ);
 		
 		int i = 0;
 		
