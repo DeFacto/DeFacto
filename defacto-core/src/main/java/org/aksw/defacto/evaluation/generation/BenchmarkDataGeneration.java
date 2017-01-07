@@ -82,16 +82,21 @@ public class BenchmarkDataGeneration {
 		
 		System.out.print("Start generating temporal facts ... ");
 		BenchmarkDataGeneration.dropEvalDirectory();
-		BenchmarkDataGeneration.loadSpouse();
-		BenchmarkDataGeneration.loadFoundationPlace();
-		BenchmarkDataGeneration.loadPublishDates();
-		BenchmarkDataGeneration.loadAwards();
+
+		//FreeBase
+		//BenchmarkDataGeneration.loadSpouse();
+		//BenchmarkDataGeneration.loadFoundationPlace();
+		//BenchmarkDataGeneration.loadPublishDates();
+		//BenchmarkDataGeneration.loadAwards();
+		//BenchmarkDataGeneration.loadSubsidiary();
+
+        //DBPedia
 		BenchmarkDataGeneration.loadNBAPlayers();
 		BenchmarkDataGeneration.loadPoliticians();
 		BenchmarkDataGeneration.loadBirth();
 		BenchmarkDataGeneration.loadDeath();
 		BenchmarkDataGeneration.loadStarring();
-		BenchmarkDataGeneration.loadSubsidiary(); 
+
 		System.out.println("DONE!");
 	}
 
@@ -141,7 +146,6 @@ public class BenchmarkDataGeneration {
 	
 	/**
 	 * 
-	 * @param foldername
 	 * @throws JSONException
 	 * @throws IOException
 	 */
@@ -194,7 +198,6 @@ public class BenchmarkDataGeneration {
 	
 	/**
 	 * 
-	 * @param foldername
 	 * @throws JSONException
 	 * @throws IOException
 	 */
@@ -872,8 +875,6 @@ public class BenchmarkDataGeneration {
 	/**
 	 * 
 	 * @param query
-	 * @param limit
-	 * @param offset
 	 * @return
 	 */
     protected static List<QuerySolution> getResults(String query) {
