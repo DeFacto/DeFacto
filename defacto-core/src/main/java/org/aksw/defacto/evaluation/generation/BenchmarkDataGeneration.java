@@ -43,8 +43,30 @@ import com.hp.hpl.jena.tdb.TDBFactory;
 public class BenchmarkDataGeneration {
 
 	static String year;
-	
-	public static void dropEvalDirectory() throws IOException{
+    static String dataset_store_path = "/Users/gerb/Development/workspaces/experimental/dbpedia/store";
+	static String qs_rel005_NBA =
+            "PREFIX dbo: <http://dbpedia.org/ontology/> " +
+                    "PREFIX dbr: <http://dbpedia.org/resource/> " +
+                    "PREFIX yago: <http://dbpedia.org/class/yago/> " +
+                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> " +
+
+//				"SELECT ?player ?playerLabel ?timePeriod ?team ?teamLabel ?from ?to WHERE {  " +
+                    "SELECT ?player ?timePeriod ?team ?from ?to FROM <http://dbpedia.org> WHERE {  " +
+                    "?player dbo:league	dbr:NBA  .  " +
+//					"?player rdfs:label ?playerLabel .  " +
+                    "?player dbo:termPeriod ?timePeriod .  " +
+                    "?timePeriod dbo:team ?team .  " +
+//					"?team rdfs:label ?teamLabel .  " +
+                    "?team rdf:type yago:NationalBasketballAssociationTeams . " +
+                    "?timePeriod dbo:team ?team .  " +
+                    "?timePeriod dbo:activeYearsStartYear ?from . " +
+                    "?timePeriod dbo:activeYearsEndYear ?to . " +
+                    "FILTER( xsd:gYear(?from) > \"2000\"^^xsd:gYear ) " +
+                    "} ";
+
+
+    public static void dropEvalDirectory() throws IOException{
 		
 		FileUtils.deleteDirectory(new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "eval/correct/birth/"));
 		FileUtils.deleteDirectory(new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "eval/correct/death/"));
@@ -361,38 +383,23 @@ public class BenchmarkDataGeneration {
 			}
 		}
 	}
-	
-	/**
-	 * 
-	 * @throws IOException
-	 */
-	public static void loadNBAPlayers() throws IOException {
+
+	private void loadNBAPlayersFromSPARQL(){
+
+    }
+
+    /**
+     *
+     * @param type 0 = from SPARQL query, 1 = from csv file
+     * @throws IOException
+     */
+	public static void loadNBAPlayers(Integer type) throws IOException {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
-		String queryString = 
-				"PREFIX dbo: <http://dbpedia.org/ontology/> " +
-				"PREFIX dbr: <http://dbpedia.org/resource/> " +
-				"PREFIX yago: <http://dbpedia.org/class/yago/> " +
-				"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-				"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> " +
 
-//				"SELECT ?player ?playerLabel ?timePeriod ?team ?teamLabel ?from ?to WHERE {  " +
-				"SELECT ?player ?timePeriod ?team ?from ?to FROM <http://dbpedia.org> WHERE {  " +
-					"?player dbo:league	dbr:NBA  .  " +
-//					"?player rdfs:label ?playerLabel .  " +
-					"?player dbo:termPeriod ?timePeriod .  " +
-					"?timePeriod dbo:team ?team .  " +
-//					"?team rdfs:label ?teamLabel .  " +
-				    "?team rdf:type yago:NationalBasketballAssociationTeams . " +
-					"?timePeriod dbo:team ?team .  " +
-					"?timePeriod dbo:activeYearsStartYear ?from . " + 
-					"?timePeriod dbo:activeYearsEndYear ?to . " +
-					"FILTER( xsd:gYear(?from) > \"2000\"^^xsd:gYear ) " + 
-				"} ";
-		
-		Query query = QueryFactory.create(queryString, Syntax.syntaxARQ);
+		Query query = QueryFactory.create(qs_rel005_NBA, Syntax.syntaxARQ);
 		
 		int i = 0;
 		
@@ -443,7 +450,7 @@ public class BenchmarkDataGeneration {
 	
 	public static void loadDeath() throws IOException {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String query =
@@ -511,7 +518,7 @@ public class BenchmarkDataGeneration {
 	
 	public static void loadStarring() throws IOException {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String query =
@@ -619,7 +626,7 @@ public class BenchmarkDataGeneration {
 	 */
 	public static void loadBirth() throws IOException {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String query =
@@ -690,7 +697,7 @@ public class BenchmarkDataGeneration {
 	 */
 	public static void loadPoliticians() throws IOException {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String defaultQuery = 
@@ -772,7 +779,7 @@ public class BenchmarkDataGeneration {
 	 */
 	private static String getCountryUri(String countryName) {
 		
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String queryString = 
@@ -807,7 +814,7 @@ public class BenchmarkDataGeneration {
 	 */
 	private static Map<String, Map<String, String>> getLanguageLabels(String playerUri, String teamUri) {
 
-		Dataset dataset = TDBFactory.createDataset("/Users/gerb/Development/workspaces/experimental/dbpedia/store");
+		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 		
 		String queryString = 
