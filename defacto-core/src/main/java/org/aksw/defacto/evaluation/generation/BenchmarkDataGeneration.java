@@ -3,9 +3,7 @@
  */
 package org.aksw.defacto.evaluation.generation;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -44,14 +42,15 @@ import com.hp.hpl.jena.tdb.TDBFactory;
 public class BenchmarkDataGeneration {
 
 	static String year;
-    static String dataset_store_path = "/Users/gerb/Development/workspaces/experimental/dbpedia/store";
+    static String dataset_store_path = "/home/esteves/github/FactBench/all";
 
     //CSV files
+    static String csv_split = ",";
     static String csv_rel001_leader = "";
     static String csv_rel002_birth = "";
     static String csv_rel003_actor = "";
     static String csv_rel004_death = "";
-    static String csv_rel005_NBA = "";
+    static String csv_rel005_NBA = "/home/esteves/github/FactBench/files/dbpedia/complete/out_dbpedia_rel_005.csv";
 
     //SPARQL queries
 	static String qs_rel005_NBA =
@@ -68,7 +67,7 @@ public class BenchmarkDataGeneration {
                     "?player dbo:termPeriod ?timePeriod .  " +
                     "?timePeriod dbo:team ?team .  " +
 //					"?team rdfs:label ?teamLabel .  " +
-                    "?team rdf:type yago:NationalBasketballAssociationTeams . " +
+                    "?team rdf:type yago:WikicatNationalBasketballAssociationTeams . " +
                     "?timePeriod dbo:team ?team .  " +
                     "?timePeriod dbo:activeYearsStartYear ?from . " +
                     "?timePeriod dbo:activeYearsEndYear ?to . " +
@@ -177,18 +176,18 @@ public class BenchmarkDataGeneration {
             BenchmarkDataGeneration.dropEvalDirectory();
 
             /* FreeBase */
-            BenchmarkDataGeneration.loadSpouse();
-            BenchmarkDataGeneration.loadFoundationPlace();
-            BenchmarkDataGeneration.loadPublishDates();
-            BenchmarkDataGeneration.loadAwards();
-            BenchmarkDataGeneration.loadSubsidiary();
+            //BenchmarkDataGeneration.loadSpouse();
+            //BenchmarkDataGeneration.loadFoundationPlace();
+            //BenchmarkDataGeneration.loadPublishDates();
+            //BenchmarkDataGeneration.loadAwards();
+            //BenchmarkDataGeneration.loadSubsidiary();
 
             /* DBPedia */
 
-            BenchmarkDataGeneration.loadPoliticians();
-            BenchmarkDataGeneration.loadBirth();
-            BenchmarkDataGeneration.loadStarring();
-            BenchmarkDataGeneration.loadDeath();
+            //BenchmarkDataGeneration.loadPoliticians();
+            //BenchmarkDataGeneration.loadBirth();
+            //BenchmarkDataGeneration.loadStarring();
+            //BenchmarkDataGeneration.loadDeath();
             BenchmarkDataGeneration.loadNBAPlayers(1);
 
             System.out.println("DONE!");
@@ -461,21 +460,61 @@ public class BenchmarkDataGeneration {
 	}
 
 
-	private static void loadNBAPlayersFromCSV() throws Exception{
+    private static void saveNBAPlayers(String playerUri, String teamUri, String bnodeUri, String from, String to,
+                                       Integer i) throws Exception{
+        Map<String, Map<String, String>> languageLabels = getLanguageLabels(playerUri, teamUri);
+        Map<String,String> playerLabels = languageLabels.get(playerUri);
+        Map<String,String> teamLabels = languageLabels.get(teamUri);
+
+        // set namespaces
+        Model model = ModelFactory.createDefaultModel();
+        BenchmarkPrerequisiteGeneration.setPrefixes(model);
+
+        // create all the necessary nodes
+        Resource player			= model.createResource(playerUri);
+        Property bnodeProperty	= model.createProperty(Constants.DBPEDIA_ONTOLOGY_NAMESPACE + "playedTeam");
+        Resource bnode			= model.createResource(bnodeUri);
+        Property teamProperty	= model.createProperty(Constants.DBPEDIA_ONTOLOGY_NAMESPACE + "team");
+        Resource team			= model.createResource(teamUri);
+
+        // add them to the model
+        model.add(player, bnodeProperty, bnode);
+        model.add(bnode, teamProperty, team);
+        BenchmarkPrerequisiteGeneration.addDates(model, bnode, Constants.DEFACTO_FROM, from);
+        BenchmarkPrerequisiteGeneration.addDates(model, bnode, Constants.DEFACTO_TO, to);
+        BenchmarkPrerequisiteGeneration.addNames(model, player, playerLabels);
+        BenchmarkPrerequisiteGeneration.addNames(model, team, teamLabels);
+        BenchmarkPrerequisiteGeneration.addOwlSameAs(model, player);
+        BenchmarkPrerequisiteGeneration.addOwlSameAs(model, team);
+
+        // write them to the file
+        model.write(new FileWriter(new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory")
+                + "eval/correct/nbateam/nbateam_" + (String.format("%05d", i)) + ".ttl")), "TURTLE");
+    }
+    private static void loadNBAPlayersFromCSV() throws Exception{
+
+        BufferedReader br = null;
+        String line = "";  // "player","team","timePeriod","from","to","dbin","dbout"
+        br = new BufferedReader(new FileReader(csv_rel005_NBA));
+        int i = 0;
+        while ((line = br.readLine()) != null) {
+
+            String[] values = line.split(csv_split);
+
+            saveNBAPlayers(values[0], values[1], values[2], values[3], values[4], i);
+            i++;
+
+        }
 
     }
-
-	private static void loadNBAPlayersFromSPARQL() throws IOException{
+	private static void loadNBAPlayersFromSPARQL() throws Exception{
 
         Dataset dataset = TDBFactory.createDataset(dataset_store_path);
         Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
-
         Query query = QueryFactory.create(qs_rel005_NBA, Syntax.syntaxARQ);
-
         int i = 0;
 
         ResultSet result = QueryExecutionFactory.create(query, dbpedia).execSelect();
-
         while ( result.hasNext() ) {
 
             QuerySolution solution = result.next();
@@ -488,34 +527,8 @@ public class BenchmarkDataGeneration {
             String from			= solution.getLiteral("from").getLexicalForm();
             String to			= solution.getLiteral("to").getLexicalForm();
 
-            Map<String, Map<String, String>> languageLabels = getLanguageLabels(playerUri, teamUri);
-            Map<String,String> playerLabels = languageLabels.get(playerUri);
-            Map<String,String> teamLabels = languageLabels.get(teamUri);
-
-            // set namespaces
-            Model model = ModelFactory.createDefaultModel();
-            BenchmarkPrerequisiteGeneration.setPrefixes(model);
-
-            // create all the necessary nodes
-            Resource player			= model.createResource(playerUri);
-            Property bnodeProperty	= model.createProperty(Constants.DBPEDIA_ONTOLOGY_NAMESPACE + "playedTeam");
-            Resource bnode			= model.createResource(bnodeUri);
-            Property teamProperty	= model.createProperty(Constants.DBPEDIA_ONTOLOGY_NAMESPACE + "team");
-            Resource team			= model.createResource(teamUri);
-
-            // add them to the model
-            model.add(player, bnodeProperty, bnode);
-            model.add(bnode, teamProperty, team);
-            BenchmarkPrerequisiteGeneration.addDates(model, bnode, Constants.DEFACTO_FROM, from);
-            BenchmarkPrerequisiteGeneration.addDates(model, bnode, Constants.DEFACTO_TO, to);
-            BenchmarkPrerequisiteGeneration.addNames(model, player, playerLabels);
-            BenchmarkPrerequisiteGeneration.addNames(model, team, teamLabels);
-            BenchmarkPrerequisiteGeneration.addOwlSameAs(model, player);
-            BenchmarkPrerequisiteGeneration.addOwlSameAs(model, team);
-
-            // write them to the file
-            model.write(new FileWriter(new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory")
-                    + "eval/correct/nbateam/nbateam_" + (String.format("%05d", i++)) + ".ttl")), "TURTLE");
+           saveNBAPlayers(playerUri, teamUri, bnodeUri, from, to, i);
+           i++;
         }
 
     }
