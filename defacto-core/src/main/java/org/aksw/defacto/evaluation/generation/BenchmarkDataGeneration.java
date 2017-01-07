@@ -45,6 +45,15 @@ public class BenchmarkDataGeneration {
 
 	static String year;
     static String dataset_store_path = "/Users/gerb/Development/workspaces/experimental/dbpedia/store";
+
+    //CSV files
+    static String csv_rel001_leader = "";
+    static String csv_rel002_birth = "";
+    static String csv_rel003_actor = "";
+    static String csv_rel004_death = "";
+    static String csv_rel005_NBA = "";
+
+    //SPARQL queries
 	static String qs_rel005_NBA =
             "PREFIX dbo: <http://dbpedia.org/ontology/> " +
                     "PREFIX dbr: <http://dbpedia.org/resource/> " +
@@ -99,28 +108,34 @@ public class BenchmarkDataGeneration {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws JSONException, IOException {
-		
-		Defacto.init();
-		BenchmarkPrerequisiteGeneration pre = new BenchmarkPrerequisiteGeneration();
-		
-		System.out.print("Start generating temporal facts ... ");
-		BenchmarkDataGeneration.dropEvalDirectory();
 
-		//FreeBase
-		//BenchmarkDataGeneration.loadSpouse();
-		//BenchmarkDataGeneration.loadFoundationPlace();
-		//BenchmarkDataGeneration.loadPublishDates();
-		//BenchmarkDataGeneration.loadAwards();
-		//BenchmarkDataGeneration.loadSubsidiary();
 
-        //DBPedia
-		BenchmarkDataGeneration.loadNBAPlayers(1);
-		BenchmarkDataGeneration.loadPoliticians();
-		BenchmarkDataGeneration.loadBirth();
-		BenchmarkDataGeneration.loadDeath();
-		BenchmarkDataGeneration.loadStarring();
+	    try{
+            Defacto.init();
+            BenchmarkPrerequisiteGeneration pre = new BenchmarkPrerequisiteGeneration();
 
-		System.out.println("DONE!");
+            System.out.print("Start generating temporal facts ... ");
+            BenchmarkDataGeneration.dropEvalDirectory();
+
+            //FreeBase
+            //BenchmarkDataGeneration.loadSpouse();
+            //BenchmarkDataGeneration.loadFoundationPlace();
+            //BenchmarkDataGeneration.loadPublishDates();
+            //BenchmarkDataGeneration.loadAwards();
+            //BenchmarkDataGeneration.loadSubsidiary();
+
+            //DBPedia
+            BenchmarkDataGeneration.loadNBAPlayers(1);
+            BenchmarkDataGeneration.loadPoliticians();
+            BenchmarkDataGeneration.loadBirth();
+            BenchmarkDataGeneration.loadDeath();
+            BenchmarkDataGeneration.loadStarring();
+
+            System.out.println("DONE!");
+        }catch (Exception e){
+
+        }
+
 	}
 
 	public static void loadSubsidiary() throws JSONException, IOException {
@@ -394,7 +409,6 @@ public class BenchmarkDataGeneration {
 
         Dataset dataset = TDBFactory.createDataset(dataset_store_path);
         Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
-
 
         Query query = QueryFactory.create(qs_rel005_NBA, Syntax.syntaxARQ);
 
