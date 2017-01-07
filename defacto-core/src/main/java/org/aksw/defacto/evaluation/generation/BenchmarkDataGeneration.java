@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.hp.hpl.jena.sparql.engine.ExecutionContext;
 import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.util.ListUtil;
@@ -113,7 +114,7 @@ public class BenchmarkDataGeneration {
 		//BenchmarkDataGeneration.loadSubsidiary();
 
         //DBPedia
-		BenchmarkDataGeneration.loadNBAPlayers();
+		BenchmarkDataGeneration.loadNBAPlayers(1);
 		BenchmarkDataGeneration.loadPoliticians();
 		BenchmarkDataGeneration.loadBirth();
 		BenchmarkDataGeneration.loadDeath();
@@ -384,54 +385,50 @@ public class BenchmarkDataGeneration {
 		}
 	}
 
-	private void loadNBAPlayersFromSPARQL(){
+
+	private static void loadNBAPlayersFromCSV() throws Exception{
 
     }
 
-    /**
-     *
-     * @param type 0 = from SPARQL query, 1 = from csv file
-     * @throws IOException
-     */
-	public static void loadNBAPlayers(Integer type) throws IOException {
-		
-		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
-		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
-		
+	private static void loadNBAPlayersFromSPARQL() throws IOException{
 
-		Query query = QueryFactory.create(qs_rel005_NBA, Syntax.syntaxARQ);
-		
-		int i = 0;
-		
-		ResultSet result = QueryExecutionFactory.create(query, dbpedia).execSelect();
+        Dataset dataset = TDBFactory.createDataset(dataset_store_path);
+        Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 
-		while ( result.hasNext() ) {
-			
-			QuerySolution solution = result.next();
-			
-			String playerUri	= solution.getResource("player").getURI();
-			String teamUri		= solution.getResource("team").getURI();
-			String bnodeUri		= solution.getResource("timePeriod").getURI();
+
+        Query query = QueryFactory.create(qs_rel005_NBA, Syntax.syntaxARQ);
+
+        int i = 0;
+
+        ResultSet result = QueryExecutionFactory.create(query, dbpedia).execSelect();
+
+        while ( result.hasNext() ) {
+
+            QuerySolution solution = result.next();
+
+            String playerUri	= solution.getResource("player").getURI();
+            String teamUri		= solution.getResource("team").getURI();
+            String bnodeUri		= solution.getResource("timePeriod").getURI();
 //			String playerName	= solution.getLiteral("playerLabel").getLexicalForm();
 //			String teamName		= solution.getLiteral("teamLabel").getLexicalForm();
-			String from			= solution.getLiteral("from").getLexicalForm();
-			String to			= solution.getLiteral("to").getLexicalForm();
-			
-			Map<String, Map<String, String>> languageLabels = getLanguageLabels(playerUri, teamUri);
-			Map<String,String> playerLabels = languageLabels.get(playerUri);
-			Map<String,String> teamLabels = languageLabels.get(teamUri);
-			
-			// set namespaces
-			Model model = ModelFactory.createDefaultModel();
-			BenchmarkPrerequisiteGeneration.setPrefixes(model);
-			
-			// create all the necessary nodes
-			Resource player			= model.createResource(playerUri);
+            String from			= solution.getLiteral("from").getLexicalForm();
+            String to			= solution.getLiteral("to").getLexicalForm();
+
+            Map<String, Map<String, String>> languageLabels = getLanguageLabels(playerUri, teamUri);
+            Map<String,String> playerLabels = languageLabels.get(playerUri);
+            Map<String,String> teamLabels = languageLabels.get(teamUri);
+
+            // set namespaces
+            Model model = ModelFactory.createDefaultModel();
+            BenchmarkPrerequisiteGeneration.setPrefixes(model);
+
+            // create all the necessary nodes
+            Resource player			= model.createResource(playerUri);
             Property bnodeProperty	= model.createProperty(Constants.DBPEDIA_ONTOLOGY_NAMESPACE + "playedTeam");
             Resource bnode			= model.createResource(bnodeUri);
             Property teamProperty	= model.createProperty(Constants.DBPEDIA_ONTOLOGY_NAMESPACE + "team");
             Resource team			= model.createResource(teamUri);
-			
+
             // add them to the model
             model.add(player, bnodeProperty, bnode);
             model.add(bnode, teamProperty, team);
@@ -441,11 +438,29 @@ public class BenchmarkDataGeneration {
             BenchmarkPrerequisiteGeneration.addNames(model, team, teamLabels);
             BenchmarkPrerequisiteGeneration.addOwlSameAs(model, player);
             BenchmarkPrerequisiteGeneration.addOwlSameAs(model, team);
-            
-			// write them to the file
+
+            // write them to the file
             model.write(new FileWriter(new File(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory")
-            		+ "eval/correct/nbateam/nbateam_" + (String.format("%05d", i++)) + ".ttl")), "TURTLE");
-		}
+                    + "eval/correct/nbateam/nbateam_" + (String.format("%05d", i++)) + ".ttl")), "TURTLE");
+        }
+
+    }
+
+    /**
+     *
+     * @param type 0 = from SPARQL query, 1 = from csv file
+     * @throws IOException
+     */
+	public static void loadNBAPlayers(Integer type) throws Exception {
+
+	    if (type.equals(0)){
+            loadNBAPlayersFromSPARQL();
+        }else if (type.equals(1)){
+            loadNBAPlayersFromCSV();
+        }else{
+            throw new Exception("parameter value must be 1 or 2");
+        }
+
 	}
 	
 	public static void loadDeath() throws IOException {
