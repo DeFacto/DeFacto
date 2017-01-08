@@ -69,28 +69,6 @@
             <url>http://asmx-sameas4j.googlecode.com/svn/repo</url>
         </repository>
         <repository>
-            <id>info-bliki-repository</id>
-            <url>http://gwtwiki.googlecode.com/svn/maven-repository/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>nxparser-repo</id>
-            <url>http://nxparser.googlecode.com/svn/repository</url>
-        </repository>
-        <repository>
-            <id>nxparser-snapshots</id>
-            <url>http://nxparser.googlecode.com/svn/snapshots</url>
-        </repository>
-        <repository>
-            <id>vaadin-addons</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
-        </repository>
-        <repository>
             <id>wordnet</id>
             <url>https://dev-iesl.cs.umass.edu/nexus/content/repositories/public/</url>
         </repository>

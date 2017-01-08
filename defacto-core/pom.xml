@@ -47,7 +47,7 @@
         </dependency>
         <dependency>
             <groupId>org.semanticweb.yars</groupId>
-            <artifactId>nxparser</artifactId>
+            <artifactId>nx-parser</artifactId>
             <version>1.2.3</version>
         </dependency>
         <dependency>
@@ -146,11 +146,17 @@
             <groupId>com.github.gerbsen</groupId>
             <artifactId>utk</artifactId>
             <version>1.0.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.semanticweb.yars</groupId>
+                    <artifactId>nxparser</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>info.bliki.wiki</groupId>
             <artifactId>bliki-core</artifactId>
-            <version>3.0.17</version>
+            <version>3.0.19</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-lang</artifactId>
@@ -185,7 +191,8 @@
         <dependency>
             <groupId>org.dllearner</groupId>
             <artifactId>components-core</artifactId>
-            <version>1.0-20131210.161252-449</version>
+            <version>0.9</version>
+            <!-- 1.0-20131210.161252-449-->
             <exclusions>
                 <exclusion>
                     <artifactId>commons-compress</artifactId>
