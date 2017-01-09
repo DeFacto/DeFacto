@@ -35,9 +35,22 @@ public class DefactoDemo {
      */
     public static void main(String[] args) throws InvalidFileFormatException, IOException {
 
-        org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");
-        Defacto.checkFacts(getSampleData(), TIME_DISTRIBUTION_ONLY.NO);
+        org.apache.log4j.PropertyConfigurator.configure("defacto-core/log/log4j.properties");
+
+        List<DefactoModel> models = new ArrayList<>();
+        models.add(getEinsteinModel());
+
+        Defacto.checkFacts(models, TIME_DISTRIBUTION_ONLY.NO);
+
+
 //        Defacto.checkFacts(new DefactoConfig(new Ini(new File("defacto.ini"))), getTrainingData());
+    }
+
+    public static DefactoModel getEinsteinModel() {
+        final Model model = ModelFactory.createDefaultModel();
+        model.read(DefactoModel.class.getClassLoader().getResourceAsStream("Einstein.ttl"), null,
+                "TURTLE");
+        return new DefactoModel(model, "Einstein Model", true, Arrays.asList("en", "fr", "de"));
     }
     
     public static List<DefactoModel> getTrainingData() {

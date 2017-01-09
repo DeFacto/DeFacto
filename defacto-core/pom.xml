@@ -188,11 +188,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.dllearner</groupId>
             <artifactId>components-core</artifactId>
-            <version>0.9</version>
-            <!-- 1.0-20131210.161252-449-->
+            <version>1.0-20131210.161252-449</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-compress</artifactId>
@@ -211,7 +210,7 @@
                     <artifactId>jena-sparql-api-utils</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>edu.uci.ics</groupId>
             <artifactId>crawler4j</artifactId>
