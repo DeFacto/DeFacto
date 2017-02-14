@@ -108,17 +108,18 @@ public class ProofExtractor {
                         word.isFromWikipedia() == true ? 1: 0);
             }
 
-            List<ComplexProof> proofs = evidence.getComplexProofs(w);
+
+            //List<ComplexProof> proofs = evidence.getComplexProofs(w);
 
             /************************
              * EXTRACTING: tb_proof
              * **********************/
-            for (ComplexProof pro: proofs){
-                SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel,
-                        pro.getHasPatternInBetween() == true ? 1:0, pro.getTinyContext(),
-                        pro.getSmallContext(), pro.getMediumContext(), pro.getLargeContext(),
-                        pro.getProofPhrase(), pro.getNormalizedProofPhrase(), pro.getLanguage());
-            }
+            //for (ComplexProof pro: proofs){
+            //    SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel,
+            //            pro.getHasPatternInBetween() == true ? 1:0, pro.getTinyContext(),
+            //            pro.getSmallContext(), pro.getMediumContext(), pro.getLargeContext(),
+            //            pro.getProofPhrase(), pro.getNormalizedProofPhrase(), pro.getLanguage());
+           // }
 
         }catch (Exception e){
             throw e;

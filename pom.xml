@@ -9,7 +9,7 @@
     <name>DeFacto Parent POM</name>
     <modules>
         <module>defacto-core</module>
-        <module>defacto-restful</module>
+        <!--<module>defacto-restful</module>-->
     </modules>
     <build>
         <plugins>
@@ -84,6 +84,14 @@
         <repository>
             <id>gerb_snapshots</id>
             <url>https://raw.github.com/gerbsen/maven-repo/master/snapshots/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>repo</id>
+            <url>file://${project.basedir}/repo</url>
         </repository>
     </repositories>
     <dependencies>

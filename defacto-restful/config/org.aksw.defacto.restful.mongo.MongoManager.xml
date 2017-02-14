@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<config>
-    <db>
-        <host>localhost</host>
-        <port>27017</port>
-        <name>fusion</name>
-    </db>
-</config>
- 
