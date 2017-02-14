@@ -1,7 +1,7 @@
 DeFacto (Deep Fact Validation)
 ==============================
-[![Build Status](https://travis-ci.org/AKSW/DeFacto.svg?branch=fusion)](https://travis-ci.org/AKSW/DeFacto)
-[![Join the chat at https://gitter.im/AKSW/DeFacto](https://badges.gitter.im/AKSW/DeFacto.svg)](https://gitter.im/AKSW/DeFacto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/SmartDataAnalytics/DeFacto.svg?branch=benchmarking)](https://travis-ci.org/SmartDataAnalytics/DeFacto)
+[![Join the chat at https://gitter.im/SmartDataAnalytics/DeFacto](https://badges.gitter.im/AKSW/DeFacto.svg)](https://gitter.im/AKSW/DeFacto?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 DeFacto is an algorithm for validating statements by finding confirming sources for it on the web. It takes a statement (such as “<i>Jamaica Inn was directed by Alfred Hitchcock</i>”) as input and then tries to find evidence for the truth of that statement by searching for information in the web ([more information](http://aksw.org/projects/DeFacto)). Check out our [demo](http://defacto.aksw.org/).
 
@@ -19,7 +19,7 @@ DeFacto is an algorithm for validating statements by finding confirming sources 
 ## Installation
 If you want to try Defacto all you need to do is:
 
-- 1. check out DeFacto (https://github.com/AKSW/DeFacto.git)
+- 1. check out DeFacto (https://github.com/SmartDataAnalytics/DeFacto.git)
 - 2. copy defacto.ini.default to defacto.ini
 - 3. get your own [bing search api key](http://www.bing.com/toolbox/bingsearchapi) 
 - 4. write this key to the defacto.ini (adjust your settings based on changes informed below)
