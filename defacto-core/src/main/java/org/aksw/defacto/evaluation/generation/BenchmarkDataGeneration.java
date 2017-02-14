@@ -34,6 +34,7 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
 import com.hp.hpl.jena.tdb.TDBFactory;
+import org.slf4j.LoggerFactory;
 
 /**
  * Daniel Gerber <dgerber@informatik.uni-leipzig.de>

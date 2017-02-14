@@ -22,16 +22,15 @@ public class SearchResultCallable implements Callable<SearchResult> {
     private Pattern pattern;
     private SearchEngine engine;
     
-    public SearchResultCallable(MetaQuery query, Pattern pattern) {
+        public SearchResultCallable(MetaQuery query, Pattern pattern, SearchEngine engine) {
 
         this.query      = query;
         this.pattern    = pattern;
-        this.engine     = new AzureBingSearchEngine();
+        this.engine     = engine;
     }
 
     @Override
     public SearchResult call() throws Exception {
-
         return this.engine.getSearchResults(this.query, this.pattern);
     }
 

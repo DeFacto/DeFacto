@@ -46,13 +46,13 @@ public class TopicTermExtractor {
     	
     	Defacto.init();
     	cache = new TopicTermSolr4Cache();
-        for ( Word w : getPotentialTopicTerms("Amazon", "Jeff Bezos"))  System.out.println(w + " " + w.getFrequency());;
+        for ( Word w : getPotentialTopicTerms("en", "Amazon", "Jeff Bezos"))  logger.info(w + " " + w.getFrequency());;
     }
     
     /**
      * 
-     * @param subjectLabel
-     * @param objectLabel
+     * @param language
+     * @param labels
      * @return
      */
     private static List<Word> getPotentialTopicTerms(String language, String... labels) {
@@ -101,7 +101,7 @@ public class TopicTermExtractor {
         if ( cache.contains(label) ) return cache.getEntry(label).relatedTopics;
 		
     	List<Word> potentialTopicTerms = new ArrayList<Word>();
-        potentialTopicTerms.addAll(queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipedia(label, language)));
+        potentialTopicTerms.addAll(queryWikipediaPageAndGetTopicTerms(WikipediaSearcher.queryWikipediaViaAPI(label, language)));
         
         // the term that appears more than once is very likely to be a potential topic
         // so we should remove the other terms which are not repeated 
@@ -159,9 +159,6 @@ public class TopicTermExtractor {
      * Determines whether potentialTopicTerm is a TopicTerm according to the results in list searchResults, which are
      * fetched from a search engine
      * The calculation is mainly based on the paper titled "Trustworthiness Analysis of Web Search Results".
-     * @param searchResults A list of search results fetched from the search engine
-     * @param queryTerms    An object containing the terms used for searching using the search engine
-     * @param potentialTopicTerm    A term that can probably be a TopicTerm (mostly fetched from Wikipedia)
      * @return  Whether it is a topic term or not
      */
     public static boolean isTopicTerm(Set<WebSite> webSites, String subjectLabel, String objectLabel, Word potentialTopicTerm){

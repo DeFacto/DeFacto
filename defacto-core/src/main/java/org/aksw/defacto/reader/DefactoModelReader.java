@@ -80,13 +80,15 @@ public class DefactoModelReader {
 //        	listSubjects.next();
 //			subjects++;
 //        }
-        
-        String absolutePath = new File(pathToModel).getAbsolutePath();
+
+		File f =  new File(pathToModel);
+        String absolutePath = f.getAbsolutePath();
         absolutePath = absolutePath.replace("/Users/gerb/Development/workspaces/experimental/defacto/mltemp/FactBench/v1/", "");
         absolutePath = absolutePath.replace("/home/dgerber/data/defacto/factbench_v1/data/v1/", "");
         
         DefactoModel defactoModel = new DefactoModel(model, absolutePath, isCorrect, languages);
-        
+		defactoModel.setFile(f);
+
 //        if ( subjects == 4) {
 //        	
 //        	System.out.println(defactoModel);

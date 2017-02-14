@@ -4,6 +4,7 @@
 .classpath
 .directory
 
+cache/
 *.log
 *.iml
 *.settings
@@ -14,4 +15,10 @@ test.h2.db
 /target
 /bin
 
-cache/sparql
+/data/crawl/*.*
+
+/log/*.*
+response.txt
+/proof
+
+/rubbish.txt

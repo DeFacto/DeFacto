@@ -30,7 +30,7 @@ import com.hp.hpl.jena.vocabulary.RDFS;
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
  *
  */
-public class DefactoModel {
+public class DefactoModel implements Cloneable {
 
     public Model model;
     public String name;
@@ -41,7 +41,9 @@ public class DefactoModel {
     public DefactoResource object;
     public DefactoTimePeriod timePeriod = new DefactoTimePeriod("", "");
     public List<String> languages = new ArrayList<String>();
-    
+	public File file;
+    //public Constants.EvidenceType evidenceType;
+
     /**
      * Creates a new Defacto Model. This is a wrapper around a jena model. But with
      * additional information for example if we know if the fact is correct or the name
@@ -49,7 +51,7 @@ public class DefactoModel {
      * 
      * @param model - the jena model with 3 statements (1 link and 2 rdfs:label triples)
      * @param name - the name of the file we got the model from
-     * @param correct is the fact contained in this model correct?
+     * @param isCorrect is the fact contained in this model correct?
      */
     public DefactoModel(Model model, String name, boolean isCorrect, List<String> languages) {
         
@@ -60,7 +62,11 @@ public class DefactoModel {
         
         init(model);
     }
-    
+
+	public File getFile(){
+		return this.file;
+	}
+
     /**
      * 
      * @param language
@@ -230,6 +236,11 @@ public class DefactoModel {
 				return false;
 		} else if (!timePeriod.equals(other.timePeriod))
 			return false;
+        //if (evidenceType == null) {
+        //    if (other.evidenceType != null)
+        //        return false;
+        //} else if (!evidenceType.equals(other.evidenceType))
+        //    return false;
 		return true;
 	}
 
@@ -273,7 +284,10 @@ public class DefactoModel {
         this.correct = correct;
     }
 
-    
+	public void setFile(File f){
+		this.file=f;
+	}
+
     /**
      * @return the name
      */
@@ -411,6 +425,10 @@ public class DefactoModel {
 		this.subject = subject;
 	}
 
+    public void setModel(Model m){
+        this.model = m;
+    }
+
 	public void setProperty(Property property) {
 		
 		this.predicate = property;
@@ -431,4 +449,14 @@ public class DefactoModel {
 		
 		return null;
 	}
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+	//public Constants.EvidenceType getEvidenceType(){
+	//	return this.evidenceType;
+	//}
+
 }

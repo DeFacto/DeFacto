@@ -10,11 +10,29 @@ NUMBER_OF_BOA_PATTERNS = 10
 PATTERN_SCORE_THRESHOLD = 0.5
 languages = de,en,fr
 
+[mysql]
+; database host name
+DB_HOST = localhost
+; database port number
+DB_PORT = 3306
+; database's name
+DB_NAME = dbpedia_metrics
+; database user's name
+DB_USER = user
+; database user's password
+DB_PWD = pass
+
 [local_corpora]
 ; the set of indexed (input) fields
 FIELDS_INPUT = titleText,text
 ; the set of indexed (output) fields
 FIELDS_OUTPUT = id,titleText
+
+wiki_service_en_url = http://139.18.2.164:8080/solr/wiki_en/
+wiki_service_fr_url = http://139.18.2.164:8080/solr/wiki_fr/
+wiki_service_de_url = http://139.18.2.164:8080/solr/wiki_de/
+wiki_fields_in = titleText,text
+wiki_fields_out = id,titleText
 
 [crawl]
 ; the bing api key get your own at: 
@@ -22,6 +40,8 @@ FIELDS_OUTPUT = id,titleText
 BING_API_KEY = grgZ1JV8G6y/zbIVA9DChAuOuUIjdcsHoxhTkz2MXKQ
 ; number of search results return be the search engine
 NUMBER_OF_SEARCH_RESULTS = 20
+; number of search results returned by the search engine
+NUMBER_OF_SEARCH_RESULTS_LC = 20
 ; thredas
 NUMBER_OF_SEARCH_RESULTS_THREADS = 40
 ; crawl thread gets terminated after this time

@@ -3,8 +3,8 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>defacto</artifactId>
-        <groupId>org.aksw</groupId>
+        <artifactId>defacto-parent</artifactId>
+        <groupId>org.aksw.defacto</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>defacto-core</artifactId>
@@ -187,69 +187,15 @@
             <systemPath>${basedir}/lib/sparql-metrics-0.0.1-SNAPSHOT.jar</systemPath>
             <scope>system</scope>
         </dependency>
-
-        <!--<dependency>
-            <groupId>org.aksw</groupId>
-            <artifactId>sparql-metrics</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.aksw.jena-sparql-api</groupId>
-                    <artifactId>jena-sparql-api-cache-h2</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.aksw.jena-sparql-api</groupId>
-                    <artifactId>jena-sparql-api-resources</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>-->
-        <!--<dependency>
-            <groupId>org.aksw.jena-sparql-api</groupId>
-            <artifactId>jena-sparql-api-core</artifactId>
-            <version>2.13.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aksw.jena-sparql-api</groupId>
-            <artifactId>jena-sparql-api-utils</artifactId>
-            <version>2.10.0-20</version>
-        </dependency>-->
         <dependency>
             <groupId>org.aksw.jena-sparql-api</groupId>
             <artifactId>jena-sparql-api-core</artifactId>
             <version>2.10.0-18-SNAPSHOT</version>
         </dependency>
-        <!--<dependency>
-            <groupId>org.dllearner</groupId>
-            <artifactId>components-core</artifactId>
-            <version>1.0-20131210.161252-449</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-compress</artifactId>
-                    <groupId>org.apache.commons</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>nz.ac.waikato.cms.weka</groupId>
-                    <artifactId>weka-dev</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.aksw.jena-sparql-api</groupId>
-                    <artifactId>jena-sparql-api-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.aksw.jena-sparql-api</groupId>
-                    <artifactId>jena-sparql-api-utils</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>-->
         <dependency>
             <groupId>edu.uci.ics</groupId>
             <artifactId>crawler4j</artifactId>
             <version>4.1</version>
         </dependency>
-        <!--<dependency>
-            <groupId>com.github.AKSW.DL-Learner</groupId>
-            <artifactId>components-core</artifactId>
-            <version>1.2</version>
-        </dependency>-->
     </dependencies>
 </project>

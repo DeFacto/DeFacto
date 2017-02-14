@@ -38,6 +38,8 @@ public class ComplexProof {
 	private String tinyContext;
 	private String taggedTinyContext;
 
+	private boolean hasPatternInBetween;
+
     /**
      * boa pattern found
      * 
@@ -57,6 +59,7 @@ public class ComplexProof {
         this.normalizedProofPhrase    = normalizedOccurrence;
         this.website                  = site;
         this.pattern                  = boaPattern;
+		this.hasPatternInBetween      = false;
     }
 
     /**
@@ -68,6 +71,8 @@ public class ComplexProof {
      * @param normalizedOccurrence
      * @param site
      */
+
+	/*
     public ComplexProof(DefactoModel model, String firstLabel, String secondLabel, String occurrence, String normalizedOccurrence, WebSite site) {
         
         this.model                    = model;
@@ -76,7 +81,17 @@ public class ComplexProof {
         this.proofPhrase              = occurrence;
         this.normalizedProofPhrase    = normalizedOccurrence;
         this.website                  = site;
+		this.hasPatternInBetween      = false;
     }
+	*/
+
+	public void setHasPatternInBetween(boolean value){
+		this.hasPatternInBetween = value;
+	}
+
+	public boolean getHasPatternInBetween(){
+		return this.hasPatternInBetween;
+	}
 
     public String getLanguage(){
     	

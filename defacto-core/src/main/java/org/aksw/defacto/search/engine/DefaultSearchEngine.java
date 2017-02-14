@@ -45,7 +45,11 @@ public abstract class DefaultSearchEngine implements SearchEngine {
     	Defacto.init();
     	
     	Cache<SearchResult> searchResultsCache = new Solr4SearchResultCache();
-    	SearchResult result = searchResultsCache.getEntry(new MetaQuery("Philipp Lenard|-|?D? won the ?R?|-|Nobel Prize in Physics|-|en").toString());
+
+        Pattern p = new Pattern();
+        p.naturalLanguageRepresentation = "?D? won the ?R?";
+
+    	SearchResult result = searchResultsCache.getEntry(new MetaQuery("Philipp Lenard|-|?D? won the ?R?|-|Nobel Prize in Physics|-|en", p).toString());
     	
     	for ( WebSite site : result.getWebSites()) {
     		System.out.println(site.getText());

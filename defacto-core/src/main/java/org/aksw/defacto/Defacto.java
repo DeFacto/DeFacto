@@ -6,14 +6,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.config.DefactoConfig;
@@ -25,18 +21,16 @@ import org.aksw.defacto.ml.feature.fact.AbstractFactFeatures;
 import org.aksw.defacto.ml.feature.fact.FactFeatureExtraction;
 import org.aksw.defacto.ml.feature.fact.FactScorer;
 import org.aksw.defacto.model.DefactoModel;
-import org.aksw.defacto.search.concurrent.NlpModelManager;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
-import org.aksw.defacto.search.fact.SubjectObjectFactSearcher;
+import org.aksw.defacto.search.engine.SearchEngine;
+import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
+import org.aksw.defacto.search.engine.localcorpora.wikipedia.WikiSearchEngine;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.query.QueryGenerator;
 import org.aksw.defacto.util.BufferedFileWriter;
 import org.aksw.defacto.util.BufferedFileWriter.WRITER_WRITE_MODE;
 import org.aksw.defacto.util.Encoder.Encoding;
 import org.aksw.defacto.util.TimeUtil;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.log4j.Level;
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 import org.slf4j.Logger;
@@ -60,7 +54,10 @@ public class Defacto {
     public static TIME_DISTRIBUTION_ONLY onlyTimes;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(Defacto.class);
-    
+    public static org.apache.log4j.Logger LOGDEV    = org.apache.log4j.Logger.getLogger("developer");
+    private static final boolean searchCounterargument = false;
+    private static boolean foundCounterargument = true;
+
     /**
      * @param model the model to check. this model may only contain the link between two resources
      * which needs to be checked and the labels (Constants.RESOURCE_LABEL) for the resources which means it
@@ -73,61 +70,161 @@ public class Defacto {
     	init();
     	LOGGER.info("Checking fact: " + model);
     	Defacto.onlyTimes = onlyTimes;
-    	
-    	// hack to get surface forms before timing
-    	// not needed anymore, since surfaceforms are inside model
-    	// SubjectObjectFactSearcher.getInstance();
-    	// not needed anymore since we do not use NER tagging
-    	// NlpModelManager.getInstance();
-        
-        // 1. generate the search engine queries
+
+        /*********************************************************************************************************************
+         [1] generate the search engine queries
+         *********************************************************************************************************************/
+
+        LOGGER.debug("[1] -> starting generating the search engines queries");
+
         long start = System.currentTimeMillis();
         QueryGenerator queryGenerator = new QueryGenerator(model);
-        Map<Pattern,MetaQuery> queries = new HashMap<Pattern,MetaQuery>();
-        for ( String language : model.languages ) 
-        	queries.putAll(queryGenerator.getSearchEngineQueries(language));
-          
-        if ( queries.size() <= 0 ) return new Evidence(model); 
-        LOGGER.info("Preparing queries took " + TimeUtil.formatTime(System.currentTimeMillis() - start));
-        
-        // 2. download the search results in parallel
+        Map<Pattern,MetaQuery> queries = new HashMap<>();
+        for ( String language : model.languages ) {
+            Map<Pattern,MetaQuery> q = queryGenerator.getSearchEngineQueries(language);
+            queries.putAll(q);
+        }
+        if ( queries.size() <= 0 ) {
+            LOGDEV.debug("none query has been generated for the model!");
+            return new Evidence(model);
+        }
+        LOGDEV.debug("-> Preparing queries took " + TimeUtil.formatTime(System.currentTimeMillis() - start));
+
+        Map<Pattern, MetaQuery> queries2 = new HashMap<>();
+        if (searchCounterargument) {
+            // counterargument
+            for (String language : model.languages) {
+                if (language.equals("en")) { //currently just english
+                    Map<Pattern, MetaQuery> q = queryGenerator.getCounterExampleSearchEngineQueries(language);
+                    queries2.putAll(q);
+                }
+            }
+        }
+
+        /*********************************************************************************************************************
+         [2] download the search results in parallel
+        *********************************************************************************************************************/
+
+        LOGDEV.debug("[2] -> downloading the search results in parallel");
+
+        // crawl evidence using a defined search engine designed for a corpora (internet or local corpora)
+        SearchEngine engine = new AzureBingSearchEngine();
+        //SearchEngine engine2 = new WikiSearchEngine(); //local corpora tests
+
+        // download the search results in parallel
         long startCrawl = System.currentTimeMillis();
         EvidenceCrawler crawler = new EvidenceCrawler(model, queries);
-        Evidence evidence = crawler.crawlEvidence();
-        LOGGER.info("Crawling evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
-        
+        Evidence evidence = crawler.crawlEvidence(engine);
+        LOGDEV.debug(" -> crawling evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
+
+        Evidence evidence2;
+        if (searchCounterargument) {
+            // counterargument
+            startCrawl = System.currentTimeMillis();
+            EvidenceCrawler crawler2 = new EvidenceCrawler(model, queries2);
+            evidence2 = crawler2.crawlEvidence(engine);
+            LOGGER.info("Crawling (counter argument) evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
+
+            //short cut to avoid unnecessary computation
+            foundCounterargument = (evidence2.getAllWebSites().size() > 0);
+        }
+
+        //nothing has been found to corroborate with the negated claim
+        if (!foundCounterargument){
+            evidence.setDeFactoCounterargumentScore(0.0d);
+        }
         // short cut to avoid unnecessary computation
         if ( onlyTimes.equals(TIME_DISTRIBUTION_ONLY.YES) ) return evidence;
-        
-        // 3. confirm the facts
+
+        /*********************************************************************************************************************
+         [1] extracting structured linked data content
+         *********************************************************************************************************************/
+
+
+        /*********************************************************************************************************************
+         [3] confirm the facts
+         *********************************************************************************************************************/
+
+        LOGDEV.debug("[3] -> confirming the facts");
+
         long startFactConfirmation = System.currentTimeMillis();
         FactFeatureExtraction factFeatureExtraction = new FactFeatureExtraction();
         factFeatureExtraction.extractFeatureForFact(evidence);
-        LOGGER.info("Fact feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFactConfirmation));
-        
-        // 
-    	 // 4. score the facts
+        LOGGER.info("Fact Feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFactConfirmation));
+
+
+        if (searchCounterargument && foundCounterargument) {
+            startFactConfirmation = System.currentTimeMillis();
+            FactFeatureExtraction factFeatureExtraction2 = new FactFeatureExtraction();
+            factFeatureExtraction2.extractFeatureForFact(evidence2);
+            LOGGER.info("Fact Feature (counterargument) extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFactConfirmation));
+        }
+
+        /*********************************************************************************************************************
+         [4] score the facts
+         *********************************************************************************************************************/
+
+        LOGDEV.debug("[3] -> scoring the facts");
+
+        // score the facts
         long startFactScoring = System.currentTimeMillis();
         FactScorer factScorer = new FactScorer();
         factScorer.scoreEvidence(evidence);
         LOGGER.info("Fact Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startFactScoring));
-    	
-    	// 5. calculate the factFeatures for the model
+
+        if (searchCounterargument && foundCounterargument) {
+            startFactScoring = System.currentTimeMillis();
+            FactScorer factScorer2 = new FactScorer();
+            factScorer2.scoreEvidence(evidence2);
+            LOGGER.info("Fact Scoring (counterargument) took " + TimeUtil.formatTime(System.currentTimeMillis() - startFactScoring));
+        }
+        /*********************************************************************************************************************
+         [5] calculate the factFeatures for the model
+         *********************************************************************************************************************/
+
+        LOGDEV.debug("[3] -> computing the fact features");
+
+    	// calculate the factFeatures for the model
         long startFeatureExtraction = System.currentTimeMillis();
         EvidenceFeatureExtractor featureCalculator = new EvidenceFeatureExtractor();
         featureCalculator.extractFeatureForEvidence(evidence);
         LOGGER.info("Evidence feature extraction took " + TimeUtil.formatTime(System.currentTimeMillis() - startFeatureExtraction));
-            
+
+        if (searchCounterargument && foundCounterargument) {
+            long startFeatureExtraction2 = System.currentTimeMillis();
+            EvidenceFeatureExtractor featureCalculator2 = new EvidenceFeatureExtractor();
+            featureCalculator2.extractFeatureForEvidence(evidence2);
+            LOGGER.info("Evidence Feature extraction (counterargument) took " + TimeUtil.formatTime(System.currentTimeMillis() - startFeatureExtraction2));
+        }
+
+
         if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) {
+
+            /*********************************************************************************************************************
+             [6] score the evidences
+             *********************************************************************************************************************/
 
             long startScoring = System.currentTimeMillis();
             EvidenceScorer scorer = new EvidenceScorer();
             scorer.scoreEvidence(evidence);
             LOGGER.info("Evidence Scoring took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring));
+
+            if (searchCounterargument && foundCounterargument) {
+                long startScoring2 = System.currentTimeMillis();
+                EvidenceScorer scorer2 = new EvidenceScorer();
+                scorer2.scoreEvidence(evidence2);
+                LOGGER.info("Evidence Scoring (counterargument) took " + TimeUtil.formatTime(System.currentTimeMillis() - startScoring2));
+            }
         }
-        
+
+        if (searchCounterargument && foundCounterargument) {
+            evidence.setDeFactoCounterargumentScore(evidence2.getDeFactoScore());
+            evidence.setNegativeEvidenceObject(evidence2);
+        }
+
         LOGGER.info("Overall time for fact: " +  TimeUtil.formatTime(System.currentTimeMillis() - start));
-        
+
+        //returning enhanced evidence (we should later merge the positive and negative evidences in one object)
         return evidence;
     }
     
@@ -162,7 +259,7 @@ public class Defacto {
 
     /**
      * 
-     * @param models
+     * @param defactoModel
      * @return
      */
     public static Map<DefactoModel,Evidence> checkFacts(List<DefactoModel> defactoModel, TIME_DISTRIBUTION_ONLY onlyTimeDistribution) {
@@ -178,7 +275,7 @@ public class Defacto {
             
             // we want to print the score of the classifier 
             if ( !Defacto.DEFACTO_CONFIG.getBooleanSetting("settings", "TRAINING_MODE") ) 
-                System.out.println("Defacto: " + new DecimalFormat("0.00").format(evidence.getDeFactoScore()) + " % that this fact is true! Actual: " + model.isCorrect() +"\n");
+                LOGGER.info("Defacto: " + new DecimalFormat("0.00").format(evidence.getDeFactoScore()) + " % that this fact is true! Actual: " + model.isCorrect() +"\n");
 
             // rewrite the fact training file after every proof
             if ( DEFACTO_CONFIG.getBooleanSetting("fact", "OVERWRITE_FACT_TRAINING_FILE") ) 
@@ -316,8 +413,8 @@ public class Defacto {
     		max = Math.max(max, j);
     		min = Math.min(min, j);
     	}
-    	
-    	System.out.println("MAX: " + max);
-    	System.out.println("MIN: " + min);
+
+        LOGGER.debug(("MAX: " + max));
+        LOGGER.debug(("MIN: " + min));
 	}
 }

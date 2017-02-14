@@ -2,15 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.aksw</groupId>
-    <artifactId>defacto</artifactId>
+    <groupId>org.aksw.defacto</groupId>
+    <artifactId>defacto-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>defacto</name>
+    <name>DeFacto Parent POM</name>
     <modules>
         <module>defacto-core</module>
-        <!--<module>defacto-evaluation</module>-->
-        <!--<module>defacto-gui</module>-->
         <module>defacto-restful</module>
     </modules>
     <build>
@@ -86,14 +84,6 @@
          <repository>
             <id>gerb_snapshots</id>
             <url>https://raw.github.com/gerbsen/maven-repo/master/snapshots/</url>
-        </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-        <repository>
-            <id>repo</id>
-            <url>file://${project.basedir}/repo</url>
         </repository>
     </repositories>
     <dependencies>

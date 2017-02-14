@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -22,7 +23,9 @@ public class CacheManager {
     private static Logger logger = Logger.getLogger(CacheManager.class);
     private static Connection connection;
     private int currentKey = 0;
-    
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(CacheManager.class);
+
     /**
      * 
      */
@@ -143,8 +146,8 @@ public class CacheManager {
                 getConnection();
                 results = stmt.executeQuery();
             }
-            else 
-                System.out.println("DOUBLE CRAP....");
+            else
+                LOGGER.error("DOUBLE CRAP....");
         }
         catch (SQLException e) {
             

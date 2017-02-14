@@ -9,6 +9,7 @@ import java.util.Set;
 
 import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.WordNetDatabase;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -17,6 +18,8 @@ import edu.smu.tspell.wordnet.WordNetDatabase;
 public class WordNetExpansion {
 
     WordNetDatabase database;
+
+    private static Logger logger = Logger.getLogger(WordNetExpansion.class);
 
     public WordNetExpansion(String dictionary) {
         System.setProperty("wordnet.database.dir", dictionary);
@@ -91,10 +94,10 @@ public class WordNetExpansion {
     {
         WordNetExpansion wne = new WordNetExpansion("resources/wordnet/dict");
         String token = "couch";
-        System.out.println(wne.getSynset(token));
+        logger.info(wne.getSynset(token));
         String token2 = "table";
-        System.out.println(wne.getSynset(token2));
-        System.out.println(wne.getExpandedJaccardSimilarity(token, token2));
+        logger.info(wne.getSynset(token2));
+        logger.info(wne.getExpandedJaccardSimilarity(token, token2));
         
     }
 }

@@ -18,6 +18,7 @@ import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 
+import org.slf4j.LoggerFactory;
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
 import weka.core.Instance;
@@ -32,6 +33,9 @@ public class FactScorer {
 
     private Classifier classifier       = null;
     private Instances trainingInstances = null;
+
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(FactScorer.class);
 
     /**
      * 
@@ -138,7 +142,7 @@ public class FactScorer {
     }
     
     public static void main(String[] args) {
-		
-    	System.out.println("-"+ "".split(";").length + "-");
+
+        LOGGER.info("-"+ "".split(";").length + "-");
 	}
 }

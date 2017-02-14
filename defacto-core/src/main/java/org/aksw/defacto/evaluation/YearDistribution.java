@@ -3,21 +3,20 @@
  */
 package org.aksw.defacto.evaluation;
 
+import org.aksw.defacto.Defacto;
+import org.aksw.defacto.boa.Pattern;
+import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
+import org.aksw.defacto.search.query.MetaQuery;
+import org.aksw.defacto.util.BufferedFileWriter;
+import org.aksw.defacto.util.BufferedFileWriter.WRITER_WRITE_MODE;
+import org.aksw.defacto.util.Encoder.Encoding;
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.aksw.defacto.Defacto;
-import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
-import org.aksw.defacto.search.query.MetaQuery;
-import org.apache.commons.io.FileUtils;
-
-import org.aksw.defacto.util.BufferedFileReader;
-import org.aksw.defacto.util.BufferedFileWriter;
-import org.aksw.defacto.util.BufferedFileWriter.WRITER_WRITE_MODE;
-import org.aksw.defacto.util.Encoder.Encoding;
 
 /**
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
@@ -43,8 +42,8 @@ public class YearDistribution {
 			String person = parts[0];
 			String npp = parts[1];
 			Integer year = Integer.valueOf(parts[2]);
-			
-			MetaQuery query0 = new MetaQuery(String.format("%s|-|%s|-|%s", person, "??? NONE ???", npp));
+
+			MetaQuery query0 = new MetaQuery(String.format("%s|-|%s|-|%s", person, "??? NONE ???", npp), new Pattern("??? NONE ???"));
 			
 			AzureBingSearchEngine engine = new AzureBingSearchEngine();
 			
