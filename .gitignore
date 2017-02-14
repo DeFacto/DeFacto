@@ -13,3 +13,5 @@ test.h2.db
 /logs
 /target
 /bin
+
+cache/sparql
