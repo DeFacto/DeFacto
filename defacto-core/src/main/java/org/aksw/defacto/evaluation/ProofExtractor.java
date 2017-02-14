@@ -213,7 +213,7 @@ public class ProofExtractor {
 
             LOGGER.info(out);
             LOGGER.info(":: saving metadata...");
-            saveMetadata(evidence, "/Users/dnes/Github/DeFacto/defacto-core/src/main/resources/Nobel1909.ttl");
+            saveMetadata(evidence, Constants.EvidenceType.POS, "/Users/dnes/Github/DeFacto/defacto-core/src/main/resources/Nobel1909.ttl");
             LOGGER.info(":: done...");
 
 
