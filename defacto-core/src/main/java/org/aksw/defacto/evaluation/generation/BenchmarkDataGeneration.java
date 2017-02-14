@@ -243,7 +243,7 @@ public class BenchmarkDataGeneration {
 	}
 	
 	/**
-	 * 
+	 *
 	 * @throws JSONException
 	 * @throws IOException
 	 */
@@ -295,7 +295,7 @@ public class BenchmarkDataGeneration {
 	}
 	
 	/**
-	 * 
+	 *
 	 * @throws JSONException
 	 * @throws IOException
 	 */
@@ -555,7 +555,7 @@ public class BenchmarkDataGeneration {
 		
 		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
-		
+
 
 		
 		List<QuerySolution> results = getResults(qs_rel004_death, dbpedia);
@@ -610,7 +610,7 @@ public class BenchmarkDataGeneration {
 		
 		Dataset dataset = TDBFactory.createDataset(dataset_store_path);
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
-		
+
 
 		
 		QueryExecution qexec = QueryExecutionFactory.create(QueryFactory.create(qs_rel003_starring, Syntax.syntaxARQ), dbpedia);
@@ -709,7 +709,7 @@ public class BenchmarkDataGeneration {
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 
 		List<QuerySolution> results = getResults(qs_rel002_birth, dbpedia);
-		
+
 		// we create 5 parts so that we take some very popular, some  
 		// popular, some not so popular... and not popular persons
 		List<List<QuerySolution>> split = ListUtil.split(results, results.size() / 5);
@@ -766,7 +766,7 @@ public class BenchmarkDataGeneration {
 		Model dbpedia = dataset.getNamedModel("http://dbpedia.org");
 
 		Query query = QueryFactory.create(qs_rel001_politicians, Syntax.syntaxARQ);
-		
+
 		int i = 0;
 		
 		ResultSet result = QueryExecutionFactory.create(query, dbpedia).execSelect();
