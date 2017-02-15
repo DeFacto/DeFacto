@@ -59,9 +59,18 @@ public class DefactoModel implements Cloneable {
         this.name       = name;
         this.correct    = isCorrect;
         this.languages	= new ArrayList<String>(languages);
-        
         init(model);
     }
+
+	public DefactoModel(Model model, String name, boolean isCorrect, List<String> languages, String filePath) {
+
+		this.model      = model;
+		this.name       = name;
+		this.correct    = isCorrect;
+		this.languages	= new ArrayList<String>(languages);
+		this.setFile(new File(filePath));
+		init(model);
+	}
 
 	public File getFile(){
 		return this.file;

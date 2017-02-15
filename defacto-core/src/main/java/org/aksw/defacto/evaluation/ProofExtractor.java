@@ -25,10 +25,13 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.System.exit;
 
 /**
  * Created by dnes on 30/10/15.
@@ -144,11 +147,12 @@ public class ProofExtractor {
             Path p1 = Paths.get(f);
             String filename = p1.getFileName().toString();
 
-
             /** tb_model **/
             Integer idmodel = SQLiteHelper.getInstance().saveModel(model.getName(), model.isCorrect() ? 1 : 0, filename,
-                    p1.getParent().toString(), model.getSubjectUri(), model.getPredicate().getURI(), model.getObjectUri(),
-                    model.getTimePeriod().getFrom().toString(), model.getTimePeriod().getTo().toString(),
+                    p1.getParent().toString(), model.getSubjectUri(), model.getSubjectLabel("en"),
+                    model.getPredicate().getURI(), model.getPredicate().getLocalName(), model.getObjectUri(),
+                    model.getObjectLabel("en"), model.getTimePeriod().getFrom().toString(),
+                    model.getTimePeriod().getTo().toString(),
                     model.getTimePeriod().isTimePoint() ? 1 : 0);
 
             /** tb_evidence **/
@@ -460,10 +464,11 @@ public class ProofExtractor {
 
     }
 
-    private static DefactoModel getOneExample(){
+    private static DefactoModel getOneExample() throws Exception{
         Model model = ModelFactory.createDefaultModel();
-        model.read(DefactoModel.class.getClassLoader().getResourceAsStream("Nobel1909.ttl"), null, "TURTLE");
-        return new DefactoModel(model, "Nobel Model", true, Arrays.asList("en"));
+        URL url = DefactoModel.class.getClassLoader().getResource("Nobel1909.ttl");
+        model.read(url.openStream(), null, "TURTLE");
+        return new DefactoModel(model, "Nobel Model", true, Arrays.asList("en"), url.getPath());
     }
 
 

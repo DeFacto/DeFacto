@@ -1,5 +1,9 @@
 package org.aksw.defacto.helper;
 
+import org.aksw.defacto.evaluation.ProofExtractor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,6 +15,7 @@ import java.util.List;
  */
 public class SQLiteHelper {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SQLiteHelper.class);
     private static Connection c = null;
     private static SQLiteHelper instance = null;
     protected SQLiteHelper() {
@@ -75,24 +80,39 @@ public class SQLiteHelper {
     }
 
     public Integer saveModel(String name, int correct, String filename, String filepath,
-                             String suri, String puri, String ouri, String from, String to, int isTimePoint){
+                             String suri, String slabel, String puri, String plabel,
+                             String ouri, String olabel, String from, String to, int isTimePoint){
         Integer id = -1;
         try {
             int curid = existsRecord("select id from tb_model where file_name = '" + filename +
-                    "' and file_path = '" + filepath + "'");
+                    "' and file_path = '" + filepath + "' and timepoint = " + isTimePoint);
             if (curid < 1) {
                 Statement stmt = null;
-                String sql = "INSERT INTO TB_MODEL (model_name, model_correct, file_name, file_path, resource_s_uri, " +
-                        "resource_p_uri, resource_o_uri, period_from, period_to, period_timepoint) " +
-                        "VALUES ('" + name + "'," + correct + ",'" + filename + "','" + filepath + "','" +
-                        suri + "','" + puri + "','" + ouri + "','" + from + "','" + to + "'," + isTimePoint + ");";
+                StringBuffer sBufferSQL = new StringBuffer(27);
+                sBufferSQL.append("INSERT INTO TB_MODEL (model_name, correct, file_name, file_path, subject_uri, " +
+                        "subject_label, predicate_uri, predicate_label, object_uri, object_label, period_from, period_to, " +
+                        "timepoint) VALUES ('")
+                        .append(name).append("',")
+                        .append(correct).append(",'")
+                        .append(filename).append("','")
+                        .append(filepath).append("','")
+                        .append(suri).append("','")
+                        .append(slabel).append("','")
+                        .append(puri).append("','")
+                        .append(plabel).append("','")
+                        .append(ouri).append("','")
+                        .append(olabel).append("','")
+                        .append(from).append("','")
+                        .append(to).append("',")
+                        .append(isTimePoint).append(");");
+
                 stmt = c.createStatement();
-                System.out.print(sql);
-                id = stmt.executeUpdate(sql);
+                LOGGER.info(":: model ok");
+                id = stmt.executeUpdate(sBufferSQL.toString());
                 stmt.close();
             }
             else{
-                throw new Exception("Err: model already exists! Please check database for reprocessing");
+                throw new Exception("Err: model already processed! Please check database for reprocessing");
             }
 
         } catch (Exception e){
