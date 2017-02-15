@@ -68,7 +68,7 @@ public class ProofExtractor {
         }
     }
 
-    private static void saveWebSiteAndRelated(WebSite w, Integer idevidence, ComplexProof proof, Integer idmodel) throws Exception {
+    private static void saveWebSiteAndRelated(WebSite w, Integer idevidence, Integer has_proof) throws Exception {
 
         /* TB_PATTERN */
         Pattern psite = w.getQuery().getPattern();
@@ -79,7 +79,7 @@ public class ProofExtractor {
         Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idpattern, msite);
 
         /* TB_WEBSITE */
-        Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(idmetaquery, idpattern, w);
+        Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(idmetaquery, idpattern, w, has_proof);
 
         /* TB_REL_TOPICTERM_METAQUERY */
         for (Word wordtt: msite.getTopicTerms()) {
@@ -91,14 +91,9 @@ public class ProofExtractor {
             SQLiteHelper.getInstance().addTopicTermsWebSite(idwebsite, word.getWord(), word.getFrequency(),
                     word.isFromWikipedia() == true ? 1: 0);}
 
-        /* TB_PROOF */
-        if (proof != null){
-            SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel, proof);
-        }
-
     }
 
-    private static void saveMetadata(Evidence _evidence, Constants.EvidenceType evidencetype, String f) throws Exception{
+    private static void saveMetadata(long totalTime, Evidence _evidence, Constants.EvidenceType evidencetype, String f) throws Exception{
 
         try{
             Evidence eaux;
@@ -117,7 +112,7 @@ public class ProofExtractor {
             String filename = p1.getFileName().toString();
 
             /** TB_MODEL **/
-            Integer idmodel = SQLiteHelper.getInstance().saveModel(model, filename, p1.getParent().toString());
+            Integer idmodel = SQLiteHelper.getInstance().saveModel(totalTime, model, filename, p1.getParent().toString());
 
             /** TB_EVIDENCE **/
             Integer idevidence = SQLiteHelper.getInstance().saveEvidenceRoot(idmodel, eaux, eauxnum);
@@ -130,15 +125,25 @@ public class ProofExtractor {
                             wordtt.getFrequency(), wordtt.isFromWikipedia() == true ? 1 : 0);}
             }
 
-            //all proofs, consequently, all websites that HAVE proof
+            //all other websites with proof
+            List<WebSite> sitesproof = eaux.getAllWebSitesWithComplexProof();
+            //all other websites without proof
+            List<WebSite> sitesnoproof = eaux.getAllWebSitesWithoutComplexProof();
+
+            for (WebSite site: sitesproof){
+                saveWebSiteAndRelated(site, idevidence, 1);}
+            for (WebSite site: sitesnoproof){
+                saveWebSiteAndRelated(site, idevidence, 0);}
+
+            //all proofs
             Set<ComplexProof> setproofs = eaux.getComplexProofs();
             Iterator<ComplexProof> iterator = setproofs.iterator();
             while(iterator.hasNext()) { ComplexProof pfr = iterator.next();
-                saveWebSiteAndRelated(pfr.getWebSite(), idevidence, pfr, idmodel);}
+                SQLiteHelper.getInstance().addProof(idmodel, pfr);}
 
-            //all other websites, which no proof
-            List<WebSite> sitesnoproof = eaux.getAllWebSitesWithoutComplexProof();
-
+            if ((sitesproof.size() + sitesnoproof.size() != eaux.getAllWebSites().size())){
+                throw new Exception("that' strange!");
+            }
 
             //commit transaction for model N
             SQLiteHelper.getInstance().commitT();
@@ -169,7 +174,7 @@ public class ProofExtractor {
 
             LOGGER.info(out);
             LOGGER.info(":: saving metadata...");
-            saveMetadata(evidence, Constants.EvidenceType.POS, model.getFile().getAbsolutePath());
+            saveMetadata(totalTime, evidence, Constants.EvidenceType.POS, model.getFile().getAbsolutePath());
             LOGGER.info(":: done...");
 
 

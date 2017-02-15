@@ -75,9 +75,7 @@ public class Evidence {
      * 
      * @param model
      * @param totalHitCount
-     * @param set 
-     * @param subjectLabel
-     * @param objectLabel
+     * @param set
      */
     public Evidence(DefactoModel model, Long totalHitCount, Set<Pattern> set) {
 
@@ -140,7 +138,7 @@ public class Evidence {
     
     /**
      * 
-     * @param site
+     * @param sites
      */
     public void addWebSites(Pattern pattern, List<WebSite> sites) {
 
@@ -347,8 +345,9 @@ public class Evidence {
     public List<ComplexProof> getComplexProofs(WebSite website) {
         
         List<ComplexProof> proofs = new ArrayList<ComplexProof>();
-        for ( ComplexProof proof : this.complexProofs )
-            if ( proof.getWebSite().equals(website)) proofs.add(proof);
+        for ( ComplexProof proof : this.complexProofs ){
+            WebSite w = proof.getWebSite();
+            if (w.equals(website)) proofs.add(proof);}
         return proofs;
     }
 

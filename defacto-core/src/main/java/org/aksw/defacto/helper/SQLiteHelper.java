@@ -98,7 +98,7 @@ public class SQLiteHelper {
 
     }
 
-    public Integer saveModel(DefactoModel model, String filename, String filepath) throws Exception{
+    public Integer saveModel(long processing_time, DefactoModel model, String filename, String filepath) throws Exception{
 
         Integer id = -1;
         String name = model.getName();
@@ -117,10 +117,10 @@ public class SQLiteHelper {
                 "' and file_path = '" + filepath + "' and timepoint = " + isTimePoint);
         if (curid < 1) {
             Statement stmt = null;
-            StringBuffer sBufferSQL = new StringBuffer(27);
+            StringBuffer sBufferSQL = new StringBuffer(29);
             sBufferSQL.append("INSERT INTO TB_MODEL (model_name, model_correct, file_name, file_path, subject_uri, " +
                     "subject_label, predicate_uri, predicate_label, object_uri, object_label, period_from, period_to, " +
-                    "period_timepoint) VALUES ('")
+                    "processing_time, period_timepoint) VALUES ('")
                     .append(name).append("',")
                     .append(correct).append(",'")
                     .append(filename).append("','")
@@ -133,6 +133,7 @@ public class SQLiteHelper {
                     .append(olabel).append("','")
                     .append(from).append("','")
                     .append(to).append("',")
+                    .append(processing_time).append(",")
                     .append(isTimePoint).append(");");
 
             stmt = c.createStatement();
@@ -246,7 +247,27 @@ public class SQLiteHelper {
         return true;
     }
 
-    public boolean addProof(Integer idwebsite, Integer idpattern, Integer idmodel, ComplexProof pro) throws Exception{
+    private Integer getPatternByURL(String pattern, String language) throws Exception{
+        int curid = existsRecord("select id from tb_pattern where nlp_normalized = '" + pattern + "' and " +
+                "lang = '" + language + "'");
+        if (curid < 0){
+            throw new Exception("this pattern/language should exists: " + pattern + " / " + language);
+        }
+        return curid;
+    }
+
+    private Integer getWebSiteByURL(String url) throws Exception{
+        int curid = existsRecord("select id from tb_website where url = '" + url + "'");
+        if (curid < 0){
+            throw new Exception("this url should exists: " + url);
+        }
+        return curid;
+    }
+
+    public boolean addProof(Integer idmodel, ComplexProof pro) throws Exception{
+
+        Integer idwebsite = getWebSiteByURL(pro.getWebSite().getUrl().toString());
+        Integer idpattern = getPatternByURL(pro.getPattern().getNormalized(), pro.getPattern().language);
 
         String ctiny = pro.getTinyContext().replaceAll("'", "''");
         String cs = pro.getSmallContext().replaceAll("'", "''");
@@ -397,7 +418,7 @@ public class SQLiteHelper {
 
     }
 
-    public Integer saveWebSite(Integer idmetaquery, Integer idpattern, WebSite w) throws Exception{
+    public Integer saveWebSite(Integer idmetaquery, Integer idpattern, WebSite w, Integer has_proof) throws Exception{
 
         URI url = new URI(w.getUrl().toString());
         String urldomain = url.getHost();
@@ -417,10 +438,10 @@ public class SQLiteHelper {
         title = title.replaceAll("'", "''");
         body = body.replaceAll("'", "''");
 
-        StringBuffer sBufferSQL = new StringBuffer(29);
+        StringBuffer sBufferSQL = new StringBuffer(31);
         sBufferSQL.append("INSERT INTO TB_WEBSITE (id_metaquery, id_pattern, url, url_domain, title, body, rank, " +
                 "pagerank, pagerank_score, ind_score, ind_topic_majority_web, ind_topic_majority_search, " +
-                "ind_topic_coverage_score, lang" +
+                "ind_topic_coverage_score, has_proof, lang" +
                 ") VALUES (")
                 .append(idmetaquery).append(",")
                 .append(idpattern).append(",'")
@@ -434,10 +455,12 @@ public class SQLiteHelper {
                 .append(ind_score).append(",")
                 .append(ind_topic_majority_web).append(",")
                 .append(ind_topic_majority_search).append(",")
-                .append(ind_topic_coverage_score).append(",'")
+                .append(ind_topic_coverage_score).append(",")
+                .append(has_proof).append(",'")
                 .append(lang).append("');");
 
         stmt = c.createStatement();
+        LOGGER.info(sBufferSQL.toString());
         Integer id = stmt.executeUpdate(sBufferSQL.toString());
         stmt.close();
         LOGGER.info(":: website ok");
