@@ -2,6 +2,7 @@ package org.aksw.defacto.evaluation;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.thoughtworks.xstream.mapper.Mapper;
 import org.aksw.defacto.Constants;
 import org.aksw.defacto.Defacto;
 import org.aksw.defacto.boa.Pattern;
@@ -67,7 +68,7 @@ public class ProofExtractor {
         }
     }
 
-    private static void saveWebSiteAndRelated(WebSite w, Integer idevidence, Integer idmodel) throws Exception {
+    private static void saveWebSiteAndRelated(WebSite w, Integer idevidence, ComplexProof proof, Integer idmodel) throws Exception {
 
         /* TB_PATTERN */
         Pattern psite = w.getQuery().getPattern();
@@ -90,19 +91,10 @@ public class ProofExtractor {
             SQLiteHelper.getInstance().addTopicTermsWebSite(idwebsite, word.getWord(), word.getFrequency(),
                     word.isFromWikipedia() == true ? 1: 0);}
 
-        //TODO: check this later!
-        //List<ComplexProof> proofs = evidence.getComplexProofs(w);
-
-        /************************
-         * EXTRACTING: tb_proof
-         * **********************/
-        //for (ComplexProof pro: proofs){
-        //    SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel,
-        //            pro.getHasPatternInBetween() == true ? 1:0, pro.getTinyContext(),
-        //            pro.getSmallContext(), pro.getMediumContext(), pro.getLargeContext(),
-        //            pro.getProofPhrase(), pro.getNormalizedProofPhrase(), pro.getLanguage());
-       // }
-
+        /* TB_PROOF */
+        if (proof != null){
+            SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel, proof);
+        }
 
     }
 
@@ -138,24 +130,15 @@ public class ProofExtractor {
                             wordtt.getFrequency(), wordtt.isFromWikipedia() == true ? 1 : 0);}
             }
 
-            Integer verification = 0;
-            //1. get all websites without proofs (remaining)
-            List<WebSite> websites = eaux.getAllWebSitesWithoutComplexProof();
-            for (WebSite wsnp: websites){
-                saveWebSiteAndRelated(wsnp, idevidence, idmodel); verification ++;}
-
-            //2. get all websites, derived by proofs
+            //all proofs, consequently, all websites that HAVE proof
             Set<ComplexProof> setproofs = eaux.getComplexProofs();
             Iterator<ComplexProof> iterator = setproofs.iterator();
-            while(iterator.hasNext()) {
-                ComplexProof pfr = iterator.next();
-                WebSite wswp = pfr.getWebSite();
-                saveWebSiteAndRelated(wswp, idevidence, idmodel); verification ++;}
+            while(iterator.hasNext()) { ComplexProof pfr = iterator.next();
+                saveWebSiteAndRelated(pfr.getWebSite(), idevidence, pfr, idmodel);}
 
-            if (verification != _evidence.getAllWebSites().size()){
-                SQLiteHelper.getInstance().rollbackT();
-                throw new Exception(":: hum...something is kaputt");
-            }
+            //all other websites, which no proof
+            List<WebSite> sitesnoproof = eaux.getAllWebSitesWithoutComplexProof();
+
 
             //commit transaction for model N
             SQLiteHelper.getInstance().commitT();

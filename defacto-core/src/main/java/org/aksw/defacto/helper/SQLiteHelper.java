@@ -2,6 +2,7 @@ package org.aksw.defacto.helper;
 
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evaluation.ProofExtractor;
+import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.model.DefactoModel;
@@ -245,26 +246,52 @@ public class SQLiteHelper {
         return true;
     }
 
-    public boolean addProof(Integer idwebsite, Integer idpattern, Integer idmodel,
-                            Integer candidate, String ctiny, String cs, String cm, String cl,
-                            String phrase, String nphrase, String lang){
+    public boolean addProof(Integer idwebsite, Integer idpattern, Integer idmodel, ComplexProof pro) throws Exception{
 
-        try{
-            Statement stmt = null;
-            String sql = "INSERT INTO TB_PROOF " +
-                    "(id_website, id_pattern, id_model, candidate, context_tiny, context_small, context_medium, " +
-                    "context_large, phrase, normalised_phrase, lang)" +
-                    " VALUES (" + idwebsite + "," + idpattern  + "," + idmodel + "," + candidate + ",'" +
-                    ctiny + "','" + cs  + "','" + cm + "','" + cl + "','" + phrase + "','" + nphrase + "','" + lang + "');";
-            stmt = c.createStatement();
-            Integer id = stmt.executeUpdate(sql);
-            stmt.close();
-            return true;
+        String ctiny = pro.getTinyContext().replaceAll("'", "''");
+        String cs = pro.getSmallContext().replaceAll("'", "''");
+        String cm = pro.getMediumContext().replaceAll("'", "''");
+        String cl = pro.getLargeContext().replaceAll("'", "''");
+        String ctinytag = pro.getTaggedTinyContext().replaceAll("'", "''");
+        String cstag = pro.getTaggedSmallContext().replaceAll("'", "''");
+        String cmtag = pro.getTaggedMediumContext().replaceAll("'", "''");
+        String cltag = pro.getTaggedLargeContext().replaceAll("'", "''");
+        String phrase = pro.getProofPhrase().replaceAll("'", "''");
+        String nphrase = pro.getNormalizedProofPhrase().replaceAll("'", "''");
+        String firstlabel = pro.getSubject();
+        String secondlabel = pro.getObject();
 
-        } catch (Exception e){
-            System.out.println(e.toString());
-            return false;
-        }
+        Statement stmt = null;
+
+        StringBuffer sBufferSQL = new StringBuffer(37);
+        sBufferSQL.append("INSERT INTO TB_PROOF (id_website, id_pattern, id_model, context_tiny, context_tiny_tagged," +
+                " context_small, context_small_tagged, context_medium, context_medium_tagged, context_large, context_large_tagged," +
+                " phrase, normalised_phrase, " +
+                "first_label, second_label, has_pattern_in_between, lang" +
+                ") VALUES (")
+                .append(idwebsite).append(",")
+                .append(idpattern).append(",")
+                .append(idmodel).append(",'")
+                .append(ctiny).append("','")
+                .append(ctinytag).append("','")
+                .append(cs).append("','")
+                .append(cstag).append("','")
+                .append(cm).append("','")
+                .append(cmtag).append("','")
+                .append(cl).append("','")
+                .append(cltag).append("','")
+                .append(phrase).append("','")
+                .append(nphrase).append("','")
+                .append(firstlabel).append("','")
+                .append(secondlabel).append("',")
+                .append(pro.getHasPatternInBetween() == true ? 1: 0).append(",'")
+                .append(pro.getLanguage()).append("');");
+
+        stmt = c.createStatement();
+        Integer id = stmt.executeUpdate(sBufferSQL.toString());
+        stmt.close();
+        LOGGER.info(":: proof ok");
+        return true;
 
     }
 
@@ -411,7 +438,6 @@ public class SQLiteHelper {
                 .append(lang).append("');");
 
         stmt = c.createStatement();
-        LOGGER.info(sBufferSQL.toString());
         Integer id = stmt.executeUpdate(sBufferSQL.toString());
         stmt.close();
         LOGGER.info(":: website ok");
