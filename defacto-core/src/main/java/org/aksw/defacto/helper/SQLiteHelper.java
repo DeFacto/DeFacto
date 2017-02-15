@@ -1,6 +1,7 @@
 package org.aksw.defacto.helper;
 
 import org.aksw.defacto.evaluation.ProofExtractor;
+import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +20,11 @@ public class SQLiteHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(SQLiteHelper.class);
     private static Connection c = null;
     private static SQLiteHelper instance = null;
+    private static String db_path = "/Users/esteves/Dropbox/Doutorado_Alemanha/#Papers/#DeFacto Files/Counterarguments/defacto.db";
     protected SQLiteHelper() {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:/Users/esteves/Dropbox/Doutorado_Alemanha/#Papers/#DeFacto Files/Counterarguments/defacto.db");
+            c = DriverManager.getConnection("jdbc:sqlite:" + db_path);
             c.setAutoCommit(false);
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -55,19 +57,35 @@ public class SQLiteHelper {
 
     }
 
-    public Integer saveEvidence(Integer idmodel, Double score, Double combinedscore, Long tothitcount,
-                             String features, Integer evidencetype){
+    public Integer saveEvidenceRoot(Integer idmodel, Evidence eaux, Integer evidencetype){
+
+        Double score = eaux.getDeFactoScore();
+        Double combinedscore = eaux.getDeFactoCombinedScore();
+        Long tothitcount = eaux.getTotalHitCount();
+        String features = eaux.getFeatures().toString();
+
+
         try {
-            int curid = existsRecord("select id from tb_evidence where id_model = '" + idmodel +
-                    "' and evidence_type = " + evidencetype);
+            int curid = existsRecord("select id from tb_evidence where id_model = " + idmodel + " and " +
+                    "evidence_type = " + evidencetype);
             if (curid < 1) {
                 Statement stmt = null;
-                String sql = "INSERT INTO TB_EVIDENCE (id_model, score, combined_score, total_hit_count, " +
-                        "features, evidence_type) VALUES (" + idmodel + "," + score + "," + combinedscore + "," +
-                        tothitcount + ",'" + features + "'," + evidencetype + ");";
+                StringBuffer sBufferSQL = new StringBuffer(13);
+
+                features = features.replaceAll("'", "''");
+
+                sBufferSQL.append("INSERT INTO TB_EVIDENCE (id_model, score, combined_score, total_hit_count, " +
+                        "features, evidence_type) VALUES ( ")
+                        .append(idmodel).append(",")
+                        .append(score).append(",")
+                        .append(combinedscore).append(",")
+                        .append(tothitcount).append(",'")
+                        .append(features).append("',")
+                        .append(evidencetype).append(");");
+
                 stmt = c.createStatement();
-                System.out.print(sql);
-                Integer id = stmt.executeUpdate(sql);
+                System.out.println(sBufferSQL.toString());
+                Integer id = stmt.executeUpdate(sBufferSQL.toString());
                 stmt.close();
                 return id;
             }
@@ -262,8 +280,7 @@ public class SQLiteHelper {
             Statement stmt = null;
             String sql = "INSERT INTO TB_REL_TOPICTERM_EVIDENCE " +
                     "(id_evidence, term, topicterm, frequency, is_from_wikipedia)" +
-                    " VALUES (" + idevidence + ",'" +
-                    term  + "','" + word + "'," + qtd + "," + isfromwiki + ");";
+                    " VALUES (" + idevidence + ",'" + term  + "','" + word + "'," + qtd + "," + isfromwiki + ");";
             stmt = c.createStatement();
             Integer id = stmt.executeUpdate(sql);
             stmt.close();

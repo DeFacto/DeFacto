@@ -147,15 +147,13 @@ public class ProofExtractor {
             Path p1 = Paths.get(f);
             String filename = p1.getFileName().toString();
 
-            /** tb_model **/
+            /** TB_MODEL **/
             Integer idmodel = SQLiteHelper.getInstance().saveModel(model, filename, p1.getParent().toString());
 
-            /** tb_evidence **/
-            Integer idevidence = SQLiteHelper.getInstance().saveEvidence(idmodel, eaux.getDeFactoScore(),
-                    eaux.getDeFactoCombinedScore(), eaux.getTotalHitCount(), eaux.getFeatures().toString(),
-                    eauxnum);
+            /** TB_EVIDENCE **/
+            Integer idevidence = SQLiteHelper.getInstance().saveEvidenceRoot(idmodel, eaux, eauxnum);
 
-            /** tb_rel_topicterm_evidence **/
+            /** TB_REL_TOPIC_TERM_EVIDENCE **/
             for (Map.Entry<String, List<Word>> entry : eaux.getTopicTerms().entrySet())
             {
                 for (Word wordtt: entry.getValue()) {
