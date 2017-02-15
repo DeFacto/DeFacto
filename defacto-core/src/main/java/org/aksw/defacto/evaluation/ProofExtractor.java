@@ -70,16 +70,12 @@ public class ProofExtractor {
 
     private static void saveWebSiteAndRelated(WebSite w, Integer idevidence, Integer has_proof) throws Exception {
 
-        /* TB_PATTERN */
-        Pattern psite = w.getQuery().getPattern();
-        Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, psite);
-
         /* TB_METAQUERY */
         MetaQuery msite = w.getQuery();
-        Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idpattern, msite);
+        Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(msite);
 
         /* TB_WEBSITE */
-        Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(idmetaquery, idpattern, w, has_proof);
+        Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(idmetaquery, w, has_proof);
 
         /* TB_REL_TOPICTERM_METAQUERY */
         for (Word wordtt: msite.getTopicTerms()) {
@@ -114,7 +110,7 @@ public class ProofExtractor {
             /** TB_MODEL **/
             Integer idmodel = SQLiteHelper.getInstance().saveModel(totalTime, model, filename, p1.getParent().toString());
 
-            /** TB_EVIDENCE **/
+            /** TB_EVIDENCE HEADER **/
             Integer idevidence = SQLiteHelper.getInstance().saveEvidenceRoot(idmodel, eaux, eauxnum);
 
             /** TB_REL_TOPIC_TERM_EVIDENCE **/
@@ -129,6 +125,12 @@ public class ProofExtractor {
             List<WebSite> sitesproof = eaux.getAllWebSitesWithComplexProof();
             //all other websites without proof
             List<WebSite> sitesnoproof = eaux.getAllWebSitesWithoutComplexProof();
+
+            /* TB_PATTERN */
+            List<Pattern> patterns = eaux.getBoaPatterns();
+            for (Pattern p: patterns){
+                SQLiteHelper.getInstance().savePattern(idevidence, p);
+            }
 
             for (WebSite site: sitesproof){
                 saveWebSiteAndRelated(site, idevidence, 1);}

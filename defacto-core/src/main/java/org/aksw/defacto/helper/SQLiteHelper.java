@@ -44,21 +44,18 @@ public class SQLiteHelper {
         return instance;
     }
 
-    private Integer existsRecord(String query){
-        try{
-            Statement stmt = null;
-            stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery( query );
-            int id = 0;
-            while ( rs.next() ) {
-                id = rs.getInt(1);
-                rs.close();
-            }
-            stmt.close();
-            return id;
-        }catch (Exception e){
-            return -1;
+    private Integer existsRecord(String query) throws Exception{
+
+        Statement stmt = null;
+        stmt = c.createStatement();
+        ResultSet rs = stmt.executeQuery( query );
+        int id = 0;
+        while ( rs.next() ) {
+            id = rs.getInt(1);
+            rs.close();
         }
+        stmt.close();
+        return id;
 
     }
 
@@ -71,7 +68,7 @@ public class SQLiteHelper {
 
         int curid = existsRecord("select id from tb_evidence where id_model = " + idmodel + " and " +
                 "evidence_type = " + evidencetype);
-        if (curid < 1) {
+        if (curid == 0) {
             Statement stmt = null;
             StringBuffer sBufferSQL = new StringBuffer(13);
 
@@ -87,20 +84,16 @@ public class SQLiteHelper {
                     .append(evidencetype).append(");");
 
             stmt = c.createStatement();
-            Integer id = stmt.executeUpdate(sBufferSQL.toString());
+            curid = stmt.executeUpdate(sBufferSQL.toString());
             stmt.close();
             LOGGER.info(":: evidence header ok");
-            return id;
         }
-        else{
-            throw new Exception("Err: evidence already exists for this model! Please check database for reprocessing");
-        }
+        return curid;
 
     }
 
     public Integer saveModel(long processing_time, DefactoModel model, String filename, String filepath) throws Exception{
 
-        Integer id = -1;
         String name = model.getName();
         int correct = model.isCorrect() ? 1 : 0;
         String suri = model.getSubjectUri();
@@ -114,8 +107,8 @@ public class SQLiteHelper {
         int isTimePoint = model.getTimePeriod().isTimePoint() ? 1 : 0;
 
         int curid = existsRecord("select id from tb_model where file_name = '" + filename +
-                "' and file_path = '" + filepath + "' and timepoint = " + isTimePoint);
-        if (curid < 1) {
+                "' and file_path = '" + filepath + "' and period_timepoint = " + isTimePoint);
+        if (curid == 0) {
             Statement stmt = null;
             StringBuffer sBufferSQL = new StringBuffer(29);
             sBufferSQL.append("INSERT INTO TB_MODEL (model_name, model_correct, file_name, file_path, subject_uri, " +
@@ -137,15 +130,12 @@ public class SQLiteHelper {
                     .append(isTimePoint).append(");");
 
             stmt = c.createStatement();
-            id = stmt.executeUpdate(sBufferSQL.toString());
+            curid = stmt.executeUpdate(sBufferSQL.toString());
             stmt.close();
-        }
-        else{
-            throw new Exception("Err: model already processed! Please check database for reprocessing");
         }
 
         LOGGER.info(":: model ok");
-        return id;
+        return curid;
     }
 
     public boolean executeQueriesInBatch(List<String> queries){
@@ -247,7 +237,7 @@ public class SQLiteHelper {
         return true;
     }
 
-    private Integer getPatternByURL(String pattern, String language) throws Exception{
+    private Integer getPattern(String pattern, String language) throws Exception{
         int curid = existsRecord("select id from tb_pattern where nlp_normalized = '" + pattern + "' and " +
                 "lang = '" + language + "'");
         if (curid < 0){
@@ -266,8 +256,10 @@ public class SQLiteHelper {
 
     public boolean addProof(Integer idmodel, ComplexProof pro) throws Exception{
 
+        //TODO: check if exists!!!!
+
         Integer idwebsite = getWebSiteByURL(pro.getWebSite().getUrl().toString());
-        Integer idpattern = getPatternByURL(pro.getPattern().getNormalized(), pro.getPattern().language);
+        Integer idpattern = getPattern(pro.getPattern().getNormalized(), pro.getPattern().language);
 
         String ctiny = pro.getTinyContext().replaceAll("'", "''");
         String cs = pro.getSmallContext().replaceAll("'", "''");
@@ -316,44 +308,57 @@ public class SQLiteHelper {
 
     }
 
-    public boolean addTopicTermsEvidence(Integer idevidence, String term, String word, Integer qtd, Integer isfromwiki)
+    public boolean addTopicTermsEvidence(Integer idevidence, String ln, String word, Integer qtd, Integer isfromwiki)
             throws Exception{
 
-        Statement stmt = null;
-        String sql = "INSERT INTO TB_REL_TOPICTERM_EVIDENCE(id_evidence, term, topicterm, frequency, is_from_wikipedia)" +
-                " VALUES (" + idevidence + ",'" + term  + "','" + word + "'," + qtd + "," + isfromwiki + ");";
-        stmt = c.createStatement();
-        Integer id = stmt.executeUpdate(sql);
-        stmt.close();
-        LOGGER.info(":: topic terms x evidence ok");
-        return true;
+        Integer id = existsRecord("SELECT 1 FROM TB_REL_TOPICTERM_EVIDENCE WHERE ID_EVIDENCE = " + idevidence +
+                " AND TOPICTERM = '" + word + "'" + " AND LANG = '" + ln + "'");
+        if (id == 0) {
+            Statement stmt = null;
+            String sql = "INSERT INTO TB_REL_TOPICTERM_EVIDENCE(id_evidence, lang, topicterm, frequency, " +
+                    "is_from_wikipedia) VALUES (" + idevidence + ",'" + ln  + "','" + word + "'," + qtd +
+                    "," + isfromwiki + ");";
+            stmt = c.createStatement();
+            stmt.executeUpdate(sql);
+            stmt.close();
+            LOGGER.info(":: topic terms x evidence ok");
+        }
+         return true;
 
     }
 
     public boolean addTopicTermsMetaQuery(Integer idmetaquery, String word, Integer qtd, Integer isfromwiki)
             throws Exception{
 
-        Statement stmt = null;
-        String sql = "INSERT INTO TB_REL_TOPICTERM_METAQUERY(id_metaquery, topic_term, frequency, is_from_wikipedia)" +
-                " VALUES (" + idmetaquery + ",'" + word  + "'," + qtd + "," + isfromwiki + ");";
-        stmt = c.createStatement();
-        Integer id = stmt.executeUpdate(sql);
-        stmt.close();
-        LOGGER.info(":: rel topic term x metaquery ok");
+        Integer id = existsRecord("SELECT 1 FROM TB_TOPICTERM_METAQUERY WHERE ID_METAQUERY = " + idmetaquery +
+                " AND TOPICTERM = '" + word + "'");
+        if (id == 0) {
+            Statement stmt = null;
+            String sql = "INSERT INTO TB_REL_TOPICTERM_METAQUERY(id_metaquery, topic_term, frequency, is_from_wikipedia)" +
+                    " VALUES (" + idmetaquery + ",'" + word  + "'," + qtd + "," + isfromwiki + ");";
+            stmt = c.createStatement();
+            stmt.executeUpdate(sql);
+            stmt.close();
+            LOGGER.info(":: rel topic term x metaquery ok");
+        }
         return true;
 
     }
 
     public boolean addTopicTermsWebSite(Integer idwebsite, String word, Integer qtd, Integer isfromwiki) throws Exception{
 
-        Statement stmt = null;
-        String sql = "INSERT INTO TB_REL_TOPICTERM_WEBSITE " +
-                "(id_website, topicterm, frequency, is_from_wikipedia)" +
-                " VALUES (" + idwebsite + ",'" + word  + "'," + qtd + "," + isfromwiki + ");";
-        stmt = c.createStatement();
-        Integer id = stmt.executeUpdate(sql);
-        stmt.close();
-        LOGGER.info(":: rel topic term x website ok");
+        Integer id = existsRecord("SELECT 1 FROM TB_REL_TOPICTERM_WEBSITE WHERE ID_WEBSITE = " + idwebsite +
+                " AND TOPICTERM = '" + word + "'");
+        if (id == 0) {
+            Statement stmt = null;
+            String sql = "INSERT INTO TB_REL_TOPICTERM_WEBSITE " +
+                    "(id_website, topicterm, frequency, is_from_wikipedia)" +
+                    " VALUES (" + idwebsite + ",'" + word  + "'," + qtd + "," + isfromwiki + ");";
+            stmt = c.createStatement();
+            stmt.executeUpdate(sql);
+            stmt.close();
+            LOGGER.info(":: rel topic term x website ok");
+        }
         return true;
 
     }
@@ -395,7 +400,7 @@ public class SQLiteHelper {
 
     }
 
-    public Integer saveMetaQuery(Integer idpattern, MetaQuery msite) throws Exception{
+    public Integer saveMetaQuery(MetaQuery msite) throws Exception{
 
         String metaquery = msite.toString();
         String sl = msite.getSubjectLabel();
@@ -403,22 +408,29 @@ public class SQLiteHelper {
         String ol = msite.getObjectLabel();
         String lang = msite.getLanguage();
         String evidencetype = msite.getEvidenceTypeRelation().toString();
+        Integer idpattern = getPattern(msite.getPattern().getNormalized(),
+                msite.getPattern().language);
 
-        Statement stmt = null;
-        String sql = "INSERT INTO TB_METAQUERY " +
-                "(id_pattern, metaquery, " +
-                "subject_label, predicate_label, object_label, lang, evidence_type)" +
-                " VALUES (" + idpattern + ",'" + metaquery  + "','" + sl + "','" + pl  + "','" + ol + "','" + lang
-                + "','" + evidencetype + "');";
-        stmt = c.createStatement();
-        Integer id = stmt.executeUpdate(sql);
-        stmt.close();
-        LOGGER.info(":: metaquery ok");
-        return id;
+        Integer idmetaquery = existsRecord("SELECT 1 FROM TB_METAQUERY WHERE METAQUERY = '" + metaquery + "'");
+
+        if (idmetaquery == 0) {
+            Statement stmt = null;
+            String sql = "INSERT INTO TB_METAQUERY " +
+                    "(id_pattern, metaquery, " +
+                    "subject_label, predicate_label, object_label, lang, evidence_type)" +
+                    " VALUES (" + idpattern + ",'" + metaquery  + "','" + sl + "','" + pl  + "','" + ol + "','" + lang
+                    + "','" + evidencetype + "');";
+            stmt = c.createStatement();
+            idmetaquery = stmt.executeUpdate(sql);
+            stmt.close();
+            LOGGER.info(":: metaquery ok");
+        }
+
+        return idmetaquery;
 
     }
 
-    public Integer saveWebSite(Integer idmetaquery, Integer idpattern, WebSite w, Integer has_proof) throws Exception{
+    public Integer saveWebSite(Integer idmetaquery, WebSite w, Integer has_proof) throws Exception{
 
         URI url = new URI(w.getUrl().toString());
         String urldomain = url.getHost();
@@ -432,6 +444,8 @@ public class SQLiteHelper {
         Double ind_topic_majority_search = w.getTopicMajoritySearchFeature();
         Double ind_topic_coverage_score = w.getTopicCoverageScore();
         String lang = w.getLanguage();
+        Integer idpattern = getPattern(w.getPattern().getNormalized(),
+                w.getPattern().language);
 
         Statement stmt = null;
 
@@ -453,7 +467,7 @@ public class SQLiteHelper {
                 .append(pagerank).append(",")
                 .append(pagerankscore).append(",")
                 .append(ind_score).append(",")
-                .append(ind_topic_majority_web).append(",")
+               .append(ind_topic_majority_web).append(",")
                 .append(ind_topic_majority_search).append(",")
                 .append(ind_topic_coverage_score).append(",")
                 .append(has_proof).append(",'")
