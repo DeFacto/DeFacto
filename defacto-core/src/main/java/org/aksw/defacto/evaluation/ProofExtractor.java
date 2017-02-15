@@ -74,12 +74,9 @@ public class ProofExtractor {
             URI uri = new URI(w.getUrl().toString());
             String domain = uri.getHost();
 
-            /* EXTRACTING: tb_pattern */
+            /* EXTRACTING: TB_PATTERN */
             Pattern psite = w.getQuery().getPattern();
-            Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, psite.boaScore,
-                    psite.naturalLanguageRepresentationNormalized, psite.naturalLanguageRepresentationWithoutVariables,
-                    psite.naturalLanguageRepresentation, psite.language, psite.posTags, psite.NER, psite.generalized,
-                    psite.naturalLanguageScore);
+            Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, psite);
 
             /* EXTRACTING: tb_metaquery */
             MetaQuery msite = w.getQuery();
@@ -164,8 +161,7 @@ public class ProofExtractor {
 
             Integer verification = 0;
             //1. get all websites without proofs (remaining)
-            List<WebSite> websites =
-                    eaux.getAllWebSitesWithoutComplexProof();
+            List<WebSite> websites = eaux.getAllWebSitesWithoutComplexProof();
             for (WebSite wsnp: websites){
                 saveWebSiteAndRelated(wsnp, idevidence, idmodel); verification ++;
             }

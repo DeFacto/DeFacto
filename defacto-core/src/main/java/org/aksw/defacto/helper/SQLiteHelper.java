@@ -1,5 +1,6 @@
 package org.aksw.defacto.helper;
 
+import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evaluation.ProofExtractor;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
@@ -334,17 +335,38 @@ public class SQLiteHelper {
 
     }
 
-    public Integer savePattern(Integer idevidence, Double boa_score, String nlpn, String nlpnovar, String nlp, String ln, String pos,
-                               String ner, String generalized, Double nlp_score){
+    public Integer savePattern(Integer idevidence, Pattern psite){
+
+        Double boa_score = psite.boaScore;
+        String nlpn = psite.naturalLanguageRepresentationNormalized;
+        String nlpnovar = psite.naturalLanguageRepresentationWithoutVariables;
+        String nlp = psite.naturalLanguageRepresentation;
+        String ln = psite.language;
+        String pos = psite.posTags;
+        String ner = psite.NER;
+        String generalized = psite.generalized;
+        Double nlp_score = psite.naturalLanguageScore;
 
         try{
             Statement stmt = null;
-            String sql = "INSERT INTO TB_PATTERN " +
-                    "(id_evidence, score_boa, nlp_normalized, nlp_no_var, nlp, lang, nlp_score, pos, generalized, ner VALUES(" +
-                     idevidence + "," + boa_score + ",'" + nlpn  + "','" + nlpnovar + "','" + nlp + "','" + ln + "'," + nlp_score + ",'" +
-                    pos + "','" + generalized + "','" + ner + "');";
+
+            StringBuffer sBufferSQL = new StringBuffer(21);
+            sBufferSQL.append("INSERT INTO TB_PATTERN (id_evidence, score_boa, nlp_normalized, nlp_no_var, nlp, " +
+                    "lang, nlp_score, pos, generalized, ner" +
+                    ") VALUES ('")
+                    .append(idevidence).append(",")
+                    .append(boa_score).append(",'")
+                    .append(nlpn).append("','")
+                    .append(nlpnovar).append("','")
+                    .append(nlp).append("','")
+                    .append(ln).append("',")
+                    .append(nlp_score).append(",'")
+                    .append(pos).append("','")
+                    .append(generalized).append("','")
+                    .append(ner).append(");");
+
             stmt = c.createStatement();
-            Integer id = stmt.executeUpdate(sql);
+            Integer id = stmt.executeUpdate(sBufferSQL.toString());
             stmt.close();
             return id;
 
