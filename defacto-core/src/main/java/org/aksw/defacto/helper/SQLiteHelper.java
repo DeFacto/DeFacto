@@ -16,7 +16,7 @@ public class SQLiteHelper {
     protected SQLiteHelper() {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:/Users/dnes/Desktop/defacto.db");
+            c = DriverManager.getConnection("jdbc:sqlite:/Users/esteves/Dropbox/Doutorado_Alemanha/#Papers/#DeFacto Files/Counterarguments/defacto.db");
             c.setAutoCommit(false);
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );

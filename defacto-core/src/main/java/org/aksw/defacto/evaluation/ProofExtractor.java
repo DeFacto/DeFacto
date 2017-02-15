@@ -41,7 +41,7 @@ public class ProofExtractor {
     public static PrintWriter           writer;
     public static PrintWriter           writer_overview;
     public static String                separator = ";";
-    private static String               path = "/Users/dnes/Github/FactBench/test/correct/";
+    private static String               path = "/Users/esteves/Github/FactBench/test/correct/";
     private static final File           folder = new File(path);
     private static List<String>         files = new ArrayList<>();
 
@@ -197,24 +197,26 @@ public class ProofExtractor {
 
     }
 
-    public static void exportMetadata(){
+    public static void exportMetadataDB(){
 
         try{
 
             long startTime = System.currentTimeMillis();
-            final Evidence evidence = Defacto.checkFact(getOneExample(), Defacto.TIME_DISTRIBUTION_ONLY.NO);
+            DefactoModel model = getOneExample();
+            final Evidence evidence = Defacto.checkFact(model, Defacto.TIME_DISTRIBUTION_ONLY.NO);
             long endTime   = System.currentTimeMillis();
             long totalTime = endTime - startTime;
 
             String out = String.format("Processing Time: %02d hour, %02d min, %02d sec",
                     TimeUnit.MILLISECONDS.toHours(totalTime),
                     TimeUnit.MILLISECONDS.toMinutes(totalTime),
-                    TimeUnit.MILLISECONDS.toSeconds(totalTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))
+                    TimeUnit.MILLISECONDS.toSeconds(totalTime) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))
             );
 
             LOGGER.info(out);
             LOGGER.info(":: saving metadata...");
-            saveMetadata(evidence, Constants.EvidenceType.POS, "/Users/dnes/Github/DeFacto/defacto-core/src/main/resources/Nobel1909.ttl");
+            saveMetadata(evidence, Constants.EvidenceType.POS, model.getFile().getAbsolutePath());
             LOGGER.info(":: done...");
 
 
@@ -432,6 +434,16 @@ public class ProofExtractor {
     }
 
     public static void main(String[] args) throws Exception {
+
+        if (1==2){
+            exportMetadataFile();
+        }else{
+            exportMetadataDB();
+        }
+
+    }
+
+    private static void exportMetadataFile() throws Exception{
 
         writer = new PrintWriter("proofs_neg.csv", "UTF-8");
         writer_overview = new PrintWriter("proofs_neg_stats.csv", "UTF-8");
