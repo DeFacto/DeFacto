@@ -3,10 +3,13 @@ package org.aksw.defacto.helper;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evaluation.ProofExtractor;
 import org.aksw.defacto.evidence.Evidence;
+import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.model.DefactoModel;
+import org.aksw.defacto.search.query.MetaQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,7 +24,7 @@ public class SQLiteHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(SQLiteHelper.class);
     private static Connection c = null;
     private static SQLiteHelper instance = null;
-    private static String db_path = "/Users/esteves/Dropbox/Doutorado_Alemanha/#Papers/#DeFacto Files/Counterarguments/defacto.db";
+    private static String db_path = "/Users/esteves/Desktop/defacto.db";
     protected SQLiteHelper() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -58,98 +61,88 @@ public class SQLiteHelper {
 
     }
 
-    public Integer saveEvidenceRoot(Integer idmodel, Evidence eaux, Integer evidencetype){
+    public Integer saveEvidenceRoot(Integer idmodel, Evidence eaux, Integer evidencetype) throws Exception{
 
         Double score = eaux.getDeFactoScore();
         Double combinedscore = eaux.getDeFactoCombinedScore();
         Long tothitcount = eaux.getTotalHitCount();
         String features = eaux.getFeatures().toString();
 
+        int curid = existsRecord("select id from tb_evidence where id_model = " + idmodel + " and " +
+                "evidence_type = " + evidencetype);
+        if (curid < 1) {
+            Statement stmt = null;
+            StringBuffer sBufferSQL = new StringBuffer(13);
 
-        try {
-            int curid = existsRecord("select id from tb_evidence where id_model = " + idmodel + " and " +
-                    "evidence_type = " + evidencetype);
-            if (curid < 1) {
-                Statement stmt = null;
-                StringBuffer sBufferSQL = new StringBuffer(13);
+            features = features.replaceAll("'", "''");
 
-                features = features.replaceAll("'", "''");
+            sBufferSQL.append("INSERT INTO TB_EVIDENCE (id_model, score, combined_score, total_hit_count, " +
+                    "features, evidence_type) VALUES ( ")
+                    .append(idmodel).append(",")
+                    .append(score).append(",")
+                    .append(combinedscore).append(",")
+                    .append(tothitcount).append(",'")
+                    .append(features).append("',")
+                    .append(evidencetype).append(");");
 
-                sBufferSQL.append("INSERT INTO TB_EVIDENCE (id_model, score, combined_score, total_hit_count, " +
-                        "features, evidence_type) VALUES ( ")
-                        .append(idmodel).append(",")
-                        .append(score).append(",")
-                        .append(combinedscore).append(",")
-                        .append(tothitcount).append(",'")
-                        .append(features).append("',")
-                        .append(evidencetype).append(");");
-
-                stmt = c.createStatement();
-                System.out.println(sBufferSQL.toString());
-                Integer id = stmt.executeUpdate(sBufferSQL.toString());
-                stmt.close();
-                return id;
-            }
-            else{
-                throw new Exception("Err: evidence already exists for this model! Please check database for reprocessing");
-            }
-        } catch (Exception e){
-            System.out.println(e.toString());
-            return -1;
+            stmt = c.createStatement();
+            Integer id = stmt.executeUpdate(sBufferSQL.toString());
+            stmt.close();
+            LOGGER.info(":: evidence header ok");
+            return id;
         }
+        else{
+            throw new Exception("Err: evidence already exists for this model! Please check database for reprocessing");
+        }
+
     }
 
-    public Integer saveModel(DefactoModel model, String filename, String filepath){
+    public Integer saveModel(DefactoModel model, String filename, String filepath) throws Exception{
+
         Integer id = -1;
-        try {
+        String name = model.getName();
+        int correct = model.isCorrect() ? 1 : 0;
+        String suri = model.getSubjectUri();
+        String slabel = model.getSubjectLabel("en");
+        String puri = model.getPredicate().getURI();
+        String plabel = model.getPredicate().getLocalName();
+        String ouri = model.getObjectUri();
+        String olabel = model.getObjectLabel("en");
+        String from = model.getTimePeriod().getFrom().toString();
+        String to = model.getTimePeriod().getTo().toString();
+        int isTimePoint = model.getTimePeriod().isTimePoint() ? 1 : 0;
 
-            String name = model.getName();
-            int correct = model.isCorrect() ? 1 : 0;
-            String suri = model.getSubjectUri();
-            String slabel = model.getSubjectLabel("en");
-            String puri = model.getPredicate().getURI();
-            String plabel = model.getPredicate().getLocalName();
-            String ouri = model.getObjectUri();
-            String olabel = model.getObjectLabel("en");
-            String from = model.getTimePeriod().getFrom().toString();
-            String to = model.getTimePeriod().getTo().toString();
-            int isTimePoint = model.getTimePeriod().isTimePoint() ? 1 : 0;
+        int curid = existsRecord("select id from tb_model where file_name = '" + filename +
+                "' and file_path = '" + filepath + "' and timepoint = " + isTimePoint);
+        if (curid < 1) {
+            Statement stmt = null;
+            StringBuffer sBufferSQL = new StringBuffer(27);
+            sBufferSQL.append("INSERT INTO TB_MODEL (model_name, model_correct, file_name, file_path, subject_uri, " +
+                    "subject_label, predicate_uri, predicate_label, object_uri, object_label, period_from, period_to, " +
+                    "period_timepoint) VALUES ('")
+                    .append(name).append("',")
+                    .append(correct).append(",'")
+                    .append(filename).append("','")
+                    .append(filepath).append("','")
+                    .append(suri).append("','")
+                    .append(slabel).append("','")
+                    .append(puri).append("','")
+                    .append(plabel).append("','")
+                    .append(ouri).append("','")
+                    .append(olabel).append("','")
+                    .append(from).append("','")
+                    .append(to).append("',")
+                    .append(isTimePoint).append(");");
 
-            int curid = existsRecord("select id from tb_model where file_name = '" + filename +
-                    "' and file_path = '" + filepath + "' and timepoint = " + isTimePoint);
-            if (curid < 1) {
-                Statement stmt = null;
-                StringBuffer sBufferSQL = new StringBuffer(27);
-                sBufferSQL.append("INSERT INTO TB_MODEL (model_name, correct, file_name, file_path, subject_uri, " +
-                        "subject_label, predicate_uri, predicate_label, object_uri, object_label, period_from, period_to, " +
-                        "timepoint) VALUES ('")
-                        .append(name).append("',")
-                        .append(correct).append(",'")
-                        .append(filename).append("','")
-                        .append(filepath).append("','")
-                        .append(suri).append("','")
-                        .append(slabel).append("','")
-                        .append(puri).append("','")
-                        .append(plabel).append("','")
-                        .append(ouri).append("','")
-                        .append(olabel).append("','")
-                        .append(from).append("','")
-                        .append(to).append("',")
-                        .append(isTimePoint).append(");");
-
-                stmt = c.createStatement();
-                LOGGER.info(":: model ok");
-                id = stmt.executeUpdate(sBufferSQL.toString());
-                stmt.close();
-            }
-            else{
-                throw new Exception("Err: model already processed! Please check database for reprocessing");
-            }
-
-        } catch (Exception e){
-            e.printStackTrace();
-            System.exit(1);
+            stmt = c.createStatement();
+            id = stmt.executeUpdate(sBufferSQL.toString());
+            stmt.close();
         }
+        else{
+            throw new Exception("Err: model already processed! Please check database for reprocessing");
+        }
+
+        LOGGER.info(":: model ok");
         return id;
     }
 
@@ -275,67 +268,49 @@ public class SQLiteHelper {
 
     }
 
-    public boolean addTopicTermsEvidence(Integer idevidence, String term, String word, Integer qtd, Integer isfromwiki){
+    public boolean addTopicTermsEvidence(Integer idevidence, String term, String word, Integer qtd, Integer isfromwiki)
+            throws Exception{
 
-        try{
-            Statement stmt = null;
-            String sql = "INSERT INTO TB_REL_TOPICTERM_EVIDENCE " +
-                    "(id_evidence, term, topicterm, frequency, is_from_wikipedia)" +
-                    " VALUES (" + idevidence + ",'" + term  + "','" + word + "'," + qtd + "," + isfromwiki + ");";
-            stmt = c.createStatement();
-            Integer id = stmt.executeUpdate(sql);
-            stmt.close();
-            return true;
-        } catch (Exception e){
-            System.out.println(e.toString());
-            return false;
-        }
+        Statement stmt = null;
+        String sql = "INSERT INTO TB_REL_TOPICTERM_EVIDENCE(id_evidence, term, topicterm, frequency, is_from_wikipedia)" +
+                " VALUES (" + idevidence + ",'" + term  + "','" + word + "'," + qtd + "," + isfromwiki + ");";
+        stmt = c.createStatement();
+        Integer id = stmt.executeUpdate(sql);
+        stmt.close();
+        LOGGER.info(":: topic terms x evidence ok");
+        return true;
 
     }
 
-    public boolean addTopicTermsMetaQuery(Integer idmetaquery, String word, Integer qtd, Integer isfromwiki){
+    public boolean addTopicTermsMetaQuery(Integer idmetaquery, String word, Integer qtd, Integer isfromwiki)
+            throws Exception{
 
-        try{
-            Statement stmt = null;
-            String sql = "INSERT INTO TB_REL_METAQUERT_TOPICTERM " +
-                    "(id_metaquery, topic_term, frequency, is_from_wikipedia)" +
-                    " VALUES (" + idmetaquery + ",'" +
-                    word  + "'," + qtd + "," +
-                    isfromwiki + ");";
-            stmt = c.createStatement();
-            Integer id = stmt.executeUpdate(sql);
-            stmt.close();
-            return true;
-
-        } catch (Exception e){
-            System.out.println(e.toString());
-            return false;
-        }
+        Statement stmt = null;
+        String sql = "INSERT INTO TB_REL_TOPICTERM_METAQUERY(id_metaquery, topic_term, frequency, is_from_wikipedia)" +
+                " VALUES (" + idmetaquery + ",'" + word  + "'," + qtd + "," + isfromwiki + ");";
+        stmt = c.createStatement();
+        Integer id = stmt.executeUpdate(sql);
+        stmt.close();
+        LOGGER.info(":: rel topic term x metaquery ok");
+        return true;
 
     }
 
-    public boolean addTopicTermsWebSite(Integer idwebsite, String word, Integer qtd, Integer isfromwiki){
+    public boolean addTopicTermsWebSite(Integer idwebsite, String word, Integer qtd, Integer isfromwiki) throws Exception{
 
-        try{
-            Statement stmt = null;
-            String sql = "INSERT INTO TB_REL_WEBSITE_TOPICTERM " +
-                    "(id_website, topic_term, frequency, is_from_wikipedia)" +
-                    " VALUES (" + idwebsite + ",'" +
-                    word  + "'," + qtd + "," +
-                    isfromwiki + ");";
-            stmt = c.createStatement();
-            Integer id = stmt.executeUpdate(sql);
-            stmt.close();
-            return true;
-
-        } catch (Exception e){
-            System.out.println(e.toString());
-            return false;
-        }
+        Statement stmt = null;
+        String sql = "INSERT INTO TB_REL_TOPICTERM_WEBSITE " +
+                "(id_website, topicterm, frequency, is_from_wikipedia)" +
+                " VALUES (" + idwebsite + ",'" + word  + "'," + qtd + "," + isfromwiki + ");";
+        stmt = c.createStatement();
+        Integer id = stmt.executeUpdate(sql);
+        stmt.close();
+        LOGGER.info(":: rel topic term x website ok");
+        return true;
 
     }
 
-    public Integer savePattern(Integer idevidence, Pattern psite){
+    public Integer savePattern(Integer idevidence, Pattern psite) throws Exception{
 
         Double boa_score = psite.boaScore;
         String nlpn = psite.naturalLanguageRepresentationNormalized;
@@ -347,82 +322,101 @@ public class SQLiteHelper {
         String generalized = psite.generalized;
         Double nlp_score = psite.naturalLanguageScore;
 
-        try{
-            Statement stmt = null;
+        Statement stmt = null;
 
-            StringBuffer sBufferSQL = new StringBuffer(21);
-            sBufferSQL.append("INSERT INTO TB_PATTERN (id_evidence, score_boa, nlp_normalized, nlp_no_var, nlp, " +
-                    "lang, nlp_score, pos, generalized, ner" +
-                    ") VALUES ('")
-                    .append(idevidence).append(",")
-                    .append(boa_score).append(",'")
-                    .append(nlpn).append("','")
-                    .append(nlpnovar).append("','")
-                    .append(nlp).append("','")
-                    .append(ln).append("',")
-                    .append(nlp_score).append(",'")
-                    .append(pos).append("','")
-                    .append(generalized).append("','")
-                    .append(ner).append(");");
+        StringBuffer sBufferSQL = new StringBuffer(21);
+        sBufferSQL.append("INSERT INTO TB_PATTERN (id_evidence, score_boa, nlp_normalized, nlp_no_var, nlp, " +
+                "lang, nlp_score, pos, generalized, ner" +
+                ") VALUES (")
+                .append(idevidence).append(",")
+                .append(boa_score).append(",'")
+                .append(nlpn).append("','")
+                .append(nlpnovar).append("','")
+                .append(nlp).append("','")
+                .append(ln).append("',")
+                .append(nlp_score).append(",'")
+                .append(pos).append("','")
+                .append(generalized).append("','")
+                .append(ner).append("');");
 
-            stmt = c.createStatement();
-            Integer id = stmt.executeUpdate(sBufferSQL.toString());
-            stmt.close();
-            return id;
-
-        } catch (Exception e){
-            System.out.println(e.toString());
-            return -1;
-        }
+        stmt = c.createStatement();
+        Integer id = stmt.executeUpdate(sBufferSQL.toString());
+        stmt.close();
+        LOGGER.info(":: pattern ok");
+        return id;
 
     }
 
-    public Integer saveMetaQuery(Integer idpattern, String metaquery, String sl, String pl, String ol,
-                               String lang, String evidencetype){
-        try{
-            Statement stmt = null;
-            String sql = "INSERT INTO TB_METAQUERY " +
-                    "(id_pattern, metaquery, " +
-                    "subject_label, predicate_label, object_label, lang, evidence_type)" +
-                    " VALUES (" + idpattern + ",'" + metaquery  + "','" + sl + "','" + pl  + "','" + ol + "','" + lang
-                    + "','" + evidencetype + "');";
-            stmt = c.createStatement();
-            Integer id = stmt.executeUpdate(sql);
-            stmt.close();
-            return id;
+    public Integer saveMetaQuery(Integer idpattern, MetaQuery msite) throws Exception{
 
-        } catch (Exception e){
-            System.out.println(e.toString());
-            return -1;
-        }
+        String metaquery = msite.toString();
+        String sl = msite.getSubjectLabel();
+        String pl = msite.getPropertyLabel();
+        String ol = msite.getObjectLabel();
+        String lang = msite.getLanguage();
+        String evidencetype = msite.getEvidenceTypeRelation().toString();
+
+        Statement stmt = null;
+        String sql = "INSERT INTO TB_METAQUERY " +
+                "(id_pattern, metaquery, " +
+                "subject_label, predicate_label, object_label, lang, evidence_type)" +
+                " VALUES (" + idpattern + ",'" + metaquery  + "','" + sl + "','" + pl  + "','" + ol + "','" + lang
+                + "','" + evidencetype + "');";
+        stmt = c.createStatement();
+        Integer id = stmt.executeUpdate(sql);
+        stmt.close();
+        LOGGER.info(":: metaquery ok");
+        return id;
 
     }
 
-    public Integer saveWebSite(Integer idmetaquery, Integer idpattern, String url, String urldomain, String title,
-                             String body, Integer rank, Integer pagerank, Double pagerankscore, Double ind_score,
-                             Double ind_topic_majority_web, Double ind_topic_majority_search,
-                               Double ind_topic_coverage_score, String lang){
-        try{
-            Statement stmt = null;
-            String sql = "INSERT INTO TB_WEBSITE " +
-                    "(id_metaquery, id_pattern, url, url_domain, " +
-                    "title, body, rank, pagerank, pagerank_score, ind_score, ind_topic_majority_web," +
-                    "ind_topic_majority_search, ind_topic_coverage_score, lang)" +
-                    " VALUES (" + idmetaquery + "," + idpattern + ",'" + url + "','" +
-                    urldomain  + "','" + title + "','" +
-                    body  + "'," + rank + "," +
-                    pagerank  + "," + pagerankscore + "," + ind_score + "," +
-                    ind_topic_majority_web + "," + ind_topic_majority_search  +  "," +
-                    ind_topic_coverage_score + ",'" + lang + "');";
-            stmt = c.createStatement();
-            Integer id = stmt.executeUpdate(sql);
-            stmt.close();
-            return id;
+    public Integer saveWebSite(Integer idmetaquery, Integer idpattern, WebSite w) throws Exception{
 
-        } catch (Exception e){
-            System.out.println(e.toString());
-            return -1;
-        }
+        URI url = new URI(w.getUrl().toString());
+        String urldomain = url.getHost();
+        String title = w.getTitle();
+        String body = w.getText();
+        Integer rank = w.getSearchRank();
+        Integer pagerank = w.getPageRank();
+        Double pagerankscore =w.getPageRankScore();
+        Double ind_score = w.getScore();
+        Double ind_topic_majority_web = w.getTopicMajorityWebFeature();
+        Double ind_topic_majority_search = w.getTopicMajoritySearchFeature();
+        Double ind_topic_coverage_score = w.getTopicCoverageScore();
+        String lang = w.getLanguage();
+
+        Statement stmt = null;
+
+        title = title.replaceAll("'", "''");
+        body = body.replaceAll("'", "''");
+
+        StringBuffer sBufferSQL = new StringBuffer(29);
+        sBufferSQL.append("INSERT INTO TB_WEBSITE (id_metaquery, id_pattern, url, url_domain, title, body, rank, " +
+                "pagerank, pagerank_score, ind_score, ind_topic_majority_web, ind_topic_majority_search, " +
+                "ind_topic_coverage_score, lang" +
+                ") VALUES (")
+                .append(idmetaquery).append(",")
+                .append(idpattern).append(",'")
+                .append(url).append("','")
+                .append(urldomain).append("','")
+                .append(title).append("','")
+                .append(body).append("',")
+                .append(rank).append(",")
+                .append(pagerank).append(",")
+                .append(pagerankscore).append(",")
+                .append(ind_score).append(",")
+                .append(ind_topic_majority_web).append(",")
+                .append(ind_topic_majority_search).append(",")
+                .append(ind_topic_coverage_score).append(",'")
+                .append(lang).append("');");
+
+        stmt = c.createStatement();
+        LOGGER.info(sBufferSQL.toString());
+        Integer id = stmt.executeUpdate(sBufferSQL.toString());
+        stmt.close();
+        LOGGER.info(":: website ok");
+        return id;
+
 
     }
 

@@ -69,61 +69,41 @@ public class ProofExtractor {
 
     private static void saveWebSiteAndRelated(WebSite w, Integer idevidence, Integer idmodel) throws Exception {
 
-        try{
+        /* TB_PATTERN */
+        Pattern psite = w.getQuery().getPattern();
+        Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, psite);
 
-            URI uri = new URI(w.getUrl().toString());
-            String domain = uri.getHost();
+        /* TB_METAQUERY */
+        MetaQuery msite = w.getQuery();
+        Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idpattern, msite);
 
-            /* EXTRACTING: TB_PATTERN */
-            Pattern psite = w.getQuery().getPattern();
-            Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, psite);
+        /* TB_WEBSITE */
+        Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(idmetaquery, idpattern, w);
 
-            /* EXTRACTING: tb_metaquery */
-            MetaQuery msite = w.getQuery();
-            Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idpattern, msite.toString(), msite.getSubjectLabel(),
-                    msite.getPropertyLabel(), msite.getObjectLabel(), msite.getLanguage(),
-                    msite.getEvidenceTypeRelation().toString());
+        /* TB_REL_TOPICTERM_METAQUERY */
+        for (Word wordtt: msite.getTopicTerms()) {
+            SQLiteHelper.getInstance().addTopicTermsMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
+                    wordtt.isFromWikipedia() == true ? 1: 0);}
 
-            /* EXTRACTING: tb_website */
-            Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(idmetaquery, idpattern, w.getUrl(), domain,
-                    w.getTitle(), w.getText(), w.getSearchRank(), w.getPageRank(), w.getPageRankScore(), w.getScore(),
-                    w.getTopicMajorityWebFeature(), w.getTopicMajoritySearchFeature(),
-                    w.getTopicCoverageScore(), w.getLanguage());
+        /* TB_REL_TOPICTERM_WEBSITE */
+        for (Word word: w.getOccurringTopicTerms()){
+            SQLiteHelper.getInstance().addTopicTermsWebSite(idwebsite, word.getWord(), word.getFrequency(),
+                    word.isFromWikipedia() == true ? 1: 0);}
 
-            /*******************************************
-             * EXTRACTING: tb_rel_metaquery_topicterm
-             * *****************************************/
-            for (Word wordtt: msite.getTopicTerms()) {
-                SQLiteHelper.getInstance().addTopicTermsMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
-                        wordtt.isFromWikipedia() == true ? 1: 0);
-            }
+        //TODO: check this later!
+        //List<ComplexProof> proofs = evidence.getComplexProofs(w);
+
+        /************************
+         * EXTRACTING: tb_proof
+         * **********************/
+        //for (ComplexProof pro: proofs){
+        //    SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel,
+        //            pro.getHasPatternInBetween() == true ? 1:0, pro.getTinyContext(),
+        //            pro.getSmallContext(), pro.getMediumContext(), pro.getLargeContext(),
+        //            pro.getProofPhrase(), pro.getNormalizedProofPhrase(), pro.getLanguage());
+       // }
 
 
-
-            /***************************************
-             * EXTRACTING: tb_rel_website_topicterm
-             * *************************************/
-            for (Word word: w.getOccurringTopicTerms()){
-                SQLiteHelper.getInstance().addTopicTermsWebSite(idwebsite, word.getWord(), word.getFrequency(),
-                        word.isFromWikipedia() == true ? 1: 0);
-            }
-
-            //TODO: check this later!
-            //List<ComplexProof> proofs = evidence.getComplexProofs(w);
-
-            /************************
-             * EXTRACTING: tb_proof
-             * **********************/
-            //for (ComplexProof pro: proofs){
-            //    SQLiteHelper.getInstance().addProof(idwebsite, idpattern, idmodel,
-            //            pro.getHasPatternInBetween() == true ? 1:0, pro.getTinyContext(),
-            //            pro.getSmallContext(), pro.getMediumContext(), pro.getLargeContext(),
-            //            pro.getProofPhrase(), pro.getNormalizedProofPhrase(), pro.getLanguage());
-           // }
-
-        }catch (Exception e){
-            throw e;
-        }
     }
 
     private static void saveMetadata(Evidence _evidence, Constants.EvidenceType evidencetype, String f) throws Exception{
@@ -155,16 +135,14 @@ public class ProofExtractor {
             {
                 for (Word wordtt: entry.getValue()) {
                     SQLiteHelper.getInstance().addTopicTermsEvidence(idevidence, entry.getKey(), wordtt.getWord(),
-                            wordtt.getFrequency(), wordtt.isFromWikipedia() == true ? 1 : 0);
-                }
+                            wordtt.getFrequency(), wordtt.isFromWikipedia() == true ? 1 : 0);}
             }
 
             Integer verification = 0;
             //1. get all websites without proofs (remaining)
             List<WebSite> websites = eaux.getAllWebSitesWithoutComplexProof();
             for (WebSite wsnp: websites){
-                saveWebSiteAndRelated(wsnp, idevidence, idmodel); verification ++;
-            }
+                saveWebSiteAndRelated(wsnp, idevidence, idmodel); verification ++;}
 
             //2. get all websites, derived by proofs
             Set<ComplexProof> setproofs = eaux.getComplexProofs();
@@ -172,12 +150,11 @@ public class ProofExtractor {
             while(iterator.hasNext()) {
                 ComplexProof pfr = iterator.next();
                 WebSite wswp = pfr.getWebSite();
-                saveWebSiteAndRelated(wswp, idevidence, idmodel); verification ++;
-            }
+                saveWebSiteAndRelated(wswp, idevidence, idmodel); verification ++;}
 
             if (verification != _evidence.getAllWebSites().size()){
                 SQLiteHelper.getInstance().rollbackT();
-                throw new Exception(":: hum...something is not well modeled");
+                throw new Exception(":: hum...something is kaputt");
             }
 
             //commit transaction for model N
