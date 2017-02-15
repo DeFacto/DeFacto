@@ -108,7 +108,7 @@ public class ProofExtractor {
                         word.isFromWikipedia() == true ? 1: 0);
             }
 
-
+            //TODO: check this later!
             //List<ComplexProof> proofs = evidence.getComplexProofs(w);
 
             /************************
