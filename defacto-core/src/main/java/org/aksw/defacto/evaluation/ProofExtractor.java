@@ -148,12 +148,7 @@ public class ProofExtractor {
             String filename = p1.getFileName().toString();
 
             /** tb_model **/
-            Integer idmodel = SQLiteHelper.getInstance().saveModel(model.getName(), model.isCorrect() ? 1 : 0, filename,
-                    p1.getParent().toString(), model.getSubjectUri(), model.getSubjectLabel("en"),
-                    model.getPredicate().getURI(), model.getPredicate().getLocalName(), model.getObjectUri(),
-                    model.getObjectLabel("en"), model.getTimePeriod().getFrom().toString(),
-                    model.getTimePeriod().getTo().toString(),
-                    model.getTimePeriod().isTimePoint() ? 1 : 0);
+            Integer idmodel = SQLiteHelper.getInstance().saveModel(model, filename, p1.getParent().toString());
 
             /** tb_evidence **/
             Integer idevidence = SQLiteHelper.getInstance().saveEvidence(idmodel, eaux.getDeFactoScore(),

@@ -1,6 +1,7 @@
 package org.aksw.defacto.helper;
 
 import org.aksw.defacto.evaluation.ProofExtractor;
+import org.aksw.defacto.model.DefactoModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,11 +80,22 @@ public class SQLiteHelper {
         }
     }
 
-    public Integer saveModel(String name, int correct, String filename, String filepath,
-                             String suri, String slabel, String puri, String plabel,
-                             String ouri, String olabel, String from, String to, int isTimePoint){
+    public Integer saveModel(DefactoModel model, String filename, String filepath){
         Integer id = -1;
         try {
+
+            String name = model.getName();
+            int correct = model.isCorrect() ? 1 : 0;
+            String suri = model.getSubjectUri();
+            String slabel = model.getSubjectLabel("en");
+            String puri = model.getPredicate().getURI();
+            String plabel = model.getPredicate().getLocalName();
+            String ouri = model.getObjectUri();
+            String olabel = model.getObjectLabel("en");
+            String from = model.getTimePeriod().getFrom().toString();
+            String to = model.getTimePeriod().getTo().toString();
+            int isTimePoint = model.getTimePeriod().isTimePoint() ? 1 : 0;
+
             int curid = existsRecord("select id from tb_model where file_name = '" + filename +
                     "' and file_path = '" + filepath + "' and timepoint = " + isTimePoint);
             if (curid < 1) {
