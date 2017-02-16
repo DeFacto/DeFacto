@@ -17,6 +17,7 @@ import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.ml.feature.evidence.AbstractEvidenceFeature;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.model.DefactoTimePeriod;
+import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.time.DefactoTimePeriodSearcher;
 import org.aksw.defacto.search.time.DomainSpecificTimePeriodSearcher;
 import org.aksw.defacto.search.time.GlobalTimePeriodSearcher;
@@ -39,6 +40,7 @@ public class Evidence {
     private Constants.EvidenceType evidenceType; //defines the type of given evidence instance (POS or NEG)
     private Evidence negative; //a link for a counter evidence (NEG)
     private DefactoModel model;
+    private Map<Pattern,MetaQuery> queries              = new LinkedHashMap<Pattern,MetaQuery>();
     private Map<Pattern,List<WebSite>> webSites         = new LinkedHashMap<Pattern,List<WebSite>>();
     private Map<String,List<Word>> topicTerms           = new HashMap<String,List<Word>>();
 //    private Map<Pattern,Double[][]> similarityMatricies = new LinkedHashMap<Pattern,Double[][]>();
@@ -98,7 +100,15 @@ public class Evidence {
         this.complexProofs      = new HashSet<ComplexProof>();
         this.evidenceType = Constants.EvidenceType.POS;
     }
-    
+
+    public void setQueries(Map<Pattern,MetaQuery> q){
+        this.queries = q;
+    }
+
+    public Map<Pattern,MetaQuery> getQueries(){
+        return this.queries;
+    }
+
     /**
      * @return the factFeatures
      */

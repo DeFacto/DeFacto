@@ -44,7 +44,7 @@ public class SQLiteHelper {
         return instance;
     }
 
-    private Integer existsRecord(String query) throws Exception{
+    public Integer existsRecord(String query) throws Exception{
 
         Statement stmt = null;
         stmt = c.createStatement();
@@ -132,9 +132,10 @@ public class SQLiteHelper {
             stmt = c.createStatement();
             curid = stmt.executeUpdate(sBufferSQL.toString());
             stmt.close();
+            LOGGER.info(":: model ok");
         }
 
-        LOGGER.info(":: model ok");
+
         return curid;
     }
 
@@ -237,28 +238,19 @@ public class SQLiteHelper {
         return true;
     }
 
-    private Integer getPattern(String pattern, String language) throws Exception{
-        int curid = existsRecord("select id from tb_pattern where nlp_normalized = '" + pattern + "' and " +
-                "lang = '" + language + "'");
-        if (curid < 0){
-            throw new Exception("this pattern/language should exists: " + pattern + " / " + language);
+    public boolean addProof(Integer idmodel, ComplexProof pro, Integer idevidence, Evidence evidence) throws Exception{
+
+        //TODO: has_proof should be a property of a website. I will not change it now...
+        Integer has_proof = 0;
+        if (evidence.getComplexProofs(pro.getWebSite()).size() > 0){
+            has_proof = 1;
         }
-        return curid;
-    }
 
-    private Integer getWebSiteByURL(String url) throws Exception{
-        int curid = existsRecord("select id from tb_website where url = '" + url + "'");
-        if (curid < 0){
-            throw new Exception("this url should exists: " + url);
-        }
-        return curid;
-    }
+        Integer idmetaquery = saveMetaQuery(pro.getWebSite().getQuery());
 
-    public boolean addProof(Integer idmodel, ComplexProof pro) throws Exception{
+        Integer idwebsite =  saveWebSite(idmetaquery, pro.getWebSite(), has_proof);
 
-
-        Integer idwebsite = getWebSiteByURL(pro.getWebSite().getUrl().toString());
-        Integer idpattern = getPattern(pro.getPattern().getNormalized(), pro.getPattern().language);
+        Integer idpattern = savePattern(idevidence, pro.getPattern());
 
         Integer id = existsRecord("SELECT id FROM TB_PROOF WHERE ID_WEBSITE = " + idwebsite +
                 " AND ID_PATTERN = " + idpattern + " AND ID_MODEL = " + idmodel + " AND LANG = '" +
@@ -368,6 +360,25 @@ public class SQLiteHelper {
 
     }
 
+    public boolean savePatternMetaQuery(Integer idpattern, Integer idmetaquery) throws Exception {
+        Integer id = existsRecord("SELECT id FROM TB_PATTERN_METAQUERY WHERE ID_PATTERN = " + idpattern +
+                " AND ID_METAQUERY = " + idmetaquery);
+        if (id == 0) {
+            Statement stmt = null;
+
+            StringBuffer sBufferSQL = new StringBuffer(5);
+            sBufferSQL.append("INSERT INTO TB_PATTERN_METAQUERY (id_pattern, id_metaquery) VALUES (")
+                    .append(idpattern).append(",")
+                    .append(idmetaquery).append(");");
+
+            stmt = c.createStatement();
+            id = stmt.executeUpdate(sBufferSQL.toString());
+            stmt.close();
+            LOGGER.info(":: pattern_metaquery ok");
+        }
+        return true;
+    }
+
     public Integer savePattern(Integer idevidence, Pattern psite) throws Exception{
 
         Double boa_score = psite.boaScore;
@@ -403,7 +414,7 @@ public class SQLiteHelper {
             stmt = c.createStatement();
             id = stmt.executeUpdate(sBufferSQL.toString());
             stmt.close();
-            LOGGER.info(":: pattern ok");
+            LOGGER.debug(":: pattern ok");
         }
 
         return id;
@@ -418,18 +429,14 @@ public class SQLiteHelper {
         String ol = msite.getObjectLabel();
         String lang = msite.getLanguage();
         String evidencetype = msite.getEvidenceTypeRelation().toString();
-        Integer idpattern = getPattern(msite.getPattern().getNormalized(),
-                msite.getPattern().language);
-
         Integer idmetaquery = existsRecord("SELECT id FROM TB_METAQUERY WHERE METAQUERY = '" + metaquery + "'");
 
         if (idmetaquery == 0) {
             Statement stmt = null;
             String sql = "INSERT INTO TB_METAQUERY " +
-                    "(id_pattern, metaquery, " +
-                    "subject_label, predicate_label, object_label, lang, evidence_type)" +
-                    " VALUES (" + idpattern + ",'" + metaquery  + "','" + sl + "','" + pl  + "','" + ol + "','" + lang
-                    + "','" + evidencetype + "');";
+                    "(metaquery, subject_label, predicate_label, object_label, lang, evidence_type)" +
+                    " VALUES ('" + metaquery  + "','" + sl + "','" + pl  + "','" + ol + "','" + lang + "','" +
+                    evidencetype + "');";
             stmt = c.createStatement();
             idmetaquery = stmt.executeUpdate(sql);
             stmt.close();
@@ -454,42 +461,43 @@ public class SQLiteHelper {
         Double ind_topic_majority_search = w.getTopicMajoritySearchFeature();
         Double ind_topic_coverage_score = w.getTopicCoverageScore();
         String lang = w.getLanguage();
-        Integer idpattern = getPattern(w.getPattern().getNormalized(),
-                w.getPattern().language);
 
         Statement stmt = null;
 
         title = title.replaceAll("'", "''");
         body = body.replaceAll("'", "''");
 
-        StringBuffer sBufferSQL = new StringBuffer(31);
-        sBufferSQL.append("INSERT INTO TB_WEBSITE (id_metaquery, id_pattern, url, url_domain, title, body, rank, " +
-                "pagerank, pagerank_score, ind_score, ind_topic_majority_web, ind_topic_majority_search, " +
-                "ind_topic_coverage_score, has_proof, lang" +
-                ") VALUES (")
-                .append(idmetaquery).append(",")
-                .append(idpattern).append(",'")
-                .append(url).append("','")
-                .append(urldomain).append("','")
-                .append(title).append("','")
-                .append(body).append("',")
-                .append(rank).append(",")
-                .append(pagerank).append(",")
-                .append(pagerankscore).append(",")
-                .append(ind_score).append(",")
-               .append(ind_topic_majority_web).append(",")
-                .append(ind_topic_majority_search).append(",")
-                .append(ind_topic_coverage_score).append(",")
-                .append(has_proof).append(",'")
-                .append(lang).append("');");
+        Integer id = existsRecord("SELECT id FROM TB_WEBSITE WHERE ID_METAQUERY = " + idmetaquery + " AND " +
+                " url = '" + url + "' AND lang = '" + lang + "'");
 
-        stmt = c.createStatement();
-        LOGGER.info(sBufferSQL.toString());
-        Integer id = stmt.executeUpdate(sBufferSQL.toString());
-        stmt.close();
-        LOGGER.info(":: website ok");
+        if (id == 0) {
+            StringBuffer sBufferSQL = new StringBuffer(31);
+            sBufferSQL.append("INSERT INTO TB_WEBSITE (id_metaquery, url, url_domain, title, body, rank, " +
+                    "pagerank, pagerank_score, ind_score, ind_topic_majority_web, ind_topic_majority_search, " +
+                    "ind_topic_coverage_score, has_proof, lang" +
+                    ") VALUES (")
+                    .append(idmetaquery).append(",'")
+                    .append(url).append("','")
+                    .append(urldomain).append("','")
+                    .append(title).append("','")
+                    .append(body).append("',")
+                    .append(rank).append(",")
+                    .append(pagerank).append(",")
+                    .append(pagerankscore).append(",")
+                    .append(ind_score).append(",")
+                    .append(ind_topic_majority_web).append(",")
+                    .append(ind_topic_majority_search).append(",")
+                    .append(ind_topic_coverage_score).append(",")
+                    .append(has_proof).append(",'")
+                    .append(lang).append("');");
+
+            stmt = c.createStatement();
+            id = stmt.executeUpdate(sBufferSQL.toString());
+            stmt.close();
+            LOGGER.info(":: website ok");
+        }
+
         return id;
-
 
     }
 

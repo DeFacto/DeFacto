@@ -115,6 +115,7 @@ public class Defacto {
         long startCrawl = System.currentTimeMillis();
         EvidenceCrawler crawler = new EvidenceCrawler(model, queries);
         Evidence evidence = crawler.crawlEvidence(engine);
+        evidence.setQueries(queries);
         LOGDEV.debug(" -> crawling evidence took " + TimeUtil.formatTime(System.currentTimeMillis() - startCrawl));
 
         Evidence evidence2;

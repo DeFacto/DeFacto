@@ -68,19 +68,11 @@ public class ProofExtractor {
         }
     }
 
-    private static void saveWebSiteAndRelated(WebSite w, Integer idevidence, Integer has_proof) throws Exception {
+    private static void saveWebSiteAndRelated(WebSite w, Integer has_proof) throws Exception {
 
-        /* TB_METAQUERY */
-        MetaQuery msite = w.getQuery();
-        Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(msite);
-
+        Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(w.getQuery());
         /* TB_WEBSITE */
         Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(idmetaquery, w, has_proof);
-
-        /* TB_REL_TOPICTERM_METAQUERY */
-        for (Word wordtt: msite.getTopicTerms()) {
-            SQLiteHelper.getInstance().addTopicTermsMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
-                    wordtt.isFromWikipedia() == true ? 1: 0);}
 
         /* TB_REL_TOPICTERM_WEBSITE */
         for (Word word: w.getOccurringTopicTerms()){
@@ -89,9 +81,13 @@ public class ProofExtractor {
 
     }
 
-    private static void saveMetadata(long totalTime, Evidence _evidence, Constants.EvidenceType evidencetype, String f) throws Exception{
+    private static void saveMetadata(long totalTime, Evidence _evidence, Constants.EvidenceType evidencetype,
+                                     String f) throws Exception{
 
         try{
+
+            //TODO: colocar ID_EVIDENCIA em todas as tabelas!!!!
+
             Evidence eaux;
             Integer eauxnum;
 
@@ -113,6 +109,28 @@ public class ProofExtractor {
             /** TB_EVIDENCE HEADER **/
             Integer idevidence = SQLiteHelper.getInstance().saveEvidenceRoot(idmodel, eaux, eauxnum);
 
+            /* TB_PATTERN x TB_METAQUERY */
+            Map<Pattern, MetaQuery> q = eaux.getQueries();
+            Iterator it = q.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                Pattern p = (Pattern) pair.getKey();
+                MetaQuery m = (MetaQuery) pair.getValue();
+
+                LOGGER.info(":: pattern - "+ p.toString());
+                LOGGER.info(":: metaquery - "+ m.toString());
+
+                Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, p);
+                Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(m);
+                SQLiteHelper.getInstance().savePatternMetaQuery(idpattern, idmetaquery);
+
+                /* TB_REL_TOPICTERM_METAQUERY */
+                for (Word wordtt: m.getTopicTerms()) {
+                    SQLiteHelper.getInstance().addTopicTermsMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
+                            wordtt.isFromWikipedia() == true ? 1: 0);}
+
+            }
+
             /** TB_REL_TOPIC_TERM_EVIDENCE **/
             for (Map.Entry<String, List<Word>> entry : eaux.getTopicTerms().entrySet())
             {
@@ -121,27 +139,28 @@ public class ProofExtractor {
                             wordtt.getFrequency(), wordtt.isFromWikipedia() == true ? 1 : 0);}
             }
 
+
+
             //all other websites with proof
             List<WebSite> sitesproof = eaux.getAllWebSitesWithComplexProof();
             //all other websites without proof
             List<WebSite> sitesnoproof = eaux.getAllWebSitesWithoutComplexProof();
 
-            /* TB_PATTERN */
-            List<Pattern> patterns = eaux.getBoaPatterns();
-            for (Pattern p: patterns){
-                SQLiteHelper.getInstance().savePattern(idevidence, p);
+            for (WebSite site: sitesproof){
+                //LOGGER.info(":: (with proof) - " + site.getUrl() + " - " + site.getTitle());
+                saveWebSiteAndRelated(site, 1);
+            }
+            for (WebSite site: sitesnoproof){
+                //LOGGER.info(":: (without proof) - " + site.getUrl() + " - " + site.getTitle());
+                saveWebSiteAndRelated(site, 0);
             }
 
-            for (WebSite site: sitesproof){
-                saveWebSiteAndRelated(site, idevidence, 1);}
-            for (WebSite site: sitesnoproof){
-                saveWebSiteAndRelated(site, idevidence, 0);}
 
             //all proofs
             Set<ComplexProof> setproofs = eaux.getComplexProofs();
             Iterator<ComplexProof> iterator = setproofs.iterator();
             while(iterator.hasNext()) { ComplexProof pfr = iterator.next();
-                SQLiteHelper.getInstance().addProof(idmodel, pfr);}
+                SQLiteHelper.getInstance().addProof(idmodel, pfr, idevidence, eaux);}
 
             if ((sitesproof.size() + sitesnoproof.size() != eaux.getAllWebSites().size())){
                 throw new Exception("that' strange!");
