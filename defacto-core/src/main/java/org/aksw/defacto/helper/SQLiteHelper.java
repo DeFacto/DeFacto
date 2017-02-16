@@ -256,54 +256,59 @@ public class SQLiteHelper {
 
     public boolean addProof(Integer idmodel, ComplexProof pro) throws Exception{
 
-        //TODO: check if exists!!!!
 
         Integer idwebsite = getWebSiteByURL(pro.getWebSite().getUrl().toString());
         Integer idpattern = getPattern(pro.getPattern().getNormalized(), pro.getPattern().language);
 
-        String ctiny = pro.getTinyContext().replaceAll("'", "''");
-        String cs = pro.getSmallContext().replaceAll("'", "''");
-        String cm = pro.getMediumContext().replaceAll("'", "''");
-        String cl = pro.getLargeContext().replaceAll("'", "''");
-        String ctinytag = pro.getTaggedTinyContext().replaceAll("'", "''");
-        String cstag = pro.getTaggedSmallContext().replaceAll("'", "''");
-        String cmtag = pro.getTaggedMediumContext().replaceAll("'", "''");
-        String cltag = pro.getTaggedLargeContext().replaceAll("'", "''");
-        String phrase = pro.getProofPhrase().replaceAll("'", "''");
-        String nphrase = pro.getNormalizedProofPhrase().replaceAll("'", "''");
-        String firstlabel = pro.getSubject();
-        String secondlabel = pro.getObject();
+        Integer id = existsRecord("SELECT id FROM TB_PROOF WHERE ID_WEBSITE = " + idwebsite +
+                " AND ID_PATTERN = " + idpattern + " AND ID_MODEL = " + idmodel + " AND LANG = '" +
+                pro.getPattern().language + "' AND NORMALISED_PHRASE = '" + pro.getPattern().getNormalized() + "'");
 
-        Statement stmt = null;
+        if (id == 0) {
+            String ctiny = pro.getTinyContext().replaceAll("'", "''");
+            String cs = pro.getSmallContext().replaceAll("'", "''");
+            String cm = pro.getMediumContext().replaceAll("'", "''");
+            String cl = pro.getLargeContext().replaceAll("'", "''");
+            String ctinytag = pro.getTaggedTinyContext().replaceAll("'", "''");
+            String cstag = pro.getTaggedSmallContext().replaceAll("'", "''");
+            String cmtag = pro.getTaggedMediumContext().replaceAll("'", "''");
+            String cltag = pro.getTaggedLargeContext().replaceAll("'", "''");
+            String phrase = pro.getProofPhrase().replaceAll("'", "''");
+            String nphrase = pro.getNormalizedProofPhrase().replaceAll("'", "''");
+            String firstlabel = pro.getSubject();
+            String secondlabel = pro.getObject();
 
-        StringBuffer sBufferSQL = new StringBuffer(37);
-        sBufferSQL.append("INSERT INTO TB_PROOF (id_website, id_pattern, id_model, context_tiny, context_tiny_tagged," +
-                " context_small, context_small_tagged, context_medium, context_medium_tagged, context_large, context_large_tagged," +
-                " phrase, normalised_phrase, " +
-                "first_label, second_label, has_pattern_in_between, lang" +
-                ") VALUES (")
-                .append(idwebsite).append(",")
-                .append(idpattern).append(",")
-                .append(idmodel).append(",'")
-                .append(ctiny).append("','")
-                .append(ctinytag).append("','")
-                .append(cs).append("','")
-                .append(cstag).append("','")
-                .append(cm).append("','")
-                .append(cmtag).append("','")
-                .append(cl).append("','")
-                .append(cltag).append("','")
-                .append(phrase).append("','")
-                .append(nphrase).append("','")
-                .append(firstlabel).append("','")
-                .append(secondlabel).append("',")
-                .append(pro.getHasPatternInBetween() == true ? 1: 0).append(",'")
-                .append(pro.getLanguage()).append("');");
+            Statement stmt = null;
+            StringBuffer sBufferSQL = new StringBuffer(37);
+            sBufferSQL.append("INSERT INTO TB_PROOF (id_website, id_pattern, id_model, context_tiny, context_tiny_tagged," +
+                    " context_small, context_small_tagged, context_medium, context_medium_tagged, context_large, " +
+                    "context_large_tagged, phrase, normalised_phrase, " +
+                    "first_label, second_label, has_pattern_in_between, lang" +
+                    ") VALUES (")
+                    .append(idwebsite).append(",")
+                    .append(idpattern).append(",")
+                    .append(idmodel).append(",'")
+                    .append(ctiny).append("','")
+                    .append(ctinytag).append("','")
+                    .append(cs).append("','")
+                    .append(cstag).append("','")
+                    .append(cm).append("','")
+                    .append(cmtag).append("','")
+                    .append(cl).append("','")
+                    .append(cltag).append("','")
+                    .append(phrase).append("','")
+                    .append(nphrase).append("','")
+                    .append(firstlabel).append("','")
+                    .append(secondlabel).append("',")
+                    .append(pro.getHasPatternInBetween() == true ? 1: 0).append(",'")
+                    .append(pro.getLanguage()).append("');");
 
-        stmt = c.createStatement();
-        Integer id = stmt.executeUpdate(sBufferSQL.toString());
-        stmt.close();
-        LOGGER.info(":: proof ok");
+            stmt = c.createStatement();
+            stmt.executeUpdate(sBufferSQL.toString());
+            stmt.close();
+            LOGGER.info(":: proof ok");
+        }
+
         return true;
 
     }
@@ -311,7 +316,7 @@ public class SQLiteHelper {
     public boolean addTopicTermsEvidence(Integer idevidence, String ln, String word, Integer qtd, Integer isfromwiki)
             throws Exception{
 
-        Integer id = existsRecord("SELECT 1 FROM TB_REL_TOPICTERM_EVIDENCE WHERE ID_EVIDENCE = " + idevidence +
+        Integer id = existsRecord("SELECT id FROM TB_REL_TOPICTERM_EVIDENCE WHERE ID_EVIDENCE = " + idevidence +
                 " AND TOPICTERM = '" + word + "'" + " AND LANG = '" + ln + "'");
         if (id == 0) {
             Statement stmt = null;
@@ -330,7 +335,7 @@ public class SQLiteHelper {
     public boolean addTopicTermsMetaQuery(Integer idmetaquery, String word, Integer qtd, Integer isfromwiki)
             throws Exception{
 
-        Integer id = existsRecord("SELECT 1 FROM TB_TOPICTERM_METAQUERY WHERE ID_METAQUERY = " + idmetaquery +
+        Integer id = existsRecord("SELECT id FROM TB_TOPICTERM_METAQUERY WHERE ID_METAQUERY = " + idmetaquery +
                 " AND TOPICTERM = '" + word + "'");
         if (id == 0) {
             Statement stmt = null;
@@ -347,7 +352,7 @@ public class SQLiteHelper {
 
     public boolean addTopicTermsWebSite(Integer idwebsite, String word, Integer qtd, Integer isfromwiki) throws Exception{
 
-        Integer id = existsRecord("SELECT 1 FROM TB_REL_TOPICTERM_WEBSITE WHERE ID_WEBSITE = " + idwebsite +
+        Integer id = existsRecord("SELECT id FROM TB_REL_TOPICTERM_WEBSITE WHERE ID_WEBSITE = " + idwebsite +
                 " AND TOPICTERM = '" + word + "'");
         if (id == 0) {
             Statement stmt = null;
@@ -375,27 +380,32 @@ public class SQLiteHelper {
         String generalized = psite.generalized;
         Double nlp_score = psite.naturalLanguageScore;
 
-        Statement stmt = null;
+        Integer id = existsRecord("SELECT id FROM TB_PATTERN WHERE ID_EVIDENCE = " + idevidence +
+                " AND NLP = '" + nlp + "'");
+        if (id == 0) {
+            Statement stmt = null;
 
-        StringBuffer sBufferSQL = new StringBuffer(21);
-        sBufferSQL.append("INSERT INTO TB_PATTERN (id_evidence, score_boa, nlp_normalized, nlp_no_var, nlp, " +
-                "lang, nlp_score, pos, generalized, ner" +
-                ") VALUES (")
-                .append(idevidence).append(",")
-                .append(boa_score).append(",'")
-                .append(nlpn).append("','")
-                .append(nlpnovar).append("','")
-                .append(nlp).append("','")
-                .append(ln).append("',")
-                .append(nlp_score).append(",'")
-                .append(pos).append("','")
-                .append(generalized).append("','")
-                .append(ner).append("');");
+            StringBuffer sBufferSQL = new StringBuffer(21);
+            sBufferSQL.append("INSERT INTO TB_PATTERN (id_evidence, score_boa, nlp_normalized, nlp_no_var, nlp, " +
+                    "lang, nlp_score, pos, generalized, ner" +
+                    ") VALUES (")
+                    .append(idevidence).append(",")
+                    .append(boa_score).append(",'")
+                    .append(nlpn).append("','")
+                    .append(nlpnovar).append("','")
+                    .append(nlp).append("','")
+                    .append(ln).append("',")
+                    .append(nlp_score).append(",'")
+                    .append(pos).append("','")
+                    .append(generalized).append("','")
+                    .append(ner).append("');");
 
-        stmt = c.createStatement();
-        Integer id = stmt.executeUpdate(sBufferSQL.toString());
-        stmt.close();
-        LOGGER.info(":: pattern ok");
+            stmt = c.createStatement();
+            id = stmt.executeUpdate(sBufferSQL.toString());
+            stmt.close();
+            LOGGER.info(":: pattern ok");
+        }
+
         return id;
 
     }
@@ -411,7 +421,7 @@ public class SQLiteHelper {
         Integer idpattern = getPattern(msite.getPattern().getNormalized(),
                 msite.getPattern().language);
 
-        Integer idmetaquery = existsRecord("SELECT 1 FROM TB_METAQUERY WHERE METAQUERY = '" + metaquery + "'");
+        Integer idmetaquery = existsRecord("SELECT id FROM TB_METAQUERY WHERE METAQUERY = '" + metaquery + "'");
 
         if (idmetaquery == 0) {
             Statement stmt = null;
