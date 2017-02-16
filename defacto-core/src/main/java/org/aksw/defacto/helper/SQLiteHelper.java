@@ -66,9 +66,9 @@ public class SQLiteHelper {
         Long tothitcount = eaux.getTotalHitCount();
         String features = eaux.getFeatures().toString();
 
-        int curid = existsRecord("select id from tb_evidence where id_model = " + idmodel + " and " +
+        int id = existsRecord("select id from tb_evidence where id_model = " + idmodel + " and " +
                 "evidence_type = " + evidencetype);
-        if (curid == 0) {
+        if (id == 0) {
             Statement stmt = null;
             StringBuffer sBufferSQL = new StringBuffer(13);
 
@@ -84,11 +84,15 @@ public class SQLiteHelper {
                     .append(evidencetype).append(");");
 
             stmt = c.createStatement();
-            curid = stmt.executeUpdate(sBufferSQL.toString());
+            stmt.executeUpdate(sBufferSQL.toString());
+            ResultSet keys = stmt.getGeneratedKeys();
+            keys.next();
+            id = keys.getInt(1);
+            keys.close();
             stmt.close();
             LOGGER.info(":: evidence header ok");
         }
-        return curid;
+        return id;
 
     }
 
@@ -106,9 +110,9 @@ public class SQLiteHelper {
         String to = model.getTimePeriod().getTo().toString();
         int isTimePoint = model.getTimePeriod().isTimePoint() ? 1 : 0;
 
-        int curid = existsRecord("select id from tb_model where file_name = '" + filename +
+        int id = existsRecord("select id from tb_model where file_name = '" + filename +
                 "' and file_path = '" + filepath + "' and period_timepoint = " + isTimePoint);
-        if (curid == 0) {
+        if (id == 0) {
             Statement stmt = null;
             StringBuffer sBufferSQL = new StringBuffer(29);
             sBufferSQL.append("INSERT INTO TB_MODEL (model_name, model_correct, file_name, file_path, subject_uri, " +
@@ -130,13 +134,17 @@ public class SQLiteHelper {
                     .append(isTimePoint).append(");");
 
             stmt = c.createStatement();
-            curid = stmt.executeUpdate(sBufferSQL.toString());
+            stmt.executeUpdate(sBufferSQL.toString());
+            ResultSet keys = stmt.getGeneratedKeys();
+            keys.next();
+            id = keys.getInt(1);
+            keys.close();
             stmt.close();
             LOGGER.info(":: model ok");
         }
 
 
-        return curid;
+        return id;
     }
 
     public boolean executeQueriesInBatch(List<String> queries){
@@ -238,7 +246,7 @@ public class SQLiteHelper {
         return true;
     }
 
-    public boolean addProof(Integer idmodel, ComplexProof pro, Integer idevidence, Evidence evidence) throws Exception{
+    public Integer addProof(Integer idmodel, ComplexProof pro, Integer idevidence, Evidence evidence) throws Exception{
 
         //TODO: has_proof should be a property of a website. I will not change it now...
         Integer has_proof = 0;
@@ -252,9 +260,14 @@ public class SQLiteHelper {
 
         Integer idpattern = savePattern(idevidence, pro.getPattern());
 
-        Integer id = existsRecord("SELECT id FROM TB_PROOF WHERE ID_WEBSITE = " + idwebsite +
+        String sql = "SELECT id FROM TB_PROOF WHERE ID_WEBSITE = " + idwebsite +
                 " AND ID_PATTERN = " + idpattern + " AND ID_MODEL = " + idmodel + " AND LANG = '" +
-                pro.getPattern().language + "' AND NORMALISED_PHRASE = '" + pro.getPattern().getNormalized() + "'");
+                pro.getPattern().language + "' AND FIRST_LABEL = '" + pro.getSubject() + "' AND SECOND_LABEL = '" +
+                pro.getObject() + "'";
+
+        LOGGER.info(sql);
+
+        Integer id = existsRecord(sql);
 
         if (id == 0) {
             String ctiny = pro.getTinyContext().replaceAll("'", "''");
@@ -297,11 +310,15 @@ public class SQLiteHelper {
 
             stmt = c.createStatement();
             stmt.executeUpdate(sBufferSQL.toString());
+            ResultSet keys = stmt.getGeneratedKeys();
+            keys.next();
+            id = keys.getInt(1);
+            keys.close();
             stmt.close();
             LOGGER.info(":: proof ok");
         }
 
-        return true;
+        return id;
 
     }
 
@@ -344,8 +361,10 @@ public class SQLiteHelper {
 
     public boolean addTopicTermsWebSite(Integer idwebsite, String word, Integer qtd, Integer isfromwiki) throws Exception{
 
-        Integer id = existsRecord("SELECT id FROM TB_REL_TOPICTERM_WEBSITE WHERE ID_WEBSITE = " + idwebsite +
-                " AND TOPICTERM = '" + word + "'");
+        String sqlsel = "SELECT id FROM TB_REL_TOPICTERM_WEBSITE WHERE ID_WEBSITE = " + idwebsite +
+                " AND TOPICTERM = '" + word + "'";
+        Integer id = existsRecord(sqlsel);
+        LOGGER.info(sqlsel);
         if (id == 0) {
             Statement stmt = null;
             String sql = "INSERT INTO TB_REL_TOPICTERM_WEBSITE " +
@@ -360,9 +379,11 @@ public class SQLiteHelper {
 
     }
 
-    public boolean savePatternMetaQuery(Integer idpattern, Integer idmetaquery) throws Exception {
+    public Integer savePatternMetaQuery(Integer idpattern, Integer idmetaquery) throws Exception {
+
         Integer id = existsRecord("SELECT id FROM TB_PATTERN_METAQUERY WHERE ID_PATTERN = " + idpattern +
                 " AND ID_METAQUERY = " + idmetaquery);
+
         if (id == 0) {
             Statement stmt = null;
 
@@ -370,13 +391,19 @@ public class SQLiteHelper {
             sBufferSQL.append("INSERT INTO TB_PATTERN_METAQUERY (id_pattern, id_metaquery) VALUES (")
                     .append(idpattern).append(",")
                     .append(idmetaquery).append(");");
+            String sql = sBufferSQL.toString();
+            LOGGER.info(sql);
 
             stmt = c.createStatement();
-            id = stmt.executeUpdate(sBufferSQL.toString());
+            stmt.executeUpdate(sql);
+            ResultSet keys = stmt.getGeneratedKeys();
+            keys.next();
+            id = keys.getInt(1);
+            keys.close();
             stmt.close();
             LOGGER.info(":: pattern_metaquery ok");
         }
-        return true;
+        return id;
     }
 
     public Integer savePattern(Integer idevidence, Pattern psite) throws Exception{
@@ -391,8 +418,9 @@ public class SQLiteHelper {
         String generalized = psite.generalized;
         Double nlp_score = psite.naturalLanguageScore;
 
-        Integer id = existsRecord("SELECT id FROM TB_PATTERN WHERE ID_EVIDENCE = " + idevidence +
-                " AND NLP = '" + nlp + "'");
+        String q = "SELECT id FROM TB_PATTERN WHERE ID_EVIDENCE = " + idevidence + " AND NLP = '" + nlp + "'";
+        Integer id = existsRecord(q);
+        //LOGGER.info(q);
         if (id == 0) {
             Statement stmt = null;
 
@@ -412,7 +440,11 @@ public class SQLiteHelper {
                     .append(ner).append("');");
 
             stmt = c.createStatement();
-            id = stmt.executeUpdate(sBufferSQL.toString());
+            stmt.executeUpdate(sBufferSQL.toString());
+            ResultSet keys = stmt.getGeneratedKeys();
+            keys.next();
+            id = keys.getInt(1);
+            keys.close();
             stmt.close();
             LOGGER.debug(":: pattern ok");
         }
@@ -429,21 +461,27 @@ public class SQLiteHelper {
         String ol = msite.getObjectLabel();
         String lang = msite.getLanguage();
         String evidencetype = msite.getEvidenceTypeRelation().toString();
-        Integer idmetaquery = existsRecord("SELECT id FROM TB_METAQUERY WHERE METAQUERY = '" + metaquery + "'");
+        String q =  "SELECT id FROM TB_METAQUERY WHERE METAQUERY = '" + metaquery + "'";
+        Integer id = existsRecord(q);
+        //LOGGER.info(q);
 
-        if (idmetaquery == 0) {
+        if (id == 0) {
             Statement stmt = null;
             String sql = "INSERT INTO TB_METAQUERY " +
                     "(metaquery, subject_label, predicate_label, object_label, lang, evidence_type)" +
                     " VALUES ('" + metaquery  + "','" + sl + "','" + pl  + "','" + ol + "','" + lang + "','" +
                     evidencetype + "');";
             stmt = c.createStatement();
-            idmetaquery = stmt.executeUpdate(sql);
+            stmt.executeUpdate(sql);
+            ResultSet keys = stmt.getGeneratedKeys();
+            keys.next();
+            id = keys.getInt(1);
             stmt.close();
+            c.commit();
             LOGGER.info(":: metaquery ok");
         }
 
-        return idmetaquery;
+        return id;
 
     }
 
@@ -492,7 +530,11 @@ public class SQLiteHelper {
                     .append(lang).append("');");
 
             stmt = c.createStatement();
-            id = stmt.executeUpdate(sBufferSQL.toString());
+            stmt.executeUpdate(sBufferSQL.toString());
+            ResultSet keys = stmt.getGeneratedKeys();
+            keys.next();
+            id = keys.getInt(1);
+            keys.close();
             stmt.close();
             LOGGER.info(":: website ok");
         }

@@ -117,11 +117,12 @@ public class ProofExtractor {
                 Pattern p = (Pattern) pair.getKey();
                 MetaQuery m = (MetaQuery) pair.getValue();
 
-                LOGGER.info(":: pattern - "+ p.toString());
-                LOGGER.info(":: metaquery - "+ m.toString());
-
                 Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, p);
                 Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(m);
+
+                //LOGGER.info(":: pattern - " + idpattern + " - " + p.toString());
+                //LOGGER.info(":: metaquery - " + idmetaquery + " - " + m.toString());
+
                 SQLiteHelper.getInstance().savePatternMetaQuery(idpattern, idmetaquery);
 
                 /* TB_REL_TOPICTERM_METAQUERY */
