@@ -265,7 +265,7 @@ public class SQLiteHelper {
                 pro.getPattern().language + "' AND FIRST_LABEL = '" + pro.getSubject() + "' AND SECOND_LABEL = '" +
                 pro.getObject() + "'";
 
-        LOGGER.info(sql);
+        //LOGGER.info(sql);
 
         Integer id = existsRecord(sql);
 
@@ -364,7 +364,7 @@ public class SQLiteHelper {
         String sqlsel = "SELECT id FROM TB_REL_TOPICTERM_WEBSITE WHERE ID_WEBSITE = " + idwebsite +
                 " AND TOPICTERM = '" + word + "'";
         Integer id = existsRecord(sqlsel);
-        LOGGER.info(sqlsel);
+        //LOGGER.info(sqlsel);
         if (id == 0) {
             Statement stmt = null;
             String sql = "INSERT INTO TB_REL_TOPICTERM_WEBSITE " +
