@@ -298,10 +298,8 @@ public class SQLiteHelper {
 
         String sql = "SELECT id FROM TB_PROOF WHERE ID_WEBSITE = " + idwebsite +
                 " AND ID_PATTERN = " + idpattern + " AND ID_MODEL = " + idmodel + " AND LANG = '" +
-                pro.getPattern().language + "' AND FIRST_LABEL = '" + pro.getSubject() + "' AND SECOND_LABEL = '" +
-                pro.getObject() + "'";
-
-        //LOGGER.info(sql);
+                pro.getPattern().language + "' AND FIRST_LABEL = '" + pro.getSubject().replaceAll("'", "''") +
+                "' AND SECOND_LABEL = '" + pro.getObject().replaceAll("'", "''") + "'";
 
         Integer id = existsRecord(sql);
 
@@ -316,8 +314,8 @@ public class SQLiteHelper {
             String cltag = pro.getTaggedLargeContext().replaceAll("'", "''");
             String phrase = pro.getProofPhrase().replaceAll("'", "''");
             String nphrase = pro.getNormalizedProofPhrase().replaceAll("'", "''");
-            String firstlabel = pro.getSubject();
-            String secondlabel = pro.getObject();
+            String firstlabel = pro.getSubject().replaceAll("'", "''");
+            String secondlabel = pro.getObject().replaceAll("'", "''");
 
             Statement stmt = null;
             StringBuffer sBufferSQL = new StringBuffer(37);
@@ -400,7 +398,6 @@ public class SQLiteHelper {
         String sqlsel = "SELECT id FROM TB_REL_TOPICTERM_WEBSITE WHERE ID_WEBSITE = " + idwebsite +
                 " AND TOPICTERM = '" + word + "'";
         Integer id = existsRecord(sqlsel);
-        //LOGGER.info(sqlsel);
         if (id == 0) {
             Statement stmt = null;
             String sql = "INSERT INTO TB_REL_TOPICTERM_WEBSITE " +
@@ -428,7 +425,6 @@ public class SQLiteHelper {
                     .append(idpattern).append(",")
                     .append(idmetaquery).append(");");
             String sql = sBufferSQL.toString();
-            LOGGER.info(sql);
 
             stmt = c.createStatement();
             stmt.executeUpdate(sql);
@@ -456,7 +452,6 @@ public class SQLiteHelper {
 
         String q = "SELECT id FROM TB_PATTERN WHERE ID_EVIDENCE = " + idevidence + " AND NLP = '" + nlp + "'";
         Integer id = existsRecord(q);
-        //LOGGER.info(q);
         if (id == 0) {
             Statement stmt = null;
 
@@ -474,8 +469,6 @@ public class SQLiteHelper {
                     .append(pos).append("','")
                     .append(generalized).append("','")
                     .append(ner).append("');");
-
-            LOGGER.info(sBufferSQL.toString());
 
             stmt = c.createStatement();
             stmt.executeUpdate(sBufferSQL.toString());
@@ -501,7 +494,6 @@ public class SQLiteHelper {
         String evidencetype = msite.getEvidenceTypeRelation().toString();
         String q =  "SELECT id FROM TB_METAQUERY WHERE METAQUERY = '" + metaquery + "'";
         Integer id = existsRecord(q);
-        //LOGGER.info(q);
 
         if (id == 0) {
             Statement stmt = null;

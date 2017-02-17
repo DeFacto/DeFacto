@@ -447,9 +447,9 @@ public class ProofExtractor {
 
     private static DefactoModel getOneExample() throws Exception{
         Model model = ModelFactory.createDefaultModel();
-        URL url = DefactoModel.class.getClassLoader().getResource("Nobel1909.ttl");
+        URL url = DefactoModel.class.getClassLoader().getResource("Einstein.ttl");
         model.read(url.openStream(), null, "TURTLE");
-        return new DefactoModel(model, "Nobel Model", true, Arrays.asList("en", "fr", "de"), url.getPath());
+        return new DefactoModel(model, "Einstein Model", true, Arrays.asList("en", "fr", "de"), url.getPath());
     }
 
 
