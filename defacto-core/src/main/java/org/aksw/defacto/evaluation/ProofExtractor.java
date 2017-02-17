@@ -85,9 +85,7 @@ public class ProofExtractor {
                                      String f) throws Exception{
 
         try{
-
             //TODO: colocar ID_EVIDENCIA em todas as tabelas!!!!
-
             Evidence eaux;
             Integer eauxnum;
 
@@ -104,10 +102,17 @@ public class ProofExtractor {
             String filename = p1.getFileName().toString();
 
             /** TB_MODEL **/
-            Integer idmodel = SQLiteHelper.getInstance().saveModel(totalTime, model, filename, p1.getParent().toString());
+            Integer idmodel = SQLiteHelper.getInstance().saveModel(totalTime, model, filename,
+                    p1.getParent().toString());
 
             /** TB_EVIDENCE HEADER **/
             Integer idevidence = SQLiteHelper.getInstance().saveEvidenceRoot(idmodel, eaux, eauxnum);
+
+            /** TB_YEAR_EVIDENCE **/
+            SQLiteHelper.getInstance().saveYearOccorrence(idevidence, 1, eaux.tinyContextYearOccurrences);
+            SQLiteHelper.getInstance().saveYearOccorrence(idevidence, 2, eaux.smallContextYearOccurrences);
+            SQLiteHelper.getInstance().saveYearOccorrence(idevidence, 3, eaux.mediumContextYearOccurrences);
+            SQLiteHelper.getInstance().saveYearOccorrence(idevidence, 4, eaux.largeContextYearOccurrences);
 
             /* TB_PATTERN x TB_METAQUERY */
             Map<Pattern, MetaQuery> q = eaux.getQueries();
@@ -129,7 +134,6 @@ public class ProofExtractor {
                 for (Word wordtt: m.getTopicTerms()) {
                     SQLiteHelper.getInstance().addTopicTermsMetaQuery(idmetaquery, wordtt.getWord(), wordtt.getFrequency(),
                             wordtt.isFromWikipedia() == true ? 1: 0);}
-
             }
 
             /** TB_REL_TOPIC_TERM_EVIDENCE **/
@@ -148,14 +152,15 @@ public class ProofExtractor {
             List<WebSite> sitesnoproof = eaux.getAllWebSitesWithoutComplexProof();
 
             for (WebSite site: sitesproof){
-                //LOGGER.info(":: (with proof) - " + site.getUrl() + " - " + site.getTitle());
+                LOGGER.info(":: (with proof) - " + site.getUrl() + " - " + site.getTitle());
                 saveWebSiteAndRelated(site, 1);
             }
             for (WebSite site: sitesnoproof){
-                //LOGGER.info(":: (without proof) - " + site.getUrl() + " - " + site.getTitle());
+                LOGGER.info(":: (without proof) - " + site.getUrl() + " - " + site.getTitle());
                 saveWebSiteAndRelated(site, 0);
             }
 
+            LOGGER.info("comprox");
 
             //all proofs
             Set<ComplexProof> setproofs = eaux.getComplexProofs();
@@ -444,7 +449,7 @@ public class ProofExtractor {
         Model model = ModelFactory.createDefaultModel();
         URL url = DefactoModel.class.getClassLoader().getResource("Nobel1909.ttl");
         model.read(url.openStream(), null, "TURTLE");
-        return new DefactoModel(model, "Nobel Model", true, Arrays.asList("en"), url.getPath());
+        return new DefactoModel(model, "Nobel Model", true, Arrays.asList("en", "fr", "de"), url.getPath());
     }
 
 

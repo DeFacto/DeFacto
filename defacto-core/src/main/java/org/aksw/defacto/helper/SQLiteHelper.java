@@ -15,7 +15,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dnes on 08/12/16.
@@ -96,6 +98,37 @@ public class SQLiteHelper {
 
     }
 
+    public boolean saveYearOccorrence(Integer idevidence, Integer idcontext, Map<String, Long> oc) throws Exception{
+
+        Iterator it = oc.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            String year = pair.getKey().toString();
+            Long occurrences = (Long) pair.getValue();
+
+            int id = existsRecord("select id from tb_year_occurrences where id_evidence = '" + idevidence +
+                    "' and year = " + year + " and occurrences = " + occurrences + " and context = " + idcontext);
+            if (id == 0) {
+                Statement stmt = null;
+                StringBuffer sBufferSQL = new StringBuffer(9);
+                sBufferSQL.append("INSERT INTO TB_YEAR_OCCURRENCES (id_evidence, year, occurrences, context) VALUES (")
+                        .append(idevidence).append(",")
+                        .append(year).append(",")
+                        .append(occurrences).append(",")
+                        .append(idcontext).append(");");
+
+                stmt = c.createStatement();
+                stmt.executeUpdate(sBufferSQL.toString());
+                stmt.close();
+                LOGGER.info(":: tb_year_occurrences ok");
+            }
+
+        }
+
+        return true;
+
+    }
+
     public Integer saveModel(long processing_time, DefactoModel model, String filename, String filepath) throws Exception{
 
         String name = model.getName();
@@ -109,15 +142,17 @@ public class SQLiteHelper {
         String from = model.getTimePeriod().getFrom().toString();
         String to = model.getTimePeriod().getTo().toString();
         int isTimePoint = model.getTimePeriod().isTimePoint() ? 1 : 0;
+        String langs = model.getLanguages().toString();
 
         int id = existsRecord("select id from tb_model where file_name = '" + filename +
-                "' and file_path = '" + filepath + "' and period_timepoint = " + isTimePoint);
+                "' and file_path = '" + filepath + "' and period_timepoint = " + isTimePoint + " and langs = '"
+                + langs + "'");
         if (id == 0) {
             Statement stmt = null;
             StringBuffer sBufferSQL = new StringBuffer(29);
             sBufferSQL.append("INSERT INTO TB_MODEL (model_name, model_correct, file_name, file_path, subject_uri, " +
                     "subject_label, predicate_uri, predicate_label, object_uri, object_label, period_from, period_to, " +
-                    "processing_time, period_timepoint) VALUES ('")
+                    "processing_time, langs, period_timepoint) VALUES ('")
                     .append(name).append("',")
                     .append(correct).append(",'")
                     .append(filename).append("','")
@@ -130,7 +165,8 @@ public class SQLiteHelper {
                     .append(olabel).append("','")
                     .append(from).append("','")
                     .append(to).append("',")
-                    .append(processing_time).append(",")
+                    .append(processing_time).append(",'")
+                    .append(langs).append("',")
                     .append(isTimePoint).append(");");
 
             stmt = c.createStatement();
@@ -409,13 +445,13 @@ public class SQLiteHelper {
     public Integer savePattern(Integer idevidence, Pattern psite) throws Exception{
 
         Double boa_score = psite.boaScore;
-        String nlpn = psite.naturalLanguageRepresentationNormalized;
-        String nlpnovar = psite.naturalLanguageRepresentationWithoutVariables;
-        String nlp = psite.naturalLanguageRepresentation;
+        String nlpn = psite.naturalLanguageRepresentationNormalized.replace("'", "''");
+        String nlpnovar = psite.naturalLanguageRepresentationWithoutVariables.replace("'", "''");
+        String nlp = psite.naturalLanguageRepresentation.replace("'", "''");
         String ln = psite.language;
         String pos = psite.posTags;
         String ner = psite.NER;
-        String generalized = psite.generalized;
+        String generalized = psite.generalized.replace("'", "''");
         Double nlp_score = psite.naturalLanguageScore;
 
         String q = "SELECT id FROM TB_PATTERN WHERE ID_EVIDENCE = " + idevidence + " AND NLP = '" + nlp + "'";
@@ -439,6 +475,8 @@ public class SQLiteHelper {
                     .append(generalized).append("','")
                     .append(ner).append("');");
 
+            LOGGER.info(sBufferSQL.toString());
+
             stmt = c.createStatement();
             stmt.executeUpdate(sBufferSQL.toString());
             ResultSet keys = stmt.getGeneratedKeys();
@@ -455,10 +493,10 @@ public class SQLiteHelper {
 
     public Integer saveMetaQuery(MetaQuery msite) throws Exception{
 
-        String metaquery = msite.toString();
-        String sl = msite.getSubjectLabel();
-        String pl = msite.getPropertyLabel();
-        String ol = msite.getObjectLabel();
+        String metaquery = msite.toString().replaceAll("'", "''");
+        String sl = msite.getSubjectLabel().replaceAll("'", "''");
+        String pl = msite.getPropertyLabel().replaceAll("'", "''");
+        String ol = msite.getObjectLabel().replaceAll("'", "''");
         String lang = msite.getLanguage();
         String evidencetype = msite.getEvidenceTypeRelation().toString();
         String q =  "SELECT id FROM TB_METAQUERY WHERE METAQUERY = '" + metaquery + "'";
@@ -487,10 +525,10 @@ public class SQLiteHelper {
 
     public Integer saveWebSite(Integer idmetaquery, WebSite w, Integer has_proof) throws Exception{
 
-        URI url = new URI(w.getUrl().toString());
+        URI url = new URI(w.getUrl().toString().replaceAll("'", "''"));
         String urldomain = url.getHost();
-        String title = w.getTitle();
-        String body = w.getText();
+        String title = w.getTitle().replaceAll("'", "''");
+        String body = w.getText().replaceAll("'", "''");
         Integer rank = w.getSearchRank();
         Integer pagerank = w.getPageRank();
         Double pagerankscore =w.getPageRankScore();
@@ -502,8 +540,6 @@ public class SQLiteHelper {
 
         Statement stmt = null;
 
-        title = title.replaceAll("'", "''");
-        body = body.replaceAll("'", "''");
 
         Integer id = existsRecord("SELECT id FROM TB_WEBSITE WHERE ID_METAQUERY = " + idmetaquery + " AND " +
                 " url = '" + url + "' AND lang = '" + lang + "'");
