@@ -299,7 +299,8 @@ public class SQLiteHelper {
         String sql = "SELECT id FROM TB_PROOF WHERE ID_WEBSITE = " + idwebsite +
                 " AND ID_PATTERN = " + idpattern + " AND ID_MODEL = " + idmodel + " AND LANG = '" +
                 pro.getPattern().language + "' AND FIRST_LABEL = '" + pro.getSubject().replaceAll("'", "''") +
-                "' AND SECOND_LABEL = '" + pro.getObject().replaceAll("'", "''") + "'";
+                "' AND SECOND_LABEL = '" + pro.getObject().replaceAll("'", "''") +
+                "' AND CONTEXT_TINY = '" + pro.getTinyContext().replaceAll("'", "''") + "'";
 
         Integer id = existsRecord(sql);
 
@@ -450,7 +451,8 @@ public class SQLiteHelper {
         String generalized = psite.generalized.replace("'", "''");
         Double nlp_score = psite.naturalLanguageScore;
 
-        String q = "SELECT id FROM TB_PATTERN WHERE ID_EVIDENCE = " + idevidence + " AND NLP = '" + nlp + "'";
+        String q = "SELECT id FROM TB_PATTERN WHERE ID_EVIDENCE = " + idevidence + " AND NLP = '" + nlp + "' AND " +
+                "lang = '" + psite.language + "'";
         Integer id = existsRecord(q);
         if (id == 0) {
             Statement stmt = null;
