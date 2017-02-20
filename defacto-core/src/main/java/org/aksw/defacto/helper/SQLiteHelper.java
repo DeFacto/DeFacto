@@ -290,7 +290,7 @@ public class SQLiteHelper {
             has_proof = 1;
         }
 
-        Integer idmetaquery = saveMetaQuery(pro.getWebSite().getQuery());
+        Integer idmetaquery = saveMetaQuery(idevidence, pro.getWebSite().getQuery());
 
         Integer idwebsite =  saveWebSite(idmetaquery, pro.getWebSite(), has_proof);
 
@@ -484,7 +484,7 @@ public class SQLiteHelper {
 
     }
 
-    public Integer saveMetaQuery(MetaQuery msite) throws Exception{
+    public Integer saveMetaQuery(Integer idevidence, MetaQuery msite) throws Exception{
 
         String metaquery = msite.toString().replaceAll("'", "''");
         String sl = msite.getSubjectLabel().replaceAll("'", "''");
@@ -492,15 +492,15 @@ public class SQLiteHelper {
         String ol = msite.getObjectLabel().replaceAll("'", "''");
         String lang = msite.getLanguage();
         String evidencetype = msite.getEvidenceTypeRelation().toString();
-        String q =  "SELECT id FROM TB_METAQUERY WHERE METAQUERY = '" + metaquery + "'";
+        String q =  "SELECT id FROM TB_METAQUERY WHERE ID_EVIDENCE = " + idevidence + " AND METAQUERY = '" + metaquery + "'";
         Integer id = existsRecord(q);
 
         if (id == 0) {
             Statement stmt = null;
             String sql = "INSERT INTO TB_METAQUERY " +
-                    "(metaquery, subject_label, predicate_label, object_label, lang, evidence_type)" +
+                    "(metaquery, subject_label, predicate_label, object_label, lang, evidence_type, id_evidence)" +
                     " VALUES ('" + metaquery  + "','" + sl + "','" + pl  + "','" + ol + "','" + lang + "','" +
-                    evidencetype + "');";
+                    evidencetype + "'," + idevidence + ");";
             stmt = c.createStatement();
             stmt.executeUpdate(sql);
             ResultSet keys = stmt.getGeneratedKeys();

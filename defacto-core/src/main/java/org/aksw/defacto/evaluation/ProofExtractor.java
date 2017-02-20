@@ -68,9 +68,9 @@ public class ProofExtractor {
         }
     }
 
-    private static void saveWebSiteAndRelated(WebSite w, Integer has_proof) throws Exception {
+    private static void saveWebSiteAndRelated(Integer idevidence, WebSite w, Integer has_proof) throws Exception {
 
-        Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(w.getQuery());
+        Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idevidence, w.getQuery());
         /* TB_WEBSITE */
         Integer idwebsite = SQLiteHelper.getInstance().saveWebSite(idmetaquery, w, has_proof);
 
@@ -123,7 +123,7 @@ public class ProofExtractor {
                 MetaQuery m = (MetaQuery) pair.getValue();
 
                 Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, p);
-                Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(m);
+                Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idevidence, m);
 
                 //LOGGER.info(":: pattern - " + idpattern + " - " + p.toString());
                 //LOGGER.info(":: metaquery - " + idmetaquery + " - " + m.toString());
@@ -152,15 +152,11 @@ public class ProofExtractor {
             List<WebSite> sitesnoproof = eaux.getAllWebSitesWithoutComplexProof();
 
             for (WebSite site: sitesproof){
-                LOGGER.info(":: (with proof) - " + site.getUrl() + " - " + site.getTitle());
-                saveWebSiteAndRelated(site, 1);
+                saveWebSiteAndRelated(idevidence, site, 1);
             }
             for (WebSite site: sitesnoproof){
-                LOGGER.info(":: (without proof) - " + site.getUrl() + " - " + site.getTitle());
-                saveWebSiteAndRelated(site, 0);
+                saveWebSiteAndRelated(idevidence, site, 0);
             }
-
-            LOGGER.info("comprox");
 
             //all proofs
             Set<ComplexProof> setproofs = eaux.getComplexProofs();
