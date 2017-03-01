@@ -29,6 +29,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.PreparedStatement;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -196,9 +197,13 @@ public class ProofExtractor {
             DefactoModel model = null;
             long startTime = System.currentTimeMillis();
 
-            Integer id = SQLiteHelper.getInstance().existsRecord(
-                        "select id from tb_model where file_name = '" + filename +
-                                "' and file_path = '" + p1.getParent().toString() + "' and langs = '[en, fr, de]'");
+            String sSQL = "SELECT ID FROM TB_MODEL WHERE FILE_NAME = ? AND FILE_PATH = ? AND LANGS = ?";
+            PreparedStatement prep = SQLiteHelper.getInstance().getConnection().prepareStatement(sSQL);
+            prep.setString(1, filename);
+            prep.setString(2, p1.getParent().toString());
+            prep.setString(3, "[en, fr, de]");
+
+            Integer id = SQLiteHelper.getInstance().existsRecord(prep);
             if (id!=0)
                 continue;
 

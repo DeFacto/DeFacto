@@ -48,6 +48,10 @@ public class SQLiteHelper {
         return instance;
     }
 
+    public static Connection getConnection(){
+        return c;
+    }
+
     public Integer existsRecord(PreparedStatement prep) throws Exception{
 
         ResultSet rs = prep.executeQuery();
@@ -114,9 +118,9 @@ public class SQLiteHelper {
                     "WHERE ID_EVIDENCE = ? AND YEAR = ? AND OCCURRENCES = ? AND CONTEXT = ?";
             PreparedStatement prep = c.prepareStatement(sSQL);
             prep.setInt(1, idevidence);
-            prep.setString(1, year);
-            prep.setLong(1, occurrences);
-            prep.setInt(1, idcontext);
+            prep.setString(2, year);
+            prep.setLong(3, occurrences);
+            prep.setInt(4, idcontext);
 
             int id = existsRecord(prep);
             if (id == 0) {
@@ -143,22 +147,28 @@ public class SQLiteHelper {
     public Integer saveModel(long processing_time, DefactoModel model, String filename, String filepath) throws Exception {
 
 
-            String name = model.getName();
-            int correct = model.isCorrect() ? 1 : 0;
-            String suri = model.getSubjectUri();
-            String slabel = model.getSubjectLabel("en");
-            String puri = model.getPredicate().getURI();
-            String plabel = model.getPredicate().getLocalName();
-            String ouri = model.getObjectUri();
-            String olabel = model.getObjectLabel("en");
-            String from = model.getTimePeriod().getFrom().toString();
-            String to = model.getTimePeriod().getTo().toString();
-            int isTimePoint = model.getTimePeriod().isTimePoint() ? 1 : 0;
-            String langs = model.getLanguages().toString();
+        String name = model.getName();
+        int correct = model.isCorrect() ? 1 : 0;
+        String suri = model.getSubjectUri();
+        String slabel = model.getSubjectLabel("en");
+        String puri = model.getPredicate().getURI();
+        String plabel = model.getPredicate().getLocalName();
+        String ouri = model.getObjectUri();
+        String olabel = model.getObjectLabel("en");
+        String from = model.getTimePeriod().getFrom().toString();
+        String to = model.getTimePeriod().getTo().toString();
+        int isTimePoint = model.getTimePeriod().isTimePoint() ? 1 : 0;
+        String langs = model.getLanguages().toString();
 
-            int id = existsRecord("select id from tb_model where file_name = '" + filename +
-                    "' and file_path = '" + filepath + "' and period_timepoint = " + isTimePoint + " and langs = '"
-                    + langs + "'");
+        String sSQL =
+                "SELECT ID FROM TB_MODEL WHERE FILE_NAME = ? AND FILE_PATH = ? AND PERIOD_TIMEPOINT = ? AND LANGS = ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setString(1, filename);
+        prep.setString(2, filepath);
+        prep.setInt(3, isTimePoint);
+        prep.setString(4, langs);
+
+        int id = existsRecord(prep);
             if (id == 0) {
                 Statement stmt = null;
                 StringBuffer sBufferSQL = new StringBuffer(29);
@@ -309,13 +319,24 @@ public class SQLiteHelper {
 
         Integer idpattern = savePattern(idevidence, pro.getPattern());
 
-        String sql = "SELECT id FROM TB_PROOF WHERE ID_WEBSITE = " + idwebsite +
+        /*String sql = "SELECT id FROM TB_PROOF WHERE ID_WEBSITE = " + idwebsite +
                 " AND ID_PATTERN = " + idpattern + " AND ID_MODEL = " + idmodel + " AND LANG = '" +
                 pro.getPattern().language + "' AND FIRST_LABEL = '" + pro.getSubject().replaceAll("'", "''") +
                 "' AND SECOND_LABEL = '" + pro.getObject().replaceAll("'", "''") +
                 "' AND CONTEXT_TINY = '" + pro.getTinyContext().replaceAll("'", "''") + "'";
+*/
+        String sSQL = "SELECT ID FROM TB_PROOF WHERE ID_WEBSITE = ? AND ID_PATTERN = ? AND ID_MODEL = ? AND LANG = ?" +
+                " AND FIRST_LABEL = ? AND SECOND_LABEL = ? AND CONTEXT_TINY = ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, idwebsite);
+        prep.setInt(2, idpattern);
+        prep.setInt(3,idmodel);
+        prep.setString(4, pro.getPattern().language);
+        prep.setString(5, pro.getSubject());
+        prep.setString(6, pro.getObject());
+        prep.setString(7, pro.getTinyContext());
 
-        Integer id = existsRecord(sql);
+        Integer id = existsRecord(prep);
 
         if (id == 0) {
             String ctiny = pro.getTinyContext().replaceAll("'", "''");
@@ -373,8 +394,13 @@ public class SQLiteHelper {
     public boolean addTopicTermsEvidence(Integer idevidence, String ln, String word, Integer qtd, Integer isfromwiki)
             throws Exception{
 
-        Integer id = existsRecord("SELECT id FROM TB_REL_TOPICTERM_EVIDENCE WHERE ID_EVIDENCE = " + idevidence +
-                " AND TOPICTERM = '" + word + "'" + " AND LANG = '" + ln + "'");
+        String sSQL = "SELECT ID FROM TB_REL_TOPICTERM_EVIDENCE WHERE ID_EVIDENCE = ? AND TOPICTERM = ? AND LANG = ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, idevidence);
+        prep.setString(2, word);
+        prep.setString(3, ln);
+
+        Integer id = existsRecord(prep);
         if (id == 0) {
             Statement stmt = null;
             String sql = "INSERT INTO TB_REL_TOPICTERM_EVIDENCE(id_evidence, lang, topicterm, frequency, " +
@@ -392,8 +418,12 @@ public class SQLiteHelper {
     public boolean addTopicTermsMetaQuery(Integer idmetaquery, String word, Integer qtd, Integer isfromwiki)
             throws Exception{
 
-        Integer id = existsRecord("SELECT id FROM TB_TOPICTERM_METAQUERY WHERE ID_METAQUERY = " + idmetaquery +
-                " AND TOPICTERM = '" + word + "'");
+        String sSQL = "SELECT ID FROM TB_TOPICTERM_METAQUERY WHERE ID_METAQUERY = ? AND TOPICTERM = ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, idmetaquery);
+        prep.setString(2, word);
+
+        Integer id = existsRecord(prep);
         if (id == 0) {
             Statement stmt = null;
             String sql = "INSERT INTO TB_REL_TOPICTERM_METAQUERY(id_metaquery, topic_term, frequency, is_from_wikipedia)" +
@@ -409,9 +439,12 @@ public class SQLiteHelper {
 
     public boolean addTopicTermsWebSite(Integer idwebsite, String word, Integer qtd, Integer isfromwiki) throws Exception{
 
-        String sqlsel = "SELECT id FROM TB_REL_TOPICTERM_WEBSITE WHERE ID_WEBSITE = " + idwebsite +
-                " AND TOPICTERM = '" + word + "'";
-        Integer id = existsRecord(sqlsel);
+        String sSQL = "SELECT ID FROM TB_REL_TOPICTERM_WEBSITE WHERE ID_WEBSITE = ? AND TOPICTERM = ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, idwebsite);
+        prep.setString(2, word);
+
+        Integer id = existsRecord(prep);
         if (id == 0) {
             Statement stmt = null;
             String sql = "INSERT INTO TB_REL_TOPICTERM_WEBSITE " +
@@ -428,9 +461,12 @@ public class SQLiteHelper {
 
     public Integer savePatternMetaQuery(Integer idpattern, Integer idmetaquery) throws Exception {
 
-        Integer id = existsRecord("SELECT id FROM TB_PATTERN_METAQUERY WHERE ID_PATTERN = " + idpattern +
-                " AND ID_METAQUERY = " + idmetaquery);
+        String sSQL = "SELECT ID FROM TB_PATTERN_METAQUERY WHERE ID_PATTERN = ? AND ID_METAQUERY = ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, idpattern);
+        prep.setInt(2, idmetaquery);
 
+        Integer id = existsRecord(prep);
         if (id == 0) {
             Statement stmt = null;
 
@@ -464,9 +500,13 @@ public class SQLiteHelper {
         String generalized = psite.generalized.replace("'", "''");
         Double nlp_score = psite.naturalLanguageScore;
 
-        String q = "SELECT id FROM TB_PATTERN WHERE ID_EVIDENCE = " + idevidence + " AND NLP = '" + nlp + "' AND " +
-                "lang = '" + psite.language + "'";
-        Integer id = existsRecord(q);
+        String sSQL = "SELECT ID FROM TB_PATTERN WHERE ID_EVIDENCE = ? AND NLP = ? AND LANG = ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, idevidence);
+        prep.setString(2, nlp);
+        prep.setString(3, psite.language);
+
+        Integer id = existsRecord(prep);
         if (id == 0) {
             Statement stmt = null;
 
@@ -507,8 +547,13 @@ public class SQLiteHelper {
         String ol = msite.getObjectLabel().replaceAll("'", "''");
         String lang = msite.getLanguage();
         String evidencetype = msite.getEvidenceTypeRelation().toString();
-        String q =  "SELECT id FROM TB_METAQUERY WHERE ID_EVIDENCE = " + idevidence + " AND METAQUERY = '" + metaquery + "'";
-        Integer id = existsRecord(q);
+
+        String sSQL = "SELECT ID FROM TB_METAQUERY WHERE ID_EVIDENCE = ? AND METAQUERY = ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, idevidence);
+        prep.setString(2, metaquery);
+
+        Integer id = existsRecord(prep);
 
         if (id == 0) {
             Statement stmt = null;
@@ -547,17 +592,22 @@ public class SQLiteHelper {
 
         Statement stmt = null;
 
-        Integer id = existsRecord("SELECT id FROM TB_WEBSITE WHERE ID_METAQUERY = " + idmetaquery + " AND " +
-                " url = '" + url.toString() + "' AND lang = '" + lang + "'");
+        String sSQL = "SELECT ID FROM TB_WEBSITE WHERE ID_METAQUERY = ? AND URL = ? AND LANG = ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, idmetaquery);
+        prep.setString(2, url.toString());
+        prep.setString(3, lang);
+
+        Integer id = existsRecord(prep);
 
         if (id == 0) {
             //StringBuffer sBufferSQL = new StringBuffer(31);
-            String sSQL = "INSERT INTO TB_WEBSITE (id_metaquery, url, url_domain, title, body, rank, " +
+            sSQL = "INSERT INTO TB_WEBSITE (id_metaquery, url, url_domain, title, body, rank, " +
                     "pagerank, pagerank_score, ind_score, ind_topic_majority_web, ind_topic_majority_search, " +
                     "ind_topic_coverage_score, has_proof, lang" +
                     ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
-            PreparedStatement prep = c.prepareStatement(sSQL);
+            prep = c.prepareStatement(sSQL);
             prep.setInt(1, idmetaquery);
             prep.setString(2, url.toString());
             prep.setString(3, urldomain);
