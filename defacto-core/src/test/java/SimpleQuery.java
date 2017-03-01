@@ -78,9 +78,7 @@ public class SimpleQuery extends JFrame
                 	}
             	}
             	catch (QueryParseException qpe) {
-            		
             		System.err.println(qpe.getMessage());
-            		System.exit(0);
             	}
             	
 //            	SimpleQuery.query.setVisible(false);

@@ -99,9 +99,7 @@ public class FactScorer {
                 instancesWithStringVector.delete();
             }
             catch (Exception e) {
-
                 e.printStackTrace();
-                System.exit(0);
             }
         }
         

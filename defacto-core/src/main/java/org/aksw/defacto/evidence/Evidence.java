@@ -50,7 +50,7 @@ public class Evidence {
     public Map<String,Long> smallContextYearOccurrences = new LinkedHashMap<String, Long>();
     public Map<String,Long> mediumContextYearOccurrences = new LinkedHashMap<String, Long>();
     public Map<String,Long> largeContextYearOccurrences = new LinkedHashMap<String, Long>();
-    
+
     private Instance features;
     private Long totalHitCount;
     private double deFactoScore;
@@ -67,7 +67,6 @@ public class Evidence {
 	public PatternTimePeriodSearcher tsSearcher = new PatternTimePeriodSearcher();
 
     //stats
-    private int totalOfReturnedWebsites = 0;
     private int totalOfComplexProofsLevel1 = 0;
     private int totalOfComplexProofsLevel2 = 0;
     private int totalOfComplexProofsLevel3 = 0;
@@ -89,7 +88,7 @@ public class Evidence {
         boaPatterns.put("de", new ArrayList<Pattern>());
         boaPatterns.put("fr", new ArrayList<Pattern>());
         boaPatterns.put("en", new ArrayList<Pattern>());
-        
+
         for ( Pattern p : set) boaPatterns.get(p.language).add(p);
     }
 

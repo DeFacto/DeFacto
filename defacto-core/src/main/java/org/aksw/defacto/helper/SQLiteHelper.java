@@ -1,5 +1,6 @@
 package org.aksw.defacto.helper;
 
+import com.mysql.jdbc.*;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evaluation.ProofExtractor;
 import org.aksw.defacto.evidence.ComplexProof;
@@ -11,9 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
+import java.net.URL;
+import java.sql.*;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
@@ -35,7 +37,7 @@ public class SQLiteHelper {
             c.setAutoCommit(false);
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
+            System.exit(-1);
         }
         System.out.println("Opened database successfully");
     }
@@ -46,19 +48,16 @@ public class SQLiteHelper {
         return instance;
     }
 
-    public Integer existsRecord(String query) throws Exception{
+    public Integer existsRecord(PreparedStatement prep) throws Exception{
 
-        Statement stmt = null;
-        stmt = c.createStatement();
-        ResultSet rs = stmt.executeQuery( query );
+        ResultSet rs = prep.executeQuery();
         int id = 0;
         while ( rs.next() ) {
             id = rs.getInt(1);
             rs.close();
         }
-        stmt.close();
+        prep.close();
         return id;
-
     }
 
     public Integer saveEvidenceRoot(Integer idmodel, Evidence eaux, Integer evidencetype) throws Exception{
@@ -68,8 +67,13 @@ public class SQLiteHelper {
         Long tothitcount = eaux.getTotalHitCount();
         String features = eaux.getFeatures().toString();
 
-        int id = existsRecord("select id from tb_evidence where id_model = " + idmodel + " and " +
-                "evidence_type = " + evidencetype);
+        String sSQL = "SELECT ID FROM TB_EVIDENCE WHERE ID_MODEL = ? AND EVIDENCE_TYPE = ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, idmodel);
+        prep.setInt(2, evidencetype);
+
+        int id = existsRecord(prep);
+
         if (id == 0) {
             Statement stmt = null;
             StringBuffer sBufferSQL = new StringBuffer(13);
@@ -92,7 +96,7 @@ public class SQLiteHelper {
             id = keys.getInt(1);
             keys.close();
             stmt.close();
-            LOGGER.info(":: evidence header ok");
+            LOGGER.debug(":: evidence header ok");
         }
         return id;
 
@@ -106,8 +110,15 @@ public class SQLiteHelper {
             String year = pair.getKey().toString();
             Long occurrences = (Long) pair.getValue();
 
-            int id = existsRecord("select id from tb_year_occurrences where id_evidence = '" + idevidence +
-                    "' and year = " + year + " and occurrences = " + occurrences + " and context = " + idcontext);
+            String sSQL = "SELECT ID FROM TB_YEAR_OCCURRENCES " +
+                    "WHERE ID_EVIDENCE = ? AND YEAR = ? AND OCCURRENCES = ? AND CONTEXT = ?";
+            PreparedStatement prep = c.prepareStatement(sSQL);
+            prep.setInt(1, idevidence);
+            prep.setString(1, year);
+            prep.setLong(1, occurrences);
+            prep.setInt(1, idcontext);
+
+            int id = existsRecord(prep);
             if (id == 0) {
                 Statement stmt = null;
                 StringBuffer sBufferSQL = new StringBuffer(9);
@@ -120,7 +131,7 @@ public class SQLiteHelper {
                 stmt = c.createStatement();
                 stmt.executeUpdate(sBufferSQL.toString());
                 stmt.close();
-                LOGGER.info(":: tb_year_occurrences ok");
+                LOGGER.debug(":: tb_year_occurrences ok");
             }
 
         }
@@ -129,55 +140,57 @@ public class SQLiteHelper {
 
     }
 
-    public Integer saveModel(long processing_time, DefactoModel model, String filename, String filepath) throws Exception{
+    public Integer saveModel(long processing_time, DefactoModel model, String filename, String filepath) throws Exception {
 
-        String name = model.getName();
-        int correct = model.isCorrect() ? 1 : 0;
-        String suri = model.getSubjectUri();
-        String slabel = model.getSubjectLabel("en");
-        String puri = model.getPredicate().getURI();
-        String plabel = model.getPredicate().getLocalName();
-        String ouri = model.getObjectUri();
-        String olabel = model.getObjectLabel("en");
-        String from = model.getTimePeriod().getFrom().toString();
-        String to = model.getTimePeriod().getTo().toString();
-        int isTimePoint = model.getTimePeriod().isTimePoint() ? 1 : 0;
-        String langs = model.getLanguages().toString();
 
-        int id = existsRecord("select id from tb_model where file_name = '" + filename +
-                "' and file_path = '" + filepath + "' and period_timepoint = " + isTimePoint + " and langs = '"
-                + langs + "'");
-        if (id == 0) {
-            Statement stmt = null;
-            StringBuffer sBufferSQL = new StringBuffer(29);
-            sBufferSQL.append("INSERT INTO TB_MODEL (model_name, model_correct, file_name, file_path, subject_uri, " +
-                    "subject_label, predicate_uri, predicate_label, object_uri, object_label, period_from, period_to, " +
-                    "processing_time, langs, period_timepoint) VALUES ('")
-                    .append(name).append("',")
-                    .append(correct).append(",'")
-                    .append(filename).append("','")
-                    .append(filepath).append("','")
-                    .append(suri).append("','")
-                    .append(slabel).append("','")
-                    .append(puri).append("','")
-                    .append(plabel).append("','")
-                    .append(ouri).append("','")
-                    .append(olabel).append("','")
-                    .append(from).append("','")
-                    .append(to).append("',")
-                    .append(processing_time).append(",'")
-                    .append(langs).append("',")
-                    .append(isTimePoint).append(");");
+            String name = model.getName();
+            int correct = model.isCorrect() ? 1 : 0;
+            String suri = model.getSubjectUri();
+            String slabel = model.getSubjectLabel("en");
+            String puri = model.getPredicate().getURI();
+            String plabel = model.getPredicate().getLocalName();
+            String ouri = model.getObjectUri();
+            String olabel = model.getObjectLabel("en");
+            String from = model.getTimePeriod().getFrom().toString();
+            String to = model.getTimePeriod().getTo().toString();
+            int isTimePoint = model.getTimePeriod().isTimePoint() ? 1 : 0;
+            String langs = model.getLanguages().toString();
 
-            stmt = c.createStatement();
-            stmt.executeUpdate(sBufferSQL.toString());
-            ResultSet keys = stmt.getGeneratedKeys();
-            keys.next();
-            id = keys.getInt(1);
-            keys.close();
-            stmt.close();
-            LOGGER.info(":: model ok");
-        }
+            int id = existsRecord("select id from tb_model where file_name = '" + filename +
+                    "' and file_path = '" + filepath + "' and period_timepoint = " + isTimePoint + " and langs = '"
+                    + langs + "'");
+            if (id == 0) {
+                Statement stmt = null;
+                StringBuffer sBufferSQL = new StringBuffer(29);
+                sBufferSQL.append("INSERT INTO TB_MODEL (model_name, model_correct, file_name, file_path, subject_uri, " +
+                        "subject_label, predicate_uri, predicate_label, object_uri, object_label, period_from, period_to, " +
+                        "processing_time, langs, period_timepoint) VALUES ('")
+                        .append(name).append("',")
+                        .append(correct).append(",'")
+                        .append(filename).append("','")
+                        .append(filepath).append("','")
+                        .append(suri).append("','")
+                        .append(slabel.replaceAll("'", "''")).append("','")
+                        .append(puri).append("','")
+                        .append(plabel.replaceAll("'", "''")).append("','")
+                        .append(ouri).append("','")
+                        .append(olabel.replaceAll("'", "''")).append("','")
+                        .append(from).append("','")
+                        .append(to).append("',")
+                        .append(processing_time).append(",'")
+                        .append(langs).append("',")
+                        .append(isTimePoint).append(");");
+
+                stmt = c.createStatement();
+                stmt.executeUpdate(sBufferSQL.toString());
+                ResultSet keys = stmt.getGeneratedKeys();
+                keys.next();
+                id = keys.getInt(1);
+                keys.close();
+                stmt.close();
+                LOGGER.debug(":: model ok");
+            }
+
 
 
         return id;
@@ -323,7 +336,7 @@ public class SQLiteHelper {
             sBufferSQL.append("INSERT INTO TB_PROOF (id_website, id_pattern, id_model, context_tiny, context_tiny_tagged," +
                     " context_small, context_small_tagged, context_medium, context_medium_tagged, context_large, " +
                     "context_large_tagged, phrase, normalised_phrase, " +
-                    "first_label, second_label, has_pattern_in_between, lang" +
+                    "first_label, second_label, has_pattern_normalized_in_between, lang" +
                     ") VALUES (")
                     .append(idwebsite).append(",")
                     .append(idpattern).append(",")
@@ -350,7 +363,7 @@ public class SQLiteHelper {
             id = keys.getInt(1);
             keys.close();
             stmt.close();
-            LOGGER.info(":: proof ok");
+            LOGGER.debug(":: proof ok");
         }
 
         return id;
@@ -370,7 +383,7 @@ public class SQLiteHelper {
             stmt = c.createStatement();
             stmt.executeUpdate(sql);
             stmt.close();
-            LOGGER.info(":: topic terms x evidence ok");
+            LOGGER.debug(":: topic terms x evidence ok");
         }
          return true;
 
@@ -388,7 +401,7 @@ public class SQLiteHelper {
             stmt = c.createStatement();
             stmt.executeUpdate(sql);
             stmt.close();
-            LOGGER.info(":: rel topic term x metaquery ok");
+            LOGGER.debug(":: rel topic term x metaquery ok");
         }
         return true;
 
@@ -407,7 +420,7 @@ public class SQLiteHelper {
             stmt = c.createStatement();
             stmt.executeUpdate(sql);
             stmt.close();
-            LOGGER.info(":: rel topic term x website ok");
+            LOGGER.debug(":: rel topic term x website ok");
         }
         return true;
 
@@ -434,7 +447,7 @@ public class SQLiteHelper {
             id = keys.getInt(1);
             keys.close();
             stmt.close();
-            LOGGER.info(":: pattern_metaquery ok");
+            LOGGER.debug(":: pattern_metaquery ok");
         }
         return id;
     }
@@ -510,7 +523,7 @@ public class SQLiteHelper {
             id = keys.getInt(1);
             stmt.close();
             c.commit();
-            LOGGER.info(":: metaquery ok");
+            LOGGER.debug(":: metaquery ok");
         }
 
         return id;
@@ -519,7 +532,7 @@ public class SQLiteHelper {
 
     public Integer saveWebSite(Integer idmetaquery, WebSite w, Integer has_proof) throws Exception{
 
-        URI url = new URI(w.getUrl().toString().replaceAll("'", "''"));
+        URI url = new URI(w.getUrl());
         String urldomain = url.getHost();
         String title = w.getTitle().replaceAll("'", "''");
         String body = w.getText().replaceAll("'", "''");
@@ -534,13 +547,33 @@ public class SQLiteHelper {
 
         Statement stmt = null;
 
-
         Integer id = existsRecord("SELECT id FROM TB_WEBSITE WHERE ID_METAQUERY = " + idmetaquery + " AND " +
-                " url = '" + url + "' AND lang = '" + lang + "'");
+                " url = '" + url.toString() + "' AND lang = '" + lang + "'");
 
         if (id == 0) {
-            StringBuffer sBufferSQL = new StringBuffer(31);
-            sBufferSQL.append("INSERT INTO TB_WEBSITE (id_metaquery, url, url_domain, title, body, rank, " +
+            //StringBuffer sBufferSQL = new StringBuffer(31);
+            String sSQL = "INSERT INTO TB_WEBSITE (id_metaquery, url, url_domain, title, body, rank, " +
+                    "pagerank, pagerank_score, ind_score, ind_topic_majority_web, ind_topic_majority_search, " +
+                    "ind_topic_coverage_score, has_proof, lang" +
+                    ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+
+            PreparedStatement prep = c.prepareStatement(sSQL);
+            prep.setInt(1, idmetaquery);
+            prep.setString(2, url.toString());
+            prep.setString(3, urldomain);
+            prep.setString(4, title);
+            prep.setString(5, body);
+            prep.setInt(6, rank);
+            prep.setInt(7, pagerank);
+            prep.setDouble(8, pagerankscore);
+            prep.setDouble(9, ind_score);
+            prep.setDouble(10, ind_topic_majority_web);
+            prep.setDouble(11, ind_topic_majority_search);
+            prep.setDouble(12, ind_topic_coverage_score);
+            prep.setInt(13, has_proof);
+            prep.setString(14, lang);
+
+            /*sBufferSQL.append("INSERT INTO TB_WEBSITE (id_metaquery, url, url_domain, title, body, rank, " +
                     "pagerank, pagerank_score, ind_score, ind_topic_majority_web, ind_topic_majority_search, " +
                     "ind_topic_coverage_score, has_proof, lang" +
                     ") VALUES (")
@@ -558,15 +591,19 @@ public class SQLiteHelper {
                     .append(ind_topic_coverage_score).append(",")
                     .append(has_proof).append(",'")
                     .append(lang).append("');");
+                    */
 
-            stmt = c.createStatement();
-            stmt.executeUpdate(sBufferSQL.toString());
-            ResultSet keys = stmt.getGeneratedKeys();
+            //stmt = c.createStatement();
+            prep.executeUpdate();
+            //stmt.executeUpdate(sBufferSQL.toString(), new String[]{"sadsad"});
+            //stmt.executeUpdate(sSQL, new String[]{idmetaquery});
+            ResultSet keys = prep.getGeneratedKeys();
             keys.next();
             id = keys.getInt(1);
             keys.close();
-            stmt.close();
-            LOGGER.info(":: website ok");
+            //stmt.close();
+            prep.close();
+            LOGGER.debug(":: website ok");
         }
 
         return id;

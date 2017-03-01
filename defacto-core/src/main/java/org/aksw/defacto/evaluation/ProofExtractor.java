@@ -45,9 +45,10 @@ public class ProofExtractor {
     public static PrintWriter           writer;
     public static PrintWriter           writer_overview;
     public static String                separator = ";";
-    private static String               path = "/Users/esteves/Github/FactBench/test/correct/";
-    private static final File           folder = new File(path);
-    private static List<String>         files = new ArrayList<>();
+    private static final File           folder_pos = new File("/Users/esteves/Github/FactBench/test/correct/");
+    private static final File           folder_neg = new File("/Users/esteves/Github/FactBench/test/wrong/property/");
+    private static List<String>         files_pos = new ArrayList<>();
+    private static List<String>         files_neg = new ArrayList<>();
 
     private static String               cacheQueueProof = "PROCESSING_QUEUE_PROOFS.csv";
     private static String               cacheProofValues = "EVAL_COUNTER_PROOFS.csv";
@@ -56,13 +57,17 @@ public class ProofExtractor {
     private static DefactoUtils util;
     private static PrintWriter          out;
 
-    private static void setFilesModelFiles(final File folder) {
+    private static void setFilesModelFiles(final File folder, String type) {
+
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
-                setFilesModelFiles(fileEntry);
+                setFilesModelFiles(fileEntry, type);
             } else {
                 if (FilenameUtils.getExtension(fileEntry.getAbsolutePath()).equals("ttl")) {
-                    files.add(fileEntry.getAbsolutePath());
+                    if (type.equals("POS"))
+                        files_pos.add(fileEntry.getAbsolutePath());
+                    else
+                        files_neg.add(fileEntry.getAbsolutePath());
                 }
             }
         }
@@ -85,7 +90,6 @@ public class ProofExtractor {
                                      String f) throws Exception{
 
         try{
-            //TODO: colocar ID_EVIDENCIA em todas as tabelas!!!!
             Evidence eaux;
             Integer eauxnum;
 
@@ -178,33 +182,52 @@ public class ProofExtractor {
 
     }
 
-    public static void exportMetadataDB(){
+    public static void exportMetadataDB() throws Exception{
 
-        try{
+        setFilesModelFiles(folder_pos, "POS");
+        setFilesModelFiles(folder_neg, "NEG");
 
+        int aux = 0;
+
+        for(String f:files_pos) {
+            aux++;
+            Path p1 = Paths.get(f);
+            String filename = p1.getFileName().toString();
+            DefactoModel model = null;
             long startTime = System.currentTimeMillis();
-            DefactoModel model = getOneExample();
+
+            Integer id = SQLiteHelper.getInstance().existsRecord(
+                        "select id from tb_model where file_name = '" + filename +
+                                "' and file_path = '" + p1.getParent().toString() + "' and langs = '[en, fr, de]'");
+            if (id!=0)
+                continue;
+
+            Model m = ModelFactory.createDefaultModel();
+            InputStream is = new FileInputStream(f);
+            m.read(is, null, "TURTLE");
+            model = new DefactoModel(m, filename.replace(FilenameUtils.getExtension(f), "").replace(".", ""),
+                            true, Arrays.asList("en", "fr", "de"), filename);
+
+            //DefactoModel model = getOneExample();
+            LOGGER.info(":: checking model [" + aux + "] : " + filename);
             final Evidence evidence = Defacto.checkFact(model, Defacto.TIME_DISTRIBUTION_ONLY.NO);
+
             long endTime   = System.currentTimeMillis();
             long totalTime = endTime - startTime;
 
             String out = String.format("Processing Time: %02d hour, %02d min, %02d sec",
-                    TimeUnit.MILLISECONDS.toHours(totalTime),
-                    TimeUnit.MILLISECONDS.toMinutes(totalTime),
-                    TimeUnit.MILLISECONDS.toSeconds(totalTime) -
-                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))
+                        TimeUnit.MILLISECONDS.toHours(totalTime),
+                        TimeUnit.MILLISECONDS.toMinutes(totalTime),
+                        TimeUnit.MILLISECONDS.toSeconds(totalTime) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))
             );
 
             LOGGER.info(out);
-            LOGGER.info(":: saving metadata...");
-            saveMetadata(totalTime, evidence, Constants.EvidenceType.POS, model.getFile().getAbsolutePath());
+            LOGGER.info(":: ok, saving metadata...");
+            saveMetadata(totalTime, evidence, Constants.EvidenceType.POS, p1.toString());
             LOGGER.info(":: done...");
 
-
-        }catch (Exception e){
-            LOGGER.error(e.toString());
-        }
-
+            }
 
     }
 
@@ -219,14 +242,14 @@ public class ProofExtractor {
         util = new DefactoUtils();
 
         //Factbench dataset directory (correct)
-        setFilesModelFiles(folder);
+        setFilesModelFiles(folder_pos, "POS");
 
         cache = util.readCacheFromCSV(cacheQueueProof);
         cacheBkp = (ArrayList<String>) cache.clone();
 
         out = new PrintWriter(new BufferedWriter(new FileWriter(cacheProofValues, true)));
 
-        for(String f:files) {
+        for(String f:files_pos) {
 
             if (!cache.contains(f)) {
 
@@ -414,14 +437,30 @@ public class ProofExtractor {
 
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
-        if (1==2){
-            exportMetadataFile();
-        }else{
-            exportMetadataDB();
+        try {
+            if (1 == 2) {
+                exportMetadataFile();
+            } else {
+                exportMetadataDB();
+            }
+        }catch (Exception e){
+            StringWriter writer = new StringWriter();
+            PrintWriter printWriter = new PrintWriter( writer );
+            getCause(e).printStackTrace( printWriter );
+            printWriter.flush();
+            LOGGER.error(writer.toString());
         }
+    }
 
+    private static Throwable getCause(Throwable e) {
+        Throwable cause = null;
+        Throwable result = e;
+        while(null != (cause = result.getCause())  && (result != cause) ) {
+            result = cause;
+        }
+        return result;
     }
 
     private static void exportMetadataFile() throws Exception{
