@@ -577,8 +577,21 @@ public class SQLiteHelper {
 
     public Integer saveWebSite(Integer idmetaquery, WebSite w, Integer has_proof) throws Exception{
 
-        URI url = new URI(w.getUrl());
-        String urldomain = url.getHost();
+        //https://www.coppercanyonpress.org/pages/browse/book.asp?bg={19621816-B5E9-4075-AF68-E409FFCED6D4}
+
+        String urldomain;
+        String urlstr;
+        try{
+            URI url = new URI(w.getUrl());
+            urlstr = url.toString();
+            urldomain = url.getHost();
+        }
+        catch (Exception e){
+            urlstr = w.getUrl();
+            int slashslash = urlstr.indexOf("//") + 2;
+            urldomain = urlstr.substring(slashslash, urlstr.indexOf('/', slashslash));
+        }
+
         String title = w.getTitle().replaceAll("'", "''");
         String body = w.getText().replaceAll("'", "''");
         Integer rank = w.getSearchRank();
@@ -595,7 +608,7 @@ public class SQLiteHelper {
         String sSQL = "SELECT ID FROM TB_WEBSITE WHERE ID_METAQUERY = ? AND URL = ? AND LANG = ?";
         PreparedStatement prep = c.prepareStatement(sSQL);
         prep.setInt(1, idmetaquery);
-        prep.setString(2, url.toString());
+        prep.setString(2, urlstr);
         prep.setString(3, lang);
 
         Integer id = existsRecord(prep);
@@ -609,7 +622,7 @@ public class SQLiteHelper {
 
             prep = c.prepareStatement(sSQL);
             prep.setInt(1, idmetaquery);
-            prep.setString(2, url.toString());
+            prep.setString(2, urlstr);
             prep.setString(3, urldomain);
             prep.setString(4, title);
             prep.setString(5, body);
