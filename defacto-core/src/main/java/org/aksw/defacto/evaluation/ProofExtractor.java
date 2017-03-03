@@ -46,8 +46,8 @@ public class ProofExtractor {
     public static PrintWriter           writer;
     public static PrintWriter           writer_overview;
     public static String                separator = ";";
-    private static final File           folder_pos = new File("/Users/esteves/Github/FactBench/test/correct/");
-    private static final File           folder_neg = new File("/Users/esteves/Github/FactBench/test/wrong/property/");
+    private static final File           folder_pos = new File("/home/esteves/github/FactBench/test/correct/");
+    private static final File           folder_neg = new File("/home/esteves/github/FactBench/test/wrong/property/");
     private static List<String>         files_pos = new ArrayList<>();
     private static List<String>         files_neg = new ArrayList<>();
 
@@ -170,6 +170,9 @@ public class ProofExtractor {
                 SQLiteHelper.getInstance().addProof(idmodel, pfr, idevidence, eaux);}
 
             if ((sitesproof.size() + sitesnoproof.size() != eaux.getAllWebSites().size())){
+                LOGGER.debug(String.valueOf(sitesproof.size()));
+                LOGGER.debug(String.valueOf(sitesnoproof.size()));
+                LOGGER.debug(String.valueOf(eaux.getAllWebSites().size()));
                 throw new Exception("that' strange!");
             }
 

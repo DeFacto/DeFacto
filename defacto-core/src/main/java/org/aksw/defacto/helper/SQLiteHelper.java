@@ -29,7 +29,7 @@ public class SQLiteHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(SQLiteHelper.class);
     private static Connection c = null;
     private static SQLiteHelper instance = null;
-    private static String db_path = "/Users/esteves/Desktop/defacto.db";
+    private static String db_path = "data/database/defacto.db";
     protected SQLiteHelper() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -172,27 +172,29 @@ public class SQLiteHelper {
             if (id == 0) {
                 Statement stmt = null;
                 StringBuffer sBufferSQL = new StringBuffer(29);
-                sBufferSQL.append("INSERT INTO TB_MODEL (model_name, model_correct, file_name, file_path, subject_uri, " +
-                        "subject_label, predicate_uri, predicate_label, object_uri, object_label, period_from, period_to, " +
-                        "processing_time, langs, period_timepoint) VALUES ('")
-                        .append(name).append("',")
-                        .append(correct).append(",'")
-                        .append(filename).append("','")
-                        .append(filepath).append("','")
-                        .append(suri).append("','")
-                        .append(slabel.replaceAll("'", "''")).append("','")
-                        .append(puri).append("','")
-                        .append(plabel.replaceAll("'", "''")).append("','")
-                        .append(ouri).append("','")
-                        .append(olabel.replaceAll("'", "''")).append("','")
-                        .append(from).append("','")
-                        .append(to).append("',")
-                        .append(processing_time).append(",'")
-                        .append(langs).append("',")
-                        .append(isTimePoint).append(");");
 
-                stmt = c.createStatement();
-                stmt.executeUpdate(sBufferSQL.toString());
+                sSQL = "INSERT INTO TB_MODEL (MODEL_NAME, MODEL_CORRECT, FILE_NAME, FILE_PATH, SUBJECT_URI, " +
+                        "SUBJECT_LABEL, PREDICATE_URI, PREDICATE_LABEL, OBJECT_URI, OBJECT_LABEL, PERIOD_FROM, PERIOD_TO, " +
+                        "PROCESSING_TIME, LANGS, PERIOD_TIMEPOINT) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+
+                prep = c.prepareStatement(sSQL);
+                prep.setString(1, name);
+                prep.setInt(2, correct);
+                prep.setString(3, filename);
+                prep.setString(4, filepath);
+                prep.setString(5, suri);
+                prep.setString(6, slabel);
+                prep.setString(7, puri);
+                prep.setString(8, plabel);
+                prep.setString(9, ouri);
+                prep.setString(10, olabel);
+                prep.setString(11, from);
+                prep.setString(12, to);
+                prep.setLong(13, processing_time);
+                prep.setString(14, langs);
+                prep.setInt(14, isTimePoint);
+
+                prep.executeUpdate();
                 ResultSet keys = stmt.getGeneratedKeys();
                 keys.next();
                 id = keys.getInt(1);

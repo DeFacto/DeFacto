@@ -73,12 +73,12 @@
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>3.6.0</version>
+            <version>3.7.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>3.6.0</version>
+            <version>3.7.0</version>
             <classifier>models</classifier>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
@@ -204,6 +204,13 @@
             <scope>system</scope>
         </dependency>
         <dependency>
+            <groupId>org.aksw.kbox</groupId>
+            <artifactId>kbox.core</artifactId>
+            <version>0.0.1-alpha3-RC4</version>
+            <systemPath>${basedir}/lib/kbox-v0.0.1-alpha3-RC4.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+        <dependency>
             <groupId>org.aksw.jena-sparql-api</groupId>
             <artifactId>jena-sparql-api-core</artifactId>
             <version>2.10.0-18-SNAPSHOT</version>
@@ -247,6 +254,12 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-core</artifactId>
             <version>1.2.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jwat/jwat-warc -->
+        <dependency>
+            <groupId>org.jwat</groupId>
+            <artifactId>jwat-warc</artifactId>
+            <version>0.8.0</version>
         </dependency>
     </dependencies>
 </project>
