@@ -352,38 +352,37 @@ public class SQLiteHelper {
             String firstlabel = pro.getSubject().replaceAll("'", "''");
             String secondlabel = pro.getObject().replaceAll("'", "''");
 
-            Statement stmt = null;
-            StringBuffer sBufferSQL = new StringBuffer(37);
-            sBufferSQL.append("INSERT INTO TB_PROOF (id_website, id_pattern, id_model, context_tiny, context_tiny_tagged," +
-                    " context_small, context_small_tagged, context_medium, context_medium_tagged, context_large, " +
-                    "context_large_tagged, phrase, normalised_phrase, " +
-                    "first_label, second_label, has_pattern_normalized_in_between, lang" +
-                    ") VALUES (")
-                    .append(idwebsite).append(",")
-                    .append(idpattern).append(",")
-                    .append(idmodel).append(",'")
-                    .append(ctiny).append("','")
-                    .append(ctinytag).append("','")
-                    .append(cs).append("','")
-                    .append(cstag).append("','")
-                    .append(cm).append("','")
-                    .append(cmtag).append("','")
-                    .append(cl).append("','")
-                    .append(cltag).append("','")
-                    .append(phrase).append("','")
-                    .append(nphrase).append("','")
-                    .append(firstlabel).append("','")
-                    .append(secondlabel).append("',")
-                    .append(pro.getHasPatternInBetween() == true ? 1: 0).append(",'")
-                    .append(pro.getLanguage()).append("');");
+            sSQL = "INSERT INTO TB_PROOF (ID_WEBSITE, ID_PATTERN, ID_MODEL, CONTEXT_TINY, CONTEXT_TINY_TAGGED, " +
+                    "CONTEXT_SMALL, CONTEXT_SMALL_TAGGED, CONTEXT_MEDIUM, CONTEXT_MEDIUM_TAGGED, CONTEXT_LARGE, " +
+                    "CONTEXT_LARGE_TAGGED, PHRASE, NORMALISED_PHRASE, " +
+                    "FIRST_LABEL, SECOND_LABEL, HAS_PATTERN_NORMALIZED_IN_BETWEEN, LANG" +
+                    ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
-            stmt = c.createStatement();
-            stmt.executeUpdate(sBufferSQL.toString());
-            ResultSet keys = stmt.getGeneratedKeys();
+            prep = c.prepareStatement(sSQL);
+            prep.setInt(1, idwebsite);
+            prep.setInt(2, idpattern);
+            prep.setInt(3, idmodel);
+            prep.setString(4, ctiny);
+            prep.setString(5, ctinytag);
+            prep.setString(6, cs);
+            prep.setString(7, cstag);
+            prep.setString(8, cm);
+            prep.setString(9, cmtag);
+            prep.setString(10, cl);
+            prep.setString(11, cltag);
+            prep.setString(12, phrase);
+            prep.setString(13, nphrase);
+            prep.setString(14, firstlabel);
+            prep.setString(15, secondlabel);
+            prep.setInt(16, pro.getHasPatternInBetween() == true ? 1: 0);
+            prep.setString(17, pro.getLanguage());
+
+            prep.executeUpdate();
+            ResultSet keys = prep.getGeneratedKeys();
             keys.next();
             id = keys.getInt(1);
             keys.close();
-            stmt.close();
+            prep.close();
             LOGGER.debug(":: proof ok");
         }
 
