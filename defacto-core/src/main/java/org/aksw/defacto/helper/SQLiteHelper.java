@@ -195,11 +195,11 @@ public class SQLiteHelper {
                 prep.setInt(15, isTimePoint);
 
                 prep.executeUpdate();
-                ResultSet keys = stmt.getGeneratedKeys();
+                ResultSet keys = prep.getGeneratedKeys();
                 keys.next();
                 id = keys.getInt(1);
                 keys.close();
-                stmt.close();
+                prep.close();
                 LOGGER.debug(":: model ok");
             }
 
