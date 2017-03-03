@@ -192,7 +192,7 @@ public class SQLiteHelper {
                 prep.setString(12, to);
                 prep.setLong(13, processing_time);
                 prep.setString(14, langs);
-                prep.setInt(14, isTimePoint);
+                prep.setInt(15, isTimePoint);
 
                 prep.executeUpdate();
                 ResultSet keys = stmt.getGeneratedKeys();
