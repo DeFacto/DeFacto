@@ -200,11 +200,14 @@ public class ProofExtractor {
             DefactoModel model = null;
             long startTime = System.currentTimeMillis();
 
-            String sSQL = "SELECT ID FROM TB_MODEL WHERE FILE_NAME = ? AND FILE_PATH = ? AND LANGS = ?";
+            String sSQL = "SELECT ID FROM TB_MODEL WHERE FILE_NAME = ? AND FILE_PATH = ? AND LANGS = ? " +
+                    "AND MODEL_CORRECT = ?";
             PreparedStatement prep = SQLiteHelper.getInstance().getConnection().prepareStatement(sSQL);
+
             prep.setString(1, filename);
             prep.setString(2, p1.getParent().toString());
             prep.setString(3, "[en, fr, de]");
+            prep.setInt(4, 1);
 
             Integer id = SQLiteHelper.getInstance().existsRecord(prep);
             if (id!=0)
