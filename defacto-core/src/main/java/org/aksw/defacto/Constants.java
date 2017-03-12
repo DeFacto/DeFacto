@@ -19,6 +19,7 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
  */
 public class Constants {
 
+	public enum ExampleKlass {TRUE, FALSE};
 	public enum EvidenceType {POS, NEG}; //pos -> positive claims / neg -> possible claims that could refute the pos ones
 
 	/* esteves: adding indexed wikipedia */

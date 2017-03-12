@@ -47,7 +47,7 @@ public class ProofExtractor {
     public static PrintWriter           writer_overview;
     public static String                separator = ";";
     private static final File           folder_pos = new File("/home/esteves/github/FactBench/test/correct/");
-    private static final File           folder_neg = new File("/home/esteves/github/FactBench/test/wrong/property/");
+    private static final File           folder_neg = new File("/home/esteves/github/FactBench/test/wrong/domainrange/");
     private static List<String>         files_pos = new ArrayList<>();
     private static List<String>         files_neg = new ArrayList<>();
 
@@ -87,19 +87,25 @@ public class ProofExtractor {
 
     }
 
-    private static void saveMetadata(long totalTime, Evidence _evidence, Constants.EvidenceType evidencetype,
+    private static void saveMetadata(long totalTime, Evidence _evidence,
+                                     Constants.ExampleKlass _exampleType,
+                                     Constants.EvidenceType evidencetype,
                                      String f) throws Exception{
 
         try{
             Evidence eaux;
             Integer eauxnum;
 
+            if (_exampleType.equals(Constants.ExampleKlass.TRUE)){
+                eauxnum = 1;
+            }else{
+                eauxnum = 0;
+            }
+
             if (evidencetype.equals(Constants.EvidenceType.POS)) {
                 eaux = _evidence;
-                eauxnum = 1;
             }else {
                 eaux = _evidence.getNegativeEvidenceObject();
-                eauxnum = 0;
             }
 
             DefactoModel model = eaux.getModel();
@@ -193,7 +199,7 @@ public class ProofExtractor {
 
         int aux = 0;
 
-        for(String f:files_pos) {
+        for(String f:files_neg) {
             aux++;
             Path p1 = Paths.get(f);
             String filename = p1.getFileName().toString();
@@ -207,7 +213,7 @@ public class ProofExtractor {
             prep.setString(1, filename);
             prep.setString(2, p1.getParent().toString());
             prep.setString(3, "[en, fr, de]");
-            prep.setInt(4, 1);
+            prep.setInt(4, 0);
 
             Integer id = SQLiteHelper.getInstance().existsRecord(prep);
             if (id!=0)
@@ -235,7 +241,7 @@ public class ProofExtractor {
 
             LOGGER.info(out);
             LOGGER.info(":: ok, saving metadata...");
-            saveMetadata(totalTime, evidence, Constants.EvidenceType.POS, p1.toString());
+            saveMetadata(totalTime, evidence, Constants.ExampleKlass.FALSE, Constants.EvidenceType.POS, p1.toString());
             LOGGER.info(":: done...");
 
             }
