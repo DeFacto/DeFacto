@@ -579,15 +579,17 @@ public class BoaPatternSearcher {
 
     	Defacto.init();
         queryPatterns("http://dbpedia.org/ontology/award");
-        queryPatterns("http://dbpedia.org/ontology/birthPlace");
-        queryPatterns("http://dbpedia.org/ontology/deathPlace");
-        queryPatterns("http://dbpedia.org/ontology/foundationPlace");
-        queryPatterns("http://dbpedia.org/ontology/leaderName");
-        queryPatterns("http://dbpedia.org/ontology/team");
-        queryPatterns("http://dbpedia.org/ontology/author");
-        queryPatterns("http://dbpedia.org/ontology/spouse");
-        queryPatterns("http://dbpedia.org/ontology/starring");
-        queryPatterns("http://dbpedia.org/ontology/subsidiary");
+        //queryPatterns("http://dbpedia.org/ontology/birthPlace");
+        //queryPatterns("http://dbpedia.org/ontology/foundationPlace");
+        //queryPatterns("http://dbpedia.org/ontology/deathPlace");
+
+        //queryPatterns("http://dbpedia.org/ontology/leaderName");
+        //queryPatterns("http://dbpedia.org/ontology/team");
+        //queryPatterns("http://dbpedia.org/ontology/author");
+        //queryPatterns("http://dbpedia.org/ontology/spouse");
+        //queryPatterns("http://dbpedia.org/ontology/starring");
+        //queryPatterns("http://dbpedia.org/ontology/subsidiary");
+
     }
 
 	/**
@@ -606,7 +608,7 @@ public class BoaPatternSearcher {
         Iterator<Pattern> iterator = sub.iterator();
         while ( iterator.hasNext()) {
 			Pattern pattern = iterator.next();
-            logger.info(pattern.naturalLanguageRepresentation + " --> " + pattern.normalize());
+            System.out.println(pattern.naturalLanguageRepresentation + " (" + pattern.normalize() + ")");
         }
 	}
 }

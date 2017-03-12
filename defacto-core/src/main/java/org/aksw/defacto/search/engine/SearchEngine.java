@@ -17,12 +17,12 @@ public interface SearchEngine {
      * @param pattern 
      * @return
      */
-    public SearchResult getSearchResults(MetaQuery query, Pattern pattern);
+    public SearchResult getSearchResults(MetaQuery query, Pattern pattern, String version);
     
     /**
      * 
      */
-    public SearchResult query(MetaQuery query, Pattern pattern);
+    public SearchResult query(MetaQuery query, Pattern pattern, String version);
 
     /**
      * 

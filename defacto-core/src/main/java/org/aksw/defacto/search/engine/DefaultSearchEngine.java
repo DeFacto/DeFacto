@@ -27,7 +27,7 @@ public abstract class DefaultSearchEngine implements SearchEngine {
      * @see org.aksw.defacto.search.engine.SearchEngine#getSearchResults(org.aksw.defacto.search.query.MetaQuery)
      */
     @Override
-    public SearchResult getSearchResults(MetaQuery query, Pattern pattern) {
+    public SearchResult getSearchResults(MetaQuery query, Pattern pattern, String version) {
 
         if ( searchResultsCache.contains(query.toString()) ) {
             
@@ -37,7 +37,7 @@ public abstract class DefaultSearchEngine implements SearchEngine {
             result.setPattern(pattern);
             return result;
         }
-        return query(query, pattern);
+        return query(query, pattern, version);
     }
     
     public static void main(String[] args) {

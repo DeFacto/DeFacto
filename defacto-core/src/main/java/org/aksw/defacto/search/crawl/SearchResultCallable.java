@@ -31,7 +31,7 @@ public class SearchResultCallable implements Callable<SearchResult> {
 
     @Override
     public SearchResult call() throws Exception {
-        return this.engine.getSearchResults(this.query, this.pattern);
+        return this.engine.getSearchResults(this.query, this.pattern, "v5");
     }
 
 }

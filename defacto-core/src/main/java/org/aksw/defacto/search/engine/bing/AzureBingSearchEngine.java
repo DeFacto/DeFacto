@@ -14,8 +14,17 @@ import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.DefaultSearchResult;
 import org.aksw.defacto.search.result.SearchResult;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -88,14 +97,62 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
 //        System.out.println(engine.query(query1, null).getWebSites().size());
 //        System.out.println(engine.query(query2, null).getWebSites().size());
     }
-    
-    
-    
-    @Override
-    public SearchResult query(MetaQuery query, Pattern pattern) {
+
+
+    private SearchResult query_v5(MetaQuery query, Pattern pattern){
 
         try {
 
+            final String accountKey = BING_API_KEY;
+            /* https://api.cognitive.microsoft.com/bing/v5.0/search?q=porsche&responseFilter=webpages */
+            final String bingUrlPattern = "https://api.datamarket.azure.com/Bing/Search/Web?Query=%%27%s%%27&$format=JSON";
+
+            final String strquery = URLEncoder.encode(this.generateQuery(query), Charset.defaultCharset().name());
+            final String bingUrl = String.format(bingUrlPattern, strquery);
+
+            final String accountKeyEnc = Base64.getEncoder().encodeToString((accountKey + ":" + accountKey).getBytes());
+            Long resultsLength = 0l;
+            final URL url = new URL(bingUrl);
+            final URLConnection connection = url.openConnection();
+            connection.setRequestProperty("Authorization", "Basic " + accountKeyEnc);
+            List<WebSite> resultsws = new ArrayList<WebSite>();
+
+            try (final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                String inputLine;
+                final StringBuilder response = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                final JSONObject json = new JSONObject(response.toString());
+                final JSONObject d = json.getJSONObject("d");
+                final JSONArray results = d.getJSONArray("results");
+                resultsLength = (Long.valueOf(results.length()));
+                int aux = 1;
+                for (int i = 0; i < resultsLength; i++) {
+                    if ( aux > Integer.valueOf(NUMBER_OF_SEARCH_RESULTS) ) break;
+                    final JSONObject aResult = results.getJSONObject(i);
+                    if ((aResult.get("Url").toString().startsWith("http://images.webgiftr.com/")
+                            || (aResult.get("Url").toString().startsWith("http://www.calza.com/")))) continue;
+
+                    WebSite website = new WebSite(query, aResult.get("Url").toString());
+                    website.setTitle(aResult.get("Title").toString());
+                    website.setRank(i++);
+                    website.setLanguage(query.getLanguage());
+                    resultsws.add(website);
+                }
+            }
+            return new DefaultSearchResult(resultsws, resultsLength, query, pattern, false);
+        }
+        catch (Exception e) {
+
+            e.printStackTrace();
+            return new DefaultSearchResult(new ArrayList<WebSite>(), 0L, query, pattern, false);
+        }
+    }
+
+    private SearchResult query_v2(MetaQuery query, Pattern pattern){
+
+        try {
             AzureSearchCompositeQuery aq = new AzureSearchCompositeQuery();
             aq.setAppid(BING_API_KEY);
             aq.setLatitude("47.603450");
@@ -103,40 +160,54 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
             if ( query.getLanguage().equals("en") ) aq.setMarket("en-US");
             else if ( query.getLanguage().equals("de") )aq.setMarket("de-DE");
             else aq.setMarket("fr-FR");
-            
+
             aq.setSources(new AZURESEARCH_QUERYTYPE[] { AZURESEARCH_QUERYTYPE.WEB });
 
             String strQuery = this.generateQuery(query);
             logger.debug("BING Query: " + strQuery);
             aq.setQuery(strQuery);
             aq.doQuery();
-            
+
             AzureSearchResultSet<AbstractAzureSearchResult> ars = aq.getQueryResult();
             // query bing and get only the urls and the total hit count back
             List<WebSite> results = new ArrayList<WebSite>();
-            
+
             int i = 1;
             for (AbstractAzureSearchResult result : ars){
 
                 if ( i > Integer.valueOf(NUMBER_OF_SEARCH_RESULTS) ) break;
-                
-                if ( ((AzureSearchWebResult) result).getUrl().startsWith("http://images.webgiftr.com/") 
-                		|| ((AzureSearchWebResult) result).getUrl().startsWith("http://www.calza.com/")) continue;
-                
+
+                if ( ((AzureSearchWebResult) result).getUrl().startsWith("http://images.webgiftr.com/")
+                        || ((AzureSearchWebResult) result).getUrl().startsWith("http://www.calza.com/")) continue;
+
                 WebSite website = new WebSite(query, ((AzureSearchWebResult) result).getUrl());
                 website.setTitle(result.getTitle());
                 website.setRank(i++);
                 website.setLanguage(query.getLanguage());
                 results.add(website);
             }
-            
+
             return new DefaultSearchResult(results, ars.getWebTotal(), query, pattern, false);
         }
         catch (Exception e) {
-            
-        	e.printStackTrace();
+
+            e.printStackTrace();
             return new DefaultSearchResult(new ArrayList<WebSite>(), 0L, query, pattern, false);
         }
+    }
+
+    @Override
+    public SearchResult query(MetaQuery query, Pattern pattern, String version) {
+
+        if (version.equals("v2")){
+            return query_v2(query, pattern);
+        }else if (version.equals("v5")){
+            return query_v5(query, pattern);
+        }else{
+            logger.error("-> bing version not implemented!");
+            return new DefaultSearchResult(new ArrayList<WebSite>(), 0L, query, pattern, false);
+        }
+
     }
 
     @Override

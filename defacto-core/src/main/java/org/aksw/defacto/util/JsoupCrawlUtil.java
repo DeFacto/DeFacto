@@ -14,7 +14,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 /**
- * 
+ * https://jsoup.org/cookbook/input/load-document-from-url
  * @author Daniel Gerber <dgerber@informatik.uni-leipzig.de>
  */
 public class JsoupCrawlUtil implements CrawlUtil {
@@ -26,9 +26,9 @@ public class JsoupCrawlUtil implements CrawlUtil {
 
         try {
             
-        	Document doc = Jsoup.connect(url).
-    		userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.120 Safari/535.2")
-    		.timeout(timeout).get();
+        	Document doc = Jsoup.connect(url)
+                    .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.120 Safari/535.2")
+    		        .timeout(timeout).get();
         	
 //        	for (Element meta : doc.select("meta")) {
 //        	    System.out.println("Name: " + meta.attr("name") + " - Content: " + meta.attr("content"));
@@ -36,6 +36,7 @@ public class JsoupCrawlUtil implements CrawlUtil {
         	
         	
             return doc.text();
+            //doc.title();
         }
         catch (Throwable e) {
             
