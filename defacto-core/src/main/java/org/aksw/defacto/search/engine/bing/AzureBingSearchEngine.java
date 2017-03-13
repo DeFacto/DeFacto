@@ -137,10 +137,10 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
 
             HttpResponse resp = httpclient.execute(request);
             int statusCode = resp.getStatusLine().getStatusCode();
-            if (statusCode != 200)
-            {
-                throw new RuntimeException("Failed with HTTP error code : " + statusCode);
-            }
+            //if (statusCode != 200)
+            //{
+            //    throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+           // }
             HttpEntity entity = resp.getEntity();
             List<WebSite> resultsws = new ArrayList<WebSite>();
             Long resultsLength = 0L;
