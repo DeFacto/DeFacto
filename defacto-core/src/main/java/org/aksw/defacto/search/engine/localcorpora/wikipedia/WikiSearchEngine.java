@@ -73,7 +73,7 @@ public class WikiSearchEngine implements SearchEngine {
             p.naturalLanguageRepresentation = "";
 
             MetaQuery q = new MetaQuery("Ghostbusters II|-|?D? NONE ?R?|-|Bill Murray|-|en", p);
-            SearchResult result = engine.getSearchResults(q, null);
+            SearchResult result = engine.getSearchResults(q, null, "v2");
             System.out.println("done!");
 
             System.out.println("total of websites: " + result.getWebSites().size());
@@ -93,12 +93,12 @@ public class WikiSearchEngine implements SearchEngine {
     }
 
     @Override
-    public SearchResult getSearchResults(MetaQuery query, Pattern pattern) {
-        return query(query, pattern);
+    public SearchResult getSearchResults(MetaQuery query, Pattern pattern, String version) {
+        return query(query, pattern, version);
     }
 
     @Override
-    public SearchResult query(MetaQuery query, Pattern pattern){
+    public SearchResult query(MetaQuery query, Pattern pattern, String vesion){
 
         Map<String, WikipediaSearchResult> lc_results = new HashMap<>();
         List<WebSite> websites = new ArrayList<>();

@@ -63,19 +63,20 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
 //        MetaQuery query  = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Montebelluna", "?R? Wii version of `` ?D?", "Procter & Gamble", "en"));
 //        MetaQuery query1 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Gloria Estefan", "??? NONE ???", "Remember Me with Love", "en"));
 //        MetaQuery query2 = new MetaQuery(String.format("%s|-|%s|-|%s|-|%s", "Avram Hershko", "?D? is a component of ?R?", "United States Marine Corps", "en"));
-        
+
+        Pattern p = new Pattern("?D politician ?R");
+        MetaQuery query = new MetaQuery("Franck Ribery|-| politician |-|Galatasaray|-|en", p);
         Defacto.init();
 
-        Pattern p = new Pattern();
         p.naturalLanguageRepresentation = "?D? was not prizewinning ?R?";
 
         MetaQuery q = new MetaQuery("Guglielmo Marconi|-| not prizewinning |-|Nobel Prize in Physics|-|en", p);
 
         //MetaQuery q = new MetaQuery("Ghostbusters II|-|?D? NONE ?R?|-|Bill Murray|-|fr");
         AzureBingSearchEngine engine = new AzureBingSearchEngine();
-        //System.out.println(BING_API_KEY);
+        System.out.println(BING_API_KEY);
         //System.out.println(engine.query(q, null).getTotalHitCount());
-//        System.out.println(engine.query(query, null).getWebSites().size());
+        System.out.println(engine.query(query, p, "v5").getWebSites().size());
         
 //        URI uri;
 //        try {
@@ -104,8 +105,7 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
         try {
 
             final String accountKey = BING_API_KEY;
-            /* https://api.cognitive.microsoft.com/bing/v5.0/search?q=porsche&responseFilter=webpages */
-            final String bingUrlPattern = "https://api.datamarket.azure.com/Bing/Search/Web?Query=%%27%s%%27&$format=JSON";
+            final String bingUrlPattern = "https://api.cognitive.microsoft.com/bing/v5.0/search?q=%s&responseFilter=webpages";
 
             final String strquery = URLEncoder.encode(this.generateQuery(query), Charset.defaultCharset().name());
             final String bingUrl = String.format(bingUrlPattern, strquery);

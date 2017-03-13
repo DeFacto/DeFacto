@@ -1,10 +1,10 @@
 package org.aksw.defacto;
 
 import com.hp.hpl.jena.query.ResultSet;
-import org.aksw.kbox.kibe.KBox;
+//import org.aksw.kbox.kibe.KBox;
 import org.dllearner.core.owl.KB;
 import org.junit.BeforeClass;
-import org.aksw.kbox.kibe.tdb.TDB;
+//import org.aksw.kbox.kibe.tdb.TDB;
 
 import java.io.File;
 import java.net.URL;
@@ -20,8 +20,8 @@ public class testeKBOX {
         URL[] filesToIndex = new URL[1];
         URL url = testeKBOX.class.getResource("/org/aksw/kbox/kibe/dbpedia_3.9.xml");
         filesToIndex[0] = url;
-        KBox.createIndex(indexFile, filesToIndex);
-        KBox.installKB(indexFile.toURI().toURL(), new URL("http://dbpedia39"));
+        //KBox.createIndex(indexFile, filesToIndex);
+        //KBox.installKB(indexFile.toURI().toURL(), new URL("http://dbpedia39"));
         indexFile.deleteOnExit();
 
     }
@@ -32,8 +32,8 @@ public class testeKBOX {
 
 
         try{
-            ResultSet rs =
-                    KBox.query("Select (count(distinct ?s) as ?n) where {?s ?p ?o}", new URL("http://dbpedia39"));
+            //ResultSet rs =
+                    //KBox.query("Select (count(distinct ?s) as ?n) where {?s ?p ?o}", new URL("http://dbpedia39"));
         }catch (Exception e){
             System.out.print(e);
         }

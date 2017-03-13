@@ -47,12 +47,12 @@ public class YearDistribution {
 			
 			AzureBingSearchEngine engine = new AzureBingSearchEngine();
 			
-			Long count = engine.query(query0, null).getTotalHitCount();
+			Long count = engine.query(query0, null, "v2").getTotalHitCount();
 			
 			if ( yearToNumber.containsKey(year) ) yearToNumber.put(year, yearToNumber.get(year) + count);
 			else yearToNumber.put(year, count);
 			
-	        System.out.println(year + "\t" + engine.query(query0, null).getTotalHitCount() + "\t" + person);
+	        System.out.println(year + "\t" + engine.query(query0, null, "v2").getTotalHitCount() + "\t" + person);
 		}
 		
 		BufferedFileWriter w = new BufferedFileWriter(Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") + "yearDistribution.tsv", Encoding.UTF_8, WRITER_WRITE_MODE.OVERRIDE);		
