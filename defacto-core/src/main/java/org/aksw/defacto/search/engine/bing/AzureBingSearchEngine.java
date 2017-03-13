@@ -13,9 +13,19 @@ import org.aksw.defacto.search.query.BingQuery;
 import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.result.DefaultSearchResult;
 import org.aksw.defacto.search.result.SearchResult;
+import org.apache.http.entity.StringEntity;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.net.URI;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -102,8 +112,69 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
 
     private SearchResult query_v5(MetaQuery query, Pattern pattern){
 
+        HttpClient httpclient = HttpClients.createDefault();
+
         try {
 
+            URIBuilder builder = new URIBuilder("https://api.cognitive.microsoft.com/bing/v5.0/search");
+            String strquery = URLEncoder.encode(this.generateQuery(query), Charset.defaultCharset().name());
+
+            builder.setParameter("q", this.generateQuery(query));
+            //builder.setParameter("count", "10");
+            //builder.setParameter("offset", "0");
+
+            String mkt;
+            if (query.getLanguage().equals("en")) mkt = "en-US";
+            else if (query.getLanguage().equals("de")) mkt="de-DE";
+            else if (query.getLanguage().equals("fr")) mkt="fr-FR";
+            else throw new Exception("language not implemented");
+
+            builder.setParameter("mkt", mkt);
+
+            URI uri = builder.build();
+            HttpGet request = new HttpGet(uri);
+            request.setHeader("Ocp-Apim-Subscription-Key", BING_API_KEY);
+
+            HttpResponse resp = httpclient.execute(request);
+            int statusCode = resp.getStatusLine().getStatusCode();
+            if (statusCode != 200)
+            {
+                throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+            }
+            HttpEntity entity = resp.getEntity();
+            List<WebSite> resultsws = new ArrayList<WebSite>();
+            Long resultsLength = 0L;
+
+            if (entity != null)
+            {
+                JSONObject json = new JSONObject(EntityUtils.toString(entity));
+                JSONObject d = json.getJSONObject("webPages");
+                JSONArray results = d.getJSONArray("value");
+                resultsLength = (Long.valueOf(results.length()));
+                int aux = 1;
+                for (int i = 0; i < resultsLength; i++) {
+                    if ( aux > Integer.valueOf(NUMBER_OF_SEARCH_RESULTS) ) break;
+                    final JSONObject aResult = results.getJSONObject(i);
+                    if ((aResult.get("displayUrl").toString().startsWith("http://images.webgiftr.com/")
+                            || (aResult.get("displayUrl").toString().startsWith("http://www.calza.com/")))) continue;
+
+                    WebSite website = new WebSite(query, aResult.get("displayUrl").toString());
+                    website.setTitle(aResult.get("name").toString());
+                    website.setRank(i++);
+                    website.setLanguage(query.getLanguage());
+                    resultsws.add(website);
+                }
+            }
+
+            return new DefaultSearchResult(resultsws, resultsLength, query, pattern, false);
+
+
+
+            // Request body
+            //StringEntity reqEntity = new StringEntity("{body}");
+            //request.setEntity(reqEntity);
+
+/*
             final String accountKey = BING_API_KEY;
             final String bingUrlPattern = "https://api.cognitive.microsoft.com/bing/v5.0/search?q=%s&responseFilter=webpages";
 
@@ -123,27 +194,9 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
-                final JSONObject json = new JSONObject(response.toString());
-                final JSONObject d = json.getJSONObject("d");
-                final JSONArray results = d.getJSONArray("results");
-                resultsLength = (Long.valueOf(results.length()));
-                int aux = 1;
-                for (int i = 0; i < resultsLength; i++) {
-                    if ( aux > Integer.valueOf(NUMBER_OF_SEARCH_RESULTS) ) break;
-                    final JSONObject aResult = results.getJSONObject(i);
-                    if ((aResult.get("Url").toString().startsWith("http://images.webgiftr.com/")
-                            || (aResult.get("Url").toString().startsWith("http://www.calza.com/")))) continue;
 
-                    WebSite website = new WebSite(query, aResult.get("Url").toString());
-                    website.setTitle(aResult.get("Title").toString());
-                    website.setRank(i++);
-                    website.setLanguage(query.getLanguage());
-                    resultsws.add(website);
-                }
-            }
-            return new DefaultSearchResult(resultsws, resultsLength, query, pattern, false);
-        }
-        catch (Exception e) {
+        */
+        } catch (Exception e) {
 
             e.printStackTrace();
             return new DefaultSearchResult(new ArrayList<WebSite>(), 0L, query, pattern, false);
