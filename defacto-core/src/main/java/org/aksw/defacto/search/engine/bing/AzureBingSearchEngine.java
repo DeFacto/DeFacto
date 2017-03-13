@@ -163,6 +163,7 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
                     website.setRank(i++);
                     website.setLanguage(query.getLanguage());
                     resultsws.add(website);
+                    aux++;
                 }
             }
 

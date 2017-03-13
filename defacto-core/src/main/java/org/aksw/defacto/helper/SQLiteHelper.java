@@ -102,6 +102,8 @@ public class SQLiteHelper {
             keys.close();
             stmt.close();
             LOGGER.debug(":: evidence header ok");
+
+
         }
         return id;
 
