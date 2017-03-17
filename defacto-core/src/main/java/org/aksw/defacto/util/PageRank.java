@@ -32,8 +32,10 @@ public class PageRank {
 
         if ( pageRankCache.containsKey(domain.trim()) ) return pageRankCache.get(domain);
         else {
-            
-            int result = -1;
+            return -1;
+
+            /*int result = -1;
+
 
             String googlePrResult = "";
 
@@ -63,7 +65,9 @@ public class PageRank {
             }
             
             return result;
+        */
         }
+
     }
 
     /**

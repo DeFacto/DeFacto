@@ -118,17 +118,17 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
 
             URIBuilder builder = new URIBuilder("https://api.cognitive.microsoft.com/bing/v5.0/search");
             String strquery = URLEncoder.encode(this.generateQuery(query), Charset.defaultCharset().name());
-
-            builder.setParameter("q", this.generateQuery(query));
-            //builder.setParameter("count", "10");
-            //builder.setParameter("offset", "0");
-
             String mkt;
             if (query.getLanguage().equals("en")) mkt = "en-US";
             else if (query.getLanguage().equals("de")) mkt="de-DE";
             else if (query.getLanguage().equals("fr")) mkt="fr-FR";
             else throw new Exception("language not implemented");
 
+            strquery = this.generateQuery(query);
+            builder.setParameter("q", strquery);
+            builder.setParameter("count", NUMBER_OF_SEARCH_RESULTS);
+            builder.setParameter("offset", "0");
+            builder.setParameter("responseFilter", "webpages");
             builder.setParameter("mkt", mkt);
 
             URI uri = builder.build();
@@ -137,10 +137,14 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
 
             HttpResponse resp = httpclient.execute(request);
             int statusCode = resp.getStatusLine().getStatusCode();
-            //if (statusCode != 200)
-            //{
-            //    throw new RuntimeException("Failed with HTTP error code : " + statusCode);
-           // }
+            if (statusCode != 200)
+            {
+                if (statusCode == 429) {
+                    System.out.print("too many requests - max is 5/sec : " + statusCode);
+                    System.exit(-429);
+                }
+                throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+            }
             HttpEntity entity = resp.getEntity();
             List<WebSite> resultsws = new ArrayList<WebSite>();
             Long resultsLength = 0L;
@@ -198,7 +202,6 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
 
         */
         } catch (Exception e) {
-
             e.printStackTrace();
             return new DefaultSearchResult(new ArrayList<WebSite>(), 0L, query, pattern, false);
         }

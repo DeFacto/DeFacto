@@ -1,5 +1,6 @@
 package org.aksw.defacto.evaluation;
 
+import au.com.bytecode.opencsv.CSVReader;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.thoughtworks.xstream.mapper.Mapper;
@@ -12,6 +13,7 @@ import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.helper.DefactoUtils;
 import org.aksw.defacto.helper.SQLiteHelper;
 import org.aksw.defacto.model.DefactoModel;
+import org.aksw.defacto.rest.RestModel;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
 import org.aksw.defacto.search.engine.SearchEngine;
 import org.aksw.defacto.search.engine.bing.AzureBingSearchEngine;
@@ -19,6 +21,7 @@ import org.aksw.defacto.search.query.MetaQuery;
 import org.aksw.defacto.search.query.QueryGenerator;
 import org.aksw.defacto.topic.frequency.Word;
 import org.aksw.defacto.util.TimeUtil;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,9 @@ import java.sql.PreparedStatement;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import com.hp.hpl.jena.graph.NodeFactory;
+import com.hp.hpl.jena.graph.Triple;
+
 import static java.lang.System.exit;
 
 /**
@@ -46,10 +52,12 @@ public class ProofExtractor {
     public static PrintWriter           writer;
     public static PrintWriter           writer_overview;
     public static String                separator = ";";
+    private static final File           folder_pos_anisa = new File("/home/esteves/github/DeFacto/data/database/anisa/");
     private static final File           folder_pos = new File("/home/esteves/github/FactBench/test/correct/");
     private static final File           folder_neg = new File("/home/esteves/github/FactBench/test/wrong/domainrange/");
     private static List<String>         files_pos = new ArrayList<>();
     private static List<String>         files_neg = new ArrayList<>();
+    private static int                  dataset = 1; //0=FB, 1=Anisa
 
     private static String               cacheQueueProof = "PROCESSING_QUEUE_PROOFS.csv";
     private static String               cacheProofValues = "EVAL_COUNTER_PROOFS.csv";
@@ -64,7 +72,8 @@ public class ProofExtractor {
             if (fileEntry.isDirectory()) {
                 setFilesModelFiles(fileEntry, type);
             } else {
-                if (FilenameUtils.getExtension(fileEntry.getAbsolutePath()).equals("ttl")) {
+                if (FilenameUtils.getExtension(fileEntry.getAbsolutePath()).equals("ttl") ||
+                FilenameUtils.getExtension(fileEntry.getAbsolutePath()).equals("tsv")) {
                     if (type.equals("POS"))
                         files_pos.add(fileEntry.getAbsolutePath());
                     else
@@ -96,16 +105,17 @@ public class ProofExtractor {
             Evidence eaux;
             Integer eauxnum;
 
-            if (_exampleType.equals(Constants.ExampleKlass.TRUE)){
-                eauxnum = 1;
-            }else{
-                eauxnum = 0;
-            }
 
             if (evidencetype.equals(Constants.EvidenceType.POS)) {
                 eaux = _evidence;
             }else {
                 eaux = _evidence.getNegativeEvidenceObject();
+            }
+
+            if (eaux.getModel().correct == true){
+                eauxnum = 1;
+            }else{
+                eauxnum = 0;
             }
 
             DefactoModel model = eaux.getModel();
@@ -192,39 +202,20 @@ public class ProofExtractor {
 
     }
 
-    public static void exportMetadataDB() throws Exception{
+    private static void export(Map<String, DefactoModel> defactoModels) throws Exception{
 
-        setFilesModelFiles(folder_pos, "POS");
-        setFilesModelFiles(folder_neg, "NEG");
+        int aux=0;
+        Iterator it = defactoModels.entrySet().iterator();
 
-        int aux = 0;
-
-        for(String f:files_neg) {
-            aux++;
-            Path p1 = Paths.get(f);
-            String filename = p1.getFileName().toString();
-            DefactoModel model = null;
+        while (it.hasNext()) {
             long startTime = System.currentTimeMillis();
+            Map.Entry pair = (Map.Entry)it.next();
 
-            String sSQL = "SELECT ID FROM TB_MODEL WHERE FILE_NAME = ? AND FILE_PATH = ? AND LANGS = ? " +
-                    "AND MODEL_CORRECT = ?";
-            PreparedStatement prep = SQLiteHelper.getInstance().getConnection().prepareStatement(sSQL);
+            String filename = pair.getKey().toString();
+            DefactoModel model = (DefactoModel)pair.getValue();
 
-            prep.setString(1, filename);
-            prep.setString(2, p1.getParent().toString());
-            prep.setString(3, "[en, fr, de]");
-            prep.setInt(4, 0);
 
-            Integer id = SQLiteHelper.getInstance().existsRecord(prep);
-            if (id!=0)
-                continue;
-
-            Model m = ModelFactory.createDefaultModel();
-            InputStream is = new FileInputStream(f);
-            m.read(is, null, "TURTLE");
-            model = new DefactoModel(m, filename.replace(FilenameUtils.getExtension(f), "").replace(".", ""),
-                            true, Arrays.asList("en", "fr", "de"), filename);
-
+            aux++;
             //DefactoModel model = getOneExample();
             LOGGER.info(":: checking model [" + aux + "] : " + filename);
             final Evidence evidence = Defacto.checkFact(model, Defacto.TIME_DISTRIBUTION_ONLY.NO);
@@ -233,18 +224,93 @@ public class ProofExtractor {
             long totalTime = endTime - startTime;
 
             String out = String.format("Processing Time: %02d hour, %02d min, %02d sec",
-                        TimeUnit.MILLISECONDS.toHours(totalTime),
-                        TimeUnit.MILLISECONDS.toMinutes(totalTime),
-                        TimeUnit.MILLISECONDS.toSeconds(totalTime) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))
+                    TimeUnit.MILLISECONDS.toHours(totalTime),
+                    TimeUnit.MILLISECONDS.toMinutes(totalTime),
+                    TimeUnit.MILLISECONDS.toSeconds(totalTime) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))
             );
 
             LOGGER.info(out);
             LOGGER.info(":: ok, saving metadata...");
-            saveMetadata(totalTime, evidence, Constants.ExampleKlass.FALSE, Constants.EvidenceType.POS, p1.toString());
+            saveMetadata(totalTime, evidence, Constants.ExampleKlass.FALSE, Constants.EvidenceType.POS, filename);
             LOGGER.info(":: done...");
 
+
+            it.remove();
+        }
+
+
+    }
+
+    private static int modelSaved(String filename, String path) throws Exception{
+
+        String sSQL = "SELECT ID FROM TB_MODEL WHERE FILE_NAME = ? AND FILE_PATH = ? AND LANGS = ? " +
+                "AND MODEL_CORRECT = ?";
+        PreparedStatement prep = SQLiteHelper.getInstance().getConnection().prepareStatement(sSQL);
+
+        prep.setString(1, filename);
+        prep.setString(2, path);
+        prep.setString(3, "[en, fr, de]");
+        prep.setInt(4, 0);
+
+        return SQLiteHelper.getInstance().existsRecord(prep);
+
+    }
+
+    public static void exportMetadataDB() throws Exception{
+
+        //setFilesModelFiles(folder_pos, "POS");
+        //setFilesModelFiles(folder_neg, "NEG");
+        setFilesModelFiles(folder_pos_anisa, "POS");
+
+        Map<String, DefactoModel> map = new HashMap<>();
+        RestModel restmodel = new RestModel();
+
+        if (dataset == 1){
+            Integer auxmodel = 0;
+            for(String f:files_pos) {
+                auxmodel++;
+                Path p1 = Paths.get(f);
+                String filename = p1.getFileName().toString();
+                CSVReader reader = new CSVReader(new FileReader(f),  '\t');
+                String [] nextLine;
+                while ((nextLine = reader.readNext()) != null) {
+
+                    if (modelSaved(filename + "_" + auxmodel.toString(), p1.getParent().toString())!=0)
+                        continue;
+
+                    Triple triple = null;
+                    triple = new Triple(NodeFactory.createURI(nextLine[0]), NodeFactory.createURI(nextLine[1]),
+                            NodeFactory.createURI(nextLine[2]));
+                    DefactoModel model = restmodel.getModel(triple, nextLine[3], nextLine[4]);
+                    model.setFile(new File(f));
+                    model.setCorrect(true);
+
+                    map.put(f, model);
+                }
             }
+        }else{
+            for(String f:files_pos) {
+                Path p1 = Paths.get(f);
+                String filename = p1.getFileName().toString();
+
+                if (modelSaved(filename, p1.getParent().toString())!=0)
+                    continue;
+
+                DefactoModel model = null;
+                Model m = ModelFactory.createDefaultModel();
+                InputStream is = new FileInputStream(f);
+                m.read(is, null, "TURTLE");
+                model = new DefactoModel(m, filename.replace(FilenameUtils.getExtension(f), "").replace(".", ""),
+                        false, Arrays.asList("en", "fr", "de"), filename);
+
+                map.put(f, model);
+
+            }
+        }
+
+
+        export(map);
 
     }
 
