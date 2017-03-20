@@ -8,6 +8,12 @@ import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.model.DefactoModel;
 import org.aksw.defacto.search.query.MetaQuery;
+import org.apache.commons.httpclient.HttpMethodBase;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,9 +23,7 @@ import java.sql.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by dnes on 08/12/16.
@@ -29,9 +33,9 @@ public class SQLiteHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(SQLiteHelper.class);
     private static Connection c = null;
     private static SQLiteHelper instance = null;
-    //private static String db_path = "data/database/defacto.db";
+    private static String db_path = "data/database/defacto.db";
     //private static String db_path = "data/database/defacto_neg.db";
-    private static String db_path = "data/database/anisa/defacto_anisa.db";
+    //private static String db_path = "data/database/anisa/defacto_anisa.db";
     protected SQLiteHelper() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -708,6 +712,62 @@ public class SQLiteHelper {
 
     public static void main( String args[] )
     {
+        try {
+            SQLiteHelper h = new SQLiteHelper();
+            //h.getBodyofWebPages(100, 0);
+        }catch (Exception e){
+            System.out.print(e.toString());
+        }
+    }
+
+
+
+    public Map<Integer, String> getTopNWebSitesURLNotQueriesSameAs(Integer limit, Integer offset) throws Exception{
+
+        Map<Integer, String> ret = new HashMap<>();
+        String sSQL = "SELECT ID, URL FROM TB_WEBSITE WHERE ID NOT IN (SELECT ID_WEBSITE FROM TB_WEBSITE_SAMEAS) " +
+                "LIMIT ? OFFSET ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, limit);
+        prep.setInt(2, offset);
+        ResultSet rs = prep.executeQuery();
+        while (rs.next()) {
+            ret.put(rs.getInt(1), rs.getString(2));
+        }
+
+        return ret;
+
+    }
+
+    public void InsertSameAsResources(Integer root, ArrayList<String> similars) throws Exception{
+
+        String uSQL = "INSERT INTO TB_WEBSITE_SAMEAS(ID_WEBSITE, URL) VALUES (?, ?);";
+        PreparedStatement prep = c.prepareStatement(uSQL);
+
+        for (String similar: similars){
+            prep.setInt(1, root);
+            prep.setString(2, similar);
+            prep.executeUpdate();
+        }
+
+        c.commit();
+        prep.close();
+
+    }
+
+    public void UpdateHTMLforWebSite(HashMap<Integer, String> content) throws Exception{
+
+        String uSQL = "UPDATE TB_WEBSITE SET BODY_ORIGINAL = ?, ERROR_PROCESSING = 0 WHERE ID = ?;";
+        PreparedStatement prep = c.prepareStatement(uSQL);
+
+        for (Map.Entry<Integer, String> entry : content.entrySet()) {
+            prep.setInt(2, entry.getKey());
+            prep.setString(1, entry.getValue());
+            prep.executeUpdate();
+        }
+
+        c.commit();
+        prep.close();
 
     }
 
