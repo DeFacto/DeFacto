@@ -97,7 +97,7 @@ public class ProofExtractor {
     }
 
     private static void saveMetadata(long totalTime, Evidence _evidence,
-                                     Constants.ExampleKlass _exampleType,
+                                     String name,
                                      Constants.EvidenceType evidencetype,
                                      String f) throws Exception{
 
@@ -124,7 +124,7 @@ public class ProofExtractor {
 
             /** TB_MODEL **/
             Integer idmodel = SQLiteHelper.getInstance().saveModel(totalTime, model, filename,
-                    p1.getParent().toString());
+                    p1.getParent().toString(), name);
 
             /** TB_EVIDENCE HEADER **/
             Integer idevidence = SQLiteHelper.getInstance().saveEvidenceRoot(idmodel, eaux, eauxnum);
@@ -204,20 +204,20 @@ public class ProofExtractor {
 
     private static void export(Map<String, DefactoModel> defactoModels) throws Exception{
 
-        int aux=0;
         Iterator it = defactoModels.entrySet().iterator();
 
         while (it.hasNext()) {
             long startTime = System.currentTimeMillis();
             Map.Entry pair = (Map.Entry)it.next();
 
-            String filename = pair.getKey().toString();
+            String real_filename = pair.getKey().toString().substring(0, pair.getKey().toString().indexOf("tsv_") + 3);
+            Integer sequencial =
+                    Integer.valueOf(pair.getKey().toString().substring(pair.getKey().toString().indexOf("tsv_") + 4,
+                    pair.getKey().toString().length()));
             DefactoModel model = (DefactoModel)pair.getValue();
 
 
-            aux++;
-            //DefactoModel model = getOneExample();
-            LOGGER.info(":: checking model [" + aux + "] : " + filename);
+            LOGGER.info(":: checking model [" + sequencial + "] : " + real_filename);
             final Evidence evidence = Defacto.checkFact(model, Defacto.TIME_DISTRIBUTION_ONLY.NO);
 
             long endTime   = System.currentTimeMillis();
@@ -232,7 +232,7 @@ public class ProofExtractor {
 
             LOGGER.info(out);
             LOGGER.info(":: ok, saving metadata...");
-            saveMetadata(totalTime, evidence, Constants.ExampleKlass.FALSE, Constants.EvidenceType.POS, filename);
+            saveMetadata(totalTime, evidence, String.valueOf(sequencial), Constants.EvidenceType.POS, real_filename);
             LOGGER.info(":: done...");
 
 
@@ -266,31 +266,39 @@ public class ProofExtractor {
         Map<String, DefactoModel> map = new HashMap<>();
         RestModel restmodel = new RestModel();
 
-        if (dataset == 1){
-            Integer auxmodel = 0;
+        if (dataset == 1){ //Anisa
+            System.out.println("->" + files_pos.size());
             for(String f:files_pos) {
-                auxmodel++;
+                Integer auxmodel = 0;
                 Path p1 = Paths.get(f);
-                String filename = p1.getFileName().toString();
                 CSVReader reader = new CSVReader(new FileReader(f),  '\t');
                 String [] nextLine;
-                while ((nextLine = reader.readNext()) != null) {
 
-                    if (modelSaved(filename + "_" + auxmodel.toString(), p1.getParent().toString())!=0)
+                int counter = 0;
+                while ((nextLine = reader.readNext()) != null) {
+                    counter++;
+                    auxmodel++;
+                    String filenameaux = f + "_" + auxmodel.toString();
+
+                    if (modelSaved(filenameaux, p1.getParent().toString())!=0)
                         continue;
 
-                    Triple triple = null;
-                    triple = new Triple(NodeFactory.createURI(nextLine[0]), NodeFactory.createURI(nextLine[1]),
+                    Triple triple =
+                            new Triple(NodeFactory.createURI(nextLine[0]), NodeFactory.createURI(nextLine[1]),
                             NodeFactory.createURI(nextLine[2]));
                     DefactoModel model = restmodel.getModel(triple, nextLine[3], nextLine[4]);
                     model.setFile(new File(f));
                     model.setCorrect(true);
 
-                    map.put(f, model);
+                    map.put(filenameaux, model);
+                    System.out.println(auxmodel);
+                    if (counter == 10)
+                        break;
                 }
             }
         }else{
             for(String f:files_pos) {
+
                 Path p1 = Paths.get(f);
                 String filename = p1.getFileName().toString();
 
@@ -306,9 +314,9 @@ public class ProofExtractor {
 
                 map.put(f, model);
 
+
             }
         }
-
 
         export(map);
 
@@ -348,9 +356,6 @@ public class ProofExtractor {
                 } catch (Exception e) {
                     LOGGER.error(e.toString());
                 }
-
-
-
 
                 LOGGER.info("Extracting Proofs for: " + model);
                 Defacto.onlyTimes = onlyTimes;

@@ -148,10 +148,9 @@ public class SQLiteHelper {
 
     }
 
-    public Integer saveModel(long processing_time, DefactoModel model, String filename, String filepath) throws Exception {
+    public Integer saveModel(long processing_time, DefactoModel model, String filename, String filepath, String name) throws Exception {
 
 
-        String name = model.getName();
         int correct = model.isCorrect() ? 1 : 0;
         String suri = model.getSubjectUri();
         String slabel = model.getSubjectLabel("en");
