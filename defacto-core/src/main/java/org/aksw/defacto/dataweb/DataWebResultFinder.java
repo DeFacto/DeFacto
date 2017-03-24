@@ -79,7 +79,7 @@ public class DataWebResultFinder {
 
     public static void getSameAsURIsAndUpdateDataBase() throws Exception{
 
-        Map<Integer, String> mapIdURL = SQLiteHelper.getInstance().getTopNWebSitesURLNotQueriesSameAs(50000, 0);
+        Map<Integer, String> mapIdURL = SQLiteHelper.getInstance().getTopNWebSitesURLNotQueriesSameAs(1000, 0);
         service = DefaultSameAsServiceFactory.getSingletonInstance();
         service.setCache(new InMemoryCache());
         ArrayList<String> similars = new ArrayList<>();

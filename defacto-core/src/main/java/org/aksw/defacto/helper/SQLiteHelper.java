@@ -1,13 +1,17 @@
 package org.aksw.defacto.helper;
 
 import com.mysql.jdbc.*;
+import edu.stanford.nlp.util.*;
 import org.aksw.defacto.boa.Pattern;
 import org.aksw.defacto.evaluation.ProofExtractor;
 import org.aksw.defacto.evidence.ComplexProof;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.model.DefactoModel;
+import org.aksw.defacto.nlp.ner.StanfordNLPNamedEntityRecognition;
+import org.aksw.defacto.search.concurrent.NlpModelManager;
 import org.aksw.defacto.search.query.MetaQuery;
+import org.aksw.defacto.util.NlpUtil;
 import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -714,13 +718,31 @@ public class SQLiteHelper {
     {
         try {
             SQLiteHelper h = new SQLiteHelper();
-            //h.getBodyofWebPages(100, 0);
+            h.annotateSomeProofs(10);
         }catch (Exception e){
             System.out.print(e.toString());
         }
     }
 
 
+    public void annotateSomeProofs(int limit)throws Exception{
+
+        String sSQL = "SELECT id, context_tiny, context_small, context_medium, context_large " +
+                "FROM TB_PROOF WHERE HAS_PATTERN_NORMALIZED_IN_BETWEEN = 1 AND LANG = 'en' LIMIT ?";
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, limit);
+        ResultSet rs = prep.executeQuery();
+
+        StanfordNLPNamedEntityRecognition nerTagger = NlpModelManager.getInstance().getNlpModel();
+
+        while (rs.next()) {
+
+            String merged = edu.stanford.nlp.util.StringUtils.join(
+                    NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(rs.getString(2))), "-=-");
+
+        }
+
+    }
 
     public Map<Integer, String> getTopNWebSitesURLNotQueriesSameAs(Integer limit, Integer offset) throws Exception{
 
