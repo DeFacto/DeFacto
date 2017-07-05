@@ -20,7 +20,7 @@ public class NlpModelManager {
 	 * 
 	 */
 	private NlpModelManager(){
-		
+
 		for ( int i = 0; i < Defacto.DEFACTO_CONFIG.getIntegerSetting("extract", "NUMBER_NLP_STANFORD_MODELS"); i++) {
 
 			models.add(new StanfordNLPNamedEntityRecognition());
@@ -33,7 +33,9 @@ public class NlpModelManager {
 	 * @return
 	 */
 	public static synchronized NlpModelManager getInstance(){
-		
+
+		Defacto.init();
+
 		if ( INSTANCE == null ) INSTANCE = new NlpModelManager();
 		return INSTANCE;
 	}

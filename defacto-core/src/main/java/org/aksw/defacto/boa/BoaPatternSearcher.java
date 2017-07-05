@@ -578,7 +578,7 @@ public class BoaPatternSearcher {
     public static void main(String[] args) {
 
     	Defacto.init();
-        queryPatterns("http://dbpedia.org/ontology/award");
+        //queryPatterns("http://dbpedia.org/ontology/award");
         //queryPatterns("http://dbpedia.org/ontology/birthPlace");
         //queryPatterns("http://dbpedia.org/ontology/foundationPlace");
         //queryPatterns("http://dbpedia.org/ontology/deathPlace");

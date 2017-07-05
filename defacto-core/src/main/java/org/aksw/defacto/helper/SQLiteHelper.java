@@ -718,28 +718,112 @@ public class SQLiteHelper {
     {
         try {
             SQLiteHelper h = new SQLiteHelper();
-            h.annotateSomeProofs(10);
+            //h.annotateSomeProofs(170000);
+            h.NEstatsForSandO(170000);
         }catch (Exception e){
             System.out.print(e.toString());
         }
     }
 
 
+    public void InsertNewTaggedProofs(Integer id, String tiny, String small, String medium, String large, String body) throws Exception{
+
+        //String uSQL = "UPDATE TB_PROOF SET CONTEXT_TINY_TAGGED2 = ?, CONTEXT_SMALL_TAGGED2 = ?, CONTEXT_MEDIUM_TAGGED2 = ?, " +
+       //         "CONTEXT_LARGE_TAGGED2 = ? WHERE ID = ?;";
+
+        String uSQL = "UPDATE TB_PROOF SET BODY_TAGGED2 = ? WHERE ID = ?;";
+        PreparedStatement prep = c.prepareStatement(uSQL);
+
+        prep.setString(1, body);
+        prep.setInt(2, id);
+
+        prep.executeUpdate();
+        c.commit();
+        prep.close();
+
+    }
+
+    public void NEstatsForSandO(int limit) throws Exception{
+        String sSQL = "SELECT p.context_large_tagged2, p.first_label, p.second_label, model.predicate_label " +
+                "FROM TB_PROOF p, TB_MODEL model WHERE model.predicate_label = 'spouse' and p.id_model = model.id and p.LANG = 'en' LIMIT ?";
+        long sper = 0;
+        long sloc = 0;
+        long sorg = 0;
+
+        long oper = 0;
+        long oloc = 0;
+        long oorg = 0;
+
+        PreparedStatement prep = c.prepareStatement(sSQL);
+        prep.setInt(1, limit);
+        ResultSet rs = prep.executeQuery();
+        while (rs.next()) {
+            String[] splittxt = rs.getString(1).split("-=-");
+            for (int i=0; i< splittxt.length - 1; i++){
+                String[] NERandTAG = splittxt[i].split("_");
+                if (rs.getString(2).toUpperCase().equals(NERandTAG[0].toUpperCase())){
+                    if (NERandTAG[1].equals("PERSON"))
+                        sper++;
+                    if (NERandTAG[1].equals("PLACE"))
+                        sloc++;
+                    if (NERandTAG[1].equals("ORGANIZATION"))
+                        sorg++;
+                }
+                if (rs.getString(3).toUpperCase().equals(NERandTAG[0].toUpperCase())){
+                    if (NERandTAG[1].equals("PERSON"))
+                        oper++;
+                    if (NERandTAG[1].equals("PLACE"))
+                        oloc++;
+                    if (NERandTAG[1].equals("ORGANIZATION"))
+                        oorg++;
+                }
+
+            }
+        }
+        System.out.println(sper);
+        System.out.println(sloc);
+        System.out.println(sorg);
+        System.out.println(oper);
+        System.out.println(oloc);
+        System.out.println(oorg);
+
+    }
+
     public void annotateSomeProofs(int limit)throws Exception{
 
-        String sSQL = "SELECT id, context_tiny, context_small, context_medium, context_large " +
-                "FROM TB_PROOF WHERE HAS_PATTERN_NORMALIZED_IN_BETWEEN = 1 AND LANG = 'en' LIMIT ?";
+        String sSQL = "SELECT p.id, p.context_tiny, p.context_small, p.context_medium, p.context_large, w.body " +
+                "FROM TB_PROOF p, TB_WEBSITE w WHERE w.id = p.id_website and p.LANG = 'en' LIMIT ?";
         PreparedStatement prep = c.prepareStatement(sSQL);
         prep.setInt(1, limit);
         ResultSet rs = prep.executeQuery();
 
         StanfordNLPNamedEntityRecognition nerTagger = NlpModelManager.getInstance().getNlpModel();
 
+        String merged_large;
+        String merged_medium;
+        String merged_small;
+        String merged_tiny;
+        String merged_body;
+
         while (rs.next()) {
 
-            String merged = edu.stanford.nlp.util.StringUtils.join(
+            merged_tiny = edu.stanford.nlp.util.StringUtils.join(
                     NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(rs.getString(2))), "-=-");
+            merged_small = edu.stanford.nlp.util.StringUtils.join(
+                    NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(rs.getString(3))), "-=-");
+            merged_medium = edu.stanford.nlp.util.StringUtils.join(
+                    NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(rs.getString(4))), "-=-");
+            merged_large = edu.stanford.nlp.util.StringUtils.join(
+                    NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(rs.getString(5))), "-=-");
+            merged_body = edu.stanford.nlp.util.StringUtils.join(
+                    NlpUtil.mergeConsecutiveNerTags(nerTagger.getAnnotatedSentences(rs.getString(6))), "-=-");
 
+            InsertNewTaggedProofs(rs.getInt(1), merged_tiny, merged_small, merged_medium, merged_large, merged_body);
+            merged_tiny = "";
+            merged_small = "";
+            merged_medium = "";
+            merged_large = "";
+            merged_body = "";
         }
 
     }
