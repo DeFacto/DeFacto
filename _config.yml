@@ -2,7 +2,7 @@ title: DeFacto
 description: Deep Fact Validation
 google_analytics: 
 show_downloads: true
-theme: jekyll-theme-minimal
+theme: jekyll-theme-dinky
 
 gems:
   - jekyll-mentions
