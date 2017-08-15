@@ -275,11 +275,127 @@ public class BoaPatternSearcher {
 
             return patternList;
         }
-        int numberOfBoaPatterns = 50;
         if(propertyUri.equals("http://dbpedia.org/ontology/nationality"))
-            return querySolrIndex("http://dbpedia.org/ontology/birth",
-                    numberOfBoaPatterns,
-                    Defacto.DEFACTO_CONFIG.getDoubleSetting("boa", "PATTERN_SCORE_THRESHOLD"), language);
+        {
+            Map<String,Pattern> patterns = new HashMap<>();
+            Pattern pattern1 = new Pattern();
+            pattern1.generalized = "?D? is a citizen of ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? is a citizen of ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "is a citizen of";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? 's a citizen of ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? 's a citizen of ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "'s a citizen of";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? is a national of ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? is a national of ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "is a national of";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? is a resident of ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? is a resident of ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "is a resident of";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? 's a national of ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? 's a national of ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "'s a national of";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? 's a national of ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? 's a national of ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "'s a national of";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? 's nationality is ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? 's nationality is ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "'s nationality is";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? 's citizenship is ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? 's citizenship is ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "'s citizenship is";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? est un citoyen de ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? est un citoyen de ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "est un citoyen de";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? est un ressortissant de ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? est un ressortissant de ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "est un ressortissant de";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? est un résident de ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? est un résident de ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "est un résident de";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? la nationalité est ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? la nationalité est ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "la nationalité est";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? la citoyenneté est ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? la citoyenneté est ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "la citoyenneté est";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+        }
+        int numberOfBoaPatterns = 50;
         return querySolrIndex(propertyUri,
                 numberOfBoaPatterns,
                 Defacto.DEFACTO_CONFIG.getDoubleSetting("boa", "PATTERN_SCORE_THRESHOLD"), language);

@@ -302,7 +302,7 @@ public class ProofExtractor {
 
                     map.put(filenameaux, model);
                     System.out.println(auxmodel);
-                    if (counter == 10)
+                    if (counter == 1)
                         break;
                 }
             }
