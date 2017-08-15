@@ -114,6 +114,8 @@ public class AbstractFactFeatures {
         propertyName.addElement("birthPlace");
         propertyName.addElement("deathPlace");
         propertyName.addElement("starring");
+        propertyName.addElement("profession");
+        propertyName.addElement("nationality");
         PROPERTY_NAME = new Attribute("property_name", propertyName);
         attributes.addElement(PROPERTY_NAME);
         

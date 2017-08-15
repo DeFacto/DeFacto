@@ -52,7 +52,7 @@ public class RestModel {
 
     // sets langs
     static {
-        PropertyConfigurator.configure(Cfg.LOG_FILE);
+        //PropertyConfigurator.configure(Cfg.LOG_FILE);
         LOG = LogManager.getLogger(RestModel.class);
         try {
             Defacto.DEFACTO_CONFIG = new DefactoConfig(

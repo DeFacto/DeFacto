@@ -28,6 +28,10 @@ public class JsoupCrawlUtil implements CrawlUtil {
             if (url.contains("...")){
                 url.replace("...","");
             }
+            if(!url.startsWith("www."))
+                url = "www." + url;
+            if(!url.startsWith("http://"))
+                url = "http://" + url;
         	Document doc = Jsoup.connect(url)
                     .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.120 Safari/535.2")
     		        .timeout(timeout).get();

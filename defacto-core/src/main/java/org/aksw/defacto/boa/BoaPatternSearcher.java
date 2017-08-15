@@ -123,8 +123,163 @@ public class BoaPatternSearcher {
      * @return
      */
     public List<Pattern> getNaturalLanguageRepresentations(String propertyUri, String language){
+        if(propertyUri.equals("http://dbpedia.org/ontology/profession"))
+        {
+            Map<String,Pattern> patterns = new HashMap<>();
+            Pattern pattern1 = new Pattern();
+            pattern1.generalized = "?D? is a ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? is a ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "is a";
+            pattern1.posTags = "VBZ DT";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
 
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? is an ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? is an ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "is an";
+            pattern1.posTags = "VBZ DT";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? est un ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? est un ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "est un";
+            pattern1.posTags = "JJS NN";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? est une ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? est une ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "est une";
+            pattern1.posTags = "JJS NN";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? was an ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? was an ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "was an";
+            pattern1.posTags = "VBD DT";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? was a ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? was a ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "was a";
+            pattern1.posTags = "VBD DT";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? était un ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? était un ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "était un";
+            pattern1.posTags = "NNP JJ";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? était une ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? était une ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "était une";
+            pattern1.posTags = "NNP JJ";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? works as a ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? works as a ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "works as a";
+            pattern1.posTags = "NNS IN DT";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? works as an ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? works as an ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "works as an";
+            pattern1.posTags = "NNS IN DT";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? travaille come un ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? travaille come un ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "travaille come un";
+            pattern1.posTags = "NN VB JJ";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? travaille come une ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? travaille come une ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "travaille come une";
+            pattern1.posTags = "NN VB JJ";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? 's profession is ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? 's profession is ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "\'s profession is";
+            pattern1.posTags = "POS NN VBZ";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "la profession de ?D? est ?R?";
+            pattern1.naturalLanguageRepresentation = "la profession de ?D? est ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "la profession de est";
+            pattern1.posTags = "JJ NN IN FW";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? 's occupation is ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? 's occupation is ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "\'s occupation is";
+            pattern1.posTags = "POS NN VBZ";
+            pattern1.boaScore = 0d;
+            pattern1.language = "en";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "la métier de ?D? est ?R?";
+            pattern1.naturalLanguageRepresentation = "la métier de ?D? est ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "la métier de est";
+            pattern1.posTags = "NN FW FW FW";
+            pattern1.boaScore = 0d;
+            pattern1.language = "fr";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            List<Pattern> patternList = new ArrayList<>(patterns.values());
+
+            return patternList;
+        }
         int numberOfBoaPatterns = 50;
+        if(propertyUri.equals("http://dbpedia.org/ontology/nationality"))
+            return querySolrIndex("http://dbpedia.org/ontology/birth",
+                    numberOfBoaPatterns,
+                    Defacto.DEFACTO_CONFIG.getDoubleSetting("boa", "PATTERN_SCORE_THRESHOLD"), language);
         return querySolrIndex(propertyUri,
                 numberOfBoaPatterns,
                 Defacto.DEFACTO_CONFIG.getDoubleSetting("boa", "PATTERN_SCORE_THRESHOLD"), language);

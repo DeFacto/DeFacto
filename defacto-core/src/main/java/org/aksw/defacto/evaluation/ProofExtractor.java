@@ -53,11 +53,13 @@ public class ProofExtractor {
     public static PrintWriter           writer_overview;
     public static String                separator = ";";
     private static final File           folder_pos_anisa = new File("/home/esteves/github/DeFacto/data/database/anisa/");
+    private static final File           wsdm_nationality = new File("/home/anikethjr/DeFacto_benchmarking/DeFacto/wsdm/nationality.test.tsv");
+    private static final File           wsdm_profession = new File("/home/anikethjr/DeFacto_benchmarking/DeFacto/wsdm/profession.test.tsv");
     private static final File           folder_pos = new File("/home/esteves/github/FactBench/test/correct/");
     private static final File           folder_neg = new File("/home/esteves/github/FactBench/test/wrong/domainrange/");
     private static List<String>         files_pos = new ArrayList<>();
     private static List<String>         files_neg = new ArrayList<>();
-    private static int                  dataset = 1; //0=FB, 1=Anisa
+    private static int                  dataset = 2; //0=FB, 1=Anisa
 
     private static String               cacheQueueProof = "PROCESSING_QUEUE_PROOFS.csv";
     private static String               cacheProofValues = "EVAL_COUNTER_PROOFS.csv";
@@ -219,7 +221,8 @@ public class ProofExtractor {
 
             LOGGER.info(":: checking model [" + sequencial + "] : " + real_filename);
             final Evidence evidence = Defacto.checkFact(model, Defacto.TIME_DISTRIBUTION_ONLY.NO);
-
+            LOGGER.info("Overall Score: " + evidence.getDeFactoScore());
+            LOGGER.info("Overall Counterargument Score: " + evidence.getDeFactoCounterargumentScore());
             long endTime   = System.currentTimeMillis();
             long totalTime = endTime - startTime;
 
@@ -232,7 +235,7 @@ public class ProofExtractor {
 
             LOGGER.info(out);
             LOGGER.info(":: ok, saving metadata...");
-            saveMetadata(totalTime, evidence, String.valueOf(sequencial), Constants.EvidenceType.POS, real_filename);
+            //saveMetadata(totalTime, evidence, String.valueOf(sequencial), Constants.EvidenceType.POS, real_filename);
             LOGGER.info(":: done...");
 
 
@@ -261,12 +264,51 @@ public class ProofExtractor {
 
         //setFilesModelFiles(folder_pos, "POS");
         //setFilesModelFiles(folder_neg, "NEG");
-        setFilesModelFiles(folder_pos_anisa, "POS");
+
 
         Map<String, DefactoModel> map = new HashMap<>();
         RestModel restmodel = new RestModel();
+        if (dataset == 2) { //WSDM dataset
+            files_pos.add(wsdm_nationality.getAbsolutePath());
+            files_pos.add(wsdm_profession.getAbsolutePath());
+            System.out.println("->" + files_pos.size());
+            for(String f:files_pos) {
+                Integer auxmodel = 0;
+                Path p1 = Paths.get(f);
+                CSVReader reader = new CSVReader(new FileReader(f), '\t');
+                String[] nextLine;
 
-        if (dataset == 1){ //Anisa
+                int counter = 0;
+                while ((nextLine = reader.readNext()) != null) {
+                    counter++;
+                    auxmodel++;
+                    String filenameaux = f + "_" + auxmodel.toString();
+
+                    if (modelSaved(filenameaux, p1.getParent().toString()) != 0)
+                        continue;
+                    Triple triple;
+                    if (f.equalsIgnoreCase(wsdm_nationality.getAbsolutePath())) {
+                        triple =
+                                new Triple(NodeFactory.createURI(nextLine[0]), NodeFactory.createURI("http://dbpedia.org/ontology/nationality"),
+                                        NodeFactory.createURI(nextLine[1]));
+                    } else {
+                        triple =
+                                new Triple(NodeFactory.createURI(nextLine[0]), NodeFactory.createURI("http://dbpedia.org/ontology/profession"),
+                                        NodeFactory.createURI(nextLine[1]));
+                    }
+                    DefactoModel model = restmodel.getModel(triple, "1900", "1900");
+                    model.setFile(new File(f));
+                    model.setCorrect(true);
+
+                    map.put(filenameaux, model);
+                    System.out.println(auxmodel);
+                    if (counter == 10)
+                        break;
+                }
+            }
+        }
+        else if (dataset == 1){ //Anisa
+            setFilesModelFiles(folder_pos_anisa, "POS");
             System.out.println("->" + files_pos.size());
             for(String f:files_pos) {
                 Integer auxmodel = 0;

@@ -1,0 +1,513 @@
+Jesus	Prophet	6
+Jesus	Preacher	5
+Jesus	Carpenter	2
+Paul the Apostle	Writer	6
+Paul the Apostle	Tentmaker	3
+Paul the Apostle	Prophet	3
+Paul the Apostle	Missionary	5
+Adolf Hitler	Writer	1
+Adolf Hitler	Soldier	4
+Adolf Hitler	Politician	7
+Adolf Hitler	Artist	0
+Saint Peter	Fisherman	1
+Saint Peter	Bishop	6
+Madonna (entertainer)	Singer-songwriter	7
+Madonna (entertainer)	Screenwriter	0
+Madonna (entertainer)	Philanthropist	1
+Madonna (entertainer)	Film Producer	0
+Madonna (entertainer)	Film Director	1
+Madonna (entertainer)	Entrepreneur	1
+Madonna (entertainer)	Dancer	5
+Madonna (entertainer)	Composer	2
+Madonna (entertainer)	Author	2
+Madonna (entertainer)	Actor	4
+George Washington	Surveyor	2
+George Washington	Soldier	2
+George Washington	Politician	7
+George Washington	Military Officer	6
+George Washington	Farmer	0
+Abraham Lincoln	Statesman	5
+Abraham Lincoln	Lawyer	2
+Michael Jackson	Voice Actor	0
+Michael Jackson	Singer-songwriter	7
+Michael Jackson	Screenwriter	0
+Michael Jackson	Record producer	6
+Michael Jackson	Philanthropist	0
+Michael Jackson	Music Arranger	0
+Michael Jackson	Film Score Composer	0
+Michael Jackson	Film Producer	0
+Michael Jackson	Film Director	0
+Michael Jackson	Entertainer	7
+Michael Jackson	Dancer	7
+Michael Jackson	Choreographer	1
+Michael Jackson	Businessperson	0
+Michael Jackson	Actor	1
+Ronald Reagan	Spokesperson	0
+Ronald Reagan	Soldier	0
+Ronald Reagan	Radio personality	0
+Ronald Reagan	Politician	7
+Ronald Reagan	Lifeguard	0
+Muhammad	Prophet	7
+Muhammad	Merchant	2
+Richard Nixon	Politician	7
+Richard Nixon	Military Officer	0
+Richard Nixon	Lawyer	0
+Richard Nixon	Author	0
+Ludwig van Beethoven	Violist	1
+Ludwig van Beethoven	Songwriter	3
+Ludwig van Beethoven	Pianist	6
+Ludwig van Beethoven	Lyricist	1
+Ludwig van Beethoven	Composer	7
+John Lennon	Singer-songwriter	7
+John Lennon	Screenwriter	0
+John Lennon	Record producer	4
+John Lennon	Keyboard player	2
+John Lennon	Guitarist	5
+John Lennon	Film Score Composer	1
+John Lennon	Film Producer	0
+John Lennon	Film Director	0
+John Lennon	Actor	1
+John Lennon	Activist	4
+John McCain	Statesman	5
+John McCain	Screenwriter	0
+John McCain	Presenter	0
+John McCain	Pilot	4
+John McCain	Military Officer	3
+John McCain	Fighter pilot	1
+John McCain	Author	0
+Plato	Writer	2
+Plato	Physicist	2
+Plato	Philosopher	7
+Plato	Mathematician	4
+George H. W. Bush	Politician	7
+George H. W. Bush	Military aviator	2
+George H. W. Bush	Entrepreneur	1
+George H. W. Bush	Businessperson	3
+Lyndon B. Johnson	Teacher	0
+Lyndon B. Johnson	Politician	7
+Duke Ellington	Pianist	7
+Duke Ellington	Lyricist	5
+Duke Ellington	Film Score Composer	4
+Duke Ellington	Bandleader	7
+Duke Ellington	Actor	0
+Augustus	Roman emperor	7
+Augustus	Politician	6
+Sigmund Freud	Writer	1
+Sigmund Freud	Scientist	3
+Sigmund Freud	Psychologist	6
+Sigmund Freud	Psychoanalyst	7
+Sigmund Freud	Psychiatrist	5
+Sigmund Freud	Philosopher	0
+Sigmund Freud	Neurologist	7
+Cicero	Writer	4
+Cicero	Statesman	3
+Cicero	Philosopher	6
+Cicero	Orator	5
+Cicero	Lawyer	4
+Kylie Minogue	Songwriter	7
+Kylie Minogue	Singer	7
+Kylie Minogue	Showgirl	2
+Kylie Minogue	Screenwriter	0
+Kylie Minogue	Record producer	3
+Kylie Minogue	Film Score Composer	0
+Kylie Minogue	Film Producer	2
+Kylie Minogue	Fashion Designer	1
+Kylie Minogue	Entrepreneur	0
+Kylie Minogue	Author	0
+Kylie Minogue	Actor	3
+Lil Wayne	Songwriter	6
+Lil Wayne	Record producer	4
+Lil Wayne	Rapper	7
+Lil Wayne	Businessperson	1
+Lil Wayne	Actor	0
+Christopher Columbus	Sailor	3
+Christopher Columbus	Explorer	7
+Igor Stravinsky	Pianist	6
+Igor Stravinsky	Film Score Composer	4
+Igor Stravinsky	Conductor	6
+David	Warrior	2
+David	Prophet	7
+Johann Wolfgang von Goethe	Poet	6
+Johann Wolfgang von Goethe	Playwright	6
+Johann Wolfgang von Goethe	Philosopher	4
+Johann Wolfgang von Goethe	Novelist	6
+Johann Wolfgang von Goethe	Lawyer	0
+Johann Wolfgang von Goethe	Diplomat	2
+Johann Wolfgang von Goethe	Civil servant	2
+Arnold Schwarzenegger	Writer	0
+Arnold Schwarzenegger	Television director	1
+Arnold Schwarzenegger	Politician	7
+Arnold Schwarzenegger	Investor	2
+Arnold Schwarzenegger	Film Producer	2
+Arnold Schwarzenegger	Businessperson	1
+Arnold Schwarzenegger	Bodybuilder	5
+Arnold Schwarzenegger	Actor	7
+Andrew Lloyd Webber	TV Personality	0
+Andrew Lloyd Webber	Theatre Director	3
+Andrew Lloyd Webber	Songwriter	2
+Andrew Lloyd Webber	Screenwriter	2
+Andrew Lloyd Webber	Impresario	5
+Andrew Lloyd Webber	Film Score Composer	4
+Andrew Lloyd Webber	Film Producer	0
+Andrew Lloyd Webber	Businessperson	0
+Arthur Conan Doyle	Screenwriter	0
+Arthur Conan Doyle	Politician	0
+Arthur Conan Doyle	Poet	4
+Arthur Conan Doyle	Physician	5
+Arthur Conan Doyle	Novelist	6
+Arthur Conan Doyle	Author	5
+Mao Zedong	Politician	7
+Mao Zedong	Librarian	1
+A. R. Rahman	Songwriter	6
+A. R. Rahman	Singer	6
+A. R. Rahman	Record producer	6
+A. R. Rahman	Philanthropist	1
+A. R. Rahman	Music Producer	5
+A. R. Rahman	Music Director	5
+A. R. Rahman	Music Arranger	6
+A. R. Rahman	Multi-instrumentalist	2
+A. R. Rahman	Film Score Composer	5
+A. R. Rahman	Entrepreneur	0
+Dr. Dre	Songwriter	4
+Dr. Dre	Record producer	6
+Dr. Dre	Rapper	7
+Dr. Dre	Film Producer	0
+Dr. Dre	Film Director	0
+Dr. Dre	Entrepreneur	5
+Dr. Dre	Disc jockey	0
+Dr. Dre	Actor	0
+Noël Coward	Theatre Director	5
+Noël Coward	Television director	4
+Noël Coward	Singer	5
+Noël Coward	Screenwriter	2
+Noël Coward	Playwright	7
+Noël Coward	Film Score Composer	3
+Noël Coward	Film Producer	1
+Noël Coward	Actor	5
+Nelly	Singer-songwriter	7
+Nelly	Record producer	5
+Nelly	Rapper	7
+Nelly	Music artist	6
+Nelly	Investor	1
+Nelly	Actor	4
+Harold Pinter	Theatre Director	3
+Harold Pinter	Social activist	2
+Harold Pinter	Screenwriter	6
+Harold Pinter	Political Activist	1
+Harold Pinter	Poet	2
+Harold Pinter	Playwright	7
+Harold Pinter	Film Director	5
+Harold Pinter	Author	1
+Harold Pinter	Actor	6
+Molière	Playwright	7
+Molière	Lawyer	0
+Molière	Actor	3
+Francis of Assisi	Preacher	7
+Francis of Assisi	Philosopher	3
+Francis of Assisi	Friar	7
+W. S. Gilbert	Poet	6
+W. S. Gilbert	Playwright	5
+W. S. Gilbert	Librettist	4
+W. S. Gilbert	Illustrator	6
+Mel Gibson	Voice Actor	2
+Mel Gibson	Television Producer	0
+Mel Gibson	Television director	0
+Mel Gibson	Screenwriter	3
+Mel Gibson	Film Producer	6
+Mel Gibson	Film Director	6
+Mel Gibson	Actor	7
+Sean Connery	Voice Actor	1
+Sean Connery	Film Producer	1
+Sean Connery	Actor	7
+Marco Polo	Merchant	7
+Marco Polo	Explorer	4
+Adam Sandler	Voice Actor	3
+Adam Sandler	Television Producer	1
+Adam Sandler	Songwriter	1
+Adam Sandler	Screenwriter	3
+Adam Sandler	Film Producer	4
+Adam Sandler	Comedian	7
+Adam Sandler	Actor	7
+Paul Gauguin	Sailor	0
+Paul Gauguin	Artist	7
+John Lewis (politician)	Writer	1
+John Lewis (politician)	Politician	7
+Cat Stevens	Singer-songwriter	7
+Cat Stevens	Multi-instrumentalist	4
+Cat Stevens	Guitarist	3
+Cat Stevens	Film Score Composer	2
+Isaac Hayes	Voice Actor	2
+Isaac Hayes	Songwriter	5
+Isaac Hayes	Singer-songwriter	7
+Isaac Hayes	Record producer	5
+Isaac Hayes	Music Arranger	2
+Isaac Hayes	Keyboard player	3
+Isaac Hayes	Film Score Composer	1
+Isaac Hayes	Actor	2
+Sri Aurobindo	Poet	6
+Sri Aurobindo	Philosopher	7
+The Game (rapper)	Songwriter	5
+The Game (rapper)	Singer	4
+The Game (rapper)	Rapper	7
+The Game (rapper)	Actor	3
+Blaise Pascal	Writer	5
+Blaise Pascal	Physicist	7
+Blaise Pascal	Philosopher	5
+Blaise Pascal	Mathematician	6
+Blaise Pascal	Inventor	6
+Raymond Chandler	Screenwriter	6
+Raymond Chandler	Novelist	7
+Raymond Chandler	Author	7
+Nick Clegg	Spokesperson	1
+Nick Clegg	Politician	7
+Billy Crystal	Voice Actor	4
+Billy Crystal	Screenwriter	1
+Billy Crystal	Film Producer	1
+Billy Crystal	Film Director	2
+Billy Crystal	Comedian	7
+Billy Crystal	Actor	7
+Kurt Russell	Voice Actor	1
+Kurt Russell	Television Producer	0
+Kurt Russell	Screenwriter	0
+Kurt Russell	Film Producer	1
+Kurt Russell	Actor	7
+John Lindsay	Politician	7
+John Lindsay	Attorneys in the United States	1
+George C. Scott	Theatrical producer	1
+George C. Scott	Theatre Director	2
+George C. Scott	Soldier	0
+George C. Scott	Film Producer	3
+George C. Scott	Film Director	5
+George C. Scott	Actor	7
+Anthony Braxton	Professor	0
+Anthony Braxton	Performance Artist	3
+Anthony Braxton	Jazz Composer	6
+Anthony Braxton	Bandleader	4
+Wayne Brady	Television Producer	0
+Wayne Brady	Talk show host	3
+Wayne Brady	Singer	4
+Wayne Brady	Screenwriter	1
+Wayne Brady	Game Show Host	5
+Wayne Brady	Comedian	6
+Wayne Brady	Actor	7
+Tony Wilson	Radio personality	4
+Tony Wilson	Presenter	6
+Tony Wilson	Journalist	3
+Tony Wilson	Impresario	3
+Tony Wilson	Businessperson	4
+Tony Wilson	Actor	0
+K. Balachander	Television director	4
+K. Balachander	Teacher	1
+K. Balachander	Screenwriter	7
+K. Balachander	Playwright	2
+K. Balachander	Film Producer	7
+K. Balachander	Film Director	7
+K. Balachander	Conductor	0
+K. Balachander	Actor	2
+Don DeLillo	Playwright	1
+Don DeLillo	Novelist	7
+Don DeLillo	Essayist	3
+Don DeLillo	Author	6
+Gabrielle Giffords	Politician	7
+Gabrielle Giffords	Businessperson	1
+Jazze Pha	Songwriter	5
+Jazze Pha	Singer-songwriter	4
+Jazze Pha	Record producer	6
+Jazze Pha	Rapper	4
+Robert Evans (producer)	Screenwriter	1
+Robert Evans (producer)	Film Producer	7
+Robert Evans (producer)	Actor	0
+Peter Shaffer	Screenwriter	6
+Peter Shaffer	Playwright	7
+Peter Shaffer	Author	3
+Raúl Zamudio	Curator	7
+Raúl Zamudio	Art critic	7
+Georges Danton	Politician	7
+Georges Danton	Lawyer	3
+Dave Smith (engineer)	Inventor	5
+Dave Smith (engineer)	Engineer	6
+Joseph B. Soloveitchik	Rabbi	7
+Joseph B. Soloveitchik	Philosopher	6
+Mavis Staples	Singer	7
+Mavis Staples	Film Score Composer	0
+Mavis Staples	Actor	1
+Warren "Pete" Moore	Songwriter	7
+Warren "Pete" Moore	Singer	7
+Warren "Pete" Moore	Record producer	3
+Warren "Pete" Moore	Entrepreneur	2
+Ben Stein	Voice Actor	2
+Ben Stein	Teacher	2
+Ben Stein	Speechwriter	3
+Ben Stein	Screenwriter	0
+Ben Stein	Professor	1
+Ben Stein	Lawyer	3
+Ben Stein	Humorist	4
+Ben Stein	Game Show Host	4
+Ben Stein	Financial adviser	2
+Ben Stein	Economist	3
+Ben Stein	Commentator	6
+Ben Stein	Comedian	4
+Ben Stein	Author	4
+Ben Stein	Actor	7
+Zack de la Rocha	Songwriter	6
+Zack de la Rocha	Social activist	2
+Zack de la Rocha	Singer	4
+Zack de la Rocha	Rapper	6
+Zack de la Rocha	Poet	4
+Chicane (musician)	Songwriter	7
+Chicane (musician)	Record producer	5
+Chicane (musician)	Electronic musician	5
+Chicane (musician)	Composer	7
+Jamie-Lynn Sigler	Singer	2
+Jamie-Lynn Sigler	Actor	7
+Horst Tappert	Television director	2
+Horst Tappert	Actor	7
+Jack Bender	Television Producer	4
+Jack Bender	Television director	6
+Jack Bender	Screenwriter	2
+Jack Bender	Film Director	5
+Jack Bender	Actor	4
+Jack Endino	Record producer	7
+Jack Endino	Musician	6
+Jack Endino	Audio Engineer	5
+Michael Tait	Songwriter	5
+Michael Tait	Singer	7
+David Wu	Politician	7
+David Wu	Lawyer	2
+Christopher Hill (historian)	Historian	7
+Christopher Hill (historian)	Author	6
+Mousse T.	Record producer	6
+Mousse T.	Film Score Composer	0
+Mousse T.	Disc jockey	7
+Jonatha Brooke	Songwriter	5
+Jonatha Brooke	Singer-songwriter	6
+Jean Hersholt	Film Director	0
+Jean Hersholt	Actor	7
+Frank J. Sprague	Inventor	7
+Frank J. Sprague	Electrical engineer	5
+Peter Lundgren	Tennis player	7
+Peter Lundgren	Coach	4
+Timothy Busfield	Theatrical producer	4
+Timothy Busfield	Theatre Director	6
+Timothy Busfield	Television Producer	3
+Timothy Busfield	Television director	5
+Timothy Busfield	Actor	7
+Patrick Abercrombie	Urban planner	7
+Patrick Abercrombie	Architect	6
+Christopher Amott	Songwriter	5
+Christopher Amott	Singer	4
+Christopher Amott	Guitarist	7
+Michelle Ye	Film Producer	4
+Michelle Ye	Actor	7
+Yoo Jae-suk	Presenter	4
+Yoo Jae-suk	Comedian	7
+James Frawley	Television Producer	3
+James Frawley	Television director	6
+James Frawley	Film Director	6
+James Frawley	Actor	5
+Vetrimaaran	Screenwriter	3
+Vetrimaaran	Film Director	7
+Todd Rokita	Politician	7
+Todd Rokita	Lawyer	3
+Bob Goen	Presenter	2
+Bob Goen	Game Show Host	7
+Max Lanier	Baseball player	7
+Max Lanier	Baseball Manager	2
+Hart Bochner	Screenwriter	4
+Hart Bochner	Film Producer	4
+Hart Bochner	Film Director	4
+Hart Bochner	Actor	6
+Kirsty Gallacher	Television presenter	7
+Kirsty Gallacher	Presenter	4
+Kirsty Gallacher	Fashion Model	0
+Kate Baldwin	Singer	6
+Kate Baldwin	Actor	7
+Luke Benward	Singer	3
+Luke Benward	Actor	7
+Enrico Corradini	Novelist	7
+Enrico Corradini	Journalist	3
+Maz Jobrani	Screenwriter	0
+Maz Jobrani	Film Producer	0
+Maz Jobrani	Comedian	7
+Maz Jobrani	Actor	7
+Parker Tyler	Poet	5
+Parker Tyler	Film critic	6
+Trimpin	Sound Sculptor	7
+Trimpin	Composer	1
+Tom Morton	Presenter	3
+Tom Morton	Novelist	5
+Tom Morton	Journalist	6
+Nicholas J. Cull	Writer	5
+Nicholas J. Cull	Professor	6
+Orlando R. Marsh	Inventor	5
+Orlando R. Marsh	Electrical engineer	7
+Donnie Simpson	Disc jockey	7
+Donnie Simpson	Actor	0
+Ljubo Sirc	Politician	0
+Ljubo Sirc	Economist	7
+Randy Moller	Ice hockey player	7
+Randy Moller	Announcer	4
+Brian Nankervis	Television Producer	2
+Brian Nankervis	Screenwriter	5
+Brian Nankervis	Film Producer	5
+Brian Nankervis	Comedian	7
+Brian Nankervis	Actor	4
+Jock Gaynor	Television Producer	4
+Jock Gaynor	Actor	7
+Vincent Pereira	Cinematographer	6
+Vincent Pereira	Actor	1
+Lizzy van Dorp	Politician	5
+Lizzy van Dorp	Lawyer	7
+Lizzy van Dorp	Economist	6
+Lela Tsurtsumia	Singer	7
+Lela Tsurtsumia	Actor	1
+Joni Evans	Writer	4
+Joni Evans	Publisher	6
+Joni Evans	Editor	4
+Neha Kapur	Singer	0
+Neha Kapur	Model	7
+Neha Kapur	Actor	0
+Elise Baughman	Voice Actor	6
+Elise Baughman	Actor	4
+Peter Ramsaroop	Writer	1
+Peter Ramsaroop	Politician	7
+Fethiye Çetin	Writer	6
+Fethiye Çetin	Lawyer	5
+Paula DiPerna	Consultant	2
+Paula DiPerna	Author	6
+Pascal Atuma	Screenwriter	7
+Pascal Atuma	Film Producer	5
+Pascal Atuma	Film Director	5
+Pascal Atuma	Actor	7
+Antonio Serapio	Politician	5
+Antonio Serapio	Lawyer	5
+Pam Wolf	Teacher	3
+Pam Wolf	Legislator	6
+Manon Barbeau	Screenwriter	4
+Manon Barbeau	Film Director	6
+Robert Celestino	Screenwriter	7
+Robert Celestino	Film Producer	7
+Robert Celestino	Film Editor	6
+Robert Celestino	Film Director	7
+Ashley Renee	Pornographic actor	7
+Ashley Renee	Model	6
+Teo Gheorghiu	Pianist	7
+Teo Gheorghiu	Actor	4
+Nicky Love	Singer	6
+Nicky Love	Model	5
+Nani Bregvadze	Singer	7
+Nani Bregvadze	Pianist	2
+Nani Bregvadze	Actor	1
+Red Ezra	Screenwriter	2
+Red Ezra	Production designer	2
+Red Ezra	Film Producer	6
+Red Ezra	Film Editor	5
+Red Ezra	Film Director	6
+Red Ezra	Film Art Director	3
+Michael Baiardi	Songwriter	6
+Michael Baiardi	Record producer	3
+Michael Baiardi	Film Score Composer	7
+Yūji Fujishiro	Voice Actor	7
+Yūji Fujishiro	Actor	2
+Klaus Filter	Engineer	5
+Klaus Filter	Architect	4

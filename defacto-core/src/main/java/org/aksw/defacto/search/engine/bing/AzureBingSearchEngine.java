@@ -77,7 +77,6 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
         Pattern p = new Pattern("?D politician ?R");
         MetaQuery query = new MetaQuery("Franck Ribery|-| politician |-|Galatasaray|-|en", p);
         Defacto.init();
-
         p.naturalLanguageRepresentation = "?D? was not prizewinning ?R?";
 
         MetaQuery q = new MetaQuery("Guglielmo Marconi|-| not prizewinning |-|Nobel Prize in Physics|-|en", p);
