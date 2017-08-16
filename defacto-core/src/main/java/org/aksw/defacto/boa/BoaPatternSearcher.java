@@ -271,6 +271,51 @@ public class BoaPatternSearcher {
             pattern1.language = "fr";
             patterns.put(pattern1.getNormalized(), pattern1);
 
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? ist ein Bürger von ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? ist ein Bürger von ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "ist ein Bürger von";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "ge";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? ist ein Staatsangehöriger von ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? ist ein Staatsangehöriger von ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "ist ein Staatsangehöriger von";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "ge";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? nationalität ist ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? nationalität ist ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "nationalität ist";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "ge";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? die Staatsbürgerschaft ist ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? die Staatsbürgerschaft ist ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "die Staatsbürgerschaft ist";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "ge";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? ist ein Bewohner von ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? ist ein Bewohner von ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "ist ein Bewohner von";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "ge";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
             List<Pattern> patternList = new ArrayList<>(patterns.values());
 
             return patternList;
@@ -394,6 +439,55 @@ public class BoaPatternSearcher {
             pattern1.boaScore = 0d;
             pattern1.language = "fr";
             patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? ist ein ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? ist ein ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "ist ein";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "ge";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? arbeitet als ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? arbeitet als ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "arbeitet als";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "ge";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? 's Beruf ist ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? 's Beruf ist ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "'s Beruf ist";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "ge";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? besetzung ist ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? besetzung ist ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "besetzung ist";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "ge";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            pattern1 = new Pattern();
+            pattern1.generalized = "?D? war ein ?R?";
+            pattern1.naturalLanguageRepresentation = "?D? war ein ?R?";
+            pattern1.naturalLanguageRepresentationWithoutVariables = "war ein";
+            pattern1.posTags = "";
+            pattern1.boaScore = 0d;
+            pattern1.language = "ge";
+            patterns.put(pattern1.getNormalized(), pattern1);
+
+            List<Pattern> patternList = new ArrayList<>(patterns.values());
+
+            return patternList;
         }
         int numberOfBoaPatterns = 50;
         return querySolrIndex(propertyUri,
