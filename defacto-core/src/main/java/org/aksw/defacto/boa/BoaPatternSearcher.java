@@ -277,7 +277,7 @@ public class BoaPatternSearcher {
             pattern1.naturalLanguageRepresentationWithoutVariables = "ist ein Bürger von";
             pattern1.posTags = "";
             pattern1.boaScore = 0d;
-            pattern1.language = "ge";
+            pattern1.language = "de";
             patterns.put(pattern1.getNormalized(), pattern1);
 
             pattern1 = new Pattern();
@@ -286,7 +286,7 @@ public class BoaPatternSearcher {
             pattern1.naturalLanguageRepresentationWithoutVariables = "ist ein Staatsangehöriger von";
             pattern1.posTags = "";
             pattern1.boaScore = 0d;
-            pattern1.language = "ge";
+            pattern1.language = "de";
             patterns.put(pattern1.getNormalized(), pattern1);
 
             pattern1 = new Pattern();
@@ -295,7 +295,7 @@ public class BoaPatternSearcher {
             pattern1.naturalLanguageRepresentationWithoutVariables = "nationalität ist";
             pattern1.posTags = "";
             pattern1.boaScore = 0d;
-            pattern1.language = "ge";
+            pattern1.language = "de";
             patterns.put(pattern1.getNormalized(), pattern1);
 
             pattern1 = new Pattern();
@@ -304,7 +304,7 @@ public class BoaPatternSearcher {
             pattern1.naturalLanguageRepresentationWithoutVariables = "die Staatsbürgerschaft ist";
             pattern1.posTags = "";
             pattern1.boaScore = 0d;
-            pattern1.language = "ge";
+            pattern1.language = "de";
             patterns.put(pattern1.getNormalized(), pattern1);
 
             pattern1 = new Pattern();
@@ -313,7 +313,7 @@ public class BoaPatternSearcher {
             pattern1.naturalLanguageRepresentationWithoutVariables = "ist ein Bewohner von";
             pattern1.posTags = "";
             pattern1.boaScore = 0d;
-            pattern1.language = "ge";
+            pattern1.language = "de";
             patterns.put(pattern1.getNormalized(), pattern1);
 
             List<Pattern> patternList = new ArrayList<>(patterns.values());
@@ -446,7 +446,7 @@ public class BoaPatternSearcher {
             pattern1.naturalLanguageRepresentationWithoutVariables = "ist ein";
             pattern1.posTags = "";
             pattern1.boaScore = 0d;
-            pattern1.language = "ge";
+            pattern1.language = "de";
             patterns.put(pattern1.getNormalized(), pattern1);
 
             pattern1 = new Pattern();
@@ -455,7 +455,7 @@ public class BoaPatternSearcher {
             pattern1.naturalLanguageRepresentationWithoutVariables = "arbeitet als";
             pattern1.posTags = "";
             pattern1.boaScore = 0d;
-            pattern1.language = "ge";
+            pattern1.language = "de";
             patterns.put(pattern1.getNormalized(), pattern1);
 
             pattern1 = new Pattern();
@@ -464,7 +464,7 @@ public class BoaPatternSearcher {
             pattern1.naturalLanguageRepresentationWithoutVariables = "'s Beruf ist";
             pattern1.posTags = "";
             pattern1.boaScore = 0d;
-            pattern1.language = "ge";
+            pattern1.language = "de";
             patterns.put(pattern1.getNormalized(), pattern1);
 
             pattern1 = new Pattern();
@@ -473,7 +473,7 @@ public class BoaPatternSearcher {
             pattern1.naturalLanguageRepresentationWithoutVariables = "besetzung ist";
             pattern1.posTags = "";
             pattern1.boaScore = 0d;
-            pattern1.language = "ge";
+            pattern1.language = "de";
             patterns.put(pattern1.getNormalized(), pattern1);
 
             pattern1 = new Pattern();
@@ -482,7 +482,7 @@ public class BoaPatternSearcher {
             pattern1.naturalLanguageRepresentationWithoutVariables = "war ein";
             pattern1.posTags = "";
             pattern1.boaScore = 0d;
-            pattern1.language = "ge";
+            pattern1.language = "de";
             patterns.put(pattern1.getNormalized(), pattern1);
 
             List<Pattern> patternList = new ArrayList<>(patterns.values());
