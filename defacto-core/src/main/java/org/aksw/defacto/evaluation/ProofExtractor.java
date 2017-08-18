@@ -52,9 +52,9 @@ public class ProofExtractor {
     public static PrintWriter           writer;
     public static PrintWriter           writer_overview;
     public static String                separator = ";";
-    private static final File           folder_pos_anisa = new File("/home/esteves/github/DeFacto/data/database/anisa/");
-    private static final File           wsdm_nationality = new File("/home/anikethjr/DeFacto_benchmarking/DeFacto/wsdm/nationality.test.tsv");
-    private static final File           wsdm_profession = new File("/home/anikethjr/DeFacto_benchmarking/DeFacto/wsdm/profession.test.tsv");
+    private static final File           folder_pos_anisa = new File("/data/anisa/");
+    private static final File           wsdm_nationality = new File("/data/wsdm/nationality.test.tsv");
+    private static final File           wsdm_profession = new File("/data/wsdm/profession.test.tsv");
     private static final File           folder_pos = new File("/home/esteves/github/FactBench/test/correct/");
     private static final File           folder_neg = new File("/home/esteves/github/FactBench/test/wrong/domainrange/");
     private static List<String>         files_pos = new ArrayList<>();
@@ -275,7 +275,7 @@ public class ProofExtractor {
             for(String f:files_pos) {
                 Integer auxmodel = 0;
                 Path p1 = Paths.get(f);
-                CSVReader reader = new CSVReader(new FileReader(f), '\t');
+                CSVReader reader = new CSVReader(new FileReader(System.getProperty("user.dir") + f), '\t');
                 String[] nextLine;
 
                 int counter = 0;

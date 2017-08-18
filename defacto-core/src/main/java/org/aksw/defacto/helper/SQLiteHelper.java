@@ -37,7 +37,7 @@ public class SQLiteHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(SQLiteHelper.class);
     private static Connection c = null;
     private static SQLiteHelper instance = null;
-    private static String db_path = "data/database/defacto.db";
+    private static String db_path = "/Users/esteves/Dropbox/Doutorado_Alemanha/#Papers/#DeFacto Files/ACM_Data_Quality_Journal/defacto_wsdm.db";
     //private static String db_path = "data/database/defacto_neg.db";
     //private static String db_path = "data/database/anisa/defacto_anisa.db";
     protected SQLiteHelper() {

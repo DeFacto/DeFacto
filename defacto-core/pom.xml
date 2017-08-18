@@ -213,13 +213,13 @@
             <systemPath>${basedir}/lib/sparql-metrics-0.0.1-SNAPSHOT.jar</systemPath>
             <scope>system</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.aksw.kbox</groupId>
             <artifactId>kbox.core</artifactId>
             <version>0.0.1-alpha3-RC4</version>
             <systemPath>${basedir}/lib/kbox-v0.0.1-alpha3-RC4.jar</systemPath>
             <scope>system</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.aksw.jena-sparql-api</groupId>
             <artifactId>jena-sparql-api-core</artifactId>

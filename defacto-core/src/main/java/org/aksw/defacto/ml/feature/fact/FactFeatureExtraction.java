@@ -47,14 +47,17 @@ public class FactFeatureExtraction {
      * 
      * @param evidence
      */
-    public void extractFeatureForFact(Evidence evidence) {
+    public void extractFeatureForFact(Evidence evidence) throws Exception {
 
         // score the collected evidence with every feature extractor defined
         for ( ComplexProof proof : evidence.getComplexProofs() ) {
-            
+            Integer aux = 0;
             for ( FactFeature feature : FactFeatureExtraction.factFeatures ) {
-                
                 feature.extractFeature(proof, evidence);
+                aux++;
+            }
+            if (aux != FactFeatureExtraction.factFeatures.size()){
+                throw new Exception("FactFeatureExtraction: we need to check why this has happened!");
             }
             // all features for this proof are completed so add it to the instances data
             // we only need to add the feature vector to the weka instances object if we plan to write the training file
