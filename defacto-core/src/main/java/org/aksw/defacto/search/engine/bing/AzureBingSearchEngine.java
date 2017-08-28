@@ -147,30 +147,40 @@ public class AzureBingSearchEngine extends DefaultSearchEngine {
             HttpEntity entity = resp.getEntity();
             List<WebSite> resultsws = new ArrayList<WebSite>();
             Long resultsLength = 0L;
+            Long totalreturnedvalues = 0L;
 
             if (entity != null)
             {
                 JSONObject json = new JSONObject(EntityUtils.toString(entity));
-                JSONObject d = json.getJSONObject("webPages");
-                JSONArray results = d.getJSONArray("value");
-                resultsLength = (Long.valueOf(results.length()));
-                int aux = 1;
-                for (int i = 0; i < resultsLength; i++) {
-                    if ( aux > Integer.valueOf(NUMBER_OF_SEARCH_RESULTS) ) break;
-                    final JSONObject aResult = results.getJSONObject(i);
-                    if ((aResult.get("displayUrl").toString().startsWith("http://images.webgiftr.com/")
-                            || (aResult.get("displayUrl").toString().startsWith("http://www.calza.com/")))) continue;
+                if (json.has("webPages")){
+                    JSONObject d = json.getJSONObject("webPages");
+                    JSONArray results = d.getJSONArray("value");
+                    totalreturnedvalues = Long.valueOf(d.getString("totalEstimatedMatches"));
+                    resultsLength = (Long.valueOf(results.length()));
 
-                    WebSite website = new WebSite(query, aResult.get("displayUrl").toString());
-                    website.setTitle(aResult.get("name").toString());
-                    website.setRank(i++);
-                    website.setLanguage(query.getLanguage());
-                    resultsws.add(website);
-                    aux++;
+                    int aux = 1;
+                    for (int i = 0; i < resultsLength; i++) {
+                        if ( aux > Integer.valueOf(NUMBER_OF_SEARCH_RESULTS) ) break;
+                        final JSONObject aResult = results.getJSONObject(i);
+                        if ((aResult.get("displayUrl").toString().startsWith("http://images.webgiftr.com/")
+                                || (aResult.get("displayUrl").toString().startsWith("http://www.calza.com/")))) continue;
+
+                        WebSite website = new WebSite(query, aResult.get("displayUrl").toString());
+                        website.setTitle(aResult.get("name").toString());
+                        website.setRank(i++);
+                        website.setLanguage(query.getLanguage());
+                        resultsws.add(website);
+                        aux++;
+                    }
                 }
+                else
+                {
+                    return new DefaultSearchResult(new ArrayList<WebSite>(), 0L, query, pattern, false);
+                }
+
             }
 
-            return new DefaultSearchResult(resultsws, resultsLength, query, pattern, false);
+            return new DefaultSearchResult(resultsws, totalreturnedvalues, query, pattern, false);
 
 
 

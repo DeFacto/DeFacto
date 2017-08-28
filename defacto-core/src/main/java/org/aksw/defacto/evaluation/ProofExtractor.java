@@ -13,6 +13,7 @@ import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.helper.DefactoUtils;
 import org.aksw.defacto.helper.SQLiteHelper;
 import org.aksw.defacto.model.DefactoModel;
+import org.aksw.defacto.model.DefactoResource;
 import org.aksw.defacto.rest.RestModel;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
 import org.aksw.defacto.search.engine.SearchEngine;
@@ -216,6 +217,9 @@ public class ProofExtractor {
             Integer sequencial =
                     Integer.valueOf(pair.getKey().toString().substring(pair.getKey().toString().indexOf("tsv_") + 4,
                     pair.getKey().toString().length()));
+            if (sequencial==202){
+                Integer a = 1;
+            }
             DefactoModel model = (DefactoModel)pair.getValue();
 
 
@@ -235,7 +239,7 @@ public class ProofExtractor {
 
             LOGGER.info(out);
             LOGGER.info(":: ok, saving metadata...");
-            //saveMetadata(totalTime, evidence, String.valueOf(sequencial), Constants.EvidenceType.POS, real_filename);
+            saveMetadata(totalTime, evidence, String.valueOf(sequencial), Constants.EvidenceType.POS, pair.getKey().toString());
             LOGGER.info(":: done...");
 
 
@@ -269,19 +273,26 @@ public class ProofExtractor {
         Map<String, DefactoModel> map = new HashMap<>();
         RestModel restmodel = new RestModel();
         if (dataset == 2) { //WSDM dataset
-            files_pos.add(wsdm_nationality.getAbsolutePath());
+            //files_pos.add(wsdm_nationality.getAbsolutePath());
             files_pos.add(wsdm_profession.getAbsolutePath());
             System.out.println("->" + files_pos.size());
             for(String f:files_pos) {
                 Integer auxmodel = 0;
                 Path p1 = Paths.get(f);
-                CSVReader reader = new CSVReader(new FileReader(System.getProperty("user.dir") + f), '\t');
+                CSVReader reader = new CSVReader(
+                        new InputStreamReader(
+                                new FileInputStream(System.getProperty("user.dir") + f),"UTF8"),
+                        '\t', '\'', 0);
+
                 String[] nextLine;
 
                 int counter = 0;
                 while ((nextLine = reader.readNext()) != null) {
                     counter++;
                     auxmodel++;
+                    if (auxmodel == 323 || auxmodel == 324){
+                        nextLine[0] = "http://dbpedia.org/resource/Raúl_Zamudio";
+                    }
                     String filenameaux = f + "_" + auxmodel.toString();
 
                     if (modelSaved(filenameaux, p1.getParent().toString()) != 0)
@@ -289,21 +300,23 @@ public class ProofExtractor {
                     Triple triple;
                     if (f.equalsIgnoreCase(wsdm_nationality.getAbsolutePath())) {
                         triple =
-                                new Triple(NodeFactory.createURI(nextLine[0]), NodeFactory.createURI("http://dbpedia.org/ontology/nationality"),
-                                        NodeFactory.createURI(nextLine[1]));
+                                new Triple(NodeFactory.createURI(nextLine[0]),
+                                           NodeFactory.createURI("http://dbpedia.org/ontology/nationality"),
+                                           NodeFactory.createURI(nextLine[1]));
                     } else {
                         triple =
-                                new Triple(NodeFactory.createURI(nextLine[0]), NodeFactory.createURI("http://dbpedia.org/ontology/profession"),
-                                        NodeFactory.createURI(nextLine[1]));
+                                new Triple(NodeFactory.createURI(nextLine[0]),
+                                           NodeFactory.createURI("http://dbpedia.org/ontology/profession"),
+                                           NodeFactory.createURI(nextLine[1]));
                     }
-                    DefactoModel model = restmodel.getModel(triple, "1900", "1900");
+                    DefactoModel model = restmodel.getModel(triple, "1800", "2017");
                     model.setFile(new File(f));
                     model.setCorrect(true);
 
                     map.put(filenameaux, model);
                     System.out.println(auxmodel);
-                    if (counter == 2)
-                        break;
+                    //if (counter == 2)
+                    //    break;
                 }
             }
         }

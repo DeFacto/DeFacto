@@ -86,13 +86,16 @@ public class WordNetExpansion {
         intersection.retainAll(tokens2);
         Set<String> union = new HashSet(tokens1);
         union.addAll(tokens2);
+
+        System.out.println(intersection.toString());
+        System.out.println(union.toString());
         
         return ((double)intersection.size())/((double)union.size());
     }
     
     public static void main(String args[])
     {
-        WordNetExpansion wne = new WordNetExpansion("resources/wordnet/dict");
+        WordNetExpansion wne = new WordNetExpansion("data/wordnet/dict");
         String token = "couch";
         logger.info(wne.getSynset(token));
         String token2 = "table";
