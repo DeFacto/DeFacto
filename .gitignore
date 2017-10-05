@@ -1,6 +1,6 @@
 .DS_Store
 .project
-.idea
+.idea/
 .classpath
 .directory
 
@@ -11,5 +11,7 @@ freebase_links.nt
 test.h2.db
 
 /logs
-/target
+target/
 /bin
+log/
+/data/database/
