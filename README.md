@@ -30,7 +30,7 @@ If you want to try Defacto all you need to do is:
 - 6. run DefactoDemo.java
 
 ## Bugs
-Found a :bug: bug? [Open an issue](https://github.com/AKSW/fox/issues/new) 
+Found a :bug: bug? [Open an issue](https://github.com/SmartDataAnalytics/DeFacto/issues/new) 
 
 ## Requirements
 Java 7, Maven, Solr 4.5, MySQL 5.5, Wordnet, Weka 3.3.6 (in case you want to check models out)
