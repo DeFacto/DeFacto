@@ -3,11 +3,11 @@ jdk:
   - oraclejdk8
 branches:
   only:
-    - fusion
+    - master
 notifications:
   email:
     recipients:
-      - speck@informatik.uni-leipzig.de
+      - esteves@cs.uni-bonn.de
     on_success: change
     on_failure: change
 after_success:
