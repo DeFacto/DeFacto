@@ -140,6 +140,7 @@ public class BoaPatternSearcher {
 
                 if (language.equals("en")){
 
+                    /*
                     pattern1.generalized = "?D? is a ?R?"; //nlr-gen
                     pattern1.naturalLanguageRepresentation = "?D? is a ?R?"; //nlr-var
                     pattern1.naturalLanguageRepresentationWithoutVariables = "is a"; //nlr-no-var
@@ -174,7 +175,7 @@ public class BoaPatternSearcher {
                     pattern1.boaScore = boascore;
                     pattern1.language = "en";
                     patterns.put(pattern1.getNormalized(), pattern1);
-
+                    */
                     pattern1 = new Pattern();
                     pattern1.generalized = "?D? 's profession is ?R?";
                     pattern1.naturalLanguageRepresentation = "?D? 's profession is ?R?";
@@ -193,6 +194,7 @@ public class BoaPatternSearcher {
                     pattern1.language = "en";
                     patterns.put(pattern1.getNormalized(), pattern1);
 
+                    /*
                     pattern1 = new Pattern();
                     pattern1.generalized = "?D? was a ?R?";
                     pattern1.naturalLanguageRepresentation = "?D? was a ?R?";
@@ -210,11 +212,13 @@ public class BoaPatternSearcher {
                     pattern1.boaScore = boascore;
                     pattern1.language = "en";
                     patterns.put(pattern1.getNormalized(), pattern1);
+                    */
 
                 }else if (language.equals("fr")){
 
                 /**************************** french *****************************/
 
+                    /*
                     pattern1 = new Pattern();
                     pattern1.generalized = "?D? est un ?R?";
                     pattern1.naturalLanguageRepresentation = "?D? est un ?R?";
@@ -232,7 +236,7 @@ public class BoaPatternSearcher {
                     pattern1.boaScore = boascore;
                     pattern1.language = "fr";
                     patterns.put(pattern1.getNormalized(), pattern1);
-
+                    */
                     pattern1 = new Pattern();
                     pattern1.generalized = "?D? travaille come un ?R?";
                     pattern1.naturalLanguageRepresentation = "?D? travaille come un ?R?";
@@ -268,7 +272,7 @@ public class BoaPatternSearcher {
                     pattern1.boaScore = boascore;
                     pattern1.language = "fr";
                     patterns.put(pattern1.getNormalized(), pattern1);
-
+                    /*
                     pattern1 = new Pattern();
                     pattern1.generalized = "?D? était un ?R?";
                     pattern1.naturalLanguageRepresentation = "?D? était un ?R?";
@@ -286,11 +290,12 @@ public class BoaPatternSearcher {
                     pattern1.boaScore = boascore;
                     pattern1.language = "fr";
                     patterns.put(pattern1.getNormalized(), pattern1);
-
+                    */
                 }else if(language.equals("de")){
 
                 /**************************** german *****************************/
 
+                    /*
                     pattern1 = new Pattern();
                     pattern1.generalized = "?D? ist ein ?R?";
                     pattern1.naturalLanguageRepresentation = "?D? ist ein ?R?";
@@ -326,7 +331,7 @@ public class BoaPatternSearcher {
                     pattern1.boaScore = boascore;
                     pattern1.language = "de";
                     patterns.put(pattern1.getNormalized(), pattern1);
-
+                    */
                     pattern1 = new Pattern();
                     pattern1.generalized = "?D? 's Beruf ist ?R?";
                     pattern1.naturalLanguageRepresentation = "?D? 's Beruf ist ?R?";
@@ -344,7 +349,7 @@ public class BoaPatternSearcher {
                     pattern1.boaScore = boascore;
                     pattern1.language = "de";
                     patterns.put(pattern1.getNormalized(), pattern1);
-
+                    /*
                     pattern1 = new Pattern();
                     pattern1.generalized = "?D? war ein ?R?";
                     pattern1.naturalLanguageRepresentation = "?D? war ein ?R?";
@@ -362,7 +367,7 @@ public class BoaPatternSearcher {
                     pattern1.boaScore = boascore;
                     pattern1.language = "de";
                     patterns.put(pattern1.getNormalized(), pattern1);
-
+                    */
                 }else
                 {
                     throw new Exception("language not supported!");
