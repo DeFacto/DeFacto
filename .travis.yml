@@ -4,6 +4,7 @@ jdk:
 branches:
   only:
     - master
+    - benchmarking
 notifications:
   email:
     recipients:
