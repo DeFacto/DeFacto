@@ -8,8 +8,10 @@ import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.dllearner.core.owl.Nothing;
 import org.ini4j.InvalidFileFormatException;
 
 import java.io.File;
@@ -216,21 +218,14 @@ public class DefactoDemo {
     private static DefactoModel getOneExample(){
 
         Model model = ModelFactory.createDefaultModel();
-        //model.read(DefactoModel.class.getClassLoader().getResourceAsStream("GhostbusterII.ttl"), null, "TURTLE");
-
+        DefactoModel defactoModel = null;
         try{
+            model.read(DefactoModel.class.getClassLoader().getResourceAsStream("GhostbusterII.ttl"), null, "TURTLE");
+            defactoModel = new DefactoModel(model, "GhostbusterII Model", true, Arrays.asList("en", "fr", "de"));
             //model.read(new FileReader(new File("C:\\DNE5\\github\\DeFacto\\data\\factbench\\v1_2013\\test\\unknown\\old\\out_birth_0.ttl")), "", "TTL");
         }catch (Exception e){
             LOG.error(e.toString());
         }
-
-       // model.read(DefactoModel.class.getClassLoader().getResourceAsStream("Nobel1909.ttl"), null, "TURTLE");
-        //return new DefactoModel(model, "Ghostbuster II Model", true, Arrays.asList("en", "fr", "de"));
-        //return new DefactoModel(model, "Nobel Model", true, Arrays.asList("en", "fr", "de"));
-        //return new DefactoModel(model, "Nobel Model", true, Arrays.asList("en"));
-
-        model.read(DefactoModel.class.getClassLoader().getResourceAsStream("GhostbusterII.ttl"), null, "TURTLE");
-        return new DefactoModel(model, "GhostbusterII Model", true, Arrays.asList("en", "fr", "de"));
-
+        return defactoModel;
     }
 }
