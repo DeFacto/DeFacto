@@ -2,7 +2,7 @@ DeFacto (Deep Fact Validation)
 ==============================
 [![Build Status](https://travis-ci.org/SmartDataAnalytics/DeFacto.svg?branch=master)](https://travis-ci.org/SmartDataAnalytics/DeFacto)
 
-DeFacto is a framework for validating statements by finding confirming sources for it on the web. It takes a statement (such as “<i>Jamaica Inn was directed by Alfred Hitchcock</i>”) as input and then tries to find evidence for the truth of that statement by searching for information in the web ([more information](http://aksw.org/projects/DeFacto)). Check out our [demo](http://defacto.aksw.org/).
+DeFacto is a framework for validating statements by finding confirming sources for it on the web. It takes a statement (such as “<i>Jamaica Inn was directed by Alfred Hitchcock</i>”) as input and then tries to find evidence for the truth of that statement by searching for information in the web ([more information](http://sda.cs.uni-bonn.de/projects/defacto/)). Check out our [demo](http://defacto.sda.tech).
 
 ## How to cite
 ```Tex
