@@ -49,7 +49,7 @@ public class DefactoTimePeriodLearning {
 	static Frequency medium = new Frequency();
 	static Frequency large = new Frequency();
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws Exception {
 		
 		Defacto.init();
 		trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 
@@ -107,7 +107,7 @@ public class DefactoTimePeriodLearning {
 //		}
 	}
 	
-	private static void printLatexTable() throws FileNotFoundException {
+	private static void printLatexTable() throws Exception {
 		
 		System.out.println(configToLatex(startSingleConfigurationEvaluation("award", Arrays.asList("en"), Arrays.asList("award"), "domain", "frequency", "medium")));
 		System.out.println(configToLatex(startSingleConfigurationEvaluation("award", Arrays.asList("en", "fr", "de"), Arrays.asList("award"), "domain", "frequency", "tiny")));
@@ -183,7 +183,7 @@ public class DefactoTimePeriodLearning {
 		return StringUtils.join(line, "\t&\t") + "\t\\\\";
 	}
 
-	private static void generateProofFrequencies() throws FileNotFoundException {
+	private static void generateProofFrequencies() throws Exception {
 		
 		System.out.println(startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"),
 				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"),
@@ -203,7 +203,7 @@ public class DefactoTimePeriodLearning {
 	}
 	
 	private static Configuration startSingleConfigurationEvaluation(String name, List<String> languages, List<String> relations, 
-			String normalizer, String searchMethod, String contextSize) throws FileNotFoundException {
+			String normalizer, String searchMethod, String contextSize) throws Exception {
 		
 		CURRENT_LANGUAGE = languages.toString();
 		List<DefactoModel>  models = new ArrayList<>();
@@ -217,14 +217,14 @@ public class DefactoTimePeriodLearning {
 		return learn(name, models, new ArrayList<Configuration>());
 	}
 	
-	private static Configuration startBestConfigurationEvaluation() throws FileNotFoundException {
+	private static Configuration startBestConfigurationEvaluation() throws Exception {
 		
 		return startSingleConfigurationEvaluation("all", Arrays.asList("en", "fr", "de"),
 				Arrays.asList("award", "birth", "death", "foundationPlace", "publicationDate", "starring", "subsidiary", "spouse", "nbateam", "leader"),
 				"occurrence", "frequency", "tiny");
 	}
 
-	public static void startEvaluation() throws FileNotFoundException{
+	public static void startEvaluation() throws Exception{
 		
 		// single - points
 		printBestConfigurations(createOptionsAndStart("award", Arrays.asList("award")));
@@ -265,7 +265,6 @@ public class DefactoTimePeriodLearning {
 	
 	/**
 	 * 
-	 * @param cells
 	 * @param cfgs
 	 * @return
 	 */
@@ -315,7 +314,7 @@ public class DefactoTimePeriodLearning {
 		return filteredConfigs.get(0);
 	}
 
-	public static List<Configuration> createOptionsAndStart(String name, List<String> relations) throws FileNotFoundException {
+	public static List<Configuration> createOptionsAndStart(String name, List<String> relations) throws Exception {
 		
 		List<Configuration> configurations = new ArrayList<>();
 		
@@ -387,7 +386,7 @@ public class DefactoTimePeriodLearning {
 		return new PrecisionRecallFMeasure(relevantYears, retrievedYears);
 	}
 
-	public static Configuration learn(String name, List<DefactoModel> models, List<Configuration> configurations){
+	public static Configuration learn(String name, List<DefactoModel> models, List<Configuration> configurations) throws Exception{
 		
 		int precisionCounter = 0;
 		int isPossible = 0;

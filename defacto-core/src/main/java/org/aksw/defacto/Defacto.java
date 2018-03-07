@@ -35,7 +35,6 @@ import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import weka.core.Instance;
 
 /**
@@ -65,7 +64,7 @@ public class Defacto {
      * 
      * @return
      */
-    public static Evidence checkFact(DefactoModel model, TIME_DISTRIBUTION_ONLY onlyTimes) {
+    public static Evidence checkFact(DefactoModel model, TIME_DISTRIBUTION_ONLY onlyTimes) throws Exception {
     	
     	init();
     	LOGGER.info("Checking fact: " + model);
@@ -263,7 +262,7 @@ public class Defacto {
      * @param defactoModel
      * @return
      */
-    public static Map<DefactoModel,Evidence> checkFacts(List<DefactoModel> defactoModel, TIME_DISTRIBUTION_ONLY onlyTimeDistribution) {
+    public static Map<DefactoModel,Evidence> checkFacts(List<DefactoModel> defactoModel, TIME_DISTRIBUTION_ONLY onlyTimeDistribution) throws Exception {
 
     	init();
         

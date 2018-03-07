@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
 import com.hp.hpl.jena.rdf.model.*;
+import org.aksw.defacto.helper.SQLiteHelper;
 import org.aksw.defacto.util.LabeledTriple;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -39,6 +40,8 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.QGramsDistance;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
+
+import static java.lang.System.exit;
 
 /**
  * 
@@ -74,7 +77,36 @@ public class DataWebResultFinder {
         blackList.add("http://www.econbiz.de/");
     }
 
-    public static void main(String args[]) throws SameAsServiceException {
+    public static void getSameAsURIsAndUpdateDataBase() throws Exception{
+
+        Map<Integer, String> mapIdURL = SQLiteHelper.getInstance().getTopNWebSitesURLNotQueriesSameAs(1000, 0);
+        service = DefaultSameAsServiceFactory.getSingletonInstance();
+        service.setCache(new InMemoryCache());
+        ArrayList<String> similars = new ArrayList<>();
+        int aux=0;
+        for (Map.Entry<Integer, String> entry : mapIdURL.entrySet())
+        {
+            System.out.println(aux + " - " + entry.getValue());
+            try{
+                Equivalence equivalence = service.getDuplicates(URI.create(entry.getValue()));
+                for (URI uri : equivalence) {
+                    similars.add(uri.toString());
+                }
+                SQLiteHelper.getInstance().InsertSameAsResources(entry.getKey(), similars);
+            }catch (Exception e){
+                //do nothing
+            }
+            similars.clear();
+            aux++;
+        }
+
+
+    }
+
+    public static void main(String args[]) throws Exception, SameAsServiceException {
+
+        getSameAsURIsAndUpdateDataBase();
+        exit(0);
 
         //curl http://localhost:8123/solr/ld_uris/update?commit=true -H "Content-Type: text/xml" --data-binary '<delete><query>*:*</query></delete>'
         //curl http://localhost:8123/solr/ld_triples/update?commit=true -H "Content-Type: text/xml" --data-binary '<delete><query>*:*</query></delete>'
@@ -196,8 +228,6 @@ public class DataWebResultFinder {
         return ret;
 
     }
-
-
 
     public static boolean isDateValid(Object date) {
 

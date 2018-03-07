@@ -41,7 +41,7 @@ public class DefactoEvaluation {
 	 * @param args
 	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws Exception {
 		
 		Defacto.init();
 		for ( String trainOrTestAndSet : args) {
@@ -50,7 +50,7 @@ public class DefactoEvaluation {
 		}
 	}
 
-	private static void generateArffFiles(String set, String testOrTrain) throws FileNotFoundException {
+	private static void generateArffFiles(String set, String testOrTrain) throws Exception {
 		
 		List<String> languages = Arrays.asList("en");
 		String trainDirectory = Defacto.DEFACTO_CONFIG.getStringSetting("eval", "data-directory") 

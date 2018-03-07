@@ -38,7 +38,7 @@ public class DefactoEval {
      * @param args
      * @throws IOException 
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         
         writer = new BufferedWriter(new FileWriter("log/progess.txt"));
         org.apache.log4j.PropertyConfigurator.configure("log/log4j.properties");

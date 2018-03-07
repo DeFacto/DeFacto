@@ -13,6 +13,7 @@ import org.aksw.defacto.evidence.WebSite;
 import org.aksw.defacto.helper.DefactoUtils;
 import org.aksw.defacto.helper.SQLiteHelper;
 import org.aksw.defacto.model.DefactoModel;
+import org.aksw.defacto.model.DefactoResource;
 import org.aksw.defacto.rest.RestModel;
 import org.aksw.defacto.search.crawl.EvidenceCrawler;
 import org.aksw.defacto.search.engine.SearchEngine;
@@ -52,12 +53,17 @@ public class ProofExtractor {
     public static PrintWriter           writer;
     public static PrintWriter           writer_overview;
     public static String                separator = ";";
-    private static final File           folder_pos_anisa = new File("/home/esteves/github/DeFacto/data/database/anisa/");
+    private static final File           folder_pos_anisa = new File("/data/anisa/");
+
+    private static final File           wsdm_nationality = new File("/data/wsdm/nationality.test.tsv");
+    private static final File           wsdm_profession = new File("/data/wsdm/profession.test.tsv");
+
     private static final File           folder_pos = new File("/home/esteves/github/FactBench/test/correct/");
     private static final File           folder_neg = new File("/home/esteves/github/FactBench/test/wrong/domainrange/");
     private static List<String>         files_pos = new ArrayList<>();
     private static List<String>         files_neg = new ArrayList<>();
-    private static int                  dataset = 1; //0=FB, 1=Anisa
+
+    private static int                  dataset = 2; //0=FB, 1=Anisa, 2=WSDM, 3=ISWC
 
     private static String               cacheQueueProof = "PROCESSING_QUEUE_PROOFS.csv";
     private static String               cacheProofValues = "EVAL_COUNTER_PROOFS.csv";
@@ -105,6 +111,7 @@ public class ProofExtractor {
             Evidence eaux;
             Integer eauxnum;
 
+            LOGGER.info("saving metadata -> " + name + evidencetype.toString() + f);
 
             if (evidencetype.equals(Constants.EvidenceType.POS)) {
                 eaux = _evidence;
@@ -143,7 +150,7 @@ public class ProofExtractor {
                 Pattern p = (Pattern) pair.getKey();
                 MetaQuery m = (MetaQuery) pair.getValue();
 
-                Integer idpattern = SQLiteHelper.getInstance().savePattern(idevidence, p);
+                Integer idpattern = SQLiteHelper.getInstance().savePattern(p);
                 Integer idmetaquery = SQLiteHelper.getInstance().saveMetaQuery(idevidence, m);
 
                 //LOGGER.info(":: pattern - " + idpattern + " - " + p.toString());
@@ -202,43 +209,50 @@ public class ProofExtractor {
 
     }
 
-    private static void export(Map<String, DefactoModel> defactoModels) throws Exception{
+    private static void export(Map<String, DefactoModel> defactoModels) {
 
         Iterator it = defactoModels.entrySet().iterator();
-
+        Integer sequencial = 0;
         while (it.hasNext()) {
-            long startTime = System.currentTimeMillis();
-            Map.Entry pair = (Map.Entry)it.next();
+            try{
 
-            String real_filename = pair.getKey().toString().substring(0, pair.getKey().toString().indexOf("tsv_") + 3);
-            Integer sequencial =
-                    Integer.valueOf(pair.getKey().toString().substring(pair.getKey().toString().indexOf("tsv_") + 4,
-                    pair.getKey().toString().length()));
-            DefactoModel model = (DefactoModel)pair.getValue();
+                long startTime = System.currentTimeMillis();
+                Map.Entry pair = (Map.Entry)it.next();
 
-
-            LOGGER.info(":: checking model [" + sequencial + "] : " + real_filename);
-            final Evidence evidence = Defacto.checkFact(model, Defacto.TIME_DISTRIBUTION_ONLY.NO);
-
-            long endTime   = System.currentTimeMillis();
-            long totalTime = endTime - startTime;
-
-            String out = String.format("Processing Time: %02d hour, %02d min, %02d sec",
-                    TimeUnit.MILLISECONDS.toHours(totalTime),
-                    TimeUnit.MILLISECONDS.toMinutes(totalTime),
-                    TimeUnit.MILLISECONDS.toSeconds(totalTime) -
-                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))
-            );
-
-            LOGGER.info(out);
-            LOGGER.info(":: ok, saving metadata...");
-            saveMetadata(totalTime, evidence, String.valueOf(sequencial), Constants.EvidenceType.POS, real_filename);
-            LOGGER.info(":: done...");
+                String real_filename = pair.getKey().toString().substring(0, pair.getKey().toString().indexOf("tsv_") + 3);
+                 sequencial = Integer.valueOf(pair.getKey().toString().substring(pair.getKey().toString().indexOf("tsv_") + 4, pair.getKey().toString().length()));
+                //if (sequencial!=380)
+                //    continue;
+                DefactoModel model = (DefactoModel)pair.getValue();
 
 
-            it.remove();
+                LOGGER.info(":: checking model [" + sequencial + "] : " + real_filename);
+                final Evidence evidence = Defacto.checkFact(model, Defacto.TIME_DISTRIBUTION_ONLY.NO);
+                LOGGER.info("Overall Score: " + evidence.getDeFactoScore());
+                LOGGER.info("Overall Counterargument Score: " + evidence.getDeFactoCounterargumentScore());
+                long endTime   = System.currentTimeMillis();
+                long totalTime = endTime - startTime;
+
+                String out = String.format("Processing Time: %02d hour, %02d min, %02d sec",
+                        TimeUnit.MILLISECONDS.toHours(totalTime),
+                        TimeUnit.MILLISECONDS.toMinutes(totalTime),
+                        TimeUnit.MILLISECONDS.toSeconds(totalTime) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(totalTime))
+                );
+
+                LOGGER.info(out);
+                LOGGER.info(":: ok, saving metadata...");
+                String name = pair.getKey().toString().replace("/data/wsdm/", "");
+                saveMetadata(totalTime, evidence, name, Constants.EvidenceType.POS, pair.getKey().toString());
+                LOGGER.info(":: done...");
+
+                it.remove();
+
+            }catch (Exception e){
+                LOGGER.error(":: error! " + e.toString());
+                LOGGER.error(":: line: " + sequencial.toString());
+            }
         }
-
 
     }
 
@@ -250,8 +264,8 @@ public class ProofExtractor {
 
         prep.setString(1, filename);
         prep.setString(2, path);
-        prep.setString(3, "[en, fr, de]");
-        prep.setInt(4, 0);
+        prep.setString(3, "[de, en, fr]");
+        prep.setInt(4, 1);
 
         return SQLiteHelper.getInstance().existsRecord(prep);
 
@@ -261,12 +275,164 @@ public class ProofExtractor {
 
         //setFilesModelFiles(folder_pos, "POS");
         //setFilesModelFiles(folder_neg, "NEG");
-        setFilesModelFiles(folder_pos_anisa, "POS");
 
+        Long totalModelsSaved = 0L;
         Map<String, DefactoModel> map = new HashMap<>();
         RestModel restmodel = new RestModel();
 
-        if (dataset == 1){ //Anisa
+        if (dataset == 3) { //ISWC 2017 Challenge dataset
+
+        }
+
+        else if (dataset == 2) { //WSDM dataset
+            //files_pos.add(wsdm_nationality.getAbsolutePath());
+            files_pos.add(wsdm_profession.getAbsolutePath());
+            System.out.println("->" + files_pos.size());
+            for(String f:files_pos) {
+                Integer auxmodel = 0;
+                Path p1 = Paths.get(f);
+                CSVReader reader = new CSVReader(
+                        new InputStreamReader(
+                                new FileInputStream(System.getProperty("user.dir") + f),"UTF8"),
+                        '\t', '\'', 0);
+
+                String[] nextLine;
+
+                int counter = 0;
+                while ((nextLine = reader.readNext()) != null) {
+                    counter++;
+                    auxmodel++;
+
+                    if (f.equalsIgnoreCase(wsdm_profession.getAbsolutePath())) {
+
+                        if (auxmodel == 323 || auxmodel == 324){
+                            nextLine[0] = "http://dbpedia.org/resource/Raúl_Zamudio";
+                        }
+                        if (auxmodel == 510 || auxmodel == 511){
+                            nextLine[0] = "http://dbpedia.org/resource/Yūji";
+                        }
+                        if (auxmodel == 380){
+                            nextLine[1] = "http://dbpedia.org/resource/Scorer";
+                        }
+
+                        if (auxmodel == 492 || auxmodel == 493){
+                            nextLine[0] = "http://dbpedia.org/resource/Ashley";
+                        }
+
+                        if (auxmodel == 284){
+                            nextLine[1] = "http://dbpedia.org/resource/Film_score_composer";
+                        }
+
+                        if (auxmodel >= 179 && auxmodel <= 186){
+                            nextLine[0] = "http://dbpedia.org/resource/Noël_Coward";
+                        }
+
+                        if (auxmodel == 90){
+                            nextLine[1] = "http://dbpedia.org/resource/Film_score_composer";
+                        }
+
+                        if (auxmodel >= 334 && auxmodel <= 337){
+                            nextLine[0] = "http://dbpedia.org/resource/Warren_Moore";
+                        }
+
+                        if (auxmodel == 238){
+                            nextLine[1] = "http://dbpedia.org/resource/Film_score_composer";
+                        }
+
+                        if (auxmodel == 83){
+                            nextLine[1] = "http://dbpedia.org/resource/Aviator";
+                        }
+
+                        if (auxmodel == 126){
+                            nextLine[1] = "http://dbpedia.org/resource/Film_score_composer";
+                        }
+
+                        if (auxmodel == 345 || auxmodel == 290){
+                            nextLine[1] = "http://dbpedia.org/resource/Game_show_host";
+                        }
+
+                        if (auxmodel == 169){
+                            nextLine[1] = "http://dbpedia.org/resource/Film_score_composer";
+                        }
+
+                        if (auxmodel == 245 || auxmodel == 332 || auxmodel == 112 || auxmodel == 66 ||
+                                auxmodel == 184 || auxmodel == 150 || auxmodel == 37){
+                            nextLine[1] = "http://dbpedia.org/resource/Film_score_composer";
+                        }
+
+                        if (auxmodel == 475 || auxmodel == 474){
+                            nextLine[0] = "http://dbpedia.org/resource/Fethiye_Çetin";
+                        }
+
+                        if (auxmodel >= 202 && auxmodel <= 204){
+                            nextLine[0] = "http://dbpedia.org/resource/Moliere";
+                        }
+
+                        if (auxmodel >= 334 && auxmodel <= 337){
+                            nextLine[0] = "http://dbpedia.org/resource/Earl_Warren";
+                        }
+
+                        if (auxmodel >= 413 && auxmodel <= 413){
+                            nextLine[1] = "http://dbpedia.org/resource/Game_show_host";
+                        }
+
+                        if (auxmodel >= 435 && auxmodel <= 435){
+                            nextLine[1] = "http://dbpedia.org/resource/Sculptor";
+                        }
+
+                        if (auxmodel == 448 || auxmodel == 448){
+                            nextLine[1] = "http://dbpedia.org/resource/Ice_hockey";
+                        }
+
+                        if (auxmodel == 506 || auxmodel == 506){
+                            nextLine[1] = "http://dbpedia.org/resource/Art_Director";
+                        }
+
+                        if (auxmodel == 509 || auxmodel == 509){
+                            nextLine[1] = "http://dbpedia.org/resource/Film_score_composer";
+                        }
+
+                        if (auxmodel >= 510 && auxmodel <= 511){
+                            nextLine[0] = "http://dbpedia.org/resource/Yūji";
+                        }
+
+                    }
+
+
+                    String filenameaux = f + "_" + auxmodel.toString();
+
+                    if (modelSaved(filenameaux.replace("/data/wsdm/", ""), p1.getParent().toString()) != 0){
+                        totalModelsSaved++;
+                        LOGGER.info("model [" + filenameaux + "] already cached!");
+                        continue;
+                    }
+
+                    Triple triple;
+                    if (f.equalsIgnoreCase(wsdm_nationality.getAbsolutePath())) {
+                        triple =
+                                new Triple(NodeFactory.createURI(nextLine[0]),
+                                           NodeFactory.createURI("http://dbpedia.org/ontology/nationality"),
+                                           NodeFactory.createURI(nextLine[1]));
+                    } else {
+                        triple =
+                                new Triple(NodeFactory.createURI(nextLine[0]),
+                                           NodeFactory.createURI("http://dbpedia.org/ontology/profession"),
+                                           NodeFactory.createURI(nextLine[1]));
+                    }
+
+                    DefactoModel model = restmodel.getModel(triple, "1800", "2017");
+                    model.setFile(new File(f));
+                    model.setCorrect(true);
+
+                    map.put(filenameaux, model);
+                    LOGGER.info(auxmodel.toString() + " : " + triple.toString());
+                    //if (counter == 2)
+                    //    break;
+                }
+            }
+        }
+        else if (dataset == 1){ //Anisa
+            setFilesModelFiles(folder_pos_anisa, "POS");
             System.out.println("->" + files_pos.size());
             for(String f:files_pos) {
                 Integer auxmodel = 0;
@@ -318,6 +484,8 @@ public class ProofExtractor {
             }
         }
 
+        LOGGER.info("total models cached: " + totalModelsSaved.toString());
+        LOGGER.info("total models to be checked: " + String.valueOf(map.size()));
         export(map);
 
     }
@@ -574,6 +742,11 @@ public class ProofExtractor {
         model.read(url.openStream(), null, "TURTLE");
         return new DefactoModel(model, "Einstein Model", true, Arrays.asList("en", "fr", "de"), url.getPath());
     }
+
+    private static void getWebpagesOriginalBody(){
+
+    }
+
 
 
 }
