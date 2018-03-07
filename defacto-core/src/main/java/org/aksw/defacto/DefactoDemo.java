@@ -7,6 +7,7 @@ import com.hp.hpl.jena.vocabulary.RDFS;
 import org.aksw.defacto.Defacto.TIME_DISTRIBUTION_ONLY;
 import org.aksw.defacto.evidence.Evidence;
 import org.aksw.defacto.model.DefactoModel;
+import org.aksw.defacto.util.Frequency;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -16,10 +17,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
@@ -62,9 +60,6 @@ public class DefactoDemo {
             LOG.info(out);
             LOG.info("Overall Score: " + evidence.getDeFactoScore());
             LOG.info("Overall Counterargument Score: " + evidence.getDeFactoCounterargumentScore());
-
-
-
 
             /*List<WebSite> allWebSites = evidence.getAllWebSites();
 

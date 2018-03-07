@@ -63,7 +63,7 @@ public class RestModel {
             LOG.error(e.getLocalizedMessage(), e);
         }
         if (lang == null) {
-            lang = new HashSet<>(Arrays.asList(new String[] {"en"}));
+            lang = new HashSet<>(Arrays.asList(new String[] {"en", "de", "fr"}));
         }
     }
 
