@@ -1,0 +1,9 @@
+python/__pycache__/
+python/core/classifiers/credibility/__pycache__/
+python/core/web/credibility/__pycache__/
+python/coffeeandnoodles/__pycache__/
+python/coffeeandnoodles/core/__pycache__/
+python/coffeeandnoodles/core/web/__pycache__/
+python/coffeeandnoodles/core/web/scrap/__pycache__/
+python/core/__pycache__/feature_extractor.cpython-36.pyc
+
