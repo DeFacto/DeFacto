@@ -1,10 +1,18 @@
-language: java
-jdk:
-  - oraclejdk8
-branches:
-  only:
-    - master
-    - benchmarking
+matrix:
+  include:
+    - language: python
+      python: 3
+      branches:
+        only:
+          - version3
+
+    - language: java
+      jdk:
+        - oraclejdk8
+      branches:
+        only:
+          - master
+          - benchmarking
 notifications:
   email:
     recipients:
@@ -12,4 +20,4 @@ notifications:
     on_success: change
     on_failure: change
 after_success:
-  - mvn clean 
+  - mvn clean

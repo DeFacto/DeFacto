@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Class-Path: iri-0.8-sources.jar stax-api-1.0.1.jar servlet-api-2.3.jar
+  commons-compress-1.0.jar spring-2.5.6.jar ehcache-1.2.3.jar metrics-
+ core-2.0.0-BETA18.jar jena-2.6.3.jar hibernate-entitymanager-3.3.2.GA
+ .jar jackson-core-asl-1.8.5.jar dom4j-1.6.1.jar metricCatcher-0.0.9.j
+ ar icu4j-3.4.4.jar javassist-3.4.GA.jar commons-lang3-3.0.1.jar bing-
+ search-java-sdk.jar slf4j-log4j12-1.5.8.jar async-http-client-1.4.0.j
+ ar commons-httpclient-3.1.jar cglib-2.1_3.jar commons-codec-1.5.jar x
+ ercesImpl-2.7.1.jar xml-apis-1.0.b2.jar metrics-graphite-2.0.0-BETA18
+ .jar javanettasks-1.0.18.jar htmlcleaner-2.2.jar gsa-japi-1.10.jar bl
+ iki-core-3.0.17.jar hibernate-3.2.6.ga.jar freemarker-2.3.15.jar jtid
+ y-4aug2000r7-dev.jar commons-logging-1.0.4.jar commons-math-1.2.jar n
+ ekohtml-1.9.6.2.jar wstx-asl-3.2.9.jar netty-3.2.3.Final.jar classifi
+ er-api-1.0.jar jta-1.0.1B.jar commons-lang-2.4.jar httpunit-1.5.4.jar
+  asm-attrs-1.5.3.jar ci-bayes-1.0.9-patch-1.jar jaxen-1.1.1.jar hiber
+ nate-annotations-3.3.1.GA.jar asm-1.5.3.jar commons-collections-2.1.1
+ .jar jsoup-1.6.1.jar antlr-2.7.6.jar dbdeploy-ant-3.0M3.jar javolutio
+ n-5.2.6.jar jena-2.6.3-sources.jar lucene-snowball-2.3.2.jar hibernat
+ e-commons-annotations-3.0.0.ga.jar ejb3-persistence-1.0.1.GA.jar metr
+ ics-ganglia-2.0.0-BETA18.jar gson-1.4.jar slf4j-api-1.5.8.jar iri-0.8
+ .jar lucene-core-3.5.0.jar naivebayes-classifier-1.2.jar arq-2.8.5.ja
+ r lucene-analyzers-3.5.0.jar jena-2.6.3-test-sources.jar jackson-mapp
+ er-asl-1.8.5.jar ant-1.5.jar log4j-1.2.14.jar
+Main-Class: 
+
