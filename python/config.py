@@ -1,6 +1,6 @@
+import datetime
 import os
 from configparser import SafeConfigParser, ConfigParser
-
 import pkg_resources
 
 class Singleton(type):
@@ -17,6 +17,7 @@ class DeFactoConfig(object):
     def __init__(self):
         fine = False
         config = None
+        self.logger = logging.getLogger('defacto')
         for ini_file in os.curdir, os.path.expanduser("~"), "/etc/defacto", os.environ.get('DEFACTO_CONF'), '/':
             try:
                 self.version = "3.0.1"
@@ -27,6 +28,7 @@ class DeFactoConfig(object):
                     parser.read(source.name)
                     self.root_dir = os.path.dirname(os.path.abspath(__file__)) + '/'
                     self.root_dir_output = self.root_dir + 'data/'
+                    self.log_level = parser.get('conf', 'log_level')
 
                     # absolute path
                     self.database = parser.get('database', 'path')
@@ -35,6 +37,7 @@ class DeFactoConfig(object):
                     self.dir_output = self.root_dir_output + parser.get('dir', 'output')
                     self.dir_models = self.root_dir_output + parser.get('dir', 'models')
                     self.dir_encoders = self.root_dir_output + parser.get('dir', 'encoders')
+                    self.dir_log = self.root_dir_output + 'log/'
 
 
                     # encoders and models
@@ -60,6 +63,7 @@ class DeFactoConfig(object):
                     self.search_engine_api = parser.get('search-engine', 'api')
                     self.search_engine_key = parser.get('search-engine', 'key')
                     self.search_engine_tot_resources = parser.get('search-engine', 'tot_resources')
+                    self.open_page_rank_api = parser.get('search-engine', 'open_pagerank_api')
 
                     self.translation_id = parser.get('translation', 'microsoft_client_id')
                     self.translation_secret = parser.get('translation', 'microsoft_client_secret')
@@ -78,6 +82,27 @@ class DeFactoConfig(object):
         if fine is False:
             raise ValueError('error on trying to read the conf file (horus.conf)! Please set HORUS_CONF with its '
                              'path or place it at your home dir')
+        else:
+            if len(self.logger.handlers) == 0:
+                self.logger.setLevel(logging.DEBUG)
+                if self.log_level=='INFO':
+                    self.logger.setLevel(logging.INFO)
+                elif self.log_level=='WARNING':
+                    self.logger.setLevel(logging.WARNING)
+                elif self.log_level=='ERROR':
+                    self.logger.setLevel(logging.ERROR)
+                elif self.log_level=='CRITICAL':
+                    self.logger.setLevel(logging.CRITICAL)
+
+                now = datetime.datetime.now()
+                handler = logging.FileHandler(self.dir_log + 'horus_' + now.strftime("%Y-%m-%d") + '.log')
+                formatter = logging.Formatter(
+                    "%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
+                handler.setFormatter(formatter)
+                self.logger.addHandler(handler)
+                consoleHandler = logging.StreamHandler()
+                consoleHandler.setFormatter(formatter)
+                self.logger.addHandler(consoleHandler)
 
         #ini_file = pkg_resources.resource_filename('resource', "horus.conf")
         #rootdir = os.getcwd()
