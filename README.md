@@ -6,11 +6,12 @@ A Fact-Validation framework :x: :white_check_mark:
 
 DeFacto is a framework for validating statements by finding confirming sources for it. It takes a statement (such as “<i>Jamaica Inn was directed by Alfred Hitchcock</i>”) as input and then tries to find evidence for the truth of that statement by searching for information in the web ([more information](http://sda.cs.uni-bonn.de/projects/defacto/)).
 
-## How to cite
-```Tex
+### How to cite
+```
 @Article{gerber2015,
   Title = {DeFacto - Temporal and Multilingual Deep Fact Validation},
-  Author = {Daniel Gerber and Diego Esteves and Jens Lehmann and Lorenz B{\"u}hmann and Ricardo Usbeck and Axel-Cyrille {Ngonga Ngomo} and Ren{\'e} Speck},
+  Author = {Daniel Gerber and Diego Esteves and Jens Lehmann and Lorenz B{\"u}hmann 
+           and Ricardo Usbeck and Axel-Cyrille {Ngonga Ngomo} and Ren{\'e} Speck},
   Journal = {Web Semantics: Science, Services and Agents on the World Wide Web},
   Year = {2015},
   Url = {http://svn.aksw.org/papers/2015/JWS_DeFacto/public.pdf}
@@ -20,7 +21,7 @@ DeFacto is a framework for validating statements by finding confirming sources f
 - :coffee: [Java](https://github.com/SmartDataAnalytics/DeFacto/tree/master) version
 - :snake: [Python](https://github.com/SmartDataAnalytics/DeFacto/tree/version3) version (:fire: **coming soon** :exclamation:)
 
-## Bugs
+### Bugs
 Found a :bug: bug? [Open an issue](https://github.com/SmartDataAnalytics/DeFacto/issues/new) 
 
 ### Changelog
