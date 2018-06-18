@@ -1,0 +1,16 @@
+## Installation
+If you want to try Defacto all you need to do is:
+
+- 1. check out DeFacto (https://github.com/SmartDataAnalytics/DeFacto.git)
+- 2. copy defacto.ini.default to defacto.ini
+- 3. get your own [bing search api key](http://www.bing.com/toolbox/bingsearchapi) 
+- 4. write this key to the defacto.ini (adjust your settings based on changes informed below)
+- 5. set up the environment
+  - 5.1 [Apache solr 4.5](https://archive.apache.org/dist/lucene/solr/4.5.0/) for indexing
+  - 5.2 [MySQL 5.5](https://dev.mysql.com/doc/refman/5.5/en/) for query support
+    - 5.2.1 create a new database dubbed ```dbpedia_metrics``` and import the file ```dbpedia_metrics.sql```
+  - 5.3 [WordNET 3.1](https://wordnet.princeton.edu/wordnet/download/)
+- 6. run DefactoDemo.java
+
+## Requirements
+Java 7, Maven, Solr 4.5, MySQL 5.5, Wordnet, Weka 3.3.6 (in case you want to check models out
