@@ -7,14 +7,14 @@ from urllib.parse import urlparse, urlencode
 import urllib
 from urllib.request import urlopen, Request
 
-from src.coffeeandnoodles.core.config import CoffeeAndNoodlesConfig
+from src.coffeeandnoodles.core.config import DeFactoConfig
 
 API_VERSION = 0.4
 REPUTATION_ENDPOINT = "http://api.mywot.com/" + str(API_VERSION) + "/public_link_json2"
 CHUNK_SIZE = 100
 RETRY_COUNT = 3
 
-config = CoffeeAndNoodlesConfig()
+config = DeFactoConfig()
 
 
 def wot_reports_for_domains(domains, key, threads_count=4):

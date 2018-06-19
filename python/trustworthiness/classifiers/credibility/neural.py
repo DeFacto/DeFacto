@@ -6,11 +6,11 @@ from keras.layers import LSTM, TimeDistributed, Dense
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.externals import joblib
 from pathlib import Path
-from config import WebTrustworthinessConfig
+from config import DeFactoConfig
 import numpy as np
 np.random.seed(7)
 
-config = WebTrustworthinessConfig()
+config = DeFactoConfig()
 
 expfolder = 'exp002/'
 tags_set = []

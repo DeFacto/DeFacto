@@ -7,12 +7,12 @@ import time
 
 from sklearn.externals import joblib
 
-from config import WebTrustworthinessConfig
+from config import DeFactoConfig
 from src.coffeeandnoodles.core.web.scrap.scrap import WebScrap
 from src.core.classifiers.credibility.util import get_html_file_path, get_features_web, save_url_body
 from src.core.feature_extractor import FeatureExtractor
 
-config = WebTrustworthinessConfig()
+config = DeFactoConfig()
 
 config.logger.info('reading MS dataset...')
 df = pd.read_csv(config.dataset_microsoft_webcred, delimiter='\t', header=0)

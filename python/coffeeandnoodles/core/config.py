@@ -12,7 +12,7 @@ class Singleton(type):
         return cls._instances[cls]
 
 
-class CoffeeAndNoodlesConfig(object):
+class DeFactoConfig(object):
     __metaclass__ = Singleton
 
     def __init__(self):

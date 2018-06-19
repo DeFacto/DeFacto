@@ -1,10 +1,10 @@
-from config import WebTrustworthinessConfig
+from config import DeFactoConfig
 import pandas as pd
 import os
 from pathlib import Path
 import urllib.request
 
-config = WebTrustworthinessConfig()
+config = DeFactoConfig()
 
 
 def __fix_url_path(url, oncemore=False):

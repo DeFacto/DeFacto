@@ -1,9 +1,10 @@
 import requests
 import hashlib
 import urllib.parse
-from src.coffeeandnoodles.core.config import CoffeeAndNoodlesConfig
 
-config = CoffeeAndNoodlesConfig()
+from config import DeFactoConfig
+
+config = DeFactoConfig()
 
 
 def get_md5_from_string(value):

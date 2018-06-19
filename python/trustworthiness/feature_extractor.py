@@ -1,6 +1,6 @@
 import multiprocessing
 
-from coffeeandnoodles.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
+#from coffeeandnoodles.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
 #from coffeeandnoodles.web.scrap.scrap import WebScrap
 from sklearn.externals import joblib
 from textstat.textstat import textstat
@@ -25,16 +25,23 @@ import time
 import pandas as pd
 from tldextract import tldextract
 from pathlib import Path
-from config import WebTrustworthinessConfig
-from src.coffeeandnoodles.core.util import get_md5_from_string
-from src.coffeeandnoodles.core.web.scrap.scrap import WebScrap
-from src.core.classifiers.credibility.util import get_html_file_path, get_features_web
-from src.core.web.credibility.topicUtils import TopicTerms
+
+from coffeeandnoodles.core.util import get_md5_from_string
+from coffeeandnoodles.core.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
+from config import DeFactoConfig
+#from src.coffeeandnoodles.core.util import get_md5_from_string
+#from src.coffeeandnoodles.core.web.scrap.scrap import WebScrap
+#from src.core.classifiers.credibility.util import get_html_file_path, get_features_web
+#from src.core.web.credibility.topicUtils import TopicTerms
 from urllib.parse import urlparse
 import pickle
 import os
 
 import warnings
+
+from trustworthiness.classifiers.credibility.util import get_html_file_path, get_features_web
+from trustworthiness.web.credibility.topicUtils import TopicTerms
+
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore",category=FutureWarning)
     import h5py
@@ -48,7 +55,7 @@ __maintainer__ = "Diego Esteves"
 __email__ = "diegoesteves@gmail.com"
 __status__ = "Dev"
 
-config = WebTrustworthinessConfig()
+config = DeFactoConfig()
 bing = MicrosoftAzurePlatform(config.translation_secret)
 
 class Singleton(object):

@@ -7,7 +7,7 @@ from itertools import product
 
 from sklearn.neural_network import MLPClassifier
 
-from config import WebTrustworthinessConfig
+from config import DeFactoConfig
 import pandas as pd
 import collections
 
@@ -25,7 +25,7 @@ from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_sc
 import numpy as np
 import matplotlib.pyplot as plt
 
-from src.core.feature_extractor import get_full_features
+from trustworthiness.feature_extractor import get_full_features
 
 __author__ = "Diego Esteves"
 __copyright__ = "Copyright 2018, DeFacto Project"
@@ -36,7 +36,7 @@ __maintainer__ = "Diego Esteves"
 __email__ = "diegoesteves@gmail.com"
 __status__ = "Dev"
 
-config = WebTrustworthinessConfig()
+config = DeFactoConfig()
 
 
 class WebCredibilityExperiments():

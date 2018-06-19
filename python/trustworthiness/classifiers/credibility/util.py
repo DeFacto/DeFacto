@@ -2,12 +2,14 @@ import collections
 from pathlib import Path
 
 import pdfkit as pdfkit
-from coffeeandnoodles.web.scrap.scrap import WebScrap
+from coffeeandnoodles.core.web.scrap.scrap import WebScrap
 from sklearn.externals import joblib
-from config import WebTrustworthinessConfig
-from src.coffeeandnoodles.core.util import get_md5_from_string
 
-config = WebTrustworthinessConfig()
+from coffeeandnoodles.core.util import get_md5_from_string
+from config import DeFactoConfig
+
+
+config = DeFactoConfig()
 
 def get_html_file_path(url):
     path = url.replace('http://', '')

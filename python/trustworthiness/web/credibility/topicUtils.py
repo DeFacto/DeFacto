@@ -1,10 +1,10 @@
 import pandas as pd
-from coffeeandnoodles.web.scrap.scrap import WebScrap
+from coffeeandnoodles.core.web.scrap.scrap import WebScrap
 from nltk.corpus import stopwords
 
-from config import WebTrustworthinessConfig
+from config import DeFactoConfig
 
-config = WebTrustworthinessConfig()
+config = DeFactoConfig()
 
 class TopicTerms():
 

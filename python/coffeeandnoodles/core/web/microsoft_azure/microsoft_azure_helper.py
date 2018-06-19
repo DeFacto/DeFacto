@@ -11,7 +11,7 @@ import json
 #sess.mount('http://', adapter)
 import time
 
-from src.coffeeandnoodles.core.config import CoffeeAndNoodlesConfig
+from config import DeFactoConfig
 
 
 class MicrosoftAzurePlatform(object):
@@ -96,7 +96,7 @@ class MicrosoftAzurePlatform(object):
 
 
 if __name__ == "__main__":
-    config = CoffeeAndNoodlesConfig()
+    config = DeFactoConfig()
     azure = MicrosoftAzurePlatform(config.translation_secret)
     for i in range(100):
         print(azure.bing_detect_language('ola tomas tudo bem?') + ' - ' + str(i))

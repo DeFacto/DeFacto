@@ -2,7 +2,7 @@ import re
 import requests
 import urllib3
 
-from src.coffeeandnoodles.core.config import CoffeeAndNoodlesConfig
+from config import DeFactoConfig
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from bs4 import BeautifulSoup
@@ -11,7 +11,7 @@ import tldextract
 from pandas._libs.tslib import Timestamp
 #requests.packages.urllib3.disable_warnings()
 
-config = CoffeeAndNoodlesConfig()
+config = DeFactoConfig()
 
 class WebScrap:
     def __init__(self, url, timeout=15, parser='html.parser', local_file_path=None):

@@ -2,6 +2,7 @@ import datetime
 import os
 from configparser import SafeConfigParser, ConfigParser
 import pkg_resources
+import logging
 
 class Singleton(type):
     _instances = {}
