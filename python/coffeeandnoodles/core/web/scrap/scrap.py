@@ -1,4 +1,6 @@
 import re
+from time import sleep
+
 import requests
 import urllib3
 
@@ -28,12 +30,24 @@ class WebScrap:
                     raise
         else:
             x, y, z = self.__check_url(url, timeout)
+            if x is False and y == 503:
+                i=5
+                while i>0 and x is False:
+                    x, y, z = self.__check_url(url, timeout)
+                    i-=1
+            elif x is True:
+                self.soup = BeautifulSoup(z, parser)
+            else:
+                raise Exception('url error: ' + url + ' - status code: ' + str(y))
+
             if x is False:
-                raise Exception('error on scraping the web page: ' + url)
-            self.soup = BeautifulSoup(z, parser)
+                raise Exception('url error: ' + url + ' - status code: ' + str(y))
+            else:
+                self.soup = BeautifulSoup(z, parser)
+
         #self.title = re.sub("\s\s+" , " ",re.sub(r"[^A-Za-z]+", '',self.__get_title().lower()))
-        self.title = self.get_title().lower()
-        self.body = re.sub("\s\s+", " ", re.sub(r"[^A-Za-z ]+", '', self.get_body().lower()))
+        #self.title = self.get_title().lower()
+        #self.body = re.sub("\s\s+", " ", re.sub(r"[^A-Za-z ]+", '', self.get_body().lower()))
 
     def __check_url(self, url, timeout):
         code = 0
@@ -56,7 +70,10 @@ class WebScrap:
 
     def get_body(self):
         try:
-            #TODO: check here to get just thr body actually
+            #_body=self.soup.find('body')
+            #if _body is not None:
+            #    return str(_body)
+            #else:
             for s in self.soup(['script', 'style']):
                 s.decompose()
             res =  ' '.join(self.soup.stripped_strings)
@@ -70,13 +87,12 @@ class WebScrap:
         except Exception as e:
             raise e
 
-
     def get_title(self):
         try:
             title = self.soup.find('title')
             if title is None:
                 return ''
-            return title.text.strip()
+            return title.text.strip().lower()
         except Exception as e:
             raise e
 
@@ -225,3 +241,9 @@ class WebScrap:
             return tweeter
         except Exception as e:
             raise e
+
+
+if __name__ == '__main__':
+    scrap = WebScrap('www.espn.com/.../amare-stoudemire-phoenix-suns-retirement-perfect')
+    print(scrap.get_title())
+    print(scrap.get_body())

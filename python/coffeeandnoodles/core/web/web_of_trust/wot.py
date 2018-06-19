@@ -7,7 +7,7 @@ from urllib.parse import urlparse, urlencode
 import urllib
 from urllib.request import urlopen, Request
 
-from src.coffeeandnoodles.core.config import DeFactoConfig
+from config import DeFactoConfig
 
 API_VERSION = 0.4
 REPUTATION_ENDPOINT = "http://api.mywot.com/" + str(API_VERSION) + "/public_link_json2"

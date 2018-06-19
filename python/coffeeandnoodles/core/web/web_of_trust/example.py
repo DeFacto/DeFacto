@@ -1,5 +1,5 @@
-from src.core.config import DeFactoConfig
-from src.core.web.web_of_trust.wot import wot_reports_for_domains, parse_attributes_for_report
+from coffeeandnoodles.core.web.web_of_trust.wot import wot_reports_for_domains, parse_attributes_for_report
+from config import DeFactoConfig
 
 config = DeFactoConfig()
 

@@ -1,11 +1,5 @@
 matrix:
   include:
-    - language: python
-      python: 3
-      branches:
-        only:
-          - version3
-
     - language: java
       jdk:
         - oraclejdk8

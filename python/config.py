@@ -52,6 +52,7 @@ class DeFactoConfig(object):
                                                                                                'microsoft_webcred_webpages_cached')
                     self.dataset_ext_microsoft_webcred_webpages_cache_missing = self.datasets_ext + parser.get('dataset_external_path',
                                                                                                        'microsoft_webcred_webpages_missing')
+                    self.dataset_ext_bbc_folder = self.datasets_ext + parser.get('dataset_external_path', 'bbc_folder')
 
                     # internal datasets
                     self.dataset_microsoft_webcred = self.datasets + parser.get('dataset', 'microsoft_webcred')

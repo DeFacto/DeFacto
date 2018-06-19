@@ -28,6 +28,7 @@ from pathlib import Path
 
 from coffeeandnoodles.core.util import get_md5_from_string
 from coffeeandnoodles.core.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
+from coffeeandnoodles.core.web.scrap.scrap import WebScrap
 from config import DeFactoConfig
 #from src.coffeeandnoodles.core.util import get_md5_from_string
 #from src.coffeeandnoodles.core.web.scrap.scrap import WebScrap
@@ -97,7 +98,7 @@ class OpenSourceData():
     def __init__(self):
         config.logger.info('loading open source data...')
         try:
-            sources = '../../data/datasets/opensources/sources.csv'
+            sources = '../data/datasets/opensources/sources.csv'
             sources = open(sources, "r").readlines()[1:]
             types = {}
             for source in sources:
@@ -143,8 +144,8 @@ class FeatureExtractor:
         self.local_file_path = local_file_path
         self.error = error
         self.webscrap = WebScrap(url, timeout, 'lxml', local_file_path)
-        self.title = self.webscrap.title
-        self.body = self.webscrap.body
+        self.title = self.webscrap.get_title()
+        self.body = self.webscrap.get_body()
         clf = Classifiers()
         self.classifiers = clf
         self.topic = TopicTerms()
@@ -486,7 +487,7 @@ class FeatureExtractor:
         # https://github.com/shivam5992/textstat
 
         try:
-            test_data = self.webscrap.body
+            test_data = self.webscrap.get_body()
             out = []
             out.append(textstat.flesch_reading_ease(test_data))
             out.append(textstat.smog_index(test_data))
@@ -674,7 +675,7 @@ if __name__ == '__main__':
     '''
     automatically exports all features from the microsoft dataset (cached websites)
     '''
-    if 1==1:
+    if 1==2:
         #read_feat_files_and_merge()
         #exit(0)
         export_features_multi_proc_microsoft('exp002/')
@@ -683,7 +684,7 @@ if __name__ == '__main__':
     '''
     manually example of features extracted from a given URL
     '''
-    fe = FeatureExtractor('http://www.cbsnews.com/8301-503544_162-20008010-503544.html')
+    fe = FeatureExtractor('https://www.amazon.com/Aristocats-Phil-Harris/dp/B00A29IQPK')
 
     summary1 = fe.get_summary_lex_rank(5)
     summary2 = fe.get_summary(5)
