@@ -30,7 +30,7 @@ from trustworthiness.feature_extractor import get_full_features
 
 __author__ = "Diego Esteves"
 __copyright__ = "Copyright 2018, DeFacto Project"
-__credits__ = ["Diego Esteves", "Aniketh Reddy", "Piyush Chawla", "Jens Lehmann"]
+__credits__ = ["Diego Esteves", "Aniketh Reddy", "Piyush Chawla"]
 __license__ = "Apache"
 __version__ = "0.0.1"
 __maintainer__ = "Diego Esteves"

@@ -4,7 +4,9 @@ from bs4 import Comment
 from keras import Sequential
 from keras.layers import LSTM, TimeDistributed, Dense
 from keras.preprocessing.sequence import pad_sequences
+from sklearn.cluster import KMeans
 from sklearn.cross_validation import train_test_split
+from sklearn.decomposition import PCA
 from sklearn.externals import joblib
 from pathlib import Path
 
@@ -14,8 +16,83 @@ from sklearn.metrics import precision_recall_fscore_support
 
 from config import DeFactoConfig
 import numpy as np
-
+import plotly.plotly as py
+import plotly.graph_objs as go
+import math
+from sklearn import metrics
+from sklearn.cluster import KMeans
+from sklearn.datasets import load_digits
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import scale
+import matplotlib.pyplot as plt
 from trustworthiness.classifiers.credibility.util import print_report
+
+
+def matplotlib_to_plotly(cmap, pl_entries):
+    h = 1.0 / (pl_entries - 1)
+    pl_colorscale = []
+
+    for k in range(pl_entries):
+        C = map(np.uint8, np.array(cmap(k * h)[:3]) * 255)
+        pl_colorscale.append([k * h, 'rgb' + str((C[0], C[1], C[2]))])
+
+    return pl_colorscale
+
+def k_means(XX, y):
+    n_digits = len(np.unique(y))
+    pca = PCA(n_components=n_digits).fit(XX)
+    reduced_data = PCA(n_components=n_digits).fit_transform(XX)
+    #kmeans = KMeans(init=pca.components_, n_clusters=n_digits, n_init=1)
+    kmeans = KMeans(n_clusters=n_digits)
+    kmeans.fit(reduced_data)
+    # Step size of the mesh. Decrease to increase the quality of the VQ.
+    h = .02  # point in the mesh [x_min, x_max]x[y_min, y_max].
+
+    # Plot the decision boundary. For that, we will assign a color to each
+    x_min, x_max = reduced_data[:, 0].min() - 1, reduced_data[:, 0].max() + 1
+    y_min, y_max = reduced_data[:, 1].min() - 1, reduced_data[:, 1].max() + 1
+    print(x_min, x_max, y_min, y_max)
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+
+    # Obtain labels for each point in mesh. Use last trained model.
+    Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+
+    back = go.Heatmap(x=xx[0][:len(Z)],
+                      y=xx[0][:len(Z)],
+                      z=Z,
+                      showscale=False,
+                      colorscale=matplotlib_to_plotly(plt.cm.Paired, len(Z)))
+
+    markers = go.Scatter(x=reduced_data[:, 0],
+                         y=reduced_data[:, 1],
+                         showlegend=False,
+                         mode='markers',
+                         marker=dict(
+                             size=3, color='black'))
+
+    # Plot the centroids as a white
+    centroids = kmeans.cluster_centers_
+    center = go.Scatter(x=centroids[:, 0],
+                        y=centroids[:, 1],
+                        showlegend=False,
+                        mode='markers',
+                        marker=dict(
+                            size=10, color='white'))
+    data = [back, markers, center]
+
+    layout = dict(title='K-means clustering on the digits dataset (PCA-reduced data)<br>'
+                             'Centroids are marked with white',
+                       xaxis=dict(ticks='', showticklabels=False,
+                                  zeroline=False),
+                       yaxis=dict(ticks='', showticklabels=False,
+                                  zeroline=False))
+    fig = dict(data=data, layout=layout)
+    py.image.save_as(fig, filename='clusters.png')
+    #py.iplot(fig)
+
 
 def get_annotation_from_max(traces, paddings):
 
@@ -56,9 +133,7 @@ def get_annotation_from_max(traces, paddings):
     return annotations
 
 def save_plot(paddings, f1_traces):
-    import plotly.plotly as py
-    import plotly.graph_objs as go
-    import math
+
 
     paddings = [math.log(pad) for pad in paddings]
 
@@ -278,6 +353,17 @@ else:
             svm_01_prec.append(p)
             svm_01_recal.append(r)
             svm_01_f1.append(f)
+
+            #K-means
+            kmeans = KMeans(n_clusters=5, random_state=0).fit(X_train, y_train)
+            predicted2=kmeans.predict(X_test)
+            print('---', np.mean(predicted2 == y_test))
+
+
+            #k_means(XX, y)
+            #exit(0)
+
+
 
 
     save_plot(pads, [nb_15_f1, svm_15_f1, nb_01_f1, svm_01_f1])
