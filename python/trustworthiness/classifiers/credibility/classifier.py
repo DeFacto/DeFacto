@@ -25,6 +25,7 @@ from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_sc
 import numpy as np
 import matplotlib.pyplot as plt
 
+from trustworthiness.classifiers.credibility.util import print_report
 from trustworthiness.feature_extractor import get_full_features
 
 __author__ = "Diego Esteves"
@@ -70,23 +71,6 @@ class WebCredibilityExperiments():
         plt.show()
         fig = plt.figure()
         fig.savefig(config.dir_output + 'plot.png')
-
-
-    def get_report_regression(self, clf_name, predictions, y_test, targets):
-        print('MAE', mean_absolute_error(y_test, predictions))
-        print('RMSE', np.math.sqrt(mean_squared_error(y_test, predictions)))
-        print("-----------------------------------------------------------------------")
-
-    def get_report(self, clf_name, predictions, y_test, targets):
-
-        print("Classifier: ", clf_name)
-        print(confusion_matrix(y_test, predictions))
-        print("accuracy: ", accuracy_score(y_test, predictions))
-        print(classification_report(y_test, predictions, target_names=targets))
-        #print(":: recall: ", recall_score(y_test, predictions, average='weighted'))
-        #print(":: precision: ", precision_score(y_test, predictions, average='weighted'))
-        #print(":: f1: ", f1_score(y_test, predictions, average='weighted'))
-        print("-----------------------------------------------------------------------")
 
     def mlp_param_selection(self, X, y, nfolds):
         alphas = 10.0 ** -np.arange(1, 7)
@@ -186,7 +170,7 @@ class WebCredibilityExperiments():
                 estimators.append((string, clf))
                 i += 1
                 predictions = clf.predict(X_test)
-                self.get_report(string, predictions, y_test, klass_labels)
+                print_report(string, predictions, y_test, klass_labels)
 
                 #gs_clf_svm = GridSearchCV(clf, parameters_svm, n_jobs=-1)
                 #gs_clf_svm = gs_clf_svm.fit(X_train, y_train)
@@ -198,7 +182,7 @@ class WebCredibilityExperiments():
             models.append(eclf1)
             labels.append('Voting')
             epredictions = eclf1.predict(X_test)
-            self.get_report('Voting', epredictions, y_test, klass_labels)
+            print_report('Voting', epredictions, y_test, klass_labels)
             #self.get_plot_voting(X_test, y_test, models[0:4], labels[0:4])
         except Exception as e:
             print(e)

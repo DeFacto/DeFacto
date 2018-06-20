@@ -10,7 +10,7 @@ class TopicTerms():
 
     def generatePageTerms(self, website):
         webscrap = WebScrap(website, 15, 'lxml', None)
-        page = self.removeStopWords(webscrap.body.split(' '))
+        page = self.removeStopWords(webscrap.get_body().split(' '))
         pageTerms = dict()
         return self.generateDict(page,pageTerms)
 
@@ -49,7 +49,7 @@ class TopicTerms():
                 if "en.wikipedia.org" in df.iloc[i,3]:
                     continue
                 webscrap = WebScrap(df.iloc[i,3], 15, 'lxml', None)
-                page = self.removeStopWords(webscrap.body.split(' '))
+                page = self.removeStopWords(webscrap.get_body().split(' '))
                 terms = self.generateDict(page,terms)
         
         terms = sorted(terms, key=terms.get, reverse = True)

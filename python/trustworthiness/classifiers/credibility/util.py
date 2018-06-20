@@ -1,7 +1,11 @@
 import collections
 from pathlib import Path
 
+import numpy as np
 import pdfkit as pdfkit
+from sklearn.metrics import mean_absolute_error, mean_squared_error, confusion_matrix, classification_report, \
+    accuracy_score
+
 from coffeeandnoodles.core.web.scrap.scrap import WebScrap
 from sklearn.externals import joblib
 
@@ -10,6 +14,23 @@ from config import DeFactoConfig
 
 
 config = DeFactoConfig()
+
+
+def print_report_regression(clf_name, predictions, y_test, targets):
+    print('MAE', mean_absolute_error(y_test, predictions))
+    print('RMSE', np.math.sqrt(mean_squared_error(y_test, predictions)))
+    print("-----------------------------------------------------------------------")
+
+
+def print_report(clf_name, predictions, y_test, targets):
+    print("Classifier: ", clf_name)
+    print(confusion_matrix(y_test, predictions))
+    print("accuracy: ", accuracy_score(y_test, predictions))
+    print(classification_report(y_test, predictions, target_names=targets))
+    # print(":: recall: ", recall_score(y_test, predictions, average='weighted'))
+    # print(":: precision: ", precision_score(y_test, predictions, average='weighted'))
+    # print(":: f1: ", f1_score(y_test, predictions, average='weighted'))
+    print("-----------------------------------------------------------------------")
 
 def get_html_file_path(url):
     path = url.replace('http://', '')

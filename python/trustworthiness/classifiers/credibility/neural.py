@@ -4,10 +4,129 @@ from bs4 import Comment
 from keras import Sequential
 from keras.layers import LSTM, TimeDistributed, Dense
 from keras.preprocessing.sequence import pad_sequences
+from sklearn.cross_validation import train_test_split
 from sklearn.externals import joblib
 from pathlib import Path
+
+from sklearn.grid_search import GridSearchCV
+from sklearn.linear_model import SGDClassifier
+from sklearn.metrics import precision_recall_fscore_support
+
 from config import DeFactoConfig
 import numpy as np
+
+from trustworthiness.classifiers.credibility.util import print_report
+
+def get_annotation_from_max(traces, paddings):
+
+    annotations = []
+    for trace in traces:
+        max_trace=-999999
+        index=-1
+        for aux in range(len(trace)):
+            if trace[aux] > max_trace:
+                max_trace, index = trace[aux], aux
+        annotations.append(dict(
+            #x=np.log(paddings[index]),
+            x=paddings[index],
+            y=max_trace,
+            xref='x',
+            yref='y',
+            text='{0:.3f}'.format(max_trace),
+            showarrow=True,
+            font=dict(
+                family='Courier New, monospace',
+                size=14,
+                color='#ffffff'
+            ),
+            align='center',
+            arrowhead=2,
+            arrowsize=1,
+            arrowwidth=2,
+            arrowcolor='#636363',
+            ax=20,
+            ay=-30,
+            bordercolor='#c7c7c7',
+            borderwidth=2,
+            borderpad=4,
+            bgcolor='#ff7f0e',
+            opacity=0.8
+        ))
+
+    return annotations
+
+def save_plot(paddings, f1_traces):
+    import plotly.plotly as py
+    import plotly.graph_objs as go
+    import math
+
+    paddings = [math.log(pad) for pad in paddings]
+
+    trace0 = go.Scatter(
+        x=paddings,
+        y=f1_traces[0],
+        text=f1_traces[0],
+        name='Multinomial NB [1-5]',
+        mode='lines+markers',
+        line=dict(
+            color=('rgb(205, 12, 24)'),
+            width=2)
+    )
+    trace1 = go.Scatter(
+        x=paddings,
+        y=f1_traces[1],
+        text=f1_traces[1],
+        name='SVM [1-5]',
+        mode='lines+markers',
+        line=dict(
+            color=('rgb(22, 96, 167)'),
+            width=2)
+    )
+    trace2 = go.Scatter(
+        x=paddings,
+        y=f1_traces[2],
+        text=f1_traces[2],
+        name='Multinomial NB [0-1]',
+        mode='lines+markers',
+        line=dict(
+            color=('rgb(205, 12, 24)'),
+            width=2,
+            dash='dash')  # dash options include 'dash', 'dot', and 'dashdot'
+    )
+    trace3 = go.Scatter(
+        x=paddings,
+        y=f1_traces[3],
+        text=f1_traces[3],
+        name='SVM [0-1]',
+        mode='lines+markers',
+        line=dict(
+            color=('rgb(22, 96, 167)'),
+            width=2,
+            dash='dash')
+    )
+
+    data = [trace0, trace1, trace2, trace3]
+
+    # Edit the layout
+    layout = dict(title='Encoding HTML code: performance varying window size',
+                  xaxis=dict(title='Padding window size (log scale)', showticklabels=True, showline=True, autorange=True),
+                  yaxis=dict(title='F1-measure (average)', showticklabels=True, showline=True, autorange=True),
+                  show_legend=True,
+                  legend=dict(orientation='h',
+                              x=math.log(1),
+                              y=-20,
+                              bordercolor='#808080',
+                              borderwidth=2
+                              ),
+                  annotations=get_annotation_from_max(f1_traces, paddings),
+                  font=dict(family='Helvetica', size=14)
+                  )
+
+    fig = dict(data=data, layout=layout)
+    #py.plot(fig, filename='paddings_f1')
+    py.image.save_as(fig, filename='paddings_f1.png')
+
+
 np.random.seed(7)
 
 config = DeFactoConfig()
@@ -71,16 +190,122 @@ else:
     data = joblib.load(config.dir_output + expfolder + 'microsoft_dataset_visual.data.nn')
     le = joblib.load(config.dir_output + expfolder + 'microsoft_dataset_visual.le.nn')
 
-    n_timesteps = 5
-
     X = data[0]
     y = data[1]
+
+    likert_labels = {1: 'non-credible', 2: 'low', 3: 'neutral', 4: 'likely', 5: 'credible'}
+    likert_labels_short = {0: 'non-credible', 1: 'credible'}
+
+    maxsent=-1
+    for e in X:
+        maxsent = len(e) if len(e) > maxsent else maxsent
+    print(maxsent)
+    maxpad = 1000
+
+    line_template = '%s\t%s\t%s\t%.3f\t%.3f\t%.3f\n'
+
+    with open(config.dir_output + expfolder  + '_performances.nn', "w") as file:
+        pads = [500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000, 20000, 30000]
+        #pads = [500, 1000, 1250, 1500]
+        nb_01_prec = []
+        nb_01_recal = []
+        nb_01_f1 = []
+        nb_15_prec = []
+        nb_15_recal = []
+        nb_15_f1 = []
+
+        svm_01_prec = []
+        svm_01_recal = []
+        svm_01_f1 = []
+        svm_15_prec = []
+        svm_15_recal = []
+        svm_15_f1 = []
+
+
+        for maxpad in pads:
+            print('padding: ', maxpad)
+
+            XX = pad_sequences(X, maxlen=maxpad, dtype='int', padding='pre', truncating='pre', value=0)
+            X_train, X_test, y_train, y_test = train_test_split(XX, y, test_size=0.20, random_state=53)
+
+            y2_train=np.array(y_train)
+            y2_train[y2_train<4] = 0
+            y2_train[y2_train>=4] = 1
+
+            y2_test=np.array(y_test)
+            y2_test[y2_test<4] = 0
+            y2_test[y2_test>=4] = 1
+
+
+            # NB
+            from sklearn.naive_bayes import MultinomialNB
+            clf = MultinomialNB().fit(X_train, y_train)
+            clf2 = MultinomialNB().fit(X_train, y2_train)
+            predicted = clf.predict(X_test)
+            predicted2 = clf2.predict(X_test)
+            np.mean(predicted == y_test)
+            #print_report('html_encoded_visual_nb', predicted, y_test, likert_labels.values())
+            #print_report('html_encoded_visual_nb', predicted2, y2_test, likert_labels_short.values())
+
+            p, r, f, s = precision_recall_fscore_support(y_test, predicted, average='weighted')
+            nb_15_prec.append(p)
+            nb_15_recal.append(r)
+            nb_15_f1.append(f)
+            #file.write(line_template % ('NB', '1-5', maxpad, p, r, f))
+
+            p, r, f, s = precision_recall_fscore_support(y2_test, predicted2, average='weighted')
+            #file.write(line_template % ('NB', '0-1', maxpad, p, r, f))
+            nb_01_prec.append(p)
+            nb_01_recal.append(r)
+            nb_01_f1.append(f)
+
+            # SVM
+            clf = SGDClassifier(loss='hinge', penalty='l2', alpha = 1e-3).fit(X_train, y_train)
+            clf2 = SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3).fit(X_train, y2_train)
+            predicted = clf.predict(X_test)
+            predicted2 = clf2.predict(X_test)
+            #print_report('html_encoded_visual_svm', predicted, y_test, likert_labels.values())
+            #print_report('html_encoded_visual_svm', predicted2, y2_test, likert_labels_short.values())
+
+            p, r, f, s = precision_recall_fscore_support(y_test, predicted, average='weighted')
+            #file.write(line_template % ('SVM', '1-5', maxpad, p, r, f))
+            svm_15_prec.append(p)
+            svm_15_recal.append(r)
+            svm_15_f1.append(f)
+
+            p, r, f, s = precision_recall_fscore_support(y2_test, predicted2, average='weighted')
+            #file.write(line_template % ('SVM', '0-1', maxpad, p, r, f))
+            svm_01_prec.append(p)
+            svm_01_recal.append(r)
+            svm_01_f1.append(f)
+
+
+    save_plot(pads, [nb_15_f1, svm_15_f1, nb_01_f1, svm_01_f1])
+    exit(0)
+
+    # gridsearch
+    parameters = {'alpha': (1e-2, 1e-3)}
+    gs_clf = GridSearchCV(clf2, parameters, n_jobs=-1)
+    gs_clf = gs_clf.fit(X_train, y2_train)
+    print(gs_clf.best_score_)
+    print(gs_clf.best_params_)
+
+
+    from sklearn.feature_extraction.text import CountVectorizer
+    count_vect = CountVectorizer()
+    X_train_counts = count_vect.fit_transform(data[0])
+    print(X_train_counts.shape)
+
+
+
+
+    n_timesteps = 5
+
+
 
     X = np.array(X)#.reshape(1, n_timesteps, 1)
     y = np.array(y)#.reshape(1, n_timesteps, 1)
 
-    maxsent=1000
-    X = pad_sequences(X, maxlen=maxsent, dtype='float', padding='pre', truncating='pre', value=0.0)
 
 
     model = Sequential()
