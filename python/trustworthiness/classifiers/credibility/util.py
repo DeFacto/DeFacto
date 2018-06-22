@@ -152,7 +152,7 @@ def save_url_body(extractor):
         config.logger.info('extracting features for: ' + extractor.url)
         hash = get_md5_from_string(extractor.local_file_path)
         text=extractor.webscrap.get_body()
-        with open(config.root_dir_output + 'marseille/input/' + hash + '.txt', "w") as file:
+        with open(config.root_dir_data + 'marseille/input/' + hash + '.txt', "w") as file:
             file.write(text)
 
     except Exception as e:

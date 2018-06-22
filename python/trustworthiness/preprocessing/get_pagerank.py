@@ -48,7 +48,7 @@ with Pool(processes=multiprocessing.cpu_count()) as pool:
 
 i=1
 for file in asyncres:
-    with open(config.root_dir_output + 'pagerank/dump_'+str(i)+'.json', 'w') as outfile:
+    with open(config.root_dir_data + 'pagerank/dump_' + str(i) + '.json', 'w') as outfile:
         json.dump(file, outfile)
         i+=1
 

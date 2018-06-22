@@ -279,10 +279,10 @@ def save_plot(paddings, f1_traces, filename='paddings'):
 
     fig = dict(data=data_1, layout=layout_1)
     #py.plot(fig, filename='paddings_f1')
-    py.image.save_as(fig, filename=filename + '_likert.png')
+    py.image.save_as(fig, filename=config.dir_output + 'graphs/' + filename + '_likert.png')
 
     fig = dict(data=data_2, layout=layout_2)
-    py.image.save_as(fig, filename=filename + '_bin.png')
+    py.image.save_as(fig, filename=config.dir_output + 'graphs/' + filename + '_bin.png')
 
 def report(results, n_top=3):
     for i in range(1, n_top + 1):
@@ -297,7 +297,7 @@ def report(results, n_top=3):
 
 def test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log):
     if isinstance(clf, str):
-        clf=joblib.load(clf)
+        clf=joblib.load(config.dir_models + 'credibility/html_encode/' + clf)
 
     predicted = clf.predict(X_test)
     if experiment_type == 'bin':
@@ -336,7 +336,7 @@ def train_test_save(clf, X_train, y_train, X_test, y_test, out, cls_label, paddi
 
     clf.fit(X_train, y_train)
     file = FILE_NAME_TEMPLATE % (cls_label, padding, experiment_type)
-    joblib.dump(clf, file)
+    joblib.dump(clf, config.dir_models + 'credibility/html_encode/' + file)
 
     return test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log)
 

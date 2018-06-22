@@ -28,17 +28,17 @@ class DeFactoConfig(object):
                     parser = ConfigParser()
                     parser.read(source.name)
                     self.root_dir = os.path.dirname(os.path.abspath(__file__)) + '/'
-                    self.root_dir_output = self.root_dir + 'data/'
+                    self.root_dir_data = self.root_dir + 'data/'
                     self.log_level = parser.get('conf', 'log_level')
 
                     # absolute path
                     self.database = parser.get('database', 'path')
                     self.datasets_ext = parser.get('dataset_external_path', 'path')
-                    self.datasets = self.root_dir_output + parser.get('dir', 'datasets')
-                    self.dir_output = self.root_dir_output + parser.get('dir', 'output')
-                    self.dir_models = self.root_dir_output + parser.get('dir', 'models')
-                    self.dir_encoders = self.root_dir_output + parser.get('dir', 'encoders')
-                    self.dir_log = self.root_dir_output + 'log/'
+                    self.datasets = self.root_dir_data + parser.get('dir', 'datasets')
+                    self.dir_output = self.root_dir_data + parser.get('dir', 'output')
+                    self.dir_models = self.root_dir_data + parser.get('dir', 'models')
+                    self.dir_encoders = self.root_dir_data + parser.get('dir', 'encoders')
+                    self.dir_log = self.root_dir_data + 'log/'
 
 
                     # encoders and models

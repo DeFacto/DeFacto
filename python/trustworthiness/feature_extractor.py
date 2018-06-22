@@ -114,9 +114,9 @@ class PageRankData():
         config.logger.info('loading page rank data...')
         try:
             pgs=dict()
-            for file in os.listdir(config.root_dir_output + 'pagerank/'):
+            for file in os.listdir(config.root_dir_data + 'pagerank/'):
                 if file.endswith(".json"):
-                    with open(config.root_dir_output + 'pagerank/' + file, 'r') as fh:
+                    with open(config.root_dir_data + 'pagerank/' + file, 'r') as fh:
                         temp=json.load(fh)
                         if temp['status_code'] == 200:
                             for w in temp['response']:
@@ -563,7 +563,7 @@ class FeatureExtractor:
         return 0
         try:
             urlcode = get_md5_from_string(url)
-            with open(config.root_dir_output + 'marseille/output.json', 'r') as fh:
+            with open(config.root_dir_data + 'marseille/output.json', 'r') as fh:
                 dargs = json.load(fh)
             try:
                 tot_args=dargs[urlcode]
