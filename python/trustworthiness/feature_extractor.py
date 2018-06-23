@@ -21,7 +21,6 @@ import re
 import numpy as np
 import socket
 from multiprocessing.dummy import Pool
-import time
 import pandas as pd
 from tldextract import tldextract
 from pathlib import Path
@@ -35,17 +34,15 @@ from config import DeFactoConfig
 #from src.core.classifiers.credibility.util import get_html_file_path, get_features_web
 #from src.core.web.credibility.topicUtils import TopicTerms
 from urllib.parse import urlparse
-import pickle
 import os
 
 import warnings
 
-from trustworthiness.classifiers.credibility.util import get_html_file_path, get_features_web
-from trustworthiness.web.credibility.topicUtils import TopicTerms
+from trustworthiness.util import get_html_file_path, get_features_web
+from trustworthiness.topic_utils import TopicTerms
 
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore",category=FutureWarning)
-    import h5py
 
 __author__ = "Diego Esteves"
 __copyright__ = "Copyright 2018, DeFacto Project"
@@ -625,17 +622,15 @@ def read_feat_files_and_merge(exp_folder='exp001/'):
         config.logger.error(repr(e))
         raise
 
-def export_features_multi_proc_microsoft(exp_folder='exp001/'):
+def export_features_multi_proc_microsoft(exp_folder):
 
-
+    assert (exp_folder is not None and exp_folder != '')
     # get the parameters
     config.logger.info('reading MS dataset...')
     df = pd.read_csv(config.dataset_microsoft_webcred, delimiter='\t', header=0)
     #extractors = []
     config.logger.info('creating job args...')
     job_args = []
-
-
 
     for index, row in df.iterrows():
         url = str(row[3])
@@ -679,33 +674,32 @@ if __name__ == '__main__':
         #read_feat_files_and_merge()
         #exit(0)
         export_features_multi_proc_microsoft('exp002/')
-        exit(0)
+    else:
+        '''
+        manually example of features extracted from a given URL
+        '''
+        fe = FeatureExtractor('https://www.amazon.com/Aristocats-Phil-Harris/dp/B00A29IQPK')
 
-    '''
-    manually example of features extracted from a given URL
-    '''
-    fe = FeatureExtractor('https://www.amazon.com/Aristocats-Phil-Harris/dp/B00A29IQPK')
-
-    summary1 = fe.get_summary_lex_rank(5)
-    summary2 = fe.get_summary(5)
-    print(fe.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot))
-    print(fe.get_feat_domain())
-    print(fe.get_feat_suffix())
-    print(fe.get_feat_source_info())
-    print(fe.get_feat_tot_outbound_links())
-    print(fe.get_feat_tot_outbound_domains())
-    print(fe.get_feat_text_category(fe.title))
-    print(fe.get_feat_text_category(fe.body))
-    print(fe.get_feat_text_category(summary1))
-    print(fe.get_feat_text_category(summary2))
-    print(fe.get_feat_readability_metrics())
-    print(fe.get_feat_spam(fe.title))
-    print(fe.get_feat_spam(fe.body))
-    print(fe.get_feat_social_media_tags())
-    print(fe.get_opensources_classification(fe.url))
-    print(fe.get_opensources_count(fe.url))
-    print(fe.get_number_of_arguments(fe.url))
-    print(fe.get_open_page_rank('jamesjema.es'))
+        summary1 = fe.get_summary_lex_rank(5)
+        summary2 = fe.get_summary(5)
+        print(fe.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot))
+        print(fe.get_feat_domain())
+        print(fe.get_feat_suffix())
+        print(fe.get_feat_source_info())
+        print(fe.get_feat_tot_outbound_links())
+        print(fe.get_feat_tot_outbound_domains())
+        print(fe.get_feat_text_category(fe.title))
+        print(fe.get_feat_text_category(fe.body))
+        print(fe.get_feat_text_category(summary1))
+        print(fe.get_feat_text_category(summary2))
+        print(fe.get_feat_readability_metrics())
+        print(fe.get_feat_spam(fe.title))
+        print(fe.get_feat_spam(fe.body))
+        print(fe.get_feat_social_media_tags())
+        print(fe.get_opensources_classification(fe.url))
+        print(fe.get_opensources_count(fe.url))
+        print(fe.get_number_of_arguments(fe.url))
+        print(fe.get_open_page_rank('jamesjema.es'))
 
 
 

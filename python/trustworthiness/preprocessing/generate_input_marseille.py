@@ -3,12 +3,8 @@ from multiprocessing.dummy import Pool
 import pandas as pd
 import multiprocessing
 
-import time
-
-from sklearn.externals import joblib
-
 from config import DeFactoConfig
-from trustworthiness.classifiers.credibility.util import get_html_file_path, save_url_body
+from trustworthiness.util import get_html_file_path, save_url_body
 from trustworthiness.feature_extractor import FeatureExtractor
 
 config = DeFactoConfig()
