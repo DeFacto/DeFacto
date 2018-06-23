@@ -306,9 +306,9 @@ def report(results, n_top=3):
             print("Parameters: {0}".format(results['params'][candidate]))
             print("")
 
-def test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log):
+def test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log, subfolder):
     if isinstance(clf, str):
-        clf=joblib.load(config.dir_models + '/credibility/html_encode/' + clf)
+        clf=joblib.load(config.dir_models + '/credibility/' + subfolder + clf)
 
     predicted = clf.predict(X_test)
     if experiment_type == 'bin':
@@ -343,13 +343,13 @@ def test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log
 
     return out
 
-def train_test_save(clf, X_train, y_train, X_test, y_test, out, cls_label, padding, experiment_type, file_log):
+def train_test_save(clf, X_train, y_train, X_test, y_test, out, cls_label, padding, experiment_type, file_log, subfolder):
 
     clf.fit(X_train, y_train)
     file = FILE_NAME_TEMPLATE % (cls_label, padding, experiment_type)
-    joblib.dump(clf, config.dir_models + '/credibility/html_encode/' + file)
+    joblib.dump(clf, config.dir_models + '/credibility/' + subfolder + file)
 
-    return test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log)
+    return test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log, subfolder)
 
 def get_plot_voting(X, y, classifiers, labels):
 
@@ -468,17 +468,20 @@ def train_baselines(features):
     try:
         with open(config.dir_output + expfolder + 'exp_performances_text_features.txt', "w") as file_log:
             file_log.write(HEADER)
+            f1_01=[]
             for clf in classifiers:
-                string = ''
-                string += clf.__class__.__name__
+
+                f1_01 = train_test_save(clf, X_train, y_train, X_test, y_test, f1_01, clf.__class__.__name__,
+                                        0, 'bin', file_log, 'text_features/')
+
                 clf.fit(X_train, y_train)
                 models.append(clf)
-                labels.append(string)
+                labels.append(clf.__class__.__name__)
                 joblib.dump(clf, path_models + 'clf_' + str(i) + '_cred_.pkl')
-                estimators.append((string, clf))
+                estimators.append((clf.__class__.__name__, clf))
                 i += 1
                 predictions = clf.predict(X_test)
-                print_report(string, predictions, y_test, klass_labels)
+                print_report(clf.__class__.__name__, predictions, y_test, klass_labels)
 
                 #gs_clf_svm = GridSearchCV(clf, parameters_svm, n_jobs=-1)
                 #gs_clf_svm = gs_clf_svm.fit(X_train, y_train)
@@ -576,6 +579,8 @@ def benchmark_html_sequence():
             k_01 = []
             k_15 = []
 
+            subfolder= 'html_encode/'
+
             for maxpad in pads:
                 XX = pad_sequences(X, maxlen=maxpad, dtype='int', padding='pre', truncating='pre', value=0)
                 X_train, X_test, y_train, y_test = train_test_split(XX, y, test_size=0.20, random_state=53)
@@ -597,16 +602,16 @@ def benchmark_html_sequence():
                 # NB
                 # ==========================================================================================================
                 clf = MultinomialNB()
-                nb_15 = train_test_save(clf, X_train, y_train, X_test, y_test, nb_15, 'nb', maxpad, 'likert', file_log)
-                nb_01 = train_test_save(clf, X_train, y2_train, X_test, y2_test, nb_01, 'nb', maxpad, 'bin', file_log)
+                nb_15 = train_test_save(clf, X_train, y_train, X_test, y_test, nb_15, 'nb', maxpad, 'likert', file_log, subfolder)
+                nb_01 = train_test_save(clf, X_train, y2_train, X_test, y2_test, nb_01, 'nb', maxpad, 'bin', file_log, subfolder)
                 # ==========================================================================================================
                 # SGD
                 # ==========================================================================================================
                 clf = SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3)
                 sgd_15 = train_test_save(clf, X_train, y_train, X_test, y_test, sgd_15, 'sgd', maxpad, 'likert',
-                                         file_log)
+                                         file_log, subfolder)
                 sgd_01 = train_test_save(clf, X_train, y2_train, X_test, y2_test, sgd_01, 'sgd', maxpad, 'bin',
-                                         file_log)
+                                         file_log, subfolder)
                 # ==========================================================================================================
                 # K-means
                 # ==========================================================================================================
@@ -615,18 +620,18 @@ def benchmark_html_sequence():
                 X_te_pca = pca.transform(X_test)
                 clf = KMeans(n_clusters=5, random_state=0, init='k-means++', max_iter=100, n_init=1)
                 k_15 = train_test_save(clf, X_tr_pca, y_train, X_te_pca, y_test, k_15, 'kmeans', maxpad, 'likert',
-                                       file_log)
+                                       file_log, subfolder)
                 clf = KMeans(n_clusters=2, random_state=0, init='k-means++', max_iter=100, n_init=1)
                 k_01 = train_test_save(clf, X_tr_pca, y2_train, X_te_pca, y2_test, k_01, 'kmeans', maxpad, 'bin',
-                                       file_log)
+                                       file_log, subfolder)
                 # ==========================================================================================================
                 # SVM
                 # ==========================================================================================================
                 clf = SVC(C=0.7, decision_function_shape='ovo', kernel='rbf', shrinking=True, tol=0.1, probability=True)
                 svm_15 = train_test_save(clf, X_train, y_train, X_test, y_test, svm_15, 'svm', maxpad, 'likert',
-                                         file_log)
+                                         file_log, subfolder)
                 svm_01 = train_test_save(clf, X_train, y2_train, X_test, y2_test, svm_01, 'svm', maxpad, 'bin',
-                                         file_log)
+                                         file_log, subfolder)
 
                 file_log.flush()
 
