@@ -316,7 +316,7 @@ def test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log
         predicted = clf.predict(X_test)
         p_avg, r_avg, f_avg, s_avg = precision_recall_fscore_support(y_test, predicted, average='weighted')
         out.append([p_avg, r_avg, f_avg])
-        config.logger.info('padding: %s cls: %s exp_type: %s f1: .3%f' % (padding, cls_label, experiment_type, f_avg))
+        config.logger.info('padding: %s cls: %s exp_type: %s f1: %.3f' % (padding, cls_label, experiment_type, f_avg))
 
         # file logging details
         p, r, f, s = precision_recall_fscore_support(y_test, predicted)
