@@ -2,6 +2,8 @@ import multiprocessing
 
 #from coffeeandnoodles.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
 #from coffeeandnoodles.web.scrap.scrap import WebScrap
+from bs4 import BeautifulSoup
+from keras.preprocessing.sequence import pad_sequences
 from sklearn.externals import joblib
 from textstat.textstat import textstat
 from sumy.parsers.html import HtmlParser
@@ -592,27 +594,155 @@ class FeatureExtractor:
             config.logger.error(repr(e))
             return ''
 
-def get_full_features(exp_folder='exp001/'):
+def likert2bin(likert):
+
+    assert likert>=1 and likert <=5
+
+    if likert in (1, 2, 3):
+        return 0
+    elif likert in (4, 5):
+        return 1
+    else:
+        raise Exception('error y')
+
+
+def get_html2sec_features(exp_folder):
+    tags_set = []
+    sentences = []
+    y = []
+    y2 = []
+    tot_files = 0
+
+    data = None
+    from sklearn import preprocessing
+    le = preprocessing.LabelEncoder()
+
     try:
-        for file in os.listdir(config.dir_output + exp_folder):
-            if file.endswith('.pkl') and file.startswith('_microsoft'):
-                config.logger.info('features file founded: ' + file)
-                f=joblib.load(config.dir_output + exp_folder + file)
-                return f
-        raise Exception('processed full file not found for this folder! ' + exp_folder)
+        my_file = Path(config.dir_output + exp_folder + 'microsoft_dataset_html2seq.pkl')
+        if not my_file.exists():
+            for file in os.listdir(config.dir_output + exp_folder + '/html'):
+                tags = []
+                if file.startswith('microsoft_dataset_visual_features_') and file.endswith('.txt'):
+                    tot_files += 1
+                    print('processing file ' + str(tot_files))
+                    path=config.dir_output + exp_folder + 'html/' + file
+                    print(path)
+                    soup = BeautifulSoup(open(path), "html.parser")
+                    html = soup.prettify()
+                    for line in html.split('\n'):
+                        if isinstance(line, str) and len(line.strip()) > 0:
+                            if (line.strip()[0] == '<') and (line.strip()[0:2] != '<!'):
+                                if len(line.split()) > 1:
+                                    tags.append(line.split()[0] + '>')
+                                else:
+                                    tags.append(line.split()[0])
+                            elif (line.strip()[0:2] == '</' and line.strip()[0:2] != '<!'):
+                                tags.append(line.split()[0])
+
+                    if len(tags) > 0:
+                        sentences.append(tags)
+                        tags_set.extend(tags)
+                        tags_set = list(set(tags_set))
+                        #print(len(tags))
+                        #print(tags)
+
+                    # getting y
+                    features_file = file.replace('microsoft_dataset_visual_features_', 'microsoft_dataset_features_')
+                    features_file = features_file.replace('.txt', '.pkl')
+
+                    path=config.dir_output + exp_folder + 'text/' + features_file
+                    data = joblib.load(path)
+                    y.append(int(data['likert']))
+                    y2.append(likert2bin(int(data['likert'])))
+
+                    # dump html2seq features
+                    html2seq_feature_file = file.replace('.txt', '.pkl')
+                    joblib.dump(tags, config.dir_output + exp_folder + 'html2seq/' + html2seq_feature_file)
+
+
+            print('tot files: ', tot_files)
+            print('dictionary size: ', len(tags_set))
+            print('dictionary: ', tags_set)
+
+            le.fit(tags_set)
+
+            X = [le.transform(s) for s in sentences]
+            print(len(X))
+            print(len(y))
+
+            data = (X, y, y2)
+
+            joblib.dump(data, config.dir_output + exp_folder + 'microsoft_dataset_html2seq.pkl')
+            joblib.dump(le, config.dir_output + exp_folder + 'microsoft_dataset_html2seq_enc.pkl')
+        else:
+            data = joblib.load(config.dir_output + exp_folder + 'microsoft_dataset_html2seq.pkl')
+            le = joblib.load(config.dir_output + exp_folder + 'microsoft_dataset_html2seq_enc.pkl')
+
+        return (data, le)
+
     except Exception as e:
         config.logger.error(repr(e))
         raise
 
-def read_feat_files_and_merge(exp_folder='exp001/'):
+def get_text_features(exp_folder, html2seq = False, pad=0):
     try:
+        assert (exp_folder is not None and exp_folder != '')
+
+        XX = []
+        y = []
+        y2 = []
+        encoder = joblib.load(config.enc_domain)
+
+        if html2seq is True:
+            le = joblib.load(config.dir_output + exp_folder + 'microsoft_dataset_html2seq_enc.pkl')
+
+        for file in os.listdir(config.dir_output + exp_folder):
+            if file.endswith('_text_features.pkl') and file.startswith('microsoft_dataset'):
+                config.logger.info('features file found: ' + file)
+                features=joblib.load(config.dir_output + exp_folder + file)
+                for d in features:
+                    feat = d.get('features')
+                    if feat is None:
+                        raise Exception('error in the feature extraction! No features extracted...')
+                    # feat[2] = encoder.transform([feat[2]])
+                    feat[3] = encoder.transform([feat[3]])
+                    del feat[2]
+
+                    if html2seq is True:
+                        hash = get_md5_from_string(d.get('url'))
+                        file_name = 'microsoft_dataset_visual_features_%s.pkl' % (hash)
+                        x=joblib.load(config.dir_output + exp_folder + 'html2seq/' + file_name)
+                        x2 = le.transform(x)
+                        feat.extend(list(x2))
+                        XX.append(feat)
+                    else:
+                        XX.append(feat)
+                    likert = int(d.get('likert'))
+                    y.append(likert)
+                    y2.append(likert2bin(likert))
+
+
+        if len(XX) == 0:
+            raise Exception('processed full file not found for this folder! ' + config.dir_output + exp_folder)
+
+        return XX, y, y2
+
+
+    except Exception as e:
+        config.logger.error(repr(e))
+        raise
+
+def read_feat_files_and_merge(exp_folder):
+    try:
+        assert (exp_folder is not None and exp_folder != '')
+
         features = []
         for file in os.listdir(config.dir_output + exp_folder):
             if file.endswith('.pkl') and not file.startswith('_microsoft'):
                 f=joblib.load(config.dir_output + exp_folder + file)
                 features.append(f)
 
-        name = '_microsoft_dataset_' + str(len(features)) + '_features.pkl'
+        name = 'microsoft_dataset_' + str(len(features)) + '_text_features.pkl'
         joblib.dump(features, config.dir_output + exp_folder + name)
         config.logger.info('full features exported: ' + name)
 
@@ -658,8 +788,8 @@ def export_features_multi_proc_microsoft(exp_folder):
         #asyncres = pool.map(get_features_web, extractors)
 
     config.logger.info('feature extraction done! saving...')
-    #name = '_microsoft_dataset_' + time.strftime("%Y%m%d%H%M%S") + '_features.pkl'
-    name = '_microsoft_dataset_' + str(len(job_args)) + '_features.pkl'
+    #name = 'microsoft_dataset_' + time.strftime("%Y%m%d%H%M%S") + '_features.pkl'
+    name = 'microsoft_dataset_' + str(len(job_args)) + '_text_features.pkl'
     joblib.dump(asyncres, config.dir_output + exp_folder + name)
     config.logger.info('done! file: ' + name)
     #asyncres = sorted(asyncres)
@@ -670,10 +800,11 @@ if __name__ == '__main__':
     '''
     automatically exports all features from the microsoft dataset (cached websites)
     '''
+    EXP_FOLDER = 'exp002/'
     if 1==2:
         #read_feat_files_and_merge()
         #exit(0)
-        export_features_multi_proc_microsoft('exp002/')
+        export_features_multi_proc_microsoft(EXP_FOLDER)
     else:
         '''
         manually example of features extracted from a given URL
