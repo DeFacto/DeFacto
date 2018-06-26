@@ -40,6 +40,7 @@ import os
 
 import warnings
 
+from trustworthiness.classifiers.benchmark import FILE_NAME_TEMPLATE
 from trustworthiness.util import get_html_file_path, get_features_web
 from trustworthiness.topic_utils import TopicTerms
 
@@ -126,8 +127,6 @@ class PageRankData():
         except Exception as e:
             config.logger.error(repr(e))
             raise e
-
-
 
 class FeatureExtractor:
     """The feature extractor for the trustworthiness module.
@@ -605,7 +604,6 @@ def likert2bin(likert):
     else:
         raise Exception('error y')
 
-
 def get_html2sec_features(exp_folder):
     tags_set = []
     sentences = []
@@ -684,7 +682,8 @@ def get_html2sec_features(exp_folder):
         config.logger.error(repr(e))
         raise
 
-def get_text_features(exp_folder, html2seq = False, pad=0):
+#TODO: update the method below to save correctly yhe text files with names (text x all)
+def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls=''):
     try:
         assert (exp_folder is not None and exp_folder != '')
 
@@ -695,6 +694,10 @@ def get_text_features(exp_folder, html2seq = False, pad=0):
 
         if html2seq is True:
             le = joblib.load(config.dir_output + exp_folder + 'microsoft_dataset_html2seq_enc.pkl')
+            # load best classifier
+            file = FILE_NAME_TEMPLATE % (best_cls.lower(), best_pad, 'bin')
+            clf_html2seq = joblib.load(config.dir_models + '/credibility/' + 'html2seq/' + file)
+
 
         for file in os.listdir(config.dir_output + exp_folder):
             if file.endswith('_text_features.pkl') and file.startswith('microsoft_dataset'):
@@ -713,10 +716,17 @@ def get_text_features(exp_folder, html2seq = False, pad=0):
                         file_name = 'microsoft_dataset_visual_features_%s.pkl' % (hash)
                         x=joblib.load(config.dir_output + exp_folder + 'html2seq/' + file_name)
                         x2 = le.transform(x)
-                        feat.extend(list(x2))
+
+                        if best_pad <= len(x2):
+                            klass = clf_html2seq.predict([x2[0:best_pad]])[0]
+                        else:
+                            klass = clf_html2seq.predict([np.pad(x2, (0, best_pad-len(x2)), 'constant')])[0]
+
+                        feat.extend([klass])
                         XX.append(feat)
                     else:
                         XX.append(feat)
+
                     likert = int(d.get('likert'))
                     y.append(likert)
                     y2.append(likert2bin(likert))
@@ -805,7 +815,7 @@ if __name__ == '__main__':
         #read_feat_files_and_merge()
         #exit(0)
         export_features_multi_proc_microsoft(EXP_FOLDER)
-    else:
+    elif 1==3:
         '''
         manually example of features extracted from a given URL
         '''

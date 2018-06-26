@@ -33,5 +33,3 @@ def get_open_pagerank(domain):
     except Exception as e:
         config.logger.error(repr(e))
         return None
-
-print(get_open_pagerank(['google.com', 'apple.com', 'unknowndomain.com']))

@@ -16,7 +16,7 @@ import math
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from trustworthiness.util import print_report
-from trustworthiness.feature_extractor import get_text_features, get_html2sec_features
+from trustworthiness.feature_extractor import *
 
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split, GridSearchCV
@@ -121,26 +121,21 @@ def k_means(XX, y):
     py.image.save_as(fig, filename='clusters.png')
     #py.iplot(fig)
 
-def get_annotation_from_max(traces, paddings):
-
-    annotations = []
-    for trace in traces:
-        max_trace=-999999
-        index=-1
-        for aux in range(len(trace)):
-            if trace[aux] > max_trace:
-                max_trace, index = trace[aux], aux
-        annotations.append(dict(
-            #x=np.log(paddings[index]),
-            x=paddings[index],
-            y=max_trace,
+def __append_annotation_style(x, y, extra_text_y=None):
+    if extra_text_y is not None and extra_text_y != '':
+        text='{0:.3f}'.format(y) + ' - size: ' + str(extra_text_y)
+    else:
+        text='{0:.3f}'.format(y)
+    return dict(
+            x=x,
+            y=y,
             xref='x',
             yref='y',
-            text='{0:.3f}'.format(max_trace),
+            text=text,
             showarrow=True,
             font=dict(
                 family='Helvetica',
-                size=14,
+                size=11,
                 color='#ffffff'
             ),
             align='center',
@@ -155,57 +150,102 @@ def get_annotation_from_max(traces, paddings):
             borderpad=4,
             bgcolor='#ff7f0e',
             opacity=0.8
-        ))
+        )
+
+def get_annotation_from_max(traces, paddings, x_labels):
+
+    annotations = []
+    for trace in traces:
+        max_trace=-999999
+        index=-1
+        label_y = None
+        for i in range(len(trace)):
+            if trace[i] > max_trace:
+                label_y, max_trace, index = x_labels[i], trace[i], i
+
+        annotations.append(__append_annotation_style(paddings[index], max_trace, extra_text_y=label_y))
 
     return annotations
 
-def save_plot(x, f1_traces_likert, f1_traces_bin, filename, exp_folder, title, x_title, y_title, log_mode=True):
+def export_chart_bar_likert_bin(x, y, filename, exp_folder, title, x_title, y_title, annotation_threshold):
+    try:
+        trace0 = go.Bar(
+            x=x,
+            y=y,
+            text=y,
+            marker=dict(
+                color=[BAR_COLOR] * len(x)),
+            opacity=0.8
+        )
+
+        data = [trace0]
+
+        layout = dict(title=title,
+                        xaxis=dict(title=x_title, showticklabels=True, showline=True,
+                                   autorange=True, showgrid=True, zeroline=True, gridcolor='#bdbdbd'),
+                        yaxis=dict(title=y_title, showticklabels=True, showline=True, showgrid=True, gridcolor='#bdbdbd',
+                                   range=[0, 1.0]),
+                        font=dict(family='Helvetica', size=14)
+                        )
+
+        annotations = []
+        for i in range(0, len(x)):
+            if y[i] >= annotation_threshold:
+                annotations.append(__append_annotation_style(x[i], y[i]))
+
+        layout['annotations'] = annotations
+        fig = go.Figure(data=data, layout=layout)
+        py.image.save_as(fig, filename=config.dir_output + exp_folder + 'graphs/' + filename)
+
+    except Exception as e:
+        raise e
+
+def export_chart_scatter_likert_bin(x, y_labels, y_likert_f1, y_bin_f1, filename, exp_folder, title, x_title, y_title, log_mode=True):
 
     try:
         if log_mode == True:
+            x_labels = x.copy()
             x = [math.log(pad) for pad in x]
         line_width=1
         mode='lines+markers'
         data_likert = []
         data_bin = []
-        colors = ['rgb(205, 12, 24)', 'rgb(22, 96, 167)', 'rgb(128, 128, 128)', 'rgb(0, 0, 139)',
-                  'rgb(192,192,192)', 'rgb(211,211,211)', 'rgb(255,255,0)', 'rgb(0,128,0)']
         dash='dash' # dash options include 'dash', 'dot', and 'dashdot'
 
-        assert len(f1_traces_likert) == len(f1_traces_bin)
-        assert len(f1_traces_likert) <= len(colors)
+        assert len(y_likert_f1) == len(y_bin_f1)
+        assert len(y_likert_f1) <= len(SERIES_COLORS)
 
         i=0
-        for trace in f1_traces_likert:
+        for trace in y_likert_f1:
             s = go.Scatter(
                 x=x,
-                y=trace[1],
-                text=trace[1],
-                name=trace[0],
+                y=trace,
+                text=trace,
+                name=y_labels[i],
                 mode=mode,
                 line=dict(
-                    color=(colors[i]),
+                    color=(SERIES_COLORS[i]),
                     width=line_width))
             data_likert.append(s)
             i += 1
 
         i=0
-        for trace in f1_traces_bin:
+        for trace in y_bin_f1:
             s = go.Scatter(
                 x=x,
-                y=trace[1],
-                text=trace[1],
-                name=trace[0],
+                y=trace,
+                text=trace,
+                name=y_labels[i],
                 mode=mode,
                 line=dict(
-                    color=(colors[i]),
-                    width=line_width),
-                    dash=dash)
+                    color=(SERIES_COLORS[i]),
+                    width=line_width,
+                    dash=dash))
             data_bin.append(s)
             i += 1
 
-        f1_traces_likert = np.array(f1_traces_likert)
-        f1_traces_bin = np.array(f1_traces_bin)
+        y_likert = np.array(y_likert_f1)
+        y_bin = np.array(y_bin_f1)
 
         # Edit the layout
         layout_1 = dict(title=title,
@@ -219,11 +259,11 @@ def save_plot(x, f1_traces_likert, f1_traces_bin, filename, exp_folder, title, x
                                   bordercolor='#808080',
                                   borderwidth=2
                                   ),
-                        annotations=get_annotation_from_max(f1_traces_likert[:, 1], x),
+                        annotations=get_annotation_from_max(y_likert, x, x_labels),
                         font=dict(family='Helvetica', size=14)
                         )
         layout_2 = layout_1.copy()
-        layout_2['annotations']=get_annotation_from_max(f1_traces_bin[:, 1], x)
+        layout_2['annotations']=get_annotation_from_max(y_bin, x, x_labels)
         #from plotly import tools
         #fig = tools.make_subplots(rows=2, cols=1, subplot_titles=('Likert Scale',
           #                                                        'Non-credible x Credible'))
@@ -341,7 +381,7 @@ def mlp_param_selection(X, y, nfolds):
     grid_search.fit(X, y)
     return grid_search.best_params_
 
-def benchmark_baselines(X, y_likert, y_bin, exp_folder, random_state, test_size):
+def benchmark_text(X, y_likert, y_bin, exp_folder, random_state, test_size):
 
     input_layer_neurons = len(X) + 1
     output_layer_neurons = 1
@@ -364,12 +404,11 @@ def benchmark_baselines(X, y_likert, y_bin, exp_folder, random_state, test_size)
         LogisticRegression(),
         KNeighborsClassifier(),
         MLPClassifier(hidden_layer_sizes=(hidden_nodes,hidden_nodes,hidden_nodes), solver='adam', alpha=1e-05)
-        #OneVsRestClassifier(SVC(kernel='linear', probability=True))
+        ##OneVsRestClassifier(SVC(kernel='linear', probability=True))
 
     ]
 
     i = 1
-    print('split data...')
     X_train, X_test, y_train_likert, y_test_likert = train_test_split(X, y_likert, test_size=test_size, random_state=random_state)
     X_train_bin, X_test_bin, y_train_bin, y_test_bin = train_test_split(X, y_bin, test_size=test_size, random_state=random_state)
 
@@ -381,43 +420,46 @@ def benchmark_baselines(X, y_likert, y_bin, exp_folder, random_state, test_size)
     X_test = scaler.transform(X_test)
     estimators = []
 
+    x_axis_bin = []
+    x_axis_likert = []
+    y_axis_bin = []
+    y_axis_likert = []
     try:
-        with open(config.dir_output + exp_folder + 'exp_performances_text.txt', "w") as file_log:
+        with open(config.dir_output + exp_folder + 'exp_performances_combined.txt', "w") as file_log:
             file_log.write(HEADER)
-            f1_01=[]
             for exp_type in ('bin', 'likert'):
                 if exp_type == 'bin':
                     y_train = y_train_bin
                     y_test = y_test_bin
+                    y_axis = y_axis_bin
+                    x_axis = x_axis_bin
                 else:
                     y_train = y_train_likert
                     y_test = y_test_likert
-
+                    y_axis = y_axis_likert
+                    x_axis = x_axis_likert
                 for clf in classifiers:
+                    out = []
                     cls_label = clf.__class__.__name__ + '_' + exp_type
-                    f1_01 = train_test_export_save(clf, X_train, y_train, X_test, y_test, f1_01,
-                                                   cls_label, 0, exp_type, file_log, 'text_features/')
+                    out = train_test_export_save(clf, X_train, y_train, X_test, y_test, out, cls_label, 0, exp_type, file_log, 'text_features/')
                     estimators.append((cls_label, clf))
                     i += 1
+                    y_axis.extend(np.array(out)[:, 2])
+                    x_axis.append(clf.__class__.__name__.replace('Classifier', ''))
 
                 clf = VotingClassifier(estimators=estimators, voting='hard')
                 cls_label = clf.__class__.__name__ + '_' + exp_type
-                f1_01 = train_test_export_save(clf, X_train, y_train, X_test, y_test, f1_01,
-                                               cls_label, 0, exp_type, file_log, 'text_features/')
+                out = []
+                out = train_test_export_save(clf, X_train, y_train, X_test, y_test, out, cls_label, 0, exp_type, file_log, 'text_features/')
+                y_axis.extend(np.array(out)[:, 2])
+                x_axis.append(clf.__class__.__name__.replace('Classifier', ''))
 
-        save_plot(pads, [['NB', np.array(nb_15)[:, 2]],
-                         ['SGD', np.array(sgd_15)[:, 2]],
-                         ['K-means', np.array(k_15)[:, 2]],
-                         ['SVM', np.array(svm_15)[:, 2]]],
-                  [['NB', np.array(nb_01)[:, 2]],
-                   ['SGD', np.array(sgd_01)[:, 2]],
-                   ['K-means', np.array(k_01)[:, 2]],
-                   ['SVM', np.array(svm_01)[:, 2]]],
-                  'html2seq_benchmark', exp_folder,
-                  'HTML2Seq: performance varying window size',
-                  'Padding window size (log scale)',
-                  'F1-measure (average)'
-                  )
+
+        export_chart_bar_likert_bin(x_axis_bin, y_axis_bin, 'all_benchmark_bin.png', exp_folder,
+                                    'Webpage Text Features', 'Classifiers', 'F1-measure', 0.7)
+
+        export_chart_bar_likert_bin(x_axis_likert, y_axis_likert, 'all_benchmark_likert.png', exp_folder,
+                                    'Webpage Text Features', 'Classifiers', 'F1-measure', 0.45)
 
     except Exception as e:
         config.logger.error(repr(e))
@@ -514,19 +556,13 @@ def benchmark_html_sequence(X, y_likert, y_bin, exp_folder, random_state, test_s
 
                 file_log.flush()
 
-        save_plot(pads, [['NB', np.array(nb_15)[:, 2]],
-                         ['SGD', np.array(sgd_15)[:, 2]],
-                         ['K-means', np.array(k_15)[:, 2]],
-                         ['SVM', np.array(svm_15)[:, 2]]],
-                         [['NB', np.array(nb_01)[:, 2]],
-                          ['SGD', np.array(sgd_01)[:, 2]],
-                          ['K-means', np.array(k_01)[:, 2]],
-                          ['SVM', np.array(svm_01)[:, 2]]],
-                  'html2seq_benchmark', exp_folder,
-                  'HTML2Seq: performance varying window size',
-                  'Padding window size (log scale)',
-                  'F1-measure (average)'
-                  )
+        title='HTML2Seq: performance varying window size'
+        x_title='Padding window size (log scale)'
+        y_title='F1-measure (average)'
+        export_chart_scatter_likert_bin(pads, ['NB','SGD','K-means','SVM'],
+            [np.array(nb_15)[:, 2], np.array(sgd_15)[:, 2],np.array(k_15)[:, 2], np.array(svm_15)[:, 2]],
+            [np.array(nb_01)[:, 2], np.array(sgd_01)[:, 2], np.array(k_01)[:, 2], np.array(svm_01)[:, 2]],
+            'html2seq_benchmark', exp_folder, title, x_title, y_title)
 
     except Exception as e:
         config.logger.error(repr(e))
@@ -651,23 +687,28 @@ if __name__ == '__main__':
         EXP_FOLDER = 'exp002/'
         RANDOM_STATE=53
         TEST_SIZE=0.2
-        PADS = [50, 100, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600,
-                2700, 2800,
-                2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000, 20000, 30000]
-        BEST_PAD = 3000
-        PADS = [50, 100]
+        PADS = [25, 50, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600,
+                2700, 2800, 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000, 20000, 30000]
+        BEST_PAD = 2900
+        BEST_CLS = 'nb'
+
         TOT_TEXT_FEAT = 53
+        SERIES_COLORS = ['rgb(205, 12, 24)', 'rgb(22, 96, 167)', 'rgb(128, 128, 128)', 'rgb(0, 0, 139)',
+                        'rgb(192,192,192)', 'rgb(211,211,211)', 'rgb(255,255,0)', 'rgb(0,128,0)']
+        BAR_COLOR = 'rgb(128,128,128)'
 
         assert EXP_TYPE in ('bin', 'likert')
 
-        features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER)
-        benchmark_baselines(features_tex, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
+        #features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER)
+        #benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
 
-        (features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER)
-        benchmark_html_sequence(features_seq, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
+        #(features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER)
+        #benchmark_html_sequence(features_seq, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
 
         ### out of best configurations
-        #features_combined, y_likert, y_bin = get_text_features(EXP_FOLDER, html2seq=True, pad=BEST_PAD)
+        features_combined, y_likert, y_bin = get_text_features(EXP_FOLDER, html2seq=True, best_pad=BEST_PAD, best_cls=BEST_CLS)
+        benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
+
         #benchmark_combined(features_combined, y_likert, y_bin, TEST_SIZE, RANDOM_STATE, BEST_PAD, EXP_FOLDER, TOT_TEXT_FEAT)
 
     except Exception as e:
