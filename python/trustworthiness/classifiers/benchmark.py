@@ -159,143 +159,95 @@ def get_annotation_from_max(traces, paddings):
 
     return annotations
 
-def save_plot(paddings, f1_traces, filename):
+def save_plot(x, f1_traces_likert, f1_traces_bin, filename, exp_folder, title, x_title, y_title, log_mode=True):
 
+    try:
+        if log_mode == True:
+            x = [math.log(pad) for pad in x]
+        line_width=1
+        mode='lines+markers'
+        data_likert = []
+        data_bin = []
+        colors = ['rgb(205, 12, 24)', 'rgb(22, 96, 167)', 'rgb(128, 128, 128)', 'rgb(0, 0, 139)',
+                  'rgb(192,192,192)', 'rgb(211,211,211)', 'rgb(255,255,0)', 'rgb(0,128,0)']
+        dash='dash' # dash options include 'dash', 'dot', and 'dashdot'
 
-    paddings = [math.log(pad) for pad in paddings]
+        assert len(f1_traces_likert) == len(f1_traces_bin)
+        assert len(f1_traces_likert) <= len(colors)
 
-    line_width=1
+        i=0
+        for trace in f1_traces_likert:
+            s = go.Scatter(
+                x=x,
+                y=trace[1],
+                text=trace[1],
+                name=trace[0],
+                mode=mode,
+                line=dict(
+                    color=(colors[i]),
+                    width=line_width))
+            data_likert.append(s)
+            i += 1
 
-    if 'traces'=='traces':
-        trace0 = go.Scatter(
-            x=paddings,
-            y=f1_traces[0],
-            text=f1_traces[0],
-            name='NB [1-5]',
-            mode='lines+markers',
-            line=dict(
-                color=('rgb(205, 12, 24)'),
-                width=line_width)
-        )
-        trace1 = go.Scatter(
-            x=paddings,
-            y=f1_traces[1],
-            text=f1_traces[1],
-            name='SGD [1-5]',
-            mode='lines+markers',
-            line=dict(
-                color=('rgb(22, 96, 167)'),
-                width=line_width)
-        )
-        trace2 = go.Scatter(
-            x=paddings,
-            y=f1_traces[2],
-            text=f1_traces[2],
-            name='K-means [1-5]',
-            mode='lines+markers',
-            line=dict(
-                color=('rgb(128, 128, 128)'),
-                width=line_width)
-        )
-        trace3 = go.Scatter(
-            x=paddings,
-            y=f1_traces[3],
-            text=f1_traces[3],
-            name='SVM [1-5]',
-            mode='lines+markers',
-            line=dict(
-                color=('rgb(0, 0, 139)'),
-                width=line_width)
-        )
+        i=0
+        for trace in f1_traces_bin:
+            s = go.Scatter(
+                x=x,
+                y=trace[1],
+                text=trace[1],
+                name=trace[0],
+                mode=mode,
+                line=dict(
+                    color=(colors[i]),
+                    width=line_width),
+                    dash=dash)
+            data_bin.append(s)
+            i += 1
 
-        trace4 = go.Scatter(
-            x=paddings,
-            y=f1_traces[4],
-            text=f1_traces[4],
-            name='NB [0-1]',
-            mode='lines+markers',
-            line=dict(
-                color=('rgb(205, 12, 24)'),
-                width=line_width,
-                dash='dash')  # dash options include 'dash', 'dot', and 'dashdot'
-        )
-        trace5 = go.Scatter(
-            x=paddings,
-            y=f1_traces[5],
-            text=f1_traces[5],
-            name='SGD [0-1]',
-            mode='lines+markers',
-            line=dict(
-                color=('rgb(22, 96, 167)'),
-                width=line_width,
-                dash='dash')
-        )
+        f1_traces_likert = np.array(f1_traces_likert)
+        f1_traces_bin = np.array(f1_traces_bin)
 
-        trace6 = go.Scatter(
-            x=paddings,
-            y=f1_traces[6],
-            text=f1_traces[6],
-            name='K-means [0-1]',
-            mode='lines+markers',
-            line=dict(
-                color=('rgb(128, 128, 128)'),
-                width=line_width,
-                dash='dash')
-        )
+        # Edit the layout
+        layout_1 = dict(title=title,
+                        xaxis=dict(title=x_title, showticklabels=True, showline=True,
+                                 autorange=True, showgrid=True, zeroline=True, gridcolor='#bdbdbd'),
+                        yaxis=dict(title=y_title, showticklabels=True, showline=True, autorange=True),
+                        show_legend=True,
+                        legend=dict(orientation='h',
+                                  x=math.log(1) if log_mode == True else 1,
+                                  y=-20,
+                                  bordercolor='#808080',
+                                  borderwidth=2
+                                  ),
+                        annotations=get_annotation_from_max(f1_traces_likert[:, 1], x),
+                        font=dict(family='Helvetica', size=14)
+                        )
+        layout_2 = layout_1.copy()
+        layout_2['annotations']=get_annotation_from_max(f1_traces_bin[:, 1], x)
+        #from plotly import tools
+        #fig = tools.make_subplots(rows=2, cols=1, subplot_titles=('Likert Scale',
+          #                                                        'Non-credible x Credible'))
+        #fig.append_trace(trace0, 1, 1)
+        #fig.append_trace(trace1, 1, 1)
+        #fig.append_trace(trace2, 1, 1)
+        #fig.append_trace(trace3, 1, 1)
 
-        trace7 = go.Scatter(
-            x=paddings,
-            y=f1_traces[7],
-            text=f1_traces[7],
-            name='SVM [0-1]',
-            mode='lines+markers',
-            line=dict(
-                color=('rgb(0, 0, 139)'),
-                width=line_width,
-                dash='dash')
-        )
+        #fig.append_trace(trace4, 2, 1)
+        #fig.append_trace(trace5, 2, 1)
+        #fig.append_trace(trace6, 2, 1)
+        #fig.append_trace(trace7, 2, 1)
 
-    data_1 = [trace0, trace1, trace2, trace3]
-    data_2 = [trace4, trace5, trace6, trace7]
+        #fig['layout'].update = layout
 
-    # Edit the layout
-    layout_1 = dict(title='Encoding HTML code: performance varying window size',
-                  xaxis=dict(title='Padding window size (log scale)', showticklabels=True, showline=True,
-                             autorange=True, showgrid=True, zeroline=True, gridcolor='#bdbdbd'),
-                  yaxis=dict(title='F1-measure (average)', showticklabels=True, showline=True, autorange=True),
-                  show_legend=True,
-                  legend=dict(orientation='h',
-                              x=math.log(1),
-                              y=-20,
-                              bordercolor='#808080',
-                              borderwidth=2
-                              ),
-                  annotations=get_annotation_from_max(f1_traces[0:4], paddings),
-                  font=dict(family='Helvetica', size=14)
-                  )
-    layout_2 = layout_1.copy()
-    layout_2['annotations']=get_annotation_from_max(f1_traces[4:8], paddings)
-    #from plotly import tools
-    #fig = tools.make_subplots(rows=2, cols=1, subplot_titles=('Likert Scale',
-      #                                                        'Non-credible x Credible'))
-    #fig.append_trace(trace0, 1, 1)
-    #fig.append_trace(trace1, 1, 1)
-    #fig.append_trace(trace2, 1, 1)
-    #fig.append_trace(trace3, 1, 1)
+        fig = dict(data=data_likert, layout=layout_1)
+        #py.plot(fig, filename='paddings_f1')
+        py.image.save_as(fig, filename=config.dir_output + exp_folder + 'graphs/' + filename + '_likert.png')
 
-    #fig.append_trace(trace4, 2, 1)
-    #fig.append_trace(trace5, 2, 1)
-    #fig.append_trace(trace6, 2, 1)
-    #fig.append_trace(trace7, 2, 1)
+        fig = dict(data=data_bin, layout=layout_2)
+        py.image.save_as(fig, filename=config.dir_output + exp_folder + 'graphs/' + filename + '_bin.png')
 
-    #fig['layout'].update = layout
-
-    fig = dict(data=data_1, layout=layout_1)
-    #py.plot(fig, filename='paddings_f1')
-    py.image.save_as(fig, filename=config.dir_output + 'graphs/' + filename + '_likert.png')
-
-    fig = dict(data=data_2, layout=layout_2)
-    py.image.save_as(fig, filename=config.dir_output + 'graphs/' + filename + '_bin.png')
+    except Exception as e:
+        raise e
 
 def report(results, n_top=3):
     for i in range(1, n_top + 1):
@@ -453,6 +405,20 @@ def benchmark_baselines(X, y_likert, y_bin, exp_folder, random_state, test_size)
                 f1_01 = train_test_export_save(clf, X_train, y_train, X_test, y_test, f1_01,
                                                cls_label, 0, exp_type, file_log, 'text_features/')
 
+        save_plot(pads, [['NB', np.array(nb_15)[:, 2]],
+                         ['SGD', np.array(sgd_15)[:, 2]],
+                         ['K-means', np.array(k_15)[:, 2]],
+                         ['SVM', np.array(svm_15)[:, 2]]],
+                  [['NB', np.array(nb_01)[:, 2]],
+                   ['SGD', np.array(sgd_01)[:, 2]],
+                   ['K-means', np.array(k_01)[:, 2]],
+                   ['SVM', np.array(svm_01)[:, 2]]],
+                  'html2seq_benchmark', exp_folder,
+                  'HTML2Seq: performance varying window size',
+                  'Padding window size (log scale)',
+                  'F1-measure (average)'
+                  )
+
     except Exception as e:
         config.logger.error(repr(e))
 
@@ -548,9 +514,19 @@ def benchmark_html_sequence(X, y_likert, y_bin, exp_folder, random_state, test_s
 
                 file_log.flush()
 
-        save_plot(pads, [np.array(nb_15)[:, 2], np.array(sgd_15)[:, 2], np.array(k_15)[:, 2], np.array(svm_15)[:, 2],
-                         np.array(nb_01)[:, 2], np.array(sgd_01)[:, 2], np.array(k_01)[:, 2], np.array(svm_01)[:, 2]],
-                  'html2seq_benchmark')
+        save_plot(pads, [['NB', np.array(nb_15)[:, 2]],
+                         ['SGD', np.array(sgd_15)[:, 2]],
+                         ['K-means', np.array(k_15)[:, 2]],
+                         ['SVM', np.array(svm_15)[:, 2]]],
+                         [['NB', np.array(nb_01)[:, 2]],
+                          ['SGD', np.array(sgd_01)[:, 2]],
+                          ['K-means', np.array(k_01)[:, 2]],
+                          ['SVM', np.array(svm_01)[:, 2]]],
+                  'html2seq_benchmark', exp_folder,
+                  'HTML2Seq: performance varying window size',
+                  'Padding window size (log scale)',
+                  'F1-measure (average)'
+                  )
 
     except Exception as e:
         config.logger.error(repr(e))
@@ -679,12 +655,13 @@ if __name__ == '__main__':
                 2700, 2800,
                 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000, 20000, 30000]
         BEST_PAD = 3000
+        PADS = [50, 100]
         TOT_TEXT_FEAT = 53
 
         assert EXP_TYPE in ('bin', 'likert')
 
-        #features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER)
-        #benchmark_baselines(features_tex, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
+        features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER)
+        benchmark_baselines(features_tex, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
 
         (features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER)
         benchmark_html_sequence(features_seq, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
