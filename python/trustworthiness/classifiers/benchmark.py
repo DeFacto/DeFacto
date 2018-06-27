@@ -381,11 +381,20 @@ def mlp_param_selection(X, y, nfolds):
     grid_search.fit(X, y)
     return grid_search.best_params_
 
-def benchmark_text(X, y_likert, y_bin, exp_folder, random_state, test_size):
+def benchmark_text(X, y_likert, y_bin, exp_folder, random_state, test_size, combined=False, threshold_annotation_bin=0.7,
+                   threshold_annotation_likert=0.45, exp_type_combined='bin'):
 
     input_layer_neurons = len(X) + 1
     output_layer_neurons = 1
     hidden_nodes = np.math.ceil(len(X) / (2 * (input_layer_neurons + output_layer_neurons)))
+
+    out_performance_file = 'text_performances.txt'
+    graph_bin_file = 'text_benchmark_bin.png'
+    graph_likert_file = 'text_benchmark_bin.png'
+    if combined is True:
+        out_performance_file = 'all_' + exp_type_combined + '_exp_performances.txt'
+        graph_bin_file = 'all_' + exp_type_combined + '_benchmark_bin.png'
+        graph_likert_file = 'all_' + exp_type_combined + '_benchmark_bin.png'
 
     classifiers = [
         BernoulliNB(),
@@ -425,7 +434,7 @@ def benchmark_text(X, y_likert, y_bin, exp_folder, random_state, test_size):
     y_axis_bin = []
     y_axis_likert = []
     try:
-        with open(config.dir_output + exp_folder + 'exp_performances_combined.txt', "w") as file_log:
+        with open(config.dir_output + exp_folder + out_performance_file, "w") as file_log:
             file_log.write(HEADER)
             for exp_type in ('bin', 'likert'):
                 if exp_type == 'bin':
@@ -455,11 +464,11 @@ def benchmark_text(X, y_likert, y_bin, exp_folder, random_state, test_size):
                 x_axis.append(clf.__class__.__name__.replace('Classifier', ''))
 
 
-        export_chart_bar_likert_bin(x_axis_bin, y_axis_bin, 'all_benchmark_bin.png', exp_folder,
-                                    'Webpage Text Features', 'Classifiers', 'F1-measure', 0.7)
+        export_chart_bar_likert_bin(x_axis_bin, y_axis_bin, graph_bin_file, exp_folder,
+                                    'Webpage Text Features', 'Classifiers', 'F1-measure', threshold_annotation_bin)
 
-        export_chart_bar_likert_bin(x_axis_likert, y_axis_likert, 'all_benchmark_likert.png', exp_folder,
-                                    'Webpage Text Features', 'Classifiers', 'F1-measure', 0.45)
+        export_chart_bar_likert_bin(x_axis_likert, y_axis_likert, graph_likert_file, exp_folder,
+                                    'Webpage Text Features', 'Classifiers', 'F1-measure', threshold_annotation_likert)
 
     except Exception as e:
         config.logger.error(repr(e))
@@ -683,7 +692,7 @@ def param_optimization():
 if __name__ == '__main__':
     try:
 
-        EXP_TYPE = 'bin'
+        EXP_TYPE_COMBINED = 'likert'
         EXP_FOLDER = 'exp002/'
         RANDOM_STATE=53
         TEST_SIZE=0.2
@@ -697,7 +706,7 @@ if __name__ == '__main__':
                         'rgb(192,192,192)', 'rgb(211,211,211)', 'rgb(255,255,0)', 'rgb(0,128,0)']
         BAR_COLOR = 'rgb(128,128,128)'
 
-        assert EXP_TYPE in ('bin', 'likert')
+        assert EXP_TYPE_COMBINED in ('bin', 'likert')
 
         #features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER)
         #benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
@@ -706,8 +715,9 @@ if __name__ == '__main__':
         #benchmark_html_sequence(features_seq, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
 
         ### out of best configurations
-        features_combined, y_likert, y_bin = get_text_features(EXP_FOLDER, html2seq=True, best_pad=BEST_PAD, best_cls=BEST_CLS)
-        benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
+        features_combined, y_likert, y_bin = get_text_features(EXP_FOLDER, html2seq=True, best_pad=BEST_PAD,
+                                                               best_cls=BEST_CLS, exp_type_combined=EXP_TYPE_COMBINED)
+        benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, combined=True)
 
         #benchmark_combined(features_combined, y_likert, y_bin, TEST_SIZE, RANDOM_STATE, BEST_PAD, EXP_FOLDER, TOT_TEXT_FEAT)
 

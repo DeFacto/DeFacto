@@ -682,8 +682,8 @@ def get_html2sec_features(exp_folder):
         config.logger.error(repr(e))
         raise
 
-#TODO: update the method below to save correctly yhe text files with names (text x all)
-def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls=''):
+
+def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp_type_combined='bin'):
     try:
         assert (exp_folder is not None and exp_folder != '')
 
@@ -695,7 +695,7 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls=''):
         if html2seq is True:
             le = joblib.load(config.dir_output + exp_folder + 'microsoft_dataset_html2seq_enc.pkl')
             # load best classifier
-            file = FILE_NAME_TEMPLATE % (best_cls.lower(), best_pad, 'bin')
+            file = FILE_NAME_TEMPLATE % (best_cls.lower(), best_pad, exp_type_combined)
             clf_html2seq = joblib.load(config.dir_models + '/credibility/' + 'html2seq/' + file)
 
 
