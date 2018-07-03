@@ -1,6 +1,7 @@
 DeFacto: Deep Fact Validation 
 ==============================
 [![Build Status](https://travis-ci.org/SmartDataAnalytics/DeFacto.svg?branch=master)](https://travis-ci.org/SmartDataAnalytics/DeFacto)
+[![Project Stats](https://www.openhub.net/p/YOUR_PROJECT/widgets/project_thin_badge.gif)](https://www.openhub.net/p/deepfactvalidation)
 
 A Fact-Validation framework :x: :white_check_mark:
 
