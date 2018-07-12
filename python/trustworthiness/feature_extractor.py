@@ -696,13 +696,14 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp
             le = joblib.load(config.dir_output + exp_folder + 'microsoft_dataset_html2seq_enc.pkl')
             # load best classifier
             file = FILE_NAME_TEMPLATE % (best_cls.lower(), best_pad, exp_type_combined)
+            config.logger.debug('loading model: ' + file)
             clf_html2seq = joblib.load(config.dir_models + '/credibility/' + 'html2seq/' + file)
-
 
         for file in os.listdir(config.dir_output + exp_folder):
             if file.endswith('_text_features.pkl') and file.startswith('microsoft_dataset'):
                 config.logger.info('features file found: ' + file)
-                features=joblib.load(config.dir_output + exp_folder + file)
+                features = joblib.load(config.dir_output + exp_folder + file)
+                config.logger.debug('extracting features')
                 for d in features:
                     feat = d.get('features')
                     if feat is None:
@@ -715,11 +716,11 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp
                         hash = get_md5_from_string(d.get('url'))
                         file_name = 'microsoft_dataset_visual_features_%s.pkl' % (hash)
                         x=joblib.load(config.dir_output + exp_folder + 'html2seq/' + file_name)
-                        x2 = le.transform(x)
-
-                        if best_pad <= len(x2):
-                            klass = clf_html2seq.predict([x2[0:best_pad]])[0]
+                        if best_pad <= len(x):
+                            x2 = le.transform(x[0:best_pad])
+                            klass = clf_html2seq.predict([x2])[0]
                         else:
+                            x2 = le.transform(x)
                             klass = clf_html2seq.predict([np.pad(x2, (0, best_pad-len(x2)), 'constant')])[0]
 
                         feat.extend([klass])

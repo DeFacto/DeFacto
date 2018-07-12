@@ -388,13 +388,13 @@ def benchmark_text(X, y_likert, y_bin, exp_folder, random_state, test_size, comb
     output_layer_neurons = 1
     hidden_nodes = np.math.ceil(len(X) / (2 * (input_layer_neurons + output_layer_neurons)))
 
-    out_performance_file = 'text_performances.txt'
-    graph_bin_file = 'text_benchmark_bin.png'
-    graph_likert_file = 'text_benchmark_bin.png'
+    out_performance_file = 'out_performance_text.txt'
+    graph_bin_file = 'benchmark_text_bin.png'
+    graph_likert_file = 'benchmark_text_likert.png'
     if combined is True:
-        out_performance_file = 'all_' + exp_type_combined + '_exp_performances.txt'
-        graph_bin_file = 'all_' + exp_type_combined + '_benchmark_bin.png'
-        graph_likert_file = 'all_' + exp_type_combined + '_benchmark_bin.png'
+        out_performance_file = 'out_performance_combined_+' + exp_type_combined + '.txt'
+        graph_bin_file = 'benchmark_combined_bin_+' + exp_type_combined + '.png'
+        graph_likert_file = 'benchmark_combined_likert_+' + exp_type_combined + '.png'
 
     classifiers = [
         BernoulliNB(),
@@ -484,7 +484,8 @@ def benchmark_html_sequence(X, y_likert, y_bin, exp_folder, random_state, test_s
 
         # X_tags = [le.inverse_transform(s) for s in X]
 
-        with open(config.dir_output + exp_folder + 'exp_performances_html2seq.txt', "w") as file_log:
+        out_performance_file = 'out_performance_html2seq.txt'
+        with open(config.dir_output + exp_folder + out_performance_file, "w") as file_log:
             file_log.write(HEADER)
             nb_01 = []
             nb_15 = []
@@ -571,7 +572,7 @@ def benchmark_html_sequence(X, y_likert, y_bin, exp_folder, random_state, test_s
         export_chart_scatter_likert_bin(pads, ['NB','SGD','K-means','SVM'],
             [np.array(nb_15)[:, 2], np.array(sgd_15)[:, 2],np.array(k_15)[:, 2], np.array(svm_15)[:, 2]],
             [np.array(nb_01)[:, 2], np.array(sgd_01)[:, 2], np.array(k_01)[:, 2], np.array(svm_01)[:, 2]],
-            'html2seq_benchmark', exp_folder, title, x_title, y_title)
+            'benchmark_html2seq', exp_folder, title, x_title, y_title)
 
     except Exception as e:
         config.logger.error(repr(e))
@@ -687,37 +688,50 @@ def param_optimization():
     #                  'tfidf__use_idf': (True, False),
     #                  'clf-svm__alpha': (1e-2, 1e-3)}
 
-
+def feature_selection():
+    #TODO: implement
+    try:
+        a=1
+    except Exception as e:
+        config.logger.error(repr(e))
+        raise
 
 if __name__ == '__main__':
     try:
 
-        EXP_TYPE_COMBINED = 'likert'
         EXP_FOLDER = 'exp002/'
         RANDOM_STATE=53
         TEST_SIZE=0.2
         PADS = [25, 50, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600,
                 2700, 2800, 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000, 20000, 30000]
-        BEST_PAD = 2900
-        BEST_CLS = 'nb'
+        BEST_PAD_BIN = 2900
+        BEST_PAD_LIKERT = 2000
+        BEST_CLS_BIN = 'nb'
+        BEST_CLS_LIKERT = 'nb'
 
         TOT_TEXT_FEAT = 53
         SERIES_COLORS = ['rgb(205, 12, 24)', 'rgb(22, 96, 167)', 'rgb(128, 128, 128)', 'rgb(0, 0, 139)',
                         'rgb(192,192,192)', 'rgb(211,211,211)', 'rgb(255,255,0)', 'rgb(0,128,0)']
         BAR_COLOR = 'rgb(128,128,128)'
 
-        assert EXP_TYPE_COMBINED in ('bin', 'likert')
+        # TEXT FEATURES
+        features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER)
+        benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
 
-        #features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER)
-        #benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
+        # HTML2Seq FEATURES
+        (features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER)
+        benchmark_html_sequence(features_seq, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
 
-        #(features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER)
-        #benchmark_html_sequence(features_seq, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
+        ### TEXT FEATURES + HTML2Seq klass as feature (out of best configurations)
+        features_combined, y_likert, y_bin = get_text_features(EXP_FOLDER, html2seq=True, best_pad=BEST_PAD_BIN,
+                                                               best_cls=BEST_CLS_BIN, exp_type_combined='bin')
+        benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, combined=True,
+                       exp_type_combined='bin')
 
-        ### out of best configurations
-        features_combined, y_likert, y_bin = get_text_features(EXP_FOLDER, html2seq=True, best_pad=BEST_PAD,
-                                                               best_cls=BEST_CLS, exp_type_combined=EXP_TYPE_COMBINED)
-        benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, combined=True)
+        features_combined, y_likert, y_bin = get_text_features(EXP_FOLDER, html2seq=True, best_pad=BEST_PAD_LIKERT,
+                                                               best_cls=BEST_CLS_LIKERT, exp_type_combined='likert')
+        benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, combined=True,
+                       exp_type_combined='likert')
 
         #benchmark_combined(features_combined, y_likert, y_bin, TEST_SIZE, RANDOM_STATE, BEST_PAD, EXP_FOLDER, TOT_TEXT_FEAT)
 

@@ -27,3 +27,8 @@
 
 #### [util](https://github.com/SmartDataAnalytics/DeFacto3/wiki/util)
 - to save any implementaiton of generic features, such as scraping, translation, etc..
+
+
+#### Installation
+
+1. Install the ClausIE [link](https://github.com/AnthonyMRios/pyclausie)
