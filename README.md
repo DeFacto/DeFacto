@@ -11,12 +11,25 @@ DeFacto is a framework for validating statements by finding confirming sources f
 ```
 @Article{gerber2015,
   Title = {DeFacto - Temporal and Multilingual Deep Fact Validation},
-  Author = {Daniel Gerber and Diego Esteves and Jens Lehmann and Lorenz B{\"u}hmann 
-           and Ricardo Usbeck and Axel-Cyrille {Ngonga Ngomo} and Ren{\'e} Speck},
+  Author = {Gerber, Daniel and Esteves, Diego and Lehmann, Jens and B{\"u}hmann, Lorenz and 
+           Usbeck, Ricardo and {Ngonga Ngomo}, Axel-Cyrille and Speck, Ren{\'e}},
   Journal = {Web Semantics: Science, Services and Agents on the World Wide Web},
   Year = {2015},
   Url = {http://svn.aksw.org/papers/2015/JWS_DeFacto/public.pdf}
 }
+```
+
+```
+@article{Esteves:2018:TVA:3183573.3177873,
+ author = {Esteves, Diego and Rula, Anisa and Reddy, Aniketh Janardhan and Lehmann, Jens},
+ title = {Toward Veracity Assessment in RDF Knowledge Bases: An Exploratory Analysis},
+ journal = {J. Data and Information Quality},
+ year = {2018},
+ url = {http://doi.acm.org/10.1145/3177873},
+ doi = {10.1145/3177873},
+ publisher = {ACM}
+} 
+
 ```
 
 - :coffee: [Java](https://github.com/SmartDataAnalytics/DeFacto/tree/master) version
