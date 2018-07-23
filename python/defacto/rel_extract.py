@@ -4,13 +4,10 @@ from defacto.definitions import CLAUSIE_PATH, STANFORD_CORE_MODEL_PATH, STANFORD
 from nltk.parse.stanford import StanfordParser
 from nltk.tree import ParentedTree, Tree
 from nltk.stem import WordNetLemmatizer
-import corenlp
 from pycorenlp import *
 
 def get_sentences_from_document(text):
     return sent_tokenize(text)
-
-
 
 
 class TripleExtraction_StanfordOpenIE(object):
@@ -144,24 +141,26 @@ class TripleExtraction_ClausIE(object):
 if __name__ == '__main__':
 
     try:
-        sentence = 'John Cage is an American actor'
+        sentence = 'John Cage is an American actor who lives in Florida'
         lemmatizer = WordNetLemmatizer()
 
+        print('---------------------------------------------------------------------------------------------')
         re0 = TripleExtraction_StanfordOpenIE()
         triples = re0.annotate(sentence)
         for t in triples:
             print(t)
-
+        print('---------------------------------------------------------------------------------------------')
         re1 = TripleExtraction_ClausIE()
         triples = re1.get_triples(sentence)
         for t in triples:
             print(t)
-            print(lemmatizer.lemmatize(t.predicate, pos='v'))
-
+            #print(lemmatizer.lemmatize(t.predicate, pos='v'))
+        print('---------------------------------------------------------------------------------------------')
         re2 = TripleExtraction_Rusu()
         triples = re2.get_triples(sentence)
         for t in triples:
             print(t)
+        print('---------------------------------------------------------------------------------------------')
 
     except Exception as e:
         print(e)
