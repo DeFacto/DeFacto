@@ -24,6 +24,35 @@ UTILS
 from collections import Counter
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import re, math
+
+WORD = re.compile(r'\w+')
+
+neg_keyword_set = {"don't", "do not", "never", "nothing", "nowhere", "noone", "none", "not",
+                      "hasn't", "has not" , "hadn't", "had not", "haven't", "have not" ,"can't", "can not",
+                      "couldn't", "could not", "shouldn't", "should not", "won't", "will not",
+                      "wouldn't", "would not", "doesn't", "does not",
+                      "didn't", "did not", "isn't", "is not", "aren't", "are not", "ain't", "am not"}
+
+from nltk.corpus import stopwords
+stopwords = stopwords.words('english')
+
+def get_cosine(vec1, vec2):
+     intersection = set(vec1.keys()) & set(vec2.keys())
+     numerator = sum([vec1[x] * vec2[x] for x in intersection])
+
+     sum1 = sum([vec1[x]**2 for x in vec1.keys()])
+     sum2 = sum([vec2[x]**2 for x in vec2.keys()])
+     denominator = math.sqrt(sum1) * math.sqrt(sum2)
+
+     if not denominator:
+        return 0.0
+     else:
+        return float(numerator) / denominator
+
+def text_to_vector(text):
+     words = WORD.findall(text)
+     return Counter(words)
 
 def levenshtein_distance(str1, str2):
     m = len(str1)
@@ -166,11 +195,7 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
     :return:
     '''
     try:
-        neg_keyword_set = {"don't", "do not", "never", "nothing", "nowhere", "noone", "none", "not",
-                      "hasn't", "has not" , "hadn't", "had not", "haven't", "have not" ,"can't", "can not",
-                      "couldn't", "could not", "shouldn't", "should not", "won't", "will not",
-                      "wouldn't", "would not", "doesn't", "does not",
-                      "didn't", "did not", "isn't", "is not", "aren't", "are not", "ain't", "am not"}
+
 
         MAX_DIST = 99999
         THETA_RELAX = 0.9
@@ -187,17 +212,17 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
         X.append(tot_neg)
         X.append(smith_waterman_distance(claim, proof_candidate, 3, -2, -2, -2, 1))
         X.append(get_jaccard_sim(claim, proof_candidate))
-        X.append(cosine_similarity([claim], [proof_candidate]))
-        X.append(len([proof_doc.token]))
+        X.append(get_cosine(text_to_vector(claim), text_to_vector(proof_candidate)))
+        X.append(len([1 for t in proof_doc]))
         X.append(len([c for c in proof_candidate if c.isdigit()]))
         X.append(len([c for c in proof_candidate if not c.isalnum()]))
         X.append(len([c for c in proof_candidate if c == '!']))
         X.append(len([c for c in proof_candidate if c == ',']))
         X.append(len([c for c in proof_candidate if c == '?']))
         X.append(len([c for c in proof_candidate if c == '.']))
-        X.append(len([token for token in proof_doc if token.text[0].isupper()]))
-        X.append(len([token for token in proof_doc if token.text.alpha()]))
-        X.append(len([token for token in proof_doc if token.text.stop()]))
+        X.append(len([t for t in proof_doc if t.text[0].isupper()]))
+        X.append(len([t for t in proof_doc if t.text.isalpha()]))
+        X.append(len([t for t in proof_doc if t.text in stopwords]))
         X.append(len(proof_doc.ents))
 
 
@@ -234,13 +259,13 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
 
             # exact string match
             subject_found_t = \
-                int(np.count_nonzero([1 if (triple.subject == t for t in proof_doc.token) else 0], axis=0) >= 1)
+                int(np.count_nonzero([1 if (triple.subject == t for t in proof_doc) else 0], axis=0) >= 1)
 
             predicate_found_t = \
-                int(np.count_nonzero([1 if (triple.predicate == t for t in proof_doc.token) else 0], axis=0) >= 1)
+                int(np.count_nonzero([1 if (triple.predicate == t for t in proof_doc) else 0], axis=0) >= 1)
 
             object_found_t = \
-                int(np.count_nonzero([1 if (triple.object == t for t in proof_doc.token) else 0], axis=0) >= 1)
+                int(np.count_nonzero([1 if (triple.object == t for t in proof_doc) else 0], axis=0) >= 1)
 
             if subject_found == 0: subject_found = subject_found_t
             if predicate_found == 0: predicate_found = predicate_found_t
@@ -275,8 +300,8 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
             # relaxed string search
             index_max_jac_subject = -1
             index_max_jac_object = -1
-            for i in range(len(proof_doc.token)):
-                token=proof_doc.token[i].text
+            for i in range(len(proof_doc)):
+                token=proof_doc[i].text
                 _jts = get_jaccard_sim(token, triple.subject)
                 if max_jac_sim_subject < _jts:
                     max_jac_sim_subject = _jts
@@ -320,7 +345,8 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
 
 def extract_features(defactoNL_file):
     try:
-        with open(defactoNL_file, 'r') as handle:
+        import os
+        with open(os.getcwd() + '/' + defactoNL_file, 'rb') as handle:
             defactoNL = pickle.load(handle)
             X = []
             y = []
@@ -347,12 +373,12 @@ def export_training_data_proof_detection(defacto_output_folder):
     job_args=[]
 
     for file in glob.glob(defacto_output_folder + "*.pkl"):
-        job_args.append(defacto_output_folder + file)
+        job_args.append(file)
 
     print('job args created - raw datasets: ' + str(len(job_args)))
     if len(job_args) > 0:
         with Pool(processes=int(4)) as pool:
-            out = pool.starmap(extract_features, job_args)
+            out = pool.map(extract_features, job_args)
 
         with open(defacto_output_folder + 'features.proof.x', 'wb') as handle:
             pickle.dump(out[0], handle, protocol=pickle.HIGHEST_PROTOCOL)
@@ -373,7 +399,7 @@ def export_defacto_models(train_file):
             with Pool(processes=int(4)) as pool:
                 err_asyncres = pool.starmap(save_defacto_model, job_args)
 
-        print('done', np.count_nonzero(err_asyncres, 0))
+        print('done! tot errors:', np.count_nonzero(err_asyncres, 0))
     except Exception as e:
         print(e)
 
