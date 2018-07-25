@@ -259,6 +259,7 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
 
         for triple in claim_spo_lst:
             str_triple = ' '.join(triple)
+
             _s = smith_waterman_distance(proof_candidate, str_triple, 3, -2, -2, -2, 1)
             _j = get_jaccard_sim(proof_candidate, str_triple)
             _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(str_triple)))
@@ -267,17 +268,17 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
             jac_max = _j if _j > jac_max else jac_max
             cos_max = _c if _c > cos_max else cos_max
 
-            _s = smith_waterman_distance(proof_candidate, triple.subject, 3, -2, -2, -2, 1)
-            _j = get_jaccard_sim(proof_candidate, triple.subject)
-            _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(triple.subject)))
+            _s = smith_waterman_distance(proof_candidate, triple[0], 3, -2, -2, -2, 1)
+            _j = get_jaccard_sim(proof_candidate, triple[0])
+            _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(triple[0])))
 
             swd_max_s = _s if _s > swd_max_s else swd_max_s
             jac_max_s = _j if _j > jac_max_s else jac_max_s
             cos_max_s = _c if _c > cos_max_s else cos_max_s
 
-            _s = smith_waterman_distance(proof_candidate, triple.object, 3, -2, -2, -2, 1)
-            _j = get_jaccard_sim(proof_candidate, triple.object)
-            _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(triple.object)))
+            _s = smith_waterman_distance(proof_candidate, triple[2], 3, -2, -2, -2, 1)
+            _j = get_jaccard_sim(proof_candidate, triple[2])
+            _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(triple[2])))
 
             swd_max_o = _s if _s > swd_max_o else swd_max_o
             jac_max_o = _j if _j > jac_max_o else jac_max_o
@@ -285,13 +286,13 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
 
             # exact string match
             subject_found_t = \
-                int(np.count_nonzero([1 if (triple.subject == t for t in proof_doc) else 0], axis=0) >= 1)
+                int(np.count_nonzero([1 if (triple[0] == t for t in proof_doc) else 0], axis=0) >= 1)
 
             predicate_found_t = \
-                int(np.count_nonzero([1 if (triple.predicate == t for t in proof_doc) else 0], axis=0) >= 1)
+                int(np.count_nonzero([1 if (triple[1] == t for t in proof_doc) else 0], axis=0) >= 1)
 
             object_found_t = \
-                int(np.count_nonzero([1 if (triple.object == t for t in proof_doc) else 0], axis=0) >= 1)
+                int(np.count_nonzero([1 if (triple[2] == t for t in proof_doc) else 0], axis=0) >= 1)
 
             if subject_found == 0: subject_found = subject_found_t
             if predicate_found == 0: predicate_found = predicate_found_t
@@ -302,9 +303,9 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
 
             if subject_found_t and object_found_t:
 
-                idx_s = substring_indexes(triple.subject, claim)
-                idx_p = substring_indexes(triple.predicate, claim)
-                idx_o = substring_indexes(triple.object, claim)
+                idx_s = substring_indexes(triple[0], claim)
+                idx_p = substring_indexes(triple[1], claim)
+                idx_o = substring_indexes(triple[2], claim)
                 idx_neg = []
                 for neg in neg_keyword_set:
                     idx_neg.extend(substring_indexes(neg, claim))
@@ -328,12 +329,12 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
             index_max_jac_object = -1
             for i in range(len(proof_doc)):
                 token=proof_doc[i].text
-                _jts = get_jaccard_sim(token, triple.subject)
+                _jts = get_jaccard_sim(token, triple[0])
                 if max_jac_sim_subject < _jts:
                     max_jac_sim_subject = _jts
                     index_max_jac_subject = i
 
-                _jto = get_jaccard_sim(token, triple.object)
+                _jto = get_jaccard_sim(token, triple[2])
                 if max_jac_sim_object < _jto:
                     max_jac_sim_object = _jto
                     index_max_jac_object = i
