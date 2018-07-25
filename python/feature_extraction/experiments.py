@@ -318,27 +318,64 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
     except Exception as e:
         raise e
 
-def extract_features(defactoNL):
+def extract_features(defactoNL_file):
     try:
-        X = []
-        y = []
-        if defactoNL.error_on_extract_triples is True:
-            raise Exception('error on defacto triple extraction')
+        with open(defactoNL_file, 'r') as handle:
+            defactoNL = pickle.load(handle)
+            X = []
+            y = []
+            if defactoNL.error_on_extract_triples is True:
+                raise Exception('error on defacto triple extraction')
 
-        for proof in defactoNL.proofs:
-            y.append(1)
-            X.append(_extract_features(proof, defactoNL.claim, defactoNL.triples))
+            for proof in defactoNL.proofs:
+                y.append(1)
+                X.append(_extract_features(proof, defactoNL.claim, defactoNL.triples))
 
-        for non_proof in defactoNL.sentences:
-            y.append(0)
-            X.append(_extract_features(non_proof, defactoNL.claim, defactoNL.triples))
+            for non_proof in defactoNL.sentences:
+                y.append(0)
+                X.append(_extract_features(non_proof, defactoNL.claim, defactoNL.triples))
 
-        assert len(X) == len(y)
-        return X, y
+            assert len(X) == len(y)
+            return (X, y)
 
     except Exception as e:
-        raise e
+        print(repr(e))
 
+
+def export_training_data_proof_detection(defacto_output_folder):
+    import glob
+    job_args=[]
+
+    for file in glob.glob(defacto_output_folder + "*.pkl"):
+        job_args.append(defacto_output_folder + file)
+
+    print('job args created - raw datasets: ' + str(len(job_args)))
+    if len(job_args) > 0:
+        with Pool(processes=int(4)) as pool:
+            out = pool.starmap(extract_features, job_args)
+
+        with open(defacto_output_folder + 'features.proof.x', 'wb') as handle:
+            pickle.dump(out[0], handle, protocol=pickle.HIGHEST_PROTOCOL)
+        with open(defacto_output_folder + 'features.proof.y', 'wb') as handle:
+            pickle.dump(out[1], handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+
+def export_defacto_models(train_file):
+    try:
+        job_args = []
+        i = 0
+        with jsonlines.open(train_file, mode='r') as reader:
+            for obj in reader:
+                job_args.append((obj["id"], obj["claim"], obj["label"], obj["evidence"][0]))
+
+        print('job args created - raw datasets: ' + str(len(job_args)))
+        if len(job_args) > 0:
+            with Pool(processes=int(4)) as pool:
+                err_asyncres = pool.starmap(save_defacto_model, job_args)
+
+        print('done', np.count_nonzero(err_asyncres, 0))
+    except Exception as e:
+        print(e)
 
 def save_defacto_model(fever_id, claim, label, evidences_train):
     try:
@@ -386,19 +423,9 @@ if __name__ == '__main__':
     try:
         train_file = "small_train.jsonl"
         defacto_output_folder = 'defacto_models/'
-        job_args = []
-        i=0
-        with jsonlines.open(train_file, mode='r') as reader:
-            for obj in reader:
-                job_args.append((obj["id"], obj["claim"], obj["label"], obj["evidence"][0]))
 
-        print('job args created - raw datasets: ' + str(len(job_args)))
-        if len(job_args) > 0:
-            with Pool(processes=int(4)) as pool:
-                err_asyncres = pool.starmap(save_defacto_model, job_args)
-
-        print('done', np.count_nonzero(err_asyncres, 0))
-
+        export_defacto_models(train_file)
+        export_training_data_proof_detection(defacto_output_folder)
 
     except Exception as e:
         print(e)
