@@ -6,16 +6,24 @@ from defacto.wikipedia import WikiPediaUtils
 
 class ModelNL(object):
 
-    def __init__(self, claim, language='en'):
+    def __init__(self, claim, language='en', label=None, fever_id=None):
         try:
+            self.id = fever_id
             self.claim = claim
             self.language = language
-            self.label = None
-            self.evidences = []
+            self.label = label
+            self.external_documents_names = []
+            self.proofs = []
+            self.proofs_tt = []
+            self.sentences = []
+            self.sentences_tt = []
             self.triples = []
+            self.topic_terms = []
+            self.error_on_extract_triples = False
+            self.error_message = ''
             self.__extract_triples()
-            if len(self.triples) == 0:
-                raise Exception('could not extract triples out of the claim!')
+            #if len(self.triples) == 0:
+            #    raise Exception('could not extract triples out of the claim!')
         except Exception as error:
             raise error
 
@@ -27,6 +35,14 @@ class ModelNL(object):
             triples = re1.get_triples(self.claim)
             for t in triples:
                 self.triples.append([t.subject, t.predicate, t.object])
+        except Exception as e:
+            self.error_on_extract_triples = True
+            self.error_message = repr(e)
+
+    def extract_features(self):
+        try:
+            print('extracting features...')
+
         except:
             raise
 
