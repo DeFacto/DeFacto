@@ -1,41 +1,15 @@
-import codecs
-import numpy as np
-import json
-import jsonlines
-import pickle
-from multiprocessing.dummy import Pool
-from defacto.model_nl import ModelNL
-import spacy
-
-#PATH_WIKIPAGES = '/data/defacto/github/fever/data/wiki-pages/wiki-pages-split/'
-PATH_WIKIPAGES = '/Users/diegoesteves/Github/factchecking/DeFacto/python/feature_extraction/'
-
-# nlp = spacy.load('en_core_web_sm') # no vectors
-nlp = spacy.load('en_core_web_md')
-#lg ?
-
 
 '''
 ------------------------------------------------------------------------------------------------------------------
 UTILS
 ------------------------------------------------------------------------------------------------------------------
 '''
+import sklearn
 
-from collections import Counter
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import re, math
+from sklearn.cross_validation import train_test_split
+from sklearn.externals import joblib
+from sklearn.metrics import classification_report
 
-WORD = re.compile(r'\w+')
-
-neg_keyword_set = {"don't", "do not", "never", "nothing", "nowhere", "noone", "none", "not",
-                      "hasn't", "has not" , "hadn't", "had not", "haven't", "have not" ,"can't", "can not",
-                      "couldn't", "could not", "shouldn't", "should not", "won't", "will not",
-                      "wouldn't", "would not", "doesn't", "does not",
-                      "didn't", "did not", "isn't", "is not", "aren't", "are not", "ain't", "am not"}
-
-from nltk.corpus import stopwords
-stopwords = stopwords.words('english')
 
 def get_cosine(vec1, vec2):
      intersection = set(vec1.keys()) & set(vec2.keys())
@@ -75,7 +49,6 @@ def levenshtein_distance(str1, str2):
     ratio = (lensum - ldist) / lensum
     return (ldist, ratio)
 
-
 def _get_vectors(*strs):
     text = [t for t in strs]
     vectorizer = CountVectorizer(text)
@@ -93,27 +66,16 @@ def get_jaccard_sim(str1, str2):
     return float(len(c)) / (len(a) + len(b) - len(c))
 
 def smith_waterman_distance(seq1, seq2, match=3, mismatch=-1, insertion=-1, deletion=-1, normalize=1):
-    '''simple and general smith waterman distance for NLP feature extraction'''
-    # switch sequences, so that seq1 is the longer sequence to search for seq2
     if len(seq2) > len(seq1): seq1, seq2 = seq2, seq1
-    # create the distance matrix
     mat = np.zeros((len(seq2) + 1, len(seq1) + 1))
-    # iterate over the matrix column wise
     for i in range(1, mat.shape[0]):
-        # iterate over the matrix row wise
         for j in range(1, mat.shape[1]):
-            # set the current matrix element with the maximum of 4 different cases
             mat[i, j] = max(
-                # negative values are not allowed
                 0,
-                # if previous character matches increase the score by match, else decrease it by mismatch
                 mat[i - 1, j - 1] + (match if seq1[j - 1] == seq2[i - 1] else mismatch),
-                # one character is missing in seq2, so decrease the score by deletion
                 mat[i - 1, j] + deletion,
-                # one additional character is in seq2, so decrease the scare by insertion
                 mat[i, j - 1] + insertion
             )
-    # the maximum of mat is now the score, which is returned raw or normalized (with a range of 0-1)
     return np.max(mat) / (len(seq2) * match) if normalize else np.max(mat)
 
 '''
@@ -196,10 +158,8 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
     '''
     try:
 
-
         MAX_DIST = 99999
         THETA_RELAX = 0.9
-
         X=[]
 
         proof_doc = nlp(proof_candidate)
@@ -225,14 +185,12 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
         X.append(len([t for t in proof_doc if t.text in stopwords]))
         X.append(len(proof_doc.ents))
 
-
-
         swd_max = 0.0
         jac_max = 0.0
         cos_max = 0.0
 
         swd_max_s = 0.0
-        jac_max_s= 0.0
+        jac_max_s = 0.0
         cos_max_s = 0.0
 
         swd_max_o = 0.0
@@ -260,6 +218,14 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
         for triple in claim_spo_lst:
             str_triple = ' '.join(triple)
 
+            s_tokens = [tok for tok in triple[0].split() if tok not in stopwords and tok not in punctuations]
+            p_tokens = [tok for tok in triple[1].split() if tok not in stopwords and tok not in punctuations]
+            o_tokens = [tok for tok in triple[2].split() if tok not in stopwords and tok not in punctuations]
+
+            triple_s_clean = ' '.join(s_tokens)
+            triple_p_clean = ' '.join(p_tokens)
+            triple_o_clean = ' '.join(o_tokens)
+
             _s = smith_waterman_distance(proof_candidate, str_triple, 3, -2, -2, -2, 1)
             _j = get_jaccard_sim(proof_candidate, str_triple)
             _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(str_triple)))
@@ -268,16 +234,16 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
             jac_max = _j if _j > jac_max else jac_max
             cos_max = _c if _c > cos_max else cos_max
 
-            _s = smith_waterman_distance(proof_candidate, triple[0], 3, -2, -2, -2, 1)
-            _j = get_jaccard_sim(proof_candidate, triple[0])
+            _s = smith_waterman_distance(proof_candidate, triple_s_clean, 3, -2, -2, -2, 1)
+            _j = get_jaccard_sim(proof_candidate, triple_s_clean)
             _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(triple[0])))
 
             swd_max_s = _s if _s > swd_max_s else swd_max_s
             jac_max_s = _j if _j > jac_max_s else jac_max_s
             cos_max_s = _c if _c > cos_max_s else cos_max_s
 
-            _s = smith_waterman_distance(proof_candidate, triple[2], 3, -2, -2, -2, 1)
-            _j = get_jaccard_sim(proof_candidate, triple[2])
+            _s = smith_waterman_distance(proof_candidate, triple_o_clean, 3, -2, -2, -2, 1)
+            _j = get_jaccard_sim(proof_candidate, triple_o_clean)
             _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(triple[2])))
 
             swd_max_o = _s if _s > swd_max_o else swd_max_o
@@ -285,14 +251,13 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
             cos_max_o = _c if _c > cos_max_o else cos_max_o
 
             # exact string match
-            subject_found_t = \
-                int(np.count_nonzero([1 if (triple[0] == t for t in proof_doc) else 0], axis=0) >= 1)
+            subject_found_t = 0
+            predicate_found_t = 0
+            object_found_t = 0
 
-            predicate_found_t = \
-                int(np.count_nonzero([1 if (triple[1] == t for t in proof_doc) else 0], axis=0) >= 1)
-
-            object_found_t = \
-                int(np.count_nonzero([1 if (triple[2] == t for t in proof_doc) else 0], axis=0) >= 1)
+            if triple_s_clean in proof_doc.text: subject_found_t = 1
+            if triple_p_clean in proof_doc.text: predicate_found_t = 1
+            if triple_o_clean in proof_doc.text: object_found_t = 1
 
             if subject_found == 0: subject_found = subject_found_t
             if predicate_found == 0: predicate_found = predicate_found_t
@@ -303,9 +268,9 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
 
             if subject_found_t and object_found_t:
 
-                idx_s = substring_indexes(triple[0], claim)
-                idx_p = substring_indexes(triple[1], claim)
-                idx_o = substring_indexes(triple[2], claim)
+                idx_s = substring_indexes(triple_s_clean, claim)
+                idx_p = substring_indexes(triple_p_clean, claim)
+                idx_o = substring_indexes(triple_o_clean, claim)
                 idx_neg = []
                 for neg in neg_keyword_set:
                     idx_neg.extend(substring_indexes(neg, claim))
@@ -376,9 +341,51 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
     except Exception as e:
         raise e
 
+
+
+def train_model():
+    try:
+        from sklearn.svm import SVC
+
+        with open(defacto_output_folder + 'features.proof.train', 'rb') as handle:
+            data = pickle.load(handle)
+            data = np.array(data)
+            X = data[:, 0]
+            y = data[:, 1]
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+            clf = SVC()
+            model = clf.fit(X_train, y_train)
+            predictions = model.predict(X_test)
+            #P, R, F, S = sklearn.metrics.precision_recall_fscore_support(y_test, predictions)
+            print(classification_report(y_test, predictions, digits=3))
+
+            filename = defacto_output_folder + 'svm.mod'
+            joblib.dump(model, filename)
+
+    except Exception as e:
+        print(repr(e))
+
+'''
+out = predict('aniketh was born in rio', [['dddasd'], ['asdsadasd']])
+= [1, 0]
+
+
+
+
+def predict(claim, sentences):
+    X = feature.extract(claim, sentences)
+    pred = model.predict(X)
+    return pred
+'''
+
+
+
 def extract_features(defactoNL_file):
     try:
         import os
+        from defacto.model_nl import ModelNL
+        print(os.getcwd() + '/' + defactoNL_file)
         with open(os.getcwd() + '/' + defactoNL_file, 'rb') as handle:
             defactoNL = pickle.load(handle)
             X = []
@@ -398,41 +405,48 @@ def extract_features(defactoNL_file):
             return (X, y)
 
     except Exception as e:
-        print(repr(e))
-
+        print('-- error ', repr(e))
 
 def export_training_data_proof_detection(defacto_output_folder):
     import glob
-    job_args=[]
 
-    for file in glob.glob(defacto_output_folder + "*.pkl"):
-        job_args.append(file)
-
-    print('job args created - raw datasets: ' + str(len(job_args)))
-    if len(job_args) > 0:
-        with Pool(processes=int(4)) as pool:
-            out = pool.map(extract_features, job_args)
-
-        with open(defacto_output_folder + 'features.proof.x', 'wb') as handle:
-            pickle.dump(out[0], handle, protocol=pickle.HIGHEST_PROTOCOL)
-        with open(defacto_output_folder + 'features.proof.y', 'wb') as handle:
-            pickle.dump(out[1], handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-
-def export_defacto_models(train_file):
     try:
-        job_args = []
+
+        job_args=[]
         i = 0
-        with jsonlines.open(train_file, mode='r') as reader:
-            for obj in reader:
-                job_args.append((obj["id"], obj["claim"], obj["label"], obj["evidence"][0]))
+
+        for file in glob.glob(defacto_output_folder + "*.pkl"):
+            if i > MAX_TRAINING_DATA:
+                break
+            job_args.append(file)
+            i += 1
 
         print('job args created - raw datasets: ' + str(len(job_args)))
         if len(job_args) > 0:
             with Pool(processes=int(4)) as pool:
-                err_asyncres = pool.starmap(save_defacto_model, job_args)
+                out = pool.map(extract_features, job_args)
 
-        print('done! tot errors:', np.count_nonzero(err_asyncres, 0))
+            with open(defacto_output_folder + 'features.proof.train', 'wb') as handle:
+                pickle.dump(out, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    except Exception as e:
+        print(repr(e))
+
+def export_defacto_models(train_file):
+    try:
+        job_args = []
+        with jsonlines.open(train_file, mode='r') as reader:
+            for obj in reader:
+                f = Path(ROOT_PATH + "/" + defacto_output_folder + 'defacto_' + str(obj["id"]) + '.pkl')
+                if not f.exists():
+                    job_args.append((obj["id"], obj["claim"], obj["label"], obj["evidence"][0]))
+
+        print('job args created - raw datasets: ' + str(len(job_args)))
+
+        if len(job_args) > 0:
+            with Pool(processes=int(4)) as pool:
+                err_asyncres = pool.starmap(save_defacto_model, job_args)
+            print('done! tot errors:', np.count_nonzero(err_asyncres, 0))
+
     except Exception as e:
         print(e)
 
@@ -440,6 +454,7 @@ def save_defacto_model(fever_id, claim, label, evidences_train):
     try:
         if claim == 'NOT ENOUGH INFO':
             return
+        from defacto.model_nl import ModelNL
         defactoNL = ModelNL(claim=claim, label=label, language='en', fever_id=fever_id)
         id_sent_proofs = {}
         # first gets the sentence ids (from train.jsonl)
@@ -478,12 +493,57 @@ if __name__ == '__main__':
 
     # 1. proof candidate (YES, NO)
     # 2. fact-checking (REFUTES, SUPPORT, NOT ENOUGH INFO)
+    # export PYTHONPATH=$PYTHONPATH:/Users/diegoesteves/Github/factchecking/DeFacto/python/
 
     try:
+        import sys
+        import os
+        import codecs
+        import numpy as np
+        import json
+        import jsonlines
+        import pickle
+        from multiprocessing.dummy import Pool
+        import spacy
+
+        # PATH_WIKIPAGES = '/data/defacto/github/fever/data/wiki-pages/wiki-pages-split/'
+        PATH_WIKIPAGES = '/Users/diegoesteves/Github/factchecking/DeFacto/python/feature_extraction/'
+
+        # nlp = spacy.load('en_core_web_sm') # no vectors
+        nlp = spacy.load('en_core_web_md')
+        # lg ?
+
+        from collections import Counter
+        from sklearn.feature_extraction.text import CountVectorizer
+        from sklearn.metrics.pairwise import cosine_similarity
+        import re, math
+        import string
+        from pathlib import Path
+
+        WORD = re.compile(r'\w+')
+
+        neg_keyword_set = {"don't", "do not", "never", "nothing", "nowhere", "noone", "none", "not",
+                           "hasn't", "has not", "hadn't", "had not", "haven't", "have not", "can't", "can not",
+                           "couldn't", "could not", "shouldn't", "should not", "won't", "will not",
+                           "wouldn't", "would not", "doesn't", "does not",
+                           "didn't", "did not", "isn't", "is not", "aren't", "are not", "ain't", "am not"}
+
+        from nltk.corpus import stopwords
+
+        stopwords = stopwords.words('english')
+        punctuations = string.punctuation
+
+        ROOT_PATH = os.getcwd()
+        MAX_TRAINING_DATA = 1000
         train_file = "small_train.jsonl"
         defacto_output_folder = 'defacto_models/'
 
+        train_model()
+
+        exit(0)
+
         export_defacto_models(train_file)
+
         export_training_data_proof_detection(defacto_output_folder)
 
     except Exception as e:
