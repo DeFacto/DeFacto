@@ -230,6 +230,15 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
         swd_max = 0.0
         jac_max = 0.0
         cos_max = 0.0
+
+        swd_max_s = 0.0
+        jac_max_s= 0.0
+        cos_max_s = 0.0
+
+        swd_max_o = 0.0
+        jac_max_o = 0.0
+        cos_max_o = 0.0
+
         subject_found = 0
         predicate_found = 0
         object_found = 0
@@ -249,13 +258,30 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
         dist_indexes_relaxed = MAX_DIST
 
         for triple in claim_spo_lst:
-            _s = smith_waterman_distance(claim, ' '.join(triple), 3, -2, -2, -2, 1)
-            _j = get_jaccard_sim(claim, ' '.join(triple))
-            _c = cosine_similarity([claim], [' '.join(triple)])
+            str_triple = ' '.join(triple)
+            _s = smith_waterman_distance(proof_candidate, str_triple, 3, -2, -2, -2, 1)
+            _j = get_jaccard_sim(proof_candidate, str_triple)
+            _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(str_triple)))
 
             swd_max = _s if _s > swd_max else swd_max
             jac_max = _j if _j > jac_max else jac_max
             cos_max = _c if _c > cos_max else cos_max
+
+            _s = smith_waterman_distance(proof_candidate, triple.subject, 3, -2, -2, -2, 1)
+            _j = get_jaccard_sim(proof_candidate, triple.subject)
+            _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(triple.subject)))
+
+            swd_max_s = _s if _s > swd_max_s else swd_max_s
+            jac_max_s = _j if _j > jac_max_s else jac_max_s
+            cos_max_s = _c if _c > cos_max_s else cos_max_s
+
+            _s = smith_waterman_distance(proof_candidate, triple.object, 3, -2, -2, -2, 1)
+            _j = get_jaccard_sim(proof_candidate, triple.object)
+            _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(triple.object)))
+
+            swd_max_o = _s if _s > swd_max_o else swd_max_o
+            jac_max_o = _j if _j > jac_max_o else jac_max_o
+            cos_max_o = _c if _c > cos_max_o else cos_max_o
 
             # exact string match
             subject_found_t = \
@@ -323,6 +349,12 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
         X.append(swd_max)
         X.append(jac_max)
         X.append(cos_max)
+        X.append(swd_max_s)
+        X.append(jac_max_s)
+        X.append(cos_max_s)
+        X.append(swd_max_o)
+        X.append(jac_max_o)
+        X.append(cos_max_o)
         X.append(subject_found)
         X.append(predicate_found)
         X.append(object_found)
