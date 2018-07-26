@@ -80,7 +80,7 @@ def smith_waterman_distance(seq1, seq2, match=3, mismatch=-1, insertion=-1, dele
 
 '''
 ------------------------------------------------------------------------------------------------------------------
-DeFacto FEVER
+DeFacto
 ------------------------------------------------------------------------------------------------------------------
 '''
 
@@ -116,21 +116,6 @@ def getDocContentFromFile(doc_filename):
         print("")
         return None
 
-'''
-
-
-has_subject
-has_predicate
-has_object
-has_similar_subject (SmithWaterman)
-has_similar_predicate (SmithWaterman)
-has_similar_object (SmithWaterman)
-has_negation
-sim_claim_evidence_avg
-max_triple_similarity (triple claim x triple text)
-
-
-'''
 
 # TODO:
 # levenshtein_distance against claim subject X proof_candidates_subjects
@@ -226,6 +211,10 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
             triple_p_clean = ' '.join(p_tokens)
             triple_o_clean = ' '.join(o_tokens)
 
+            triple_s_clean = triple_s_clean.lower()
+            triple_p_clean = triple_p_clean.lower()
+            triple_o_clean = triple_o_clean.lower()
+
             _s = smith_waterman_distance(proof_candidate, str_triple, 3, -2, -2, -2, 1)
             _j = get_jaccard_sim(proof_candidate, str_triple)
             _c = (get_cosine(text_to_vector(proof_candidate), text_to_vector(str_triple)))
@@ -255,9 +244,11 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
             predicate_found_t = 0
             object_found_t = 0
 
-            if triple_s_clean in proof_doc.text: subject_found_t = 1
-            if triple_p_clean in proof_doc.text: predicate_found_t = 1
-            if triple_o_clean in proof_doc.text: object_found_t = 1
+            proof_doc_text_lower = proof_doc.text.lower()
+
+            if triple_s_clean in proof_doc_text_lower: subject_found_t = 1
+            if triple_p_clean in proof_doc_text_lower: predicate_found_t = 1
+            if triple_o_clean in proof_doc_text_lower: object_found_t = 1
 
             if subject_found == 0: subject_found = subject_found_t
             if predicate_found == 0: predicate_found = predicate_found_t
@@ -268,12 +259,12 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
 
             if subject_found_t and object_found_t:
 
-                idx_s = substring_indexes(triple_s_clean, claim)
-                idx_p = substring_indexes(triple_p_clean, claim)
-                idx_o = substring_indexes(triple_o_clean, claim)
+                idx_s = substring_indexes(triple_s_clean, proof_doc_text_lower)
+                idx_p = substring_indexes(triple_p_clean, proof_doc_text_lower)
+                idx_o = substring_indexes(triple_o_clean, proof_doc_text_lower)
                 idx_neg = []
                 for neg in neg_keyword_set:
-                    idx_neg.extend(substring_indexes(neg, claim))
+                    idx_neg.extend(substring_indexes(neg, proof_doc_text_lower))
 
 
                 for i_s in idx_s:
@@ -294,12 +285,12 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
             index_max_jac_object = -1
             for i in range(len(proof_doc)):
                 token=proof_doc[i].text
-                _jts = get_jaccard_sim(token, triple[0])
+                _jts = get_jaccard_sim(token.lower(), triple_s_clean)
                 if max_jac_sim_subject < _jts:
                     max_jac_sim_subject = _jts
                     index_max_jac_subject = i
 
-                _jto = get_jaccard_sim(token, triple[2])
+                _jto = get_jaccard_sim(token.lower(), triple_o_clean)
                 if max_jac_sim_object < _jto:
                     max_jac_sim_object = _jto
                     index_max_jac_object = i
@@ -360,7 +351,7 @@ def train_model():
             y = []
             [y.extend(row) for row in [r for r in data_y]]
 
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.7, random_state=42)
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
             print('training the classifier...')
             clf = RandomForestClassifier()
@@ -423,12 +414,13 @@ def export_training_data_proof_detection(defacto_output_folder):
 
         job_args=[]
         i = 0
-
-        for file in glob.glob(defacto_output_folder + "*.pkl"):
-            if i > MAX_TRAINING_DATA:
-                break
-            job_args.append(file)
-            i += 1
+        f = Path(ROOT_PATH + "/" + defacto_output_folder + 'features.proof.train')
+        if not f.exists():
+            for file in glob.glob(defacto_output_folder + "*.pkl"):
+                if i > MAX_TRAINING_DATA:
+                    break
+                job_args.append(file)
+                i += 1
 
         print('export_training_data_proof_detection: job args created: ' + str(len(job_args)))
         if len(job_args) > 0:
@@ -545,12 +537,12 @@ if __name__ == '__main__':
         train_file = "small_train.jsonl"
         defacto_output_folder = 'defacto_models/'
 
-        #print('export_defacto_models()')
-        #export_defacto_models(train_file)
-        #print('=======================================================================================')
-        #print('export_training_data_proof_detection()')
-        #export_training_data_proof_detection(defacto_output_folder)
-        #print('=======================================================================================')
+        print('export_defacto_models()')
+        export_defacto_models(train_file)
+        print('=======================================================================================')
+        print('export_training_data_proof_detection()')
+        export_training_data_proof_detection(defacto_output_folder)
+        print('=======================================================================================')
         print('train_model()')
         train_model()
 
