@@ -34,5 +34,5 @@
 1. Set the paths and constants in ```defacto/definitions.py```
 2. Install the ClausIE [link](https://github.com/AnthonyMRios/pyclausie)
 3. Download and start the StanfordCoreNLP server: ``` java -cp "*" -Xmx4g edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout=5000 ```
-4. Install Solr 7.4.0
+4. Install Solr 7.4.0 (http://localhost:8983/solr)
 5. Download extra models: ```python -m spacy download en_core_web_lg```

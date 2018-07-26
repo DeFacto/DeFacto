@@ -6,9 +6,9 @@ UTILS
 '''
 import sklearn
 
-from sklearn.cross_validation import train_test_split
 from sklearn.externals import joblib
 from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
 
 
 def get_cosine(vec1, vec2):
@@ -345,22 +345,31 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
 
 def train_model():
     try:
-        from sklearn.svm import SVC
+        from sklearn.ensemble import RandomForestClassifier
 
         with open(defacto_output_folder + 'features.proof.train', 'rb') as handle:
             data = pickle.load(handle)
             data = np.array(data)
-            X = data[:, 0]
-            y = data[:, 1]
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+            data_X = data[:, 0]
+            data_y = data[:, 1]
 
-            clf = SVC()
+            print('reshaping the data...')
+            X = []
+            [X.extend(row) for row in [row2 for row2 in data_X]]
+
+            y = []
+            [y.extend(row) for row in [r for r in data_y]]
+
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.7, random_state=42)
+
+            print('training the classifier...')
+            clf = RandomForestClassifier()
             model = clf.fit(X_train, y_train)
             predictions = model.predict(X_test)
             #P, R, F, S = sklearn.metrics.precision_recall_fscore_support(y_test, predictions)
             print(classification_report(y_test, predictions, digits=3))
 
-            filename = defacto_output_folder + 'svm.mod'
+            filename = defacto_output_folder + 'rfc.mod'
             joblib.dump(model, filename)
 
     except Exception as e:
@@ -421,7 +430,7 @@ def export_training_data_proof_detection(defacto_output_folder):
             job_args.append(file)
             i += 1
 
-        print('job args created - raw datasets: ' + str(len(job_args)))
+        print('export_training_data_proof_detection: job args created: ' + str(len(job_args)))
         if len(job_args) > 0:
             with Pool(processes=int(4)) as pool:
                 out = pool.map(extract_features, job_args)
@@ -437,10 +446,10 @@ def export_defacto_models(train_file):
         with jsonlines.open(train_file, mode='r') as reader:
             for obj in reader:
                 f = Path(ROOT_PATH + "/" + defacto_output_folder + 'defacto_' + str(obj["id"]) + '.pkl')
-                if not f.exists():
+                if not f.exists() and obj["label"] != 'NOT ENOUGH INFO':
                     job_args.append((obj["id"], obj["claim"], obj["label"], obj["evidence"][0]))
 
-        print('job args created - raw datasets: ' + str(len(job_args)))
+        print('export_defacto_models: job args created: ' + str(len(job_args)))
 
         if len(job_args) > 0:
             with Pool(processes=int(4)) as pool:
@@ -452,8 +461,6 @@ def export_defacto_models(train_file):
 
 def save_defacto_model(fever_id, claim, label, evidences_train):
     try:
-        if claim == 'NOT ENOUGH INFO':
-            return
         from defacto.model_nl import ModelNL
         defactoNL = ModelNL(claim=claim, label=label, language='en', fever_id=fever_id)
         id_sent_proofs = {}
@@ -507,7 +514,7 @@ if __name__ == '__main__':
         import spacy
 
         # PATH_WIKIPAGES = '/data/defacto/github/fever/data/wiki-pages/wiki-pages-split/'
-        PATH_WIKIPAGES = '/Users/diegoesteves/Github/factchecking/DeFacto/python/feature_extraction/'
+        PATH_WIKIPAGES = '/Users/diegoesteves/Github/factchecking/DeFacto/python/defacto/'
 
         # nlp = spacy.load('en_core_web_sm') # no vectors
         nlp = spacy.load('en_core_web_md')
@@ -538,13 +545,14 @@ if __name__ == '__main__':
         train_file = "small_train.jsonl"
         defacto_output_folder = 'defacto_models/'
 
+        #print('export_defacto_models()')
+        #export_defacto_models(train_file)
+        #print('=======================================================================================')
+        #print('export_training_data_proof_detection()')
+        #export_training_data_proof_detection(defacto_output_folder)
+        #print('=======================================================================================')
+        print('train_model()')
         train_model()
-
-        exit(0)
-
-        export_defacto_models(train_file)
-
-        export_training_data_proof_detection(defacto_output_folder)
 
     except Exception as e:
         print(e)
