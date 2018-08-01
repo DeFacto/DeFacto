@@ -9,7 +9,43 @@ import sklearn
 from sklearn.externals import joblib
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
+import nltk
+import numpy as np
+import spacy
 
+import sys
+import os
+import codecs
+import numpy as np
+import json
+import jsonlines
+import pickle
+from multiprocessing.dummy import Pool
+import spacy
+
+# nlp = spacy.load('en_core_web_sm') # no vectors
+nlp = spacy.load('en_core_web_md')
+# lg ?
+
+from collections import Counter
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import re, math
+import string
+from pathlib import Path
+
+WORD = re.compile(r'\w+')
+
+neg_keyword_set = {"don't", "do not", "never", "nothing", "nowhere", "noone", "none", "not",
+                   "hasn't", "has not", "hadn't", "had not", "haven't", "have not", "can't", "can not",
+                   "couldn't", "could not", "shouldn't", "should not", "won't", "will not",
+                   "wouldn't", "would not", "doesn't", "does not",
+                   "didn't", "did not", "isn't", "is not", "aren't", "are not", "ain't", "am not"}
+
+from nltk.corpus import stopwords
+
+stopwords = stopwords.words('english')
+punctuations = string.punctuation
 
 def get_cosine(vec1, vec2):
      intersection = set(vec1.keys()) & set(vec2.keys())
@@ -147,6 +183,7 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
         THETA_RELAX = 0.9
         X=[]
 
+        nlp = spacy.load('en_core_web_md')
         proof_doc = nlp(proof_candidate)
 
         tot_neg = 0
@@ -337,10 +374,14 @@ def _extract_features(proof_candidate, claim, claim_spo_lst):
 def train_model():
     try:
         from sklearn.ensemble import RandomForestClassifier
+        from sklearn.metrics import confusion_matrix
+        from sklearn.ensemble import AdaBoostClassifier
+        from sklearn.tree import DecisionTreeClassifier
 
-        with open(defacto_output_folder + 'features.proof.train', 'rb') as handle:
+        with open(DEFACTO_OUTPUT_FOLDER + 'features.proof.train', 'rb') as handle:
             data = pickle.load(handle)
             data = np.array(data)
+            print(data.shape)
             data_X = data[:, 0]
             data_y = data[:, 1]
 
@@ -351,17 +392,32 @@ def train_model():
             y = []
             [y.extend(row) for row in [r for r in data_y]]
 
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=MODEL_TEST_SIZE, random_state=42)
 
             print('training the classifier...')
-            clf = RandomForestClassifier()
+            clf = RandomForestClassifier(n_jobs=-1, n_estimators=100)
+            clf2 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),
+                         algorithm="SAMME",
+                         n_estimators=200)
             model = clf.fit(X_train, y_train)
+            model2 = clf2.fit(X_train, y_train)
             predictions = model.predict(X_test)
+            predictions2 = model2.predict(X_test)
             #P, R, F, S = sklearn.metrics.precision_recall_fscore_support(y_test, predictions)
             print(classification_report(y_test, predictions, digits=3))
+            tn, fp, fn, tp = confusion_matrix(y_test, predictions).ravel()
+            print('tn, fp, fn, tp', tn, fp, fn, tp)
+            print('--------------------------------------------------------')
+            print(classification_report(y_test, predictions2, digits=3))
+            tn, fp, fn, tp = confusion_matrix(y_test, predictions2).ravel()
+            print('tn, fp, fn, tp', tn, fp, fn, tp)
 
-            filename = defacto_output_folder + 'rfc.mod'
+            filename = DEFACTO_OUTPUT_FOLDER + 'rfc.mod'
             joblib.dump(model, filename)
+
+            filename2 = DEFACTO_OUTPUT_FOLDER + 'rfc2.mod'
+            joblib.dump(model2, filename2)
+
 
     except Exception as e:
         print(repr(e))
@@ -381,63 +437,79 @@ def predict(claim, sentences):
 
 
 
-def extract_features(defactoNL_file):
+def extract_features(defactoNL_full_path_file):
     try:
         import os
         from defacto.model_nl import ModelNL
-        print(os.getcwd() + '/' + defactoNL_file)
-        with open(os.getcwd() + '/' + defactoNL_file, 'rb') as handle:
+        with open(defactoNL_full_path_file, 'rb') as handle:
             defactoNL = pickle.load(handle)
             X = []
             y = []
             if defactoNL.error_on_extract_triples is True:
-                raise Exception('error on defacto triple extraction')
+                print('error on defacto triple extraction: ', defactoNL.error_message)
+            else:
+                for proof in defactoNL.proofs:
+                    y.append(1)
+                    X.append(_extract_features(proof, defactoNL.claim, defactoNL.triples))
 
-            for proof in defactoNL.proofs:
-                y.append(1)
-                X.append(_extract_features(proof, defactoNL.claim, defactoNL.triples))
+                for non_proof in defactoNL.sentences:
+                    y.append(0)
+                    X.append(_extract_features(non_proof, defactoNL.claim, defactoNL.triples))
 
-            for non_proof in defactoNL.sentences:
-                y.append(0)
-                X.append(_extract_features(non_proof, defactoNL.claim, defactoNL.triples))
-
-            assert len(X) == len(y)
-            return (X, y)
+                assert len(X) == len(y)
+                return (X, y)
 
     except Exception as e:
         print('-- error ', repr(e))
 
-def export_training_data_proof_detection(defacto_output_folder):
+def export_training_data_proof_detection():
     import glob
 
     try:
 
         job_args=[]
         i = 0
-        f = Path(ROOT_PATH + "/" + defacto_output_folder + 'features.proof.train')
-        if not f.exists():
-            for file in glob.glob(defacto_output_folder + "*.pkl"):
-                if i > MAX_TRAINING_DATA:
-                    break
-                job_args.append(file)
-                i += 1
+        #f = Path(ROOT_PATH + DEFACTO_OUTPUT_FOLDER + 'features.proof.train')
+        #print(f)
+        #if not f.exists():
+        for file in glob.glob(ROOT_PATH + DEFACTO_OUTPUT_FOLDER + "*.pkl"):
+            if i > MAX_TRAINING_DATA:
+                break
+            job_args.append(file)
+            i += 1
 
-        print('export_training_data_proof_detection: job args created: ' + str(len(job_args)))
+        print('export_training_data_proof_detection() - job args created: ' + str(len(job_args)))
+
         if len(job_args) > 0:
             with Pool(processes=int(4)) as pool:
                 out = pool.map(extract_features, job_args)
 
-            with open(defacto_output_folder + 'features.proof.train', 'wb') as handle:
-                pickle.dump(out, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    except Exception as e:
-        print(repr(e))
+            print('callback vector size = ', len(out))
+            o2 = []
+            for o in out:
+                if o is not None:
+                    o2.append(o)
 
-def export_defacto_models(train_file):
+            assert len(o2) > 0
+
+            with open(ROOT_PATH + DEFACTO_OUTPUT_FOLDER + 'features.proof.train', 'wb') as handle:
+                pickle.dump(o2, handle, protocol=pickle.HIGHEST_PROTOCOL)
+                print('file dump OK', len(o2))
+
+    except Exception as e:
+        print('error export_training_data_proof_detection()', repr(e))
+
+def export_defacto_models():
     try:
         job_args = []
-        with jsonlines.open(train_file, mode='r') as reader:
+        print('searching .pkl files in: ', ROOT_PATH + DEFACTO_OUTPUT_FOLDER)
+        i=0
+        with jsonlines.open(TRAIN_FILE, mode='r') as reader:
             for obj in reader:
-                f = Path(ROOT_PATH + "/" + defacto_output_folder + 'defacto_' + str(obj["id"]) + '.pkl')
+                if i > MAX_TRAINING_DATA:
+                    break
+                i+=1
+                f = Path(ROOT_PATH + DEFACTO_OUTPUT_FOLDER + 'defacto_' + str(obj["id"]) + '.pkl')
                 if not f.exists() and obj["label"] != 'NOT ENOUGH INFO':
                     job_args.append((obj["id"], obj["claim"], obj["label"], obj["evidence"][0]))
 
@@ -447,6 +519,9 @@ def export_defacto_models(train_file):
             with Pool(processes=int(4)) as pool:
                 err_asyncres = pool.starmap(save_defacto_model, job_args)
             print('done! tot errors:', np.count_nonzero(err_asyncres, 0))
+            print('done! tot OK:', len(err_asyncres) - np.count_nonzero(err_asyncres, 0))
+        else:
+            print(' -- ATTENTION: no job created!')
 
     except Exception as e:
         print(e)
@@ -480,11 +555,16 @@ def save_defacto_model(fever_id, claim, label, evidences_train):
                             defactoNL.sentences.append(_e[index])
                             defactoNL.sentences_tt.append(_tts[index])
 
-        with open(defacto_output_folder + 'defacto_' + str(defactoNL.id) + '.pkl', 'wb') as handle:
+        assert defactoNL.proofs is not None
+        assert defactoNL.sentences is not None and len(defactoNL.sentences) > 0
+
+        path = ROOT_PATH + DEFACTO_OUTPUT_FOLDER + 'defacto_' + str(defactoNL.id) + '.pkl'
+        #print(path)
+        with open(path, 'wb') as handle:
             pickle.dump(defactoNL, handle, protocol=pickle.HIGHEST_PROTOCOL)
         return 0
     except Exception as e:
-        print(e)
+        print(repr(e))
         return 1
 
 
@@ -504,9 +584,6 @@ if __name__ == '__main__':
         import pickle
         from multiprocessing.dummy import Pool
         import spacy
-
-        # PATH_WIKIPAGES = '/data/defacto/github/fever/data/wiki-pages/wiki-pages-split/'
-        PATH_WIKIPAGES = '/Users/diegoesteves/Github/factchecking/DeFacto/python/defacto/'
 
         # nlp = spacy.load('en_core_web_sm') # no vectors
         nlp = spacy.load('en_core_web_md')
@@ -532,19 +609,42 @@ if __name__ == '__main__':
         stopwords = stopwords.words('english')
         punctuations = string.punctuation
 
-        ROOT_PATH = os.getcwd()
-        MAX_TRAINING_DATA = 1000
-        train_file = "small_train.jsonl"
-        defacto_output_folder = 'defacto_models/'
+        ROOT_PATH = os.getcwd() + "/"
+        print(' --> root: ', ROOT_PATH)
+        MAX_TRAINING_DATA = 100000
+        MODEL_TEST_SIZE = 0.3
 
-        print('export_defacto_models()')
-        export_defacto_models(train_file)
-        print('=======================================================================================')
-        print('export_training_data_proof_detection()')
-        export_training_data_proof_detection(defacto_output_folder)
-        print('=======================================================================================')
-        print('train_model()')
-        train_model()
+        args = sys.argv
+        print(args)
+        print(args[1])
+
+
+        if args[1] == 'prod':
+            PATH_WIKIPAGES = '/data/defacto/github/fever/data/wiki-pages/wiki-pages-split/'
+            TRAIN_FILE = "/data/defacto/github/fever/data/subsample_train_relevant_docs.jsonl"
+            DEFACTO_OUTPUT_FOLDER = 'defacto/defacto_models/'
+        else:
+            if len(args) == 0:
+                args = ['dev', '0', '1', '2']
+            PATH_WIKIPAGES = '/Users/diegoesteves/Github/factchecking/DeFacto/python/defacto/'
+            TRAIN_FILE = "defacto/small_train.jsonl"
+            DEFACTO_OUTPUT_FOLDER = 'defacto/defacto_models/'
+
+
+        if '0' in args:
+            print('=======================================================================================')
+            print(' -- export_defacto_models()')
+            export_defacto_models()
+
+        if '1' in args:
+            print('=======================================================================================')
+            print(' -- export_training_data_proof_detection()')
+            export_training_data_proof_detection()
+
+        if '2' in args:
+            print('=======================================================================================')
+            print(' -- train_model()')
+            train_model()
 
     except Exception as e:
         print(e)
