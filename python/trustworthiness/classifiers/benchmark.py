@@ -47,7 +47,7 @@ __version__ = "0.0.1"
 __email__ = "diegoesteves@gmail.com"
 __status__ = "Dev"
 
-FILE_NAME_TEMPLATE = 'cls_%s_%s_%s.pkl'
+
 LINE_TEMPLATE = '%s\t%s\t%s\t%s\t%.3f\t%.3f\t%.3f\t%d\t%.3f\n'
 likert_labels = {1: 'non-credible', 2: 'low', 3: 'neutral', 4: 'likely', 5: 'credible'}
 likert_labels_short = {0: 'non-credible', 1: 'credible'}
@@ -341,7 +341,7 @@ def test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log
 def train_test_export_save(clf, X_train, y_train, X_test, y_test, out, cls_label, padding, experiment_type, file_log, subfolder):
 
     clf.fit(X_train, y_train)
-    file = FILE_NAME_TEMPLATE % (cls_label.lower(), padding, experiment_type)
+    file = BENCHMARK_FILE_NAME_TEMPLATE % (cls_label.lower(), padding, experiment_type)
     joblib.dump(clf, config.dir_models + '/credibility/' + subfolder + file)
 
     return test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log, subfolder)

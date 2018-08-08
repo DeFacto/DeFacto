@@ -5,6 +5,7 @@ import requests
 import urllib3
 
 from config import DeFactoConfig
+from defacto.definitions import SOCIAL_NETWORK_NAMES
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from bs4 import BeautifulSoup
@@ -195,19 +196,19 @@ class WebScrap:
         except:
             return k, None
 
-    def get_outbound_links(self):
+    def get_outbound_links(self, tp='http'):
         try:
             links = []
-            for link in self.soup.findAll('a', attrs={'href': re.compile("^http://")}):
+            for link in self.soup.findAll('a', attrs={'href': re.compile("^" + tp + "://")}):
                 links.append(link.get('href'))
             return links
         except Exception as e:
             raise e
 
-    def get_outbound_domains(self):
+    def get_outbound_domains(self, tp='http'):
         try:
             domains = []
-            for link in self.soup.findAll('a', attrs={'href': re.compile("^http://")}):
+            for link in self.soup.findAll('a', attrs={'href': re.compile("^" + tp + "://")}):
                 domains.append(tldextract.extract(link.get('href')))
             return list(set(domains))
         except Exception as e:
@@ -235,15 +236,18 @@ class WebScrap:
 
     def get_total_social_media_tags(self):
         try:
-            data = set(self.soup.text.split(' '))
-            str_data = ' '.join(data)
-            tweeter = set(re.findall("https://twitter.com", str_data, re.I))
-            return tweeter
+            data = set(str(self.soup).split(' '))
+            str_data = ' '.join(data).lower()
+            tags = []
+            for social in SOCIAL_NETWORK_NAMES:
+                tags.append(len(re.findall(social.lower(), str_data, re.I)))
+            return tags
         except Exception as e:
             raise e
 
 
 if __name__ == '__main__':
-    scrap = WebScrap('www.espn.com/.../amare-stoudemire-phoenix-suns-retirement-perfect')
+    scrap = WebScrap('https://www.globo.com/')
     print(scrap.get_title())
     print(scrap.get_body())
+    print(scrap.get_total_social_media_tags())

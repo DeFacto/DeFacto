@@ -2,6 +2,7 @@ import multiprocessing
 
 #from coffeeandnoodles.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
 #from coffeeandnoodles.web.scrap.scrap import WebScrap
+import nltk
 from bs4 import BeautifulSoup
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.externals import joblib
@@ -40,7 +41,8 @@ import os
 
 import warnings
 
-from trustworthiness.classifiers.benchmark import FILE_NAME_TEMPLATE
+from data.datasets.read_lexicons import GeneralInquirer, get_vader_lexicon
+from defacto.definitions import DEFACTO_LEXICON_GI_PATH
 from trustworthiness.util import get_html_file_path, get_features_web
 from trustworthiness.topic_utils import TopicTerms
 
@@ -149,10 +151,44 @@ class FeatureExtractor:
         self.topic = TopicTerms()
         self.sources = OpenSourceData()
         self.page_rank = PageRankData()
+        self.gi = GeneralInquirer(DEFACTO_LEXICON_GI_PATH)
 
-    def get_feature_vector(self):
-        return []
-    # TODO: implement
+    def get_final_feature_vector(self):
+       try:
+           out = []
+           out.extend(self.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot))
+           out.append(self.get_feat_domain())
+           out.append(self.get_feat_suffix())
+           out.append(self.get_feat_source_info())
+           out.append(self.get_feat_tot_outbound_links(tp='http'))
+           out.append(self.get_feat_tot_outbound_links(tp='https'))
+           out.append(self.get_feat_tot_outbound_links(tp='ftp'))
+           out.append(self.get_feat_tot_outbound_links(tp='ftps'))
+           out.append(self.get_feat_tot_outbound_domains(tp='http'))
+           out.append(self.get_feat_tot_outbound_domains(tp='https'))
+           out.append(self.get_feat_tot_outbound_domains(tp='ftp'))
+           out.append(self.get_feat_tot_outbound_domains(tp='ftps'))
+           out.extend(self.get_feat_text_category(self.title))
+           out.extend(self.get_feat_text_category(self.body))
+           out.extend(self.get_feat_text_category(self.get_summary_lex_rank(100)))
+           out.extend(self.get_feat_text_category(self.get_summary(100)))
+           out.extend(self.get_feat_readability_metrics())
+           out.extend(self.get_feat_spam(self.title))
+           out.extend(self.get_feat_spam(self.body))
+           out.extend(self.get_feat_social_media_tags())
+           out.append(self.get_opensources_classification(self.url))
+           out.extend(self.get_opensources_count(self.url))
+           # out.append(extractor.get_number_of_arguments(extractor.url))
+           out.extend(self.get_open_page_rank(self.url))
+           out.extend(self.get_gi(self.body))
+           out.extend(self.get_gi(self.title))
+           out.extend(self.get_vader(self.body))
+           out.extend(self.get_vader(self.title))
+
+           return out
+
+       except Exception as e:
+           config.logger.error(repr(e))
 
     def filterTerm(self,word):
         if word is not None:
@@ -448,16 +484,16 @@ class FeatureExtractor:
             config.logger.error(repr(e))
             return 0
 
-    def get_feat_tot_outbound_links(self):
+    def get_feat_tot_outbound_links(self, tp):
         try:
-            return len(self.webscrap.get_outbound_links())
+            return len(self.webscrap.get_outbound_links(tp))
         except Exception as e:
             config.logger.error(repr(e))
             return 0
 
-    def get_feat_tot_outbound_domains(self):
+    def get_feat_tot_outbound_domains(self, tp):
         try:
-            return len(self.webscrap.get_outbound_domains())
+            return len(self.webscrap.get_outbound_domains(tp))
         except Exception as e:
             config.logger.error(repr(e))
             return 0
@@ -504,7 +540,7 @@ class FeatureExtractor:
 
     def get_feat_social_media_tags(self):
         try:
-            return len(self.webscrap.get_total_social_media_tags())
+            return self.webscrap.get_total_social_media_tags()
         except Exception as e:
             config.logger.error(repr(e))
             return 0
@@ -557,17 +593,16 @@ class FeatureExtractor:
         return [num_reliable, num_unreliable, total_num_sources]
 
     def get_number_of_arguments(self, url):
-        #TODO: wait aniketh processing
-        return 0
         try:
             urlcode = get_md5_from_string(url)
             with open(config.root_dir_data + 'marseille/output.json', 'r') as fh:
                 dargs = json.load(fh)
             try:
                 tot_args=dargs[urlcode]
+                return tot_args
             except KeyError:
                 config.logger.warn('this should not happen but lets move on for now, check marseille dump files/pre-processing!')
-                tot_args=0
+                raise
         except Exception as e:
             config.logger.error(repr(e))
             raise
@@ -592,6 +627,28 @@ class FeatureExtractor:
         except Exception as e:
             config.logger.error(repr(e))
             return ''
+
+    def get_gi(self, text):
+
+        try:
+
+            vectors = []
+            tokens = nltk.word_tokenize(text)
+            for token in tokens:
+                vectors.append(self.gi.get_word_vector(token))
+            return [sum(x) for x in zip(*vectors)]
+        except Exception as e:
+            config.logger.error(repr(e))
+            return [0] * 182
+
+    def get_vader(self, text):
+        try:
+            return get_vader_lexicon(text)
+        except Exception as e:
+            config.logger.error(repr(e))
+            return [0, 0, 0, 0]
+
+
 
 def likert2bin(likert):
 
@@ -695,7 +752,7 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp
         if html2seq is True:
             le = joblib.load(config.dir_output + exp_folder + 'microsoft_dataset_html2seq_enc.pkl')
             # load best classifier
-            file = FILE_NAME_TEMPLATE % (best_cls.lower(), best_pad, exp_type_combined)
+            file = BENCHMARK_FILE_NAME_TEMPLATE % (best_cls.lower(), best_pad, exp_type_combined)
             config.logger.debug('loading model: ' + file)
             clf_html2seq = joblib.load(config.dir_models + '/credibility/' + 'html2seq/' + file)
 
@@ -807,41 +864,27 @@ def export_features_multi_proc_microsoft(exp_folder):
 
 
 if __name__ == '__main__':
+    '''
+    manually example of features extracted from a given URL
+    '''
+    fe = FeatureExtractor('https://www.amazon.com/Aristocats-Phil-Harris/dp/B00A29IQPK')
+    print(fe.get_final_feature_vector())
+    exit(0)
 
     '''
     automatically exports all features from the microsoft dataset (cached websites)
     '''
     EXP_FOLDER = 'exp002/'
-    if 1==2:
-        #read_feat_files_and_merge()
-        #exit(0)
-        export_features_multi_proc_microsoft(EXP_FOLDER)
-    elif 1==3:
-        '''
-        manually example of features extracted from a given URL
-        '''
-        fe = FeatureExtractor('https://www.amazon.com/Aristocats-Phil-Harris/dp/B00A29IQPK')
 
-        summary1 = fe.get_summary_lex_rank(5)
-        summary2 = fe.get_summary(5)
-        print(fe.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot))
-        print(fe.get_feat_domain())
-        print(fe.get_feat_suffix())
-        print(fe.get_feat_source_info())
-        print(fe.get_feat_tot_outbound_links())
-        print(fe.get_feat_tot_outbound_domains())
-        print(fe.get_feat_text_category(fe.title))
-        print(fe.get_feat_text_category(fe.body))
-        print(fe.get_feat_text_category(summary1))
-        print(fe.get_feat_text_category(summary2))
-        print(fe.get_feat_readability_metrics())
-        print(fe.get_feat_spam(fe.title))
-        print(fe.get_feat_spam(fe.body))
-        print(fe.get_feat_social_media_tags())
-        print(fe.get_opensources_classification(fe.url))
-        print(fe.get_opensources_count(fe.url))
-        print(fe.get_number_of_arguments(fe.url))
-        print(fe.get_open_page_rank('jamesjema.es'))
+    read_feat_files_and_merge()
+
+    #exit(0)
+
+    export_features_multi_proc_microsoft(EXP_FOLDER)
+
+    exit(0)
+
+
 
 
 

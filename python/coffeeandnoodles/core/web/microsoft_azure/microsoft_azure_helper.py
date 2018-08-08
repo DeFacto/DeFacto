@@ -12,6 +12,7 @@ import json
 import time
 
 from config import DeFactoConfig
+from defacto.definitions import BING_LANG_DISABLED
 
 
 class MicrosoftAzurePlatform(object):
@@ -45,6 +46,8 @@ class MicrosoftAzurePlatform(object):
 
     def bing_detect_language(self, text):
         try:
+            if BING_LANG_DISABLED == 1:
+                return 'en'
             if len(text) > 500:
                 text = text[0:500]
             text = self.clean_text(text)
@@ -98,7 +101,7 @@ class MicrosoftAzurePlatform(object):
 if __name__ == "__main__":
     config = DeFactoConfig()
     azure = MicrosoftAzurePlatform(config.translation_secret)
-    for i in range(100):
+    for i in range(10):
         print(azure.bing_detect_language('ola tomas tudo bem?') + ' - ' + str(i))
         print(azure.bing_translate_text('sim sim por aqui tudo bem e com voce? Hup &%5', 'en') + ' - ' + str(i))
         q, t, i = azure.query_bing('diego esteves', config.search_engine_key, config.search_engine_tot_resources)

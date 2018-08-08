@@ -110,27 +110,7 @@ def get_features_web(extractor, topic, query, rank, url, likert, output_filename
         data['url'] = url
         data['likert'] = likert
 
-        out = []
-        out.extend(extractor.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot))
-        out.append(extractor.get_feat_domain())
-        out.append(extractor.get_feat_suffix())
-        out.append(extractor.get_feat_source_info())
-        out.append(extractor.get_feat_tot_outbound_links())
-        out.append(extractor.get_feat_tot_outbound_domains())
-        out.extend(extractor.get_feat_text_category(extractor.title))
-        out.extend(extractor.get_feat_text_category(extractor.body))
-        out.extend(extractor.get_feat_text_category(extractor.get_summary_lex_rank(100)))
-        out.extend(extractor.get_feat_text_category(extractor.get_summary(100)))
-        out.extend(extractor.get_feat_readability_metrics())
-        out.extend(extractor.get_feat_spam(extractor.title))
-        out.extend(extractor.get_feat_spam(extractor.body))
-        out.append(extractor.get_feat_social_media_tags())
-        out.append(extractor.get_opensources_classification(extractor.url))
-        out.extend(extractor.get_opensources_count(extractor.url))
-        out.append(extractor.get_number_of_arguments(extractor.url))
-        out.extend(extractor.get_open_page_rank(extractor.url))
-
-
+        out = extractor.get_final_feature_vector()
 
         tempname = str(output_filename).replace('microsoft_dataset_features_', 'microsoft_dataset_visual_features_')
         tempname = tempname.replace('.pkl', '.txt')
@@ -140,7 +120,6 @@ def get_features_web(extractor, topic, query, rank, url, likert, output_filename
         data['features'] = out
         config.logger.info('features extracted - OK: ' + extractor.url)
         joblib.dump(data, output_filename)
-
 
         return data
     except:
