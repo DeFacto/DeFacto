@@ -2,6 +2,8 @@ import multiprocessing
 
 #from coffeeandnoodles.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
 #from coffeeandnoodles.web.scrap.scrap import WebScrap
+import sys
+
 import nltk
 from bs4 import BeautifulSoup
 from keras.preprocessing.sequence import pad_sequences
@@ -27,7 +29,7 @@ from multiprocessing.dummy import Pool
 import pandas as pd
 from tldextract import tldextract
 from pathlib import Path
-
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from coffeeandnoodles.core.util import get_md5_from_string
 from coffeeandnoodles.core.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
 from coffeeandnoodles.core.web.scrap.scrap import WebScrap
@@ -41,9 +43,9 @@ import os
 
 import warnings
 
-from data.datasets.read_lexicons import GeneralInquirer, get_vader_lexicon
-from defacto.definitions import DEFACTO_LEXICON_GI_PATH
-from trustworthiness.util import get_html_file_path, get_features_web
+from defacto.definitions import DEFACTO_LEXICON_GI_PATH, BENCHMARK_FILE_NAME_TEMPLATE, \
+    DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, SOCIAL_NETWORK_NAMES
+from trustworthiness.util import get_html_file_path, get_features_web_microsoft, get_features_web_3c
 from trustworthiness.topic_utils import TopicTerms
 
 with warnings.catch_warnings():
@@ -67,6 +69,31 @@ class Singleton(object):
         if not cls._instance:
             cls._instance = object.__new__(cls, *args, **kwargs)
         return cls._instance
+
+@singleton
+class GeneralInquirer:
+
+    def __init__(self, path):
+        config.logger.info('loading GI lexicon...')
+        self.df = pd.read_table(path, sep="\t", na_values=0, low_memory=False, skiprows=1)
+        self.df.drop(self.df.columns[[1, 184, 185]], axis=1, inplace=True)
+        self.df.columns = ['col_' + str(i) for i in range(0,183)]
+        self.df.fillna(0, inplace=True)
+        self.df.set_index('col_0', inplace=True)
+        self.tot_features = len(self.df.columns)
+        config.logger.info('done! ' + str(self.tot_features) + ' word features')
+
+    def get_word_vector(self, word):
+        word = word.upper()
+        not_found=[0] * self.tot_features
+        try:
+            ret = self.df.loc[word]
+        except:
+            try:
+                ret = self.df.loc[word + '#1']
+            except:
+                return not_found
+        return [1 if c != 0 else 0 for c in ret]
 
 @singleton
 class Classifiers():
@@ -138,20 +165,26 @@ class FeatureExtractor:
 
     def __init__(self, url, timeout=15, local_file_path=None, error=False, save_webpage_file=False):
         #self.DataTable = pd.read_table(config.dataset_ext_microsoft_webcred_webpages_cache,sep=",",header=None,names=["topic","query","rank","url","rating"])
-        assert (local_file_path is not None and save_webpage_file is False) or \
-               (local_file_path is None)
-        self.url = url
-        self.local_file_path = local_file_path
-        self.error = error
-        self.webscrap = WebScrap(url, timeout, 'lxml', local_file_path)
-        self.title = self.webscrap.get_title()
-        self.body = self.webscrap.get_body()
-        clf = Classifiers()
-        self.classifiers = clf
-        self.topic = TopicTerms()
-        self.sources = OpenSourceData()
-        self.page_rank = PageRankData()
-        self.gi = GeneralInquirer(DEFACTO_LEXICON_GI_PATH)
+        try:
+            assert (local_file_path is not None and save_webpage_file is False) or \
+                   (local_file_path is None)
+            self.url = url
+            self.local_file_path = local_file_path
+            self.timeout = timeout
+            self.error = error
+            self.webscrap = None
+            self.title = None
+            self.body = None
+            clf = Classifiers()
+            self.classifiers = clf
+            self.topic = TopicTerms()
+            self.sources = OpenSourceData()
+            self.page_rank = PageRankData()
+            self.gi = GeneralInquirer(DEFACTO_LEXICON_GI_PATH)
+            self.error_message = ''
+        except Exception as e:
+            self.error_message = repr(e)
+            self.error = True
 
     def get_final_feature_vector(self):
        try:
@@ -182,8 +215,8 @@ class FeatureExtractor:
            out.extend(self.get_open_page_rank(self.url))
            out.extend(self.get_gi(self.body))
            out.extend(self.get_gi(self.title))
-           out.extend(self.get_vader(self.body))
-           out.extend(self.get_vader(self.title))
+           out.extend(self.get_vader_lexicon(self.body))
+           out.extend(self.get_vader_lexicon(self.title))
 
            return out
 
@@ -434,7 +467,7 @@ class FeatureExtractor:
             return [pred_probs[0], pred_probs[1], pred_klass]
         except Exception as e:
             config.logger.error(repr(e))
-            return 0,0,0
+            return 0, 0, 0
 
     def get_feat_sentiment(self):
         '''
@@ -543,7 +576,7 @@ class FeatureExtractor:
             return self.webscrap.get_total_social_media_tags()
         except Exception as e:
             config.logger.error(repr(e))
-            return 0
+            return [0] * SOCIAL_NETWORK_NAMES
 
     def get_opensources_classification(self, url):
         '''
@@ -586,11 +619,14 @@ class FeatureExtractor:
                     num_reliable += 1  # this is a reliable source
                 else:
                     num_unreliable += 1  # not a very reliable source
+
+            return [num_reliable, num_unreliable, total_num_sources]
+
         except Exception as e:
             config.logger.error(repr(e))
             return [0, 0, 0]
 
-        return [num_reliable, num_unreliable, total_num_sources]
+
 
     def get_number_of_arguments(self, url):
         try:
@@ -619,7 +655,7 @@ class FeatureExtractor:
             return [pginfo['page_rank_decimal'], pginfo['rank']]
         except Exception as e:
             config.logger.error(repr(e))
-            return 0
+            return [0, 0]
 
     def get_sequence_html(self):
         try:
@@ -631,24 +667,44 @@ class FeatureExtractor:
     def get_gi(self, text):
 
         try:
-
             vectors = []
             tokens = nltk.word_tokenize(text)
             for token in tokens:
                 vectors.append(self.gi.get_word_vector(token))
-            return [sum(x) for x in zip(*vectors)]
+            if len(vectors) == 0:
+                return [0] * self.gi.tot_features
+            else:
+                return [sum(x) for x in zip(*vectors)]
         except Exception as e:
             config.logger.error(repr(e))
-            return [0] * 182
+            return [0] * self.gi.tot_features
 
-    def get_vader(self, text):
+    def get_vader_lexicon(self, text):
         try:
-            return get_vader_lexicon(text)
+            analyzer = SentimentIntensityAnalyzer()
+            scores = analyzer.polarity_scores(text)
+            return [scores.get('neg'), scores.get('neu'), scores.get('pos'), scores.get('compound')]
         except Exception as e:
             config.logger.error(repr(e))
             return [0, 0, 0, 0]
 
+    def get_senti_wordnet_lexicon(word):
+        from nltk.corpus import sentiwordnet as swn
+        xxx = swn.senti_synsets(word)
+        for s in xxx:
+            print(s._neg_score)
+            print(s._pos_score)
+            print(s._obj_score)
 
+    def call_web_scrap(self):
+        try:
+            self.webscrap = WebScrap(self.url, self.timeout, 'lxml', self.local_file_path)
+            self.title = self.webscrap.get_title()
+            self.body = self.webscrap.get_body()
+        except Exception as e:
+            self.error = True
+            self.error_message = repr(e)
+            config.logger.error(self.error_message)
 
 def likert2bin(likert):
 
@@ -739,7 +795,6 @@ def get_html2sec_features(exp_folder):
         config.logger.error(repr(e))
         raise
 
-
 def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp_type_combined='bin'):
     try:
         assert (exp_folder is not None and exp_folder != '')
@@ -757,7 +812,7 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp
             clf_html2seq = joblib.load(config.dir_models + '/credibility/' + 'html2seq/' + file)
 
         for file in os.listdir(config.dir_output + exp_folder):
-            if file.endswith('_text_features.pkl') and file.startswith('microsoft_dataset'):
+            if file.endswith('_text_features.pkl'):
                 config.logger.info('features file found: ' + file)
                 features = joblib.load(config.dir_output + exp_folder + file)
                 config.logger.debug('extracting features')
@@ -766,7 +821,7 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp
                     if feat is None:
                         raise Exception('error in the feature extraction! No features extracted...')
                     # feat[2] = encoder.transform([feat[2]])
-                    feat[3] = encoder.transform([feat[3]])
+                    feat[3] = encoder.transform([feat[3]])[0]
                     del feat[2]
 
                     if html2seq is True:
@@ -793,6 +848,7 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp
         if len(XX) == 0:
             raise Exception('processed full file not found for this folder! ' + config.dir_output + exp_folder)
 
+        config.logger.info('OK')
         return XX, y, y2
 
 
@@ -800,18 +856,20 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp
         config.logger.error(repr(e))
         raise
 
-def read_feat_files_and_merge(exp_folder):
+def read_feat_files_and_merge(exp_folder, dataset):
     try:
         assert (exp_folder is not None and exp_folder != '')
+        assert (dataset is not None and dataset != '')
 
         features = []
-        for file in os.listdir(config.dir_output + exp_folder):
-            if file.endswith('.pkl') and not file.startswith('_microsoft'):
-                f=joblib.load(config.dir_output + exp_folder + file)
-                features.append(f)
+        path = config.dir_output + exp_folder + dataset + '/text/'
+        for file in os.listdir(path):
+            #if file.endswith('.pkl') and not file.startswith('_microsoft'):
+            f=joblib.load(path + file)
+            features.append(f)
 
-        name = 'microsoft_dataset_' + str(len(features)) + '_text_features.pkl'
-        joblib.dump(features, config.dir_output + exp_folder + name)
+        name = dataset + '_dataset_' + str(len(features)) + '_text_features.pkl'
+        joblib.dump(features, config.dir_output + exp_folder + dataset + '/' + name)
         config.logger.info('full features exported: ' + name)
 
         return features
@@ -820,9 +878,10 @@ def read_feat_files_and_merge(exp_folder):
         config.logger.error(repr(e))
         raise
 
-def export_features_multi_proc_microsoft(exp_folder):
+def __export_features_multi_proc_microsoft(exp_folder, export_html_tags):
 
     assert (exp_folder is not None and exp_folder != '')
+    SUBFOLDER = 'microsoft/'
     # get the parameters
     config.logger.info('reading MS dataset...')
     df = pd.read_csv(config.dataset_microsoft_webcred, delimiter='\t', header=0)
@@ -830,12 +889,16 @@ def export_features_multi_proc_microsoft(exp_folder):
     config.logger.info('creating job args...')
     job_args = []
 
+    tot_proc = 0
+    err = 0
     for index, row in df.iterrows():
         url = str(row[3])
         urlencoded = get_md5_from_string(url)
         name = 'microsoft_dataset_features_' + urlencoded + '.pkl'
-        my_file = Path(config.dir_output + exp_folder + name)
-        if not my_file.exists():
+        folder = config.dir_output + exp_folder + SUBFOLDER
+        my_file = Path(folder + 'text/' + name)
+        my_file_err = Path(folder + 'error/' + name)
+        if not my_file.exists() and not my_file_err.exists():
             topic = row[0]
             query = row[1]
             rank = int(row[2])
@@ -845,14 +908,24 @@ def export_features_multi_proc_microsoft(exp_folder):
                 fe = FeatureExtractor(url, local_file_path=path)
             else:
                 fe = FeatureExtractor(url)
-            job_args.append((fe, topic, query, rank, url, likert, my_file)) # -> multiple arguments
+            if fe.error is False:
+                job_args.append((fe, topic, query, rank, url, likert, folder, name, export_html_tags)) # -> multiple arguments
+                tot_proc += 1
+                if tot_proc > MAX_WEBSITES_PROCESS - 1:
+                    config.logger.warn('max number of websites reached: ' + str(MAX_WEBSITES_PROCESS))
+                    break
+            else:
+                err += 1
+
             if index % 100 ==0:
                 config.logger.info('processing job args ' + str(index))
             # extractors.append(fe) # -> single argument
-    config.logger.info('%f job args created (out of %s): starting multi thread' % (len(job_args), len(df)))
+
+    config.logger.info('%d job args created (out of %s): starting multi thread' % (len(job_args), len(df)))
+    config.logger.info('apart from the jobs, weve got %d errors' % (err))
     config.logger.info(str(multiprocessing.cpu_count()) + ' CPUs available')
     with Pool(processes=multiprocessing.cpu_count()) as pool:
-        asyncres = pool.starmap(get_features_web, job_args)
+        asyncres = pool.starmap(get_features_web_microsoft, job_args)
         #asyncres = pool.map(get_features_web, extractors)
 
     config.logger.info('feature extraction done! saving...')
@@ -862,28 +935,97 @@ def export_features_multi_proc_microsoft(exp_folder):
     config.logger.info('done! file: ' + name)
     #asyncres = sorted(asyncres)
 
+def __export_features_multi_proc_3c(exp_folder, export_html_tags):
+    assert (exp_folder is not None and exp_folder != '')
+    SUBFOLDER = '3c/'
+    # get the parameters
+    config.logger.info('reading 3C dataset...')
+    df_sites = pd.read_csv(DATASET_3C_SITES_PATH, na_values=0, delimiter=',', usecols=['document_id', 'document_url'])
+    df_scores = pd.read_csv(DATASET_3C_SCORES_PATH, na_values=0, delimiter=';', usecols=['average(documentevaluation_credibility)',
+                                                                            'mode(documentevaluation_credibility)',
+                                                                            'document_id'])
+
+    df_sites.set_index('document_id', inplace=True)
+    #df_scores.set_index('document_id', inplace=True)
+
+    config.logger.info('creating job args...')
+    job_args = []
+    err = 0
+    tot_proc = 0
+
+    for doc_index, row in df_sites.iterrows():
+        url = str(row[0])
+        url_id = doc_index
+        urlencoded = get_md5_from_string(url)
+        name = '3c_dataset_features_' + urlencoded + '.pkl'
+        folder = config.dir_output + exp_folder + SUBFOLDER
+        my_file = Path(folder + 'text/' + name)
+        my_file_err = Path(folder + 'error/' + name)
+        if not my_file.exists() and not my_file_err.exists():
+            temp = df_scores['document_id'].isin([url_id])
+            likert_mode = df_scores.loc[temp, 'mode(documentevaluation_credibility)']
+            likert_avg = df_scores.loc[temp, 'average(documentevaluation_credibility)']
+
+            #likert_mode = df_scores.loc[url_id]['mode(documentevaluation_credibility)']
+            #likert_avg = df_scores.loc[url_id]['average(documentevaluation_credibility)']
+            fe = FeatureExtractor(url)
+            if fe.error is False:
+                job_args.append((fe, url, likert_mode, likert_avg, folder, name, export_html_tags))  # -> multiple arguments
+                tot_proc += 1
+                if tot_proc > MAX_WEBSITES_PROCESS - 1:
+                    config.logger.warn('max number of websites reached: ' + str(MAX_WEBSITES_PROCESS))
+                    break
+            else:
+                err += 1
+            if tot_proc % 100 == 0:
+                config.logger.info('processing job args ' + str(tot_proc))
+
+    config.logger.info('%d job args created (out of %s): starting multi thread' % (len(job_args), len(df_sites)))
+    config.logger.info('apart from the jobs, weve got %d errors' % (err))
+    config.logger.info(str(multiprocessing.cpu_count()) + ' CPUs available')
+    with Pool(processes=multiprocessing.cpu_count()) as pool:
+        asyncres = pool.starmap(get_features_web_3c, job_args)
+
+    config.logger.info('feature extraction done! saving...')
+    name = '3c_dataset_' + str(len(job_args)) + '_text_features.pkl'
+    joblib.dump(asyncres, config.dir_output + exp_folder + name)
+    config.logger.info('done! file: ' + name)
+
+def export_features_multithread(exp_folder, dataset, export_html_tags = True):
+    if dataset == 'microsoft':
+        __export_features_multi_proc_microsoft(exp_folder, export_html_tags)
+    elif dataset == '3c':
+        __export_features_multi_proc_3c(exp_folder, export_html_tags)
+    else:
+        config.logger.error('dataset script not implemented: ' + dataset)
+
+
 
 if __name__ == '__main__':
+
     '''
     manually example of features extracted from a given URL
     '''
-    fe = FeatureExtractor('https://www.amazon.com/Aristocats-Phil-Harris/dp/B00A29IQPK')
-    print(fe.get_final_feature_vector())
-    exit(0)
+    #fe = FeatureExtractor('https://www.amazon.com/Aristocats-Phil-Harris/dp/B00A29IQPK')
+    #print(fe.get_final_feature_vector())
+
 
     '''
-    automatically exports all features from the microsoft dataset (cached websites)
+    automatically extracts all features from a given dataset (currently microsoft or 3c)
+    and saves the files locally, one per example (URL). 
+    Since it implements multithread, in order to have a final features file, 
+    one needs to call the method: read_feat_files_and_merge()
     '''
-    EXP_FOLDER = 'exp002/'
+    EXP_FOLDER = 'exp003/'
 
-    read_feat_files_and_merge()
+    #export_features_multithread(EXP_FOLDER, 'microsoft', export_html_tags=False)
+    #export_features_multithread(EXP_FOLDER, '3c', export_html_tags=False)
 
-    #exit(0)
-
-    export_features_multi_proc_microsoft(EXP_FOLDER)
-
-    exit(0)
-
+    '''
+    create a final traning file
+    '''
+    read_feat_files_and_merge(EXP_FOLDER, 'microsoft')
+    read_feat_files_and_merge(EXP_FOLDER, '3c')
 
 
 

@@ -433,6 +433,9 @@ def benchmark_text(X, y_likert, y_bin, exp_folder, random_state, test_size, comb
     x_axis_likert = []
     y_axis_bin = []
     y_axis_likert = []
+
+    print(X_train.shape)
+    print(X_test.shape)
     try:
         with open(config.dir_output + exp_folder + out_performance_file, "w") as file_log:
             file_log.write(HEADER)
@@ -699,7 +702,8 @@ def feature_selection():
 if __name__ == '__main__':
     try:
 
-        EXP_FOLDER = 'exp002/'
+        EXP_FOLDER = 'exp003/microsoft/'
+
         RANDOM_STATE=53
         TEST_SIZE=0.2
         PADS = [25, 50, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600,
@@ -716,7 +720,10 @@ if __name__ == '__main__':
 
         # TEXT FEATURES
         features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER)
+
         benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
+
+        exit(0)
 
         # HTML2Seq FEATURES
         (features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER)

@@ -98,30 +98,80 @@ def get_encoder_domain():
     joblib.dump(le, config.enc_domain)
     print(le.classes_)
 
-def get_features_web(extractor, topic, query, rank, url, likert, output_filename):
+def get_features_web_3c(extractor, url, likert_mode, likert_avg, folder, name, export_html_tags):
+
     try:
 
-        config.logger.info('process starts for : ' + extractor.url)
+        if extractor.webscrap is None:
+            extractor.call_web_scrap()
 
-        data = collections.defaultdict(dict)
-        data['topic'] = topic
-        data['query'] = query
-        data['rank'] = rank
-        data['url'] = url
-        data['likert'] = likert
+        if not extractor.error:
 
-        out = extractor.get_final_feature_vector()
+            config.logger.info('process starts for : ' + extractor.url)
 
-        tempname = str(output_filename).replace('microsoft_dataset_features_', 'microsoft_dataset_visual_features_')
-        tempname = tempname.replace('.pkl', '.txt')
-        with open(tempname, "w") as file:
-            file.write(str(extractor.get_sequence_html()))
+            data = collections.defaultdict(dict)
+            data['url'] = url
+            data['likert_mode'] = likert_mode
+            data['likert_avg'] = likert_avg
 
-        data['features'] = out
-        config.logger.info('features extracted - OK: ' + extractor.url)
-        joblib.dump(data, output_filename)
+            out = extractor.get_final_feature_vector()
 
-        return data
+            # text/
+            data['features'] = out
+            config.logger.info('features extracted - OK: ' + extractor.url)
+            joblib.dump(data, folder + 'text/' + name)
+
+            # html/
+            if export_html_tags:
+                with open(folder + 'html/' + name.replace('.pkl', '.txt'), "w") as file:
+                    file.write(str(extractor.get_sequence_html()))
+
+            return data
+
+        else:
+
+            Path(folder + 'error/' + name).touch()
+
+    except:
+        config.logger.error('features extraction - ERROR: ' + extractor.url)
+        raise
+
+def get_features_web_microsoft(extractor, topic, query, rank, url, likert, folder, name, export_html_tags):
+
+    try:
+
+        if extractor.webscrap is None:
+            extractor.call_web_scrap()
+
+        if not extractor.error:
+
+            config.logger.info('process starts for : ' + extractor.url)
+
+            data = collections.defaultdict(dict)
+            data['topic'] = topic
+            data['query'] = query
+            data['rank'] = rank
+            data['url'] = url
+            data['likert'] = likert
+
+            out = extractor.get_final_feature_vector()
+
+            # text/
+            data['features'] = out
+            config.logger.info('features extracted - OK: ' + extractor.url)
+            joblib.dump(data, folder + 'text/' + name)
+
+            # html/
+            if export_html_tags:
+                with open(folder + 'html/' + name.replace('.pkl', '.txt'), "w") as file:
+                    file.write(str(extractor.get_sequence_html()))
+
+            return data
+
+        else:
+
+            Path(folder + 'error/' + name).touch()
+
     except:
         config.logger.error('features extraction - ERROR: ' + extractor.url)
         raise
