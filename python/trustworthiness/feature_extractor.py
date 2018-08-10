@@ -44,7 +44,7 @@ import os
 import warnings
 
 from defacto.definitions import DEFACTO_LEXICON_GI_PATH, BENCHMARK_FILE_NAME_TEMPLATE, \
-    DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, SOCIAL_NETWORK_NAMES
+    DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, SOCIAL_NETWORK_NAMES, WEB_CREDIBILITY_DATA_PATH
 from trustworthiness.util import get_html_file_path, get_features_web_microsoft, get_features_web_3c
 from trustworthiness.topic_utils import TopicTerms
 
@@ -717,7 +717,7 @@ def likert2bin(likert):
     else:
         raise Exception('error y')
 
-def get_html2sec_features(exp_folder):
+def get_html2sec_features(exp_folder, ds_folder):
     tags_set = []
     sentences = []
     y = []
@@ -728,22 +728,24 @@ def get_html2sec_features(exp_folder):
     from sklearn import preprocessing
     le = preprocessing.LabelEncoder()
 
-    try:
-        my_file = Path(config.dir_output + exp_folder + 'html2seq.pkl')
+    config.logger.info('get_html2sec_features()')
 
-        path_html2seq = config.dir_output + exp_folder + 'html2seq/'
+    try:
+        my_file = Path(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
+
+        path_html2seq = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq/'
         if not os.path.exists(path_html2seq):
             os.makedirs(path_html2seq)
 
         if not my_file.exists():
-            for file_html in os.listdir(config.dir_output + exp_folder + '/html'):
+            for file_html in os.listdir(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + '/html'):
 
                 html2seq_feature_file = file_html.replace('.txt', '.pkl')
                 features_file = file_html.replace('dataset_visual_features_', 'dataset_features_')
                 features_file = features_file.replace('.txt', '.pkl')
 
-                path_feature = config.dir_output + exp_folder + 'text/'
-                path_html = config.dir_output + exp_folder + 'html/'
+                path_feature = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'text/'
+                path_html = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html/'
 
                 features = joblib.load(path_feature + features_file)
 
@@ -795,11 +797,11 @@ def get_html2sec_features(exp_folder):
 
             features = (X, y, y2)
 
-            joblib.dump(features, config.dir_output + exp_folder + 'html2seq.pkl')
-            joblib.dump(le, config.dir_output + exp_folder + 'html2seq_enc.pkl')
+            joblib.dump(features, WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
+            joblib.dump(le, WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq_enc.pkl')
         else:
-            features = joblib.load(config.dir_output + exp_folder + 'html2seq.pkl')
-            le = joblib.load(config.dir_output + exp_folder + 'html2seq_enc.pkl')
+            features = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
+            le = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq_enc.pkl')
 
         return (features, le)
 
@@ -807,9 +809,11 @@ def get_html2sec_features(exp_folder):
         config.logger.error(repr(e))
         raise
 
-def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp_type_combined='bin'):
+def get_text_features(exp_folder, ds_folder, html2seq = False, best_pad=0, best_cls='', exp_type_combined='bin'):
     try:
         assert (exp_folder is not None and exp_folder != '')
+        assert (ds_folder is not None and ds_folder != '')
+        config.logger.info('get_text_features()')
 
         XX = []
         y = []
@@ -817,16 +821,16 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp
         encoder = joblib.load(config.enc_domain)
 
         if html2seq is True:
-            le = joblib.load(config.dir_output + exp_folder + 'microsoft_dataset_html2seq_enc.pkl')
+            le = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq_enc.pkl')
             # load best classifier
             file = BENCHMARK_FILE_NAME_TEMPLATE % (best_cls.lower(), best_pad, exp_type_combined)
             config.logger.debug('loading model: ' + file)
-            clf_html2seq = joblib.load(config.dir_models + '/credibility/' + 'html2seq/' + file)
+            clf_html2seq = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'models/html2seq/' + file)
 
-        for file in os.listdir(config.dir_output + exp_folder):
+        for file in os.listdir(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder):
             if file.endswith('_text_features.pkl'):
                 config.logger.info('features file found: ' + file)
-                features = joblib.load(config.dir_output + exp_folder + file)
+                features = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + file)
                 config.logger.debug('extracting features')
                 for d in features:
                     feat = d.get('features')
@@ -838,8 +842,8 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp
 
                     if html2seq is True:
                         hash = get_md5_from_string(d.get('url'))
-                        file_name = 'microsoft_dataset_visual_features_%s.pkl' % (hash)
-                        x=joblib.load(config.dir_output + exp_folder + 'html2seq/' + file_name)
+                        file_name = '_dataset_visual_features_%s.pkl' % (hash)
+                        x=joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq/' + file_name)
                         if best_pad <= len(x):
                             x2 = le.transform(x[0:best_pad])
                             klass = clf_html2seq.predict([x2])[0]
@@ -860,9 +864,8 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp
                         y2.append(likert2bin(int(d.get('likert_mode'))))
 
 
-
         if len(XX) == 0:
-            raise Exception('processed full file not found for this folder! ' + config.dir_output + exp_folder)
+            raise Exception('processed full file not found for this folder! ' + WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder)
 
         config.logger.info('OK')
         return XX, y, y2
@@ -1036,13 +1039,13 @@ if __name__ == '__main__':
     EXP_FOLDER = 'exp003/'
 
     #export_features_multithread(EXP_FOLDER, 'microsoft', export_html_tags=True)
-    #export_features_multithread(EXP_FOLDER, '3c', export_html_tags=False)
+    #export_features_multithread(EXP_FOLDER, '3c', export_html_tags=True)
 
     '''
     create a final traning file
     '''
-    read_feat_files_and_merge(EXP_FOLDER, 'microsoft')
-    #read_feat_files_and_merge(EXP_FOLDER, '3c')
+    #read_feat_files_and_merge(EXP_FOLDER, 'microsoft')
+    read_feat_files_and_merge(EXP_FOLDER, '3c')
 
 
 

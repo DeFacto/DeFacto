@@ -29,3 +29,5 @@ DATASET_3C_SITES_PATH = EXPERIMENTS_FOLDER_PATH + 'web_credibility/datasets/cred
 DATASET_3C_SCORES_PATH = EXPERIMENTS_FOLDER_PATH + 'web_credibility/datasets/credibility corpus/reconcile_mturk_dm_ready.csv'
 
 MAX_WEBSITES_PROCESS = 9999
+
+WEB_CREDIBILITY_DATA_PATH = '/Users/diegoesteves/DropDrive/CloudStation/experiments_cache/web_credibility/output/'
