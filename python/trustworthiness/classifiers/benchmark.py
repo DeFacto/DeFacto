@@ -401,59 +401,62 @@ def benchmark_text(X, y_likert, y_bin, exp_folder, ds_folder, random_state, test
                    threshold_annotation_likert=0.45, exp_type_combined='bin'):
 
     config.logger.info('benchmark_text()')
-    input_layer_neurons = len(X) + 1
-    output_layer_neurons = 1
-    hidden_nodes = np.math.ceil(len(X) / (2 * (input_layer_neurons + output_layer_neurons)))
 
-    out_performance_file = 'out_performance_text.txt'
-    graph_bin_file = 'benchmark_text_bin.png'
-    graph_likert_file = 'benchmark_text_likert.png'
-    if combined is True:
-        out_performance_file = 'out_performance_combined_+' + exp_type_combined + '.txt'
-        graph_bin_file = 'benchmark_combined_bin_+' + exp_type_combined + '.png'
-        graph_likert_file = 'benchmark_combined_likert_+' + exp_type_combined + '.png'
-
-    classifiers = [
-        BernoulliNB(),
-        RandomForestClassifier(n_estimators=100, n_jobs=-1),
-        AdaBoostClassifier(),
-        BaggingClassifier(),
-        ExtraTreesClassifier(),
-        GradientBoostingClassifier(),
-        DecisionTreeClassifier(),
-        CalibratedClassifierCV(),
-        DummyClassifier(),
-        PassiveAggressiveClassifier(max_iter=1000, tol=1e-3),
-        RidgeClassifier(),
-        RidgeClassifierCV(),
-        SGDClassifier(max_iter=1000, tol=1e-3),
-        LogisticRegression(),
-        KNeighborsClassifier(),
-        MLPClassifier(hidden_layer_sizes=(hidden_nodes,hidden_nodes,hidden_nodes), solver='adam', alpha=1e-05)
-        ##OneVsRestClassifier(SVC(kernel='linear', probability=True))
-
-    ]
-
-    i = 1
-    X_train, X_test, y_train_likert, y_test_likert = train_test_split(X, y_likert, test_size=test_size, random_state=random_state)
-    X_train_bin, X_test_bin, y_train_bin, y_test_bin = train_test_split(X, y_bin, test_size=test_size, random_state=random_state)
-
-    # just to double check...
-    assert np.all(X_train == X_train_bin)
-
-    scaler.fit(X_train)
-    X_train = scaler.transform(X_train)
-    X_test = scaler.transform(X_test)
-    estimators = []
-
-    x_axis_bin = []
-    x_axis_likert = []
-    y_axis_bin = []
-    y_axis_likert = []
-
-    print(X_train.shape)
-    print(X_test.shape)
     try:
+
+        input_layer_neurons = len(X) + 1
+        output_layer_neurons = 1
+        hidden_nodes = np.math.ceil(len(X) / (2 * (input_layer_neurons + output_layer_neurons)))
+
+        out_performance_file = 'out_performance_text.txt'
+        graph_bin_file = 'benchmark_text_bin.png'
+        graph_likert_file = 'benchmark_text_likert.png'
+        if combined is True:
+            out_performance_file = 'out_performance_combined_+' + exp_type_combined + '.txt'
+            graph_bin_file = 'benchmark_combined_bin_+' + exp_type_combined + '.png'
+            graph_likert_file = 'benchmark_combined_likert_+' + exp_type_combined + '.png'
+
+        classifiers = [
+            BernoulliNB(),
+            RandomForestClassifier(n_estimators=100, n_jobs=-1),
+            AdaBoostClassifier(),
+            BaggingClassifier(),
+            ExtraTreesClassifier(),
+            GradientBoostingClassifier(),
+            DecisionTreeClassifier(),
+            CalibratedClassifierCV(),
+            DummyClassifier(),
+            PassiveAggressiveClassifier(max_iter=1000, tol=1e-3),
+            RidgeClassifier(),
+            RidgeClassifierCV(),
+            SGDClassifier(max_iter=1000, tol=1e-3),
+            LogisticRegression(),
+            KNeighborsClassifier(),
+            MLPClassifier(hidden_layer_sizes=(hidden_nodes,hidden_nodes,hidden_nodes), solver='adam', alpha=1e-05)
+            ##OneVsRestClassifier(SVC(kernel='linear', probability=True))
+
+        ]
+
+        i = 1
+        X_train, X_test, y_train_likert, y_test_likert = train_test_split(X, y_likert, test_size=test_size, random_state=random_state)
+        X_train_bin, X_test_bin, y_train_bin, y_test_bin = train_test_split(X, y_bin, test_size=test_size, random_state=random_state)
+
+        # just to double check...
+        assert np.all(X_train == X_train_bin)
+
+        scaler.fit(X_train)
+        X_train = scaler.transform(X_train)
+        X_test = scaler.transform(X_test)
+        estimators = []
+
+        x_axis_bin = []
+        x_axis_likert = []
+        y_axis_bin = []
+        y_axis_likert = []
+
+        print(X_train.shape)
+        print(X_test.shape)
+
         with open(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + out_performance_file, "w") as file_log:
             file_log.write(HEADER)
             for exp_type in ('bin', 'likert'):
@@ -494,6 +497,7 @@ def benchmark_text(X, y_likert, y_bin, exp_folder, ds_folder, random_state, test
 
     except Exception as e:
         config.logger.error(repr(e))
+        raise
 
 def benchmark_html_sequence(X, y_likert, y_bin, exp_folder, ds_folder, random_state, test_size, pads):
 
@@ -600,6 +604,7 @@ def benchmark_html_sequence(X, y_likert, y_bin, exp_folder, ds_folder, random_st
 
     except Exception as e:
         config.logger.error(repr(e))
+        raise
 
 def benchmark_combined(X, y_likert, y_bin, test_size, random_state, bestpad, exp_folder, tot_text_feat):
     try:
@@ -741,8 +746,8 @@ if __name__ == '__main__':
         BAR_COLOR = 'rgb(128,128,128)'
 
         # TEXT FEATURES
-        features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER, DS_FOLDER)
-        benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE)
+        #features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER, DS_FOLDER)
+        #benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE)
 
         # HTML2Seq FEATURES
         (features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER, DS_FOLDER)

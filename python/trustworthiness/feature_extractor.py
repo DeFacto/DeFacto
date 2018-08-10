@@ -44,7 +44,8 @@ import os
 import warnings
 
 from defacto.definitions import DEFACTO_LEXICON_GI_PATH, BENCHMARK_FILE_NAME_TEMPLATE, \
-    DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, SOCIAL_NETWORK_NAMES, WEB_CREDIBILITY_DATA_PATH
+    DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, SOCIAL_NETWORK_NAMES, \
+    WEB_CREDIBILITY_DATA_PATH, TIMEOUT_MS
 from trustworthiness.util import get_html_file_path, get_features_web_microsoft, get_features_web_3c
 from trustworthiness.topic_utils import TopicTerms
 
@@ -163,7 +164,7 @@ class FeatureExtractor:
     It implements a set of feature extractors for a given web page.
     """
 
-    def __init__(self, url, timeout=15, local_file_path=None, error=False, save_webpage_file=False):
+    def __init__(self, url, timeout=TIMEOUT_MS, local_file_path=None, error=False, save_webpage_file=False):
         #self.DataTable = pd.read_table(config.dataset_ext_microsoft_webcred_webpages_cache,sep=",",header=None,names=["topic","query","rank","url","rating"])
         try:
             assert (local_file_path is not None and save_webpage_file is False) or \
@@ -602,7 +603,7 @@ class FeatureExtractor:
         Function return the number of reliable sources, number of unreliable sources and the total number of sources referenced by a webpage in that order
         '''
         try:
-            connection = urlopen(url, timeout=5)
+            connection = urlopen(url, timeout=TIMEOUT_MS)
             dom = lxml.html.fromstring(connection.read())
             num_reliable = 0
             num_unreliable = 0
@@ -732,58 +733,67 @@ def get_html2sec_features(exp_folder, ds_folder):
 
     try:
         my_file = Path(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
-
         path_html2seq = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq/'
+
         if not os.path.exists(path_html2seq):
             os.makedirs(path_html2seq)
 
         if not my_file.exists():
+            print('file not found: ' + WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
+            print('start process (HTML2seq)')
             for file_html in os.listdir(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + '/html'):
 
                 html2seq_feature_file = file_html.replace('.txt', '.pkl')
-                features_file = file_html.replace('dataset_visual_features_', 'dataset_features_')
-                features_file = features_file.replace('.txt', '.pkl')
-
-                path_feature = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'text/'
-                path_html = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html/'
-
-                features = joblib.load(path_feature + features_file)
-
-
-                tags = []
-                #if file.startswith('microsoft_dataset_visual_features_') and file.endswith('.txt'):
+                check = Path(path_html2seq + html2seq_feature_file)
                 tot_files += 1
-                print('processing file ' + str(tot_files))
+                if check.exists():
+                    print('processing file ' + str(tot_files) + ' - cached')
+                    tags = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + html2seq_feature_file)
+                else:
+                    print('processing file ' + str(tot_files) + ' - not cached')
+                    #features_file = file_html.replace('dataset_visual_features_', 'dataset_features_')
+                    features_file = file_html.replace('.txt', '.pkl')
 
-                soup = BeautifulSoup(open(path_html + file_html), "html.parser")
-                html = soup.prettify()
-                for line in html.split('\n'):
-                    if isinstance(line, str) and len(line.strip()) > 0:
-                        if (line.strip()[0] == '<') and (line.strip()[0:2] != '<!'):
-                            if len(line.split()) > 1:
-                                tags.append(line.split()[0] + '>')
-                            else:
+                    path_feature = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'text/'
+                    path_html = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html/'
+
+                    features = joblib.load(path_feature + features_file)
+
+                    tags = []
+                    #if file.startswith('microsoft_dataset_visual_features_') and file.endswith('.txt'):
+                    soup = BeautifulSoup(open(path_html + file_html), "html.parser")
+                    html = soup.prettify()
+                    for line in html.split('\n'):
+                        if isinstance(line, str) and len(line.strip()) > 0:
+                            if (line.strip()[0] == '<') and (line.strip()[0:2] != '<!'):
+                                if len(line.split()) > 1:
+                                    tags.append(line.split()[0] + '>')
+                                else:
+                                    tags.append(line.split()[0])
+                            elif (line.strip()[0:2] == '</' and line.strip()[0:2] != '<!'):
                                 tags.append(line.split()[0])
-                        elif (line.strip()[0:2] == '</' and line.strip()[0:2] != '<!'):
-                            tags.append(line.split()[0])
+
+                    # dump html2seq features
+                    joblib.dump(tags, path_html2seq + html2seq_feature_file)
 
                 if len(tags) > 0:
                     sentences.append(tags)
                     tags_set.extend(tags)
                     tags_set = list(set(tags_set))
 
-                # getting y
-                try:
-                    y.append(int(features['likert']))
-                    y2.append(likert2bin(int(features['likert'])))
-                except: # have to rename these fields later, to have the same interface (microsoft and c3 datasets)
-                    y.append(int(features['likert_mode']))
-                    y2.append(likert2bin(int(features['likert_mode'])))
-
-
-                # dump html2seq features
-                joblib.dump(tags, path_html2seq + html2seq_feature_file)
-
+                    # getting y
+                    try:
+                        y.append(int(features['likert']))
+                        y2.append(likert2bin(int(features['likert'])))
+                    except: # have to rename these fields later, to have the same interface (microsoft and c3 datasets)
+                        try:
+                            y.append(int(features['likert_mode']))
+                            y2.append(likert2bin(int(features['likert_mode'])))
+                        except:
+                            print('should not happen!!!')
+                            raise
+                else:
+                    print('no tags...')
 
             print('tot files: ', tot_files)
             print('dictionary size: ', len(tags_set))
@@ -800,6 +810,8 @@ def get_html2sec_features(exp_folder, ds_folder):
             joblib.dump(features, WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
             joblib.dump(le, WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq_enc.pkl')
         else:
+            print('file found: ' + WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
+            print('loading dump (HTML2seq)')
             features = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
             le = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq_enc.pkl')
 
@@ -898,10 +910,10 @@ def read_feat_files_and_merge(exp_folder, dataset):
         config.logger.error(repr(e))
         raise
 
-def __export_features_multi_proc_microsoft(exp_folder, export_html_tags):
+def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_tags):
 
     assert (exp_folder is not None and exp_folder != '')
-    SUBFOLDER = 'microsoft/'
+    assert (ds_folder is not None and ds_folder != '')
     # get the parameters
     config.logger.info('reading microsoft dataset...')
     df = pd.read_csv(config.dataset_microsoft_webcred, delimiter='\t', header=0)
@@ -915,7 +927,7 @@ def __export_features_multi_proc_microsoft(exp_folder, export_html_tags):
         url = str(row[3])
         urlencoded = get_md5_from_string(url)
         name = 'microsoft_dataset_features_' + urlencoded + '.pkl'
-        folder = config.dir_output + exp_folder + SUBFOLDER
+        folder = config.dir_output + exp_folder + ds_folder
         my_file = Path(folder + 'text/' + name)
         my_file_err = Path(folder + 'error/' + name)
         if not my_file.exists() and not my_file_err.exists():
@@ -955,9 +967,8 @@ def __export_features_multi_proc_microsoft(exp_folder, export_html_tags):
     config.logger.info('done! file: ' + name)
     #asyncres = sorted(asyncres)
 
-def __export_features_multi_proc_3c(exp_folder, export_html_tags):
+def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags):
     assert (exp_folder is not None and exp_folder != '')
-    SUBFOLDER = '3c/'
     # get the parameters
     config.logger.info('reading 3C dataset...')
     df_sites = pd.read_csv(DATASET_3C_SITES_PATH, na_values=0, delimiter=',', usecols=['document_id', 'document_url'])
@@ -978,7 +989,7 @@ def __export_features_multi_proc_3c(exp_folder, export_html_tags):
         url_id = doc_index
         urlencoded = get_md5_from_string(url)
         name = '3c_dataset_features_' + urlencoded + '.pkl'
-        folder = config.dir_output + exp_folder + SUBFOLDER
+        folder = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder
         my_file = Path(folder + 'text/' + name)
         my_file_err = Path(folder + 'error/' + name)
         if not my_file.exists() and not my_file_err.exists():
@@ -1011,13 +1022,13 @@ def __export_features_multi_proc_3c(exp_folder, export_html_tags):
     joblib.dump(asyncres, config.dir_output + exp_folder + name)
     config.logger.info('done! file: ' + name)
 
-def export_features_multithread(exp_folder, dataset, export_html_tags = True):
-    if dataset == 'microsoft':
-        __export_features_multi_proc_microsoft(exp_folder, export_html_tags)
-    elif dataset == '3c':
-        __export_features_multi_proc_3c(exp_folder, export_html_tags)
+def export_features_multithread(exp_folder, ds_folder, export_html_tags = True):
+    if ds_folder == 'microsoft/':
+        __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_tags)
+    elif ds_folder == '3c/':
+        __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags)
     else:
-        config.logger.error('dataset script not implemented: ' + dataset)
+        config.logger.error('dataset script not implemented: ' + ds_folder)
 
 
 
@@ -1038,14 +1049,14 @@ if __name__ == '__main__':
     '''
     EXP_FOLDER = 'exp003/'
 
-    #export_features_multithread(EXP_FOLDER, 'microsoft', export_html_tags=True)
-    #export_features_multithread(EXP_FOLDER, '3c', export_html_tags=True)
+    export_features_multithread(EXP_FOLDER, 'microsoft/', export_html_tags=True)
+    #export_features_multithread(EXP_FOLDER, '3c/', export_html_tags=True)
 
     '''
     create a final traning file
     '''
-    #read_feat_files_and_merge(EXP_FOLDER, 'microsoft')
-    read_feat_files_and_merge(EXP_FOLDER, '3c')
+    read_feat_files_and_merge(EXP_FOLDER, 'microsoft/')
+    #read_feat_files_and_merge(EXP_FOLDER, '3c/')
 
 
 

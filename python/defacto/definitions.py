@@ -31,3 +31,5 @@ DATASET_3C_SCORES_PATH = EXPERIMENTS_FOLDER_PATH + 'web_credibility/datasets/cre
 MAX_WEBSITES_PROCESS = 9999
 
 WEB_CREDIBILITY_DATA_PATH = '/Users/diegoesteves/DropDrive/CloudStation/experiments_cache/web_credibility/output/'
+
+TIMEOUT_MS = 3

@@ -5,7 +5,7 @@ import requests
 import urllib3
 
 from config import DeFactoConfig
-from defacto.definitions import SOCIAL_NETWORK_NAMES
+from defacto.definitions import SOCIAL_NETWORK_NAMES, TIMEOUT_MS
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from bs4 import BeautifulSoup
@@ -17,7 +17,7 @@ from pandas._libs.tslib import Timestamp
 config = DeFactoConfig()
 
 class WebScrap:
-    def __init__(self, url, timeout=15, parser='html.parser', local_file_path=None):
+    def __init__(self, url, timeout=TIMEOUT_MS, parser='html.parser', local_file_path=None):
         if url is None or url == '':
             raise Exception('url can not be empty')
         self.url = url
