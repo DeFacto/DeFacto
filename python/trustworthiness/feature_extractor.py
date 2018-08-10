@@ -1049,14 +1049,14 @@ if __name__ == '__main__':
     '''
     EXP_FOLDER = 'exp003/'
 
-    export_features_multithread(EXP_FOLDER, 'microsoft/', export_html_tags=True)
+    #export_features_multithread(EXP_FOLDER, 'microsoft/', export_html_tags=True)
     #export_features_multithread(EXP_FOLDER, '3c/', export_html_tags=True)
 
     '''
     create a final traning file
     '''
-    read_feat_files_and_merge(EXP_FOLDER, 'microsoft/')
-    #read_feat_files_and_merge(EXP_FOLDER, '3c/')
+    read_feat_files_and_merge(EXP_FOLDER, 'microsoft')
+    #read_feat_files_and_merge(EXP_FOLDER, '3c')
 
 
 
