@@ -5,13 +5,14 @@ import numpy as np
 import pdfkit as pdfkit
 from sklearn.metrics import mean_absolute_error, mean_squared_error, confusion_matrix, classification_report, \
     accuracy_score
+from tldextract import tldextract
 
 from coffeeandnoodles.core.web.scrap.scrap import WebScrap
 from sklearn.externals import joblib
 
 from coffeeandnoodles.core.util import get_md5_from_string
 from config import DeFactoConfig
-
+from defacto.definitions import DATASET_3C_SITES_PATH
 
 config = DeFactoConfig()
 
@@ -79,6 +80,17 @@ def get_encoder_domain():
 
     domains = []
 
+    df_sites = pd.read_csv(DATASET_3C_SITES_PATH, na_values=0, delimiter=',', usecols=['document_url'])
+    for index, row in df_sites.iterrows():
+        url = str(row[0])
+        print(index, url)
+        try:
+            o = tldextract.extract(url)
+            if o.suffix is not None:
+                domains.append(str(o.suffix).lower())
+        except:
+            continue
+
     # appending upper level domains, from http://data.iana.org/TLD/tlds-alpha-by-domain.txt
     # Version 2018040300, Last Updated Tue Apr  3 07:07:01 2018 UTC
     df = pd.read_csv(config.datasets + 'data/iana/org/TLD/tlds-alpha-by-domain.txt', sep=" ", header=None)
@@ -93,6 +105,10 @@ def get_encoder_domain():
         path = get_html_file_path(url)
         web = WebScrap(url, 15, 'lxml', path)
         domains.append(web.get_suffix())
+
+
+
+
 
     le.fit(domains)
     joblib.dump(le, config.enc_domain)
@@ -187,3 +203,8 @@ def save_url_body(extractor):
     except Exception as e:
         config.logger.error(repr(e))
         raise
+
+
+
+if __name__ == '__main__':
+    get_encoder_domain()

@@ -732,43 +732,58 @@ def get_html2sec_features(exp_folder):
         my_file = Path(config.dir_output + exp_folder + 'microsoft_dataset_html2seq.pkl')
         if not my_file.exists():
             for file in os.listdir(config.dir_output + exp_folder + '/html'):
+                html2seq_feature_file = file.replace('.txt', '.pkl')
+
                 tags = []
-                if file.startswith('microsoft_dataset_visual_features_') and file.endswith('.txt'):
-                    tot_files += 1
-                    print('processing file ' + str(tot_files))
-                    path=config.dir_output + exp_folder + 'html/' + file
-                    print(path)
-                    soup = BeautifulSoup(open(path), "html.parser")
-                    html = soup.prettify()
-                    for line in html.split('\n'):
-                        if isinstance(line, str) and len(line.strip()) > 0:
-                            if (line.strip()[0] == '<') and (line.strip()[0:2] != '<!'):
-                                if len(line.split()) > 1:
-                                    tags.append(line.split()[0] + '>')
-                                else:
-                                    tags.append(line.split()[0])
-                            elif (line.strip()[0:2] == '</' and line.strip()[0:2] != '<!'):
+                #if file.startswith('microsoft_dataset_visual_features_') and file.endswith('.txt'):
+                tot_files += 1
+                print('processing file ' + str(tot_files))
+                path=config.dir_output + exp_folder + 'html/' + file
+                print(path)
+
+
+
+                soup = BeautifulSoup(open(path), "html.parser")
+                html = soup.prettify()
+                for line in html.split('\n'):
+                    if isinstance(line, str) and len(line.strip()) > 0:
+                        if (line.strip()[0] == '<') and (line.strip()[0:2] != '<!'):
+                            if len(line.split()) > 1:
+                                tags.append(line.split()[0] + '>')
+                            else:
                                 tags.append(line.split()[0])
+                        elif (line.strip()[0:2] == '</' and line.strip()[0:2] != '<!'):
+                            tags.append(line.split()[0])
 
-                    if len(tags) > 0:
-                        sentences.append(tags)
-                        tags_set.extend(tags)
-                        tags_set = list(set(tags_set))
-                        #print(len(tags))
-                        #print(tags)
+                if len(tags) > 0:
+                    sentences.append(tags)
+                    tags_set.extend(tags)
+                    tags_set = list(set(tags_set))
+                    #print(len(tags))
+                    #print(tags)
 
-                    # getting y
-                    features_file = file.replace('microsoft_dataset_visual_features_', 'microsoft_dataset_features_')
-                    features_file = features_file.replace('.txt', '.pkl')
+                # getting y
+                features_file = file.replace('microsoft_dataset_visual_features_', 'microsoft_dataset_features_')
+                features_file = features_file.replace('.txt', '.pkl')
 
-                    path=config.dir_output + exp_folder + 'text/' + features_file
-                    data = joblib.load(path)
+                path=config.dir_output + exp_folder + 'text/' + features_file
+                data = joblib.load(path)
+                try:
                     y.append(int(data['likert']))
                     y2.append(likert2bin(int(data['likert'])))
+                except: # have to rename these fields later, to have the same interface (microsoft and c3 datasets)
+                    y.append(int(data['likert_mode']))
+                    y2.append(likert2bin(int(data['likert_mode'])))
 
-                    # dump html2seq features
-                    html2seq_feature_file = file.replace('.txt', '.pkl')
-                    joblib.dump(tags, config.dir_output + exp_folder + 'html2seq/' + html2seq_feature_file)
+                #data['likert_mode'] = likert_mode
+                #data['likert_avg'] = likert_avg
+
+                # dump html2seq features
+
+                _path = config.dir_output + exp_folder + 'html2seq/'
+                if not os.path.exists(_path):
+                    os.makedirs(_path)
+                joblib.dump(tags, _path + html2seq_feature_file)
 
 
             print('tot files: ', tot_files)
@@ -840,9 +855,13 @@ def get_text_features(exp_folder, html2seq = False, best_pad=0, best_cls='', exp
                     else:
                         XX.append(feat)
 
-                    likert = int(d.get('likert'))
-                    y.append(likert)
-                    y2.append(likert2bin(likert))
+                    try:
+                        y.append(int(d.get('likert')))
+                        y2.append(likert2bin(int(d.get('likert'))))
+                    except:  # have to rename these fields later, to have the same interface (microsoft and c3 datasets)
+                        y.append(int(d.get('likert_mode')))
+                        y2.append(likert2bin(int(d.get('likert_mode'))))
+
 
 
         if len(XX) == 0:
@@ -869,8 +888,9 @@ def read_feat_files_and_merge(exp_folder, dataset):
             features.append(f)
 
         name = dataset + '_dataset_' + str(len(features)) + '_text_features.pkl'
-        joblib.dump(features, config.dir_output + exp_folder + dataset + '/' + name)
-        config.logger.info('full features exported: ' + name)
+        _path = config.dir_output + exp_folder + dataset + '/'
+        joblib.dump(features, _path + name)
+        config.logger.info('full features exported: ' + _path + name)
 
         return features
 
@@ -883,7 +903,7 @@ def __export_features_multi_proc_microsoft(exp_folder, export_html_tags):
     assert (exp_folder is not None and exp_folder != '')
     SUBFOLDER = 'microsoft/'
     # get the parameters
-    config.logger.info('reading MS dataset...')
+    config.logger.info('reading microsoft dataset...')
     df = pd.read_csv(config.dataset_microsoft_webcred, delimiter='\t', header=0)
     #extractors = []
     config.logger.info('creating job args...')
@@ -1018,14 +1038,14 @@ if __name__ == '__main__':
     '''
     EXP_FOLDER = 'exp003/'
 
-    #export_features_multithread(EXP_FOLDER, 'microsoft', export_html_tags=False)
+    #export_features_multithread(EXP_FOLDER, 'microsoft', export_html_tags=True)
     #export_features_multithread(EXP_FOLDER, '3c', export_html_tags=False)
 
     '''
     create a final traning file
     '''
     read_feat_files_and_merge(EXP_FOLDER, 'microsoft')
-    read_feat_files_and_merge(EXP_FOLDER, '3c')
+    #read_feat_files_and_merge(EXP_FOLDER, '3c')
 
 
 

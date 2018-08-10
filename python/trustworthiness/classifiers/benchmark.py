@@ -195,7 +195,12 @@ def export_chart_bar_likert_bin(x, y, filename, exp_folder, title, x_title, y_ti
 
         layout['annotations'] = annotations
         fig = go.Figure(data=data, layout=layout)
-        py.image.save_as(fig, filename=config.dir_output + exp_folder + 'graphs/' + filename)
+
+        _path = config.dir_output + exp_folder + 'graphs/'
+        if not os.path.exists(_path):
+            os.mkdir(_path)
+
+        py.image.save_as(fig, filename=_path + filename)
 
     except Exception as e:
         raise e
@@ -281,10 +286,15 @@ def export_chart_scatter_likert_bin(x, y_labels, y_likert_f1, y_bin_f1, filename
 
         fig = dict(data=data_likert, layout=layout_1)
         #py.plot(fig, filename='paddings_f1')
-        py.image.save_as(fig, filename=config.dir_output + exp_folder + 'graphs/' + filename + '_likert.png')
+
+        _path = config.dir_output + exp_folder + 'graphs/'
+        if not os.path.exists(_path):
+            os.mkdir(_path)
+
+        py.image.save_as(fig, filename=_path + filename + '_likert.png')
 
         fig = dict(data=data_bin, layout=layout_2)
-        py.image.save_as(fig, filename=config.dir_output + exp_folder + 'graphs/' + filename + '_bin.png')
+        py.image.save_as(fig, filename=_path + filename + '_bin.png')
 
     except Exception as e:
         raise e
@@ -702,7 +712,7 @@ def feature_selection():
 if __name__ == '__main__':
     try:
 
-        EXP_FOLDER = 'exp003/microsoft/'
+        EXP_FOLDER = 'exp003/3c/'
 
         RANDOM_STATE=53
         TEST_SIZE=0.2
@@ -713,7 +723,7 @@ if __name__ == '__main__':
         BEST_CLS_BIN = 'nb'
         BEST_CLS_LIKERT = 'nb'
 
-        TOT_TEXT_FEAT = 53
+        #TOT_TEXT_FEAT = 53
         SERIES_COLORS = ['rgb(205, 12, 24)', 'rgb(22, 96, 167)', 'rgb(128, 128, 128)', 'rgb(0, 0, 139)',
                         'rgb(192,192,192)', 'rgb(211,211,211)', 'rgb(255,255,0)', 'rgb(0,128,0)']
         BAR_COLOR = 'rgb(128,128,128)'
@@ -722,8 +732,6 @@ if __name__ == '__main__':
         features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER)
 
         benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
-
-        exit(0)
 
         # HTML2Seq FEATURES
         (features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER)
