@@ -724,26 +724,36 @@ def get_html2sec_features(exp_folder):
     y2 = []
     tot_files = 0
 
-    data = None
+    features = None
     from sklearn import preprocessing
     le = preprocessing.LabelEncoder()
 
     try:
-        my_file = Path(config.dir_output + exp_folder + 'microsoft_dataset_html2seq.pkl')
+        my_file = Path(config.dir_output + exp_folder + 'html2seq.pkl')
+
+        path_html2seq = config.dir_output + exp_folder + 'html2seq/'
+        if not os.path.exists(path_html2seq):
+            os.makedirs(path_html2seq)
+
         if not my_file.exists():
-            for file in os.listdir(config.dir_output + exp_folder + '/html'):
-                html2seq_feature_file = file.replace('.txt', '.pkl')
+            for file_html in os.listdir(config.dir_output + exp_folder + '/html'):
+
+                html2seq_feature_file = file_html.replace('.txt', '.pkl')
+                features_file = file_html.replace('dataset_visual_features_', 'dataset_features_')
+                features_file = features_file.replace('.txt', '.pkl')
+
+                path_feature = config.dir_output + exp_folder + 'text/'
+                path_html = config.dir_output + exp_folder + 'html/'
+
+                features = joblib.load(path_feature + features_file)
+
 
                 tags = []
                 #if file.startswith('microsoft_dataset_visual_features_') and file.endswith('.txt'):
                 tot_files += 1
                 print('processing file ' + str(tot_files))
-                path=config.dir_output + exp_folder + 'html/' + file
-                print(path)
 
-
-
-                soup = BeautifulSoup(open(path), "html.parser")
+                soup = BeautifulSoup(open(path_html + file_html), "html.parser")
                 html = soup.prettify()
                 for line in html.split('\n'):
                     if isinstance(line, str) and len(line.strip()) > 0:
@@ -759,31 +769,18 @@ def get_html2sec_features(exp_folder):
                     sentences.append(tags)
                     tags_set.extend(tags)
                     tags_set = list(set(tags_set))
-                    #print(len(tags))
-                    #print(tags)
 
                 # getting y
-                features_file = file.replace('microsoft_dataset_visual_features_', 'microsoft_dataset_features_')
-                features_file = features_file.replace('.txt', '.pkl')
-
-                path=config.dir_output + exp_folder + 'text/' + features_file
-                data = joblib.load(path)
                 try:
-                    y.append(int(data['likert']))
-                    y2.append(likert2bin(int(data['likert'])))
+                    y.append(int(features['likert']))
+                    y2.append(likert2bin(int(features['likert'])))
                 except: # have to rename these fields later, to have the same interface (microsoft and c3 datasets)
-                    y.append(int(data['likert_mode']))
-                    y2.append(likert2bin(int(data['likert_mode'])))
+                    y.append(int(features['likert_mode']))
+                    y2.append(likert2bin(int(features['likert_mode'])))
 
-                #data['likert_mode'] = likert_mode
-                #data['likert_avg'] = likert_avg
 
                 # dump html2seq features
-
-                _path = config.dir_output + exp_folder + 'html2seq/'
-                if not os.path.exists(_path):
-                    os.makedirs(_path)
-                joblib.dump(tags, _path + html2seq_feature_file)
+                joblib.dump(tags, path_html2seq + html2seq_feature_file)
 
 
             print('tot files: ', tot_files)
@@ -796,15 +793,15 @@ def get_html2sec_features(exp_folder):
             print(len(X))
             print(len(y))
 
-            data = (X, y, y2)
+            features = (X, y, y2)
 
-            joblib.dump(data, config.dir_output + exp_folder + 'microsoft_dataset_html2seq.pkl')
-            joblib.dump(le, config.dir_output + exp_folder + 'microsoft_dataset_html2seq_enc.pkl')
+            joblib.dump(features, config.dir_output + exp_folder + 'html2seq.pkl')
+            joblib.dump(le, config.dir_output + exp_folder + 'html2seq_enc.pkl')
         else:
-            data = joblib.load(config.dir_output + exp_folder + 'microsoft_dataset_html2seq.pkl')
-            le = joblib.load(config.dir_output + exp_folder + 'microsoft_dataset_html2seq_enc.pkl')
+            features = joblib.load(config.dir_output + exp_folder + 'html2seq.pkl')
+            le = joblib.load(config.dir_output + exp_folder + 'html2seq_enc.pkl')
 
-        return (data, le)
+        return (features, le)
 
     except Exception as e:
         config.logger.error(repr(e))

@@ -729,9 +729,9 @@ if __name__ == '__main__':
         BAR_COLOR = 'rgb(128,128,128)'
 
         # TEXT FEATURES
-        features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER)
+        #features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER)
 
-        benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
+        #benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE)
 
         # HTML2Seq FEATURES
         (features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER)
