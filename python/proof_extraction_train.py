@@ -573,6 +573,9 @@ if __name__ == '__main__':
     # 1. proof candidate (YES, NO)
     # 2. fact-checking (REFUTES, SUPPORT, NOT ENOUGH INFO)
     # export PYTHONPATH=$PYTHONPATH:/Users/diegoesteves/Github/factchecking/DeFacto/python/
+    # python proof_extraction_train.py dev 0
+    # python proof_extraction_train.py dev 1
+    # python proof_extraction_train.py dev 2
 
     try:
         import sys

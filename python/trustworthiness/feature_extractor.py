@@ -1,9 +1,6 @@
 import multiprocessing
-
-#from coffeeandnoodles.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
-#from coffeeandnoodles.web.scrap.scrap import WebScrap
 import sys
-
+from datetime import date
 import nltk
 from bs4 import BeautifulSoup
 from keras.preprocessing.sequence import pad_sequences
@@ -22,7 +19,6 @@ from keras.models import load_model
 from keras.preprocessing import sequence
 import lxml.html
 import json
-import re
 import numpy as np
 import socket
 from multiprocessing.dummy import Pool
@@ -34,15 +30,10 @@ from coffeeandnoodles.core.util import get_md5_from_string
 from coffeeandnoodles.core.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
 from coffeeandnoodles.core.web.scrap.scrap import WebScrap
 from config import DeFactoConfig
-#from src.coffeeandnoodles.core.util import get_md5_from_string
-#from src.coffeeandnoodles.core.web.scrap.scrap import WebScrap
-#from src.core.classifiers.credibility.util import get_html_file_path, get_features_web
-#from src.core.web.credibility.topicUtils import TopicTerms
+import whois
 from urllib.parse import urlparse
 import os
-
 import warnings
-
 from defacto.definitions import DEFACTO_LEXICON_GI_PATH, BENCHMARK_FILE_NAME_TEMPLATE, \
     DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, SOCIAL_NETWORK_NAMES, \
     WEB_CREDIBILITY_DATA_PATH, TIMEOUT_MS
@@ -212,99 +203,21 @@ class FeatureExtractor:
            out.extend(self.get_feat_social_media_tags())
            out.append(self.get_opensources_classification(self.url))
            out.extend(self.get_opensources_count(self.url))
-           # out.append(extractor.get_number_of_arguments(extractor.url))
            out.extend(self.get_open_page_rank(self.url))
            out.extend(self.get_gi(self.body))
            out.extend(self.get_gi(self.title))
            out.extend(self.get_vader_lexicon(self.body))
            out.extend(self.get_vader_lexicon(self.title))
+           out.extend(self.get_whois_features(self.webscrap.get_domain()))
+
 
            return out
 
        except Exception as e:
            config.logger.error(repr(e))
 
-    def filterTerm(self,word):
-        if word is not None:
-            temp = word.lower()
-            return re.sub(r"[^A-Za-z]+", '',temp)
-        else:
-            return ''
 
-    def get_feat_majorityweb(self):
-        query = self.DataTable[self.DataTable['url'] == self.url].iloc[0,1]
-        websites = self.DataTable[self.DataTable['query'] == query]
-        terms =  self.topic.extractTopicTerm(query)
-        DF = 0
-        pageTerms = self.topic.generatePageTerms(self.url)
-        pageTerms= sorted(pageTerms, key=pageTerms.get, reverse = True)
-        inter = [item for item in terms if item in pageTerms]
-        parameter_s = 5  #TODO tune this
-        inter = inter[:parameter_s]
-        for i in range(int(websites.shape[0])):
-            website_i = websites['url'].iloc[i]
-            if website_i == self.url:
-                continue
-            try:
-                pageTerms = self.topic.generatePageTerms(website_i)
-                pageTerms= sorted(pageTerms, key=pageTerms.get, reverse = True)
-            except Exception as e:
-                config.logger.error(repr(e))
-                continue
-            inter_i = [item for item in terms if item in pageTerms]
-            if len(set(inter).intersection(inter_i)) >=  parameter_s-2:
-                DF+=1
-        return DF
 
-    def get_feat_coverage(self):
-        query = self.DataTable[self.DataTable['url'] == self.url].iloc[0,1]
-        websites = self.DataTable[self.DataTable['query'] == query]
-        terms =  self.topic.extractTopicTerm(query)
-        pageTerms = self.topic.generatePageTerms(self.url)
-        pageTerms= sorted(pageTerms, key=pageTerms.get, reverse = True)
-        intersection = [item for item in terms if item in pageTerms]
-        return (len(intersection)*1.0)/len(terms)
-
-    def get_feat_qtermstitle(self):
-        title = self.title
-        returnVal = 0
-        query = self.DataTable[self.DataTable['url'] == self.url].iloc[0,1]
-        query = query.split(' ')
-        title = title.split(' ')
-        for i in range(len(query)):
-            query[i] = self.filterTerm(query[i])
-        for i in query:
-            for j in title:
-                if i in j:
-                    returnVal+=1
-        return returnVal
-
-    def get_feat_qtermsbody(self):
-        returnVal = 0
-        query = self.DataTable[self.DataTable['url'] == self.url].iloc[0,1]
-        query = query.split(' ')
-        for i in range(len(query)):
-            query[i] = self.filterTerm(query[i])
-        try:
-            pageTerms = self.topic.generatePageTerms(self.url)
-        except Exception as e:
-            config.logger.error(repr(e))
-            return -1
-        for i in query:
-            if i in pageTerms:
-                returnVal+=pageTerms[i]
-        return returnVal
-
-    def findIP(self, url):
-        if "http://" in url:
-            url = url[7:]
-        if "www." in url:
-            url = url[4:]
-        url = url.split('/')
-        url = url[0]
-        ip = socket.gethostbyname(url)
-        reader = geolite2.reader()
-        return reader.get(ip)
 
     def rms(self,vec):
         vec = np.multiply(vec,vec)
@@ -316,59 +229,6 @@ class FeatureExtractor:
         vec2 = np.array(vec2)
         prod = np.sum(np.multiply(vec1,vec2))
         return (prod*1.0)/(self.rms(vec1)*self.rms(vec2))
-
-    def get_feat_majoritysearch(self):
-        query = self.DataTable[self.DataTable['url'] == self.url].iloc[0,1]
-        websites = self.DataTable[self.DataTable['query'] == query]
-        terms =  self.topic.extractTopicTerm(query)
-        termList = []
-        websiteTerms = self.topic.generatePageTerms(self.url)
-        websiteTerms = websiteTerms.values()
-        websiteTerms = sorted(websiteTerms,reverse=True)
-        length = len(websiteTerms)
-
-        for i in range(int(websites.shape[0])):
-            website_i = websites['url'].iloc[i]
-            if websites['url'].iloc[i] == self.url:
-                continue
-            try:
-                pageTerms = self.topic.generatePageTerms(website_i)
-                pageTerms = pageTerms.values()
-                pageTerms = sorted(pageTerms,reverse=True)
-            except Exception as e:
-                config.logger.error(repr(e))
-                continue
-            if len(pageTerms) == 0:
-                continue
-            length = min(length,len(pageTerms))
-            termList.append(pageTerms)
-
-        temp = []
-        websiteTerms = websiteTerms[:length]
-        for i in range(len(termList)):
-            termList[i] = termList[i][:length]
-        returnVal = 0
-        for i in termList:
-            returnVal = max(returnVal,self.distance(websiteTerms,i))
-        return returnVal
-
-    def get_feat_locality(self):
-        query = self.DataTable[self.DataTable['url'] == self.url]['query']
-        websites = self.DataTable[self.DataTable['query'] == query]
-        lgDis = 0
-        count  = 0
-        ip = self.findIP(self.url)
-        for i in range(websites.shape[0]):
-            if websites['url'].iloc[i] == self.url:
-                continue
-            try:
-                ip_i = self.findIP(websites['url'].iloc[i])
-                count+=1
-            except Exception as e:
-                config.logger.error(repr(e))
-                continue
-            lgDis+= np.log(1+np.sqrt((ip_i['location']['latitude']-ip['location']['latitude'])**2+(ip_i['location']['longitude']-ip['location']['longitude'])**2))
-        return count/lgDis
 
     def get_summary(self,num_sentence):
         out = ''
@@ -504,6 +364,45 @@ class FeatureExtractor:
             config.logger.error(repr(e))
             return ''
 
+    def get_whois_features(self, domain):
+        data = []
+        _OK = 1
+        _NONE = -1
+        _ERR = -2
+        try:
+            try:
+                details = whois.whois(domain)
+                if isinstance(details.expiration_date, list) == True:
+                    dt = details.expiration_date[0]
+                else:
+                    dt = details.expiration_date
+                if isinstance(details.creation_date, list) == True:
+                    dtc = details.creation_date[0]
+                else:
+                    dtc = details.creation_date
+                if dt is None:
+                    data.append(_NONE)
+                else:
+                    data.append((dt.date() - date.today()).days)
+                if dtc is None:
+                    data.append(_NONE)
+                else:
+                    data.append((date.today() - dtc.date()).days)
+                data.append(_NONE if details.name_servers is None else len(details.name_servers))
+                data.append(_NONE if details.emails is None else len(details.emails))
+                data.append(_NONE if details.name is None else _OK)
+                data.append(_NONE if details.address is None else _OK)
+                data.append(_NONE if details.city is None else _OK)
+                data.append(_NONE if details.state is None else _OK)
+                data.append(_NONE if details.zipcode is None else _OK)
+                data.append(_NONE if details.country is None else _OK)
+            except:
+                raise
+        except Exception as e:
+            data.append([_ERR] * 10)
+
+        return data
+
     def get_feat_suffix(self):
         try:
             return self.webscrap.get_suffix()
@@ -626,8 +525,6 @@ class FeatureExtractor:
         except Exception as e:
             config.logger.error(repr(e))
             return [0, 0, 0]
-
-
 
     def get_number_of_arguments(self, url):
         try:
@@ -849,12 +746,16 @@ def get_text_features(exp_folder, ds_folder, html2seq = False, best_pad=0, best_
                     if feat is None:
                         raise Exception('error in the feature extraction! No features extracted...')
                     # feat[2] = encoder.transform([feat[2]])
-                    feat[3] = encoder.transform([feat[3]])[0]
+                    try:
+                        feat[3] = encoder.transform([feat[3]])[0]
+                    except Exception as e:
+                        print('encoder transformation error! ', repr(e))
+                        feat[3] = encoder.transform('com')
                     del feat[2]
 
                     if html2seq is True:
                         hash = get_md5_from_string(d.get('url'))
-                        file_name = '_dataset_visual_features_%s.pkl' % (hash)
+                        file_name = ds_folder.replace('/','') + '_dataset_features_%s.pkl' % (hash)
                         x=joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq/' + file_name)
                         if best_pad <= len(x):
                             x2 = le.transform(x[0:best_pad])
@@ -1049,7 +950,7 @@ if __name__ == '__main__':
     '''
     EXP_FOLDER = 'exp003/'
 
-    #export_features_multithread(EXP_FOLDER, 'microsoft/', export_html_tags=True)
+    export_features_multithread(EXP_FOLDER, 'microsoft/', export_html_tags=True)
     #export_features_multithread(EXP_FOLDER, '3c/', export_html_tags=True)
 
     '''

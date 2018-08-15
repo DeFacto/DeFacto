@@ -16,7 +16,8 @@ import math
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
-from defacto.definitions import WEB_CREDIBILITY_DATA_PATH
+from defacto.definitions import WEB_CREDIBILITY_DATA_PATH, BEST_CLS_BIN, TEST_SIZE, BEST_CLS_LIKERT, BEST_PAD_BIN, \
+    BEST_PAD_LIKERT, PADS
 from trustworthiness.util import print_report
 from trustworthiness.feature_extractor import *
 
@@ -729,16 +730,9 @@ if __name__ == '__main__':
     try:
 
         EXP_FOLDER = 'exp003/'
-        DS_FOLDER = '3c/'
+        DS_FOLDER = 'microsoft/'
 
         RANDOM_STATE=53
-        TEST_SIZE=0.2
-        PADS = [25, 50, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600,
-                2700, 2800, 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000, 20000, 30000]
-        BEST_PAD_BIN = 2900
-        BEST_PAD_LIKERT = 2000
-        BEST_CLS_BIN = 'nb'
-        BEST_CLS_LIKERT = 'nb'
 
         #TOT_TEXT_FEAT = 53
         SERIES_COLORS = ['rgb(205, 12, 24)', 'rgb(22, 96, 167)', 'rgb(128, 128, 128)', 'rgb(0, 0, 139)',
@@ -749,19 +743,20 @@ if __name__ == '__main__':
         #features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER, DS_FOLDER)
         #benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE)
 
+
         # HTML2Seq FEATURES
-        (features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER, DS_FOLDER)
-        benchmark_html_sequence(features_seq, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
+        #(features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER, DS_FOLDER)
+        #benchmark_html_sequence(features_seq, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
 
         ### TEXT FEATURES + HTML2Seq klass as feature (out of best configurations)
         features_combined, y_likert, y_bin = get_text_features(EXP_FOLDER, DS_FOLDER, html2seq=True, best_pad=BEST_PAD_BIN,
                                                                best_cls=BEST_CLS_BIN, exp_type_combined='bin')
-        benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, combined=True,
+        benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE, combined=True,
                        exp_type_combined='bin')
-
+        exit(0)
         features_combined, y_likert, y_bin = get_text_features(EXP_FOLDER, DS_FOLDER, html2seq=True, best_pad=BEST_PAD_LIKERT,
                                                                best_cls=BEST_CLS_LIKERT, exp_type_combined='likert')
-        benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, RANDOM_STATE, TEST_SIZE, combined=True,
+        benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE, combined=True,
                        exp_type_combined='likert')
 
         #benchmark_combined(features_combined, y_likert, y_bin, TEST_SIZE, RANDOM_STATE, BEST_PAD, EXP_FOLDER, TOT_TEXT_FEAT)

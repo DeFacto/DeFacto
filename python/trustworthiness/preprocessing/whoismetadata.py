@@ -6,7 +6,7 @@ from datetime import date
 from sklearn.externals import joblib
 
 
-def get_features(index, domain):
+def get_whois_features(index, domain):
     data = []
     data.append(index)
     data.append(domain)
@@ -61,7 +61,7 @@ try:
             if len(row)>=1:
                 i+=1
                 print(i, row[0])
-                features.append(get_features(i, row[0]))
+                features.append(get_whois_features(i, row[0]))
             time.sleep(0.5)
     #print(features)
 except Exception as e:
