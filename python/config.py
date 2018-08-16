@@ -4,7 +4,7 @@ from configparser import SafeConfigParser, ConfigParser
 import pkg_resources
 import logging
 
-from defacto.definitions import WEB_CREDIBILITY_DATA_PATH
+from defacto.definitions import OUTPUT_FOLDER
 
 
 class Singleton(type):
@@ -39,7 +39,7 @@ class DeFactoConfig(object):
                     self.datasets_ext = parser.get('dataset_external_path', 'path')
                     self.datasets = self.root_dir_data + parser.get('dir', 'datasets')
                     #self.dir_output = self.root_dir_data + parser.get('dir', 'output')
-                    self.dir_output = WEB_CREDIBILITY_DATA_PATH
+                    self.dir_output = OUTPUT_FOLDER
                     self.dir_models = self.root_dir_data + parser.get('dir', 'models')
                     self.dir_encoders = self.root_dir_data + parser.get('dir', 'encoders')
                     self.dir_log = self.root_dir_data + 'log/'

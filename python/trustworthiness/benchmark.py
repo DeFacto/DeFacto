@@ -16,7 +16,7 @@ import math
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
-from defacto.definitions import WEB_CREDIBILITY_DATA_PATH, BEST_CLS_BIN, TEST_SIZE, BEST_CLS_LIKERT, BEST_PAD_BIN, \
+from defacto.definitions import OUTPUT_FOLDER, BEST_CLS_BIN, TEST_SIZE, BEST_CLS_LIKERT, BEST_PAD_BIN, \
     BEST_PAD_LIKERT, PADS
 from trustworthiness.util import print_report
 from trustworthiness.feature_extractor import *
@@ -290,7 +290,7 @@ def export_chart_scatter_likert_bin(x, y_labels, y_likert_f1, y_bin_f1, filename
         fig = dict(data=data_likert, layout=layout_1)
         #py.plot(fig, filename='paddings_f1')
 
-        _path = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'graphs/'
+        _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'graphs/'
         if not os.path.exists(_path):
             os.mkdir(_path)
 
@@ -316,7 +316,7 @@ def report(results, n_top=3):
 def test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log, subfolder, exp_folder, ds_folder):
     try:
         if isinstance(clf, str):
-            clf=joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'models/' + subfolder + clf)
+            clf=joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder + clf)
 
         predicted = clf.predict(X_test)
         p_avg, r_avg, f_avg, s_avg = precision_recall_fscore_support(y_test, predicted, average='weighted')
@@ -356,7 +356,7 @@ def train_test_export_save(clf, X_train, y_train, X_test, y_test, out, cls_label
 
     clf.fit(X_train, y_train)
     file = BENCHMARK_FILE_NAME_TEMPLATE % (cls_label.lower(), padding, experiment_type)
-    _path = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'models/' + subfolder
+    _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder
     if not os.path.exists(_path):
         os.mkdir(_path)
     joblib.dump(clf, _path + file)
@@ -458,7 +458,7 @@ def benchmark_text(X, y_likert, y_bin, exp_folder, ds_folder, random_state, test
         print(X_train.shape)
         print(X_test.shape)
 
-        with open(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + out_performance_file, "w") as file_log:
+        with open(OUTPUT_FOLDER + exp_folder + ds_folder + out_performance_file, "w") as file_log:
             file_log.write(HEADER)
             for exp_type in ('bin', 'likert'):
                 if exp_type == 'bin':
@@ -514,7 +514,7 @@ def benchmark_html_sequence(X, y_likert, y_bin, exp_folder, ds_folder, random_st
         # X_tags = [le.inverse_transform(s) for s in X]
 
         out_performance_file = 'out_performance_html2seq.txt'
-        with open(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + out_performance_file, "w") as file_log:
+        with open(OUTPUT_FOLDER + exp_folder + ds_folder + out_performance_file, "w") as file_log:
             file_log.write(HEADER)
             nb_01 = []
             nb_15 = []
@@ -732,28 +732,40 @@ if __name__ == '__main__':
         EXP_FOLDER = 'exp003/'
         DS_FOLDER = 'microsoft/'
 
-        RANDOM_STATE=53
+        RANDOM_STATE = 53
 
         #TOT_TEXT_FEAT = 53
         SERIES_COLORS = ['rgb(205, 12, 24)', 'rgb(22, 96, 167)', 'rgb(128, 128, 128)', 'rgb(0, 0, 139)',
                         'rgb(192,192,192)', 'rgb(211,211,211)', 'rgb(255,255,0)', 'rgb(0,128,0)']
         BAR_COLOR = 'rgb(128,128,128)'
 
+        # BASELINE 1 (OLTEANU et al.)
+        INDEX_FEAT_OLTEANU = range(0, 10)
+
+
+        # BASELINE 2 (WAWER et al.)
+        INDEX_FEAT_WAWER = range(11, 20)
+
+
+        # OURS
+        INDEX_FEAT_OURS = range(21, 30)
+
+
         # TEXT FEATURES
-        #features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER, DS_FOLDER)
-        #benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE)
+        features_tex, y_likert, y_bin = get_text_features(EXP_FOLDER, DS_FOLDER)
+        benchmark_text(features_tex, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE)
 
 
         # HTML2Seq FEATURES
-        #(features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER, DS_FOLDER)
-        #benchmark_html_sequence(features_seq, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
+        (features_seq, y_likert, y_bin), le = get_html2sec_features(EXP_FOLDER, DS_FOLDER)
+        benchmark_html_sequence(features_seq, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
 
-        ### TEXT FEATURES + HTML2Seq klass as feature (out of best configurations)
+        # TEXT FEATURES + HTML2Seq klass as feature (out of best configurations)
         features_combined, y_likert, y_bin = get_text_features(EXP_FOLDER, DS_FOLDER, html2seq=True, best_pad=BEST_PAD_BIN,
                                                                best_cls=BEST_CLS_BIN, exp_type_combined='bin')
         benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE, combined=True,
                        exp_type_combined='bin')
-        exit(0)
+
         features_combined, y_likert, y_bin = get_text_features(EXP_FOLDER, DS_FOLDER, html2seq=True, best_pad=BEST_PAD_LIKERT,
                                                                best_cls=BEST_CLS_LIKERT, exp_type_combined='likert')
         benchmark_text(features_combined, y_likert, y_bin, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE, combined=True,

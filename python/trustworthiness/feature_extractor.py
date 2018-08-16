@@ -36,7 +36,7 @@ import os
 import warnings
 from defacto.definitions import DEFACTO_LEXICON_GI_PATH, BENCHMARK_FILE_NAME_TEMPLATE, \
     DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, SOCIAL_NETWORK_NAMES, \
-    WEB_CREDIBILITY_DATA_PATH, TIMEOUT_MS
+    OUTPUT_FOLDER, TIMEOUT_MS, DATASET_MICROSOFT_PATH
 from trustworthiness.util import get_html_file_path, get_features_web_microsoft, get_features_web_3c
 from trustworthiness.topic_utils import TopicTerms
 
@@ -132,12 +132,13 @@ class OpenSourceData():
 @singleton
 class PageRankData():
     def __init__(self):
-        config.logger.info('loading page rank data...')
+        path = OUTPUT_FOLDER + 'open_pagerank/'
+        config.logger.info('loading page rank extracted data: ' + path)
         try:
             pgs=dict()
-            for file in os.listdir(config.root_dir_data + 'pagerank/'):
+            for file in os.listdir(path):
                 if file.endswith(".json"):
-                    with open(config.root_dir_data + 'pagerank/' + file, 'r') as fh:
+                    with open(path + file, 'r') as fh:
                         temp=json.load(fh)
                         if temp['status_code'] == 200:
                             for w in temp['response']:
@@ -629,30 +630,30 @@ def get_html2sec_features(exp_folder, ds_folder):
     config.logger.info('get_html2sec_features()')
 
     try:
-        my_file = Path(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
-        path_html2seq = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq/'
+        my_file = Path(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
+        path_html2seq = OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq/'
 
         if not os.path.exists(path_html2seq):
             os.makedirs(path_html2seq)
 
         if not my_file.exists():
-            print('file not found: ' + WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
+            print('file not found: ' + OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
             print('start process (HTML2seq)')
-            for file_html in os.listdir(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + '/html'):
+            for file_html in os.listdir(OUTPUT_FOLDER + exp_folder + ds_folder + '/html'):
 
                 html2seq_feature_file = file_html.replace('.txt', '.pkl')
                 check = Path(path_html2seq + html2seq_feature_file)
                 tot_files += 1
                 if check.exists():
                     print('processing file ' + str(tot_files) + ' - cached')
-                    tags = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + html2seq_feature_file)
+                    tags = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + html2seq_feature_file)
                 else:
                     print('processing file ' + str(tot_files) + ' - not cached')
                     #features_file = file_html.replace('dataset_visual_features_', 'dataset_features_')
                     features_file = file_html.replace('.txt', '.pkl')
 
-                    path_feature = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'text/'
-                    path_html = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html/'
+                    path_feature = OUTPUT_FOLDER + exp_folder + ds_folder + 'text/'
+                    path_html = OUTPUT_FOLDER + exp_folder + ds_folder + 'html/'
 
                     features = joblib.load(path_feature + features_file)
 
@@ -704,13 +705,13 @@ def get_html2sec_features(exp_folder, ds_folder):
 
             features = (X, y, y2)
 
-            joblib.dump(features, WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
-            joblib.dump(le, WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq_enc.pkl')
+            joblib.dump(features, OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
+            joblib.dump(le, OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq_enc.pkl')
         else:
-            print('file found: ' + WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
+            print('file found: ' + OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
             print('loading dump (HTML2seq)')
-            features = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq.pkl')
-            le = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq_enc.pkl')
+            features = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
+            le = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq_enc.pkl')
 
         return (features, le)
 
@@ -730,16 +731,16 @@ def get_text_features(exp_folder, ds_folder, html2seq = False, best_pad=0, best_
         encoder = joblib.load(config.enc_domain)
 
         if html2seq is True:
-            le = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq_enc.pkl')
+            le = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq_enc.pkl')
             # load best classifier
             file = BENCHMARK_FILE_NAME_TEMPLATE % (best_cls.lower(), best_pad, exp_type_combined)
             config.logger.debug('loading model: ' + file)
-            clf_html2seq = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'models/html2seq/' + file)
+            clf_html2seq = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'models/html2seq/' + file)
 
-        for file in os.listdir(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder):
+        for file in os.listdir(OUTPUT_FOLDER + exp_folder + ds_folder):
             if file.endswith('_text_features.pkl'):
                 config.logger.info('features file found: ' + file)
-                features = joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + file)
+                features = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + file)
                 config.logger.debug('extracting features')
                 for d in features:
                     feat = d.get('features')
@@ -756,7 +757,7 @@ def get_text_features(exp_folder, ds_folder, html2seq = False, best_pad=0, best_
                     if html2seq is True:
                         hash = get_md5_from_string(d.get('url'))
                         file_name = ds_folder.replace('/','') + '_dataset_features_%s.pkl' % (hash)
-                        x=joblib.load(WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder + 'html2seq/' + file_name)
+                        x=joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq/' + file_name)
                         if best_pad <= len(x):
                             x2 = le.transform(x[0:best_pad])
                             klass = clf_html2seq.predict([x2])[0]
@@ -778,7 +779,7 @@ def get_text_features(exp_folder, ds_folder, html2seq = False, best_pad=0, best_
 
 
         if len(XX) == 0:
-            raise Exception('processed full file not found for this folder! ' + WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder)
+            raise Exception('processed full file not found for this folder! ' + OUTPUT_FOLDER + exp_folder + ds_folder)
 
         config.logger.info('OK')
         return XX, y, y2
@@ -788,50 +789,26 @@ def get_text_features(exp_folder, ds_folder, html2seq = False, best_pad=0, best_
         config.logger.error(repr(e))
         raise
 
-def read_feat_files_and_merge(exp_folder, dataset):
-    try:
-        assert (exp_folder is not None and exp_folder != '')
-        assert (dataset is not None and dataset != '')
 
-        features = []
-        path = config.dir_output + exp_folder + dataset + '/text/'
-        for file in os.listdir(path):
-            #if file.endswith('.pkl') and not file.startswith('_microsoft'):
-            f=joblib.load(path + file)
-            features.append(f)
 
-        name = dataset + '_dataset_' + str(len(features)) + '_text_features.pkl'
-        _path = config.dir_output + exp_folder + dataset + '/'
-        joblib.dump(features, _path + name)
-        config.logger.info('full features exported: ' + _path + name)
-
-        return features
-
-    except Exception as e:
-        config.logger.error(repr(e))
-        raise
-
-def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_tags):
+def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_tags, force):
 
     assert (exp_folder is not None and exp_folder != '')
     assert (ds_folder is not None and ds_folder != '')
-    # get the parameters
-    config.logger.info('reading microsoft dataset...')
-    df = pd.read_csv(config.dataset_microsoft_webcred, delimiter='\t', header=0)
-    #extractors = []
-    config.logger.info('creating job args...')
-    job_args = []
 
+    df = pd.read_csv(DATASET_MICROSOFT_PATH, delimiter='\t', header=0)
+    config.logger.info('creating job args for: ' + DATASET_MICROSOFT_PATH)
+    job_args = []
     tot_proc = 0
     err = 0
     for index, row in df.iterrows():
         url = str(row[3])
         urlencoded = get_md5_from_string(url)
         name = 'microsoft_dataset_features_' + urlencoded + '.pkl'
-        folder = config.dir_output + exp_folder + ds_folder
+        folder = OUTPUT_FOLDER + exp_folder + ds_folder
         my_file = Path(folder + 'text/' + name)
         my_file_err = Path(folder + 'error/' + name)
-        if not my_file.exists() and not my_file_err.exists():
+        if (not my_file.exists() and not my_file_err.exists()) or force is True:
             topic = row[0]
             query = row[1]
             rank = int(row[2])
@@ -864,11 +841,11 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
     config.logger.info('feature extraction done! saving...')
     #name = 'microsoft_dataset_' + time.strftime("%Y%m%d%H%M%S") + '_features.pkl'
     name = 'microsoft_dataset_' + str(len(job_args)) + '_text_features.pkl'
-    joblib.dump(asyncres, config.dir_output + exp_folder + name)
+    joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + name)
     config.logger.info('done! file: ' + name)
-    #asyncres = sorted(asyncres)
 
-def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags):
+
+def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, force):
     assert (exp_folder is not None and exp_folder != '')
     # get the parameters
     config.logger.info('reading 3C dataset...')
@@ -890,7 +867,7 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags):
         url_id = doc_index
         urlencoded = get_md5_from_string(url)
         name = '3c_dataset_features_' + urlencoded + '.pkl'
-        folder = WEB_CREDIBILITY_DATA_PATH + exp_folder + ds_folder
+        folder = OUTPUT_FOLDER + exp_folder + ds_folder
         my_file = Path(folder + 'text/' + name)
         my_file_err = Path(folder + 'error/' + name)
         if not my_file.exists() and not my_file_err.exists():
@@ -923,41 +900,45 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags):
     joblib.dump(asyncres, config.dir_output + exp_folder + name)
     config.logger.info('done! file: ' + name)
 
-def export_features_multithread(exp_folder, ds_folder, export_html_tags = True):
-    if ds_folder == 'microsoft/':
-        __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_tags)
-    elif ds_folder == '3c/':
-        __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags)
-    else:
-        config.logger.error('dataset script not implemented: ' + ds_folder)
+def export_features_multithread(out_exp_folder, out_ds_folder, export_html_tags = True, force=False):
+
+    try:
+        if out_ds_folder == 'microsoft/':
+            __export_features_multi_proc_microsoft(out_exp_folder, out_ds_folder, export_html_tags, force)
+        elif out_ds_folder == '3c/':
+            __export_features_multi_proc_3c(out_exp_folder, out_ds_folder, export_html_tags, force)
+        else:
+            raise('script not implemented: ' + out_ds_folder)
+    except:
+        raise
+
 
 
 
 if __name__ == '__main__':
 
-    '''
-    manually example of features extracted from a given URL
-    '''
-    #fe = FeatureExtractor('https://www.amazon.com/Aristocats-Phil-Harris/dp/B00A29IQPK')
-    #print(fe.get_final_feature_vector())
+    if 1==2:
 
+        '''
+            manually example of features extracted from a given URL
+        '''
 
-    '''
-    automatically extracts all features from a given dataset (currently microsoft or 3c)
-    and saves the files locally, one per example (URL). 
-    Since it implements multithread, in order to have a final features file, 
-    one needs to call the method: read_feat_files_and_merge()
-    '''
-    EXP_FOLDER = 'exp003/'
+        fe = FeatureExtractor('https://www.amazon.com/Aristocats-Phil-Harris/dp/B00A29IQPK')
+        print(fe.get_final_feature_vector())
 
-    export_features_multithread(EXP_FOLDER, 'microsoft/', export_html_tags=True)
-    #export_features_multithread(EXP_FOLDER, '3c/', export_html_tags=True)
+    else:
 
-    '''
-    create a final traning file
-    '''
-    read_feat_files_and_merge(EXP_FOLDER, 'microsoft')
-    #read_feat_files_and_merge(EXP_FOLDER, '3c')
+        '''
+            automatically extracts all features from a given dataset (currently microsoft or 3c)
+            and saves the files locally, one per example (URL). 
+            Since it implements multithread, in order to have a final features file, 
+            one needs to call the method: read_feat_files_and_merge()
+        '''
+
+        export_features_multithread('exp003/', 'microsoft/', export_html_tags=True, force=True)
+
+        export_features_multithread('exp003/', '3c/', export_html_tags=True, force=True)
+
 
 
 

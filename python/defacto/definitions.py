@@ -1,17 +1,34 @@
+"""
+Project: DeFacto
+Module: Web Credibility
+Author: Diego Esteves
+Date: 15-Aug-2018
+"""
+
 VERSION_LABEL = 'DeFacto 3'
 VERSION = '3.0.0'
-
-
+ROOT_FOLDER_PATH = '/Users/diegoesteves/DropDrive/CloudStation/experiments_cache/'
 LABELS_FEVER_DATASET = {1: 'SUPPORTS', 2: 'REFUTES', 3: 'NOT ENOUGH INFO'}
 
-EXPERIMENTS_FOLDER_PATH = '/Users/diegoesteves/DropDrive/CloudStation/experiments_cache/'
+# ----------------------------------------------------------------------------------------------------------------------
+# DEPENDENCIES
+# ----------------------------------------------------------------------------------------------------------------------
+CLAUSIE_PATH = ROOT_FOLDER_PATH + 'clausie/clausie/clausie.jar'
+STANFORD_CORE_MODEL_PATH = ROOT_FOLDER_PATH + 'stanford_models/3.5.1/stanford-parser-full-2015-01-30/'
+STANFORD_MODEL_PATH = ROOT_FOLDER_PATH + 'stanford_models/3.5.1/stanford-parser-3.5.1-models/edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz'
+STANFORD_3_8_PATH = ROOT_FOLDER_PATH + 'stanford_models/3.8/stanford-corenlp-full-2017-06-09'
 
-CLAUSIE_PATH = EXPERIMENTS_FOLDER_PATH + 'clausie/clausie/clausie.jar'
-STANFORD_CORE_MODEL_PATH = EXPERIMENTS_FOLDER_PATH + 'stanford_models/3.5.1/stanford-parser-full-2015-01-30/'
-STANFORD_MODEL_PATH = EXPERIMENTS_FOLDER_PATH + 'stanford_models/3.5.1/stanford-parser-3.5.1-models/edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz'
-STANFORD_3_8_PATH = EXPERIMENTS_FOLDER_PATH + 'stanford_models/3.8/stanford-corenlp-full-2017-06-09'
+# ----------------------------------------------------------------------------------------------------------------------
+# MAIN PROJECT
+# ----------------------------------------------------------------------------------------------------------------------
+ROOT_PROJECT_PATH = ROOT_FOLDER_PATH + 'web_credibility/'
+OUTPUT_FOLDER = ROOT_PROJECT_PATH + 'output/'
+DATASET_3C_SITES_PATH = ROOT_PROJECT_PATH + 'datasets/C3/c3.sites.csv'
+DATASET_3C_SCORES_PATH = ROOT_PROJECT_PATH + 'datasets/C3/reconcile_mturk_dm_ready.csv'
+DATASET_MICROSOFT_PATH = ROOT_PROJECT_PATH + 'datasets/microsoft/web_credibility_1000_url_ratings.fixed.tsv'
 
-DEFACTO_LEXICON_GI_PATH = EXPERIMENTS_FOLDER_PATH + 'web_credibility/general inquirer/inquireraugmented.csv'
+
+DEFACTO_LEXICON_GI_PATH = ROOT_FOLDER_PATH + 'general inquirer/inquireraugmented.csv'
 
 SOCIAL_NETWORK_NAMES = ['Facebook', 'WhatsApp', 'QQ', 'TencentQQ', 'WeChat', 'QZone', 'Tumblr', 'Instagram', 'Twitter',
                         'Google', 'Google+', 'BaiduTieba', 'Postbar', 'Skype', 'Viber', 'SinaWeibo', 'Line', 'Snapchat',
@@ -24,16 +41,8 @@ SOCIAL_NETWORK_NAMES = ['Facebook', 'WhatsApp', 'QQ', 'TencentQQ', 'WeChat', 'QZ
 
 BENCHMARK_FILE_NAME_TEMPLATE = 'cls_%s_%s_%s.pkl'
 BING_LANG_DISABLED = 1
-
-DATASET_3C_SITES_PATH = EXPERIMENTS_FOLDER_PATH + 'web_credibility/datasets/credibility corpus/c3.sites.csv'
-DATASET_3C_SCORES_PATH = EXPERIMENTS_FOLDER_PATH + 'web_credibility/datasets/credibility corpus/reconcile_mturk_dm_ready.csv'
-
 MAX_WEBSITES_PROCESS = 9999
-
-WEB_CREDIBILITY_DATA_PATH = '/Users/diegoesteves/DropDrive/CloudStation/experiments_cache/web_credibility/output/'
-
 TIMEOUT_MS = 3
-
 TEST_SIZE=0.2
 PADS = [25, 50, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600,
         2700, 2800, 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000]
@@ -41,3 +50,4 @@ BEST_PAD_BIN = 2900
 BEST_PAD_LIKERT = 2000
 BEST_CLS_BIN = 'nb'
 BEST_CLS_LIKERT = 'nb'
+
