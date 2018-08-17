@@ -1,9 +1,5 @@
-import multiprocessing
-import sys
 from datetime import date
 import nltk
-from bs4 import BeautifulSoup
-from keras.preprocessing.sequence import pad_sequences
 from sklearn.externals import joblib
 from textstat.textstat import textstat
 from sumy.parsers.html import HtmlParser
@@ -20,11 +16,8 @@ from keras.preprocessing import sequence
 import lxml.html
 import json
 import numpy as np
-import socket
-from multiprocessing.dummy import Pool
 import pandas as pd
 from tldextract import tldextract
-from pathlib import Path
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from coffeeandnoodles.core.util import get_md5_from_string
 from coffeeandnoodles.core.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
@@ -34,12 +27,8 @@ import whois
 from urllib.parse import urlparse
 import os
 import warnings
-from defacto.definitions import DEFACTO_LEXICON_GI_PATH, BENCHMARK_FILE_NAME_TEMPLATE, \
-    DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, SOCIAL_NETWORK_NAMES, \
-    OUTPUT_FOLDER, TIMEOUT_MS, DATASET_MICROSOFT_PATH
-from trustworthiness.util import get_html_file_path, get_features_web_microsoft, get_features_web_3c
+from defacto.definitions import DEFACTO_LEXICON_GI_PATH, SOCIAL_NETWORK_NAMES, OUTPUT_FOLDER, TIMEOUT_MS
 from trustworthiness.topic_utils import TopicTerms
-
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore",category=FutureWarning)
 
@@ -47,7 +36,7 @@ __author__ = "Diego Esteves"
 __copyright__ = "Copyright 2018, DeFacto Project"
 __credits__ = ["Diego Esteves", "Aniketh Reddy", "Piyush Chawla"]
 __license__ = "Apache"
-__version__ = "0.0.1"
+__version__ = "1.0"
 __maintainer__ = "Diego Esteves"
 __email__ = "diegoesteves@gmail.com"
 __status__ = "Dev"
@@ -178,44 +167,6 @@ class FeaturesCore:
         except Exception as e:
             self.error_message = repr(e)
             self.error = True
-
-    def get_final_feature_vector(self):
-       try:
-           out = []
-           out.extend(self.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot))
-           out.append(self.get_feat_domain())
-           out.append(self.get_feat_suffix())
-           out.append(self.get_feat_source_info())
-           out.append(self.get_feat_tot_outbound_links(tp='http'))
-           out.append(self.get_feat_tot_outbound_links(tp='https'))
-           out.append(self.get_feat_tot_outbound_links(tp='ftp'))
-           out.append(self.get_feat_tot_outbound_links(tp='ftps'))
-           out.append(self.get_feat_tot_outbound_domains(tp='http'))
-           out.append(self.get_feat_tot_outbound_domains(tp='https'))
-           out.append(self.get_feat_tot_outbound_domains(tp='ftp'))
-           out.append(self.get_feat_tot_outbound_domains(tp='ftps'))
-           out.extend(self.get_feat_text_category(self.title))
-           out.extend(self.get_feat_text_category(self.body))
-           out.extend(self.get_feat_text_category(self.get_summary_lex_rank(100)))
-           out.extend(self.get_feat_text_category(self.get_summary(100)))
-           out.extend(self.get_feat_readability_metrics())
-           out.extend(self.get_feat_spam(self.title))
-           out.extend(self.get_feat_spam(self.body))
-           out.extend(self.get_feat_social_media_tags())
-           out.append(self.get_opensources_classification(self.url))
-           out.extend(self.get_opensources_count(self.url))
-           out.extend(self.get_open_page_rank(self.url))
-           out.extend(self.get_gi(self.body))
-           out.extend(self.get_gi(self.title))
-           out.extend(self.get_vader_lexicon(self.body))
-           out.extend(self.get_vader_lexicon(self.title))
-           out.extend(self.get_whois_features(self.webscrap.get_domain()))
-
-
-           return out
-
-       except Exception as e:
-           config.logger.error(repr(e))
 
     def rms(self,vec):
         vec = np.multiply(vec,vec)
@@ -601,3 +552,44 @@ class FeaturesCore:
             self.error = True
             self.error_message = repr(e)
             config.logger.error(self.error_message)
+
+
+    def get_final_feature_vector(self):
+       try:
+           out = dict()
+
+           out['archive'] = self.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot)
+           out['domain'] = self.get_feat_domain()
+           out['suffix'] = self.get_feat_suffix()
+
+           out['suffix'] = self.get_feat_source_info()
+           out['outbound_links_http'] = self.get_feat_tot_outbound_links(tp='http')
+           out['outbound_links_https'] = self.get_feat_tot_outbound_links(tp='https')
+           out['outbound_links_ftp'] = self.get_feat_tot_outbound_links(tp='ftp')
+           out['outbound_links_ftps'] = self.get_feat_tot_outbound_links(tp='ftps')
+           out['outbound_domains_http'] = self.get_feat_tot_outbound_domains(tp='http')
+           out['outbound_domains_https'] = self.get_feat_tot_outbound_domains(tp='https')
+           out['outbound_domains_ftp'] = self.get_feat_tot_outbound_domains(tp='ftp')
+           out['outbound_domains_ftps'] = self.get_feat_tot_outbound_domains(tp='ftps')
+           out['text_categ_title'] = self.get_feat_text_category(self.title)
+           out['text_categ_body'] = self.get_feat_text_category(self.body)
+           out['text_categ_summary_lex'] = self.get_feat_text_category(self.get_summary_lex_rank(100))
+           out['text_categ_summary_lsa'] = self.get_feat_text_category(self.get_summary(100))
+           out['readability_metrics'] = self.get_feat_readability_metrics()
+           out['spam_title'] = self.get_feat_spam(self.title)
+           out['spam_body'] = self.get_feat_spam(self.body)
+           out['social_links'] = self.get_feat_social_media_tags()
+           out['open_source_class'] = self.get_opensources_classification(self.url)
+           out['open_source_count'] = self.get_opensources_count(self.url)
+           out['open_page_rank'] = self.get_open_page_rank(self.url)
+           out['general_inquirer_body'] = self.get_gi(self.body)
+           out['general_inquirer_title'] = self.get_gi(self.title)
+           out['vader_body'] = self.get_vader_lexicon(self.body)
+           out['vader_title'] = self.get_vader_lexicon(self.title)
+           out['who_is'] = self.get_whois_features(self.webscrap.get_domain())
+
+
+           return out
+
+       except Exception as e:
+           config.logger.error(repr(e))

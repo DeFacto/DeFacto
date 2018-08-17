@@ -1,47 +1,20 @@
 import multiprocessing
-import sys
-from datetime import date
-import nltk
 from bs4 import BeautifulSoup
-from keras.preprocessing.sequence import pad_sequences
 from sklearn.externals import joblib
-from textstat.textstat import textstat
-from sumy.parsers.html import HtmlParser
-from sumy.parsers.plaintext import PlaintextParser
-from sumy.nlp.tokenizers import Tokenizer
-from sumy.summarizers.lsa import LsaSummarizer as Summarizer
-from sumy.nlp.stemmers import Stemmer
-from sumy.utils import get_stop_words
-from singleton_decorator import singleton
-from urllib.request import urlopen
-from keras.datasets import imdb
-from keras.models import load_model
-from keras.preprocessing import sequence
-import lxml.html
-import json
 import numpy as np
-import socket
 from multiprocessing.dummy import Pool
 import pandas as pd
-from tldextract import tldextract
 from pathlib import Path
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from coffeeandnoodles.core.util import get_md5_from_string
 from coffeeandnoodles.core.web.microsoft_azure.microsoft_azure_helper import MicrosoftAzurePlatform
-from coffeeandnoodles.core.web.scrap.scrap import WebScrap
 from config import DeFactoConfig
-import whois
-from urllib.parse import urlparse
 import os
 import warnings
-from defacto.definitions import DEFACTO_LEXICON_GI_PATH, BENCHMARK_FILE_NAME_TEMPLATE, \
-    DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, SOCIAL_NETWORK_NAMES, \
-    OUTPUT_FOLDER, TIMEOUT_MS, DATASET_MICROSOFT_PATH
-from dev.web.credibility.feature_extractor import FeatureExtractor
-from trustworthiness.util import get_html_file_path, get_features_web_microsoft, get_features_web_3c
-from trustworthiness.topic_utils import TopicTerms
-
-from trustworthiness import features_core
+from defacto.definitions import BENCHMARK_FILE_NAME_TEMPLATE, \
+    DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, \
+    OUTPUT_FOLDER, DATASET_MICROSOFT_PATH
+from trustworthiness.features_core import FeaturesCore
+from trustworthiness.util import get_html_file_path, get_features_web_microsoft, get_features_web_c3
 
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore",category=FutureWarning)
@@ -50,14 +23,13 @@ __author__ = "Diego Esteves"
 __copyright__ = "Copyright 2018, DeFacto Project"
 __credits__ = ["Diego Esteves", "Aniketh Reddy", "Piyush Chawla"]
 __license__ = "Apache"
-__version__ = "0.0.1"
+__version__ = "1.0"
 __maintainer__ = "Diego Esteves"
 __email__ = "diegoesteves@gmail.com"
 __status__ = "Dev"
 
 config = DeFactoConfig()
 bing = MicrosoftAzurePlatform(config.translation_secret)
-
 
 def likert2bin(likert):
 
@@ -269,7 +241,7 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
     for index, row in df.iterrows():
         url = str(row[3])
         urlencoded = get_md5_from_string(url)
-        name = 'microsoft_dataset_features_' + urlencoded + '.pkl'
+        name = urlencoded + '.pkl'
         folder = OUTPUT_FOLDER + exp_folder + ds_folder
         my_file = Path(folder + 'text/' + name)
         my_file_err = Path(folder + 'error/' + name)
@@ -280,9 +252,9 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
             likert = int(row[4])
             path = str(get_html_file_path(url))
             if path is not None:
-                fe = FeatureExtractor(url, local_file_path=path)
+                fe = FeaturesCore(url, local_file_path=path)
             else:
-                fe = FeatureExtractor(url)
+                fe = FeaturesCore(url)
             if fe.error is False:
                 job_args.append((fe, topic, query, rank, url, likert, folder, name, export_html_tags)) # -> multiple arguments
                 tot_proc += 1
@@ -330,18 +302,17 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
         url = str(row[0])
         url_id = doc_index
         urlencoded = get_md5_from_string(url)
-        name = '3c_dataset_features_' + urlencoded + '.pkl'
+        name = urlencoded + '.pkl'
         folder = OUTPUT_FOLDER + exp_folder + ds_folder
         my_file = Path(folder + 'text/' + name)
         my_file_err = Path(folder + 'error/' + name)
-        if not my_file.exists() and not my_file_err.exists():
+        if (not my_file.exists() and not my_file_err.exists()) or force is True:
             temp = df_scores['document_id'].isin([url_id])
             likert_mode = df_scores.loc[temp, 'mode(documentevaluation_credibility)']
             likert_avg = df_scores.loc[temp, 'average(documentevaluation_credibility)']
-
             #likert_mode = df_scores.loc[url_id]['mode(documentevaluation_credibility)']
             #likert_avg = df_scores.loc[url_id]['average(documentevaluation_credibility)']
-            fe = FeatureExtractor(url)
+            fe = FeaturesCore(url)
             if fe.error is False:
                 job_args.append((fe, url, likert_mode, likert_avg, folder, name, export_html_tags))  # -> multiple arguments
                 tot_proc += 1
@@ -357,16 +328,36 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
     config.logger.info('apart from the jobs, weve got %d errors' % (err))
     config.logger.info(str(multiprocessing.cpu_count()) + ' CPUs available')
     with Pool(processes=multiprocessing.cpu_count()) as pool:
-        asyncres = pool.starmap(get_features_web_3c, job_args)
+        asyncres = pool.starmap(get_features_web_c3, job_args)
 
     config.logger.info('feature extraction done! saving...')
     name = '3c_dataset_' + str(len(job_args)) + '_text_features.pkl'
-    joblib.dump(asyncres, config.dir_output + exp_folder + name)
+    joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + name)
     config.logger.info('done! file: ' + name)
+
+def __verify_and_create_experiment_folders(out_exp_folder, dataset):
+    try:
+        path = OUTPUT_FOLDER + out_exp_folder + dataset + '/'
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        subfolders = ['error', 'graphs', 'html', 'text', 'models',
+                      'models/text', 'models/html2seq', 'models/html',
+                      'models/text/2-classes/', 'models/text/3-classes/', 'models/text/5-classes/']
+        for subfolder in subfolders:
+            if not os.path.exists(path + subfolder):
+                os.makedirs(path + subfolder)
+
+        config.logger.info('experiment sub-folders created successfully: ' + path)
+
+    except Exception as e:
+        raise e
 
 def export_features_multithread(out_exp_folder, dataset, export_html_tags = True, force=False):
 
     try:
+        __verify_and_create_experiment_folders(out_exp_folder, dataset)
+
         if dataset == 'microsoft':
             __export_features_multi_proc_microsoft(out_exp_folder, dataset + '/', export_html_tags, force)
         elif dataset == '3c':
@@ -379,29 +370,15 @@ def export_features_multithread(out_exp_folder, dataset, export_html_tags = True
 
 if __name__ == '__main__':
 
-    if 1==2:
+    '''
+        automatically extracts all features from a given dataset (currently microsoft or 3c)
+        and saves the files locally, one per example (URL)
+    '''
 
-        '''
-            manually example of features extracted from a given URL
-        '''
+    params = [
+        {'EXP_FOLDER': 'exp004/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': True},
+        {'EXP_FOLDER': 'exp004/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': True},
+    ]
 
-        fe = FeaturesCore('https://www.amazon.com/Aristocats-Phil-Harris/dp/B00A29IQPK')
-        print(fe.get_final_feature_vector())
-
-    else:
-
-        '''
-            automatically extracts all features from a given dataset (currently microsoft or 3c)
-            and saves the files locally, one per example (URL). 
-            Since it implements multithread, in order to have a final features file, 
-            one needs to call the method: read_feat_files_and_merge()
-        '''
-
-        export_features_multithread('exp003/', 'microsoft', export_html_tags=True, force=True)
-
-        export_features_multithread('exp003/', '3c', export_html_tags=True, force=True)
-
-
-
-
-
+    for p in params:
+        export_features_multithread(p['EXP_FOLDER'], p['DATASET'], export_html_tags=p['EXPORT_HTML'], force=p['REPROCESS'])

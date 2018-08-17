@@ -199,7 +199,7 @@ def export_chart_bar_likert_bin(x, y, filename, exp_folder, title, x_title, y_ti
         layout['annotations'] = annotations
         fig = go.Figure(data=data, layout=layout)
 
-        _path = config.dir_output + exp_folder + 'graphs/'
+        _path = OUTPUT_FOLDER + exp_folder + 'graphs/'
         if not os.path.exists(_path):
             os.mkdir(_path)
 
@@ -388,7 +388,7 @@ def get_plot_voting(X, y, classifiers, labels):
 
     plt.show()
     fig = plt.figure()
-    fig.savefig(config.dir_output + 'plot.png')
+    fig.savefig(OUTPUT_FOLDER + 'plot.png')
 
 def mlp_param_selection(X, y, nfolds):
     alphas = 10.0 ** -np.arange(1, 7)
@@ -620,7 +620,7 @@ def benchmark_combined(X, y_likert, y_bin, test_size, random_state, bestpad, exp
         sgd_15=[]
         sgd_01=[]
 
-        with open(config.dir_output + exp_folder + 'exp_performances_combined.txt', "w") as file_log:
+        with open(OUTPUT_FOLDER + exp_folder + 'exp_performances_combined.txt', "w") as file_log:
             file_log.write(HEADER)
 
             clf = SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3)

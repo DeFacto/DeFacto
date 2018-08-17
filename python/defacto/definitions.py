@@ -26,7 +26,8 @@ OUTPUT_FOLDER = ROOT_PROJECT_PATH + 'output/'
 DATASET_3C_SITES_PATH = ROOT_PROJECT_PATH + 'datasets/C3/c3.sites.csv'
 DATASET_3C_SCORES_PATH = ROOT_PROJECT_PATH + 'datasets/C3/reconcile_mturk_dm_ready.csv'
 DATASET_MICROSOFT_PATH = ROOT_PROJECT_PATH + 'datasets/microsoft/web_credibility_1000_url_ratings.fixed.tsv'
-
+DATASET_MICROSOFT_PATH_PAGES_CACHED = ROOT_PROJECT_PATH + 'datasets/microsoft/Cached Pages/'
+DATASET_MICROSOFT_PATH_PAGES_MISSING = ROOT_PROJECT_PATH + 'datasets/microsoft/Cached Pages Missing/'
 
 DEFACTO_LEXICON_GI_PATH = ROOT_FOLDER_PATH + 'general inquirer/inquireraugmented.csv'
 
@@ -39,15 +40,33 @@ SOCIAL_NETWORK_NAMES = ['Facebook', 'WhatsApp', 'QQ', 'TencentQQ', 'WeChat', 'QZ
                         'LiveJournal', 'Friendster', 'FunnyorDie', 'GaiaOnline', 'WeHeartIt', 'Buzznet', 'DeviantArt',
                         'Flickr', 'MeetMe', 'Meetup', 'Tout', 'Mixi', 'Douban', 'Vero', 'Quora']
 
+# the benchmark file name template
 BENCHMARK_FILE_NAME_TEMPLATE = 'cls_%s_%s_%s.pkl'
+
+# enable or disable the bing language detection module (microsoft bing API)
 BING_LANG_DISABLED = 1
-MAX_WEBSITES_PROCESS = 9999
+
+# when processing a dataset, limits the maximum number of URL to process (useful for dev/debug mode)
+MAX_WEBSITES_PROCESS = 999999
+
+# max timeout to scrap a given URL
 TIMEOUT_MS = 3
-TEST_SIZE=0.2
+
+# sampling parameters
+CROSS_VALIDATION_K_FOLDS = 10
+
+TEST_SIZE = 0.2
+
+# HTML sequence windows
 PADS = [25, 50, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600,
         2700, 2800, 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000]
+
+# best model's info (used in the combined evaluation)
 BEST_PAD_BIN = 2900
+
 BEST_PAD_LIKERT = 2000
+
 BEST_CLS_BIN = 'nb'
+
 BEST_CLS_LIKERT = 'nb'
 

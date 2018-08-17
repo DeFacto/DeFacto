@@ -1,0 +1,2 @@
+
+print(DATASET_FAKE_OR_REAL_NEWS)

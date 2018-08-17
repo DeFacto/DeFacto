@@ -4,7 +4,7 @@ from sklearn.externals import joblib
 from coffeeandnoodles.core.util import get_md5_from_string
 from config import DeFactoConfig
 from defacto.definitions import OUTPUT_FOLDER, BENCHMARK_FILE_NAME_TEMPLATE, BEST_CLS_BIN, BEST_PAD_BIN
-from trustworthiness.feature_extractor import FeatureExtractor
+from trustworthiness.feature_extractor import FeaturesCore
 
 config = DeFactoConfig()
 
@@ -27,7 +27,7 @@ if __name__ == '__main__':
             claim = row[1]
             likert = row[2]
             urlencoded = get_md5_from_string(url)
-            extractor = FeatureExtractor(url)
+            extractor = FeaturesCore(url)
             if extractor.webscrap is None:
                 extractor.call_web_scrap()
 

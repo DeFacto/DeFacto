@@ -2,18 +2,24 @@
 
 This project provides the data and models described in the paper:
 
-"**Belliting the Source: Trustworthiness Indicators to Obfuscate Fake News on the Web**"
+"**Belliting the Source: Trustworthiness Indicators to Obfuscate Fake News on the Web, Esteves et. al. 2018**"
 
 Module: trustworthiness
 
-#### Pre-processing
+#### 0. Configurations
+
+- ``definitions.py`` update local paths here!
+
+#### 1. Pre-processing
 preprocessing/
 
 -  ``fix_dataset_microsoft.py`` to fix the original Microsoft Credibility dataset.
 
 - ``openpg.py`` exports OpenPageRank data given a set of URLs (datasets) as input
 
-#### Feature Extraction
+#### 2. Feature Extraction
+
+- ``features_core.py`` implements the features
 
 - ``feature_extractor.py`` extract and caches the features for all URLs existing in a given dataset, creating one feature file (*.pkl) for each URL (multithreading).
     - ``export_features_multithread('exp003/', 'microsoft', export_html_tags=True, force=True)``
@@ -25,12 +31,13 @@ preprocessing/
     - ``read_feat_files_and_merge('exp003/', 'microsoft')``
 
 
-#### Run
+#### 3. Run
 classifiers/
 
 - ``benchmark.py`` to obtain the results and save the models
 
-#### FactBench Eval
+
+#### 4. FactBench Eval
 
 - ``factbench.py`` extracts the features and uses a trained model to make predictions on each URL from the **FactBench2012_Credibility** dataset. This dataset is created from URLs obtained from DeFacto's output over positive and negative data from **FactBench** dataset.
 
@@ -41,4 +48,4 @@ classifiers/
 
 currently supports the following datasets:
 - Microsoft
-- C3 Corpus.
+- C3 Corpus

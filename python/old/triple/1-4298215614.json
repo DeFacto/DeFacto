@@ -1,0 +1,490 @@
+{
+    "_type": "SearchResponse", 
+    "images": {
+        "displayRecipeSourcesBadges": true, 
+        "displayShoppingSourcesBadges": false, 
+        "id": "https://api.cognitive.microsoft.com/api/v5/#Images", 
+        "isFamilyFriendly": true, 
+        "readLink": "https://api.cognitive.microsoft.com/api/v5/images/search?q=premium+brands+of+puerto+rico+inc&qpvt=Premium+Brands+of+Puerto+Rico+Inc", 
+        "value": [
+            {
+                "contentSize": "14915 B", 
+                "contentUrl": "https://www.flavorsofpuertorico.com/wp-content/uploads/2014/08/dulzura1.jpg", 
+                "datePublished": "2017-08-09T12:42:00", 
+                "encodingFormat": "jpeg", 
+                "height": 332, 
+                "hostPageDisplayUrl": "http://www.flavorsofpuertorico.com/brands/", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=Ap6cvk7mXLnLXRIVc1-M8iAdogWHwIaqlA3slHp_6Zg&v=1&r=http%3a%2f%2fwww.flavorsofpuertorico.com%2fbrands%2f&p=DevEx,5245.1", 
+                "name": "OUR BRANDS | Flavors of Puerto Rico", 
+                "thumbnail": {
+                    "height": 300, 
+                    "width": 297
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.uJZ6FAbWEOi5rNVZACRd2gEpEs&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=F73G2G-RWNBT-eHs9bRaMx2dRWpkdxy3RUGryBav1vI&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3dD442E9A6B4D95EED37F0311EF4658186E0187A3F%26FORM%3dIQFRBA&p=DevEx,5170.1", 
+                "width": 329
+            }, 
+            {
+                "contentSize": "420669 B", 
+                "contentUrl": "http://bloominbrands.com/ourcompany/images/bbi_locations2_375x580.png", 
+                "datePublished": "2017-06-30T16:57:00", 
+                "encodingFormat": "png", 
+                "height": 580, 
+                "hostPageDisplayUrl": "http://www.bloominbrands.com/ourcompany/", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=q61iR8nyIIfhkkuekBJYtB8Glm8nSHXbjerb0txPliM&v=1&r=http%3a%2f%2fwww.bloominbrands.com%2fourcompany%2f&p=DevEx,5247.1", 
+                "insightsSourcesSummary": {
+                    "recipeSourcesCount": 0, 
+                    "shoppingSourcesCount": 0
+                }, 
+                "name": "BLOOMIN' BRANDS, INC. - Our Company - Our Story", 
+                "thumbnail": {
+                    "height": 300, 
+                    "width": 193
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.weQ30OSQjykyL4TBlZZ1sgDBEs&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=fM_P_L4RZQHJms_iAB8Cp7U-Z_SK4iGB2f-SJTiXWEg&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3dD32A4D8101A5B4E971BABC410898C86DF2708CEE%26FORM%3dIQFRBA&p=DevEx,5171.1", 
+                "width": 375
+            }, 
+            {
+                "contentSize": "48658 B", 
+                "contentUrl": "http://www.tmcapital.com/assets/Starbucks.png", 
+                "datePublished": "2015-11-14T16:21:00", 
+                "encodingFormat": "png", 
+                "height": 400, 
+                "hostPageDisplayUrl": "http://www.tmcapital.com/newsroom-article/tm-capital-advises-starbucks-on-sale-of-puerto-rico-restaurants/", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=nN6vrcffzJxCt2td9l_0r6DHc8qHkU-JGJe3XbrPLTI&v=1&r=http%3a%2f%2fwww.tmcapital.com%2fnewsroom-article%2ftm-capital-advises-starbucks-on-sale-of-puerto-rico-restaurants%2f&p=DevEx,5248.1", 
+                "name": "TM Capital Advises Starbucks on Sale of Puerto Rico ...", 
+                "thumbnail": {
+                    "height": 300, 
+                    "width": 183
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.YYUWrrt0G2bQNdgh6shOTQC3Es&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=A2tPOgmUxzGvlSS3Rh-fdV9_AZxqk5StONZsDSZyrF4&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3dD3F5EB69D7D62891893C406827B3AC204FEAA449%26FORM%3dIQFRBA&p=DevEx,5172.1", 
+                "width": 244
+            }, 
+            {
+                "contentSize": "7473 B", 
+                "contentUrl": "https://www.flavorsofpuertorico.com/wp-content/uploads/2014/08/puya1.jpg", 
+                "datePublished": "2017-08-14T23:42:00", 
+                "encodingFormat": "jpeg", 
+                "height": 332, 
+                "hostPageDisplayUrl": "http://www.flavorsofpuertorico.com/brands/", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=Ap6cvk7mXLnLXRIVc1-M8iAdogWHwIaqlA3slHp_6Zg&v=1&r=http%3a%2f%2fwww.flavorsofpuertorico.com%2fbrands%2f&p=DevEx,5249.1", 
+                "name": "OUR BRANDS | Flavors of Puerto Rico", 
+                "thumbnail": {
+                    "height": 300, 
+                    "width": 297
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.gs1hA8pKrgXQ_UypJ9t5owEpEs&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=jIQjuC5lf-swpjOx7AooghOLWHS2vMknJ57UNDmTedU&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3dD442E9A6B4D95EED37F0D408ABFF76E5A7553B7A%26FORM%3dIQFRBA&p=DevEx,5173.1", 
+                "width": 329
+            }, 
+            {
+                "contentSize": "10381 B", 
+                "contentUrl": "https://www.flavorsofpuertorico.com/wp-content/uploads/2014/08/poskon2.jpg", 
+                "datePublished": "2017-08-09T12:42:00", 
+                "encodingFormat": "jpeg", 
+                "height": 332, 
+                "hostPageDisplayUrl": "http://www.flavorsofpuertorico.com/brands/", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=Ap6cvk7mXLnLXRIVc1-M8iAdogWHwIaqlA3slHp_6Zg&v=1&r=http%3a%2f%2fwww.flavorsofpuertorico.com%2fbrands%2f&p=DevEx,5250.1", 
+                "name": "OUR BRANDS | Flavors of Puerto Rico", 
+                "thumbnail": {
+                    "height": 300, 
+                    "width": 297
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.aa_Su5Z3sFtfNa-bN-70fQEpEs&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=tQFuhfhmAsx_b3-hjvOcb_Vmh9gi8WweVaa605gln0c&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3dD442E9A6B4D95EED37F0F9C61B1EBBEB352676E7%26FORM%3dIQFRBA&p=DevEx,5174.1", 
+                "width": 329
+            }, 
+            {
+                "contentSize": "11003 B", 
+                "contentUrl": "https://www.flavorsofpuertorico.com/wp-content/uploads/2014/08/KITSWHITEBACK.jpg", 
+                "datePublished": "2017-08-09T12:42:00", 
+                "encodingFormat": "jpeg", 
+                "height": 332, 
+                "hostPageDisplayUrl": "http://www.flavorsofpuertorico.com/brands/", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=Ap6cvk7mXLnLXRIVc1-M8iAdogWHwIaqlA3slHp_6Zg&v=1&r=http%3a%2f%2fwww.flavorsofpuertorico.com%2fbrands%2f&p=DevEx,5251.1", 
+                "name": "OUR BRANDS | Flavors of Puerto Rico", 
+                "thumbnail": {
+                    "height": 300, 
+                    "width": 297
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.n9xJ5IlvhrxHFIaMCzSKqgEpEs&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=dP3PtekAlEITXgAvLhkfkUeqwdRkPY8TRQpJOXoJZp0&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3dD442E9A6B4D95EED37F0E3519C506C158071C2CF%26FORM%3dIQFRBA&p=DevEx,5175.1", 
+                "width": 329
+            }, 
+            {
+                "contentSize": "11513 B", 
+                "contentUrl": "http://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/052010/LOGO_pa_donde_voy_FINAL.png", 
+                "datePublished": "2013-02-28T02:13:00", 
+                "encodingFormat": "gif", 
+                "height": 200, 
+                "hostPageDisplayUrl": "http://brandsoftheworld.com/logos/countries/pr?page=2", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=PFTYT215DXhZ8ZUI0nVLRauhkH-CNK5IsGm2hvrMiBk&v=1&r=http%3a%2f%2fbrandsoftheworld.com%2flogos%2fcountries%2fpr%3fpage%3d2&p=DevEx,5252.1", 
+                "insightsSourcesSummary": {
+                    "recipeSourcesCount": 0, 
+                    "shoppingSourcesCount": 0
+                }, 
+                "name": "Puerto Rico | Brands of the World\u2122", 
+                "thumbnail": {
+                    "height": 200, 
+                    "width": 200
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.yqW3WikVCAFvJFA_y2u-MgDIDI&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=1_XY_00ifgJOYFLV-sRxmJchAWjgFvEy0Q9bA-Mdg2Y&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3d163E7B88C9808F66D614A233B5157FD013B479B8%26FORM%3dIQFRBA&p=DevEx,5176.1", 
+                "width": 200
+            }, 
+            {
+                "contentSize": "428951 B", 
+                "contentUrl": "http://a.mktgcdn.com/p/aOD1gKnWNDnkxJ87ff6r9bfEKC7Ai8CMOSiEBZhHDBM/1000x740.jpg", 
+                "datePublished": "2017-07-09T21:19:00", 
+                "encodingFormat": "jpeg", 
+                "height": 740, 
+                "hostPageDisplayUrl": "https://www.iglobal.co/puerto-rico/barceloneta/puerto-rico-premium-outlets", 
+                "hostPageUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=9_pVzNqKGrNar1LkyBXs4nMddHiBbb8ey2_zFgJM8Xk&v=1&r=https%3a%2f%2fwww.iglobal.co%2fpuerto-rico%2fbarceloneta%2fpuerto-rico-premium-outlets&p=DevEx,5253.1", 
+                "insightsSourcesSummary": {
+                    "recipeSourcesCount": 0, 
+                    "shoppingSourcesCount": 0
+                }, 
+                "name": "PUERTO RICO PREMIUM OUTLETS - 1 Premium Outlets Boulevard ...", 
+                "thumbnail": {
+                    "height": 222, 
+                    "width": 300
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.FcvPNeKrL41uqsWOohfxwAEsDe&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=ZAz_FRxzkOlHvo6WoNTCINlOqH7XR5jrzkbapApl8AQ&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3dF17980F65CEF1D889D7ECD47FE5D5759A93F4011%26FORM%3dIQFRBA&p=DevEx,5177.1", 
+                "width": 1000
+            }, 
+            {
+                "contentSize": "1931820 B", 
+                "contentUrl": "https://d21buns5ku92am.cloudfront.net/26488/images/126626-07462cfa-daa9-4209-ba3e-ddce3fa2e2b5-don_2520q_2520logo-original-1396394617.jpg", 
+                "datePublished": "2014-04-11T07:35:00", 
+                "encodingFormat": "jpeg", 
+                "height": 2019, 
+                "hostPageDisplayUrl": "http://iws.pr.co/73717-destileria-serralles-through-its-strategic-distribution-partnership-with-island-wine-spirits-brings-don-q-to-the-island-of-guam", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=sW6LpGaPhsJLgyxe-MaKT75VjUdQHsEEOKdzVy-cMRg&v=1&r=http%3a%2f%2fiws.pr.co%2f73717-destileria-serralles-through-its-strategic-distribution-partnership-with-island-wine-spirits-brings-don-q-to-the-island-of-guam&p=DevEx,5254.1", 
+                "insightsSourcesSummary": {
+                    "recipeSourcesCount": 0, 
+                    "shoppingSourcesCount": 0
+                }, 
+                "name": "Destiler\u00eda Serrall\u00e9s Through Its Strategic Distribution ...", 
+                "thumbnail": {
+                    "height": 273, 
+                    "width": 300
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.M7LvcMM4jCm8zxriCfpygwEsER&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=rbrVeTjl5CtMPIAdfWQNBP__lCvf8vXNp5cJWCyBBxA&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3d2FAC72AC4C5FD5577190175A7146C79F6F3463DD%26FORM%3dIQFRBA&p=DevEx,5178.1", 
+                "width": 2218
+            }, 
+            {
+                "contentSize": "18976 B", 
+                "contentUrl": "https://www.flavorsofpuertorico.com/wp-content/uploads/2014/08/cecilias-01.jpg", 
+                "datePublished": "2017-08-14T23:42:00", 
+                "encodingFormat": "jpeg", 
+                "height": 332, 
+                "hostPageDisplayUrl": "http://www.flavorsofpuertorico.com/brands/", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=Ap6cvk7mXLnLXRIVc1-M8iAdogWHwIaqlA3slHp_6Zg&v=1&r=http%3a%2f%2fwww.flavorsofpuertorico.com%2fbrands%2f&p=DevEx,5255.1", 
+                "name": "OUR BRANDS | Flavors of Puerto Rico", 
+                "thumbnail": {
+                    "height": 300, 
+                    "width": 297
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.XwBZYp0krtplHfFEFrz36wEpEs&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=-4tJyjmhzD4IuUx7nyjYaN4OII_geObIt1yp6iaQKqg&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3dD442E9A6B4D95EED37F05DC1E5E7A0E19198CE34%26FORM%3dIQFRBA&p=DevEx,5179.1", 
+                "width": 329
+            }, 
+            {
+                "contentSize": "124294 B", 
+                "contentUrl": "http://www.flavorsofpuertorico.com/wp-content/uploads/2015/04/Puntos-de-ventas.png", 
+                "datePublished": "2015-04-04T08:24:00", 
+                "encodingFormat": "png", 
+                "height": 726, 
+                "hostPageDisplayUrl": "http://www.flavorsofpuertorico.com/points-of-sale/", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=nMS1CeVZF6eKgc0RlRgVpc1nTcqvHmiUic2iWIdbDgU&v=1&r=http%3a%2f%2fwww.flavorsofpuertorico.com%2fpoints-of-sale%2f&p=DevEx,5256.1", 
+                "name": "Points of Sale | Flavors of Puerto Rico", 
+                "thumbnail": {
+                    "height": 222, 
+                    "width": 300
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.Svnx_KwNSdurSG2Uf1qS1wEsDe&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=y4E1UkJBdtZNkLJQL6xroEniuJuDHXUrRvkQaKVToZw&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3d4D71EBAAFEAAAB0BC9A364F49D916F60F7837204%26FORM%3dIQFRBA&p=DevEx,5180.1", 
+                "width": 979
+            }, 
+            {
+                "contentSize": "81997 B", 
+                "contentUrl": "https://www.flavorsofpuertorico.com/wp-content/uploads/2015/11/chali-mango.jpg", 
+                "datePublished": "2017-07-08T01:10:00", 
+                "encodingFormat": "jpeg", 
+                "height": 500, 
+                "hostPageDisplayUrl": "https://www.flavorsofpuertorico.com/chali-mango/", 
+                "hostPageUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=AwmcN3HyuuX-rLeVu1BuMavw0y11mumyb-ozKH7WP4s&v=1&r=https%3a%2f%2fwww.flavorsofpuertorico.com%2fchali-mango%2f&p=DevEx,5257.1", 
+                "insightsSourcesSummary": {
+                    "recipeSourcesCount": 0, 
+                    "shoppingSourcesCount": 0
+                }, 
+                "name": "chali-mango \u2013 Flavors of Puerto Rico", 
+                "thumbnail": {
+                    "height": 230, 
+                    "width": 300
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.dDimFkrqED3ZovCaKB6ycQEsDm&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=bRVekP9RYBrhaR6U8lzrFf9wWzpzGhvjIClF60eHdj8&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3d5C6F1645461E80FB37E483478CBB6193EF136187%26FORM%3dIQFRBA&p=DevEx,5181.1", 
+                "width": 650
+            }, 
+            {
+                "contentSize": "783063 B", 
+                "contentUrl": "http://remezcla.com/wp-content/uploads/2015/09/box_mex_puertorico_07.jpg", 
+                "datePublished": "2017-07-27T00:33:00", 
+                "encodingFormat": "jpeg", 
+                "height": 1280, 
+                "hostPageDisplayUrl": "http://remezcla.com/lists/sports/5-of-the-best-fights-in-the-history-of-the-puerto-rico-mexico-boxing-rivalry/", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=1-cSFMSsp10qLrQgzXMsYB44t3O_Y-joEfGPV1yKV8A&v=1&r=http%3a%2f%2fremezcla.com%2flists%2fsports%2f5-of-the-best-fights-in-the-history-of-the-puerto-rico-mexico-boxing-rivalry%2f&p=DevEx,5258.1", 
+                "insightsSourcesSummary": {
+                    "recipeSourcesCount": 0, 
+                    "shoppingSourcesCount": 0
+                }, 
+                "name": "5 of the Best Fights in the History of the Puerto Rico ...", 
+                "thumbnail": {
+                    "height": 197, 
+                    "width": 300
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.47rV2I5oSj5OsbQQbdFJOgEsDF&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=PLATGZ8jJ96Mw0gBx-7lk8lu6OuQnTIDEpTgSBveMM4&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3d11E2460E09099840293E236A5FF3C9EFC2E2B23B%26FORM%3dIQFRBA&p=DevEx,5182.1", 
+                "width": 1948
+            }, 
+            {
+                "contentSize": "91084 B", 
+                "contentUrl": "http://www.moodiereport.com/images/DonQ_Box_600.jpg", 
+                "datePublished": "2016-06-25T01:36:00", 
+                "encodingFormat": "jpeg", 
+                "height": 680, 
+                "hostPageDisplayUrl": "http://www.moodiereport.com/print.php?c_id=12&doc_id=30276", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=0Mp1q9m6bUNcKnZ8a_ra5lGKCgBXYG0gbHtk3CDaJMI&v=1&r=http%3a%2f%2fwww.moodiereport.com%2fprint.php%3fc_id%3d12%26doc_id%3d30276&p=DevEx,5259.1", 
+                "insightsSourcesSummary": {
+                    "recipeSourcesCount": 0, 
+                    "shoppingSourcesCount": 0
+                }, 
+                "name": "Welcome to TheMoodieReport.com", 
+                "thumbnail": {
+                    "height": 300, 
+                    "width": 264
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.4wNsLDrzw6um6TBSEao8ZQEIEs&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=8gzyQT9FJ7TEtjy7pwN1LpjoXn0Ho1Nv7tcHuNUlEOo&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3dA058A4FA3F2B66040FD9A5CDA2130E289459B5C9%26FORM%3dIQFRBA&p=DevEx,5183.1", 
+                "width": 600
+            }, 
+            {
+                "contentSize": "24286 B", 
+                "contentUrl": "http://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/112011/la_gran_via.png", 
+                "datePublished": "2010-10-10T05:07:00", 
+                "encodingFormat": "png", 
+                "height": 195, 
+                "hostPageDisplayUrl": "http://www.brandsoftheworld.com/logos/countries/pr?page=1", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=hVl62obj512931qwMPvv7LKiuMrMlgFIatrs66NOi-0&v=1&r=http%3a%2f%2fwww.brandsoftheworld.com%2flogos%2fcountries%2fpr%3fpage%3d1&p=DevEx,5260.1", 
+                "insightsSourcesSummary": {
+                    "recipeSourcesCount": 0, 
+                    "shoppingSourcesCount": 0
+                }, 
+                "name": "301 Moved Permanently", 
+                "thumbnail": {
+                    "height": 195, 
+                    "width": 195
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.KA_N4myWChgb5U3RNJKOYwDDDD&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=gLNsiCUksTe01hL0j9vP88TQsZexDENKse79HVSrKpc&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3d12BA4F54350B841FAD8B2786EDF161DB3ED545B1%26FORM%3dIQFRBA&p=DevEx,5184.1", 
+                "width": 195
+            }, 
+            {
+                "contentSize": "10582 B", 
+                "contentUrl": "http://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/0020/2342/brand.gif", 
+                "datePublished": "2008-08-28T12:00:00", 
+                "encodingFormat": "gif", 
+                "height": 200, 
+                "hostPageDisplayUrl": "http://www.brandsoftheworld.com/logo/porpuertorico-ppr", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=q7yJaE4SRie1eG7fxytV52V3Lm9ucDnKq61tNmJi2ZQ&v=1&r=http%3a%2f%2fwww.brandsoftheworld.com%2flogo%2fporpuertorico-ppr&p=DevEx,5261.1", 
+                "insightsSourcesSummary": {
+                    "recipeSourcesCount": 0, 
+                    "shoppingSourcesCount": 0
+                }, 
+                "name": "PorPuertoRico (PPR) | Brands of the World\u2122 | Download ...", 
+                "thumbnail": {
+                    "height": 200, 
+                    "width": 200
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.X9x2IxLWs5qQ7FLYMaiOrADIDI&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=cPsk7wKJupwidOYZKBXttqb9kgficjge13okAdtk3VI&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3dE9E9237A7EC6AD6A5D1EA15E5AEECD4D7ACA487F%26FORM%3dIQFRBA&p=DevEx,5185.1", 
+                "width": 200
+            }, 
+            {
+                "contentSize": "14283 B", 
+                "contentUrl": "http://www.ministryofrum.com/graphics/paloviejo.jpg", 
+                "datePublished": "2010-06-23T12:00:00", 
+                "encodingFormat": "jpeg", 
+                "height": 256, 
+                "hostPageDisplayUrl": "http://www.ministryofrum.com/rumdetails.php?r=295", 
+                "hostPageUrl": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=nNhJ4LyATouruf1YrKlU9PKha3ZA1jDoZc6qyMtdp5k&v=1&r=http%3a%2f%2fwww.ministryofrum.com%2frumdetails.php%3fr%3d295&p=DevEx,5262.1", 
+                "insightsSourcesSummary": {
+                    "recipeSourcesCount": 0, 
+                    "shoppingSourcesCount": 0
+                }, 
+                "name": "Palo Viejo Dark Rum - Puerto Rico - review - Ministry of Rum", 
+                "thumbnail": {
+                    "height": 256, 
+                    "width": 180
+                }, 
+                "thumbnailUrl": "https://tse1.mm.bing.net/th?id=OIP.FuujLMIMrBRfckb4XXfo7wC0EA&pid=Api", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=RWDVF0XbgHL8IRIN56LvFHokR6iB7X-Rby1pCl0y_5s&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26id%3d14E3DCB10AB7A85EFA0A4D5EFEFA4B6D8A92CF98%26FORM%3dIQFRBA&p=DevEx,5186.1", 
+                "width": 180
+            }
+        ], 
+        "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=bhLO9myX_G0tVObqRrhCkqD9gBO0eCOX6GQw7BPE1AE&v=1&r=https%3a%2f%2fwww.bing.com%2fimages%2fsearch%3fq%3dpremium%2bbrands%2bof%2bpuerto%2brico%2binc%26qpvt%3dPremium%2bBrands%2bof%2bPuerto%2bRico%2bInc&p=DevEx,5031.1"
+    }, 
+    "rankingResponse": {
+        "mainline": {
+            "items": [
+                {
+                    "answerType": "WebPages", 
+                    "resultIndex": 0, 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.0"
+                    }
+                }, 
+                {
+                    "answerType": "WebPages", 
+                    "resultIndex": 1, 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.1"
+                    }
+                }, 
+                {
+                    "answerType": "Images", 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#Images"
+                    }
+                }, 
+                {
+                    "answerType": "WebPages", 
+                    "resultIndex": 2, 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.2"
+                    }
+                }, 
+                {
+                    "answerType": "WebPages", 
+                    "resultIndex": 3, 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.3"
+                    }
+                }, 
+                {
+                    "answerType": "WebPages", 
+                    "resultIndex": 4, 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.4"
+                    }
+                }
+            ]
+        }, 
+        "sidebar": {
+            "items": [
+                {
+                    "answerType": "RelatedSearches", 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#RelatedSearches"
+                    }
+                }
+            ]
+        }
+    }, 
+    "relatedSearches": {
+        "id": "https://api.cognitive.microsoft.com/api/v5/#RelatedSearches", 
+        "value": [
+            {
+                "displayText": "puerto rico brands", 
+                "text": "puerto rico brands", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=wbWiKYrMRQzPbZnANm_C57mb4OjuO0x3Dd0c5xkF9WA&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dpuerto%2brico%2bbrands&p=DevEx,5263.1"
+            }, 
+            {
+                "displayText": "rocky brands puerto rico", 
+                "text": "rocky brands puerto rico", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=ZJ-tzXPT66q5E4S06cYE7hp7_ro1zQhNl9I_rLeLPO0&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3drocky%2bbrands%2bpuerto%2brico&p=DevEx,5264.1"
+            }, 
+            {
+                "displayText": "puerto rico rum brands", 
+                "text": "puerto rico rum brands", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=b6mCsW15ie8lbfAsydYUogbNmoijTA1XjkFi4bIfwME&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dpuerto%2brico%2brum%2bbrands&p=DevEx,5265.1"
+            }, 
+            {
+                "displayText": "carrier puerto rico inc", 
+                "text": "carrier puerto rico inc", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=sORvLjSLvt57lE-DVcbGzkwqnDUlTU-v72H9TLoLKls&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dcarrier%2bpuerto%2brico%2binc&p=DevEx,5266.1"
+            }, 
+            {
+                "displayText": "puerto rico logo", 
+                "text": "puerto rico logo", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=rY54hM_qiuHjFWSWfy_YzXdkdF3LRBvPR2KqVTALXhQ&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dpuerto%2brico%2blogo&p=DevEx,5267.1"
+            }, 
+            {
+                "displayText": "ricoh puerto rico inc", 
+                "text": "ricoh puerto rico inc", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=DN5e9H6dwaSTLDh22Br2TZVA5TQ7azsnI4kEqiKn_iM&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dricoh%2bpuerto%2brico%2binc&p=DevEx,5268.1"
+            }, 
+            {
+                "displayText": "nestle puerto rico inc", 
+                "text": "nestle puerto rico inc", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=8iEckd5zBOtq4-QrJ3VXS6KRhfr7EtOfFCTM3_ih7CE&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dnestle%2bpuerto%2brico%2binc&p=DevEx,5269.1"
+            }, 
+            {
+                "displayText": "island finance puerto rico inc", 
+                "text": "island finance puerto rico inc", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=rQ-xzXoLdbvl5DUwWkFlsFtz-eKuFc2qecofS71ub_I&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3disland%2bfinance%2bpuerto%2brico%2binc&p=DevEx,5270.1"
+            }
+        ]
+    }, 
+    "webPages": {
+        "totalEstimatedMatches": 1190000, 
+        "value": [
+            {
+                "dateLastCrawled": "2017-08-15T15:01:00", 
+                "displayUrl": "https://www.companybooknetworking.com/premium-brands-of-puerto...", 
+                "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.0", 
+                "name": "Premium Brands of Puerto Rico, Inc. - Companybook", 
+                "snippet": "Premium Brands of Puerto Rico, Inc. was founded in 1998 and generated a revenue of \u00a325m - \u00a350m in 2017. This company is working within the Dairy Product (except ...", 
+                "url": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=O0QA2RAONrUK34Jyq6o-JPLwBlWO6nD4v0U8pxpVYqY&v=1&r=https%3a%2f%2fwww.companybooknetworking.com%2fpremium-brands-of-puerto-rico-inc%23!&p=DevEx,5063.1"
+            }, 
+            {
+                "dateLastCrawled": "2017-08-22T19:37:00", 
+                "displayUrl": "www.hoovers.com/company-information/cs/company-profile.premium...", 
+                "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.1", 
+                "name": "Premium Brands of Puerto Rico, Inc. | Company Profile from ...", 
+                "snippet": "Premium Brands of Puerto Rico, Inc. company profile from Hoover\u2019s \u2013 get an in-depth analysis of Premium Brands of Puerto Rico, Inc. business, financials, industry ...", 
+                "url": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=LjCCTJb6NRvs_XgvNAr_yAGs3ieQFN5iHK4cRy8OCvY&v=1&r=http%3a%2f%2fwww.hoovers.com%2fcompany-information%2fcs%2fcompany-profile.premium_brands_of_puerto_rico_inc.3208e986e213bfa5.html&p=DevEx,5080.1"
+            }, 
+            {
+                "dateLastCrawled": "2017-08-06T00:28:00", 
+                "displayUrl": "government-contractors.insidegov.com/l/186231/Premium-Brands-Of...", 
+                "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.2", 
+                "name": "Premium Brands Of Puerto Rico, Inc. | Government Contractor", 
+                "snippet": "Premium Brands Of Puerto Rico, Inc. in Bayamon, PR has worked on 26 contracts worth $2.53 million USD from the U.S. government since FY2007. See contract details ...", 
+                "url": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=Sv8clcwHuwFi_sP6gEQcP_YOm4dFSV5s3VwDGgVLt-8&v=1&r=http%3a%2f%2fgovernment-contractors.insidegov.com%2fl%2f186231%2fPremium-Brands-Of-Puerto-Rico-Inc&p=DevEx,5095.1"
+            }, 
+            {
+                "dateLastCrawled": "2017-09-01T03:22:00", 
+                "displayUrl": "listings.findthecompany.com/.../Premium-Brands-Of-Puerto-Rico-Inc", 
+                "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.3", 
+                "name": "Premium Brands Of Puerto Rico, Inc. in Bayamon, PR 00961 ...", 
+                "snippet": "Premium Brands Of Puerto Rico, Inc. is a dairy product company located in Bayamon, Puerto Rico. View phone number, website, employees, products, revenue, and more.", 
+                "url": "http://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=1qIKM88iQCLJ4MA0jbnI5S2g_vKVya7jST0WAH0hDa0&v=1&r=http%3a%2f%2flistings.findthecompany.com%2fl%2f3919877%2fPremium-Brands-Of-Puerto-Rico-Inc&p=DevEx,5108.1"
+            }, 
+            {
+                "dateLastCrawled": "2017-08-27T01:15:00", 
+                "displayUrl": "https://www.dandb.com/businessdirectory/premiumbrandsofpuertorico...", 
+                "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.4", 
+                "name": "Premium Brands of Puerto Rico, Inc. - Bayamon , PR ...", 
+                "snippet": "Find the Premium Brands of Puerto Rico, Inc. business profile in Bayamon ...", 
+                "url": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=njn0Of6MpJgYGG2CCvn-RwJZEzeOBYiqcYaLO1Em3Ok&v=1&r=https%3a%2f%2fwww.dandb.com%2fbusinessdirectory%2fpremiumbrandsofpuertoricoinc.-bayamon-pr-6916165.html&p=DevEx,5121.1"
+            }
+        ], 
+        "webSearchUrl": "https://www.bing.com/cr?IG=4707EC7487A8439D9F857F420D64712E&CID=3D04D6DAD8AC662317C1DC23D94967F4&rd=1&h=HUxlmhBll9qAli8008ltn2HMOJfyjcJ40chmoU55e70&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dPremium%2bBrands%2bof%2bPuerto%2bRico%2bInc&p=DevEx,5244.1"
+    }
+}

@@ -12,7 +12,8 @@ from sklearn.externals import joblib
 
 from coffeeandnoodles.core.util import get_md5_from_string
 from config import DeFactoConfig
-from defacto.definitions import DATASET_3C_SITES_PATH
+from defacto.definitions import DATASET_3C_SITES_PATH, DATASET_MICROSOFT_PATH_PAGES_MISSING, \
+    DATASET_MICROSOFT_PATH_PAGES_CACHED
 
 config = DeFactoConfig()
 
@@ -41,11 +42,11 @@ def get_html_file_path(url):
     if ('.html' not in last) and ('.htm' not in last) and ('.shtml' not in last):
         if path[-1] != '/':
             path = path + '/'
-        path_root1 = Path(config.dataset_ext_microsoft_webcred_webpages_cache + path + 'index.html')
-        path_root2 = Path(config.dataset_ext_microsoft_webcred_webpages_cache_missing + path + 'index.html')
+        path_root1 = Path(DATASET_MICROSOFT_PATH_PAGES_CACHED + path + 'index.html')
+        path_root2 = Path(DATASET_MICROSOFT_PATH_PAGES_MISSING + path + 'index.html')
     else:
-        path_root1 = Path(config.dataset_ext_microsoft_webcred_webpages_cache + path)
-        path_root2 = Path(config.dataset_ext_microsoft_webcred_webpages_cache_missing + path)
+        path_root1 = Path(DATASET_MICROSOFT_PATH_PAGES_CACHED + path)
+        path_root2 = Path(DATASET_MICROSOFT_PATH_PAGES_MISSING + path)
 
     if path_root1.exists():
         path_root = path_root1
@@ -53,12 +54,9 @@ def get_html_file_path(url):
         path_root = path_root2
     else:
         # sometimes the last part is not a folder, but the file itself without the ".html" , try it as a last attempt
-        path_root3a = Path(
-            config.dataset_ext_microsoft_webcred_webpages_cache + path.replace(last, '') + last + '.html')
-        path_root3b = Path(
-            config.dataset_ext_microsoft_webcred_webpages_cache + path.replace(last, '') + last + '.htm')
-        path_root3c = Path(
-            config.dataset_ext_microsoft_webcred_webpages_cache + path.replace(last, '') + last + '.shtml')
+        path_root3a = Path(DATASET_MICROSOFT_PATH_PAGES_CACHED + path.replace(last, '') + last + '.html')
+        path_root3b = Path(DATASET_MICROSOFT_PATH_PAGES_CACHED + path.replace(last, '') + last + '.htm')
+        path_root3c = Path(DATASET_MICROSOFT_PATH_PAGES_CACHED + path.replace(last, '') + last + '.shtml')
         if path_root3a.exists():
             path_root = path_root3a
         elif path_root3b.exists():
@@ -114,7 +112,7 @@ def get_encoder_domain():
     joblib.dump(le, config.enc_domain)
     print(le.classes_)
 
-def get_features_web_3c(extractor, url, likert_mode, likert_avg, folder, name, export_html_tags):
+def get_features_web_c3(extractor, url, likert_mode, likert_avg, folder, name, export_html_tags):
 
     try:
 
@@ -145,7 +143,6 @@ def get_features_web_3c(extractor, url, likert_mode, likert_avg, folder, name, e
             return data
 
         else:
-
             Path(folder + 'error/' + name).touch()
 
     except:

@@ -1,0 +1,4 @@
+verbalisations = []
+isDomiciledIn
+hasLatestOrganizationFoundedDate
+hasHeadquartersPhoneNumber

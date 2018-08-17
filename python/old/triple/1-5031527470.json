@@ -1,0 +1,127 @@
+{
+    "_type": "SearchResponse", 
+    "rankingResponse": {
+        "mainline": {
+            "items": [
+                {
+                    "answerType": "WebPages", 
+                    "resultIndex": 0, 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.0"
+                    }
+                }, 
+                {
+                    "answerType": "WebPages", 
+                    "resultIndex": 1, 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.1"
+                    }
+                }, 
+                {
+                    "answerType": "WebPages", 
+                    "resultIndex": 2, 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.2"
+                    }
+                }, 
+                {
+                    "answerType": "WebPages", 
+                    "resultIndex": 3, 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.3"
+                    }
+                }
+            ]
+        }, 
+        "sidebar": {
+            "items": [
+                {
+                    "answerType": "RelatedSearches", 
+                    "value": {
+                        "id": "https://api.cognitive.microsoft.com/api/v5/#RelatedSearches"
+                    }
+                }
+            ]
+        }
+    }, 
+    "relatedSearches": {
+        "id": "https://api.cognitive.microsoft.com/api/v5/#RelatedSearches", 
+        "value": [
+            {
+                "displayText": "modern engineering co", 
+                "text": "modern engineering co", 
+                "webSearchUrl": "https://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=VSEGUAdrbeDVghqaagWNNsLwjEsWjGsYMVOo9fVAaJQ&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dmodern%2bengineering%2bco&p=DevEx,5221.1"
+            }
+        ]
+    }, 
+    "webPages": {
+        "totalEstimatedMatches": 108000, 
+        "value": [
+            {
+                "dateLastCrawled": "2017-09-01T02:45:00", 
+                "deepLinks": [
+                    {
+                        "name": "Capabilities", 
+                        "snippet": "Capabilities. Modern Engineering is your solution for everything from CNC automation and machining, to milling and turning. No matter what size of project, our ...", 
+                        "url": "http://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=IjCgO6qLje2xMxIReUlAFbwH4nMlBY24KB-4YvEKakg&v=1&r=http%3a%2f%2fmoderneng.com%2fcapabilities%2f&p=DevEx,5063.1"
+                    }, 
+                    {
+                        "name": "UDO Jahn", 
+                        "snippet": "As Modern Engineering's General Manager since 1986, Udo has made Modern stand out amongst its competitors for not only the accuracy and consistency of our ...", 
+                        "url": "http://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=X7IW6LK55F5J9TPfcYxnWr5KV_Np016qkYKHPsjhRL4&v=1&r=http%3a%2f%2fmoderneng.com%2fabout%2fudo-jahn&p=DevEx,5064.1"
+                    }, 
+                    {
+                        "name": "Contact", 
+                        "snippet": "Contact a representative at Modern Engineering directly or fill out the form below. Modern Engineering (1973) Ltd. 8190 River Road Delta, British Columbia, Canada", 
+                        "url": "http://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=OuK8-Gcbuf6_eKywFvFUxJwRUjSDo1amr8-gtouM5vk&v=1&r=http%3a%2f%2fmoderneng.com%2fcontact%2f&p=DevEx,5065.1"
+                    }, 
+                    {
+                        "name": "Accomplishments", 
+                        "snippet": "Accomplishments. At Modern Engineering, we know a thing or two about excellence. Other people have noticed, too. Press. The Big Picture on Training - March 2014, The ...", 
+                        "url": "http://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=l3VVk-6g162ZEtTljmtULVDt_848Cx7topzbPQAVUUY&v=1&r=http%3a%2f%2fmoderneng.com%2fabout%2faccomplishments&p=DevEx,5066.1"
+                    }, 
+                    {
+                        "name": "Blog", 
+                        "snippet": "Like many of you, I go on vacation with my family every year. For some people, otherwise known as workaholics, vacation is a struggle. But most people love going on ...", 
+                        "url": "http://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=hHc_YqNUOWEUZdxDTlYmwWeWMvFL1beFN7WHYevC-zw&v=1&r=http%3a%2f%2fmoderneng.com%2fblog%2f&p=DevEx,5067.1"
+                    }, 
+                    {
+                        "name": "Automation", 
+                        "snippet": "Automation is the Key to Success. ... Modern Engineering has always believed in keeping our Canadian manufacturing sector alive and well.", 
+                        "url": "http://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=Oha_C6rY7l5bFcBVpaowk7mJiv1RPsoBDRcZkTMCL2M&v=1&r=http%3a%2f%2fmoderneng.com%2fabout%2fautomation&p=DevEx,5068.1"
+                    }
+                ], 
+                "displayUrl": "moderneng.com", 
+                "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.0", 
+                "name": "Modern Engineering - CNC Machine Shop &amp; CNC Machining ...", 
+                "snippet": "A fully automated CNC organization. With a history spanning over 70 years, we at Modern Engineering continue to build successful business relationships by exceeding ...", 
+                "url": "http://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=vd4tHmg9SFs1F_rbyG5DMhGdaAVnfzcKobogQ37mNTk&v=1&r=http%3a%2f%2fmoderneng.com%2f&p=DevEx,5074.1"
+            }, 
+            {
+                "dateLastCrawled": "2017-08-19T09:29:00", 
+                "displayUrl": "www.ic.gc.ca/app/ccc/srch/nvgt.do?lang=eng&prtl=1&estblmntNo=...", 
+                "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.1", 
+                "name": "Modern Engineering (1973) Ltd. - Complete profile ...", 
+                "snippet": "Company profile - Canadian Company Capabilities ... Modern Engineering (1973) Ltd. ... Modern Engineering is an established CNC machining organization.", 
+                "url": "http://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=vik6UCwDPIqCjbdcrzevcB3-D1JTpdwni25MfHukb1U&v=1&r=http%3a%2f%2fwww.ic.gc.ca%2fapp%2fccc%2fsrch%2fnvgt.do%3flang%3deng%26prtl%3d1%26estblmntNo%3d234567010445%26profile%3dcmpltPrfl%26profileId%3d2056%26app%3dsold&p=DevEx,5089.1"
+            }, 
+            {
+                "dateLastCrawled": "2017-08-13T22:23:00", 
+                "displayUrl": "https://plus.google.com/114546235078428098345", 
+                "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.2", 
+                "name": "Modern Engineering (1973) Ltd - Google+", 
+                "snippet": "Modern Engineering (1973) Ltd. 39 followers - A fully automated CNC organization that delivers precision solutions to complex problems. A fully automated CNC ...", 
+                "url": "https://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=LHuNgM55aWE5HzeqRMwAAJC7-m8BNRhZ5XZafsU1458&v=1&r=https%3a%2f%2fplus.google.com%2f114546235078428098345&p=DevEx,5116.1"
+            }, 
+            {
+                "dateLastCrawled": "2017-08-05T15:47:00", 
+                "displayUrl": "https://www.yellowpages.ca/bus/British-Columbia/Delta/Modern...", 
+                "id": "https://api.cognitive.microsoft.com/api/v5/#WebPages.3", 
+                "name": "Modern Engineering (1973) Ltd - 105-6951 72 St, Delta, BC", 
+                "snippet": "Modern Engineering (1973) Ltd - Delta - phone number, website & address - BC - Consulting Engineers.", 
+                "url": "https://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=DeV2fqcI1Rf7UDR_1rbFjtoiHGwcJPyqQjeAKQ5nH5g&v=1&r=https%3a%2f%2fwww.yellowpages.ca%2fbus%2fBritish-Columbia%2fDelta%2fModern-Engineering-1973-Ltd%2f7826259.html&p=DevEx,5133.1"
+            }
+        ], 
+        "webSearchUrl": "https://www.bing.com/cr?IG=517D4C211DF349F5901026850FD81765&CID=31C5AF83DE3469993F4DA57ADFD16825&rd=1&h=_I2rywY8740MuNxzEI5jtKywIbIir65yHb3wk-KkN_I&v=1&r=https%3a%2f%2fwww.bing.com%2fsearch%3fq%3dModern%2bEngineering%2b1973%2bLtd&p=DevEx,5220.1"
+    }
+}
