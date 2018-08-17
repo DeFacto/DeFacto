@@ -157,12 +157,10 @@ class FeaturesCore:
             self.webscrap = None
             self.title = None
             self.body = None
-            clf = Classifiers()
-            self.classifiers = clf
-            self.topic = TopicTerms()
             self.sources = OpenSourceData()
             self.page_rank = PageRankData()
             self.gi = GeneralInquirer(DEFACTO_LEXICON_GI_PATH)
+            self.classifiers = Classifiers()
             self.error_message = ''
         except Exception as e:
             self.error_message = repr(e)

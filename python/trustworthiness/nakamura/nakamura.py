@@ -5,7 +5,7 @@ import socket
 class Nakamura:
     def __init__(self):
         self.DataTable = None
-        self.topic = None
+        self.topic = TopicTerms()
 
     def filterTerm(self, word):
         if word is not None:

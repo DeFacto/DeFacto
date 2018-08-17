@@ -1,9 +1,8 @@
 import pandas as pd
 from sklearn.externals import joblib
-
 from coffeeandnoodles.core.util import get_md5_from_string
 from config import DeFactoConfig
-from defacto.definitions import OUTPUT_FOLDER, BENCHMARK_FILE_NAME_TEMPLATE, BEST_CLS_BIN, BEST_PAD_BIN
+from defacto.definitions import OUTPUT_FOLDER
 from trustworthiness.feature_extractor import FeaturesCore
 
 config = DeFactoConfig()
