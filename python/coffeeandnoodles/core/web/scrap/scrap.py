@@ -82,12 +82,6 @@ class WebScrap:
         except Exception as e:
             raise e
 
-    def get_body_sequence_tags(self):
-        try:
-            return self.soup()
-        except Exception as e:
-            raise e
-
     def get_title(self):
         try:
             title = self.soup.find('title')

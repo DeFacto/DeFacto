@@ -26,10 +26,11 @@ OUTPUT_FOLDER = ROOT_PROJECT_PATH + 'output/'
 DATASET_3C_SITES_PATH = ROOT_PROJECT_PATH + 'datasets/C3/c3.sites.csv'
 DATASET_3C_SCORES_PATH = ROOT_PROJECT_PATH + 'datasets/C3/reconcile_mturk_dm_ready.csv'
 DATASET_MICROSOFT_PATH = ROOT_PROJECT_PATH + 'datasets/microsoft/web_credibility_1000_url_ratings.fixed.tsv'
+DATASET_MICROSOFT_TEST_PATH = ROOT_PROJECT_PATH + 'datasets/microsoft/web_credibility_expert_ratings_for_test_set.tsv'
 DATASET_MICROSOFT_PATH_PAGES_CACHED = ROOT_PROJECT_PATH + 'datasets/microsoft/Cached Pages/'
 DATASET_MICROSOFT_PATH_PAGES_MISSING = ROOT_PROJECT_PATH + 'datasets/microsoft/Cached Pages Missing/'
 
-DEFACTO_LEXICON_GI_PATH = ROOT_FOLDER_PATH + 'general inquirer/inquireraugmented.csv'
+DEFACTO_LEXICON_GI_PATH = ROOT_PROJECT_PATH + 'general inquirer/inquireraugmented.csv'
 
 SOCIAL_NETWORK_NAMES = ['Facebook', 'WhatsApp', 'QQ', 'TencentQQ', 'WeChat', 'QZone', 'Tumblr', 'Instagram', 'Twitter',
                         'Google', 'Google+', 'BaiduTieba', 'Postbar', 'Skype', 'Viber', 'SinaWeibo', 'Line', 'Snapchat',
@@ -51,6 +52,9 @@ MAX_WEBSITES_PROCESS = 999999
 
 # max timeout to scrap a given URL
 TIMEOUT_MS = 3
+
+# summarization lengh
+SUMMARIZATION_LEN = 100
 
 # sampling parameters
 CROSS_VALIDATION_K_FOLDS = 10

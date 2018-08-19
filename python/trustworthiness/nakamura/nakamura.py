@@ -2,18 +2,16 @@ import re
 import numpy as np
 import socket
 
+from config import DeFactoConfig
+from trustworthiness.nakamura.topic_utils import TopicTerms
+from trustworthiness.util import filterTerm
+
+config = DeFactoConfig()
+
 class Nakamura:
     def __init__(self):
         self.DataTable = None
         self.topic = TopicTerms()
-
-    def filterTerm(self, word):
-        if word is not None:
-            temp = word.lower()
-            return re.sub(r"[^A-Za-z]+", '', temp)
-        else:
-            return ''
-
 
     def get_feat_majorityweb(self):
         query = self.DataTable[self.DataTable['url'] == self.url].iloc[0, 1]
@@ -58,7 +56,7 @@ class Nakamura:
         query = query.split(' ')
         title = title.split(' ')
         for i in range(len(query)):
-            query[i] = self.filterTerm(query[i])
+            query[i] = filterTerm(query[i])
         for i in query:
             for j in title:
                 if i in j:
@@ -71,7 +69,7 @@ class Nakamura:
         query = self.DataTable[self.DataTable['url'] == self.url].iloc[0, 1]
         query = query.split(' ')
         for i in range(len(query)):
-            query[i] = self.filterTerm(query[i])
+            query[i] = filterTerm(query[i])
         try:
             pageTerms = self.topic.generatePageTerms(self.url)
         except Exception as e:

@@ -233,53 +233,58 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
     assert (exp_folder is not None and exp_folder != '')
     assert (ds_folder is not None and ds_folder != '')
 
-    df = pd.read_csv(DATASET_MICROSOFT_PATH, delimiter='\t', header=0)
-    config.logger.info('creating job args for: ' + DATASET_MICROSOFT_PATH)
-    job_args = []
-    tot_proc = 0
-    err = 0
-    for index, row in df.iterrows():
-        url = str(row[3])
-        urlencoded = get_md5_from_string(url)
-        name = urlencoded + '.pkl'
-        folder = OUTPUT_FOLDER + exp_folder + ds_folder
-        my_file = Path(folder + 'text/' + name)
-        my_file_err = Path(folder + 'error/' + name)
-        if (not my_file.exists() and not my_file_err.exists()) or force is True:
-            topic = row[0]
-            query = row[1]
-            rank = int(row[2])
-            likert = int(row[4])
-            path = str(get_html_file_path(url))
-            if path is not None:
-                fe = FeaturesCore(url, local_file_path=path)
-            else:
-                fe = FeaturesCore(url)
-            if fe.error is False:
-                job_args.append((fe, topic, query, rank, url, likert, folder, name, export_html_tags)) # -> multiple arguments
-                tot_proc += 1
-                if tot_proc > MAX_WEBSITES_PROCESS - 1:
-                    config.logger.warn('max number of websites reached: ' + str(MAX_WEBSITES_PROCESS))
-                    break
-            else:
-                err += 1
+    try:
 
-            if index % 100 ==0:
-                config.logger.info('processing job args ' + str(index))
-            # extractors.append(fe) # -> single argument
+        df = pd.read_csv(DATASET_MICROSOFT_PATH, delimiter='\t', header=0)
+        config.logger.info('creating job args for: ' + DATASET_MICROSOFT_PATH)
+        job_args = []
+        tot_proc = 0
+        err = 0
+        for index, row in df.iterrows():
+            url = str(row[3])
+            urlencoded = get_md5_from_string(url)
+            name = urlencoded + '.pkl'
+            folder = OUTPUT_FOLDER + exp_folder + ds_folder
+            my_file = Path(folder + 'text/' + name)
+            my_file_err = Path(folder + 'error/' + name)
+            if (not my_file.exists() and not my_file_err.exists()) or force is True:
+                topic = row[0]
+                query = row[1]
+                rank = int(row[2])
+                likert = int(row[4])
+                path = str(get_html_file_path(url))
+                if path is not None:
+                    fe = FeaturesCore(url, local_file_path=path)
+                else:
+                    fe = FeaturesCore(url)
+                if fe.error is False:
+                    job_args.append((fe, topic, query, rank, url, likert, folder, name, export_html_tags)) # -> multiple arguments
+                    tot_proc += 1
+                    if tot_proc > MAX_WEBSITES_PROCESS - 1:
+                        config.logger.warn('max number of websites reached: ' + str(MAX_WEBSITES_PROCESS))
+                        break
+                else:
+                    err += 1
 
-    config.logger.info('%d job args created (out of %s): starting multi thread' % (len(job_args), len(df)))
-    config.logger.info('apart from the jobs, weve got %d errors' % (err))
-    config.logger.info(str(multiprocessing.cpu_count()) + ' CPUs available')
-    with Pool(processes=multiprocessing.cpu_count()) as pool:
-        asyncres = pool.starmap(get_features_web_microsoft, job_args)
-        #asyncres = pool.map(get_features_web, extractors)
+                if index % 100 ==0:
+                    config.logger.info('processing job args ' + str(index))
+                # extractors.append(fe) # -> single argument
 
-    config.logger.info('feature extraction done! saving...')
-    #name = 'microsoft_dataset_' + time.strftime("%Y%m%d%H%M%S") + '_features.pkl'
-    name = 'microsoft_dataset_' + str(len(job_args)) + '_text_features.pkl'
-    joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + name)
-    config.logger.info('done! file: ' + name)
+        config.logger.info('%d job args created (out of %s): starting multi thread' % (len(job_args), len(df)))
+        config.logger.info('apart from the jobs, weve got %d errors' % (err))
+        config.logger.info(str(multiprocessing.cpu_count()) + ' CPUs available')
+        with Pool(processes=multiprocessing.cpu_count()) as pool:
+            asyncres = pool.starmap(get_features_web_microsoft, job_args)
+            #asyncres = pool.map(get_features_web, extractors)
+
+        config.logger.info('feature extraction done! saving...')
+        #name = 'microsoft_dataset_' + time.strftime("%Y%m%d%H%M%S") + '_features.pkl'
+        name = 'microsoft_dataset_' + str(len(job_args)) + '_text_features.pkl'
+        joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + name)
+        config.logger.info('done! file: ' + name)
+
+    except Exception as e:
+        config.logger.error(repr(e))
 
 def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, force):
     assert (exp_folder is not None and exp_folder != '')

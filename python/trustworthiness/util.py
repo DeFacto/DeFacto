@@ -15,8 +15,17 @@ from config import DeFactoConfig
 from defacto.definitions import DATASET_3C_SITES_PATH, DATASET_MICROSOFT_PATH_PAGES_MISSING, \
     DATASET_MICROSOFT_PATH_PAGES_CACHED
 
+import re
+
 config = DeFactoConfig()
 
+
+def filterTerm(word):
+    if word is not None:
+        temp = word.lower()
+        return re.sub(r"[^A-Za-z]+", '', temp)
+    else:
+        return ''
 
 def print_report_regression(clf_name, predictions, y_test, targets):
     print('MAE', mean_absolute_error(y_test, predictions))
@@ -121,73 +130,90 @@ def get_features_web_c3(extractor, url, likert_mode, likert_avg, folder, name, e
 
         if not extractor.error:
 
-            config.logger.info('process starts for : ' + extractor.url)
+            #config.logger.debug('process starts for : ' + extractor.url)
 
             data = collections.defaultdict(dict)
             data['url'] = url
             data['likert_mode'] = likert_mode
             data['likert_avg'] = likert_avg
 
-            out = extractor.get_final_feature_vector()
+            err, out = extractor.get_final_feature_vector()
 
             # text/
             data['features'] = out
-            config.logger.info('features extracted - OK: ' + extractor.url)
-            joblib.dump(data, folder + 'text/' + name)
+            extractor.tot_feat_extraction_errors = err
+
 
             # html/
+            html_error = False
             if export_html_tags:
                 with open(folder + 'html/' + name.replace('.pkl', '.txt'), "w") as file:
-                    file.write(str(extractor.get_sequence_html()))
+                    content = str(extractor.webscrap.soup)
+                    if content is not None:
+                        file.write(content)
+                    else:
+                        html_error = True
+
+            if html_error is False:
+                joblib.dump(data, folder + 'text/' + name)
+                config.logger.info('OK: ' + extractor.url)
+            else:
+                config.logger.info('Err: ' + extractor.url)
 
             return data
 
         else:
             Path(folder + 'error/' + name).touch()
 
-    except:
-        config.logger.error('features extraction - ERROR: ' + extractor.url)
-        raise
+    except Exception as e:
+        config.logger.error(extractor.url + ' - ' + repr(e))
+        Path(folder + 'error/' + name).touch()
 
 def get_features_web_microsoft(extractor, topic, query, rank, url, likert, folder, name, export_html_tags):
 
-    try:
 
-        if extractor.webscrap is None:
-            extractor.call_web_scrap()
+    if extractor.webscrap is None:
+        extractor.call_web_scrap()
 
-        if not extractor.error:
+    if not extractor.error:
 
-            config.logger.info('process starts for : ' + extractor.url)
+        #config.logger.debug('process starts for : ' + extractor.url)
 
-            data = collections.defaultdict(dict)
-            data['topic'] = topic
-            data['query'] = query
-            data['rank'] = rank
-            data['url'] = url
-            data['likert'] = likert
+        data = collections.defaultdict(dict)
+        data['topic'] = topic
+        data['query'] = query
+        data['rank'] = rank
+        data['url'] = url
+        data['likert'] = likert
 
-            out = extractor.get_final_feature_vector()
+        err, out = extractor.get_final_feature_vector()
+        config.logger.info('total of features function errors: ' + str(err))
 
-            # text/
-            data['features'] = out
-            config.logger.info('features extracted - OK: ' + extractor.url)
+        # text/
+        data['features'] = out
+        extractor.tot_feat_extraction_errors = err
+
+        # html/
+        html_error = False
+        if export_html_tags:
+            with open(folder + 'html/' + name.replace('.pkl', '.txt'), "w") as file:
+                content = str(extractor.webscrap.soup)
+                if content is not None:
+                    file.write(content)
+                else:
+                    html_error = True
+
+        if html_error is False:
             joblib.dump(data, folder + 'text/' + name)
-
-            # html/
-            if export_html_tags:
-                with open(folder + 'html/' + name.replace('.pkl', '.txt'), "w") as file:
-                    file.write(str(extractor.get_sequence_html()))
-
-            return data
-
+            config.logger.info('OK: ' + extractor.url)
         else:
+            config.logger.info('Err: ' + extractor.url)
 
-            Path(folder + 'error/' + name).touch()
+        return data
 
-    except:
-        config.logger.error('features extraction - ERROR: ' + extractor.url)
-        raise
+    else:
+        Path(folder + 'error/' + name).touch()
+
 
 def save_url_body(extractor):
     try:

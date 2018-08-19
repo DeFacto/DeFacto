@@ -1,6 +1,8 @@
+from collections import Counter
 from datetime import date
 import nltk
 from sklearn.externals import joblib
+from textblob import TextBlob
 from textstat.textstat import textstat
 from sumy.parsers.html import HtmlParser
 from sumy.parsers.plaintext import PlaintextParser
@@ -27,8 +29,10 @@ import whois
 from urllib.parse import urlparse
 import os
 import warnings
-from defacto.definitions import DEFACTO_LEXICON_GI_PATH, SOCIAL_NETWORK_NAMES, OUTPUT_FOLDER, TIMEOUT_MS
-from trustworthiness.topic_utils import TopicTerms
+from defacto.definitions import DEFACTO_LEXICON_GI_PATH, SOCIAL_NETWORK_NAMES, OUTPUT_FOLDER, TIMEOUT_MS, \
+    SUMMARIZATION_LEN
+from trustworthiness.util import filterTerm
+
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore",category=FutureWarning)
 
@@ -55,14 +59,17 @@ class Singleton(object):
 class GeneralInquirer:
 
     def __init__(self, path):
-        config.logger.info('loading GI lexicon...')
-        self.df = pd.read_table(path, sep="\t", na_values=0, low_memory=False, skiprows=1)
-        self.df.drop(self.df.columns[[1, 184, 185]], axis=1, inplace=True)
-        self.df.columns = ['col_' + str(i) for i in range(0,183)]
-        self.df.fillna(0, inplace=True)
-        self.df.set_index('col_0', inplace=True)
-        self.tot_features = len(self.df.columns)
-        config.logger.info('done! ' + str(self.tot_features) + ' word features')
+        try:
+            config.logger.info('loading GI lexicon...')
+            self.df = pd.read_table(path, sep="\t", na_values=0, low_memory=False, skiprows=1)
+            self.df.drop(self.df.columns[[1, 184, 185]], axis=1, inplace=True)
+            self.df.columns = ['col_' + str(i) for i in range(0,183)]
+            self.df.fillna(0, inplace=True)
+            self.df.set_index('col_0', inplace=True)
+            self.tot_features = len(self.df.columns)
+            config.logger.info('done! ' + str(self.tot_features) + ' word features')
+        except Exception as e:
+            raise e
 
     def get_word_vector(self, word):
         word = word.upper()
@@ -154,14 +161,16 @@ class FeaturesCore:
             self.local_file_path = local_file_path
             self.timeout = timeout
             self.error = error
+            self.error_message = ''
+            self.tot_feat_extraction_errors = 0
             self.webscrap = None
             self.title = None
             self.body = None
+            self.gi = GeneralInquirer(DEFACTO_LEXICON_GI_PATH)
             self.sources = OpenSourceData()
             self.page_rank = PageRankData()
-            self.gi = GeneralInquirer(DEFACTO_LEXICON_GI_PATH)
             self.classifiers = Classifiers()
-            self.error_message = ''
+
         except Exception as e:
             self.error_message = repr(e)
             self.error = True
@@ -226,7 +235,7 @@ class FeaturesCore:
         '''
         try:
             if text is None or len(text.split()) == 0:
-                return [0,0,0,0,0,0]
+                return [-1] * 6
             else:
                 aux = text.split()
                 limit = min(len(aux), 1000)
@@ -256,8 +265,7 @@ class FeaturesCore:
 
                 return out
         except Exception as e:
-            config.logger.error(repr(e))
-            return [0,0,0,0,0,0]
+           raise e
 
     def get_feat_spam(self, text):
         '''
@@ -274,48 +282,100 @@ class FeaturesCore:
             pred_probs = self.classifiers.clf_spam_1.predict_proba(vec_text)[0]
             return [pred_probs[0], pred_probs[1], pred_klass]
         except Exception as e:
-            config.logger.error(repr(e))
-            return 0, 0, 0
+            raise e
 
-    def get_feat_sentiment(self):
+    def get_feat_sentiment(self, text):
         '''
         returns probability 0-1
         '''
-        text = self.get_summary_lex_rank(200)
-        top_words = 10000
-        textList = []
-        text = text.split(' ')
-        for i in text:
-            i = self.filterTerm(i)
-            if i in self.classifiers.vec_sentiment_1:
-                textList.append(self.classifiers.vec_sentiment_1[i])
-            else:
-                textList.append(0)
+        try:
+            probs_sent = []
+            probs_subj = []
+            blob = TextBlob(text)
+            for sentence in blob.sentences:
+                probs_sent.append(sentence.sentiment.polarity)
+                probs_subj.append(sentence.sentiment.subjetivity)
+            return (np.average(probs_sent), np.average(probs_subj))
+        except Exception as e:
+            raise e
 
-        max_review_length = 1600
-
-        #if(len(textList)>max_review_length):
-        #    textList = textList(:max_review_length)
-
-        inputList = []
-        textList = np.array(textList)
-        inputList.append(textList)
-        modelInput = sequence.pad_sequences(inputList,maxlen = max_review_length)
-
-        return self.classifiers.clf_sentiment_1.predict(modelInput)
 
     def get_feat_domain(self):
         try:
             return self.webscrap.get_domain()
         except Exception as e:
-            config.logger.error(repr(e))
-            return ''
+            raise e
+
+    def get_feat_basic_text(self, text):
+        from nltk import FreqDist
+        import numpy as np
+        try:
+            tokens = nltk.word_tokenize(text)
+            tags = nltk.pos_tag(tokens)
+            set_tokens = set(tokens)
+            n = len(tokens)
+            F = FreqDist(tokens)
+            Ftags = FreqDist(tags)
+
+            k = 0
+            for st in set_tokens:
+                freq_w = F.get(st)
+                k += (freq_w * (np.math.log10(n) - np.math.log10(freq_w)))
+
+            e = (1 / len(tokens)) * k
+
+            # exclamations
+            nr_exclamations = 0
+            nr_quotation_mark = 0
+            nr_comma = 0
+            nr_dot = 0
+            for s in tokens:
+                if s == '!':
+                    nr_exclamations +=1
+                elif s == ',':
+                    nr_comma +=1
+                elif s == '.':
+                    nr_dot += 1
+                elif s == '?':
+                    nr_quotation_mark += 1
+
+            nr_sent_pos = 0
+            nr_sent_neg = 0
+            nr_sent_neu = 0
+            sent_tokenize_list = nltk.sent_tokenize(text)
+            for s in sent_tokenize_list:
+                x = self.get_feat_sentiment(s)
+                if x > .5:
+                    nr_sent_pos += 1
+                elif .4 <= x <= .5:
+                    nr_sent_neu += 1
+                else:
+                    nr_sent_neg += 1
+
+            pos = [['NN', 'NNP'], ['VB', 'VBN', 'VBG', 'VBD'], ['DT'], ['JJ'], ['RB']]
+            freq_pos = []
+            for pp in pos:
+                y = 0
+                for p in pp:
+                    try:
+                        y += Ftags.get(p)
+                    except:
+                        y += 0
+                freq_pos.append(y)
+
+
+            return [e, len(sent_tokenize_list), len(tokens), len(set_tokens),
+                    nr_sent_pos, nr_sent_neu, nr_sent_neg,
+                    nr_exclamations, nr_quotation_mark, nr_comma, nr_dot,
+                    ].extend(freq_pos)
+
+        except Exception as e:
+            raise e
 
     def get_whois_features(self, domain):
         data = []
-        _OK = 1
-        _NONE = -1
-        _ERR = -2
+        _OK = 2
+        _NONE = 1
         try:
             try:
                 details = whois.whois(domain)
@@ -346,7 +406,7 @@ class FeaturesCore:
             except:
                 raise
         except Exception as e:
-            data.append([_ERR] * 10)
+           raise e
 
         return data
 
@@ -354,29 +414,26 @@ class FeaturesCore:
         try:
             return self.webscrap.get_suffix()
         except Exception as e:
-            config.logger.error(repr(e))
-            return ''
+            raise e
+
 
     def get_feat_source_info(self):
         try:
             return self.webscrap.get_tot_occurences_authority()
         except Exception as e:
-            config.logger.error(repr(e))
-            return 0
+            raise e
 
     def get_feat_tot_outbound_links(self, tp):
         try:
             return len(self.webscrap.get_outbound_links(tp))
         except Exception as e:
-            config.logger.error(repr(e))
-            return 0
+            raise e
 
     def get_feat_tot_outbound_domains(self, tp):
         try:
             return len(self.webscrap.get_outbound_domains(tp))
         except Exception as e:
-            config.logger.error(repr(e))
-            return 0
+            raise e
 
     def get_feat_archive_tot_records(self, w, tot_records=None):
         '''
@@ -392,10 +449,11 @@ class FeaturesCore:
             out, last =self.webscrap.get_wayback_tot_via_memento(w)
             if out == 0:
                 out, last = self.webscrap.get_wayback_tot_via_memento(w, self.webscrap.get_full_domain())
+            return [out, 0 if last is None else last]
         except Exception as e:
-            config.logger.error(repr(e))
+            raise e
 
-        return [out, 0 if last is None else last]
+
 
     def get_feat_readability_metrics(self):
         # https://github.com/shivam5992/textstat
@@ -415,15 +473,13 @@ class FeaturesCore:
             #out.append(textstat.text_standard(test_data))
             return out
         except Exception as e:
-            config.logger.error(repr(e))
-            return [0] * 9
+            raise e
 
     def get_feat_social_media_tags(self):
         try:
             return self.webscrap.get_total_social_media_tags()
         except Exception as e:
-            config.logger.error(repr(e))
-            return [0] * SOCIAL_NETWORK_NAMES
+            raise e
 
     def get_opensources_classification(self, url):
         '''
@@ -441,8 +497,7 @@ class FeaturesCore:
             else:
                 return 2  # not a very reliable source
         except Exception as e:
-            config.logger.error(repr(e))
-            return 0
+            raise e
 
     def get_opensources_count(self, url):
         '''
@@ -470,8 +525,7 @@ class FeaturesCore:
             return [num_reliable, num_unreliable, total_num_sources]
 
         except Exception as e:
-            config.logger.error(repr(e))
-            return [0, 0, 0]
+            raise e
 
     def get_number_of_arguments(self, url):
         try:
@@ -499,15 +553,7 @@ class FeaturesCore:
                 return [0, 0]
             return [pginfo['page_rank_decimal'], pginfo['rank']]
         except Exception as e:
-            config.logger.error(repr(e))
-            return [0, 0]
-
-    def get_sequence_html(self):
-        try:
-            return self.webscrap.get_body_sequence_tags()
-        except Exception as e:
-            config.logger.error(repr(e))
-            return ''
+            raise
 
     def get_gi(self, text):
 
@@ -521,8 +567,7 @@ class FeaturesCore:
             else:
                 return [sum(x) for x in zip(*vectors)]
         except Exception as e:
-            config.logger.error(repr(e))
-            return [0] * self.gi.tot_features
+            raise e
 
     def get_vader_lexicon(self, text):
         try:
@@ -530,8 +575,7 @@ class FeaturesCore:
             scores = analyzer.polarity_scores(text)
             return [scores.get('neg'), scores.get('neu'), scores.get('pos'), scores.get('compound')]
         except Exception as e:
-            config.logger.error(repr(e))
-            return [0, 0, 0, 0]
+            raise e
 
     def get_senti_wordnet_lexicon(word):
         from nltk.corpus import sentiwordnet as swn
@@ -549,45 +593,238 @@ class FeaturesCore:
         except Exception as e:
             self.error = True
             self.error_message = repr(e)
-            config.logger.error(self.error_message)
 
 
     def get_final_feature_vector(self):
-       try:
-           out = dict()
 
-           out['archive'] = self.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot)
-           out['domain'] = self.get_feat_domain()
-           out['suffix'] = self.get_feat_suffix()
+        out = dict()
+        err = 0
 
-           out['suffix'] = self.get_feat_source_info()
-           out['outbound_links_http'] = self.get_feat_tot_outbound_links(tp='http')
-           out['outbound_links_https'] = self.get_feat_tot_outbound_links(tp='https')
-           out['outbound_links_ftp'] = self.get_feat_tot_outbound_links(tp='ftp')
-           out['outbound_links_ftps'] = self.get_feat_tot_outbound_links(tp='ftps')
-           out['outbound_domains_http'] = self.get_feat_tot_outbound_domains(tp='http')
-           out['outbound_domains_https'] = self.get_feat_tot_outbound_domains(tp='https')
-           out['outbound_domains_ftp'] = self.get_feat_tot_outbound_domains(tp='ftp')
-           out['outbound_domains_ftps'] = self.get_feat_tot_outbound_domains(tp='ftps')
-           out['text_categ_title'] = self.get_feat_text_category(self.title)
-           out['text_categ_body'] = self.get_feat_text_category(self.body)
-           out['text_categ_summary_lex'] = self.get_feat_text_category(self.get_summary_lex_rank(100))
-           out['text_categ_summary_lsa'] = self.get_feat_text_category(self.get_summary(100))
-           out['readability_metrics'] = self.get_feat_readability_metrics()
-           out['spam_title'] = self.get_feat_spam(self.title)
-           out['spam_body'] = self.get_feat_spam(self.body)
-           out['social_links'] = self.get_feat_social_media_tags()
-           out['open_source_class'] = self.get_opensources_classification(self.url)
-           out['open_source_count'] = self.get_opensources_count(self.url)
-           out['open_page_rank'] = self.get_open_page_rank(self.url)
-           out['general_inquirer_body'] = self.get_gi(self.body)
-           out['general_inquirer_title'] = self.get_gi(self.title)
-           out['vader_body'] = self.get_vader_lexicon(self.body)
-           out['vader_title'] = self.get_vader_lexicon(self.title)
-           out['who_is'] = self.get_whois_features(self.webscrap.get_domain())
+        try:
+            out['basic_text'] = self.get_feat_basic_text(self.body)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['basic_text'] = [-1] * 16
+
+        try:
+            out['archive'] = self.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['archive'] = [-1] * 2
+
+        try:
+            out['domain'] = self.get_feat_domain()
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['domain'] = ['']
+
+        try:
+            out['suffix'] = self.get_feat_suffix()
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['suffix'] = ['']
+
+        try:
+            out['source'] = self.get_feat_source_info()
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['source'] = [-1]
+
+        try:
+            out['outbound_links_http'] = self.get_feat_tot_outbound_links(tp='http')
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['outbound_links_http'] = [-1]
+
+        try:
+            out['outbound_links_https'] = self.get_feat_tot_outbound_links(tp='https')
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['outbound_links_https'] = [-1]
 
 
-           return out
+        try:
+            out['outbound_links_ftp'] = self.get_feat_tot_outbound_links(tp='ftp')
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['outbound_links_ftp'] = [-1]
 
-       except Exception as e:
-           config.logger.error(repr(e))
+        try:
+            out['outbound_links_ftps'] = self.get_feat_tot_outbound_links(tp='ftps')
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['outbound_links_ftps'] = [-1]
+
+        try:
+            out['outbound_domains_http'] = self.get_feat_tot_outbound_domains(tp='http')
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['outbound_domains_http'] = [-1]
+
+        try:
+            out['outbound_domains_https'] = self.get_feat_tot_outbound_domains(tp='https')
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['outbound_domains_https'] = [-1]
+
+        try:
+            out['outbound_domains_ftp'] = self.get_feat_tot_outbound_domains(tp='ftp')
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['outbound_domains_ftp'] = [-1]
+
+        try:
+            out['outbound_domains_ftps'] = self.get_feat_tot_outbound_domains(tp='ftps')
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['outbound_domains_ftps'] = [-1]
+
+        try:
+            out['text_categ_title'] = self.get_feat_text_category(self.title)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['text_categ_title'] = [-1] * 6
+
+        try:
+            out['text_categ_body'] = self.get_feat_text_category(self.body)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['text_categ_body'] = [-1] * 6
+
+        try:
+            out['text_categ_summary_lex'] = self.get_feat_text_category(self.get_summary_lex_rank(SUMMARIZATION_LEN))
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['text_categ_summary_lex'] = [-1] * 6
+
+        try:
+            out['text_categ_summary_lsa'] = self.get_feat_text_category(self.get_summary(SUMMARIZATION_LEN))
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['text_categ_summary_lsa'] = [-1] * 6
+
+        try:
+            out['readability_metrics'] = self.get_feat_readability_metrics()
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['readability_metrics'] = [-1] * 9
+
+        try:
+            out['spam_title'] = self.get_feat_spam(self.title)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['spam_title'] = [-1] * 3
+
+        try:
+            out['spam_body'] = self.get_feat_spam(self.body)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['spam_body'] = [-1] * 3
+
+        try:
+            out['social_links'] = self.get_feat_social_media_tags()
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['social_links'] = [-1] * len(SOCIAL_NETWORK_NAMES)
+
+        try:
+            out['open_source_class'] = self.get_opensources_classification(self.url)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['open_source_class'] = [-1]
+
+        try:
+            out['open_source_count'] = self.get_opensources_count(self.url)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['open_source_count'] = [-1] * 3
+
+        try:
+            out['open_page_rank'] = self.get_open_page_rank(self.url)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['open_page_rank'] = [-1] * 2
+
+        try:
+            out['general_inquirer_body'] = self.get_gi(self.body)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['general_inquirer_body'] = [-1] * self.gi.tot_features
+
+        try:
+            out['general_inquirer_title'] = self.get_gi(self.title)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['general_inquirer_title'] = [-1] * self.gi.tot_features
+
+        try:
+            out['vader_body'] = self.get_vader_lexicon(self.body)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['vader_body'] = [-1] * 4
+
+        try:
+            out['vader_title'] = self.get_vader_lexicon(self.title)
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['vader_title'] = [-1] * 4
+
+        try:
+            out['who_is'] = self.get_whois_features(self.webscrap.get_domain())
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['who_is'] = [-1] * 10
+
+
+        try:
+            sent, subj = self.get_feat_sentiment(self.title)
+            out['sent_prob_title'] = sent
+            out['subj_prob_title'] = subj
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['sent_prob_title'] = [-1]
+            out['subj_prob_title'] = [-1]
+
+        try:
+            sent, subj = self.get_feat_sentiment(self.body)
+            out['sent_prob_body'] = sent
+            out['subj_prob_body'] = subj
+        except Exception as e:
+            err += 1
+            config.logger.error(repr(e))
+            out['sent_prob_body'] = [-1]
+            out['subj_prob_body'] = [-1]
+
+
+        return err, out
+
