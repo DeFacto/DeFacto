@@ -7,6 +7,7 @@ import urllib3
 
 from config import DeFactoConfig
 from defacto.definitions import SOCIAL_NETWORK_NAMES, TIMEOUT_MS
+from trustworthiness.util import diff_month
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from bs4 import BeautifulSoup
@@ -144,8 +145,8 @@ class WebScrap:
         :param urlalt: an alternative URL (e.g., the URL domain)
         :return: number of years the URL was cached, since the caching started.
         '''
-        #k = 0
-        #y = 0
+        k = 0
+        y = 0
         try:
             if urlalt is None:
                 urlalt = self.url
@@ -153,23 +154,30 @@ class WebScrap:
             out = self.__query_memento(urlalt)
             if out['mementos']:
                 t1 = Timestamp(out['mementos']['first']['datetime'], tz=None)
-                t2 = Timestamp(out['mementos']['prev']['datetime'], tz=None)
+                try:
+                    t2 = Timestamp(out['mementos']['prev']['datetime'], tz=None)
+                except:
+                    t2 = t1
                 t3 = Timestamp(out['mementos']['closest']['datetime'], tz=None)
-                t4 = Timestamp(out['mementos']['next']['datetime'], tz=None)
+                try:
+                    t4 = Timestamp(out['mementos']['next']['datetime'], tz=None)
+                except:
+                    t4 = t3
                 t5 = Timestamp(out['mementos']['last']['datetime'], tz=None)
 
-                d1 = abs(t2 - t1)
-                d2 = abs(t4 - t3)
+                import datetime
+                d1 = abs(t2 - t1) + datetime.timedelta(days=1)
+                d2 = abs(t4 - t3) + datetime.timedelta(days=1)
 
-                l = 1 / np.log(d1.days*d2.days)
+                l = 1 / (np.log(d1.days * d2.days) + 1)
 
                 age_years = abs(t5.year - t1.year) + 1
                 today = datetime.today()
-                most_recent_update = abs(t5.year - today.year) + 1
+                most_recent_update = diff_month(today, t5) + 1
 
                 k = (l + np.log(age_years) + (1 / most_recent_update)) * w
 
-                print(t1, t2, t3, t4, t5)
+                #print(t1, t2, t3, t4, t5)
 
                 #k = (t1.year - t2.year)
                 #k = k * w
@@ -178,7 +186,8 @@ class WebScrap:
             print(k)
             return k, y
         except Exception as e:
-            return 0, 0
+            config.logger.error(repr(e))
+            raise
 
     def get_wayback_tot_via_api(self, x, w, urlalt=None):
         '''
@@ -260,6 +269,11 @@ class WebScrap:
         except Exception as e:
             raise e
 
+    def get_total_css_tags(self):
+        try:
+            return len(self.soup.select('style'))
+        except Exception as e:
+            raise e
 
 if __name__ == '__main__':
     scrap = WebScrap('https://www.globo.com/')

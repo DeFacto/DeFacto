@@ -6,8 +6,6 @@ import pdfkit as pdfkit
 from sklearn.metrics import mean_absolute_error, mean_squared_error, confusion_matrix, classification_report, \
     accuracy_score
 from tldextract import tldextract
-
-from coffeeandnoodles.core.web.scrap.scrap import WebScrap
 from sklearn.externals import joblib
 
 from coffeeandnoodles.core.util import get_md5_from_string
@@ -120,6 +118,9 @@ def get_encoder_domain():
     le.fit(domains)
     joblib.dump(le, config.enc_domain)
     print(le.classes_)
+
+def diff_month(d1, d2):
+    return (d1.year - d2.year) * 12 + d1.month - d2.month
 
 def get_features_web_c3(extractor, url, likert_mode, likert_avg, folder, name, export_html_tags):
 

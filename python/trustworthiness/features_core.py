@@ -461,16 +461,15 @@ class FeaturesCore:
         :param tot_records: the max number of records to search (optional) and just for 'get_wayback_tot_via_api' calls
         :return:
         '''
+        w = float(w)
         try:
-            w = float(w)
             out, last = self.webscrap.get_wayback_tot_via_memento(w)
-            if out == 0:
+        except:
+            try:
                 out, last = self.webscrap.get_wayback_tot_via_memento(w, self.webscrap.get_full_domain())
-            return [out, last], False
-        except Exception as e:
-            config.logger.error(repr(e))
-            return MISSING_FEATURE * 2, True
-
+            except Exception as e:
+                return MISSING_FEATURE * 2, True
+        return [out, last], False
 
 
     def get_feat_readability_metrics(self):
@@ -502,6 +501,13 @@ class FeaturesCore:
         except Exception as e:
             config.logger.error(repr(e))
             return MISSING_FEATURE * len(SOCIAL_NETWORK_NAMES), True
+
+    def get_get_total_css_tags(self):
+        try:
+            return self.webscrap.get_total_css_tags(), False
+        except Exception as e:
+            config.logger.error(repr(e))
+            return MISSING_FEATURE, True
 
     def get_opensources_classification(self, url):
         '''
@@ -630,9 +636,6 @@ class FeaturesCore:
         out['basic_text'], err = self.get_feat_basic_text(self.body)
         if err: err_tot += 1
 
-        out['archive'], err = self.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot)
-        if err: err_tot += 1
-
         out['domain'], err = self.get_feat_domain()
         if err: err_tot += 1
 
@@ -690,6 +693,9 @@ class FeaturesCore:
         out['social_links'], err = self.get_feat_social_media_tags()
         if err: err_tot += 1
 
+        out['css'], err = self.get_get_total_css_tags()
+        if err: err_tot += 1
+
         out['open_source_class'], err = self.get_opensources_classification(self.url)
         if err: err_tot += 1
 
@@ -720,4 +726,7 @@ class FeaturesCore:
         out['sent_probs_body'], err = self.get_feat_sentiment(self.body)
         if err: err_tot += 1
 
-        return err, out
+        out['archive'], err = self.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot)
+        if err: err_tot += 1
+
+        return err_tot, out
