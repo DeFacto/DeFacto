@@ -16,6 +16,7 @@ import tldextract
 from pandas._libs.tslib import Timestamp
 import numpy as np
 from datetime import datetime
+import datetime as dt2
 #requests.packages.urllib3.disable_warnings()
 
 config = DeFactoConfig()
@@ -165,9 +166,9 @@ class WebScrap:
                     t4 = t3
                 t5 = Timestamp(out['mementos']['last']['datetime'], tz=None)
 
-                import datetime
-                d1 = abs(t2 - t1) + datetime.timedelta(days=1)
-                d2 = abs(t4 - t3) + datetime.timedelta(days=1)
+
+                d1 = abs(t2 - t1) + dt2.timedelta(days=1)
+                d2 = abs(t4 - t3) + dt2.timedelta(days=1)
 
                 l = 1 / (np.log(d1.days * d2.days) + 1)
 
@@ -271,7 +272,12 @@ class WebScrap:
 
     def get_total_css_tags(self):
         try:
-            return len(self.soup.select('style'))
+            data = set(str(self.soup).split(' '))
+            str_data = ' '.join(data).lower()
+            x1 = len(re.findall('style', str_data, re.I))
+            x2 = len(re.findall('.css', str_data, re.I))
+            print(x1+x2)
+            return x1+x2
         except Exception as e:
             raise e
 
