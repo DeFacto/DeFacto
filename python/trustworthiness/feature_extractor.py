@@ -365,7 +365,7 @@ def export_features_multithread(out_exp_folder, dataset, export_html_tags = True
 
         if dataset == 'microsoft':
             __export_features_multi_proc_microsoft(out_exp_folder, dataset + '/', export_html_tags, force)
-        elif dataset == '3c':
+        elif dataset == 'c3':
             __export_features_multi_proc_3c(out_exp_folder, dataset + '/', export_html_tags, force)
         else:
             raise('script not implemented: ' + dataset)

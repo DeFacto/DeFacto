@@ -1,3 +1,4 @@
+import datetime
 import re
 from time import sleep
 
@@ -12,6 +13,8 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import tldextract
 from pandas._libs.tslib import Timestamp
+import numpy as np
+from datetime import datetime
 #requests.packages.urllib3.disable_warnings()
 
 config = DeFactoConfig()
@@ -141,20 +144,39 @@ class WebScrap:
         :param urlalt: an alternative URL (e.g., the URL domain)
         :return: number of years the URL was cached, since the caching started.
         '''
-        k=0
-        y=None
+        k = 0
+        y = None
         try:
             if urlalt is None:
                 urlalt = self.url
                 w = 1.0
-            out=self.__query_memento(urlalt)
+            out = self.__query_memento(urlalt)
             if out['mementos']:
                 k+=1
-                t1 = Timestamp(out['mementos']['last']['datetime'], tz=None)
-                t2 = Timestamp(out['mementos']['first']['datetime'], tz=None)
-                k = (t1.year - t2.year)
-                k = k * w
-                y = t2.year
+                t1 = Timestamp(out['mementos']['first']['datetime'], tz=None)
+                t2 = Timestamp(out['mementos']['prev']['datetime'], tz=None)
+                t3 = Timestamp(out['mementos']['closest']['datetime'], tz=None)
+                t4 = Timestamp(out['mementos']['next']['datetime'], tz=None)
+                t5 = Timestamp(out['mementos']['last']['datetime'], tz=None)
+
+                d1 = abs(t2 - t1)
+                d2 = abs(t4 - t3)
+
+                l = 1 / np.log(d1*d2)
+
+                age_years = abs(t5.year - t1.year)
+                today = datetime.today()
+                most_recent_update = abs(t5.year - today.year) + 1
+
+                k = (l + np.log(age_years) + (1 / most_recent_update)) * w
+
+                print(t1, t2, t3, t4, t5)
+
+                #k = (t1.year - t2.year)
+                #k = k * w
+                y = t5.year
+
+            print(k)
             return k, y
         except:
             return k, None

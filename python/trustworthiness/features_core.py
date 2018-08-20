@@ -105,9 +105,9 @@ class Classifiers():
         self.clf_spam_1 = joblib.load(path_spam + 'clf_41_spam_onevsrestclassifier_tfidf.pkl')
         self.vec_spam_1 = joblib.load(path_spam + 'vec_41_spam_onevsrestclassifier_tfidf.pkl')
 
-        path_sentiment = config.dir_models + '/sentimentanalysis/'
-        self.clf_sentiment_1 = load_model(path_sentiment + 'imdb_1600')
-        self.vec_sentiment_1 = imdb.get_word_index()
+        #path_sentiment = config.dir_models + '/sentimentanalysis/'
+        #self.clf_sentiment_1 = load_model(path_sentiment + 'imdb_1600')
+        #self.vec_sentiment_1 = imdb.get_word_index()
         config.logger.info('done')
 
 @singleton
@@ -294,8 +294,8 @@ class FeaturesCore:
             blob = TextBlob(text)
             for sentence in blob.sentences:
                 probs_sent.append(sentence.sentiment.polarity)
-                probs_subj.append(sentence.sentiment.subjetivity)
-            return (np.average(probs_sent), np.average(probs_subj))
+                probs_subj.append(sentence.sentiment.subjectivity)
+            return [np.average(probs_sent), np.average(probs_subj)]
         except Exception as e:
             raise e
 
@@ -339,18 +339,18 @@ class FeaturesCore:
                 elif s == '?':
                     nr_quotation_mark += 1
 
-            nr_sent_pos = 0
-            nr_sent_neg = 0
-            nr_sent_neu = 0
+            #nr_sent_pos = 0
+            #nr_sent_neg = 0
+            #nr_sent_neu = 0
             sent_tokenize_list = nltk.sent_tokenize(text)
-            for s in sent_tokenize_list:
-                x = self.get_feat_sentiment(s)
-                if x > .5:
-                    nr_sent_pos += 1
-                elif .4 <= x <= .5:
-                    nr_sent_neu += 1
-                else:
-                    nr_sent_neg += 1
+            #for s in sent_tokenize_list:
+            #    x = self.get_feat_sentiment(s)
+            #    if x > .5:
+            #        nr_sent_pos += 1
+            #    elif .4 <= x <= .5:
+            #        nr_sent_neu += 1
+            #    else:
+            #        nr_sent_neg += 1
 
             pos = [['NN', 'NNP'], ['VB', 'VBN', 'VBG', 'VBD'], ['DT'], ['JJ'], ['RB']]
             freq_pos = []
@@ -365,7 +365,7 @@ class FeaturesCore:
 
 
             return [e, len(sent_tokenize_list), len(tokens), len(set_tokens),
-                    nr_sent_pos, nr_sent_neu, nr_sent_neg,
+                    # nr_sent_pos, nr_sent_neu, nr_sent_neg,
                     nr_exclamations, nr_quotation_mark, nr_comma, nr_dot,
                     ].extend(freq_pos)
 
@@ -605,7 +605,7 @@ class FeaturesCore:
         except Exception as e:
             err += 1
             config.logger.error(repr(e))
-            out['basic_text'] = [-1] * 16
+            out['basic_text'] = [-1] * 13
 
         try:
             out['archive'] = self.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot)
@@ -806,24 +806,19 @@ class FeaturesCore:
 
 
         try:
-            sent, subj = self.get_feat_sentiment(self.title)
-            out['sent_prob_title'] = sent
-            out['subj_prob_title'] = subj
+            out['sent_probs_title'] = self.get_feat_sentiment(self.title)
         except Exception as e:
             err += 1
             config.logger.error(repr(e))
-            out['sent_prob_title'] = [-1]
-            out['subj_prob_title'] = [-1]
+            out['sent_probs_title'] = [-1] * 2
+
 
         try:
-            sent, subj = self.get_feat_sentiment(self.body)
-            out['sent_prob_body'] = sent
-            out['subj_prob_body'] = subj
+            out['sent_probs_body'] = self.get_feat_sentiment(self.body)
         except Exception as e:
             err += 1
             config.logger.error(repr(e))
-            out['sent_prob_body'] = [-1]
-            out['subj_prob_body'] = [-1]
+            out['sent_probs_body'] = [-1] * 2
 
 
         return err, out
