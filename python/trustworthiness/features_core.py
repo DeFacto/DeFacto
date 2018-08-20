@@ -48,6 +48,8 @@ __status__ = "Dev"
 config = DeFactoConfig()
 bing = MicrosoftAzurePlatform(config.translation_secret)
 
+MISSING_FEATURE = [0]
+
 class Singleton(object):
     _instance = None
     def __new__(cls, *args, **kwargs):
@@ -235,7 +237,7 @@ class FeaturesCore:
         '''
         try:
             if text is None or len(text.split()) == 0:
-                return [-1] * 6
+                return MISSING_FEATURE * 6
             else:
                 aux = text.split()
                 limit = min(len(aux), 1000)
@@ -263,9 +265,11 @@ class FeaturesCore:
                 out.append(round(self.classifiers.clf_textclass_5.predict_proba(vec_text_5)[0][1],3))
                 out.append(round(self.classifiers.clf_textclass_6.predict_proba(vec_text_6)[0][1],3))
 
-                return out
+                return out, False
+
         except Exception as e:
-           raise e
+           config.logger.error(repr(e))
+           return MISSING_FEATURE * 6, True
 
     def get_feat_spam(self, text):
         '''
@@ -274,15 +278,17 @@ class FeaturesCore:
         '''
         try:
             if text is None or text == '':
-                return 0, 0, 0
+                return MISSING_FEATURE * 3, True
 
             vec_text = self.classifiers.vec_spam_1.transform([text])
             # attention here, if the classifiers supports probabilities, otherwise need to change to predict()
             pred_klass = 0 if self.classifiers.clf_spam_1.predict(vec_text)[0] == 'ham' else 1
             pred_probs = self.classifiers.clf_spam_1.predict_proba(vec_text)[0]
-            return [pred_probs[0], pred_probs[1], pred_klass]
+            return [pred_probs[0], pred_probs[1], pred_klass], False
+
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE * 3, True
 
     def get_feat_sentiment(self, text):
         '''
@@ -295,16 +301,17 @@ class FeaturesCore:
             for sentence in blob.sentences:
                 probs_sent.append(sentence.sentiment.polarity)
                 probs_subj.append(sentence.sentiment.subjectivity)
-            return [np.average(probs_sent), np.average(probs_subj)]
+            return [np.average(probs_sent), np.average(probs_subj)], False
         except Exception as e:
-            raise e
-
+            config.logger.error(repr(e))
+            return MISSING_FEATURE * 2, True
 
     def get_feat_domain(self):
         try:
-            return self.webscrap.get_domain()
+            return self.webscrap.get_domain(), False
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return [''], True
 
     def get_feat_basic_text(self, text):
         from nltk import FreqDist
@@ -367,73 +374,85 @@ class FeaturesCore:
             return [e, len(sent_tokenize_list), len(tokens), len(set_tokens),
                     # nr_sent_pos, nr_sent_neu, nr_sent_neg,
                     nr_exclamations, nr_quotation_mark, nr_comma, nr_dot,
-                    ].extend(freq_pos)
+                    ].extend(freq_pos), False
 
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE * 13, True
 
     def get_whois_features(self, domain):
         data = []
         _OK = 2
         _NONE = 1
         try:
-            try:
-                details = whois.whois(domain)
-                if isinstance(details.expiration_date, list) == True:
-                    dt = details.expiration_date[0]
-                else:
-                    dt = details.expiration_date
-                if isinstance(details.creation_date, list) == True:
-                    dtc = details.creation_date[0]
-                else:
-                    dtc = details.creation_date
-                if dt is None:
-                    data.append(_NONE)
-                else:
-                    data.append((dt.date() - date.today()).days)
-                if dtc is None:
-                    data.append(_NONE)
-                else:
-                    data.append((date.today() - dtc.date()).days)
-                data.append(_NONE if details.name_servers is None else len(details.name_servers))
-                data.append(_NONE if details.emails is None else len(details.emails))
-                data.append(_NONE if details.name is None else _OK)
-                data.append(_NONE if details.address is None else _OK)
-                data.append(_NONE if details.city is None else _OK)
-                data.append(_NONE if details.state is None else _OK)
-                data.append(_NONE if details.zipcode is None else _OK)
-                data.append(_NONE if details.country is None else _OK)
-            except:
-                raise
-        except Exception as e:
-           raise e
 
-        return data
+            details = whois.whois(domain)
+            if isinstance(details.expiration_date, list) == True:
+                dt = details.expiration_date[0]
+            else:
+                dt = details.expiration_date
+
+            if isinstance(details.creation_date, list) == True:
+                dtc = details.creation_date[0]
+            else:
+                dtc = details.creation_date
+
+            if dt is None:
+                data.append(_NONE)
+            else:
+                data.append((dt.date() - date.today()).days)
+
+            if dtc is None:
+                data.append(_NONE)
+            else:
+                data.append((date.today() - dtc.date()).days)
+
+            data.append(_NONE if details.name_servers is None else len(details.name_servers))
+            data.append(_NONE if details.emails is None else len(details.emails))
+            data.append(_NONE if details.name is None else _OK)
+            data.append(_NONE if details.address is None else _OK)
+            data.append(_NONE if details.city is None else _OK)
+            data.append(_NONE if details.state is None else _OK)
+            data.append(_NONE if details.zipcode is None else _OK)
+            data.append(_NONE if details.country is None else _OK)
+
+            return data, False
+
+        except Exception as e:
+           config.logger.error(repr(e))
+           return MISSING_FEATURE * 12, True
+
+
 
     def get_feat_suffix(self):
         try:
-            return self.webscrap.get_suffix()
+            return self.webscrap.get_suffix(), False
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return [''], True
+
 
 
     def get_feat_source_info(self):
         try:
-            return self.webscrap.get_tot_occurences_authority()
+            return self.webscrap.get_tot_occurences_authority(), False
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE, True
 
     def get_feat_tot_outbound_links(self, tp):
         try:
-            return len(self.webscrap.get_outbound_links(tp))
+            return len(self.webscrap.get_outbound_links(tp)), False
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE, True
 
     def get_feat_tot_outbound_domains(self, tp):
         try:
-            return len(self.webscrap.get_outbound_domains(tp))
+            return len(self.webscrap.get_outbound_domains(tp)), False
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE, True
 
     def get_feat_archive_tot_records(self, w, tot_records=None):
         '''
@@ -442,16 +461,15 @@ class FeaturesCore:
         :param tot_records: the max number of records to search (optional) and just for 'get_wayback_tot_via_api' calls
         :return:
         '''
-        out=0
-        last=None
         try:
-            w=float(w)
-            out, last =self.webscrap.get_wayback_tot_via_memento(w)
+            w = float(w)
+            out, last = self.webscrap.get_wayback_tot_via_memento(w)
             if out == 0:
                 out, last = self.webscrap.get_wayback_tot_via_memento(w, self.webscrap.get_full_domain())
-            return [out, 0 if last is None else last]
+            return [out, last], False
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE * 2, True
 
 
 
@@ -471,15 +489,19 @@ class FeaturesCore:
             out.append(textstat.linsear_write_formula(test_data))
             out.append(textstat.gunning_fog(test_data))
             #out.append(textstat.text_standard(test_data))
-            return out
+            return out, False
+
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE * 9, True
+
 
     def get_feat_social_media_tags(self):
         try:
-            return self.webscrap.get_total_social_media_tags()
+            return self.webscrap.get_total_social_media_tags(), False
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE * len(SOCIAL_NETWORK_NAMES), True
 
     def get_opensources_classification(self, url):
         '''
@@ -491,13 +513,14 @@ class FeaturesCore:
             if hostname.startswith('www'):
                 hostname = hostname[4:]
             if hostname not in self.sources.types.keys():
-                return 0  # no info on this page
+                return 0, False  # no info on this page
             if "reliable" in self.sources.types[hostname]:
-                return 1  # this is a reliable sourc
+                return 1, False  # this is a reliable sourc
             else:
-                return 2  # not a very reliable source
+                return 2, False  # not a very reliable source
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE, True
 
     def get_opensources_count(self, url):
         '''
@@ -522,10 +545,11 @@ class FeaturesCore:
                 else:
                     num_unreliable += 1  # not a very reliable source
 
-            return [num_reliable, num_unreliable, total_num_sources]
+            return [num_reliable, num_unreliable, total_num_sources], False
 
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE * 3, True
 
     def get_number_of_arguments(self, url):
         try:
@@ -550,10 +574,11 @@ class FeaturesCore:
                 pginfo=self.page_rank.pg[domain]
             except KeyError:
                 config.logger.warn('page rank information for domain [' + domain + '] not found')
-                return [0, 0]
-            return [pginfo['page_rank_decimal'], pginfo['rank']]
+                return MISSING_FEATURE * 2, True
+            return [pginfo['page_rank_decimal'], pginfo['rank']], False
         except Exception as e:
-            raise
+            config.logger.error(repr(e))
+            return MISSING_FEATURE * 2, True
 
     def get_gi(self, text):
 
@@ -563,19 +588,21 @@ class FeaturesCore:
             for token in tokens:
                 vectors.append(self.gi.get_word_vector(token))
             if len(vectors) == 0:
-                return [0] * self.gi.tot_features
+                return MISSING_FEATURE * self.gi.tot_features, True
             else:
-                return [sum(x) for x in zip(*vectors)]
+                return [sum(x) for x in zip(*vectors)], False
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE * self.gi.tot_features, True
 
     def get_vader_lexicon(self, text):
         try:
             analyzer = SentimentIntensityAnalyzer()
             scores = analyzer.polarity_scores(text)
-            return [scores.get('neg'), scores.get('neu'), scores.get('pos'), scores.get('compound')]
+            return [scores.get('neg'), scores.get('neu'), scores.get('pos'), scores.get('compound')], False
         except Exception as e:
-            raise e
+            config.logger.error(repr(e))
+            return MISSING_FEATURE * 4, True
 
     def get_senti_wordnet_lexicon(word):
         from nltk.corpus import sentiwordnet as swn
@@ -598,228 +625,99 @@ class FeaturesCore:
     def get_final_feature_vector(self):
 
         out = dict()
-        err = 0
+        err_tot = 0
 
-        try:
-            out['basic_text'] = self.get_feat_basic_text(self.body)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['basic_text'] = [-1] * 13
+        out['basic_text'], err = self.get_feat_basic_text(self.body)
+        if err: err_tot += 1
 
-        try:
-            out['archive'] = self.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['archive'] = [-1] * 2
+        out['archive'], err = self.get_feat_archive_tot_records(config.waybackmachine_weight, config.waybackmachine_tot)
+        if err: err_tot += 1
 
-        try:
-            out['domain'] = self.get_feat_domain()
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['domain'] = ['']
+        out['domain'], err = self.get_feat_domain()
+        if err: err_tot += 1
 
-        try:
-            out['suffix'] = self.get_feat_suffix()
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['suffix'] = ['']
+        out['suffix'], err = self.get_feat_suffix()
+        if err: err_tot += 1
 
-        try:
-            out['source'] = self.get_feat_source_info()
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['source'] = [-1]
+        out['source'], err = self.get_feat_source_info()
+        if err: err_tot += 1
 
-        try:
-            out['outbound_links_http'] = self.get_feat_tot_outbound_links(tp='http')
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['outbound_links_http'] = [-1]
+        out['outbound_links_http'], err = self.get_feat_tot_outbound_links(tp='http')
+        if err: err_tot += 1
 
-        try:
-            out['outbound_links_https'] = self.get_feat_tot_outbound_links(tp='https')
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['outbound_links_https'] = [-1]
+        out['outbound_links_https'], err = self.get_feat_tot_outbound_links(tp='https')
+        if err: err_tot += 1
 
+        out['outbound_links_ftp'], err = self.get_feat_tot_outbound_links(tp='ftp')
+        if err: err_tot += 1
 
-        try:
-            out['outbound_links_ftp'] = self.get_feat_tot_outbound_links(tp='ftp')
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['outbound_links_ftp'] = [-1]
+        out['outbound_links_ftps'], err = self.get_feat_tot_outbound_links(tp='ftps')
+        if err: err_tot += 1
 
-        try:
-            out['outbound_links_ftps'] = self.get_feat_tot_outbound_links(tp='ftps')
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['outbound_links_ftps'] = [-1]
+        out['outbound_domains_http'], err = self.get_feat_tot_outbound_domains(tp='http')
+        if err: err_tot += 1
 
-        try:
-            out['outbound_domains_http'] = self.get_feat_tot_outbound_domains(tp='http')
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['outbound_domains_http'] = [-1]
+        out['outbound_domains_https'], err = self.get_feat_tot_outbound_domains(tp='https')
+        if err: err_tot += 1
 
-        try:
-            out['outbound_domains_https'] = self.get_feat_tot_outbound_domains(tp='https')
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['outbound_domains_https'] = [-1]
+        out['outbound_domains_ftp'], err = self.get_feat_tot_outbound_domains(tp='ftp')
+        if err: err_tot += 1
 
-        try:
-            out['outbound_domains_ftp'] = self.get_feat_tot_outbound_domains(tp='ftp')
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['outbound_domains_ftp'] = [-1]
+        out['outbound_domains_ftps'], err = self.get_feat_tot_outbound_domains(tp='ftps')
+        if err: err_tot += 1
 
-        try:
-            out['outbound_domains_ftps'] = self.get_feat_tot_outbound_domains(tp='ftps')
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['outbound_domains_ftps'] = [-1]
+        out['text_categ_title'], err = self.get_feat_text_category(self.title)
+        if err: err_tot += 1
 
-        try:
-            out['text_categ_title'] = self.get_feat_text_category(self.title)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['text_categ_title'] = [-1] * 6
+        out['text_categ_body'], err = self.get_feat_text_category(self.body)
+        if err: err_tot += 1
 
-        try:
-            out['text_categ_body'] = self.get_feat_text_category(self.body)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['text_categ_body'] = [-1] * 6
+        out['text_categ_summary_lex'], err = self.get_feat_text_category(self.get_summary_lex_rank(SUMMARIZATION_LEN))
+        if err: err_tot += 1
 
-        try:
-            out['text_categ_summary_lex'] = self.get_feat_text_category(self.get_summary_lex_rank(SUMMARIZATION_LEN))
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['text_categ_summary_lex'] = [-1] * 6
+        out['text_categ_summary_lsa'], err = self.get_feat_text_category(self.get_summary(SUMMARIZATION_LEN))
+        if err: err_tot += 1
 
-        try:
-            out['text_categ_summary_lsa'] = self.get_feat_text_category(self.get_summary(SUMMARIZATION_LEN))
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['text_categ_summary_lsa'] = [-1] * 6
+        out['readability_metrics'], err = self.get_feat_readability_metrics()
+        if err: err_tot += 1
 
-        try:
-            out['readability_metrics'] = self.get_feat_readability_metrics()
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['readability_metrics'] = [-1] * 9
+        out['spam_title'], err = self.get_feat_spam(self.title)
+        if err: err_tot += 1
 
-        try:
-            out['spam_title'] = self.get_feat_spam(self.title)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['spam_title'] = [-1] * 3
+        out['spam_body'], err = self.get_feat_spam(self.body)
+        if err: err_tot += 1
 
-        try:
-            out['spam_body'] = self.get_feat_spam(self.body)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['spam_body'] = [-1] * 3
+        out['social_links'], err = self.get_feat_social_media_tags()
+        if err: err_tot += 1
 
-        try:
-            out['social_links'] = self.get_feat_social_media_tags()
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['social_links'] = [-1] * len(SOCIAL_NETWORK_NAMES)
+        out['open_source_class'], err = self.get_opensources_classification(self.url)
+        if err: err_tot += 1
 
-        try:
-            out['open_source_class'] = self.get_opensources_classification(self.url)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['open_source_class'] = [-1]
+        out['open_source_count'], err = self.get_opensources_count(self.url)
+        if err: err_tot += 1
 
-        try:
-            out['open_source_count'] = self.get_opensources_count(self.url)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['open_source_count'] = [-1] * 3
+        out['open_page_rank'], err = self.get_open_page_rank(self.url)
+        if err: err_tot += 1
 
-        try:
-            out['open_page_rank'] = self.get_open_page_rank(self.url)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['open_page_rank'] = [-1] * 2
+        out['general_inquirer_body'], err = self.get_gi(self.body)
+        if err: err_tot += 1
 
-        try:
-            out['general_inquirer_body'] = self.get_gi(self.body)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['general_inquirer_body'] = [-1] * self.gi.tot_features
+        out['general_inquirer_title'], err = self.get_gi(self.title)
+        if err: err_tot += 1
 
-        try:
-            out['general_inquirer_title'] = self.get_gi(self.title)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['general_inquirer_title'] = [-1] * self.gi.tot_features
+        out['vader_body'], err = self.get_vader_lexicon(self.body)
+        if err: err_tot += 1
 
-        try:
-            out['vader_body'] = self.get_vader_lexicon(self.body)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['vader_body'] = [-1] * 4
+        out['vader_title'], err = self.get_vader_lexicon(self.title)
+        if err: err_tot += 1
 
-        try:
-            out['vader_title'] = self.get_vader_lexicon(self.title)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['vader_title'] = [-1] * 4
+        out['who_is'], err = self.get_whois_features(self.webscrap.get_domain())
+        if err: err_tot += 1
 
-        try:
-            out['who_is'] = self.get_whois_features(self.webscrap.get_domain())
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['who_is'] = [-1] * 10
+        out['sent_probs_title'], err = self.get_feat_sentiment(self.title)
+        if err: err_tot += 1
 
-
-        try:
-            out['sent_probs_title'] = self.get_feat_sentiment(self.title)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['sent_probs_title'] = [-1] * 2
-
-
-        try:
-            out['sent_probs_body'] = self.get_feat_sentiment(self.body)
-        except Exception as e:
-            err += 1
-            config.logger.error(repr(e))
-            out['sent_probs_body'] = [-1] * 2
-
+        out['sent_probs_body'], err = self.get_feat_sentiment(self.body)
+        if err: err_tot += 1
 
         return err, out
-
