@@ -12,7 +12,7 @@ import os
 import warnings
 from defacto.definitions import BENCHMARK_FILE_NAME_TEMPLATE, \
     DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, \
-    OUTPUT_FOLDER, DATASET_MICROSOFT_PATH
+    OUTPUT_FOLDER, DATASET_MICROSOFT_PATH, ENC_WEB_DOMAIN
 from trustworthiness.features_core import FeaturesCore
 from trustworthiness.util import get_html_file_path, get_features_web_microsoft, get_features_web_c3
 
@@ -58,11 +58,12 @@ def likert2tri(likert):
 def get_html2sec_features(exp_folder, ds_folder):
     tags_set = []
     sentences = []
-    y = []
+    y5 = []
+    y3 = []
     y2 = []
     tot_files = 0
+    text_data = None
 
-    features = None
     from sklearn import preprocessing
     le = preprocessing.LabelEncoder()
 
@@ -90,11 +91,10 @@ def get_html2sec_features(exp_folder, ds_folder):
                     print('processing file ' + str(tot_files) + ' - not cached')
                     #features_file = file_html.replace('dataset_visual_features_', 'dataset_features_')
                     features_file = file_html.replace('.txt', '.pkl')
-
                     path_feature = OUTPUT_FOLDER + exp_folder + ds_folder + 'text/'
                     path_html = OUTPUT_FOLDER + exp_folder + ds_folder + 'html/'
 
-                    features = joblib.load(path_feature + features_file)
+                    text_data = joblib.load(path_feature + features_file)
 
                     tags = []
                     #if file.startswith('microsoft_dataset_visual_features_') and file.endswith('.txt'):
@@ -119,16 +119,10 @@ def get_html2sec_features(exp_folder, ds_folder):
                     tags_set = list(set(tags_set))
 
                     # getting y
-                    try:
-                        y.append(int(features['likert']))
-                        y2.append(likert2bin(int(features['likert'])))
-                    except: # have to rename these fields later, to have the same interface (microsoft and c3 datasets)
-                        try:
-                            y.append(int(features['likert_mode']))
-                            y2.append(likert2bin(int(features['likert_mode'])))
-                        except:
-                            print('should not happen!!!')
-                            raise
+                    y5.append(text_data[1])
+                    y3.append(likert2tri(text_data[1]))
+                    y2.append(likert2bin(text_data[1]))
+
                 else:
                     print('no tags...')
 
@@ -138,36 +132,39 @@ def get_html2sec_features(exp_folder, ds_folder):
 
             le.fit(tags_set)
 
-            X = [le.transform(s) for s in sentences]
-            print(len(X))
-            print(len(y))
+            X_html = [le.transform(s) for s in sentences]
+            print(len(X_html))
+            print(len(y5))
 
-            features = (X, y, y2)
+            data = (X_html, y5, y3, y2)
 
-            joblib.dump(features, OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
+            joblib.dump(data, OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
             joblib.dump(le, OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq_enc.pkl')
         else:
             print('file found: ' + OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
             print('loading dump (HTML2seq)')
-            features = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
+            data = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
             le = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq_enc.pkl')
 
-        return (features, le)
+        return (data, le)
 
     except Exception as e:
         config.logger.error(repr(e))
         raise
 
-def get_text_features(exp_folder, ds_folder, html2seq = False, best_pad=0, best_cls='', exp_type_combined='bin'):
+def get_text_features(exp_folder, ds_folder, features_file, html2seq = False, best_pad=0, best_cls=None, exp_type_combined=None):
     try:
         assert (exp_folder is not None and exp_folder != '')
         assert (ds_folder is not None and ds_folder != '')
+        assert (html2seq is False or (html2seq is True and best_cls is not None and exp_type_combined is not None))
         config.logger.info('get_text_features()')
 
-        XX = []
-        y = []
         y2 = []
-        encoder = joblib.load(config.enc_domain)
+        y3 = []
+        y5 = []
+
+        X = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + features_file)
+        config.logger.debug('extracting features for: ' + features_file)
 
         if html2seq is True:
             le = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq_enc.pkl')
@@ -176,52 +173,28 @@ def get_text_features(exp_folder, ds_folder, html2seq = False, best_pad=0, best_
             config.logger.debug('loading model: ' + file)
             clf_html2seq = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'models/html2seq/' + file)
 
-        for file in os.listdir(OUTPUT_FOLDER + exp_folder + ds_folder):
-            if file.endswith('_text_features.pkl'):
-                config.logger.info('features file found: ' + file)
-                features = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + file)
-                config.logger.debug('extracting features')
-                for d in features:
-                    feat = d.get('features')
-                    if feat is None:
-                        raise Exception('error in the feature extraction! No features extracted...')
-                    # feat[2] = encoder.transform([feat[2]])
-                    try:
-                        feat[3] = encoder.transform([feat[3]])[0]
-                    except Exception as e:
-                        print('encoder transformation error! ', repr(e))
-                        feat[3] = encoder.transform('com')
-                    del feat[2]
+        for feat in X:
+            if html2seq is True:
+                hash = get_md5_from_string(feat[0])
+                file_name = ds_folder.replace('/','') + '_dataset_features_%s.pkl' % (hash)
+                x = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq/' + file_name)
+                if best_pad <= len(x):
+                    x2 = le.transform(x[0:best_pad])
+                    klass = clf_html2seq.predict([x2])[0]
+                else:
+                    x2 = le.transform(x)
+                    klass = clf_html2seq.predict([np.pad(x2, (0, best_pad-len(x2)), 'constant')])[0]
+                feat.extend([klass])
 
-                    if html2seq is True:
-                        hash = get_md5_from_string(d.get('url'))
-                        file_name = ds_folder.replace('/','') + '_dataset_features_%s.pkl' % (hash)
-                        x=joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq/' + file_name)
-                        if best_pad <= len(x):
-                            x2 = le.transform(x[0:best_pad])
-                            klass = clf_html2seq.predict([x2])[0]
-                        else:
-                            x2 = le.transform(x)
-                            klass = clf_html2seq.predict([np.pad(x2, (0, best_pad-len(x2)), 'constant')])[0]
+            y2.append(likert2bin(X[1]))
+            y3.append(likert2tri(X[1]))
+            y5.append(X[1])
 
-                        feat.extend([klass])
-                        XX.append(feat)
-                    else:
-                        XX.append(feat)
-
-                    try:
-                        y.append(int(d.get('likert')))
-                        y2.append(likert2bin(int(d.get('likert'))))
-                    except:  # have to rename these fields later, to have the same interface (microsoft and c3 datasets)
-                        y.append(int(d.get('likert_mode')))
-                        y2.append(likert2bin(int(d.get('likert_mode'))))
-
-
-        if len(XX) == 0:
-            raise Exception('processed full file not found for this folder! ' + OUTPUT_FOLDER + exp_folder + ds_folder)
+            del X[0]  #hash
+            del X[1]  #y
 
         config.logger.info('OK')
-        return XX, y, y2
+        return X, y5, y3, y2
 
 
     except Exception as e:

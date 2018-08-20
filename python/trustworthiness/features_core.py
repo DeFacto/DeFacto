@@ -308,7 +308,7 @@ class FeaturesCore:
 
     def get_feat_domain(self):
         try:
-            return self.webscrap.get_domain(), False
+            return [self.webscrap.get_domain()], False
         except Exception as e:
             config.logger.error(repr(e))
             return [''], True
@@ -370,11 +370,11 @@ class FeaturesCore:
                         y += 0
                 freq_pos.append(y)
 
+            ret = [e, len(sent_tokenize_list), len(tokens), len(set_tokens),
+                    nr_exclamations, nr_quotation_mark, nr_comma, nr_dot]
+            ret.extend(freq_pos) # nr_sent_pos, nr_sent_neu, nr_sent_neg,
 
-            return [e, len(sent_tokenize_list), len(tokens), len(set_tokens),
-                    # nr_sent_pos, nr_sent_neu, nr_sent_neg,
-                    nr_exclamations, nr_quotation_mark, nr_comma, nr_dot,
-                    ].extend(freq_pos), False
+            return ret, False
 
         except Exception as e:
             config.logger.error(repr(e))
@@ -426,7 +426,7 @@ class FeaturesCore:
 
     def get_feat_suffix(self):
         try:
-            return self.webscrap.get_suffix(), False
+            return [self.webscrap.get_suffix()], False
         except Exception as e:
             config.logger.error(repr(e))
             return [''], True
@@ -435,21 +435,21 @@ class FeaturesCore:
 
     def get_feat_source_info(self):
         try:
-            return self.webscrap.get_tot_occurences_authority(), False
+            return [self.webscrap.get_tot_occurences_authority()], False
         except Exception as e:
             config.logger.error(repr(e))
             return MISSING_FEATURE, True
 
     def get_feat_tot_outbound_links(self, tp):
         try:
-            return len(self.webscrap.get_outbound_links(tp)), False
+            return [len(self.webscrap.get_outbound_links(tp))], False
         except Exception as e:
             config.logger.error(repr(e))
             return MISSING_FEATURE, True
 
     def get_feat_tot_outbound_domains(self, tp):
         try:
-            return len(self.webscrap.get_outbound_domains(tp)), False
+            return [len(self.webscrap.get_outbound_domains(tp))], False
         except Exception as e:
             config.logger.error(repr(e))
             return MISSING_FEATURE, True
@@ -504,7 +504,7 @@ class FeaturesCore:
 
     def get_get_total_css_tags(self):
         try:
-            return self.webscrap.get_total_css_tags(), False
+            return [self.webscrap.get_total_css_tags()], False
         except Exception as e:
             config.logger.error(repr(e))
             return MISSING_FEATURE, True
@@ -519,11 +519,11 @@ class FeaturesCore:
             if hostname.startswith('www'):
                 hostname = hostname[4:]
             if hostname not in self.sources.types.keys():
-                return 0, False  # no info on this page
+                return [0], False  # no info on this page
             if "reliable" in self.sources.types[hostname]:
-                return 1, False  # this is a reliable sourc
+                return [1], False  # this is a reliable sourc
             else:
-                return 2, False  # not a very reliable source
+                return [2], False  # not a very reliable source
         except Exception as e:
             config.logger.error(repr(e))
             return MISSING_FEATURE, True

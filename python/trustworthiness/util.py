@@ -11,7 +11,7 @@ from sklearn.externals import joblib
 from coffeeandnoodles.core.util import get_md5_from_string
 from config import DeFactoConfig
 from defacto.definitions import DATASET_3C_SITES_PATH, DATASET_MICROSOFT_PATH_PAGES_MISSING, \
-    DATASET_MICROSOFT_PATH_PAGES_CACHED
+    DATASET_MICROSOFT_PATH_PAGES_CACHED, ENC_WEB_DOMAIN, ENC_WEB_DOMAIN_SUFFIX, DATASET_MICROSOFT_PATH
 
 import re
 
@@ -77,13 +77,16 @@ def get_html_file_path(url):
 
     return path_root
 
+
 def get_encoder_domain():
 
     import pandas as pd
     from sklearn import preprocessing
-    le = preprocessing.LabelEncoder()
+    le1 = preprocessing.LabelEncoder()
+    le2 = preprocessing.LabelEncoder()
 
-    domains = []
+    domain_s = ['com']
+    domain = []
 
     df_sites = pd.read_csv(DATASET_3C_SITES_PATH, na_values=0, delimiter=',', usecols=['document_url'])
     for index, row in df_sites.iterrows():
@@ -92,7 +95,9 @@ def get_encoder_domain():
         try:
             o = tldextract.extract(url)
             if o.suffix is not None:
-                domains.append(str(o.suffix).lower())
+                domain_s.append(str(o.suffix).lower())
+            if o.domain is not None:
+                domain.append(str(o.domain).lower())
         except:
             continue
 
@@ -101,23 +106,29 @@ def get_encoder_domain():
     df = pd.read_csv(config.datasets + 'data/iana/org/TLD/tlds-alpha-by-domain.txt', sep=" ", header=None)
     for index, row in df.iterrows():
         print(index, row[0])
-        domains.append(str(row[0]).lower())
+        domain.append(str(row[0]).lower())
 
-    df = pd.read_csv(config.dataset_microsoft_webcred, delimiter='\t', header=0)
+    df = pd.read_csv(DATASET_MICROSOFT_PATH, delimiter='\t', header=0)
     for index, row in df.iterrows():
         url = str(row[3])
         print(index, url)
-        path = get_html_file_path(url)
-        web = WebScrap(url, 15, 'lxml', path)
-        domains.append(web.get_suffix())
+        try:
+            o = tldextract.extract(url)
+            if o.suffix is not None:
+                domain_s.append(str(o.suffix).lower())
+            if o.domain is not None:
+                domain.append(str(o.domain).lower())
+        except:
+            continue
 
 
+    le1.fit(domain)
+    joblib.dump(le1, ENC_WEB_DOMAIN)
+    print(le1.classes_)
 
-
-
-    le.fit(domains)
-    joblib.dump(le, config.enc_domain)
-    print(le.classes_)
+    le2.fit(domain_s)
+    joblib.dump(le2, ENC_WEB_DOMAIN_SUFFIX)
+    print(le2.classes_)
 
 def diff_month(d1, d2):
     return (d1.year - d2.year) * 12 + d1.month - d2.month

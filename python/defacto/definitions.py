@@ -41,6 +41,10 @@ SOCIAL_NETWORK_NAMES = ['Facebook', 'WhatsApp', 'QQ', 'TencentQQ', 'WeChat', 'QZ
                         'LiveJournal', 'Friendster', 'FunnyorDie', 'GaiaOnline', 'WeHeartIt', 'Buzznet', 'DeviantArt',
                         'Flickr', 'MeetMe', 'Meetup', 'Tout', 'Mixi', 'Douban', 'Vero', 'Quora']
 
+# encoder web domains
+ENC_WEB_DOMAIN = '/Users/diegoesteves/Github/factchecking/DeFacto/python/data/encoders/encoder_webdomain.pkl'
+ENC_WEB_DOMAIN_SUFFIX = '/Users/diegoesteves/Github/factchecking/DeFacto/python/data/encoders/encoder_webdomain_suffix.pkl'
+
 # the benchmark file name template
 BENCHMARK_FILE_NAME_TEMPLATE = 'cls_%s_%s_%s.pkl'
 
@@ -67,10 +71,15 @@ PADS = [25, 50, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 20
 
 # best model's info (used in the combined evaluation)
 BEST_PAD_BIN = 2900
-
 BEST_PAD_LIKERT = 2000
-
 BEST_CLS_BIN = 'nb'
-
 BEST_CLS_LIKERT = 'nb'
+LINE_TEMPLATE = '%s\t%s\t%s\t%s\t%.3f\t%.3f\t%.3f\t%d\t%.3f\n'
+EXP_2_CLASSES_LABEL = '2-classes'
+EXP_3_CLASSES_LABEL = '3-classes'
+EXP_5_CLASSES_LABEL = '5-classes'
+labels_5classes = {1: 'non-credible', 2: 'low', 3: 'neutral', 4: 'likely', 5: 'credible'}
+labels_3classes = {0: 'low', 1: 'medium', 2: 'high'}
+labels_2classes = {0: 'low', 1: 'high'}
+HEADER = 'cls\texperiment_type\tpadding\tklass\tprecision\trecall\tf-measure\tsupport\trate\n'
 
