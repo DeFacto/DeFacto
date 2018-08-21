@@ -33,7 +33,7 @@ bing = MicrosoftAzurePlatform(config.translation_secret)
 
 def likert2bin(likert):
 
-    assert likert>=1 and likert <=5
+    assert (likert>=1 and likert <=5)
 
     if likert in (1, 2, 3):
         return 0
@@ -162,8 +162,8 @@ def get_text_features(exp_folder, ds_folder, features_file, html2seq = False):
         y3 = []
         y5 = []
 
-        X = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + features_file)
         config.logger.debug('extracting features for: ' + features_file)
+        X = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + features_file)
 
         if html2seq is True:
             le = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq_enc.pkl')
@@ -185,15 +185,15 @@ def get_text_features(exp_folder, ds_folder, features_file, html2seq = False):
                     klass = clf_html2seq.predict([np.pad(x2, (0, BEST_PAD_WINDOW - len(x2)), 'constant')])[0]
                 feat.extend([klass])
 
-            y2.append(likert2bin(X[1]))
-            y3.append(likert2tri(X[1]))
-            y5.append(X[1])
+            y2.append(likert2bin(feat[1]))
+            y3.append(likert2tri(feat[1]))
+            y5.append(feat[1])
 
-            del X[0]  #hash
-            del X[1]  #y
-
-        config.logger.info('OK')
-        return X, y5, y3, y2
+        X = np.array(X)
+        # excluding hash and y data
+        X_clean = np.delete(X, np.s_[0:2], axis=1)
+        config.logger.info('OK -> ' + str(X_clean.shape))
+        return X_clean, y5, y3, y2
 
 
     except Exception as e:

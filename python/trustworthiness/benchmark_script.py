@@ -1,44 +1,23 @@
-import os
-
-from bs4 import BeautifulSoup
-from keras import Sequential
-from keras.layers import LSTM, TimeDistributed, Dense
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.cross_validation import train_test_split
-from pathlib import Path
-
 from sklearn.grid_search import GridSearchCV
-from sklearn.metrics import precision_recall_fscore_support
-
 import plotly.plotly as py
 import plotly.graph_objs as go
 import math
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
+from sklearn.metrics import precision_recall_fscore_support
 
-from defacto.definitions import OUTPUT_FOLDER, BEST_CLS_2class, TEST_SIZE, BEST_CLS_5class, BEST_PAD_2class, \
-    BEST_PAD_5class, PADS, HEADER, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL, LINE_TEMPLATE, \
+from defacto.definitions import OUTPUT_FOLDER, TEST_SIZE, \
+    PADS, HEADER, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL, LINE_TEMPLATE, \
     LABELS_2_CLASSES, LABELS_5_CLASSES, CROSS_VALIDATION_K_FOLDS, SEARCH_METHOD_RANDOMIZED_GRID, SEARCH_METHOD_GRID, \
     CONFIGS_CLASSIFICATION, CONFIGS_REGRESSION, CONFIGS_HIGH_DIMEN
-from trustworthiness.util import print_report
 from trustworthiness.feature_extractor import *
-
-from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_validate, KFold, RandomizedSearchCV
 from itertools import product
-
 from sklearn.neural_network import MLPClassifier
-
 from config import DeFactoConfig
-
-from sklearn.naive_bayes import *
-from sklearn.dummy import *
 from sklearn.ensemble import *
-from sklearn.neighbors import *
-from sklearn.tree import *
-from sklearn.calibration import *
-from sklearn.linear_model import *
-from sklearn.svm import *
 from sklearn.externals import joblib
 import numpy as np
 import matplotlib.pyplot as plt
@@ -351,14 +330,15 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         # grid search on 10-fold cross validation
         if experiment_type == EXP_2_CLASSES_LABEL:
             scoring = ['precision', 'recall', 'f1']
-
+            refit = 'f1'
         elif experiment_type == EXP_3_CLASSES_LABEL:
             scoring = ['precision', 'precision_micro', 'precision_macro', 'precision_weighted',
                        'recall', 'recall_micro', 'recall_macro', 'recall_weighted',
                        'f1', 'f1_micro', 'f1_macro', 'f1_weighted']
-
+            refit = 'f1_weighted'
         elif experiment_type == EXP_5_CLASSES_LABEL:
             scoring = ['r2', 'neg_mean_squared_error', 'neg_mean_absolute_error', 'explained_variance']
+            refit='r2'
 
         else:
             raise Exception ('not supported! ' + experiment_type)
@@ -366,7 +346,8 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         if search_method == 'grid':
             clf = GridSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1)
         elif search_method == 'random':
-            clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1)
+            clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1,
+                                     refit=refit)
         else:
             raise Exception('not supported! ' + search_method)
 
@@ -374,44 +355,29 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         config.logger.info('best training set parameters: ')
         config.logger.info(clf.best_params_)
         config.logger.info(clf.best_score_)
+        config.logger.info(experiment_type)
         config.logger.info('----------------------------------------------------')
-        pred = clf.predict(X_test) # equivalent to clf.best_estimator_.predict()
-        # p_avg, r_avg, f_avg, s_avg = precision_recall_fscore_support(y_test, predicted, average='weighted')
-
-        scores = clf.score(X_test, y_test) # check if this score == score on pred
+        predicted = clf.best_estimator_.predict(X_test)
 
         # saving the best model
-        joblib.dump(clf, _path + file)
+        joblib.dump(clf.best_estimator_, _path + file)
 
         # saving the best parameters
-        best_parameters_file_name = BENCHMARK_FILE_NAME_TEMPLATE.replace('.pkl', '.grid_search_best_param')
-
+        best_parameters_file_name = BENCHMARK_FILE_NAME_TEMPLATE.replace('.pkl', '.best_param')
         with open(OUTPUT_FOLDER + exp_folder + ds_folder + best_parameters_file_name, "w") as best:
             best.write(' -- best params')
             best.write(str(clf.best_params_))
             best.write(' -- best score')
             best.write(str(clf.best_score_))
 
-        #cv_results = cross_validate(clf, X_test, y_test, return_train_score=False, cv=10, scoring=scoring)
+        if experiment_type == EXP_2_CLASSES_LABEL or experiment_type == EXP_3_CLASSES_LABEL:
+            p, r, f, s = precision_recall_fscore_support(y_test, predicted)
+            p_weighted, r_weighted, f_weighted, s_weighted = precision_recall_fscore_support(y_test, predicted,
+                                                                                             average='weighted')
+            p_micro, r_micro, f_micro, s_micro = precision_recall_fscore_support(y_test, predicted, average='micro')
+            p_macro, r_macro, f_macro, s_macro = precision_recall_fscore_support(y_test, predicted, average='macro')
 
-        # get metrics for chart and full log
-        if experiment_type == EXP_2_CLASSES_LABEL:
-            # chart
-            p_avg = scores['precision']
-            r_avg = scores['recall']
-            f_avg = scores['f1']
-
-            # log
-        elif experiment_type == EXP_3_CLASSES_LABEL:
-            # chart
-            p_avg = scores['precision_weighted']
-            r_avg = scores['recall_weighted']
-            f_avg = scores['f1_weighted']
-
-            # log
         elif experiment_type == EXP_5_CLASSES_LABEL:
-
-            # log
             for i in range(len(scores)):
                 r2 = scores[i]['r2']
                 rmse = scores[i]['rmse']
@@ -500,6 +466,9 @@ def mlp_param_selection(X, y, nfolds):
 def feature_selection():
     try:
         a=1
+        # ch2 = SelectKBest(chi2, k=10)
+        # X_train = ch2.fit_transform(X_train, y_train)
+        # X_test = ch2.transform(X_test)
         #TODO: implement (only top 20th percentile is relevant? 20, 50, 80 and 100
     except:
         raise
@@ -522,7 +491,8 @@ def benchmark(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size,
 
 
         # just to double check...
-        assert np.all(X_train_5 == X_train_3 == X_train_2)
+        assert np.all(X_train_5 == X_train_3)
+        assert np.all(X_train_5 == X_train_2)
 
         scaler.fit(X_train_5)
         X_train = scaler.transform(X_train_5)
@@ -721,95 +691,12 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
         config.logger.error(repr(e))
         raise
 
-def param_optimization():
-    probability=True
-    #ch2 = SelectKBest(chi2, k=10)
-    #X_train = ch2.fit_transform(X_train, y_train)
-    #X_test = ch2.transform(X_test)
-
-    param_grid = {"C": [0.5, 0.7, 0.9, 1.0],
-                  "kernel": ['linear', 'rbf', 'sigmoid'],
-                  "shrinking": [True, False],
-                  "decision_function_shape": ['ovo', 'ovr'],
-                  "tol": [0.1, 0.01, 0.001]}
-
-    clf = SVC()
-
-    grid_search = GridSearchCV(clf, param_grid=param_grid, n_jobs=-1)
-    start = time()
-    grid_search.fit(X_train, y2_train)
-    print(grid_search.best_params_)
-    print(grid_search.best_score_)
-
-
-
-    param_grid = {"alpha": [0.01, 0.05, 0.1, 0.2, 0.5, 0.7, 1.0],
-                  "fit_intercept": [True, False],
-                  "normalize": [True, False],
-                  "copy_X": [True, False],
-                  "tol": [0.1, 0.01, 0.001]}
-
-    #clf = SGDClassifier(alpha=.0001, penalty="elasticnet")
-    #clf = LinearSVC(penalty='l2')
-    #clf = PassiveAggressiveClassifier()
-    #clf = Perceptron()
-    clf = RidgeClassifier()
-
-    grid_search = GridSearchCV(clf, param_grid=param_grid, n_jobs=-1)
-    start = time()
-    grid_search.fit(X_train, y2_train)
-    print(grid_search.best_params_)
-    print(grid_search.best_score_)
-
-    # NearestCentroid
-    clf.fit(X_train, y_train)
-    predicted = clf.predict(X_test)
-    p, r, f, s = precision_recall_fscore_support(y_test, predicted, average='weighted')
-    print(f)
-    #print(np.mean(predicted == y_test))
-
-    #X_train = ch2.fit_transform(X_train, y2_train)
-    #X_test = ch2.transform(X_test)
-
-    clf.fit(X_train, y2_train)
-    predicted2 = clf.predict(X_test)
-    p, r, f, s = precision_recall_fscore_support(y2_test, predicted2, average='weighted')
-    print(f)
-    #print(np.mean(predicted2 == y2_test))
-
-    clf = RandomForestClassifier(n_estimators=20)
-    param_grid = {"max_depth": [3, None],
-                  "max_features": [1, 3, 10],
-                  "min_samples_split": [2, 3, 10],
-                  "min_samples_leaf": [1, 3, 10],
-                  "bootstrap": [True, False],
-                  "criterion": ["gini", "entropy"]}
-    grid_search = GridSearchCV(clf, param_grid=param_grid)
-    start = time()
-    grid_search.fit(X_train, y2_train)
-    print(grid_search.best_params_)
-    print(grid_search.best_score_)
-
-
-    # gs_clf_svm = GridSearchCV(clf, parameters_svm, n_jobs=-1)
-    # gs_clf_svm = gs_clf_svm.fit(X_train, y_train)
-    # print(gs_clf_svm.best_score_)
-    # print(gs_clf_svm.best_params_)
-
-    # print(self.mlp_param_selection(XX, y2, 5))
-    # exit(0)
-
-    #parameters_svm = {'vect__ngram_range': [(1, 1), (1, 2)],
-    #                  'tfidf__use_idf': (True, False),
-    #                  'clf-svm__alpha': (1e-2, 1e-3)}
-
-
 if __name__ == '__main__':
     try:
 
-        EXP_FOLDER = 'exp003/'
+        EXP_FOLDER = 'exp004/'
         DS_FOLDER = 'microsoft/'
-        FEATURES_FILE = 'microsoft_dataset_227_all_text_features.pkl'
+        FEATURES_FILE = 'basic_text_features227.pkl'
 
         RANDOM_STATE = 53
         #TOT_TEXT_FEAT = 53

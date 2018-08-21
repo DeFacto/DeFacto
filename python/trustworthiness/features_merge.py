@@ -28,7 +28,7 @@ def read_feat_files_and_merge(out_exp_folder, dataset, label, run_features, data
                 matrix.append(used_features)
 
 
-        name = dataset + '_dataset_' + str(len(matrix)) + '_' + label + '_text_features.pkl'
+        name = label + '_text_features' + str(len(matrix)) + '.pkl'
         _path = OUTPUT_FOLDER + out_exp_folder + dataset + '/'
         joblib.dump(matrix, _path + name)
         print('full features exported: ' + _path + name)
