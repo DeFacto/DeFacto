@@ -78,8 +78,8 @@ LINE_TEMPLATE = '%s\t%s\t%s\t%s\t%.3f\t%.3f\t%.3f\t%d\t%.3f\n'
 EXP_2_CLASSES_LABEL = '2-classes'
 EXP_3_CLASSES_LABEL = '3-classes'
 EXP_5_CLASSES_LABEL = '5-classes'
-labels_5classes = {1: 'non-credible', 2: 'low', 3: 'neutral', 4: 'likely', 5: 'credible'}
-labels_3classes = {0: 'low', 1: 'medium', 2: 'high'}
-labels_2classes = {0: 'low', 1: 'high'}
+LABELS_5_CLASSES = {1: 'non-credible', 2: 'low', 3: 'neutral', 4: 'likely', 5: 'credible'}
+LABELS_3_CLASSES = {0: 'low', 1: 'medium', 2: 'high'}
+LABELS_2_CLASSES = {0: 'low', 1: 'high'}
 HEADER = 'cls\texperiment_type\tpadding\tklass\tprecision\trecall\tf-measure\tsupport\trate\n'
 

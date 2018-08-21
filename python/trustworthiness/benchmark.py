@@ -17,7 +17,8 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
 from defacto.definitions import OUTPUT_FOLDER, BEST_CLS_BIN, TEST_SIZE, BEST_CLS_LIKERT, BEST_PAD_BIN, \
-    BEST_PAD_LIKERT, PADS, HEADER, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL
+    BEST_PAD_LIKERT, PADS, HEADER, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL, LINE_TEMPLATE, \
+    LABELS_2_CLASSES, LABELS_5_CLASSES
 from trustworthiness.util import print_report
 from trustworthiness.feature_extractor import *
 
@@ -356,13 +357,13 @@ def test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log
             #fpr_0, tpr_0, thresholds_0 = roc_curve(y_test, predicted, pos_label=0)
             #fpr_1, tpr_1, thresholds_1 = roc_curve(y_test, predicted, pos_label=1)
 
-            file_log.write(LINE_TEMPLATE % (cls_label, experiment_type, padding, labels_2classes.get(0), p[0], r[0], f[0], s[0], fpr))
-            file_log.write(LINE_TEMPLATE % (cls_label, experiment_type, padding, labels_2classes.get(1), p[1], r[1], f[1], s[1], fnr))
+            file_log.write(LINE_TEMPLATE % (cls_label, experiment_type, padding, LABELS_2_CLASSES.get(0), p[0], r[0], f[0], s[0], fpr))
+            file_log.write(LINE_TEMPLATE % (cls_label, experiment_type, padding, LABELS_2_CLASSES.get(1), p[1], r[1], f[1], s[1], fnr))
             file_log.write(LINE_TEMPLATE % (cls_label, experiment_type, padding, 'average', p_avg, r_avg, f_avg, s[0]+s[1], rate_avg))
 
         else:
             for i in range(len(p)):
-                file_log.write(LINE_TEMPLATE % (cls_label, experiment_type, padding, labels_5classes.get(i + 1), p[i], r[i], f[i], s[i], 0))
+                file_log.write(LINE_TEMPLATE % (cls_label, experiment_type, padding, LABELS_5_CLASSES.get(i + 1), p[i], r[i], f[i], s[i], 0))
 
         return out
 
@@ -485,18 +486,18 @@ def benchmark_text(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size
 
         with open(OUTPUT_FOLDER + exp_folder + ds_folder + out_performance_file, "w") as file_log:
             file_log.write(HEADER)
-            for exp_type in ('2', '3', '5'):
-                if exp_type == '2':
+            for exp_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_5_CLASSES_LABEL):
+                if exp_type == EXP_2_CLASSES_LABEL:
                     y_train = y_train_2
                     y_test = y_test_2
                     y_axis = y_axis_2
                     x_axis = x_axis_2
-                elif exp_type == '3':
+                elif exp_type == EXP_3_CLASSES_LABEL:
                     y_train = y_train_3
                     y_test = y_test_3
                     y_axis = y_axis_3
                     x_axis = x_axis_3
-                elif exp_type == '5':
+                elif exp_type == EXP_5_CLASSES_LABEL:
                     y_train = y_train_5
                     y_test = y_test_5
                     y_axis = y_axis_5
@@ -505,7 +506,7 @@ def benchmark_text(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size
                     raise Exception('blah! error')
                 for clf in classifiers:
                     out = []
-                    cls_label = clf.__class__.__name__ + '_' + exp_type + 'classes'
+                    cls_label = clf.__class__.__name__ + '_' + exp_type
                     out = train_test_export_save(clf, X_train, y_train, X_test, y_test, out, cls_label, 0,
                                                  exp_type, file_log, 'text_features/', exp_folder, ds_folder)
                     estimators.append((cls_label, clf))
@@ -645,32 +646,6 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
         config.logger.error(repr(e))
         raise
 
-def benchmark_combined(X, y_likert, y_bin, test_size, random_state, bestpad, exp_folder, tot_text_feat):
-    try:
-
-        XX = pad_sequences(X, maxlen=bestpad+tot_text_feat, dtype='int', padding='pre', truncating='pre', value=0)
-
-        X_train, X_test, y_train_likert, y_test_likert = train_test_split(XX, y_likert, test_size=test_size,
-                                                                          random_state=random_state)
-        X_train, X_test, y_train_bin, y_test_bin = train_test_split(XX, y_bin, test_size=test_size,
-                                                                    random_state=random_state)
-
-        sgd_15=[]
-        sgd_01=[]
-
-        with open(OUTPUT_FOLDER + exp_folder + 'exp_performances_combined.txt', "w") as file_log:
-            file_log.write(HEADER)
-
-            clf = SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3)
-            sgd_15 = train_test_export_save(clf, X_train, y_train_likert, X_test, y_test_likert, sgd_15, 'sgd', bestpad,
-                                            'likert', file_log, 'combined/')
-            sgd_01 = train_test_export_save(clf, X_train, y_train_bin, X_test, y_test_bin, sgd_01, 'sgd', bestpad,
-                                            'bin', file_log, 'combined/')
-
-
-    except Exception as e:
-        config.logger.error(repr(e))
-
 def param_optimization():
     probability=True
     #ch2 = SelectKBest(chi2, k=10)
@@ -710,9 +685,6 @@ def param_optimization():
     grid_search.fit(X_train, y2_train)
     print(grid_search.best_params_)
     print(grid_search.best_score_)
-
-
-
 
     # NearestCentroid
     clf.fit(X_train, y_train)
@@ -756,13 +728,6 @@ def param_optimization():
     #                  'tfidf__use_idf': (True, False),
     #                  'clf-svm__alpha': (1e-2, 1e-3)}
 
-def feature_selection():
-    #TODO: implement
-    try:
-        a=1
-    except Exception as e:
-        config.logger.error(repr(e))
-        raise
 
 if __name__ == '__main__':
     try:
@@ -794,23 +759,21 @@ if __name__ == '__main__':
         '''
         features_combined, y5, y3, y2 = get_text_features(EXP_FOLDER, DS_FOLDER, FEATURES_FILE,
                                                           html2seq=True, best_pad=BEST_PAD_BIN,
-                                                          best_cls=BEST_CLS_BIN, exp_type_combined='2-classes')
+                                                          best_cls=BEST_CLS_BIN, exp_type_combined=EXP_2_CLASSES_LABEL)
         benchmark_text(features_combined, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE,
-                       combined=True, exp_type_combined='2-classes')
+                       combined=True, exp_type_combined=EXP_2_CLASSES_LABEL)
 
         features_combined, y5, y3, y2 = get_text_features(EXP_FOLDER, DS_FOLDER, FEATURES_FILE,
                                                           html2seq=True, best_pad=BEST_PAD_LIKERT,
-                                                          best_cls=BEST_CLS_LIKERT, exp_type_combined='3-classes')
+                                                          best_cls=BEST_CLS_LIKERT, exp_type_combined=EXP_3_CLASSES_LABEL)
         benchmark_text(features_combined, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE,
-                       combined=True, exp_type_combined='3-classes')
+                       combined=True, exp_type_combined=EXP_3_CLASSES_LABEL)
 
         features_combined, y5, y3, y2 = get_text_features(EXP_FOLDER, DS_FOLDER, FEATURES_FILE,
                                                           html2seq=True, best_pad=BEST_PAD_LIKERT,
-                                                          best_cls=BEST_CLS_LIKERT, exp_type_combined='5-classes')
+                                                          best_cls=BEST_CLS_LIKERT, exp_type_combined=EXP_5_CLASSES_LABEL)
         benchmark_text(features_combined, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE,
-                       combined=True, exp_type_combined='5-classes')
-
-        #benchmark_combined(features_combined, y_likert, y_bin, TEST_SIZE, RANDOM_STATE, BEST_PAD, EXP_FOLDER, TOT_TEXT_FEAT)
+                       combined=True, exp_type_combined=EXP_5_CLASSES_LABEL)
 
     except Exception as e:
         config.logger.error(repr(e))
