@@ -4,6 +4,14 @@ Module: Web Credibility
 Author: Diego Esteves
 Date: 15-Aug-2018
 """
+from sklearn.cluster import KMeans, AgglomerativeClustering
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, ExtraTreesClassifier, \
+    BaggingClassifier, AdaBoostClassifier
+from sklearn.linear_model import LogisticRegression, Ridge, PassiveAggressiveClassifier, SGDClassifier
+from sklearn.naive_bayes import BernoulliNB, MultinomialNB
+from sklearn.svm import SVR
+from sklearn.tree import DecisionTreeClassifier
+import numpy as np
 
 VERSION_LABEL = 'DeFacto 3'
 VERSION = '3.0.0'
@@ -65,15 +73,15 @@ CROSS_VALIDATION_K_FOLDS = 10
 
 TEST_SIZE = 0.2
 
+SEARCH_METHOD_RANDOMIZED_GRID = 'random'
+
+SEARCH_METHOD_GRID = 'grid'
+
 # HTML sequence windows
 PADS = [25, 50, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600,
         2700, 2800, 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000]
 
-# best model's info (used in the combined evaluation)
-BEST_PAD_BIN = 2900
-BEST_PAD_LIKERT = 2000
-BEST_CLS_BIN = 'nb'
-BEST_CLS_LIKERT = 'nb'
+
 LINE_TEMPLATE = '%s\t%s\t%s\t%s\t%.3f\t%.3f\t%.3f\t%d\t%.3f\n'
 EXP_2_CLASSES_LABEL = '2-classes'
 EXP_3_CLASSES_LABEL = '3-classes'
@@ -83,3 +91,71 @@ LABELS_3_CLASSES = {0: 'low', 1: 'medium', 2: 'high'}
 LABELS_2_CLASSES = {0: 'low', 1: 'high'}
 HEADER = 'cls\texperiment_type\tpadding\tklass\tprecision\trecall\tf-measure\tsupport\trate\n'
 
+# best model's info (used in the combined evaluation)
+BEST_PAD_WINDOW = 2900
+BEST_PAD_EXPERIMENT_TYPE = EXP_5_CLASSES_LABEL
+BEST_PAD_ALGORITHM = 'nb'
+
+# classifiers x hyper-parameters x search method
+
+trees_param_basic = {"criterion": ['gini', 'entropy'],
+                     "max_features": ['auto', 'sqrt'],
+                     "max_depth": [int(x) for x in np.linspace(10, 110, num=11)],
+                     "min_samples_split": [2, 5, 10],
+                     "min_samples_leaf": [1, 2, 4]}
+
+trees_param = trees_param_basic.copy()
+trees_param["n_estimators"] = [10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000]
+
+trees_param_bootstrap = trees_param.copy()
+trees_param_bootstrap["bootstrap"] = [True, False]
+
+CONFIGS_HIGH_DIMEN = [(MultinomialNB(),dict(alpha=[1e0, 1e-1, 1e-2, 1e-3]),SEARCH_METHOD_GRID),
+                      (BernoulliNB(), dict(alpha=[1e0, 1e-1, 1e-2, 1e-3]), SEARCH_METHOD_GRID),
+                      (KMeans(n_jobs=-1),
+                       dict(init=["k-means++", "random"], n_init=[5, 10, 20], tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4],
+                            algorithm=['auto', 'full', 'elkan'], n_clusters=[2, 3, 5, 6, 7, 8, 9, 10, 15, 20]),
+                       SEARCH_METHOD_RANDOMIZED_GRID
+                       ),
+                      (AgglomerativeClustering(), dict(affinity=['euclidean', 'l1', 'l2', 'manhattan', 'cosine'],
+                                                       n_clusters=[2, 3, 5, 6, 7, 8, 9, 10, 15, 20],
+                                                       linkage=['ward', 'complete', 'average']),
+                       SEARCH_METHOD_RANDOMIZED_GRID)]
+
+CONFIGS_REGRESSION = [(LogisticRegression(n_jobs=-1),
+                       dict(alpha=[1e0, 1e-1, 1e-2, 1e-3], solver=["newton-cg", "lbfgs", "liblinear", "sag", "saga"],
+                            multi_class=["ovr", "multinomial"], tol=[1e0, 1e-1, 1e-2, 1e-3], penalty=["l1", "l2"],
+                            C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]),
+                       SEARCH_METHOD_RANDOMIZED_GRID),
+                      (Ridge(), dict(alpha=[1e0, 1e-1, 1e-2, 1e-3],
+                                     solver=['auto', 'svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag', 'saga'],
+                                     tol=[1e0, 1e-1, 1e-2, 1e-3]),
+                       SEARCH_METHOD_RANDOMIZED_GRID),
+                      (SVR(), dict(epsilon=[1e0, 1e-1, 1e-2, 1e-3], kernel=["linear", "poly", "rbf", "sigmoid"],
+                                   tol=[1e0, 1e-1, 1e-2, 1e-3], C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]), SEARCH_METHOD_GRID)
+                      ]
+
+CONFIGS_CLASSIFICATION = [
+    (DecisionTreeClassifier(), trees_param_basic, SEARCH_METHOD_RANDOMIZED_GRID),
+    (GradientBoostingClassifier(), trees_param, SEARCH_METHOD_RANDOMIZED_GRID),
+    (RandomForestClassifier(n_jobs=-1), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
+    (ExtraTreesClassifier(n_jobs=-1), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
+    (BaggingClassifier(), {"n_estimators": [10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000],
+                           "base_estimator__max_depth": [1, 2, 3, 4, 5],
+                           "max_samples": [0.05, 0.1, 0.2, 0.5]}, SEARCH_METHOD_RANDOMIZED_GRID),
+    (AdaBoostClassifier(), {"n_estimators": [10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000],
+                            "algorithm": ["SAMME", "SAMME.R"]}, SEARCH_METHOD_RANDOMIZED_GRID),
+    (PassiveAggressiveClassifier(n_jobs=-1), {"tol": [1e0, 1e-1, 1e-2, 1e-3],
+                                              "C": [0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0],
+                                              "loss": ["hinge", "squared_hinge"]}, SEARCH_METHOD_GRID),
+    (SGDClassifier(n_jobs=-1), {"loss": ["hinge", "log", "modified_huber", "squared_hinge", "perceptron"],
+                                "penality": ["none", "l2", "l1", "elasticnet"],
+                                "alpha": [1e0, 1e-1, 1e-2, 1e-3],
+                                "tol": [1e0, 1e-1, 1e-2, 1e-3],
+                                "learning_rate": ["constant", "invscaling", "optimal"]},
+                                SEARCH_METHOD_RANDOMIZED_GRID),
+    (BernoulliNB(), {"alpha": [1e0, 1e-1, 1e-2, 1e-3]}, SEARCH_METHOD_GRID),
+    #MLPClassifier(hidden_layer_sizes=(hidden_nodes,hidden_nodes,hidden_nodes), solver='adam', alpha=1e-05)
+    ##OneVsRestClassifier(SVC(kernel='linear', probability=True))
+
+        ]

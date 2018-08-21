@@ -15,7 +15,7 @@ if __name__ == '__main__':
         df_annotations_all = pd.read_table(OUTPUT_FOLDER + 'exp003/factbench/factbench_annotations.tsv',
                                            sep="\t", na_values=0, low_memory=False, skiprows=1)
 
-        #file = BENCHMARK_FILE_NAME_TEMPLATE % (BEST_CLS_BIN, BEST_PAD_BIN, 'bin')
+        #file = BENCHMARK_FILE_NAME_TEMPLATE % (BEST_CLS_2class, BEST_PAD_2class, 'bin')
         file = 'cls_decisiontreeclassifier_bin_0_bin.pkl'
         print('loading model: ' + file)
         clf = joblib.load(OUTPUT_FOLDER + 'exp003/3c/models/text_features/' + file)

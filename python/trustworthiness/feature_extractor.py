@@ -12,7 +12,7 @@ import os
 import warnings
 from defacto.definitions import BENCHMARK_FILE_NAME_TEMPLATE, \
     DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, \
-    OUTPUT_FOLDER, DATASET_MICROSOFT_PATH, ENC_WEB_DOMAIN
+    OUTPUT_FOLDER, DATASET_MICROSOFT_PATH, ENC_WEB_DOMAIN, BEST_PAD_ALGORITHM, BEST_PAD_WINDOW, BEST_PAD_EXPERIMENT_TYPE
 from trustworthiness.features_core import FeaturesCore
 from trustworthiness.util import get_html_file_path, get_features_web_microsoft, get_features_web_c3
 
@@ -152,11 +152,10 @@ def get_html2sec_features(exp_folder, ds_folder):
         config.logger.error(repr(e))
         raise
 
-def get_text_features(exp_folder, ds_folder, features_file, html2seq = False, best_pad=0, best_cls=None, exp_type_combined=None):
+def get_text_features(exp_folder, ds_folder, features_file, html2seq = False):
     try:
         assert (exp_folder is not None and exp_folder != '')
         assert (ds_folder is not None and ds_folder != '')
-        assert (html2seq is False or (html2seq is True and best_cls is not None and exp_type_combined is not None))
         config.logger.info('get_text_features()')
 
         y2 = []
@@ -169,7 +168,7 @@ def get_text_features(exp_folder, ds_folder, features_file, html2seq = False, be
         if html2seq is True:
             le = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq_enc.pkl')
             # load best classifier
-            file = BENCHMARK_FILE_NAME_TEMPLATE % (best_cls.lower(), best_pad, exp_type_combined)
+            file = BENCHMARK_FILE_NAME_TEMPLATE % (BEST_PAD_ALGORITHM.lower(), BEST_PAD_WINDOW, BEST_PAD_EXPERIMENT_TYPE)
             config.logger.debug('loading model: ' + file)
             clf_html2seq = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'models/html2seq/' + file)
 
@@ -178,12 +177,12 @@ def get_text_features(exp_folder, ds_folder, features_file, html2seq = False, be
                 hash = get_md5_from_string(feat[0])
                 file_name = ds_folder.replace('/','') + '_dataset_features_%s.pkl' % (hash)
                 x = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq/' + file_name)
-                if best_pad <= len(x):
-                    x2 = le.transform(x[0:best_pad])
+                if BEST_PAD_WINDOW <= len(x):
+                    x2 = le.transform(x[0:BEST_PAD_WINDOW])
                     klass = clf_html2seq.predict([x2])[0]
                 else:
                     x2 = le.transform(x)
-                    klass = clf_html2seq.predict([np.pad(x2, (0, best_pad-len(x2)), 'constant')])[0]
+                    klass = clf_html2seq.predict([np.pad(x2, (0, BEST_PAD_WINDOW - len(x2)), 'constant')])[0]
                 feat.extend([klass])
 
             y2.append(likert2bin(X[1]))

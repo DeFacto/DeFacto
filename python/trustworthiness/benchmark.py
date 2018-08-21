@@ -16,9 +16,10 @@ import math
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
-from defacto.definitions import OUTPUT_FOLDER, BEST_CLS_BIN, TEST_SIZE, BEST_CLS_LIKERT, BEST_PAD_BIN, \
-    BEST_PAD_LIKERT, PADS, HEADER, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL, LINE_TEMPLATE, \
-    LABELS_2_CLASSES, LABELS_5_CLASSES, CROSS_VALIDATION_K_FOLDS, SEARCH_METHOD_RANDOMIZED_GRID, SEARCH_METHOD_GRID
+from defacto.definitions import OUTPUT_FOLDER, BEST_CLS_2class, TEST_SIZE, BEST_CLS_5class, BEST_PAD_2class, \
+    BEST_PAD_5class, PADS, HEADER, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL, LINE_TEMPLATE, \
+    LABELS_2_CLASSES, LABELS_5_CLASSES, CROSS_VALIDATION_K_FOLDS, SEARCH_METHOD_RANDOMIZED_GRID, SEARCH_METHOD_GRID, \
+    CONFIGS_CLASSIFICATION, CONFIGS_REGRESSION, CONFIGS_HIGH_DIMEN
 from trustworthiness.util import print_report
 from trustworthiness.feature_extractor import *
 
@@ -45,7 +46,6 @@ from sklearn.preprocessing import StandardScaler
 
 __author__ = "Diego Esteves"
 __copyright__ = "Copyright 2018, DeFacto Project"
-__credits__ = ["Diego Esteves", "Aniketh Reddy", "Piyush Chawla"]
 __license__ = "Apache"
 __version__ = "0.0.1"
 __email__ = "diegoesteves@gmail.com"
@@ -333,9 +333,9 @@ def report(results, n_top=3):
             print("Parameters: {0}".format(results['params'][candidate]))
             print("")
 
-def train_test_export_save(estimator, estimator_label, hyperparameters, search_method,
-                           X_train, X_test, y_train, y_test, experiment_type, padding,
-                           out, file_log, subfolder, exp_folder, ds_folder):
+def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparameters, search_method,
+                                        X_train, X_test, y_train, y_test, experiment_type, padding,
+                                        out_chart, file_log, subfolder, exp_folder, ds_folder):
 
     try:
         # file dump info
@@ -373,6 +373,7 @@ def train_test_export_save(estimator, estimator_label, hyperparameters, search_m
         clf.fit(X_train, y_train)
         config.logger.info('best training set parameters: ')
         config.logger.info(clf.best_params_)
+        config.logger.info(clf.best_score_)
         config.logger.info('----------------------------------------------------')
         pred = clf.predict(X_test) # equivalent to clf.best_estimator_.predict()
         # p_avg, r_avg, f_avg, s_avg = precision_recall_fscore_support(y_test, predicted, average='weighted')
@@ -383,7 +384,7 @@ def train_test_export_save(estimator, estimator_label, hyperparameters, search_m
         joblib.dump(clf, _path + file)
 
         # saving the best parameters
-        best_parameters_file_name = BENCHMARK_FILE_NAME_TEMPLATE.replace('.pkl', '.best_param')
+        best_parameters_file_name = BENCHMARK_FILE_NAME_TEMPLATE.replace('.pkl', '.grid_search_best_param')
 
         with open(OUTPUT_FOLDER + exp_folder + ds_folder + best_parameters_file_name, "w") as best:
             best.write(' -- best params')
@@ -418,17 +419,18 @@ def train_test_export_save(estimator, estimator_label, hyperparameters, search_m
                 evar = scores[i]['evar']
                 file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, LABELS_5_CLASSES.get(i + 1), r2, rmse, mae, evar, 0))
 
-
-
         else:
             raise Exception('not supported! ' + experiment_type)
 
+        if experiment_type == EXP_2_CLASSES_LABEL or experiment_type == EXP_3_CLASSES_LABEL:
+            out_chart.append([p_avg, r_avg, f_avg])
+            config.logger.info('padding: %s cls: %s exp_type: %s f1: %.3f' % (padding, estimator_label, experiment_type, f_avg))
+            return out_chart
+        else:
+            return None
 
-
-
-        out.append([p_avg, r_avg, f_avg])
-        config.logger.info('padding: %s cls: %s exp_type: %s f1: %.3f' % (padding, estimator_label, experiment_type, f_avg))
-
+        '''
+        
         # file logging details
         p, r, f, s = precision_recall_fscore_support(y_test, predicted)
         if experiment_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL):
@@ -450,14 +452,15 @@ def train_test_export_save(estimator, estimator_label, hyperparameters, search_m
         else:
             for i in range(len(p)):
                 file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, LABELS_5_CLASSES.get(i + 1), p[i], r[i], f[i], s[i], 0))
+        '''
 
-        return out
+
 
     except Exception as e:
         config.logger.error(repr(e))
         raise
 
-    #return test(clf, X_test, y_test, out, padding, estimator_label, experiment_type, file_log, subfolder, exp_folder, ds_folder)
+    #return test(clf, X_test, y_test, out_chart, padding, estimator_label, experiment_type, file_log, subfolder, exp_folder, ds_folder)
 
 def get_plot_voting(X, y, classifiers, labels):
 
@@ -501,89 +504,17 @@ def feature_selection():
     except:
         raise
 
-def benchmark_text(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size, combined=False,
-                   threshold_label_bin=0.7, threshold_label_likert=0.45, exp_type_combined=None):
+def benchmark(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size,
+              out_performance_file_classification, out_performance_file_regression, graph_2_file, graph_3_file, graph_5_file,
+              combined=False, threshold_label_bin=0.7, threshold_label_likert=0.45):
 
     config.logger.info('benchmark_text()')
 
     try:
 
-        out_performance_file_classification = 'out_performance_text_classification.txt'
-        out_performance_file_regression = 'out_performance_text_regression.txt'
-        graph_2_file = 'benchmark_text_2classes.png'
-        graph_3_file = 'benchmark_text_3classes.png'
-        graph_5_file = 'benchmark_text_5classes.png'
-
-        if combined is True:
-            out_performance_file_classification = 'out_performance_combined_+' + exp_type_combined + '_classification.txt'
-            out_performance_file_regression = 'out_performance_combined_+' + exp_type_combined + '_regression.txt'
-            graph_2_file = 'benchmark_combined_2classes_+' + exp_type_combined + '.png'
-            graph_3_file = 'benchmark_combined_3classes_+' + exp_type_combined + '.png'
-            graph_5_file = 'benchmark_combined_5classes_+' + exp_type_combined + '.png'
-
         #input_layer_neurons = len(X) + 1
         #output_layer_neurons = 1
         #hidden_nodes = np.math.ceil(len(X) / (2 * (input_layer_neurons + output_layer_neurons)))
-
-        trees_param_basic = {"criterion": ['gini', 'entropy'],
-                            "max_features": ['auto', 'sqrt'],
-                            "max_depth": [int(x) for x in np.linspace(10, 110, num = 11)],
-                            "min_samples_split":[2, 5, 10],
-                            "min_samples_leaf": [1, 2, 4]}
-
-        trees_param = trees_param_basic.copy()
-        trees_param["n_estimators"] = [10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000]
-
-        trees_param_bootstrap = trees_param.copy()
-        trees_param_bootstrap["bootstrap"] = [True, False]
-
-
-        # classifiers x hyper-parameters x search method
-
-        config_regression = [(LogisticRegression(n_jobs=-1),
-                              {"alpha": [1e0, 1e-1, 1e-2, 1e-3],
-                               "solver": ["newton-cg", "lbfgs", "liblinear", "sag", "saga"],
-                               "multi_class": ["ovr", "multinomial"],
-                               "tol": [1e0, 1e-1, 1e-2, 1e-3],
-                               "penalty": ["l1", "l2"],
-                               "C": [0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]
-                               },
-                              SEARCH_METHOD_RANDOMIZED_GRID),
-                             (Ridge(), {"alpha": [1e0, 1e-1, 1e-2, 1e-3],
-                                        "solver": ['auto', 'svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag','saga'],
-                                        "tol": [1e0, 1e-1, 1e-2, 1e-3]},
-                              SEARCH_METHOD_RANDOMIZED_GRID),
-                             (SVR(),  {"epsilon": [1e0, 1e-1, 1e-2, 1e-3],
-                               "kernel": ["linear", "poly", "rbf", "sigmoid"],
-                               "tol": [1e0, 1e-1, 1e-2, 1e-3],
-                               "C": [0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]
-                               }, SEARCH_METHOD_GRID)
-                             ]
-
-        config_classification = [
-            (DecisionTreeClassifier(), trees_param_basic, SEARCH_METHOD_RANDOMIZED_GRID),
-            (GradientBoostingClassifier(), trees_param, SEARCH_METHOD_RANDOMIZED_GRID),
-            (RandomForestClassifier(n_jobs=-1), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
-            (ExtraTreesClassifier(n_jobs=-1), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
-            (BaggingClassifier(), {"n_estimators": [10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000],
-                                   "base_estimator__max_depth": [1, 2, 3, 4, 5],
-                                   "max_samples": [0.05, 0.1, 0.2, 0.5]}, SEARCH_METHOD_RANDOMIZED_GRID),
-            (AdaBoostClassifier(), {"n_estimators": [10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000],
-                                    "algorithm": ["SAMME", "SAMME.R"]}, SEARCH_METHOD_RANDOMIZED_GRID),
-            (PassiveAggressiveClassifier(n_jobs=-1), {"tol": [1e0, 1e-1, 1e-2, 1e-3],
-                                                      "C": [0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0],
-                                                      "loss": ["hinge", "squared_hinge"]}, SEARCH_METHOD_GRID),
-            (SGDClassifier(n_jobs=-1), {"loss": ["hinge", "log", "modified_huber", "squared_hinge", "perceptron"],
-                                        "penality": ["none", "l2", "l1", "elasticnet"],
-                                        "alpha": [1e0, 1e-1, 1e-2, 1e-3],
-                                        "tol": [1e0, 1e-1, 1e-2, 1e-3],
-                                        "learning_rate": ["constant", "invscaling", "optimal"]},
-                                        SEARCH_METHOD_RANDOMIZED_GRID),
-            (BernoulliNB(), {"alpha": [1e0, 1e-1, 1e-2, 1e-3]}, SEARCH_METHOD_GRID),
-            #MLPClassifier(hidden_layer_sizes=(hidden_nodes,hidden_nodes,hidden_nodes), solver='adam', alpha=1e-05)
-            ##OneVsRestClassifier(SVC(kernel='linear', probability=True))
-
-        ]
 
         X_train_5, X_test_5, y_train_5, y_test_5 = train_test_split(X, y5, test_size=test_size, random_state=random_state)
         X_train_3, X_test_3, y_train_3, y_test_3 = train_test_split(X, y3, test_size=test_size, random_state=random_state)
@@ -624,12 +555,12 @@ def benchmark_text(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size
                 else:
                     raise Exception('blah! error')
 
-                for estimator, hyperparam, grid_method in config_classification:
+                for estimator, hyperparam, grid_method in CONFIGS_CLASSIFICATION:
                     out = []
                     cls_label = estimator.__class__.__name__ + '_' + exp_type
-                    out = train_test_export_save(estimator, cls_label, hyperparam, grid_method,
-                                                    X_train, X_test, y_train, y_test, exp_type, 0,
-                                                    out, file_log_classification, 'text_features/', exp_folder, ds_folder)
+                    out = train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
+                                                              X_train, X_test, y_train, y_test, exp_type, 0,
+                                                              out, file_log_classification, 'text_features/', exp_folder, ds_folder)
                     estimators.append((cls_label, estimator))
                     i += 1
                     y_axis.extend(np.array(out)[:, 2])
@@ -638,18 +569,18 @@ def benchmark_text(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size
                 estimator = VotingClassifier(estimators=estimators, voting='hard')
                 cls_label = estimator.__class__.__name__ + '_hard_' + exp_type
                 out = []
-                out = train_test_export_save(estimator, cls_label, hyperparam, grid_method,
-                                                 X_train, X_test, y_train, y_test, exp_type, 0,
-                                                 out, file_log_classification, 'text_features/', exp_folder, ds_folder)
+                out = train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
+                                                          X_train, X_test, y_train, y_test, exp_type, 0,
+                                                          out, file_log_classification, 'text_features/', exp_folder, ds_folder)
                 y_axis.extend(np.array(out)[:, 2])
                 x_axis.append(estimator.__class__.__name__.replace('Classifier', ''))
 
                 estimator = VotingClassifier(estimators=estimators, voting='soft')
                 cls_label = estimator.__class__.__name__ + '_soft_' + exp_type
                 out = []
-                out = train_test_export_save(estimator, cls_label, hyperparam, grid_method,
-                                                 X_train, X_test, y_train, y_test, exp_type, 0,
-                                                 out, file_log_classification, 'text_features/', exp_folder, ds_folder)
+                out = train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
+                                                          X_train, X_test, y_train, y_test, exp_type, 0,
+                                                          out, file_log_classification, 'text_features/', exp_folder, ds_folder)
                 y_axis.extend(np.array(out)[:, 2])
                 x_axis.append(estimator.__class__.__name__.replace('Classifier', ''))
 
@@ -675,12 +606,12 @@ def benchmark_text(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size
 
         with open(OUTPUT_FOLDER + exp_folder + ds_folder + out_performance_file_regression, "w") as file_log_regression:
             file_log_regression.write(HEADER)
-            for estimator, hyperparam, grid_method in config_regression:
+            for estimator, hyperparam, grid_method in CONFIGS_REGRESSION:
                 out = []
                 cls_label = estimator.__class__.__name__ + '_' + EXP_5_CLASSES_LABEL
-                out = train_test_export_save(estimator, cls_label, hyperparam, grid_method,
-                                                 X_train, X_test, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, 0,
-                                                 out, file_log_regression, 'text_features/', exp_folder, ds_folder)
+                train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
+                                                    X_train, X_test, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, 0,
+                                                    out, file_log_regression, 'text_features/', exp_folder, ds_folder)
 
     except Exception as e:
         config.logger.error(repr(e))
@@ -703,8 +634,8 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
         with open(OUTPUT_FOLDER + exp_folder + ds_folder + out_performance_file, "w") as file_log:
             file_log.write(HEADER)
             nb_2 = [], nb_3 = [], nb_5 = []
-            svm_2 = [], svm_3 = [], svm_5 = []
-            sgd_2 = [], sgd_3 = [], sgd_5 = []
+            bnb_2 = [], bnb_3 = [], bnb_5 = []
+            agg_2 = [], agg_3 = [], agg_5 = []
             k_2 = [], k_3 = [], k_5 = []
 
             subfolder= 'html2seq/'
@@ -719,41 +650,39 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 # tfidf = TfidfVectorizer(preprocessor=lambda x: x, tokenizer=lambda x: x)
                 # X_train = tfidf.fit_transform(X_train)
                 # X_test = tfidf.transform(X_test)
+
                 # ==========================================================================================================
                 # NB
                 # ==========================================================================================================
-                clf = MultinomialNB()
-                nb_5 = train_test_export_save(clf, X_train, y_train_5, X_test, y_test_5, nb_5, 'nb', maxpad, EXP_5_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
-                nb_3 = train_test_export_save(clf, X_train, y_train_3, X_test, y_test_3, nb_3, 'nb', maxpad, EXP_3_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
-                nb_2 = train_test_export_save(clf, X_train, y_train_2, X_test, y_test_2, nb_2, 'nb', maxpad, EXP_2_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
+                cls, params, search_method = CONFIGS_HIGH_DIMEN[0]
+                nb_5 = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, nb_5, file_log, subfolder, exp_folder, ds_folder)
+                nb_3 = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, nb_3, file_log, subfolder, exp_folder, ds_folder)
+                nb_2 = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, nb_2, file_log, subfolder, exp_folder, ds_folder)
                 # ==========================================================================================================
-                # SGD
+                # BernoulliNB
                 # ==========================================================================================================
-                clf = SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3)
-                sgd_5 = train_test_export_save(clf, X_train, y_train_5, X_test, y_test_5, sgd_5, 'sgd', maxpad, EXP_5_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
-                sgd_3 = train_test_export_save(clf, X_train, y_train_3, X_test, y_test_3, sgd_3, 'sgd', maxpad, EXP_3_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
-                sgd_2 = train_test_export_save(clf, X_train, y_train_2, X_test, y_test_2, sgd_2, 'sgd', maxpad, EXP_2_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
+                cls, params, search_method = CONFIGS_HIGH_DIMEN[1]
+                bnb_5 = train_test_export_save_per_exp_type(cls, 'sgd', params, search_method, X_train, X_test, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, bnb_5, file_log, subfolder, exp_folder, ds_folder)
+                bnb_3 = train_test_export_save_per_exp_type(cls, 'sgd', params, search_method, X_train, X_test, y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, bnb_3, file_log, subfolder, exp_folder, ds_folder)
+                bnb_2 = train_test_export_save_per_exp_type(cls, 'sgd', params, search_method, X_train, X_test, y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, bnb_2, file_log, subfolder, exp_folder, ds_folder)
                 # ==========================================================================================================
                 # K-means
                 # ==========================================================================================================
                 pca = PCA()
                 X_tr_pca = pca.fit_transform(X_train)
                 X_te_pca = pca.transform(X_test)
-                clf5 = KMeans(n_clusters=5, random_state=0, init='k-means++', max_iter=100, n_init=1)
-                clf3 = KMeans(n_clusters=3, random_state=0, init='k-means++', max_iter=100, n_init=1)
-                clf2 = KMeans(n_clusters=2, random_state=0, init='k-means++', max_iter=100, n_init=1)
-                k_5 = train_test_export_save(clf5, X_tr_pca, y_train_5, X_te_pca, y_test_5, k_5, 'kmeans', maxpad, EXP_5_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
-                k_3 = train_test_export_save(clf3, X_tr_pca, y_train_3, X_te_pca, y_test_3, k_3, 'kmeans', maxpad, EXP_3_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
-                k_2 = train_test_export_save(clf2, X_tr_pca, y_train_2, X_te_pca, y_test_2, k_2, 'kmeans', maxpad, EXP_2_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
+                cls, params, search_method = CONFIGS_HIGH_DIMEN[3]
+                k_5 = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, k_5, file_log, subfolder, exp_folder, ds_folder)
+                k_3 = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca, y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, k_3, file_log, subfolder, exp_folder, ds_folder)
+                k_2 = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca, y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, k_2, file_log, subfolder, exp_folder, ds_folder)
 
                 # ==========================================================================================================
-                # SVM
+                # AgglomerativeClustering
                 # ==========================================================================================================
-                clf = SVC(C=0.7, decision_function_shape='ovo', kernel='rbf', shrinking=True, tol=0.1, probability=True)
-
-                svm_5 = train_test_export_save(clf, X_train, y_train_5, X_test, y_test_5, svm_5, 'svm', maxpad, EXP_5_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
-                svm_3 = train_test_export_save(clf, X_train, y_train_3, X_test, y_test_3, svm_3, 'svm', maxpad, EXP_3_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
-                svm_2 = train_test_export_save(clf, X_train, y_train_2, X_test, y_test_2, svm_2, 'svm', maxpad, EXP_2_CLASSES_LABEL, file_log, subfolder, exp_folder, ds_folder)
+                cls, params, search_method = CONFIGS_HIGH_DIMEN[4]
+                agg_5 = train_test_export_save_per_exp_type(cls, 'agg', params, search_method, X_train, X_test, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, agg_5, file_log, subfolder, exp_folder, ds_folder)
+                agg_3 = train_test_export_save_per_exp_type(cls, 'agg', params, search_method, X_train, X_test, y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, agg_3, file_log, subfolder, exp_folder, ds_folder)
+                agg_2 = train_test_export_save_per_exp_type(cls, 'agg', params, search_method, X_train, X_test, y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, agg_2, file_log, subfolder, exp_folder, ds_folder)
 
                 # ==========================================================================================================
                 # LSTM
@@ -782,10 +711,10 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
         title='HTML2Seq: performance varying window size'
         x_title='Padding window size (log scale)'
         y_title='F1-measure (average)'
-        export_chart_scatter(pads, ['NB', 'SGD', 'K-means', 'SVM'],
-                             [np.array(nb_5)[:, 2], np.array(sgd_5)[:, 2], np.array(k_5)[:, 2], np.array(svm_5)[:, 2]],
-                             [np.array(nb_3)[:, 2], np.array(sgd_3)[:, 2], np.array(k_3)[:, 2], np.array(svm_3)[:, 2]],
-                             [np.array(nb_2)[:, 2], np.array(sgd_2)[:, 2], np.array(k_2)[:, 2], np.array(svm_2)[:, 2]],
+        export_chart_scatter(pads, ['NB', 'BNB', 'K-means', 'AGG'],
+                             [np.array(nb_5)[:, 2], np.array(bnb_5)[:, 2], np.array(k_5)[:, 2], np.array(agg_5)[:, 2]],
+                             [np.array(nb_3)[:, 2], np.array(bnb_3)[:, 2], np.array(k_3)[:, 2], np.array(agg_3)[:, 2]],
+                             [np.array(nb_2)[:, 2], np.array(bnb_2)[:, 2], np.array(k_2)[:, 2], np.array(agg_2)[:, 2]],
         'benchmark_html2seq', exp_folder, ds_folder, title, x_title, y_title)
 
     except Exception as e:
@@ -889,40 +818,43 @@ if __name__ == '__main__':
         BAR_COLOR = 'rgb(128,128,128)'
 
         '''
+        ------------------------------------------------------------------
         01. TEXT FEATURES (only)
+        ------------------------------------------------------------------
         '''
         config.logger.info('text feature benchmark')
-        features_tex, y5, y3, y2 = get_text_features(EXP_FOLDER, DS_FOLDER, FEATURES_FILE)
-        benchmark_text(features_tex, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE, combined=False)
+        features_tex, y5, y3, y2 = get_text_features(EXP_FOLDER, DS_FOLDER, FEATURES_FILE, html2seq=False)
+
+        benchmark(features_tex, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE,
+                       'perf.text.classification.log', 'perf.text.regression.log',
+                       'graph.text.2class.png', 'graph.text.3class.png', 'graph.text.5class.png',
+                  combined=False)
 
         ''' 
+        ------------------------------------------------------------------
         02. HTML2Seq FEATURES (only)
+        ------------------------------------------------------------------
         '''
         config.logger.info('html2seq feature benchmark')
+
         (features_seq, y5, y3, y2), le = get_html2sec_features(EXP_FOLDER, DS_FOLDER)
+
         benchmark_html_sequence(features_seq, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
 
         '''
+        ------------------------------------------------------------------
         03. TEXT + HTML2Seq features combined (out of best configurations)
+        ------------------------------------------------------------------
         '''
         config.logger.info('text+html2seq feature benchmark')
-        features_combined, y5, y3, y2 = get_text_features(EXP_FOLDER, DS_FOLDER, FEATURES_FILE,
-                                                          html2seq=True, best_pad=BEST_PAD_BIN,
-                                                          best_cls=BEST_CLS_BIN, exp_type_combined=EXP_2_CLASSES_LABEL)
-        benchmark_text(features_combined, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE,
-                       combined=True, exp_type_combined=EXP_2_CLASSES_LABEL)
 
-        features_combined, y5, y3, y2 = get_text_features(EXP_FOLDER, DS_FOLDER, FEATURES_FILE,
-                                                          html2seq=True, best_pad=BEST_PAD_LIKERT,
-                                                          best_cls=BEST_CLS_LIKERT, exp_type_combined=EXP_3_CLASSES_LABEL)
-        benchmark_text(features_combined, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE,
-                       combined=True, exp_type_combined=EXP_3_CLASSES_LABEL)
+        features_combined, y5, y3, y2 = get_text_features(EXP_FOLDER, DS_FOLDER, FEATURES_FILE, html2seq=True)
 
-        features_combined, y5, y3, y2 = get_text_features(EXP_FOLDER, DS_FOLDER, FEATURES_FILE,
-                                                          html2seq=True, best_pad=BEST_PAD_LIKERT,
-                                                          best_cls=BEST_CLS_LIKERT, exp_type_combined=EXP_5_CLASSES_LABEL)
-        benchmark_text(features_combined, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE,
-                       combined=True, exp_type_combined=EXP_5_CLASSES_LABEL)
+        benchmark(features_combined, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE,
+                       'perf.text+html.classification.log', 'perf.text+html.regression.log',
+                       'graph.text.2class.png', 'graph.text.3class.png', 'graph.text.5class.png',
+                  combined=True)
+
 
     except Exception as e:
         config.logger.error(repr(e))
