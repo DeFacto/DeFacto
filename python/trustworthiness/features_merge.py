@@ -3,7 +3,7 @@ from sklearn.externals import joblib
 from defacto.definitions import OUTPUT_FOLDER, ENC_WEB_DOMAIN, ENC_WEB_DOMAIN_SUFFIX
 
 
-def read_feat_files_and_merge(out_exp_folder, dataset, label, run_features, y_label='likert'):
+def read_feat_files_and_merge(out_exp_folder, dataset, label, run_features, dataset_y_label='likert'):
     try:
         assert (out_exp_folder is not None and out_exp_folder != '')
         assert (dataset is not None and dataset != '')
@@ -16,7 +16,7 @@ def read_feat_files_and_merge(out_exp_folder, dataset, label, run_features, y_la
             if file.endswith('.pkl'):
                 f = joblib.load(path + file)
                 used_features = [file.replace('.pkl', '')]
-                used_features.extend([f.get(y_label)])
+                used_features.extend([f.get(dataset_y_label)])
                 for key in f.get('features'):
                     if key in run_features:
                         data = f.get('features').get(key)
@@ -28,7 +28,7 @@ def read_feat_files_and_merge(out_exp_folder, dataset, label, run_features, y_la
                 matrix.append(used_features)
 
 
-        name = dataset + '_dataset_' + str(len(X)) + '_' + label + '_text_features.pkl'
+        name = dataset + '_dataset_' + str(len(matrix)) + '_' + label + '_text_features.pkl'
         _path = OUTPUT_FOLDER + out_exp_folder + dataset + '/'
         joblib.dump(matrix, _path + name)
         print('full features exported: ' + _path + name)

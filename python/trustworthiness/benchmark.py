@@ -23,7 +23,7 @@ from trustworthiness.util import print_report
 from trustworthiness.feature_extractor import *
 
 from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_validate
 from itertools import product
 
 from sklearn.neural_network import MLPClassifier
@@ -335,17 +335,34 @@ def report(results, n_top=3):
 
 def test(clf, X_test, y_test, out, padding, cls_label, experiment_type, file_log, subfolder, exp_folder, ds_folder):
     try:
+        # loading the classifier
         if isinstance(clf, str):
-            clf=joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder + clf)
+            clf = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder + clf)
 
-        predicted = clf.predict(X_test)
-        p_avg, r_avg, f_avg, s_avg = precision_recall_fscore_support(y_test, predicted, average='weighted')
+        # performing 10-fold cross validation
+        if experiment_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL):
+            scoring = ['precision', 'precision_micro', 'precision_macro', 'precision_weighted',
+                       'recall', 'recall_micro', 'recall_macro', 'recall_weighted',
+                       'f1', 'f1_micro', 'f1_macro', 'f1_weighted']
+        elif experiment_type == EXP_5_CLASSES_LABEL:
+            scoring = ['r2', 'neg_mean_squared_error', 'neg_mean_absolute_error', 'explained_variance']
+        else:
+            raise Exception ('not implemented! ' + experiment_type)
+
+        cv_results = cross_validate(clf, X_test, y_test, return_train_score=False, cv=10, scoring=scoring)
+        if experiment_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL):
+            p_avg = cv_results['test_precision_weighted']
+            r_avg = cv_results['test_recall_weighted']
+            f_avg = cv_results['test_f1_weighted']
+
+        #predicted = clf.predict(X_test)
+        #p_avg, r_avg, f_avg, s_avg = precision_recall_fscore_support(y_test, predicted, average='weighted')
         out.append([p_avg, r_avg, f_avg])
         config.logger.info('padding: %s cls: %s exp_type: %s f1: %.3f' % (padding, cls_label, experiment_type, f_avg))
 
         # file logging details
         p, r, f, s = precision_recall_fscore_support(y_test, predicted)
-        if experiment_type == '2classes':
+        if experiment_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL):
             tn, fp, fn, tp =confusion_matrix(y_test, predicted).ravel()
             fpr=fp/(fp+tn)
             fnr=fn/(tp+fn)
