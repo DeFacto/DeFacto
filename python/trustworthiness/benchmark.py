@@ -204,7 +204,7 @@ def export_chart_bar(x, y, filename, exp_folder, title, x_title, y_title, annota
     except Exception as e:
         raise e
 
-def export_chart_scatter_likert_bin(x, y_labels, y_likert_f1, y_bin_f1, filename, exp_folder, ds_folder, title, x_title, y_title, log_mode=True):
+def export_chart_scatter(x, y_labels, y_5_f1, y_3_f1, y_2_f1, filename, exp_folder, ds_folder, title, x_title, y_title, log_mode=True):
 
     try:
         if log_mode == True:
@@ -212,15 +212,16 @@ def export_chart_scatter_likert_bin(x, y_labels, y_likert_f1, y_bin_f1, filename
             x = [math.log(pad) for pad in x]
         line_width=1
         mode='lines+markers'
-        data_likert = []
-        data_bin = []
-        dash='dash' # dash options include 'dash', 'dot', and 'dashdot'
+        data_5 = []
+        data_3 = []
+        data_2 = []
 
-        assert len(y_likert_f1) == len(y_bin_f1)
-        assert len(y_likert_f1) <= len(SERIES_COLORS)
+        assert log_mode == True # otherwise need to adjust the function
+        assert len(y_5_f1) == len(y_2_f1) == len(y_3_f1)
+        assert len(y_5_f1) <= len(SERIES_COLORS)
 
         i=0
-        for trace in y_likert_f1:
+        for trace in y_5_f1:
             s = go.Scatter(
                 x=x,
                 y=trace,
@@ -230,11 +231,11 @@ def export_chart_scatter_likert_bin(x, y_labels, y_likert_f1, y_bin_f1, filename
                 line=dict(
                     color=(SERIES_COLORS[i]),
                     width=line_width))
-            data_likert.append(s)
+            data_5.append(s)
             i += 1
 
-        i=0
-        for trace in y_bin_f1:
+        i = 0
+        for trace in y_3_f1:
             s = go.Scatter(
                 x=x,
                 y=trace,
@@ -244,15 +245,31 @@ def export_chart_scatter_likert_bin(x, y_labels, y_likert_f1, y_bin_f1, filename
                 line=dict(
                     color=(SERIES_COLORS[i]),
                     width=line_width,
-                    dash=dash))
-            data_bin.append(s)
+                    dash='dot'))
+            data_3.append(s)
             i += 1
 
-        y_likert = np.array(y_likert_f1)
-        y_bin = np.array(y_bin_f1)
+        i=0
+        for trace in y_2_f1:
+            s = go.Scatter(
+                x=x,
+                y=trace,
+                text=trace,
+                name=y_labels[i],
+                mode=mode,
+                line=dict(
+                    color=(SERIES_COLORS[i]),
+                    width=line_width,
+                    dash='dash'))
+            data_2.append(s)
+            i += 1
+
+        y_5 = np.array(y_5_f1)
+        y_3 = np.array(y_3_f1)
+        y_2 = np.array(y_2_f1)
 
         # Edit the layout
-        layout_1 = dict(title=title,
+        layout_5 = dict(title=title,
                         xaxis=dict(title=x_title, showticklabels=True, showline=True,
                                  autorange=True, showgrid=True, zeroline=True, gridcolor='#bdbdbd'),
                         yaxis=dict(title=y_title, showticklabels=True, showline=True, autorange=True),
@@ -263,11 +280,15 @@ def export_chart_scatter_likert_bin(x, y_labels, y_likert_f1, y_bin_f1, filename
                                   bordercolor='#808080',
                                   borderwidth=2
                                   ),
-                        annotations=get_annotation_from_max(y_likert, x, x_labels),
+                        annotations=get_annotation_from_max(y_5, x, x_labels),
                         font=dict(family='Helvetica', size=14)
                         )
-        layout_2 = layout_1.copy()
-        layout_2['annotations']=get_annotation_from_max(y_bin, x, x_labels)
+        layout_3 = layout_5.copy()
+        layout_2 = layout_5.copy()
+
+        layout_3['annotations'] = get_annotation_from_max(y_3, x, x_labels)
+        layout_2['annotations'] = get_annotation_from_max(y_2, x, x_labels)
+
         #from plotly import tools
         #fig = tools.make_subplots(rows=2, cols=1, subplot_titles=('Likert Scale',
           #                                                        'Non-credible x Credible'))
@@ -282,18 +303,20 @@ def export_chart_scatter_likert_bin(x, y_labels, y_likert_f1, y_bin_f1, filename
         #fig.append_trace(trace7, 2, 1)
 
         #fig['layout'].update = layout
-
-        fig = dict(data=data_likert, layout=layout_1)
         #py.plot(fig, filename='paddings_f1')
 
         _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'graphs/'
         if not os.path.exists(_path):
             os.mkdir(_path)
 
-        py.image.save_as(fig, filename=_path + filename + '_likert.png')
+        fig = dict(data=data_5, layout=layout_5)
+        py.image.save_as(fig, filename=_path + filename + '_5class.png')
 
-        fig = dict(data=data_bin, layout=layout_2)
-        py.image.save_as(fig, filename=_path + filename + '_bin.png')
+        fig = dict(data=data_3, layout=layout_3)
+        py.image.save_as(fig, filename=_path + filename + '_3class.png')
+
+        fig = dict(data=data_2, layout=layout_2)
+        py.image.save_as(fig, filename=_path + filename + '_2class.png')
 
     except Exception as e:
         raise e
@@ -612,10 +635,10 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
         title='HTML2Seq: performance varying window size'
         x_title='Padding window size (log scale)'
         y_title='F1-measure (average)'
-        export_chart_scatter_likert_bin(pads, ['NB', 'SGD', 'K-means', 'SVM'],
-            [np.array(nb_5)[:, 2], np.array(sgd_5)[:, 2], np.array(k_5)[:, 2], np.array(svm_5)[:, 2]],
-            [np.array(nb_3)[:, 2], np.array(sgd_3)[:, 2], np.array(k_3)[:, 2], np.array(svm_3)[:, 2]],
-            [np.array(nb_2)[:, 2], np.array(sgd_2)[:, 2], np.array(k_2)[:, 2], np.array(svm_2)[:, 2]],
+        export_chart_scatter(pads, ['NB', 'SGD', 'K-means', 'SVM'],
+                             [np.array(nb_5)[:, 2], np.array(sgd_5)[:, 2], np.array(k_5)[:, 2], np.array(svm_5)[:, 2]],
+                             [np.array(nb_3)[:, 2], np.array(sgd_3)[:, 2], np.array(k_3)[:, 2], np.array(svm_3)[:, 2]],
+                             [np.array(nb_2)[:, 2], np.array(sgd_2)[:, 2], np.array(k_2)[:, 2], np.array(svm_2)[:, 2]],
         'benchmark_html2seq', exp_folder, ds_folder, title, x_title, y_title)
 
     except Exception as e:
