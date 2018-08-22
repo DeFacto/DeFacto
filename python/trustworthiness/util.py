@@ -16,8 +16,6 @@ from defacto.definitions import DATASET_3C_SITES_PATH, DATASET_MICROSOFT_PATH_PA
 
 import re
 
-from trustworthiness.feature_extractor import get_html2sec_features
-
 config = DeFactoConfig()
 
 
@@ -63,7 +61,7 @@ def verify_and_create_experiment_folders(out_exp_folder, dataset):
                       'benchmark/text_html/2-classes/log/', 'benchmark/text_html/3-classes/log/', 'benchmark/text_html/5-classes/log/',
                       'benchmark/text_html/2-classes/graph/', 'benchmark/text_html/3-classes/graph/', 'benchmark/text_html/5-classes/graph/']
 
-        subfolders = ['features/text/', 'features/error/', 'features/html/', 'features/text_html/', 'features/html2seq/']
+        subfolders = ['features/ok/', 'features/error/']
 
         subfolders.extend(folders_text)
         subfolders.extend(folders_html)

@@ -26,7 +26,7 @@ preprocessing/
     - **force** = forces reprocessing, even if the file already exists.
 
 - ``features_merge.py`` merges the features files (*.pkl) for a given dataset into a single file
-    - ``read_feat_files_and_merge('exp004/', 'microsoft', config_basic[0][0], config_basic[1], 'likert')``
+    - ``read_feat_files_and_merge('exp004/', 'microsoft', CONFIG_FEATURES_BASIC[0][0], CONFIG_FEATURES_BASIC[1], 'likert')``
 
 - others
     - ``features_core.py`` implements the features

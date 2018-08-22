@@ -120,6 +120,41 @@ dt_param = trees_param_basic.copy()
 dt_param["criterion"] = ['gini', 'entropy']
 
 
+CONFIG_FEATURES_BASIC = ['basic',
+                         ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http', 'outbound_links_https',
+                       'outbound_links_ftp', 'outbound_links_ftps', 'outbound_domains_http', 'outbound_domains_https',
+                       'outbound_domains_ftp', 'outbound_domains_ftps', 'text_categ_title', 'text_categ_body',
+                       'readability_metrics', 'css', 'open_page_rank',
+                       'sent_probs_title', 'sent_probs_body']]
+
+CONFIG_FEATURES_BASIC_GI = ['basic_gi',
+                            ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http',
+                        'outbound_links_https',
+                        'outbound_links_ftp', 'outbound_links_ftps', 'outbound_domains_http',
+                        'outbound_domains_https',
+                        'outbound_domains_ftp', 'outbound_domains_ftps', 'text_categ_title', 'text_categ_body',
+                        'readability_metrics', 'css', 'open_page_rank',
+                        'sent_probs_title', 'sent_probs_body', 'general_inquirer_body', 'general_inquirer_title']]
+
+
+CONFIG_FEATURES_ALL = ['all', ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http', 'outbound_links_https',
+              'outbound_links_ftp', 'outbound_links_ftps', 'outbound_domains_http', 'outbound_domains_https',
+              'outbound_domains_ftp', 'outbound_domains_ftps', 'text_categ_title', 'text_categ_body',
+              'text_categ_summary_lex', 'text_categ_summary_lsa', 'readability_metrics', 'spam_title',
+              'spam_body', 'social_links', 'css', 'open_source_class', 'open_source_count', 'open_page_rank',
+                                 'general_inquirer_body', 'general_inquirer_title', 'vader_body', 'vader_title', 'who_is',
+                                 'sent_probs_title', 'sent_probs_body', 'archive']]
+
+CONFIG_FEATURES_ALL_HTML2SEQ = ['all+html2seq', ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http', 'outbound_links_https',
+              'outbound_links_ftp', 'outbound_links_ftps', 'outbound_domains_http', 'outbound_domains_https',
+              'outbound_domains_ftp', 'outbound_domains_ftps', 'text_categ_title', 'text_categ_body',
+              'text_categ_summary_lex', 'text_categ_summary_lsa', 'readability_metrics', 'spam_title',
+              'spam_body', 'social_links', 'css', 'open_source_class', 'open_source_count', 'open_page_rank',
+                                 'general_inquirer_body', 'general_inquirer_title', 'vader_body', 'vader_title', 'who_is',
+                                 'sent_probs_title', 'sent_probs_body', 'archive']]
+
+CONFIG_FEATURES = [CONFIG_FEATURES_BASIC, CONFIG_FEATURES_BASIC_GI, CONFIG_FEATURES_ALL, CONFIG_FEATURES_ALL_HTML2SEQ]
+
 CONFIGS_HIGH_DIMEN = [(MultinomialNB(),dict(alpha=[1e0, 1e-1, 1e-2, 1e-3]),SEARCH_METHOD_GRID),
                       (BernoulliNB(), dict(alpha=[1e0, 1e-1, 1e-2, 1e-3]), SEARCH_METHOD_GRID),
                       (KMeans(n_jobs=-1),

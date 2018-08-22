@@ -58,6 +58,27 @@ def likert2tri(likert):
     else:
         raise Exception('error y')
 
+def get_html2seq(extractor):
+    try:
+        tags = []
+        html = extractor.webscrap.soup.prettify()
+        for line in html.split('\n'):
+            if isinstance(line, str) and len(line.strip()) > 0:
+                if (line.strip()[0] == '<') and (line.strip()[0:2] != '<!'):
+                    if len(line.split()) > 1:
+                        tags.append(line.split()[0] + '>')
+                    else:
+                        tags.append(line.split()[0])
+                elif (line.strip()[0:2] == '</' and line.strip()[0:2] != '<!'):
+                    tags.append(line.split()[0])
+
+        tags2seq = [extractor.encoders.html2seq.transform([t]) for t in tags]
+        return tags2seq
+    except Exception as e:
+        config.logger.error('this should not have happened, since HTML was validated! hmm...')
+        config.logger.error(repr(e))
+        raise
+
 def get_features_web_c3(extractor, url, likert_mode, likert_avg, folder, name, export_html_tags):
 
     try:
@@ -93,8 +114,10 @@ def get_features_web_c3(extractor, url, likert_mode, likert_avg, folder, name, e
 
             if html_error is False:
                 joblib.dump(data, folder + 'text/' + name)
+                data['html2seq'] = get_html2seq(extractor)
                 config.logger.info('OK: ' + extractor.url)
             else:
+                data['html2seq'] = None
                 config.logger.info('Err: ' + extractor.url)
 
             return data
@@ -106,72 +129,56 @@ def get_features_web_c3(extractor, url, likert_mode, likert_avg, folder, name, e
         config.logger.error(extractor.url + ' - ' + repr(e))
         Path(folder + 'error/' + name).touch()
 
-def get_html2seq(extractor):
-    try:
-        tags = []
-        html = extractor.webscrap.soup.prettify()
-        for line in html.split('\n'):
-            if isinstance(line, str) and len(line.strip()) > 0:
-                if (line.strip()[0] == '<') and (line.strip()[0:2] != '<!'):
-                    if len(line.split()) > 1:
-                        tags.append(line.split()[0] + '>')
-                    else:
-                        tags.append(line.split()[0])
-                elif (line.strip()[0:2] == '</' and line.strip()[0:2] != '<!'):
-                    tags.append(line.split()[0])
-
-        tags2seq = [extractor.encoders.encoder_tags.transform(t) for t in tags]
-        return tags2seq
-    except:
-        raise
-
-
 def get_features_web_microsoft(extractor, topic, query, rank, url, likert, folder, name, export_html_tags):
 
+    try:
+        if extractor.webscrap is None:
+            extractor.call_web_scrap()
 
-    if extractor.webscrap is None:
-        extractor.call_web_scrap()
+        if not extractor.error:
 
-    if not extractor.error:
+            #config.logger.debug('process starts for : ' + extractor.url)
 
-        #config.logger.debug('process starts for : ' + extractor.url)
+            data = collections.defaultdict(dict)
+            data['topic'] = topic
+            data['query'] = query
+            data['rank'] = rank
+            data['url'] = url
+            data['likert'] = likert
 
-        data = collections.defaultdict(dict)
-        data['topic'] = topic
-        data['query'] = query
-        data['rank'] = rank
-        data['url'] = url
-        data['likert'] = likert
+            err, out = extractor.get_final_feature_vector()
+            config.logger.info('total of features function errors: ' + str(err))
 
-        err, out = extractor.get_final_feature_vector()
-        config.logger.info('total of features function errors: ' + str(err))
+            # text/
+            data['features'] = out
+            extractor.tot_feat_extraction_errors = err
 
-        # text/
-        data['features'] = out
-        extractor.tot_feat_extraction_errors = err
+            # save html?
+            html_error = False
+            if export_html_tags:
+                with open(folder + 'html/' + name.replace('.pkl', '.txt'), "w") as file:
+                    content = str(extractor.webscrap.soup)
+                    if content is not None:
+                        file.write(content)
+                    else:
+                        html_error = True
 
-        # save html?
-        html_error = False
-        if export_html_tags:
-            with open(folder + 'sites/' + name.replace('.pkl', '.txt'), "w") as file:
-                content = str(extractor.webscrap.soup)
-                if content is not None:
-                    file.write(content)
-                else:
-                    html_error = True
-
-        if html_error is False:
-            joblib.dump(data, folder + 'text/' + name)
-            data['html2seq'] = get_html2sec_features(folder)
-            config.logger.info('OK: ' + extractor.url)
+            if html_error is False:
+                joblib.dump(data, folder + 'ok/' + name)
+                data['html2seq'] = get_html2seq(extractor)
+                config.logger.info('OK: ' + extractor.url)
+                return data
+            else:
+                data['html2seq'] = None
+                config.logger.info('Err: ' + extractor.url)
+                Path(folder + 'error/' + name).touch()
         else:
-            data['html2seq'] = None
-            config.logger.info('Err: ' + extractor.url)
+            Path(folder + 'error/' + name).touch()
 
-        return data
-
-    else:
+    except Exception as e:
+        config.logger.error(extractor.url + ' - ' + repr(e))
         Path(folder + 'error/' + name).touch()
+
 
 def get_html2sec_features(folder):
     tags_set = []
@@ -315,7 +322,7 @@ def get_text_features(exp_folder, ds_folder, features_file, html2seq = False):
         config.logger.error(repr(e))
         raise
 
-def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_tags, force, encoder_tags):
+def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_tags, force):
 
     assert (exp_folder is not None and exp_folder != '')
     assert (ds_folder is not None and ds_folder != '')
