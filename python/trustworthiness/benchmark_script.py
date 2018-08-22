@@ -322,9 +322,6 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         config.logger.info(estimator_label)
         # file dump info
         file = BENCHMARK_FILE_NAME_TEMPLATE % (estimator_label.lower(), padding, experiment_type)
-        _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder
-        if not os.path.exists(_path):
-            os.mkdir(_path)
 
         ## loading the classifier
         #if isinstance(clf, str):
@@ -347,7 +344,8 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
             raise Exception ('not supported! ' + experiment_type)
 
         if search_method == 'grid':
-            clf = GridSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1)
+            clf = GridSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1,
+                               refit=refit)
         elif search_method == 'random':
             clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1,
                                      refit=refit)
@@ -362,11 +360,14 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         predicted = clf.best_estimator_.predict(X_test)
 
         # saving the best model
+        _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder
+        if not os.path.exists(_path):
+            os.mkdir(_path)
         joblib.dump(clf.best_estimator_, _path + file)
 
         # saving the best parameters
         best_parameters_file_name = file.replace('.pkl', '.best_param')
-        with open(OUTPUT_FOLDER + exp_folder + ds_folder + best_parameters_file_name, "w") as best:
+        with open(OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder + best_parameters_file_name, "w") as best:
             best.write(' -- best params')
             best.write(str(clf.best_params_))
             best.write(' -- best score')
@@ -545,21 +546,20 @@ def benchmark(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size,
 
                 for estimator, hyperparam, grid_method in CONFIGS_CLASSIFICATION:
                     out = []
-                    cls_label = estimator.__class__.__name__ + '_' + exp_type
-                    out, best_estimator = train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
+                    out, best_estimator = train_test_export_save_per_exp_type(estimator, estimator.__class__.__name__, hyperparam, grid_method,
                                                               X_train, X_test, y_train, y_test, exp_type, 0,
                                                               out, file_log_classification, 'text_features/', exp_folder, ds_folder)
-                    best_estimators.append((cls_label, best_estimator))
+                    best_estimators.append((estimator.__class__.__name__, best_estimator))
                     i += 1
                     y_axis.extend(np.array(out)[:, 2])
                     x_axis.append(best_estimator.__class__.__name__.replace('Classifier', ''))
 
-                estimator_ensamble = VotingClassifier(estimators=best_estimators, n_jobs=-1)
+                estimator_ensamble = VotingClassifier(estimators=best_estimators)
                 hyperparam_ensamble = dict(voting=['hard', 'soft'], flatten_transform=[True, False])
 
-                cls_label = estimator.__class__.__name__ + '_hard_' + exp_type
                 out = []
-                out, best_estimator = train_test_export_save_per_exp_type(estimator_ensamble, cls_label, hyperparam_ensamble, SEARCH_METHOD_GRID,
+                out, best_estimator = train_test_export_save_per_exp_type(estimator_ensamble, estimator_ensamble.__class__.__name__,
+                                                                          hyperparam_ensamble, SEARCH_METHOD_GRID,
                                                           X_train, X_test, y_train, y_test, exp_type, 0,
                                                           out, file_log_classification, 'text_features/', exp_folder, ds_folder)
                 y_axis.extend(np.array(out)[:, 2])
