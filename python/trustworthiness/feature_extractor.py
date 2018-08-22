@@ -72,7 +72,7 @@ def get_html2seq(extractor):
                 elif (line.strip()[0:2] == '</' and line.strip()[0:2] != '<!'):
                     tags.append(line.split()[0])
 
-        tags2seq = [extractor.encoders.html2seq.transform([t]) for t in tags]
+        tags2seq = [extractor.encoders.html2seq.transform([t])[0] for t in tags]
         return tags2seq
     except Exception as e:
         config.logger.error('this should not have happened, since HTML was validated! hmm...')
@@ -105,7 +105,7 @@ def get_features_web_c3(extractor, url, likert_mode, likert_avg, folder, name, e
             # html/
             html_error = False
             if export_html_tags:
-                with open(folder + 'sites/' + name.replace('.pkl', '.txt'), "w") as file:
+                with open(folder + 'html/' + name.replace('.pkl', '.txt'), "w") as file:
                     content = str(extractor.webscrap.soup)
                     if content is not None:
                         file.write(content)
@@ -113,12 +113,14 @@ def get_features_web_c3(extractor, url, likert_mode, likert_avg, folder, name, e
                         html_error = True
 
             if html_error is False:
-                joblib.dump(data, folder + 'text/' + name)
+                joblib.dump(data, folder + 'ok/' + name)
                 data['html2seq'] = get_html2seq(extractor)
                 config.logger.info('OK: ' + extractor.url)
+                return data
             else:
                 data['html2seq'] = None
                 config.logger.info('Err: ' + extractor.url)
+                Path(folder + 'error/' + name).touch()
 
             return data
 
@@ -457,7 +459,7 @@ if __name__ == '__main__':
     '''
 
     params = [
-        {'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': True},
+        {'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': False},
         {'EXP_FOLDER': 'exp010/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': True},
     ]
 
