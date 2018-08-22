@@ -19,8 +19,6 @@ preprocessing/
 
 #### 2. Feature Extraction
 
-- ``features_core.py`` implements the features
-
 - ``feature_extractor.py`` extract and caches the features for all URLs existing in a given dataset, creating one feature file (*.pkl) for each URL (multithreading).
     - ``export_features_multithread('exp003/', 'microsoft', export_html_tags=True, force=True)``
 
@@ -30,7 +28,8 @@ preprocessing/
 - ``features_merge.py`` merges the features files (*.pkl) for a given dataset into a single file
     - ``read_feat_files_and_merge('exp004/', 'microsoft', config_basic[0][0], config_basic[1], 'likert')``
 
-
+- others
+    - ``features_core.py`` implements the features
 #### 3. Run
 classifiers/
 

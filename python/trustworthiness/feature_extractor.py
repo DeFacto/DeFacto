@@ -1,3 +1,4 @@
+import collections
 import multiprocessing
 from bs4 import BeautifulSoup
 from sklearn.externals import joblib
@@ -12,9 +13,11 @@ import os
 import warnings
 from defacto.definitions import BENCHMARK_FILE_NAME_TEMPLATE, \
     DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, \
-    OUTPUT_FOLDER, DATASET_MICROSOFT_PATH, ENC_WEB_DOMAIN, BEST_PAD_ALGORITHM, BEST_PAD_WINDOW, BEST_PAD_EXPERIMENT_TYPE
+    OUTPUT_FOLDER, DATASET_MICROSOFT_PATH, BEST_PAD_ALGORITHM, BEST_PAD_WINDOW, \
+    BEST_PAD_EXPERIMENT_TYPE
 from trustworthiness.features_core import FeaturesCore
-from trustworthiness.util import get_html_file_path, get_features_web_microsoft, get_features_web_c3
+from trustworthiness.util import get_html_file_path, \
+    verify_and_create_experiment_folders
 
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore",category=FutureWarning)
@@ -55,7 +58,122 @@ def likert2tri(likert):
     else:
         raise Exception('error y')
 
-def get_html2sec_features(exp_folder, ds_folder):
+def get_features_web_c3(extractor, url, likert_mode, likert_avg, folder, name, export_html_tags):
+
+    try:
+
+        if extractor.webscrap is None:
+            extractor.call_web_scrap()
+
+        if not extractor.error:
+
+            #config.logger.debug('process starts for : ' + extractor.url)
+
+            data = collections.defaultdict(dict)
+            data['url'] = url
+            data['likert_mode'] = likert_mode
+            data['likert_avg'] = likert_avg
+
+            err, out = extractor.get_final_feature_vector()
+
+            # text/
+            data['features'] = out
+            extractor.tot_feat_extraction_errors = err
+
+
+            # html/
+            html_error = False
+            if export_html_tags:
+                with open(folder + 'sites/' + name.replace('.pkl', '.txt'), "w") as file:
+                    content = str(extractor.webscrap.soup)
+                    if content is not None:
+                        file.write(content)
+                    else:
+                        html_error = True
+
+            if html_error is False:
+                joblib.dump(data, folder + 'text/' + name)
+                config.logger.info('OK: ' + extractor.url)
+            else:
+                config.logger.info('Err: ' + extractor.url)
+
+            return data
+
+        else:
+            Path(folder + 'error/' + name).touch()
+
+    except Exception as e:
+        config.logger.error(extractor.url + ' - ' + repr(e))
+        Path(folder + 'error/' + name).touch()
+
+def get_html2seq(extractor):
+    try:
+        tags = []
+        html = extractor.webscrap.soup.prettify()
+        for line in html.split('\n'):
+            if isinstance(line, str) and len(line.strip()) > 0:
+                if (line.strip()[0] == '<') and (line.strip()[0:2] != '<!'):
+                    if len(line.split()) > 1:
+                        tags.append(line.split()[0] + '>')
+                    else:
+                        tags.append(line.split()[0])
+                elif (line.strip()[0:2] == '</' and line.strip()[0:2] != '<!'):
+                    tags.append(line.split()[0])
+
+        tags2seq = [extractor.encoders.encoder_tags.transform(t) for t in tags]
+        return tags2seq
+    except:
+        raise
+
+
+def get_features_web_microsoft(extractor, topic, query, rank, url, likert, folder, name, export_html_tags):
+
+
+    if extractor.webscrap is None:
+        extractor.call_web_scrap()
+
+    if not extractor.error:
+
+        #config.logger.debug('process starts for : ' + extractor.url)
+
+        data = collections.defaultdict(dict)
+        data['topic'] = topic
+        data['query'] = query
+        data['rank'] = rank
+        data['url'] = url
+        data['likert'] = likert
+
+        err, out = extractor.get_final_feature_vector()
+        config.logger.info('total of features function errors: ' + str(err))
+
+        # text/
+        data['features'] = out
+        extractor.tot_feat_extraction_errors = err
+
+        # save html?
+        html_error = False
+        if export_html_tags:
+            with open(folder + 'sites/' + name.replace('.pkl', '.txt'), "w") as file:
+                content = str(extractor.webscrap.soup)
+                if content is not None:
+                    file.write(content)
+                else:
+                    html_error = True
+
+        if html_error is False:
+            joblib.dump(data, folder + 'text/' + name)
+            data['html2seq'] = get_html2sec_features(folder)
+            config.logger.info('OK: ' + extractor.url)
+        else:
+            data['html2seq'] = None
+            config.logger.info('Err: ' + extractor.url)
+
+        return data
+
+    else:
+        Path(folder + 'error/' + name).touch()
+
+def get_html2sec_features(folder):
     tags_set = []
     sentences = []
     y5 = []
@@ -70,34 +188,30 @@ def get_html2sec_features(exp_folder, ds_folder):
     config.logger.info('get_html2sec_features()')
 
     try:
-        my_file = Path(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
-        path_html2seq = OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq/'
-
-        if not os.path.exists(path_html2seq):
-            os.makedirs(path_html2seq)
+        my_file = Path(folder + 'features.html2seq.pkl')
+        my_encoder = Path(folder + 'encoder.html2seq.pkl')
+        path_html2seq = folder + 'html2seq/'
+        path_html = folder + 'html/'
+        path_text = folder + 'text/'
 
         if not my_file.exists():
-            print('file not found: ' + OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
-            print('start process (HTML2seq)')
-            for file_html in os.listdir(OUTPUT_FOLDER + exp_folder + ds_folder + '/html'):
-
+            config.logger.info('file not found: ' + my_file)
+            config.logger.info('start extraction process (HTML2seq)')
+            for file_html in os.listdir(path_html):
                 html2seq_feature_file = file_html.replace('.txt', '.pkl')
                 check = Path(path_html2seq + html2seq_feature_file)
                 tot_files += 1
                 if check.exists():
-                    print('processing file ' + str(tot_files) + ' - cached')
-                    tags = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + html2seq_feature_file)
+                    config.logger.info('tags extracted. ' + str(tot_files) + ' - cached')
+                    tags = joblib.load(path_html2seq + html2seq_feature_file)
                 else:
-                    print('processing file ' + str(tot_files) + ' - not cached')
-                    #features_file = file_html.replace('dataset_visual_features_', 'dataset_features_')
-                    features_file = file_html.replace('.txt', '.pkl')
-                    path_feature = OUTPUT_FOLDER + exp_folder + ds_folder + 'text/'
-                    path_html = OUTPUT_FOLDER + exp_folder + ds_folder + 'html/'
+                    config.logger.info('extracting tags. ' + str(tot_files) + ' - not cached')
 
-                    text_data = joblib.load(path_feature + features_file)
+                    # get corresponding label
+                    text_data = joblib.load(path_text + file_html.replace('.txt', '.pkl'))
 
+                    # get tags
                     tags = []
-                    #if file.startswith('microsoft_dataset_visual_features_') and file.endswith('.txt'):
                     soup = BeautifulSoup(open(path_html + file_html), "html.parser")
                     html = soup.prettify()
                     for line in html.split('\n'):
@@ -111,6 +225,7 @@ def get_html2sec_features(exp_folder, ds_folder):
                                 tags.append(line.split()[0])
 
                     # dump html2seq features
+                    config.logger.info('dumping single feature file...')
                     joblib.dump(tags, path_html2seq + html2seq_feature_file)
 
                 if len(tags) > 0:
@@ -124,27 +239,27 @@ def get_html2sec_features(exp_folder, ds_folder):
                     y2.append(likert2bin(text_data[1]))
 
                 else:
-                    print('no tags...')
+                    config.logger.info('no tags...')
 
-            print('tot files: ', tot_files)
-            print('dictionary size: ', len(tags_set))
-            print('dictionary: ', tags_set)
+            config.logger.info('tot files: ', tot_files)
+            config.logger.info('dictionary size: ', len(tags_set))
+            config.logger.info('dictionary: ', tags_set)
 
             le.fit(tags_set)
 
             X_html = [le.transform(s) for s in sentences]
-            print(len(X_html))
-            print(len(y5))
+            config.logger.info(len(X_html))
+            config.logger.info(len(y5))
 
             data = (X_html, y5, y3, y2)
 
-            joblib.dump(data, OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
-            joblib.dump(le, OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq_enc.pkl')
+            config.logger.info('dumping full feature file...')
+            joblib.dump(data, str(my_file))
+            joblib.dump(le, str(my_encoder))
         else:
-            print('file found: ' + OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
-            print('loading dump (HTML2seq)')
-            data = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq.pkl')
-            le = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq_enc.pkl')
+            config.logger.info('full feature file found: ' + str(my_file))
+            data = joblib.load(str(my_file))
+            le = joblib.load(str(my_encoder))
 
         return (data, le)
 
@@ -200,7 +315,7 @@ def get_text_features(exp_folder, ds_folder, features_file, html2seq = False):
         config.logger.error(repr(e))
         raise
 
-def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_tags, force):
+def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_tags, force, encoder_tags):
 
     assert (exp_folder is not None and exp_folder != '')
     assert (ds_folder is not None and ds_folder != '')
@@ -216,7 +331,7 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
             url = str(row[3])
             urlencoded = get_md5_from_string(url)
             name = urlencoded + '.pkl'
-            folder = OUTPUT_FOLDER + exp_folder + ds_folder
+            folder = OUTPUT_FOLDER + exp_folder + ds_folder + 'features/'
             my_file = Path(folder + 'text/' + name)
             my_file_err = Path(folder + 'error/' + name)
             if (not my_file.exists() and not my_file_err.exists()) or force is True:
@@ -251,8 +366,8 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
 
         config.logger.info('feature extraction done! saving...')
         #name = 'microsoft_dataset_' + time.strftime("%Y%m%d%H%M%S") + '_features.pkl'
-        name = 'microsoft_dataset_' + str(len(job_args)) + '_text_features.pkl'
-        joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + name)
+        name = 'features.text.' + str(len(job_args)) + '.pkl'
+        joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + ds_folder + 'features/' + name)
         config.logger.info('done! file: ' + name)
 
     except Exception as e:
@@ -280,7 +395,7 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
         url_id = doc_index
         urlencoded = get_md5_from_string(url)
         name = urlencoded + '.pkl'
-        folder = OUTPUT_FOLDER + exp_folder + ds_folder
+        folder = OUTPUT_FOLDER + exp_folder + ds_folder + 'features/'
         my_file = Path(folder + 'text/' + name)
         my_file_err = Path(folder + 'error/' + name)
         if (not my_file.exists() and not my_file_err.exists()) or force is True:
@@ -308,32 +423,14 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
         asyncres = pool.starmap(get_features_web_c3, job_args)
 
     config.logger.info('feature extraction done! saving...')
-    name = '3c_dataset_' + str(len(job_args)) + '_text_features.pkl'
-    joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + name)
+    name = 'features.text.' + str(len(job_args)) + '.pkl'
+    joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + ds_folder + 'features/' + name)
     config.logger.info('done! file: ' + name)
-
-def __verify_and_create_experiment_folders(out_exp_folder, dataset):
-    try:
-        path = OUTPUT_FOLDER + out_exp_folder + dataset + '/'
-        if not os.path.exists(path):
-            os.makedirs(path)
-
-        subfolders = ['error', 'graphs', 'html', 'text', 'models',
-                      'models/text', 'models/html2seq', 'models/html',
-                      'models/text/2-classes/', 'models/text/3-classes/', 'models/text/5-classes/']
-        for subfolder in subfolders:
-            if not os.path.exists(path + subfolder):
-                os.makedirs(path + subfolder)
-
-        config.logger.info('experiment sub-folders created successfully: ' + path)
-
-    except Exception as e:
-        raise e
 
 def export_features_multithread(out_exp_folder, dataset, export_html_tags = True, force=False):
 
     try:
-        __verify_and_create_experiment_folders(out_exp_folder, dataset)
+        verify_and_create_experiment_folders(out_exp_folder, dataset)
 
         if dataset == 'microsoft':
             __export_features_multi_proc_microsoft(out_exp_folder, dataset + '/', export_html_tags, force)
@@ -353,8 +450,8 @@ if __name__ == '__main__':
     '''
 
     params = [
-        {'EXP_FOLDER': 'exp004/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': True},
-        {'EXP_FOLDER': 'exp004/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': True},
+        {'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': True},
+        {'EXP_FOLDER': 'exp010/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': True},
     ]
 
     for p in params:

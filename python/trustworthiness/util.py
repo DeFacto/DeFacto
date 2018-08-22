@@ -1,4 +1,5 @@
 import collections
+import os
 from pathlib import Path
 
 import numpy as np
@@ -11,9 +12,11 @@ from sklearn.externals import joblib
 from coffeeandnoodles.core.util import get_md5_from_string
 from config import DeFactoConfig
 from defacto.definitions import DATASET_3C_SITES_PATH, DATASET_MICROSOFT_PATH_PAGES_MISSING, \
-    DATASET_MICROSOFT_PATH_PAGES_CACHED, ENC_WEB_DOMAIN, ENC_WEB_DOMAIN_SUFFIX, DATASET_MICROSOFT_PATH
+    DATASET_MICROSOFT_PATH_PAGES_CACHED, ENC_WEB_DOMAIN, ENC_WEB_DOMAIN_SUFFIX, DATASET_MICROSOFT_PATH, OUTPUT_FOLDER
 
 import re
+
+from trustworthiness.feature_extractor import get_html2sec_features
 
 config = DeFactoConfig()
 
@@ -40,6 +43,40 @@ def print_report(clf_name, predictions, y_test, targets):
     # print(":: precision: ", precision_score(y_test, predictions, average='weighted'))
     # print(":: f1: ", f1_score(y_test, predictions, average='weighted'))
     print("-----------------------------------------------------------------------")
+
+def verify_and_create_experiment_folders(out_exp_folder, dataset):
+    try:
+        path = OUTPUT_FOLDER + out_exp_folder + dataset + '/'
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+
+        folders_text = ['benchmark/text/2-classes/cls/', 'benchmark/text/3-classes/cls/', 'benchmark/text/5-classes/cls/',
+                      'benchmark/text/2-classes/log/', 'benchmark/text/3-classes/log/', 'benchmark/text/5-classes/log/',
+                      'benchmark/text/2-classes/graph/', 'benchmark/text/3-classes/graph/', 'benchmark/text/5-classes/graph/']
+
+        folders_html = ['benchmark/html/2-classes/cls/', 'benchmark/html/3-classes/cls/', 'benchmark/html/5-classes/cls/',
+                      'benchmark/html/2-classes/log/', 'benchmark/html/3-classes/log/', 'benchmark/html/5-classes/log/',
+                      'benchmark/html/2-classes/graph/', 'benchmark/html/3-classes/graph/', 'benchmark/html/5-classes/graph/']
+
+        folders_text_html = ['benchmark/text_html/2-classes/cls/', 'benchmark/text_html/3-classes/cls/', 'benchmark/text_html/5-classes/cls/',
+                      'benchmark/text_html/2-classes/log/', 'benchmark/text_html/3-classes/log/', 'benchmark/text_html/5-classes/log/',
+                      'benchmark/text_html/2-classes/graph/', 'benchmark/text_html/3-classes/graph/', 'benchmark/text_html/5-classes/graph/']
+
+        subfolders = ['features/text/', 'features/error/', 'features/html/', 'features/text_html/', 'features/html2seq/']
+
+        subfolders.extend(folders_text)
+        subfolders.extend(folders_html)
+        subfolders.extend(folders_text_html)
+
+        for subfolder in subfolders:
+            if not os.path.exists(path + subfolder):
+                os.makedirs(path + subfolder)
+
+        config.logger.info('experiment sub-folders created successfully: ' + path)
+
+    except Exception as e:
+        raise e
 
 def get_html_file_path(url):
     path = url.replace('http://', '')
@@ -132,100 +169,6 @@ def get_encoder_domain():
 
 def diff_month(d1, d2):
     return (d1.year - d2.year) * 12 + d1.month - d2.month
-
-def get_features_web_c3(extractor, url, likert_mode, likert_avg, folder, name, export_html_tags):
-
-    try:
-
-        if extractor.webscrap is None:
-            extractor.call_web_scrap()
-
-        if not extractor.error:
-
-            #config.logger.debug('process starts for : ' + extractor.url)
-
-            data = collections.defaultdict(dict)
-            data['url'] = url
-            data['likert_mode'] = likert_mode
-            data['likert_avg'] = likert_avg
-
-            err, out = extractor.get_final_feature_vector()
-
-            # text/
-            data['features'] = out
-            extractor.tot_feat_extraction_errors = err
-
-
-            # html/
-            html_error = False
-            if export_html_tags:
-                with open(folder + 'html/' + name.replace('.pkl', '.txt'), "w") as file:
-                    content = str(extractor.webscrap.soup)
-                    if content is not None:
-                        file.write(content)
-                    else:
-                        html_error = True
-
-            if html_error is False:
-                joblib.dump(data, folder + 'text/' + name)
-                config.logger.info('OK: ' + extractor.url)
-            else:
-                config.logger.info('Err: ' + extractor.url)
-
-            return data
-
-        else:
-            Path(folder + 'error/' + name).touch()
-
-    except Exception as e:
-        config.logger.error(extractor.url + ' - ' + repr(e))
-        Path(folder + 'error/' + name).touch()
-
-def get_features_web_microsoft(extractor, topic, query, rank, url, likert, folder, name, export_html_tags):
-
-
-    if extractor.webscrap is None:
-        extractor.call_web_scrap()
-
-    if not extractor.error:
-
-        #config.logger.debug('process starts for : ' + extractor.url)
-
-        data = collections.defaultdict(dict)
-        data['topic'] = topic
-        data['query'] = query
-        data['rank'] = rank
-        data['url'] = url
-        data['likert'] = likert
-
-        err, out = extractor.get_final_feature_vector()
-        config.logger.info('total of features function errors: ' + str(err))
-
-        # text/
-        data['features'] = out
-        extractor.tot_feat_extraction_errors = err
-
-        # html/
-        html_error = False
-        if export_html_tags:
-            with open(folder + 'html/' + name.replace('.pkl', '.txt'), "w") as file:
-                content = str(extractor.webscrap.soup)
-                if content is not None:
-                    file.write(content)
-                else:
-                    html_error = True
-
-        if html_error is False:
-            joblib.dump(data, folder + 'text/' + name)
-            config.logger.info('OK: ' + extractor.url)
-        else:
-            config.logger.info('Err: ' + extractor.url)
-
-        return data
-
-    else:
-        Path(folder + 'error/' + name).touch()
-
 
 def save_url_body(extractor):
     try:

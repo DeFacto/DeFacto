@@ -30,7 +30,7 @@ from urllib.parse import urlparse
 import os
 import warnings
 from defacto.definitions import DEFACTO_LEXICON_GI_PATH, SOCIAL_NETWORK_NAMES, OUTPUT_FOLDER, TIMEOUT_MS, \
-    SUMMARIZATION_LEN
+    SUMMARIZATION_LEN, ENC_TAGS, ENC_WEB_DOMAIN, ENC_WEB_DOMAIN_SUFFIX
 from trustworthiness.util import filterTerm
 
 with warnings.catch_warnings():
@@ -84,6 +84,14 @@ class GeneralInquirer:
             except:
                 return not_found
         return [1 if c != 0 else 0 for c in ret]
+
+@singleton
+class Encoders():
+    def __init__(self):
+        config.logger.info('loading encoders...')
+        self.html2seq = joblib.load(ENC_TAGS)
+        self.web_domain = joblib.load(ENC_WEB_DOMAIN)
+        self.web_domain_suffix = joblib.load(ENC_WEB_DOMAIN_SUFFIX)
 
 @singleton
 class Classifiers():
@@ -172,6 +180,7 @@ class FeaturesCore:
             self.sources = OpenSourceData()
             self.page_rank = PageRankData()
             self.classifiers = Classifiers()
+            self.encoders = Encoders()
 
         except Exception as e:
             self.error_message = repr(e)
