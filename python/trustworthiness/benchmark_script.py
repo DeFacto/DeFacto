@@ -319,6 +319,7 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
                                         out_chart, file_log, subfolder, exp_folder, ds_folder):
 
     try:
+        config.logger.info(estimator_label)
         # file dump info
         file = BENCHMARK_FILE_NAME_TEMPLATE % (estimator_label.lower(), padding, experiment_type)
         _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder
@@ -358,14 +359,13 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         config.logger.info(clf.best_params_)
         config.logger.info(clf.best_score_)
         config.logger.info(experiment_type)
-        config.logger.info('----------------------------------------------------')
         predicted = clf.best_estimator_.predict(X_test)
 
         # saving the best model
         joblib.dump(clf.best_estimator_, _path + file)
 
         # saving the best parameters
-        best_parameters_file_name = BENCHMARK_FILE_NAME_TEMPLATE.replace('.pkl', '.best_param')
+        best_parameters_file_name = file.replace('.pkl', '.best_param')
         with open(OUTPUT_FOLDER + exp_folder + ds_folder + best_parameters_file_name, "w") as best:
             best.write(' -- best params')
             best.write(str(clf.best_params_))
@@ -386,12 +386,16 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
             for i in range(len(p)):
                 file_log.write(LINE_TEMPLATE % (
                 estimator_label, experiment_type, padding, d.get(i + 1), p[i], r[i], f[i], s[i], 0))
+            file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, 'weighted', p_weighted, r_weighted, f_weighted, 0, 0))
+            file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, 'micro', p_micro, r_micro, f_micro, 0, 0))
+            file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, 'macro', p_macro, r_macro, f_macro, 0, 0))
 
             out_chart.append([p_weighted, r_weighted, f_weighted])
             config.logger.info(
-                'padding: %s cls: %s exp_type: %s f1: %.3f' % (padding, estimator_label, experiment_type, f_weighted))
+                'padding: %s F1 test (avg): %.3f' % (padding, f_weighted))
+            config.logger.info('----------------------------------------------------')
 
-            return out_chart
+            return out_chart, clf.best_estimator_
 
         elif experiment_type == EXP_5_CLASSES_LABEL:
             mae = mean_absolute_error(y_test, predicted)
@@ -399,8 +403,11 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
             evar = explained_variance_score(y_test, predicted)
             r2 = r2_score(y_test, predicted)
             file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, experiment_type, r2, rmse, mae, evar, 0))
-
-            return None
+            config.logger.info(
+                'padding: %s cls: %s exp_type: %s r2: %.3f rmse: %.3f mae: %.3f evar: %.3f' %
+                (padding, estimator_label, experiment_type, r2, rmse, mae, evar))
+            config.logger.info('----------------------------------------------------')
+            return None, clf.best_estimator_
 
         else:
             raise Exception('not supported! ' + experiment_type)
@@ -508,7 +515,7 @@ def benchmark(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size,
         scaler.fit(X_train_5)
         X_train = scaler.transform(X_train_5)
         X_test = scaler.transform(X_test_5)
-        estimators = []
+        best_estimators = []
 
         x_axis_2 = []
         x_axis_3 = []
@@ -539,31 +546,24 @@ def benchmark(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size,
                 for estimator, hyperparam, grid_method in CONFIGS_CLASSIFICATION:
                     out = []
                     cls_label = estimator.__class__.__name__ + '_' + exp_type
-                    out = train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
+                    out, best_estimator = train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
                                                               X_train, X_test, y_train, y_test, exp_type, 0,
                                                               out, file_log_classification, 'text_features/', exp_folder, ds_folder)
-                    estimators.append((cls_label, estimator))
+                    best_estimators.append((cls_label, best_estimator))
                     i += 1
                     y_axis.extend(np.array(out)[:, 2])
-                    x_axis.append(estimator.__class__.__name__.replace('Classifier', ''))
+                    x_axis.append(best_estimator.__class__.__name__.replace('Classifier', ''))
 
-                estimator = VotingClassifier(estimators=estimators, voting='hard')
+                estimator_ensamble = VotingClassifier(estimators=best_estimators, n_jobs=-1)
+                hyperparam_ensamble = dict(voting=['hard', 'soft'], flatten_transform=[True, False])
+
                 cls_label = estimator.__class__.__name__ + '_hard_' + exp_type
                 out = []
-                out = train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
+                out, best_estimator = train_test_export_save_per_exp_type(estimator_ensamble, cls_label, hyperparam_ensamble, SEARCH_METHOD_GRID,
                                                           X_train, X_test, y_train, y_test, exp_type, 0,
                                                           out, file_log_classification, 'text_features/', exp_folder, ds_folder)
                 y_axis.extend(np.array(out)[:, 2])
-                x_axis.append(estimator.__class__.__name__.replace('Classifier', ''))
-
-                estimator = VotingClassifier(estimators=estimators, voting='soft')
-                cls_label = estimator.__class__.__name__ + '_soft_' + exp_type
-                out = []
-                out = train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
-                                                          X_train, X_test, y_train, y_test, exp_type, 0,
-                                                          out, file_log_classification, 'text_features/', exp_folder, ds_folder)
-                y_axis.extend(np.array(out)[:, 2])
-                x_axis.append(estimator.__class__.__name__.replace('Classifier', ''))
+                x_axis.append(best_estimator.__class__.__name__.replace('Classifier', ''))
 
 
         title = 'Webpage Text Features'

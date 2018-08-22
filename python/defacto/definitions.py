@@ -98,8 +98,7 @@ BEST_PAD_ALGORITHM = 'nb'
 
 # classifiers x hyper-parameters x search method
 
-trees_param_basic = {"criterion": ['gini', 'entropy'],
-                     "max_features": ['auto', 'sqrt'],
+trees_param_basic = {"max_features": ['auto', 'sqrt'],
                      "max_depth": [int(x) for x in np.linspace(10, 110, num=11)],
                      "min_samples_split": [2, 5, 10],
                      "min_samples_leaf": [1, 2, 4]}
@@ -109,6 +108,13 @@ trees_param["n_estimators"] = [10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000]
 
 trees_param_bootstrap = trees_param.copy()
 trees_param_bootstrap["bootstrap"] = [True, False]
+
+gb_param = trees_param.copy()
+gb_param["criterion"] = ['friedman_mse', 'mse', 'mae']
+
+dt_param = trees_param_basic.copy()
+dt_param["criterion"] = ['gini', 'entropy']
+
 
 CONFIGS_HIGH_DIMEN = [(MultinomialNB(),dict(alpha=[1e0, 1e-1, 1e-2, 1e-3]),SEARCH_METHOD_GRID),
                       (BernoulliNB(), dict(alpha=[1e0, 1e-1, 1e-2, 1e-3]), SEARCH_METHOD_GRID),
@@ -136,8 +142,8 @@ CONFIGS_REGRESSION = [(LogisticRegression(n_jobs=-1),
                       ]
 
 CONFIGS_CLASSIFICATION = [
-    (DecisionTreeClassifier(), trees_param_basic, SEARCH_METHOD_RANDOMIZED_GRID),
-    (GradientBoostingClassifier(), trees_param, SEARCH_METHOD_RANDOMIZED_GRID),
+    (DecisionTreeClassifier(), dt_param, SEARCH_METHOD_RANDOMIZED_GRID),
+    (GradientBoostingClassifier(), gb_param, SEARCH_METHOD_RANDOMIZED_GRID),
     (RandomForestClassifier(n_jobs=-1), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
     (ExtraTreesClassifier(n_jobs=-1), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
     (BaggingClassifier(), {"n_estimators": [10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000],
