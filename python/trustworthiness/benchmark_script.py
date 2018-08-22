@@ -6,12 +6,12 @@ import plotly.graph_objs as go
 import math
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
-from sklearn.metrics import precision_recall_fscore_support
+from sklearn.metrics import precision_recall_fscore_support, explained_variance_score, r2_score
 
 from defacto.definitions import OUTPUT_FOLDER, TEST_SIZE, \
     PADS, HEADER, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL, LINE_TEMPLATE, \
     LABELS_2_CLASSES, LABELS_5_CLASSES, CROSS_VALIDATION_K_FOLDS, SEARCH_METHOD_RANDOMIZED_GRID, SEARCH_METHOD_GRID, \
-    CONFIGS_CLASSIFICATION, CONFIGS_REGRESSION, CONFIGS_HIGH_DIMEN
+    CONFIGS_CLASSIFICATION, CONFIGS_REGRESSION, CONFIGS_HIGH_DIMEN, LABELS_3_CLASSES
 from trustworthiness.feature_extractor import *
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_validate, KFold, RandomizedSearchCV
 from itertools import product
@@ -22,7 +22,9 @@ from sklearn.externals import joblib
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
-
+from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_squared_error
+from math import sqrt
 __author__ = "Diego Esteves"
 __copyright__ = "Copyright 2018, DeFacto Project"
 __license__ = "Apache"
@@ -372,28 +374,37 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
 
         if experiment_type == EXP_2_CLASSES_LABEL or experiment_type == EXP_3_CLASSES_LABEL:
             p, r, f, s = precision_recall_fscore_support(y_test, predicted)
-            p_weighted, r_weighted, f_weighted, s_weighted = precision_recall_fscore_support(y_test, predicted,
-                                                                                             average='weighted')
+            p_weighted, r_weighted, f_weighted, s_weighted = precision_recall_fscore_support(y_test, predicted, average='weighted')
             p_micro, r_micro, f_micro, s_micro = precision_recall_fscore_support(y_test, predicted, average='micro')
             p_macro, r_macro, f_macro, s_macro = precision_recall_fscore_support(y_test, predicted, average='macro')
 
+            if experiment_type == EXP_2_CLASSES_LABEL:
+                d = LABELS_2_CLASSES
+            else:
+                d = LABELS_3_CLASSES
+
+            for i in range(len(p)):
+                file_log.write(LINE_TEMPLATE % (
+                estimator_label, experiment_type, padding, d.get(i + 1), p[i], r[i], f[i], s[i], 0))
+
+            out_chart.append([p_weighted, r_weighted, f_weighted])
+            config.logger.info(
+                'padding: %s cls: %s exp_type: %s f1: %.3f' % (padding, estimator_label, experiment_type, f_weighted))
+
+            return out_chart
+
         elif experiment_type == EXP_5_CLASSES_LABEL:
-            for i in range(len(scores)):
-                r2 = scores[i]['r2']
-                rmse = scores[i]['rmse']
-                mae = scores[i]['mae']
-                evar = scores[i]['evar']
-                file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, LABELS_5_CLASSES.get(i + 1), r2, rmse, mae, evar, 0))
+            mae = mean_absolute_error(y_test, predicted)
+            rmse = sqrt(mean_squared_error(y_test, predicted))
+            evar = explained_variance_score(y_test, predicted)
+            r2 = r2_score(y_test, predicted)
+            file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, experiment_type, r2, rmse, mae, evar, 0))
+
+            return None
 
         else:
             raise Exception('not supported! ' + experiment_type)
 
-        if experiment_type == EXP_2_CLASSES_LABEL or experiment_type == EXP_3_CLASSES_LABEL:
-            out_chart.append([p_avg, r_avg, f_avg])
-            config.logger.info('padding: %s cls: %s exp_type: %s f1: %.3f' % (padding, estimator_label, experiment_type, f_avg))
-            return out_chart
-        else:
-            return None
 
         '''
         
