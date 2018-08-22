@@ -96,6 +96,9 @@ BEST_PAD_WINDOW = 2900
 BEST_PAD_EXPERIMENT_TYPE = EXP_5_CLASSES_LABEL
 BEST_PAD_ALGORITHM = 'nb'
 
+THRESHOLD_LABEL_2class = 0.70
+THRESHOLD_LABEL_3class = 0.45
+
 # classifiers x hyper-parameters x search method
 
 trees_param_basic = {"max_features": ['auto', 'sqrt'],

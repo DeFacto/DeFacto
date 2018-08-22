@@ -11,7 +11,8 @@ from sklearn.metrics import precision_recall_fscore_support, explained_variance_
 from defacto.definitions import OUTPUT_FOLDER, TEST_SIZE, \
     PADS, HEADER, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL, LINE_TEMPLATE, \
     LABELS_2_CLASSES, LABELS_5_CLASSES, CROSS_VALIDATION_K_FOLDS, SEARCH_METHOD_RANDOMIZED_GRID, SEARCH_METHOD_GRID, \
-    CONFIGS_CLASSIFICATION, CONFIGS_REGRESSION, CONFIGS_HIGH_DIMEN, LABELS_3_CLASSES
+    CONFIGS_CLASSIFICATION, CONFIGS_REGRESSION, CONFIGS_HIGH_DIMEN, LABELS_3_CLASSES, THRESHOLD_LABEL_2class, \
+    THRESHOLD_LABEL_3class
 from trustworthiness.feature_extractor import *
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_validate, KFold, RandomizedSearchCV
 from itertools import product
@@ -360,17 +361,17 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         predicted = clf.best_estimator_.predict(X_test)
 
         # saving the best model
-        _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder
+        _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder + experiment_type + '/'
         if not os.path.exists(_path):
             os.mkdir(_path)
         joblib.dump(clf.best_estimator_, _path + file)
 
         # saving the best parameters
         best_parameters_file_name = file.replace('.pkl', '.best_param')
-        with open(OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder + best_parameters_file_name, "w") as best:
-            best.write(' -- best params')
+        with open(_path + best_parameters_file_name, "w") as best:
+            best.write(' -- best params \n')
             best.write(str(clf.best_params_))
-            best.write(' -- best score')
+            best.write(' -- best score \n')
             best.write(str(clf.best_score_))
 
         if experiment_type == EXP_2_CLASSES_LABEL or experiment_type == EXP_3_CLASSES_LABEL:
@@ -396,6 +397,7 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
                 'padding: %s F1 test (avg): %.3f' % (padding, f_weighted))
             config.logger.info('----------------------------------------------------')
 
+            file_log.flush()
             return out_chart, clf.best_estimator_
 
         elif experiment_type == EXP_5_CLASSES_LABEL:
@@ -404,6 +406,7 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
             evar = explained_variance_score(y_test, predicted)
             r2 = r2_score(y_test, predicted)
             file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, experiment_type, r2, rmse, mae, evar, 0))
+            file_log.flush()
             config.logger.info(
                 'padding: %s cls: %s exp_type: %s r2: %.3f rmse: %.3f mae: %.3f evar: %.3f' %
                 (padding, estimator_label, experiment_type, r2, rmse, mae, evar))
@@ -492,13 +495,13 @@ def feature_selection():
     except:
         raise
 
-def benchmark(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size,
-              out_performance_file_classification, out_performance_file_regression, graph_2_file, graph_3_file, graph_5_file,
-              combined=False, threshold_label_bin=0.7, threshold_label_likert=0.45):
+def benchmark(X, y5, y3, y2, exp_folder, ds_folder, subfolder, random_state, test_size):
 
     config.logger.info('benchmark_text()')
 
     try:
+
+        out_models_folder = OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder
 
         #input_layer_neurons = len(X) + 1
         #output_layer_neurons = 1
@@ -523,24 +526,32 @@ def benchmark(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size,
         y_axis_2 = []
         y_axis_3 = []
 
+        title = 'Webpage Text Features'
+        x_axis_label = 'Classifiers'
+        y_axis_label = 'F1-measure'
+
         # --------------------------------------------------------------------------------------------------------------
         # classification experiment
         # --------------------------------------------------------------------------------------------------------------
         config.logger.info('starting experiments classification (2-classes and 3-classes)')
         i = 1
-        with open(OUTPUT_FOLDER + exp_folder + ds_folder + out_performance_file_classification, "w") as file_log_classification:
-            file_log_classification.write(HEADER)
-            for exp_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL):
+        for exp_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL):
+            with open(out_models_folder + exp_type + 'perf.classification.log', "w") as file_log_classification:
+                file_log_classification.write(HEADER)
                 if exp_type == EXP_2_CLASSES_LABEL:
                     y_train = y_train_2
                     y_test = y_test_2
                     y_axis = y_axis_2
                     x_axis = x_axis_2
+                    graph_file = 'graph.2-class.png'
+                    threshold = THRESHOLD_LABEL_2class
                 elif exp_type == EXP_3_CLASSES_LABEL:
                     y_train = y_train_3
                     y_test = y_test_3
                     y_axis = y_axis_3
                     x_axis = x_axis_3
+                    graph_file = 'graph.3-class.png'
+                    threshold = THRESHOLD_LABEL_3class
                 else:
                     raise Exception('blah! error')
 
@@ -548,7 +559,7 @@ def benchmark(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size,
                     out = []
                     out, best_estimator = train_test_export_save_per_exp_type(estimator, estimator.__class__.__name__, hyperparam, grid_method,
                                                               X_train, X_test, y_train, y_test, exp_type, 0,
-                                                              out, file_log_classification, 'text_features/', exp_folder, ds_folder)
+                                                              out, file_log_classification, subfolder, exp_folder, ds_folder)
                     best_estimators.append((estimator.__class__.__name__, best_estimator))
                     i += 1
                     y_axis.extend(np.array(out)[:, 2])
@@ -561,38 +572,27 @@ def benchmark(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size,
                 out, best_estimator = train_test_export_save_per_exp_type(estimator_ensamble, estimator_ensamble.__class__.__name__,
                                                                           hyperparam_ensamble, SEARCH_METHOD_GRID,
                                                           X_train, X_test, y_train, y_test, exp_type, 0,
-                                                          out, file_log_classification, 'text_features/', exp_folder, ds_folder)
+                                                          out, file_log_classification, subfolder, exp_folder, ds_folder)
                 y_axis.extend(np.array(out)[:, 2])
                 x_axis.append(best_estimator.__class__.__name__.replace('Classifier', ''))
 
+                config.logger.info('experiments classification done! exporting charts...')
+                export_chart_bar(x_axis, y_axis, graph_file, exp_folder, title, x_axis_label, y_axis_label, threshold)
+                config.logger.info('charts exported!')
 
-        title = 'Webpage Text Features'
-        x_axis_label = 'Classifiers'
-        y_axis_label = 'F1-measure'
+            # --------------------------------------------------------------------------------------------------------------
+            # regression experiment
+            # --------------------------------------------------------------------------------------------------------------
+            config.logger.info('starting experiments regression (5-classes)')
 
-        config.logger.info('experiments classification done! exporting charts...')
-
-        export_chart_bar(
-            x_axis_2, y_axis_2, graph_2_file, exp_folder, title, x_axis_label, y_axis_label, threshold_label_bin)
-
-        export_chart_bar(
-            x_axis_3, y_axis_3, graph_3_file, exp_folder, title, x_axis_label, y_axis_label, threshold_label_likert)
-
-        config.logger.info('charts exported!')
-
-        # --------------------------------------------------------------------------------------------------------------
-        # regression experiment
-        # --------------------------------------------------------------------------------------------------------------
-        config.logger.info('starting experiments regression (5-classes)')
-
-        with open(OUTPUT_FOLDER + exp_folder + ds_folder + out_performance_file_regression, "w") as file_log_regression:
-            file_log_regression.write(HEADER)
-            for estimator, hyperparam, grid_method in CONFIGS_REGRESSION:
-                out = []
-                cls_label = estimator.__class__.__name__ + '_' + EXP_5_CLASSES_LABEL
-                train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
-                                                    X_train, X_test, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, 0,
-                                                    out, file_log_regression, 'text_features/', exp_folder, ds_folder)
+            with open(out_models_folder + exp_type + 'perf.regression.log', "w") as file_log_regression:
+                file_log_regression.write(HEADER)
+                for estimator, hyperparam, grid_method in CONFIGS_REGRESSION:
+                    out = []
+                    cls_label = estimator.__class__.__name__ + '_' + EXP_5_CLASSES_LABEL
+                    train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
+                                                        X_train, X_test, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, 0,
+                                                        out, file_log_regression, subfolder, exp_folder, ds_folder)
 
     except Exception as e:
         config.logger.error(repr(e))
@@ -705,9 +705,12 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
 if __name__ == '__main__':
     try:
 
-        EXP_FOLDER = 'exp004/'
-        DS_FOLDER = 'microsoft/'
-        FEATURES_FILE = 'basic_text_features227.pkl'
+
+        EXP_CONFIGS = dict(EXP_FOLDER = ['exp010/', 'exp011/', 'exp012/'],
+                           DS_FOLDER = ['microsoft/', 'c3/'],
+                           FEATURES_FILE = ['features_basic_227.pkl',
+                                            'features_basic+gi_277.pkl',
+                                            'features_all_277.pkl'])
 
         RANDOM_STATE = 53
         #TOT_TEXT_FEAT = 53
@@ -715,43 +718,38 @@ if __name__ == '__main__':
                         'rgb(192,192,192)', 'rgb(211,211,211)', 'rgb(255,255,0)', 'rgb(0,128,0)']
         BAR_COLOR = 'rgb(128,128,128)'
 
-        '''
-        ------------------------------------------------------------------
-        01. TEXT FEATURES (only)
-        ------------------------------------------------------------------
-        '''
-        config.logger.info('text feature benchmark')
-        features_tex, y5, y3, y2 = get_text_features(EXP_FOLDER, DS_FOLDER, FEATURES_FILE, html2seq=False)
+        for conf in EXP_CONFIGS:
+            '''
+            ------------------------------------------------------------------
+            01. TEXT FEATURES (only)
+            ------------------------------------------------------------------
+            '''
+            config.logger.info('text feature benchmark')
+            features_tex, y5, y3, y2 = get_text_features(conf['EXP_FOLDER'], conf['DS_FOLDER'], conf['FEATURES_FILE'], html2seq=False)
 
-        benchmark(features_tex, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE,
-                       'perf.text.classification.log', 'perf.text.regression.log',
-                       'graph.text.2class.png', 'graph.text.3class.png', 'graph.text.5class.png',
-                  combined=False)
+            benchmark(features_tex, y5, y3, y2, conf['EXP_FOLDER'], conf['DS_FOLDER'], 'text/', RANDOM_STATE, TEST_SIZE)
 
-        ''' 
-        ------------------------------------------------------------------
-        02. HTML2Seq FEATURES (only)
-        ------------------------------------------------------------------
-        '''
-        config.logger.info('html2seq feature benchmark')
+            ''' 
+            ------------------------------------------------------------------
+            02. HTML2Seq FEATURES (only)
+            ------------------------------------------------------------------
+            '''
+            config.logger.info('html2seq feature benchmark')
 
-        (features_seq, y5, y3, y2), le = get_html2sec_features(EXP_FOLDER, DS_FOLDER)
+            (features_seq, y5, y3, y2), le = get_html2sec_features(conf['EXP_FOLDER'], conf['DS_FOLDER'])
 
-        benchmark_html_sequence(features_seq, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE, PADS)
+            benchmark_html_sequence(features_seq, y5, y3, y2, conf['EXP_FOLDER'], conf['DS_FOLDER'], RANDOM_STATE, TEST_SIZE, PADS)
 
-        '''
-        ------------------------------------------------------------------
-        03. TEXT + HTML2Seq features combined (out of best configurations)
-        ------------------------------------------------------------------
-        '''
-        config.logger.info('text+html2seq feature benchmark')
+            '''
+            ------------------------------------------------------------------
+            03. TEXT + HTML2Seq features combined (out of best configurations)
+            ------------------------------------------------------------------
+            '''
+            config.logger.info('text+html2seq feature benchmark')
 
-        features_combined, y5, y3, y2 = get_text_features(EXP_FOLDER, DS_FOLDER, FEATURES_FILE, html2seq=True)
+            features_combined, y5, y3, y2 = get_text_features(conf['EXP_FOLDER'], conf['DS_FOLDER'], conf['FEATURES_FILE'], html2seq=True)
 
-        benchmark(features_combined, y5, y3, y2, EXP_FOLDER, DS_FOLDER, RANDOM_STATE, TEST_SIZE,
-                       'perf.text+html.classification.log', 'perf.text+html.regression.log',
-                       'graph.text.2class.png', 'graph.text.3class.png', 'graph.text.5class.png',
-                  combined=True)
+            benchmark(features_combined, y5, y3, y2, conf['EXP_FOLDER'], conf['DS_FOLDER'], 'text+html/', RANDOM_STATE, TEST_SIZE)
 
 
     except Exception as e:
