@@ -645,11 +645,13 @@ class FeaturesCore:
         out['basic_text'], err = self.get_feat_basic_text(self.body)
         if err: err_tot += 1
 
-        out['domain'], err = self.get_feat_domain()
+        domain, err = self.get_feat_domain()
         if err: err_tot += 1
+        out['domain'] = list(self.encoders.web_domain.transform(domain))
 
-        out['suffix'], err = self.get_feat_suffix()
+        suffix, err = self.get_feat_suffix()
         if err: err_tot += 1
+        out['suffix'] = list(self.encoders.web_domain_suffix.transform(suffix))
 
         out['source'], err = self.get_feat_source_info()
         if err: err_tot += 1

@@ -1,5 +1,8 @@
 import collections
+import json
 import multiprocessing
+import pickle
+
 from bs4 import BeautifulSoup
 from sklearn.externals import joblib
 import numpy as np
@@ -79,59 +82,7 @@ def get_html2seq(extractor):
         config.logger.error(repr(e))
         raise
 
-def get_features_web_c3(extractor, url, likert_mode, likert_avg, folder, name, export_html_tags):
-
-    try:
-
-        if extractor.webscrap is None:
-            extractor.call_web_scrap()
-
-        if not extractor.error:
-
-            #config.logger.debug('process starts for : ' + extractor.url)
-
-            data = collections.defaultdict(dict)
-            data['url'] = url
-            data['likert_mode'] = likert_mode
-            data['likert_avg'] = likert_avg
-
-            err, out = extractor.get_final_feature_vector()
-
-            # text/
-            data['features'] = out
-            extractor.tot_feat_extraction_errors = err
-
-
-            # html/
-            html_error = False
-            if export_html_tags:
-                with open(folder + 'html/' + name.replace('.pkl', '.txt'), "w") as file:
-                    content = str(extractor.webscrap.soup)
-                    if content is not None:
-                        file.write(content)
-                    else:
-                        html_error = True
-
-            if html_error is False:
-                joblib.dump(data, folder + 'ok/' + name)
-                data['html2seq'] = get_html2seq(extractor)
-                config.logger.info('OK: ' + extractor.url)
-                return data
-            else:
-                data['html2seq'] = None
-                config.logger.info('Err: ' + extractor.url)
-                Path(folder + 'error/' + name).touch()
-
-            return data
-
-        else:
-            Path(folder + 'error/' + name).touch()
-
-    except Exception as e:
-        config.logger.error(extractor.url + ' - ' + repr(e))
-        Path(folder + 'error/' + name).touch()
-
-def get_features_web_microsoft(extractor, topic, query, rank, url, likert, folder, name, export_html_tags):
+def get_features_web(extractor, topic, query, rank, url, likert, likert_mode, likert_avg, folder, name, export_html_tags):
 
     try:
         if extractor.webscrap is None:
@@ -146,7 +97,11 @@ def get_features_web_microsoft(extractor, topic, query, rank, url, likert, folde
             data['query'] = query
             data['rank'] = rank
             data['url'] = url
-            data['likert'] = likert
+            data['hash'] = get_md5_from_string(url)
+            data['likert'] = likert # Microsoft dataset
+            data['likert_mode'] = likert_mode # C3 dataset
+            data['likert_avg'] = likert_avg # C3 dataset
+            data['html2seq'] = []
 
             err, out = extractor.get_final_feature_vector()
             config.logger.info('total of features function errors: ' + str(err))
@@ -166,20 +121,21 @@ def get_features_web_microsoft(extractor, topic, query, rank, url, likert, folde
                         html_error = True
 
             if html_error is False:
-                joblib.dump(data, folder + 'ok/' + name)
                 data['html2seq'] = get_html2seq(extractor)
+                joblib.dump(data, folder + 'ok/' + name)
                 config.logger.info('OK: ' + extractor.url)
                 return data
             else:
-                data['html2seq'] = None
-                config.logger.info('Err: ' + extractor.url)
                 Path(folder + 'error/' + name).touch()
+                config.logger.info('Err: ' + extractor.url)
         else:
             Path(folder + 'error/' + name).touch()
+            config.logger.info('extractor error: ' + extractor.url)
 
     except Exception as e:
-        config.logger.error(extractor.url + ' - ' + repr(e))
         Path(folder + 'error/' + name).touch()
+        config.logger.error('exception: ' + extractor.url + ' - ' + repr(e))
+
 
 def get_html2sec_features(folder):
     tags_set = []
@@ -353,7 +309,7 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
                 else:
                     fe = FeaturesCore(url)
                 if fe.error is False:
-                    job_args.append((fe, topic, query, rank, url, likert, folder, name, export_html_tags)) # -> multiple arguments
+                    job_args.append((fe, topic, query, rank, url, likert, 0, 0, folder, name, export_html_tags)) # -> multiple arguments
                     tot_proc += 1
                     if tot_proc > MAX_WEBSITES_PROCESS - 1:
                         config.logger.warn('max number of websites reached: ' + str(MAX_WEBSITES_PROCESS))
@@ -369,12 +325,12 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
         config.logger.info('apart from the jobs, weve got %d errors' % (err))
         config.logger.info(str(multiprocessing.cpu_count()) + ' CPUs available')
         with Pool(processes=multiprocessing.cpu_count()) as pool:
-            asyncres = pool.starmap(get_features_web_microsoft, job_args)
+            asyncres = pool.starmap(get_features_web, job_args)
             #asyncres = pool.map(get_features_web, extractors)
 
         config.logger.info('feature extraction done! saving...')
         #name = 'microsoft_dataset_' + time.strftime("%Y%m%d%H%M%S") + '_features.pkl'
-        name = 'features.text.' + str(len(job_args)) + '.pkl'
+        name = 'features.complex.all.' + str(len(job_args)) + '.pkl'
         joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + ds_folder + 'features/' + name)
         config.logger.info('done! file: ' + name)
 
@@ -414,7 +370,7 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
             #likert_avg = df_scores.loc[url_id]['average(documentevaluation_credibility)']
             fe = FeaturesCore(url)
             if fe.error is False:
-                job_args.append((fe, url, likert_mode, likert_avg, folder, name, export_html_tags))  # -> multiple arguments
+                job_args.append((fe, 0, 0, 0, url, 0, likert_mode, likert_avg, folder, name, export_html_tags))  # -> multiple arguments
                 tot_proc += 1
                 if tot_proc > MAX_WEBSITES_PROCESS - 1:
                     config.logger.warn('max number of websites reached: ' + str(MAX_WEBSITES_PROCESS))
@@ -428,10 +384,10 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
     config.logger.info('apart from the jobs, weve got %d errors' % (err))
     config.logger.info(str(multiprocessing.cpu_count()) + ' CPUs available')
     with Pool(processes=multiprocessing.cpu_count()) as pool:
-        asyncres = pool.starmap(get_features_web_c3, job_args)
+        asyncres = pool.starmap(get_features_web, job_args)
 
     config.logger.info('feature extraction done! saving...')
-    name = 'features.text.' + str(len(job_args)) + '.pkl'
+    name = 'features.complex.all.' + str(len(job_args)) + '.pkl'
     joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + ds_folder + 'features/' + name)
     config.logger.info('done! file: ' + name)
 
@@ -458,8 +414,8 @@ if __name__ == '__main__':
     '''
 
     params = [
-        #{'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': True},
-        {'EXP_FOLDER': 'exp010/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': False},
+        {'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': True},
+        #{'EXP_FOLDER': 'exp010/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': False},
     ]
 
     for p in params:

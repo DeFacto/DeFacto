@@ -171,7 +171,7 @@ def save_encoder_html2seq(folder_html_data):
         raise
 
 
-def save_encoder_domain():
+def save_encoder_domain_and_suffix():
 
     import pandas as pd
     from sklearn import preprocessing
@@ -179,7 +179,8 @@ def save_encoder_domain():
     le2 = preprocessing.LabelEncoder()
 
     domain_s = ['com']
-    domain = []
+    domain_s = ['']
+    domain = ['']
 
     df_sites = pd.read_csv(DATASET_3C_SITES_PATH, na_values=0, delimiter=',', usecols=['document_url'])
     for index, row in df_sites.iterrows():
@@ -241,5 +242,5 @@ def save_url_body(extractor):
 
 
 if __name__ == '__main__':
-    #save_encoder_domain()
-    save_encoder_html2seq('/Users/diegoesteves/DropDrive/CloudStation/experiments_cache/web_credibility/output/all_html/') # just copy and paste all html files into a single temp file to generate this.
+    save_encoder_domain_and_suffix()
+    # save_encoder_html2seq('/Users/diegoesteves/DropDrive/CloudStation/experiments_cache/web_credibility/output/all_html/') # just copy and paste all html files into a single temp file to generate this.

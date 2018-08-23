@@ -33,3 +33,4 @@ def get_open_pagerank(domain):
     except Exception as e:
         config.logger.error(repr(e))
         return None
+

@@ -19,23 +19,33 @@ preprocessing/
 
 #### 2. Feature Extraction
 
-- ``feature_extractor.py`` extract and caches the features for all URLs existing in a given dataset, creating one feature file (*.pkl) for each URL (multithreading).
-    - ``export_features_multithread('exp003/', 'microsoft', export_html_tags=True, force=True)``
+2.1 ``feature_extractor.py`` extract and caches the features for all URLs existing in a given dataset, creating one feature file (*.pkl) for each URL as well as a single final file (features.complex.all.X.pkl) merging all files (multithreading).
 
-    - **export_html_tags** = saves locally the HTML code.
-    - **force** = forces reprocessing, even if the file already exists.
+    - folder: experiment's folder
+    - dataset: dataset
+    - export_html_tags: saves locally the HTML code.
+    - force: forces reprocessing, even if the file already exists.
+    - outputs:
+        - /out/[expX]/[dataset]/features/
+            - ok/ -> features files (.pkl for each URL)
+            - error/ -> extraction error (one for each URL)
+            - html/ -> HTML content for each (successfully) URL
+            - features.complex.all.X.pkl (a single file containing: all features (text and html2seq) + y + hash [for all URLs])
 
-    - ``/out/[expX]/[dataset]/features/``
-        - ``ok/`` -> features files (.pkl for each URL)
-        - ``error/`` -> extraction error (one for each URL)
-        - ``html/`` -> HTML content for each (successfully) URL
+2.2 ``features_split.py`` splits the features files (features.complex.all.X.pkl) for a given dataset into a set of group of features, converting the features from a json-like format to a np.array ready to be used for training.
+
+    - folder: experiment's folder
+    - dataset: dataset
+    - outputs: (K=number of ok/ files, where K<=X)
+        - /out/[expX]/[dataset]/features/
+            1. features.basic.K.pkl
+            2. features.basic_gi.K.pkl
+            3. features.all.K.pkl
+            4. features.all.html2seq.K.pkl
+            5. features.html2seq.K.pkl
 
 
-- ``features_merge.py`` merges the features files (*.pkl) for a given dataset into a single file
-    - ``read_feat_files_and_merge('exp004/', 'microsoft', CONFIG_FEATURES_BASIC[0][0], CONFIG_FEATURES_BASIC[1], 'likert')``
-
-- others
-    - ``features_core.py`` implements the features
+2.3 ``features_core.py`` implements all the features
 #### 3. Run
 classifiers/
 

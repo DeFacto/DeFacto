@@ -54,6 +54,8 @@ ENC_WEB_DOMAIN = ROOT_PROJECT_PATH + 'encoders/encoder_webdomain.pkl'
 ENC_WEB_DOMAIN_SUFFIX = ROOT_PROJECT_PATH + 'encoders/encoder_webdomain_suffix.pkl'
 ENC_TAGS = ROOT_PROJECT_PATH + 'encoders/encoder_html2seq.pkl'
 
+
+PATH_FEATURES_FILES = OUTPUT_FOLDER + '%s%sfeatures/' # experiment_folder, dataset_folder
 # the benchmark file name template
 BENCHMARK_FILE_NAME_TEMPLATE = 'cls_%s_%s_%s.pkl'
 
@@ -61,7 +63,7 @@ BENCHMARK_FILE_NAME_TEMPLATE = 'cls_%s_%s_%s.pkl'
 BING_LANG_DISABLED = 1
 
 # when processing a dataset, limits the maximum number of URL to process (useful for dev/debug mode)
-MAX_WEBSITES_PROCESS = 999999999 # 999999999
+MAX_WEBSITES_PROCESS = 10 # 999999999
 
 # max timeout to scrap a given URL
 TIMEOUT_MS = 3
@@ -77,10 +79,6 @@ TEST_SIZE = 0.2
 SEARCH_METHOD_RANDOMIZED_GRID = 'random'
 
 SEARCH_METHOD_GRID = 'grid'
-
-# HTML sequence windows
-PADS = [25, 50, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600,
-        2700, 2800, 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000]
 
 
 LINE_TEMPLATE = '%s\t%s\t%s\t%s\t%.3f\t%.3f\t%.3f\t%d\t%.3f\n'
