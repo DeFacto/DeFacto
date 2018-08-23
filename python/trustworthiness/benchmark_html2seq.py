@@ -7,7 +7,7 @@ from trustworthiness.benchmark_utils import train_test_export_save_per_exp_type,
 from trustworthiness.benchmark_utils import append_annotation_style
 from config import DeFactoConfig
 from defacto.definitions import OUTPUT_FOLDER, HEADER, CONFIGS_HIGH_DIMEN, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, \
-    EXP_2_CLASSES_LABEL
+    EXP_2_CLASSES_LABEL, TEST_SIZE, RANDOM_STATE
 from trustworthiness.feature_extractor import likert2bin, likert2tri
 import numpy as np
 import math
@@ -23,17 +23,23 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
         print('max_sent: ', maxsent)
         maxpad = 1000
 
-        # X_tags = [le.inverse_transform(s) for s in X]
-
         out_performance_file = 'out_performance_html2seq.txt'
-        with open(OUTPUT_FOLDER + exp_folder + ds_folder + out_performance_file, "w") as file_log:
-            file_log.write(HEADER)
-            nb_2 = [], nb_3 = [], nb_5 = []
-            bnb_2 = [], bnb_3 = [], bnb_5 = []
-            agg_2 = [], agg_3 = [], agg_5 = []
-            k_2 = [], k_3 = [], k_5 = []
+        subfolder = 'html2seq/'
 
-            subfolder = 'html2seq/'
+        with open(OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder + 'out_performance_file', "w") as file_log:
+            file_log.write(HEADER)
+            nb_2 = []
+            nb_3 = []
+            nb_5 = []
+            bnb_2 = []
+            bnb_3 = []
+            bnb_5 = []
+            agg_2 = []
+            agg_3 = []
+            agg_5 = []
+            k_2 = []
+            k_3 = []
+            k_5 = []
 
             for maxpad in pads:
                 XX = pad_sequences(X, maxlen=maxpad, dtype='int', padding='pre', truncating='pre', value=0)
@@ -160,7 +166,7 @@ if __name__ == '__main__':
         #(features_seq, y5, y3, y2), le = get_html2sec_features(exp, ds)
 
         ds = 'microsoft/'
-        K1 = '9'
+        K1 = '86'
         exp = 'exp010/'
 
         features_html2seq_file = OUTPUT_FOLDER + exp + ds + 'features/' + 'features.html2seq.' + K1 + '.pkl'

@@ -44,39 +44,6 @@ def print_report(clf_name, predictions, y_test, targets):
     # print(":: f1: ", f1_score(y_test, predictions, average='weighted'))
     print("-----------------------------------------------------------------------")
 
-def verify_and_create_experiment_folders(out_exp_folder, dataset):
-    try:
-        path = OUTPUT_FOLDER + out_exp_folder + dataset + '/'
-        if not os.path.exists(path):
-            os.makedirs(path)
-
-
-        folders_text = ['benchmark/text/2-classes/cls/', 'benchmark/text/3-classes/cls/', 'benchmark/text/5-classes/cls/',
-                      'benchmark/text/2-classes/log/', 'benchmark/text/3-classes/log/', 'benchmark/text/5-classes/log/',
-                      'benchmark/text/2-classes/graph/', 'benchmark/text/3-classes/graph/', 'benchmark/text/5-classes/graph/']
-
-        folders_html = ['benchmark/html/2-classes/cls/', 'benchmark/html/3-classes/cls/', 'benchmark/html/5-classes/cls/',
-                      'benchmark/html/2-classes/log/', 'benchmark/html/3-classes/log/', 'benchmark/html/5-classes/log/',
-                      'benchmark/html/2-classes/graph/', 'benchmark/html/3-classes/graph/', 'benchmark/html/5-classes/graph/']
-
-        folders_text_html = ['benchmark/text_html/2-classes/cls/', 'benchmark/text_html/3-classes/cls/', 'benchmark/text_html/5-classes/cls/',
-                      'benchmark/text_html/2-classes/log/', 'benchmark/text_html/3-classes/log/', 'benchmark/text_html/5-classes/log/',
-                      'benchmark/text_html/2-classes/graph/', 'benchmark/text_html/3-classes/graph/', 'benchmark/text_html/5-classes/graph/']
-
-        subfolders = ['features/ok/', 'features/error/', 'features/html/']
-
-        subfolders.extend(folders_text)
-        subfolders.extend(folders_html)
-        subfolders.extend(folders_text_html)
-
-        for subfolder in subfolders:
-            if not os.path.exists(path + subfolder):
-                os.makedirs(path + subfolder)
-
-        config.logger.info('experiment sub-folders created successfully: ' + path)
-
-    except Exception as e:
-        raise e
 
 def get_html_file_path(url):
     path = url.replace('http://', '')

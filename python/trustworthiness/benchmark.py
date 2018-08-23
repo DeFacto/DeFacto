@@ -323,12 +323,6 @@ if __name__ == '__main__':
             {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.html2seq.' + K1 + '.pkl'},
         ]
 
-        RANDOM_STATE = 53
-        #TOT_TEXT_FEAT = 53
-
-        BAR_COLOR = 'rgb(128,128,128)'
-
-
 
         exit(0)
 

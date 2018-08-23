@@ -1,6 +1,8 @@
 import math
 from math import sqrt
-
+import plotly.plotly as py
+import plotly.graph_objs as go
+import numpy as np
 from sklearn.externals import joblib
 from sklearn.metrics import precision_recall_fscore_support, mean_absolute_error, mean_squared_error, \
     explained_variance_score, r2_score
@@ -14,6 +16,54 @@ config = DeFactoConfig()
 
 SERIES_COLORS = ['rgb(205, 12, 24)', 'rgb(22, 96, 167)', 'rgb(128, 128, 128)', 'rgb(0, 0, 139)',
                          'rgb(192,192,192)', 'rgb(211,211,211)', 'rgb(255,255,0)', 'rgb(0,128,0)']
+# TOT_TEXT_FEAT = 53
+
+BAR_COLOR = 'rgb(128,128,128)'
+
+def verify_and_create_experiment_folders(out_exp_folder, dataset):
+    try:
+        path = OUTPUT_FOLDER + out_exp_folder + dataset + '/'
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+
+        folders_text = ['benchmark/text/2-classes/cls/', 'benchmark/text/3-classes/cls/', 'benchmark/text/5-classes/cls/',
+                      'benchmark/text/2-classes/log/', 'benchmark/text/3-classes/log/', 'benchmark/text/5-classes/log/',
+                      'benchmark/text/2-classes/graph/', 'benchmark/text/3-classes/graph/', 'benchmark/text/5-classes/graph/']
+
+        folders_html = ['benchmark/html/2-classes/cls/', 'benchmark/html/3-classes/cls/', 'benchmark/html/5-classes/cls/',
+                      'benchmark/html/2-classes/log/', 'benchmark/html/3-classes/log/', 'benchmark/html/5-classes/log/',
+                      'benchmark/html/2-classes/graph/', 'benchmark/html/3-classes/graph/', 'benchmark/html/5-classes/graph/']
+
+        folders_text_html = ['benchmark/text_html/2-classes/cls/', 'benchmark/text_html/3-classes/cls/', 'benchmark/text_html/5-classes/cls/',
+                      'benchmark/text_html/2-classes/log/', 'benchmark/text_html/3-classes/log/', 'benchmark/text_html/5-classes/log/',
+                      'benchmark/text_html/2-classes/graph/', 'benchmark/text_html/3-classes/graph/', 'benchmark/text_html/5-classes/graph/']
+
+        folders_text_html = ['benchmark/html2seq/2-classes/cls/',
+                             'benchmark/html2seq/3-classes/cls/',
+                             'benchmark/html2seq/5-classes/cls/',
+                             'benchmark/html2seq/2-classes/log/',
+                             'benchmark/html2seq/3-classes/log/',
+                             'benchmark/html2seq/5-classes/log/',
+                             'benchmark/html2seq/2-classes/graph/',
+                             'benchmark/html2seq/3-classes/graph/',
+                             'benchmark/html2seq/5-classes/graph/']
+
+        subfolders = ['features/ok/', 'features/error/', 'features/html/']
+
+        subfolders.extend(folders_text)
+        subfolders.extend(folders_html)
+        subfolders.extend(folders_text_html)
+        subfolders.extend(folders_text_html)
+
+        for subfolder in subfolders:
+            if not os.path.exists(path + subfolder):
+                os.makedirs(path + subfolder)
+
+        config.logger.info('experiment sub-folders created successfully: ' + path)
+
+    except Exception as e:
+        raise e
 
 def append_annotation_style(x, y, extra_text_y=None):
     if extra_text_y is not None and extra_text_y != '':
@@ -195,9 +245,9 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
             scoring = ['precision', 'recall', 'f1']
             refit = 'f1'
         elif experiment_type == EXP_3_CLASSES_LABEL:
-            scoring = ['precision', 'precision_micro', 'precision_macro', 'precision_weighted',
-                       'recall', 'recall_micro', 'recall_macro', 'recall_weighted',
-                       'f1', 'f1_micro', 'f1_macro', 'f1_weighted']
+            scoring = ['precision_weighted',
+                       'recall_weighted',
+                       'f1_weighted']
             refit = 'f1_weighted'
         elif experiment_type == EXP_5_CLASSES_LABEL:
             scoring = ['r2', 'neg_mean_squared_error', 'neg_mean_absolute_error', 'explained_variance']
@@ -224,7 +274,7 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         predicted = clf.best_estimator_.predict(X_test)
 
         # saving the best model
-        _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder + experiment_type + '/'
+        _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder + experiment_type + '/cls/'
         if not os.path.exists(_path):
             os.mkdir(_path)
         joblib.dump(clf.best_estimator_, _path + file)

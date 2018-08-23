@@ -18,9 +18,9 @@ from defacto.definitions import BENCHMARK_FILE_NAME_TEMPLATE, \
     DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, \
     OUTPUT_FOLDER, DATASET_MICROSOFT_PATH, BEST_PAD_ALGORITHM, BEST_PAD_WINDOW, \
     BEST_PAD_EXPERIMENT_TYPE
+from trustworthiness.benchmark_utils import verify_and_create_experiment_folders
 from trustworthiness.features_core import FeaturesCore
-from trustworthiness.util import get_html_file_path, \
-    verify_and_create_experiment_folders
+from trustworthiness.util import get_html_file_path
 
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore",category=FutureWarning)
@@ -394,6 +394,7 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
 def export_features_multithread(out_exp_folder, dataset, export_html_tags = True, force=False):
 
     try:
+
         verify_and_create_experiment_folders(out_exp_folder, dataset)
 
         if dataset == 'microsoft':

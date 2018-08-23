@@ -63,7 +63,7 @@ BENCHMARK_FILE_NAME_TEMPLATE = 'cls_%s_%s_%s.pkl'
 BING_LANG_DISABLED = 1
 
 # when processing a dataset, limits the maximum number of URL to process (useful for dev/debug mode)
-MAX_WEBSITES_PROCESS = 10 # 999999999
+MAX_WEBSITES_PROCESS = 100 # 999999999
 
 # max timeout to scrap a given URL
 TIMEOUT_MS = 3
@@ -72,9 +72,11 @@ TIMEOUT_MS = 3
 SUMMARIZATION_LEN = 100
 
 # sampling parameters
-CROSS_VALIDATION_K_FOLDS = 10
+CROSS_VALIDATION_K_FOLDS = 3
 
 TEST_SIZE = 0.2
+
+RANDOM_STATE = 53
 
 SEARCH_METHOD_RANDOMIZED_GRID = 'random'
 
