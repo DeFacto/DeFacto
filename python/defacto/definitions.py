@@ -50,9 +50,9 @@ SOCIAL_NETWORK_NAMES = ['Facebook', 'WhatsApp', 'QQ', 'TencentQQ', 'WeChat', 'QZ
                         'Flickr', 'MeetMe', 'Meetup', 'Tout', 'Mixi', 'Douban', 'Vero', 'Quora']
 
 # encoder web domains
-ENC_WEB_DOMAIN = '/Users/diegoesteves/Github/factchecking/DeFacto/python/data/encoders/encoder_webdomain.pkl'
-ENC_WEB_DOMAIN_SUFFIX = '/Users/diegoesteves/Github/factchecking/DeFacto/python/data/encoders/encoder_webdomain_suffix.pkl'
-ENC_TAGS = '/Users/diegoesteves/Github/factchecking/DeFacto/python/data/encoders/encoder_html2seq.pkl'
+ENC_WEB_DOMAIN = ROOT_PROJECT_PATH + 'encoders/encoder_webdomain.pkl'
+ENC_WEB_DOMAIN_SUFFIX = ROOT_PROJECT_PATH + 'encoders/encoder_webdomain_suffix.pkl'
+ENC_TAGS = ROOT_PROJECT_PATH + 'encoders/encoder_html2seq.pkl'
 
 # the benchmark file name template
 BENCHMARK_FILE_NAME_TEMPLATE = 'cls_%s_%s_%s.pkl'
@@ -61,7 +61,7 @@ BENCHMARK_FILE_NAME_TEMPLATE = 'cls_%s_%s_%s.pkl'
 BING_LANG_DISABLED = 1
 
 # when processing a dataset, limits the maximum number of URL to process (useful for dev/debug mode)
-MAX_WEBSITES_PROCESS = 100 # 999999999
+MAX_WEBSITES_PROCESS = 999999999 # 999999999
 
 # max timeout to scrap a given URL
 TIMEOUT_MS = 3

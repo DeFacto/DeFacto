@@ -181,7 +181,6 @@ def get_features_web_microsoft(extractor, topic, query, rank, url, likert, folde
         config.logger.error(extractor.url + ' - ' + repr(e))
         Path(folder + 'error/' + name).touch()
 
-
 def get_html2sec_features(folder):
     tags_set = []
     sentences = []
@@ -459,8 +458,8 @@ if __name__ == '__main__':
     '''
 
     params = [
-        {'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': False},
-        {'EXP_FOLDER': 'exp010/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': True},
+        #{'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': True},
+        {'EXP_FOLDER': 'exp010/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': False},
     ]
 
     for p in params:

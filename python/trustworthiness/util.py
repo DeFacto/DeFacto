@@ -4,6 +4,7 @@ from pathlib import Path
 
 import numpy as np
 import pdfkit as pdfkit
+from bs4 import BeautifulSoup
 from sklearn.metrics import mean_absolute_error, mean_squared_error, confusion_matrix, classification_report, \
     accuracy_score
 from tldextract import tldextract
@@ -12,7 +13,8 @@ from sklearn.externals import joblib
 from coffeeandnoodles.core.util import get_md5_from_string
 from config import DeFactoConfig
 from defacto.definitions import DATASET_3C_SITES_PATH, DATASET_MICROSOFT_PATH_PAGES_MISSING, \
-    DATASET_MICROSOFT_PATH_PAGES_CACHED, ENC_WEB_DOMAIN, ENC_WEB_DOMAIN_SUFFIX, DATASET_MICROSOFT_PATH, OUTPUT_FOLDER
+    DATASET_MICROSOFT_PATH_PAGES_CACHED, ENC_WEB_DOMAIN, ENC_WEB_DOMAIN_SUFFIX, DATASET_MICROSOFT_PATH, OUTPUT_FOLDER, \
+    ENC_TAGS
 
 import re
 
@@ -113,7 +115,63 @@ def get_html_file_path(url):
     return path_root
 
 
-def get_encoder_domain():
+def save_encoder_html2seq(folder_html_data):
+
+    from sklearn import preprocessing
+    le = preprocessing.LabelEncoder()
+
+    config.logger.info('get_encoder_html2seq()')
+
+    try:
+        tags_set = []
+        #sentences = []
+        tot_files = 0
+        #my_file = Path(folder_html_data + 'features.html2seq.pkl')
+        my_encoder = Path(ENC_TAGS)
+        #path_html2seq = folder_html_data + 'html2seq/'
+        #path_html = folder_html_data + 'html/'
+        #path_text = folder_html_data + 'text/'
+
+        for dirpath, dirs, files in os.walk(folder_html_data):
+            for file_html in files:
+                if file_html.endswith('.txt'):
+                    tot_files += 1
+                    config.logger.info('processing file ' + str(tot_files) + ' - ' + str(len(tags_set)))
+                    # get tags
+                    tags = []
+                    soup = BeautifulSoup(open(os.path.join(dirpath, file_html)), "html.parser")
+                    html = soup.prettify()
+                    for line in html.split('\n'):
+                        if isinstance(line, str) and len(line.strip()) > 0:
+                            if (line.strip()[0] == '<') and (line.strip()[0:2] != '<!'):
+                                if len(line.split()) > 1:
+                                    tags.append(line.split()[0] + '>')
+                                else:
+                                    tags.append(line.split()[0])
+                            elif (line.strip()[0:2] == '</' and line.strip()[0:2] != '<!'):
+                                tags.append(line.split()[0])
+
+                    if len(tags) > 0:
+                        #sentences.append(tags)
+                        tags_set.extend(tags)
+                        tags_set = list(set(tags_set))
+                    else:
+                        config.logger.info('no tags for this file...')
+
+
+        config.logger.info('saving dump')
+        le.fit(tags_set)
+        joblib.dump(le, str(my_encoder))
+
+        config.logger.info('tot files: ' + str(tot_files))
+        config.logger.info('dictionary size: ' + str(len(tags_set)))
+
+    except Exception as e:
+        config.logger.error(repr(e))
+        raise
+
+
+def save_encoder_domain():
 
     import pandas as pd
     from sklearn import preprocessing
@@ -183,4 +241,5 @@ def save_url_body(extractor):
 
 
 if __name__ == '__main__':
-    get_encoder_domain()
+    #save_encoder_domain()
+    save_encoder_html2seq('/Users/diegoesteves/DropDrive/CloudStation/experiments_cache/web_credibility/output/all_html/') # just copy and paste all html files into a single temp file to generate this.
