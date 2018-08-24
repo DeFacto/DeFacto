@@ -28,10 +28,9 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
         config.logger.debug('max_sent: ' + str(maxsent))
         maxpad = 1000
 
-        out_performance_file = 'out_performance_html2seq.txt'
         subfolder = 'html2seq/'
 
-        with open(OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder + 'out_performance_file', "w") as file_log:
+        with open(OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder + 'results.txt', "w") as file_log:
             file_log.write(HEADER)
             nb_2 = []
             nb_3 = []
@@ -46,12 +45,9 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
             for maxpad in pads:
                 config.logger.debug('padding ' + str(maxpad))
                 XX = pad_sequences(X, maxlen=maxpad, dtype='int', padding='pre', truncating='pre', value=0)
-                X_train, X_test, y_train_5, y_test_5 = train_test_split(XX, y5, test_size=test_size,
-                                                                        random_state=random_state)
-                X_train, X_test, y_train_3, y_test_3 = train_test_split(XX, y3, test_size=test_size,
-                                                                        random_state=random_state)
-                X_train, X_test, y_train_2, y_test_2 = train_test_split(XX, y2, test_size=test_size,
-                                                                        random_state=random_state)
+                X_train, X_test, y_train_5, y_test_5 = train_test_split(XX, y5, test_size=test_size, random_state=random_state)
+                X_train, X_test, y_train_3, y_test_3 = train_test_split(XX, y3, test_size=test_size, random_state=random_state)
+                X_train, X_test, y_train_2, y_test_2 = train_test_split(XX, y2, test_size=test_size, random_state=random_state)
 
                 config.logger.debug(X_train.shape)
                 config.logger.debug(X_test.shape)
@@ -65,28 +61,32 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 # NB
                 # ==========================================================================================================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN[0]
-                nb_5 = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_5,
+                nb_5, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_5,
                                                            y_test_5, EXP_5_CLASSES_LABEL, maxpad, nb_5, file_log,
                                                            subfolder, exp_folder, ds_folder)
-                nb_3 = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_3,
+                nb_3, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_3,
                                                            y_test_3, EXP_3_CLASSES_LABEL, maxpad, nb_3, file_log,
                                                            subfolder, exp_folder, ds_folder)
-                nb_2 = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_2,
+                nb_2, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_2,
                                                            y_test_2, EXP_2_CLASSES_LABEL, maxpad, nb_2, file_log,
                                                            subfolder, exp_folder, ds_folder)
+
+                file_log.flush()
                 # ==========================================================================================================
                 # BernoulliNB
                 # ==========================================================================================================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN[1]
-                bnb_5 = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train, X_test,
+                bnb_5, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train, X_test,
                                                             y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, bnb_5,
                                                             file_log, subfolder, exp_folder, ds_folder)
-                bnb_3 = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train, X_test,
+                bnb_3, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train, X_test,
                                                             y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, bnb_3,
                                                             file_log, subfolder, exp_folder, ds_folder)
-                bnb_2 = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train, X_test,
+                bnb_2, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train, X_test,
                                                             y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, bnb_2,
                                                             file_log, subfolder, exp_folder, ds_folder)
+
+                file_log.flush()
                 # ==========================================================================================================
                 # K-means
                 # ==========================================================================================================
@@ -94,16 +94,17 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 X_tr_pca = pca.fit_transform(X_train)
                 X_te_pca = pca.transform(X_test)
                 cls, params, search_method = CONFIGS_HIGH_DIMEN[2]
-                k_5 = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca,
+                k_5, _ = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca,
                                                           y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, k_5,
                                                           file_log, subfolder, exp_folder, ds_folder)
-                k_3 = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca,
+                k_3, _ = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca,
                                                           y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, k_3,
                                                           file_log, subfolder, exp_folder, ds_folder)
-                k_2 = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca,
+                k_2, _ = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca,
                                                           y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, k_2,
                                                           file_log, subfolder, exp_folder, ds_folder)
 
+                file_log.flush()
                 '''
                 # ==========================================================================================================
                 # AgglomerativeClustering
@@ -141,13 +142,10 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 #   print('Expected:', y[0, i], 'Predicted', yhat[0, i])
                 '''
 
-                file_log.flush()
-
         title = 'HTML2Seq: performance varying window size'
         x_title = 'Padding window size (log scale)'
         y_title = 'F1-measure (average)'
         export_chart_scatter(pads, ['NB', 'BNB', 'K-means'],
-                             [np.array(nb_5)[:, 2], np.array(bnb_5)[:, 2], np.array(k_5)[:, 2]],
                              [np.array(nb_3)[:, 2], np.array(bnb_3)[:, 2], np.array(k_3)[:, 2]],
                              [np.array(nb_2)[:, 2], np.array(bnb_2)[:, 2], np.array(k_2)[:, 2]],
                              'benchmark_html2seq', exp_folder, ds_folder, title, x_title, y_title)
@@ -163,8 +161,8 @@ if __name__ == '__main__':
 
         # benchmarking the best window for HTML2seq
         # HTML sequence windows
-        PADS = [25, 50, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400,
-                2500, 2600, 2700, 2800, 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000]
+        PADS = [25, 50]#, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400,
+        #        2500, 2600, 2700, 2800, 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000]
 
 
         config.logger.info('html2seq feature benchmark')

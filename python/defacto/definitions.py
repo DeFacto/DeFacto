@@ -79,7 +79,6 @@ TEST_SIZE = 0.2
 RANDOM_STATE = 53
 
 SEARCH_METHOD_RANDOMIZED_GRID = 'random'
-
 SEARCH_METHOD_GRID = 'grid'
 
 
@@ -157,7 +156,7 @@ CONFIG_FEATURES = [CONFIG_FEATURES_BASIC, CONFIG_FEATURES_BASIC_GI, CONFIG_FEATU
 
 CONFIGS_HIGH_DIMEN = [(MultinomialNB(), dict(alpha=[1e0, 1e-1, 1e-2, 1e-3]),SEARCH_METHOD_GRID),
                         (BernoulliNB(), dict(alpha=[1e0, 1e-1, 1e-2, 1e-3]), SEARCH_METHOD_GRID),
-                      (KMeans(), dict(init=["k-means++", "random"], n_init=[5, 10, 20], tol=[1e0, 1e-1, 1e-2],
+                      (KMeans(verbose=True), dict(init=["k-means++", "random"], n_init=[5, 10, 20], tol=[1e0, 1e-1, 1e-2, 1e-3],
                             algorithm=['auto', 'full', 'elkan'], n_clusters=[2, 3, 5, 6, 7, 8, 9, 10, 15]),
                        SEARCH_METHOD_RANDOMIZED_GRID),
                       ]

@@ -111,9 +111,12 @@ def get_annotation_from_max(traces, paddings, x_labels):
 
     return annotations
 
-def export_chart_scatter(x, y_labels, y_5_f1, y_3_f1, y_2_f1, filename, exp_folder, ds_folder, title, x_title, y_title, log_mode=True):
+def export_chart_scatter(x, y_labels, y_3_f1, y_2_f1, filename, exp_folder, ds_folder, title, x_title, y_title, log_mode=True):
 
     try:
+
+        _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/html2seq/'
+
         if log_mode == True:
             x_labels = x.copy()
             x = [math.log(pad) for pad in x]
@@ -124,10 +127,11 @@ def export_chart_scatter(x, y_labels, y_5_f1, y_3_f1, y_2_f1, filename, exp_fold
         data_2 = []
 
         assert log_mode == True # otherwise need to adjust the function
-        assert len(y_5_f1) == len(y_2_f1) == len(y_3_f1)
-        assert len(y_5_f1) <= len(SERIES_COLORS)
+        assert len(y_2_f1) == len(y_3_f1)
+        #assert len(y_5_f1) <= len(SERIES_COLORS)
 
         i=0
+        '''
         for trace in y_5_f1:
             s = go.Scatter(
                 x=x,
@@ -140,7 +144,7 @@ def export_chart_scatter(x, y_labels, y_5_f1, y_3_f1, y_2_f1, filename, exp_fold
                     width=line_width))
             data_5.append(s)
             i += 1
-
+        '''
         i = 0
         for trace in y_3_f1:
             s = go.Scatter(
@@ -171,12 +175,12 @@ def export_chart_scatter(x, y_labels, y_5_f1, y_3_f1, y_2_f1, filename, exp_fold
             data_2.append(s)
             i += 1
 
-        y_5 = np.array(y_5_f1)
+        #y_5 = np.array(y_5_f1)
         y_3 = np.array(y_3_f1)
         y_2 = np.array(y_2_f1)
 
         # Edit the layout
-        layout_5 = dict(title=title,
+        layout_3 = dict(title=title,
                         xaxis=dict(title=x_title, showticklabels=True, showline=True,
                                  autorange=True, showgrid=True, zeroline=True, gridcolor='#bdbdbd'),
                         yaxis=dict(title=y_title, showticklabels=True, showline=True, autorange=True),
@@ -187,13 +191,13 @@ def export_chart_scatter(x, y_labels, y_5_f1, y_3_f1, y_2_f1, filename, exp_fold
                                   bordercolor='#808080',
                                   borderwidth=2
                                   ),
-                        annotations=get_annotation_from_max(y_5, x, x_labels),
+                        annotations=get_annotation_from_max(y_3, x, x_labels),
                         font=dict(family='Helvetica', size=14)
                         )
-        layout_3 = layout_5.copy()
-        layout_2 = layout_5.copy()
+        #layout_3 = layout_5.copy()
+        layout_2 = layout_3.copy()
 
-        layout_3['annotations'] = get_annotation_from_max(y_3, x, x_labels)
+        #layout_3['annotations'] = get_annotation_from_max(y_3, x, x_labels)
         layout_2['annotations'] = get_annotation_from_max(y_2, x, x_labels)
 
         #from plotly import tools
@@ -212,18 +216,16 @@ def export_chart_scatter(x, y_labels, y_5_f1, y_3_f1, y_2_f1, filename, exp_fold
         #fig['layout'].update = layout
         #py.plot(fig, filename='paddings_f1')
 
-        _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'graphs/'
-        if not os.path.exists(_path):
-            os.mkdir(_path)
 
-        fig = dict(data=data_5, layout=layout_5)
-        py.image.save_as(fig, filename=_path + filename + '_5class.png')
+
+        #fig = dict(data=data_5, layout=layout_5)
+        #py.image.save_as(fig, filename=_path + filename + '_5class.png')
 
         fig = dict(data=data_3, layout=layout_3)
-        py.image.save_as(fig, filename=_path + filename + '_3class.png')
+        py.image.save_as(fig, filename=_path + '3-classes/graph/' + filename + '_3class.png')
 
         fig = dict(data=data_2, layout=layout_2)
-        py.image.save_as(fig, filename=_path + filename + '_2class.png')
+        py.image.save_as(fig, filename=_path + '2-classes/graph/' + filename + '_2class.png')
 
     except Exception as e:
         raise e
@@ -256,17 +258,19 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         else:
             raise Exception('not supported! ' + experiment_type)
 
+        config.logger.info(experiment_type)
+        config.logger.info(scoring)
         if search_method == 'grid':
-            clf = GridSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1,
-                               refit=refit)
+            clf = GridSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1, refit=refit)
         elif search_method == 'random':
-            clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring,
-                                     n_jobs=-1,
-                                     refit=refit)
+            #clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, refit=refit)
+            clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS)
         else:
             raise Exception('not supported! ' + search_method)
 
         config.logger.debug('fitting the model')
+        print(set(y_train))
+        print(set(y_test))
         clf.fit(X_train, y_train)
         config.logger.info('done. best training set parameters: ')
         config.logger.info(clf.best_params_)
@@ -296,8 +300,7 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
 
         if experiment_type == EXP_2_CLASSES_LABEL or experiment_type == EXP_3_CLASSES_LABEL:
             p, r, f, s = precision_recall_fscore_support(y_test, predicted)
-            p_weighted, r_weighted, f_weighted, s_weighted = precision_recall_fscore_support(y_test, predicted,
-                                                                                             average='weighted')
+            p_weighted, r_weighted, f_weighted, s_weighted = precision_recall_fscore_support(y_test, predicted, average='weighted')
             p_micro, r_micro, f_micro, s_micro = precision_recall_fscore_support(y_test, predicted, average='micro')
             p_macro, r_macro, f_macro, s_macro = precision_recall_fscore_support(y_test, predicted, average='macro')
 
@@ -323,8 +326,6 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
 
             file_log.flush()
 
-            config.logger.debug('finished! ' + experiment_type)
-
             return out_chart, clf.best_estimator_
 
         elif experiment_type == EXP_5_CLASSES_LABEL:
@@ -339,8 +340,6 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
                 'padding: %s cls: %s exp_type: %s r2: %.3f rmse: %.3f mae: %.3f evar: %.3f' %
                 (padding, estimator_label, experiment_type, r2, rmse, mae, evar))
             config.logger.info('----------------------------------------------------')
-
-            config.logger.debug('finished! ' + experiment_type)
 
             return None, clf.best_estimator_
 
