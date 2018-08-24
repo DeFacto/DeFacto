@@ -184,7 +184,7 @@ class WebScrap:
                 #k = k * w
                 y = t5.year
 
-            print(k)
+            #print(k)
             return k, y
         except Exception as e:
             config.logger.error(repr(e))
@@ -276,7 +276,7 @@ class WebScrap:
             str_data = ' '.join(data).lower()
             x1 = len(re.findall('style', str_data, re.I))
             x2 = len(re.findall('.css', str_data, re.I))
-            print(x1+x2)
+            #print(x1+x2)
             return x1+x2
         except Exception as e:
             raise e

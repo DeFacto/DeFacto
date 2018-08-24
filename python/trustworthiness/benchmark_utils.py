@@ -266,13 +266,18 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         else:
             raise Exception('not supported! ' + search_method)
 
+        config.logger.debug('fitting the model')
         clf.fit(X_train, y_train)
-        config.logger.info('best training set parameters: ')
+        config.logger.info('done. best training set parameters: ')
         config.logger.info(clf.best_params_)
         config.logger.info(clf.best_score_)
         config.logger.info(experiment_type)
+        #if hasattr(clf.best_estimator_, 'labels_'):
+        #    predicted = clf.best_estimator_.labels_.astype(np.int)
+        #else:
         predicted = clf.best_estimator_.predict(X_test)
 
+        config.logger.debug('saving the best model and hyperparameters...')
         # saving the best model
         _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder + experiment_type + '/cls/'
         if not os.path.exists(_path):
@@ -286,6 +291,8 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
             best.write(str(clf.best_params_))
             best.write(' -- best score \n')
             best.write(str(clf.best_score_))
+
+        config.logger.debug('done. test it...')
 
         if experiment_type == EXP_2_CLASSES_LABEL or experiment_type == EXP_3_CLASSES_LABEL:
             p, r, f, s = precision_recall_fscore_support(y_test, predicted)
@@ -315,6 +322,9 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
             config.logger.info('----------------------------------------------------')
 
             file_log.flush()
+
+            config.logger.debug('finished! ' + experiment_type)
+
             return out_chart, clf.best_estimator_
 
         elif experiment_type == EXP_5_CLASSES_LABEL:
@@ -329,10 +339,15 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
                 'padding: %s cls: %s exp_type: %s r2: %.3f rmse: %.3f mae: %.3f evar: %.3f' %
                 (padding, estimator_label, experiment_type, r2, rmse, mae, evar))
             config.logger.info('----------------------------------------------------')
+
+            config.logger.debug('finished! ' + experiment_type)
+
             return None, clf.best_estimator_
 
         else:
             raise Exception('not supported! ' + experiment_type)
+
+
 
         '''
 
@@ -358,7 +373,6 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
             for i in range(len(p)):
                 file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, LABELS_5_CLASSES.get(i + 1), p[i], r[i], f[i], s[i], 0))
         '''
-
 
 
     except Exception as e:

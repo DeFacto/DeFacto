@@ -11,7 +11,7 @@ from defacto.definitions import OUTPUT_FOLDER, TEST_SIZE, \
     HEADER, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL, LINE_TEMPLATE, \
     LABELS_2_CLASSES, LABELS_5_CLASSES, CROSS_VALIDATION_K_FOLDS, SEARCH_METHOD_RANDOMIZED_GRID, SEARCH_METHOD_GRID, \
     CONFIGS_CLASSIFICATION, CONFIGS_REGRESSION, CONFIGS_HIGH_DIMEN, LABELS_3_CLASSES, THRESHOLD_LABEL_2class, \
-    THRESHOLD_LABEL_3class
+    THRESHOLD_LABEL_3class, RANDOM_STATE
 from trustworthiness.benchmark_utils import train_test_export_save_per_exp_type
 from trustworthiness.feature_extractor import *
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_validate, KFold, RandomizedSearchCV
@@ -311,7 +311,7 @@ if __name__ == '__main__':
     try:
 
         ds = 'microsoft/'
-        K1 ='9'
+        K1 ='882'
         exp ='exp010/'
 
 

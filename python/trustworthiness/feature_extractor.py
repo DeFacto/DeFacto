@@ -64,6 +64,7 @@ def likert2tri(likert):
 def get_html2seq(extractor):
     try:
         tags = []
+        tags2seq = [0]
         html = extractor.webscrap.soup.prettify()
         for line in html.split('\n'):
             if isinstance(line, str) and len(line.strip()) > 0:
@@ -75,16 +76,26 @@ def get_html2seq(extractor):
                 elif (line.strip()[0:2] == '</' and line.strip()[0:2] != '<!'):
                     tags.append(line.split()[0])
 
-        tags2seq = [extractor.encoders.html2seq.transform([t])[0] for t in tags]
+        for t in tags:
+            try:
+                x = extractor.encoders.html2seq.transform([t])
+                tags2seq.append(x[0])
+            except ValueError as ve:
+                config.logger.error(repr(ve))
+                continue
+            except:
+                raise
+
         return tags2seq
+
     except Exception as e:
-        config.logger.error('this should not have happened, since HTML was validated! hmm...')
         config.logger.error(repr(e))
         raise
 
-def get_features_web(extractor, topic, query, rank, url, likert, likert_mode, likert_avg, folder, name, export_html_tags):
+def get_features_web(id, extractor, topic, query, rank, url, likert, likert_mode, likert_avg, folder, name, export_html_tags):
 
     try:
+        config.logger.info('processing file ' + str(id))
         if extractor.webscrap is None:
             extractor.call_web_scrap()
 
@@ -104,7 +115,7 @@ def get_features_web(extractor, topic, query, rank, url, likert, likert_mode, li
             data['html2seq'] = []
 
             err, out = extractor.get_final_feature_vector()
-            config.logger.info('total of features function errors: ' + str(err))
+            config.logger.debug('total of features function errors: ' + str(err))
 
             # text/
             data['features'] = out
@@ -121,16 +132,20 @@ def get_features_web(extractor, topic, query, rank, url, likert, likert_mode, li
                         html_error = True
 
             if html_error is False:
-                data['html2seq'] = get_html2seq(extractor)
-                joblib.dump(data, folder + 'ok/' + name)
-                config.logger.info('OK: ' + extractor.url)
-                return data
+                try:
+                    data['html2seq'] = get_html2seq(extractor)
+                    joblib.dump(data, folder + 'ok/' + name)
+                    config.logger.debug('OK: ' + extractor.url)
+                    return data
+                except:
+                    Path(folder + 'error/' + name).touch()
+                    config.logger.error('Err: ' + extractor.url)
             else:
                 Path(folder + 'error/' + name).touch()
-                config.logger.info('Err: ' + extractor.url)
+                config.logger.error('Err: ' + extractor.url)
         else:
             Path(folder + 'error/' + name).touch()
-            config.logger.info('extractor error: ' + extractor.url)
+            config.logger.error('extractor error: ' + extractor.url)
 
     except Exception as e:
         Path(folder + 'error/' + name).touch()
@@ -159,17 +174,17 @@ def get_html2sec_features(folder):
         path_text = folder + 'text/'
 
         if not my_file.exists():
-            config.logger.info('file not found: ' + my_file)
-            config.logger.info('start extraction process (HTML2seq)')
+            config.logger.warn('file not found: ' + my_file)
+            config.logger.debug('start extraction process (HTML2seq)')
             for file_html in os.listdir(path_html):
                 html2seq_feature_file = file_html.replace('.txt', '.pkl')
                 check = Path(path_html2seq + html2seq_feature_file)
                 tot_files += 1
                 if check.exists():
-                    config.logger.info('tags extracted. ' + str(tot_files) + ' - cached')
+                    config.logger.debug('tags extracted. ' + str(tot_files) + ' - cached')
                     tags = joblib.load(path_html2seq + html2seq_feature_file)
                 else:
-                    config.logger.info('extracting tags. ' + str(tot_files) + ' - not cached')
+                    config.logger.debug('extracting tags. ' + str(tot_files) + ' - not cached')
 
                     # get corresponding label
                     text_data = joblib.load(path_text + file_html.replace('.txt', '.pkl'))
@@ -189,7 +204,7 @@ def get_html2sec_features(folder):
                                 tags.append(line.split()[0])
 
                     # dump html2seq features
-                    config.logger.info('dumping single feature file...')
+                    config.logger.debug('dumping single feature file...')
                     joblib.dump(tags, path_html2seq + html2seq_feature_file)
 
                 if len(tags) > 0:
@@ -203,7 +218,7 @@ def get_html2sec_features(folder):
                     y2.append(likert2bin(text_data[1]))
 
                 else:
-                    config.logger.info('no tags...')
+                    config.logger.debug('no tags...')
 
             config.logger.info('tot files: ', tot_files)
             config.logger.info('dictionary size: ', len(tags_set))
@@ -217,11 +232,11 @@ def get_html2sec_features(folder):
 
             data = (X_html, y5, y3, y2)
 
-            config.logger.info('dumping full feature file...')
+            config.logger.debug('dumping full feature file...')
             joblib.dump(data, str(my_file))
             joblib.dump(le, str(my_encoder))
         else:
-            config.logger.info('full feature file found: ' + str(my_file))
+            config.logger.debug('full feature file found: ' + str(my_file))
             data = joblib.load(str(my_file))
             le = joblib.load(str(my_encoder))
 
@@ -271,7 +286,7 @@ def get_text_features(exp_folder, ds_folder, features_file, html2seq = False):
         X = np.array(X)
         # excluding hash and y data
         X_clean = np.delete(X, np.s_[0:2], axis=1)
-        config.logger.info('OK -> ' + str(X_clean.shape))
+        config.logger.debug('OK -> ' + str(X_clean.shape))
         return X_clean, y5, y3, y2
 
 
@@ -291,7 +306,9 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
         job_args = []
         tot_proc = 0
         err = 0
+        id = 0
         for index, row in df.iterrows():
+            id += 1
             url = str(row[3])
             urlencoded = get_md5_from_string(url)
             name = urlencoded + '.pkl'
@@ -309,7 +326,7 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
                 else:
                     fe = FeaturesCore(url)
                 if fe.error is False:
-                    job_args.append((fe, topic, query, rank, url, likert, 0, 0, folder, name, export_html_tags)) # -> multiple arguments
+                    job_args.append((id, fe, topic, query, rank, url, likert, 0, 0, folder, name, export_html_tags)) # -> multiple arguments
                     tot_proc += 1
                     if tot_proc > MAX_WEBSITES_PROCESS - 1:
                         config.logger.warn('max number of websites reached: ' + str(MAX_WEBSITES_PROCESS))
@@ -415,8 +432,8 @@ if __name__ == '__main__':
     '''
 
     params = [
-        {'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': True},
-        #{'EXP_FOLDER': 'exp010/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': False},
+        {'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': False},
+        {'EXP_FOLDER': 'exp010/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': True},
     ]
 
     for p in params:

@@ -1,5 +1,6 @@
 import datetime
 import os
+import sys
 from configparser import SafeConfigParser, ConfigParser
 import pkg_resources
 import logging
@@ -14,9 +15,25 @@ class Singleton(type):
             cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
         return cls._instances[cls]
 
-
 class DeFactoConfig(object):
     __metaclass__ = Singleton
+
+    def set_logger(self, log_file, file_level=logging.DEBUG, console_level=logging.INFO):
+
+        formatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
+
+        fileHandler = logging.FileHandler(log_file)
+        fileHandler.setFormatter(formatter)
+        fileHandler.setLevel(file_level)
+
+        consoleHandler = logging.StreamHandler(sys.stdout)
+        consoleHandler.setFormatter(formatter)
+        consoleHandler.setLevel(console_level)
+
+        self.logger.setLevel(logging.DEBUG)
+        self.logger.addHandler(fileHandler)
+        self.logger.addHandler(consoleHandler)
+        self.logger.propagate = False
 
     def __init__(self):
         fine = False
@@ -32,7 +49,7 @@ class DeFactoConfig(object):
                     parser.read(source.name)
                     self.root_dir = os.path.dirname(os.path.abspath(__file__)) + '/'
                     self.root_dir_data = self.root_dir + 'data/'
-                    self.log_level = parser.get('conf', 'log_level')
+                    #self.log_level = parser.get('conf', 'log_level')
 
                     # absolute path
                     self.database = parser.get('database', 'path')
@@ -86,29 +103,13 @@ class DeFactoConfig(object):
                 pass
 
         if fine is False:
-            raise ValueError('error on trying to read the conf file (horus.conf)! Please set HORUS_CONF with its '
+            raise ValueError('error on trying to read the conf file (defacto.conf)! Please set DEFACTO_CONF with its '
                              'path or place it at your home dir')
         else:
             if len(self.logger.handlers) == 0:
-                self.logger.setLevel(logging.DEBUG)
-                if self.log_level=='INFO':
-                    self.logger.setLevel(logging.INFO)
-                elif self.log_level=='WARNING':
-                    self.logger.setLevel(logging.WARNING)
-                elif self.log_level=='ERROR':
-                    self.logger.setLevel(logging.ERROR)
-                elif self.log_level=='CRITICAL':
-                    self.logger.setLevel(logging.CRITICAL)
-
+                # first file logger (can add more..)
                 now = datetime.datetime.now()
-                handler = logging.FileHandler(self.dir_log + 'horus_' + now.strftime("%Y-%m-%d") + '.log')
-                formatter = logging.Formatter(
-                    "%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
-                handler.setFormatter(formatter)
-                self.logger.addHandler(handler)
-                consoleHandler = logging.StreamHandler()
-                consoleHandler.setFormatter(formatter)
-                self.logger.addHandler(consoleHandler)
+                self.set_logger(self.dir_log + 'defacto_' + now.strftime("%Y-%m-%d") + '.log')
 
         #ini_file = pkg_resources.resource_filename('resource', "horus.conf")
         #rootdir = os.getcwd()
