@@ -370,8 +370,9 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
     job_args = []
     err = 0
     tot_proc = 0
-
+    tot = 0
     for doc_index, row in df_sites.iterrows():
+        tot+=1
         url = str(row[0])
         url_id = doc_index
         urlencoded = get_md5_from_string(url)
@@ -387,7 +388,7 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
             #likert_avg = df_scores.loc[url_id]['average(documentevaluation_credibility)']
             fe = FeaturesCore(url)
             if fe.error is False:
-                job_args.append((fe, 0, 0, 0, url, 0, likert_mode, likert_avg, folder, name, export_html_tags))  # -> multiple arguments
+                job_args.append((tot, fe, 0, 0, 0, url, 0, likert_mode, likert_avg, folder, name, export_html_tags))  # -> multiple arguments
                 tot_proc += 1
                 if tot_proc > MAX_WEBSITES_PROCESS - 1:
                     config.logger.warn('max number of websites reached: ' + str(MAX_WEBSITES_PROCESS))
@@ -432,8 +433,8 @@ if __name__ == '__main__':
     '''
 
     params = [
-        {'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': False},
-        {'EXP_FOLDER': 'exp010/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': True},
+        #{'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': False},
+        {'EXP_FOLDER': 'exp010/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': False},
     ]
 
     for p in params:

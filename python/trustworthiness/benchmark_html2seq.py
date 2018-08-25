@@ -1,8 +1,10 @@
 from keras.preprocessing.sequence import pad_sequences
-from sklearn.decomposition import PCA
+from sklearn.decomposition import PCA, TruncatedSVD
 from sklearn.exceptions import UndefinedMetricWarning
 from sklearn.externals import joblib
 import os
+
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 import plotly.plotly as py
 from trustworthiness.benchmark_utils import train_test_export_save_per_exp_type, export_chart_scatter
@@ -16,21 +18,27 @@ import math
 import plotly.graph_objs as go
 
 import warnings
+
+from trustworthiness.util import get_logger
+
 warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
 
 def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size, pads):
     try:
         config.logger.info('benchmark_html_sequence()')
 
+
         maxsent = -1
         for e in X:
             maxsent = len(e) if len(e) > maxsent else maxsent
         config.logger.debug('max_sent: ' + str(maxsent))
-        maxpad = 1000
+
 
         subfolder = 'html2seq/'
+        path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder
+        #logger = get_logger('defacto.trust.benchmark.html2seq', path)
 
-        with open(OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder + 'results.txt', "w") as file_log:
+        with open(path + 'results.txt', "w") as file_log:
             file_log.write(HEADER)
             nb_2 = []
             nb_3 = []
@@ -38,9 +46,9 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
             bnb_2 = []
             bnb_3 = []
             bnb_5 = []
-            k_2 = []
-            k_3 = []
-            k_5 = []
+            svc_2 = []
+            svc_3 = []
+            svc_5 = []
 
             for maxpad in pads:
                 config.logger.debug('padding ' + str(maxpad))
@@ -53,21 +61,23 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 config.logger.debug(X_test.shape)
 
                 ## no need to perform pre-processing nor tokenization here
-                # tfidf = TfidfVectorizer(preprocessor=lambda x: x, tokenizer=lambda x: x)
-                # X_train = tfidf.fit_transform(X_train)
-                # X_test = tfidf.transform(X_test)
+                config.logger.info('vectorizing...')
+                tfidf = TfidfVectorizer(preprocessor=lambda x: x, tokenizer=lambda x: x)
+                X_train_tfidf = tfidf.fit_transform(X_train)
+                X_test_tfidf = tfidf.transform(X_test)
+                config.logger.info('TF-IDF ok.')
 
                 # ==========================================================================================================
                 # NB
                 # ==========================================================================================================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN[0]
-                nb_5, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_5,
+                nb_5, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train_tfidf, X_test_tfidf, y_train_5,
                                                            y_test_5, EXP_5_CLASSES_LABEL, maxpad, nb_5, file_log,
                                                            subfolder, exp_folder, ds_folder)
-                nb_3, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_3,
+                nb_3, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train_tfidf, X_test_tfidf, y_train_3,
                                                            y_test_3, EXP_3_CLASSES_LABEL, maxpad, nb_3, file_log,
                                                            subfolder, exp_folder, ds_folder)
-                nb_2, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_2,
+                nb_2, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train_tfidf, X_test_tfidf, y_train_2,
                                                            y_test_2, EXP_2_CLASSES_LABEL, maxpad, nb_2, file_log,
                                                            subfolder, exp_folder, ds_folder)
 
@@ -76,13 +86,13 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 # BernoulliNB
                 # ==========================================================================================================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN[1]
-                bnb_5, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train, X_test,
+                bnb_5, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train_tfidf, X_test_tfidf,
                                                             y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, bnb_5,
                                                             file_log, subfolder, exp_folder, ds_folder)
-                bnb_3, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train, X_test,
+                bnb_3, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train_tfidf, X_test_tfidf,
                                                             y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, bnb_3,
                                                             file_log, subfolder, exp_folder, ds_folder)
-                bnb_2, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train, X_test,
+                bnb_2, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train_tfidf, X_test_tfidf,
                                                             y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, bnb_2,
                                                             file_log, subfolder, exp_folder, ds_folder)
 
@@ -90,18 +100,21 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 # ==========================================================================================================
                 # K-means
                 # ==========================================================================================================
-                pca = PCA()
-                X_tr_pca = pca.fit_transform(X_train)
-                X_te_pca = pca.transform(X_test)
+                #svd = TruncatedSVD(n_components=100, n_iter=7, random_state=42)
+                #X_tr_pca = svd.fit_transform(X_train)
+                #X_te_pca = svd.transform(X_test)
+                #pca = PCA()
+                #X_tr_pca = pca.fit_transform(X_train)
+                #X_te_pca = pca.transform(X_test)
                 cls, params, search_method = CONFIGS_HIGH_DIMEN[2]
-                k_5, _ = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca,
-                                                          y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, k_5,
+                svc_5, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train, X_test,
+                                                          y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, svc_5,
                                                           file_log, subfolder, exp_folder, ds_folder)
-                k_3, _ = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca,
-                                                          y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, k_3,
+                svc_3, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train, X_test,
+                                                          y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, svc_3,
                                                           file_log, subfolder, exp_folder, ds_folder)
-                k_2, _ = train_test_export_save_per_exp_type(cls, 'kmeans', params, search_method, X_tr_pca, X_te_pca,
-                                                          y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, k_2,
+                svc_2, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train, X_test,
+                                                          y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, svc_2,
                                                           file_log, subfolder, exp_folder, ds_folder)
 
                 file_log.flush()
@@ -146,8 +159,8 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
         x_title = 'Padding window size (log scale)'
         y_title = 'F1-measure (average)'
         export_chart_scatter(pads, ['NB', 'BNB', 'K-means'],
-                             [np.array(nb_3)[:, 2], np.array(bnb_3)[:, 2], np.array(k_3)[:, 2]],
-                             [np.array(nb_2)[:, 2], np.array(bnb_2)[:, 2], np.array(k_2)[:, 2]],
+                             [np.array(nb_3)[:, 2], np.array(bnb_3)[:, 2], np.array(svc_3)[:, 2]],
+                             [np.array(nb_2)[:, 2], np.array(bnb_2)[:, 2], np.array(svc_2)[:, 2]],
                              'benchmark_html2seq', exp_folder, ds_folder, title, x_title, y_title)
 
     except Exception as e:
@@ -159,17 +172,18 @@ if __name__ == '__main__':
     try:
         config = DeFactoConfig()
 
+
         # benchmarking the best window for HTML2seq
         # HTML sequence windows
-        PADS = [25, 50]#, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400,
-        #        2500, 2600, 2700, 2800, 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000]
+        PADS = [25, 50, 100, 175, 250, 500, 1000, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400,
+                2500, 2600, 2700, 2800, 2900, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000]
 
 
         config.logger.info('html2seq feature benchmark')
         #(features_seq, y5, y3, y2), le = get_html2sec_features(exp, ds)
 
         ds = 'microsoft/'
-        K1 = '99'
+        K1 = '882'
         exp = 'exp010/'
 
         features_html2seq_file = OUTPUT_FOLDER + exp + ds + 'features/' + 'features.html2seq.' + K1 + '.pkl'

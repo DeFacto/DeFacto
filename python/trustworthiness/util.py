@@ -1,5 +1,8 @@
 import collections
+import datetime
+import logging
 import os
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -43,6 +46,34 @@ def print_report(clf_name, predictions, y_test, targets):
     # print(":: precision: ", precision_score(y_test, predictions, average='weighted'))
     # print(":: f1: ", f1_score(y_test, predictions, average='weighted'))
     print("-----------------------------------------------------------------------")
+
+def get_logger(name, dir, file_level=logging.DEBUG, console_level=logging.INFO):
+
+    try:
+        logger = logging.getLogger(name)
+        if len(logger.handlers) == 0:
+            now = datetime.datetime.now()
+            filename = dir + name + '_' + now.strftime("%Y-%m-%d") + '.log'
+
+            formatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
+
+            fileHandler = logging.FileHandler(filename)
+            fileHandler.setFormatter(formatter)
+            fileHandler.setLevel(file_level)
+
+            consoleHandler = logging.StreamHandler(sys.stdout)
+            consoleHandler.setFormatter(formatter)
+            consoleHandler.setLevel(console_level)
+
+            logger.setLevel(logging.DEBUG)
+            logger.addHandler(fileHandler)
+            logger.addHandler(consoleHandler)
+            logger.propagate = False
+
+        return logger
+
+    except:
+        raise
 
 
 def get_html_file_path(url):

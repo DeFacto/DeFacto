@@ -7,9 +7,11 @@ Date: 15-Aug-2018
 from sklearn.cluster import KMeans, AgglomerativeClustering, AffinityPropagation
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, ExtraTreesClassifier, \
     BaggingClassifier, AdaBoostClassifier
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.linear_model import LogisticRegression, Ridge, PassiveAggressiveClassifier, SGDClassifier
 from sklearn.naive_bayes import BernoulliNB, MultinomialNB
-from sklearn.svm import SVR
+from sklearn.pipeline import Pipeline
+from sklearn.svm import SVR, LinearSVC
 from sklearn.tree import DecisionTreeClassifier
 import numpy as np
 
@@ -63,7 +65,7 @@ BENCHMARK_FILE_NAME_TEMPLATE = 'cls_%s_%s_%s.pkl'
 BING_LANG_DISABLED = 1
 
 # when processing a dataset, limits the maximum number of URL to process (useful for dev/debug mode)
-MAX_WEBSITES_PROCESS = 100 # 999999999
+MAX_WEBSITES_PROCESS = 9999999 # 999999999
 
 # max timeout to scrap a given URL
 TIMEOUT_MS = 3
@@ -72,7 +74,7 @@ TIMEOUT_MS = 3
 SUMMARIZATION_LEN = 100
 
 # sampling parameters
-CROSS_VALIDATION_K_FOLDS = 2
+CROSS_VALIDATION_K_FOLDS = 10
 
 TEST_SIZE = 0.2
 
@@ -154,11 +156,14 @@ CONFIG_FEATURES_ALL_HTML2SEQ = ['all+html2seq', ['basic_text', 'domain', 'suffix
 
 CONFIG_FEATURES = [CONFIG_FEATURES_BASIC, CONFIG_FEATURES_BASIC_GI, CONFIG_FEATURES_ALL, CONFIG_FEATURES_ALL_HTML2SEQ]
 
-CONFIGS_HIGH_DIMEN = [(MultinomialNB(), dict(alpha=[1e0, 1e-1, 1e-2, 1e-3]),SEARCH_METHOD_GRID),
-                        (BernoulliNB(), dict(alpha=[1e0, 1e-1, 1e-2, 1e-3]), SEARCH_METHOD_GRID),
-                      (KMeans(verbose=True), dict(init=["k-means++", "random"], n_init=[5, 10, 20], tol=[1e0, 1e-1, 1e-2, 1e-3],
-                            algorithm=['auto', 'full', 'elkan'], n_clusters=[2, 3, 5, 6, 7, 8, 9, 10, 15]),
-                       SEARCH_METHOD_RANDOMIZED_GRID),
+
+CONFIGS_HIGH_DIMEN = [(MultinomialNB(), dict(alpha=[1.0, 0.7, 0.5, 0.0]), SEARCH_METHOD_GRID),
+                     (BernoulliNB(), dict(alpha=[1.0, 0.7, 0.5, 0.0]), SEARCH_METHOD_GRID),
+                      (LinearSVC(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2],
+                                         penalty=['l1', 'l2'], multi_class=['ovr', 'crammer_singer']), SEARCH_METHOD_GRID),
+                      #(KMeans(), dict(init=["k-means++", "random"], n_init=[5, 10], tol=[1e0, 1e-1, 1e-2],
+                      #      algorithm=['auto', 'elkan'], n_clusters=[2, 3, 5, 7, 10, 15]),
+                      # SEARCH_METHOD_RANDOMIZED_GRID),
                       ]
 
 CONFIGS_REGRESSION = [(LogisticRegression(n_jobs=-1),
@@ -171,7 +176,7 @@ CONFIGS_REGRESSION = [(LogisticRegression(n_jobs=-1),
                                      tol=[1e0, 1e-1, 1e-2, 1e-3]),
                        SEARCH_METHOD_RANDOMIZED_GRID),
                       (SVR(), dict(epsilon=[1e0, 1e-1, 1e-2, 1e-3], kernel=["linear", "poly", "rbf", "sigmoid"],
-                                   tol=[1e0, 1e-1, 1e-2, 1e-3], C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]), SEARCH_METHOD_GRID)
+                                   tol=[1e0, 1e-1, 1e-2, 1e-3], C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]), SEARCH_METHOD_RANDOMIZED_GRID)
                       ]
 
 CONFIGS_CLASSIFICATION = [

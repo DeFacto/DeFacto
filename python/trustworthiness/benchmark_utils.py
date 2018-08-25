@@ -234,7 +234,10 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
                                         X_train, X_test, y_train, y_test, experiment_type, padding,
                                         out_chart, file_log, subfolder, exp_folder, ds_folder):
     try:
+        config.logger.info('----------------------------------------------------------------------')
         config.logger.info(estimator_label)
+        config.logger.info(experiment_type)
+
         # file dump info
         file = BENCHMARK_FILE_NAME_TEMPLATE % (estimator_label.lower(), padding, experiment_type)
 
@@ -258,13 +261,14 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         else:
             raise Exception('not supported! ' + experiment_type)
 
-        config.logger.info(experiment_type)
-        config.logger.info(scoring)
+
+
         if search_method == 'grid':
             clf = GridSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1, refit=refit)
         elif search_method == 'random':
+            #TODO: why this does not work????!!! add scoring and refit on k-means for HTML2seq !
             #clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, refit=refit)
-            clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS)
+            clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, n_jobs=-1)
         else:
             raise Exception('not supported! ' + search_method)
 
@@ -288,14 +292,6 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
             os.mkdir(_path)
         joblib.dump(clf.best_estimator_, _path + file)
 
-        # saving the best parameters
-        best_parameters_file_name = file.replace('.pkl', '.best_param')
-        with open(_path + best_parameters_file_name, "w") as best:
-            best.write(' -- best params \n')
-            best.write(str(clf.best_params_))
-            best.write(' -- best score \n')
-            best.write(str(clf.best_score_))
-
         config.logger.debug('done. test it...')
 
         if experiment_type == EXP_2_CLASSES_LABEL or experiment_type == EXP_3_CLASSES_LABEL:
@@ -310,42 +306,44 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
                 d = LABELS_3_CLASSES
 
             for i in range(len(p)):
-                file_log.write(LINE_TEMPLATE % (
-                    estimator_label, experiment_type, padding, d.get(i), p[i], r[i], f[i], s[i], 0))
-            file_log.write(LINE_TEMPLATE % (
-            estimator_label, experiment_type, padding, 'weighted', p_weighted, r_weighted, f_weighted, 0, 0))
-            file_log.write(
-                LINE_TEMPLATE % (estimator_label, experiment_type, padding, 'micro', p_micro, r_micro, f_micro, 0, 0))
-            file_log.write(
-                LINE_TEMPLATE % (estimator_label, experiment_type, padding, 'macro', p_macro, r_macro, f_macro, 0, 0))
+                file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, d.get(i), p[i], r[i], f[i], s[i], 0))
+
+            file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, 'weighted', p_weighted, r_weighted, f_weighted, 0, 0))
+            file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, 'micro', p_micro, r_micro, f_micro, 0, 0))
+            file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, 'macro', p_macro, r_macro, f_macro, 0, 0))
 
             out_chart.append([p_weighted, r_weighted, f_weighted])
-            config.logger.info(
-                'padding: %s F1 test (avg): %.3f' % (padding, f_weighted))
-            config.logger.info('----------------------------------------------------')
+            config.logger.info('padding: %s F1 test (avg): %.3f' % (padding, f_weighted))
 
-            file_log.flush()
-
-            return out_chart, clf.best_estimator_
+            test_perf = '(average) prec: ' + str(p_weighted) + ' recall: ' + str(r_weighted) + ' f1: ' + str(f_weighted)
 
         elif experiment_type == EXP_5_CLASSES_LABEL:
             mae = mean_absolute_error(y_test, predicted)
             rmse = sqrt(mean_squared_error(y_test, predicted))
             evar = explained_variance_score(y_test, predicted)
             r2 = r2_score(y_test, predicted)
-            file_log.write(
-                LINE_TEMPLATE % (estimator_label, experiment_type, padding, experiment_type, r2, rmse, mae, evar, 0))
-            file_log.flush()
-            config.logger.info(
-                'padding: %s cls: %s exp_type: %s r2: %.3f rmse: %.3f mae: %.3f evar: %.3f' %
+            file_log.write(LINE_TEMPLATE % (estimator_label, experiment_type, padding, experiment_type, r2, rmse, mae, evar, 0))
+            config.logger.info('padding: %s cls: %s exp_type: %s r2: %.3f rmse: %.3f mae: %.3f evar: %.3f' %
                 (padding, estimator_label, experiment_type, r2, rmse, mae, evar))
-            config.logger.info('----------------------------------------------------')
 
-            return None, clf.best_estimator_
+            test_perf = 'mae: ' + str(mae) + ' rmse: ' + str(rmse) + ' evar: ' + str(evar) + ' r2: ' + str(r2)
 
         else:
             raise Exception('not supported! ' + experiment_type)
 
+        # saving the best parameters
+        best_parameters_file_name = file.replace('.pkl', '.best_params.txt')
+        with open(_path + best_parameters_file_name, "w") as best:
+            best.write(' -- best params \n')
+            best.write(str(clf.best_params_) + '\n')
+            best.write(' -- best score \n')
+            best.write(str(clf.best_score_) + '\n')
+            best.write(' - test performance \n')
+            best.write(test_perf + '\n')
+
+        config.logger.info('----------------------------------------------------')
+        file_log.flush()
+        return out_chart, clf.best_estimator_
 
 
         '''
