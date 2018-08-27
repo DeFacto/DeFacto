@@ -121,7 +121,7 @@ gb_param["criterion"] = ['friedman_mse', 'mse', 'mae']
 dt_param = trees_param_basic.copy()
 dt_param["criterion"] = ['gini', 'entropy']
 
-BEST_FEATURES_PERCENT = [1.0, 0.85, 0.70, 0.55, 0.40, 0.25, 0.10]
+BEST_FEATURES_PERCENT = [100, 85, 70, 55, 40, 25, 10, 5, 3, 1]
 
 CONFIG_FEATURES_BASIC = ['basic',
                          ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http', 'outbound_links_https',

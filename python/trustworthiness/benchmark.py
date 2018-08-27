@@ -193,32 +193,18 @@ def mlp_param_selection(X, y, nfolds):
     grid_search.fit(X, y)
     return grid_search.best_params_
 
-def feature_selection():
-    try:
-        a=1
-        # ch2 = SelectKBest(chi2, k=10)
-        # X_train = ch2.fit_transform(X_train, y_train)
-        # X_test = ch2.transform(X_test)
-        #TODO: implement (only top 20th percentile is relevant? 20, 50, 80 and 100
-    except:
-        raise
-
-def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size, perc_f):
+def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y2_test, exp_folder, ds_folder, subfolder, perc_f):
 
     config.logger.info('benchmark_text()')
 
     try:
-        y_train_3 = [], y_test_3 = []
-        y_train_2 = [], y_test_2 = []
 
-        path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder
-
+        path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder + str(perc_f)
 
         #input_layer_neurons = len(X) + 1
         #output_layer_neurons = 1
         #hidden_nodes = np.math.ceil(len(X) / (2 * (input_layer_neurons + output_layer_neurons)))
 
-        X_train, X_test, y_train_5, y_test_5 = train_test_split(X, y5, test_size=test_size, random_state=random_state)
         #X_train_3, X_test_3, y_train_3, y_test_3 = train_test_split(X, y3, test_size=test_size, random_state=random_state)
         #X_train_2, X_test_2, y_train_2, y_test_2 = train_test_split(X, y2, test_size=test_size, random_state=random_state)
 
@@ -227,23 +213,25 @@ def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size, 
         #assert np.all(X_train_5 == X_train_3)
         #assert np.all(X_train_5 == X_train_2)
 
-        config.logger.debug('converting y: 3-class and 2-class experiments...')
-        for y_train in y_train_5:
-            y_train_2.append(likert2bin(y_train))
-            y_train_3.append(likert2tri(y_train))
-        for y_test in y_test_5:
-            y_test_2.append(likert2bin(y_test))
-            y_test_3.append(likert2tri(y_test))
-
         config.logger.debug('OK. feature selection')
         # feature selection
-        X_best_5 = SelectPercentile(f_regression, perc_f).fit_transform(X, y5)
-        X_best_3 = SelectPercentile(chi2, perc_f).fit_transform(X, y3)
-        X_best_2 = SelectPercentile(chi2, perc_f).fit_transform(X, y2)
+        best5 = SelectPercentile(f_regression, perc_f)
+        best3 = SelectPercentile(chi2, perc_f)
+        best2 = SelectPercentile(chi2, perc_f)
 
-        scaler.fit(X_train)
-        X_train = scaler.transform(X_train)
-        X_test = scaler.transform(X_test)
+        X_train_best5 = best5.fit_transform(X_train, y5_train)
+        X_test_best5 = best5.transform(X_test)
+
+        X_train_best3 = best3.fit_transform(X_train, y3_train)
+        X_test_best3 = best3.transform(X_test)
+
+        X_train_best2 = best2.fit_transform(X_train, y2_train)
+        X_test_best2 = best2.transform(X_test)
+
+
+        #scaler.fit(X_train)
+        #X_train = scaler.transform(X_train)
+        #X_test = scaler.transform(X_test)
         best_estimators = []
 
         x_axis_2 = []
@@ -255,8 +243,6 @@ def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size, 
         x_axis_label = 'Classifiers'
         y_axis_label = 'F1-measure'
 
-
-
         # --------------------------------------------------------------------------------------------------------------
         # classification experiment
         # --------------------------------------------------------------------------------------------------------------
@@ -266,15 +252,19 @@ def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size, 
             with open(path + exp_type + '/log/results.txt', "w") as file_log_classification:
                 file_log_classification.write(HEADER)
                 if exp_type == EXP_2_CLASSES_LABEL:
-                    y_train = y_train_2
-                    y_test = y_test_2
+                    X_train = X_train_best2
+                    X_test = X_test_best2
+                    y_train = y2_train
+                    y_test = y2_test
                     y_axis = y_axis_2
                     x_axis = x_axis_2
                     graph_file = 'graph.2-class.png'
                     threshold = THRESHOLD_LABEL_2class
                 elif exp_type == EXP_3_CLASSES_LABEL:
-                    y_train = y_train_3
-                    y_test = y_test_3
+                    X_train = X_train_best3
+                    X_test = X_test_best3
+                    y_train = y3_train
+                    y_test = y3_test
                     y_axis = y_axis_3
                     x_axis = x_axis_3
                     graph_file = 'graph.3-class.png'
@@ -318,7 +308,7 @@ def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size, 
                     out = []
                     cls_label = estimator.__class__.__name__ + '_' + EXP_5_CLASSES_LABEL
                     out, best_estimator = train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
-                                                        X_train, X_test, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, 0,
+                                                        X_train_best5, X_test_best5, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, 0,
                                                         out, file_log_regression, subfolder, exp_folder, ds_folder)
 
     except Exception as e:
@@ -345,9 +335,18 @@ if __name__ == '__main__':
 
         # benchmarking text features + html2seq (with best HTML2seq model)
         config.logger.debug('02. TEXT + HTML2Seq features combined (out of best configurations)')
-        features_combined, y5, y3, y2 = get_text_features(exp, ds, features_file, html2seq=True)
+        X, y5, y3, y2 = get_text_features(exp, ds, features_file, html2seq=True)
+        X_train, X_test, y5_train, y5_test = train_test_split(X, y5, test_size=TEST_SIZE, random_state=RANDOM_STATE)
+        y3_train, y2_train, y3_test, y2_test = [], [], [], []
+        config.logger.debug('converting y: 3-class and 2-class experiments...')
+        for y_train in y5_train:
+            y2_train.append(likert2bin(y_train))
+            y3_train.append(likert2tri(y_train))
+        for y_test in y5_test:
+            y2_test.append(likert2bin(y_test))
+            y3_test.append(likert2tri(y_test))
         for best_k_features in BEST_FEATURES_PERCENT:
-            benchmark(features_combined, y5, exp, ds, 'best_k/', RANDOM_STATE, TEST_SIZE, best_k_features)
+            benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y2_test, exp, ds, 'best_k/', best_k_features)
         config.logger.info('done!')
 
 
