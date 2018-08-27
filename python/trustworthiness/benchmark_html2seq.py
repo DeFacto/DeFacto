@@ -40,15 +40,10 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
 
         with open(path + 'results.txt', "w") as file_log:
             file_log.write(HEADER)
-            nb_2 = []
-            nb_3 = []
-            nb_5 = []
-            bnb_2 = []
-            bnb_3 = []
-            bnb_5 = []
-            svc_2 = []
-            svc_3 = []
-            svc_5 = []
+            nb_2 = [], nb_3 = [], nb_5 = []
+            bnb_2 = [], bnb_3 = [], bnb_5 = []
+            svc_2 = [], svc_3 = [], svc_5 = []
+            gau_2 = [], gau_3 = [], gau_5 = []
 
             for maxpad in pads:
                 config.logger.debug('padding ' + str(maxpad))
@@ -62,7 +57,7 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
 
                 ## no need to perform pre-processing nor tokenization here
                 config.logger.info('vectorizing...')
-                tfidf = TfidfVectorizer(preprocessor=lambda x: x, tokenizer=lambda x: x)
+                tfidf = TfidfVectorizer(preprocessor=lambda x: x, tokenizer=lambda x: x) #ngram_range=
                 X_train_tfidf = tfidf.fit_transform(X_train)
                 X_test_tfidf = tfidf.transform(X_test)
                 config.logger.info('TF-IDF ok.')
@@ -98,6 +93,24 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
 
                 file_log.flush()
                 # ==========================================================================================================
+                # Gaussian
+                # ==========================================================================================================
+                cls, params, search_method = CONFIGS_HIGH_DIMEN[2]
+                gau_5, _ = train_test_export_save_per_exp_type(cls, 'gau', params, search_method, X_train_tfidf,
+                                                               X_test_tfidf,
+                                                               y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, gau_5,
+                                                               file_log, subfolder, exp_folder, ds_folder)
+                gau_3, _ = train_test_export_save_per_exp_type(cls, 'gau', params, search_method, X_train_tfidf,
+                                                               X_test_tfidf,
+                                                               y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, gau_3,
+                                                               file_log, subfolder, exp_folder, ds_folder)
+                gau_2, _ = train_test_export_save_per_exp_type(cls, 'gau', params, search_method, X_train_tfidf,
+                                                               X_test_tfidf,
+                                                               y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, gau_2,
+                                                               file_log, subfolder, exp_folder, ds_folder)
+
+                file_log.flush()
+                # ==========================================================================================================
                 # K-means
                 # ==========================================================================================================
                 #svd = TruncatedSVD(n_components=100, n_iter=7, random_state=42)
@@ -106,7 +119,11 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 #pca = PCA()
                 #X_tr_pca = pca.fit_transform(X_train)
                 #X_te_pca = pca.transform(X_test)
-                cls, params, search_method = CONFIGS_HIGH_DIMEN[2]
+
+                # ==========================================================================================================
+                # SVC
+                # ==========================================================================================================
+                cls, params, search_method = CONFIGS_HIGH_DIMEN[3]
                 svc_5, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train_tfidf, X_test_tfidf,
                                                           y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, svc_5,
                                                           file_log, subfolder, exp_folder, ds_folder)
@@ -158,9 +175,9 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
         title = 'HTML2Seq: performance varying window size'
         x_title = 'Padding window size (log scale)'
         y_title = 'F1-measure (average)'
-        export_chart_scatter(pads, ['NB', 'BNB', 'K-means'],
-                             [np.array(nb_3)[:, 2], np.array(bnb_3)[:, 2], np.array(svc_3)[:, 2]],
-                             [np.array(nb_2)[:, 2], np.array(bnb_2)[:, 2], np.array(svc_2)[:, 2]],
+        export_chart_scatter(pads, ['NB', 'BNB', 'GAU', 'Lin-SVC'],
+                             [np.array(nb_3)[:, 2], np.array(bnb_3)[:, 2], np.array(svc_3)[:, 2], np.array(gau_3)[:, 2]],
+                             [np.array(nb_2)[:, 2], np.array(bnb_2)[:, 2], np.array(svc_2)[:, 2], np.array(gau_2)[:, 2]],
                              'benchmark_html2seq', exp_folder, ds_folder, title, x_title, y_title)
 
     except Exception as e:

@@ -252,8 +252,8 @@ def get_text_features(exp_folder, ds_folder, features_file, html2seq = False):
         assert (ds_folder is not None and ds_folder != '')
         config.logger.info('get_text_features()')
 
-        y2 = []
-        y3 = []
+        #y2 = []
+        #y3 = []
         y5 = []
 
         config.logger.debug('extracting features for: ' + features_file)
@@ -273,21 +273,24 @@ def get_text_features(exp_folder, ds_folder, features_file, html2seq = False):
                 x = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq/' + file_name)
                 if BEST_PAD_WINDOW <= len(x):
                     x2 = le.transform(x[0:BEST_PAD_WINDOW])
-                    klass = clf_html2seq.predict([x2])[0]
                 else:
                     x2 = le.transform(x)
-                    klass = clf_html2seq.predict([np.pad(x2, (0, BEST_PAD_WINDOW - len(x2)), 'constant')])[0]
-                feat.extend([klass])
+                    x2 = np.pad(x2, (0, BEST_PAD_WINDOW - len(x2)), 'constant')
+                pred_klass = clf_html2seq.predict([x2])[0]
+                pred_prob = clf_html2seq.predict_proba([x2])
 
-            y2.append(likert2bin(feat[1]))
-            y3.append(likert2tri(feat[1]))
+                feat.extend([pred_klass])
+                feat.extend(pred_prob)
+
+            #y2.append(likert2bin(feat[1]))
+            #y3.append(likert2tri(feat[1]))
             y5.append(feat[1])
 
         X = np.array(X)
         # excluding hash and y data
         X_clean = np.delete(X, np.s_[0:2], axis=1)
         config.logger.debug('OK -> ' + str(X_clean.shape))
-        return X_clean, y5, y3, y2
+        return X_clean, y5#, y3, y2
 
 
     except Exception as e:

@@ -1,5 +1,6 @@
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.cross_validation import train_test_split
+from sklearn.feature_selection import SelectPercentile, chi2, mutual_info_regression, f_regression
 from sklearn.grid_search import GridSearchCV
 import plotly.plotly as py
 import plotly.graph_objs as go
@@ -201,11 +202,13 @@ def feature_selection():
     except:
         raise
 
-def benchmark(X, y5, y3, y2, exp_folder, ds_folder, subfolder, random_state, test_size):
+def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size):
 
     config.logger.info('benchmark_text()')
 
     try:
+        y_train_3 = [], y_test_3 = []
+        y_train_2 = [], y_test_2 = []
 
         out_models_folder = OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder
         if not os.path.exists(out_models_folder):
@@ -215,18 +218,32 @@ def benchmark(X, y5, y3, y2, exp_folder, ds_folder, subfolder, random_state, tes
         #output_layer_neurons = 1
         #hidden_nodes = np.math.ceil(len(X) / (2 * (input_layer_neurons + output_layer_neurons)))
 
-        X_train_5, X_test_5, y_train_5, y_test_5 = train_test_split(X, y5, test_size=test_size, random_state=random_state)
-        X_train_3, X_test_3, y_train_3, y_test_3 = train_test_split(X, y3, test_size=test_size, random_state=random_state)
-        X_train_2, X_test_2, y_train_2, y_test_2 = train_test_split(X, y2, test_size=test_size, random_state=random_state)
+        X_train, X_test, y_train_5, y_test_5 = train_test_split(X, y5, test_size=test_size, random_state=random_state)
+        #X_train_3, X_test_3, y_train_3, y_test_3 = train_test_split(X, y3, test_size=test_size, random_state=random_state)
+        #X_train_2, X_test_2, y_train_2, y_test_2 = train_test_split(X, y2, test_size=test_size, random_state=random_state)
 
 
         # just to double check...
-        assert np.all(X_train_5 == X_train_3)
-        assert np.all(X_train_5 == X_train_2)
+        #assert np.all(X_train_5 == X_train_3)
+        #assert np.all(X_train_5 == X_train_2)
 
-        scaler.fit(X_train_5)
-        X_train = scaler.transform(X_train_5)
-        X_test = scaler.transform(X_test_5)
+        config.logger.debug('converting y: 3-class and 2-class experiments...')
+        for y_train in y_train_5:
+            y_train_2.append(likert2bin(y_train))
+            y_train_3.append(likert2tri(y_train))
+        for y_test in y_test_5:
+            y_test_2.append(likert2bin(y_test))
+            y_test_3.append(likert2tri(y_test))
+
+        config.logger.debug('OK. feature selection')
+        # feature selection
+        X_best_5 = SelectPercentile(f_regression, 0.5).fit_transform(X, y5)
+        X_best_3 = SelectPercentile(chi2, 0.5).fit_transform(X, y3)
+        X_best_2 = SelectPercentile(chi2, 0.5).fit_transform(X, y2)
+
+        scaler.fit(X_train)
+        X_train = scaler.transform(X_train)
+        X_test = scaler.transform(X_test)
         best_estimators = []
 
         x_axis_2 = []
@@ -298,7 +315,7 @@ def benchmark(X, y5, y3, y2, exp_folder, ds_folder, subfolder, random_state, tes
                 for estimator, hyperparam, grid_method in CONFIGS_REGRESSION:
                     out = []
                     cls_label = estimator.__class__.__name__ + '_' + EXP_5_CLASSES_LABEL
-                    train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
+                    out, best_estimator = train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
                                                         X_train, X_test, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, 0,
                                                         out, file_log_regression, subfolder, exp_folder, ds_folder)
 
@@ -329,26 +346,25 @@ if __name__ == '__main__':
         # benchmarking text features and text features + html2seq (with best HTML2seq model)
 
         for conf in EXP_CONFIGS:
-            '''
-            ------------------------------------------------------------------
-            01. TEXT FEATURES (only)
-            ------------------------------------------------------------------
-            '''
-            config.logger.info('text feature benchmark')
+            config.logger.debug('')
+            config.logger.debug('------------------------------------------------------------------')
+            config.logger.debug('01. TEXT FEATURES (only)')
+            config.logger.debug('------------------------------------------------------------------')
+            config.logger.debug('')
+
             features_tex, y5, y3, y2 = get_text_features(conf['EXP_FOLDER'], conf['DS_FOLDER'], conf['FEATURES_FILE'], html2seq=False)
 
-            benchmark(features_tex, y5, y3, y2, conf['EXP_FOLDER'], conf['DS_FOLDER'], 'text/', RANDOM_STATE, TEST_SIZE)
+            benchmark(features_tex, y5, conf['EXP_FOLDER'], conf['DS_FOLDER'], 'text/', RANDOM_STATE, TEST_SIZE)
 
-            '''
-            ------------------------------------------------------------------
-            02. TEXT + HTML2Seq features combined (out of best configurations)
-            ------------------------------------------------------------------
-            '''
-            config.logger.info('text+html2seq feature benchmark')
+            config.logger.debug('')
+            config.logger.debug('------------------------------------------------------------------')
+            config.logger.debug('02. TEXT + HTML2Seq features combined (out of best configurations)')
+            config.logger.debug('------------------------------------------------------------------')
+            config.logger.debug('')
 
             features_combined, y5, y3, y2 = get_text_features(conf['EXP_FOLDER'], conf['DS_FOLDER'], conf['FEATURES_FILE'], html2seq=True)
 
-            benchmark(features_combined, y5, y3, y2, conf['EXP_FOLDER'], conf['DS_FOLDER'], 'text+html/', RANDOM_STATE, TEST_SIZE)
+            benchmark(features_combined, y5, conf['EXP_FOLDER'], conf['DS_FOLDER'], 'text+html/', RANDOM_STATE, TEST_SIZE)
 
 
     except Exception as e:

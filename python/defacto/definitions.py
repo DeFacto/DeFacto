@@ -9,7 +9,7 @@ from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier,
     BaggingClassifier, AdaBoostClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.linear_model import LogisticRegression, Ridge, PassiveAggressiveClassifier, SGDClassifier
-from sklearn.naive_bayes import BernoulliNB, MultinomialNB
+from sklearn.naive_bayes import BernoulliNB, MultinomialNB, GaussianNB
 from sklearn.pipeline import Pipeline
 from sklearn.svm import SVR, LinearSVC
 from sklearn.tree import DecisionTreeClassifier
@@ -159,6 +159,7 @@ CONFIG_FEATURES = [CONFIG_FEATURES_BASIC, CONFIG_FEATURES_BASIC_GI, CONFIG_FEATU
 
 CONFIGS_HIGH_DIMEN = [(MultinomialNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
                      (BernoulliNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
+                      (GaussianNB(), None, None),
                       (LinearSVC(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2], multi_class=['ovr', 'crammer_singer']), SEARCH_METHOD_GRID),
                       #(KMeans(), dict(init=["k-means++", "random"], n_init=[5, 10], tol=[1e0, 1e-1, 1e-2],
                       #      algorithm=['auto', 'elkan'], n_clusters=[2, 3, 5, 7, 10, 15]),

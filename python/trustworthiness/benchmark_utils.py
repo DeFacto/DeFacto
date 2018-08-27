@@ -4,6 +4,7 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 import numpy as np
 from sklearn.externals import joblib
+from sklearn.feature_selection import SelectKBest, chi2, SelectPercentile
 from sklearn.metrics import precision_recall_fscore_support, mean_absolute_error, mean_squared_error, \
     explained_variance_score, r2_score
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
@@ -261,14 +262,14 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         else:
             raise Exception('not supported! ' + experiment_type)
 
-
-
         if search_method == 'grid':
             clf = GridSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1, refit=refit)
         elif search_method == 'random':
             #TODO: why this does not work????!!! add scoring and refit on k-means for HTML2seq !
             #clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, refit=refit)
             clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, n_jobs=-1)
+        elif search_method is None:
+            clf = estimator
         else:
             raise Exception('not supported! ' + search_method)
 
@@ -276,21 +277,26 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         print(set(y_train))
         print(set(y_test))
         clf.fit(X_train, y_train)
-        config.logger.info('done. best training set parameters: ')
-        config.logger.info(clf.best_params_)
-        config.logger.info(clf.best_score_)
+
+        _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder + experiment_type + '/cls/'
+        if not os.path.exists(_path):
+            os.mkdir(_path)
+
+        if search_method is not None:
+            config.logger.info('done. best training set parameters: ')
+            config.logger.info(clf.best_params_)
+            config.logger.info(clf.best_score_)
+            predicted = clf.best_estimator_.predict(X_test)
+            joblib.dump(clf.best_estimator_, _path + file)
+        else:
+            config.logger.info('done.')
+            predicted = clf.predict(X_test)
+            joblib.dump(clf, _path + file)
+
         config.logger.info(experiment_type)
         #if hasattr(clf.best_estimator_, 'labels_'):
         #    predicted = clf.best_estimator_.labels_.astype(np.int)
         #else:
-        predicted = clf.best_estimator_.predict(X_test)
-
-        config.logger.debug('saving the best model and hyperparameters...')
-        # saving the best model
-        _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder + experiment_type + '/cls/'
-        if not os.path.exists(_path):
-            os.mkdir(_path)
-        joblib.dump(clf.best_estimator_, _path + file)
 
         config.logger.debug('done. test it...')
 
@@ -334,10 +340,11 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         # saving the best parameters
         best_parameters_file_name = file.replace('.pkl', '.best_params.txt')
         with open(_path + best_parameters_file_name, "w") as best:
-            best.write(' -- best params \n')
-            best.write(str(clf.best_params_) + '\n')
-            best.write(' -- best score \n')
-            best.write(str(clf.best_score_) + '\n')
+            if search_method is not None:
+                best.write(' -- best params \n')
+                best.write(str(clf.best_params_) + '\n')
+                best.write(' -- best score \n')
+                best.write(str(clf.best_score_) + '\n')
             best.write(' - test performance \n')
             best.write(test_perf + '\n')
 
