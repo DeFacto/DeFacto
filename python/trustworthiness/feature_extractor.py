@@ -307,13 +307,14 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
         tot_proc = 0
         err = 0
         id = 0
+        cached= []
         for index, row in df.iterrows():
             id += 1
             url = str(row[3])
             urlencoded = get_md5_from_string(url)
             name = urlencoded + '.pkl'
             folder = OUTPUT_FOLDER + exp_folder + ds_folder + 'features/'
-            my_file = Path(folder + 'text/' + name)
+            my_file = Path(folder + 'ok/' + name)
             my_file_err = Path(folder + 'error/' + name)
             if (not my_file.exists() and not my_file_err.exists()) or force is True:
                 topic = row[0]
@@ -337,6 +338,9 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
                 if index % 100 ==0:
                     config.logger.info('processing job args ' + str(index))
                 # extractors.append(fe) # -> single argument
+            elif my_file.exists():
+                data = joblib.load(str(my_file))
+                cached.append(data)
 
         config.logger.info('%d job args created (out of %s): starting multi thread' % (len(job_args), len(df)))
         config.logger.info('apart from the jobs, weve got %d errors' % (err))
@@ -345,11 +349,13 @@ def __export_features_multi_proc_microsoft(exp_folder, ds_folder, export_html_ta
             asyncres = pool.starmap(get_features_web, job_args)
             #asyncres = pool.map(get_features_web, extractors)
 
+        if len(cached) > 0:
+            asyncres.extend(cached)
+
         config.logger.info('feature extraction done! saving...')
-        #name = 'microsoft_dataset_' + time.strftime("%Y%m%d%H%M%S") + '_features.pkl'
-        name = 'features.complex.all.' + str(len(job_args)) + '.pkl'
+        name = 'features.complex.all.' + str(len(job_args) + len(cached)) + '.pkl'
         joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + ds_folder + 'features/' + name)
-        config.logger.info('done! file: ' + name)
+        config.logger.info('done! file: ' + name + ' (' + OUTPUT_FOLDER + exp_folder + ds_folder + 'features/)' )
 
     except Exception as e:
         config.logger.error(repr(e))
@@ -371,6 +377,7 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
     err = 0
     tot_proc = 0
     tot = 0
+    cached = []
     for doc_index, row in df_sites.iterrows():
         tot+=1
         url = str(row[0])
@@ -378,7 +385,7 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
         urlencoded = get_md5_from_string(url)
         name = urlencoded + '.pkl'
         folder = OUTPUT_FOLDER + exp_folder + ds_folder + 'features/'
-        my_file = Path(folder + 'text/' + name)
+        my_file = Path(folder + 'ok/' + name)
         my_file_err = Path(folder + 'error/' + name)
         if (not my_file.exists() and not my_file_err.exists()) or force is True:
             temp = df_scores['document_id'].isin([url_id])
@@ -397,6 +404,9 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
                 err += 1
             if tot_proc % 100 == 0:
                 config.logger.info('processing job args ' + str(tot_proc))
+        elif my_file.exists():
+            data = joblib.load(str(my_file))
+            cached.append(data)
 
     config.logger.info('%d job args created (out of %s): starting multi thread' % (len(job_args), len(df_sites)))
     config.logger.info('apart from the jobs, weve got %d errors' % (err))
@@ -404,8 +414,11 @@ def __export_features_multi_proc_3c(exp_folder, ds_folder, export_html_tags, for
     with Pool(processes=multiprocessing.cpu_count()) as pool:
         asyncres = pool.starmap(get_features_web, job_args)
 
+    if len(cached) > 0:
+        asyncres.extend(cached)
+
     config.logger.info('feature extraction done! saving...')
-    name = 'features.complex.all.' + str(len(job_args)) + '.pkl'
+    name = 'features.complex.all.' + str(len(job_args) + len(cached)) + '.pkl'
     joblib.dump(asyncres, OUTPUT_FOLDER + exp_folder + ds_folder + 'features/' + name)
     config.logger.info('done! file: ' + name)
 

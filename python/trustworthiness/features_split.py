@@ -2,7 +2,7 @@ import os
 from sklearn.externals import joblib
 from defacto.definitions import OUTPUT_FOLDER, ENC_WEB_DOMAIN, ENC_WEB_DOMAIN_SUFFIX, CONFIG_FEATURES_BASIC, \
     CONFIG_FEATURES
-
+import pandas as pd
 
 def features_split(out_exp_folder, dataset, complex_features_file):
     '''
@@ -19,7 +19,7 @@ def features_split(out_exp_folder, dataset, complex_features_file):
     try:
 
         full_path_features_file = OUTPUT_FOLDER + out_exp_folder + dataset + '/features/' + complex_features_file
-        tot_valid_features = 0
+
         if dataset == 'microsoft':
             dataset_y_label = 'likert'
         elif dataset == 'c3':
@@ -38,33 +38,41 @@ def features_split(out_exp_folder, dataset, complex_features_file):
             for features in complex_features:
                 if features is None:
                     continue
-                tot_valid_features += 1
-                # get hash
-                X_features = [features.get('hash')]
-                # get the label (y)
-                X_features.extend([features.get(dataset_y_label)])
-                # get the selected features
-                for key in features.get('features'):
-                    if key in running_features:
-                        data = features.get('features').get(key)
-                        X_features.extend(data)
-
-                if configuration[0] == 'all+html2seq':
-                    # exports also the HTML2Seq features
-                    html2seq_single = features.get('html2seq')
-                    if html2seq_single is None:
-                        print(features.get('hash'))
+                else:
+                    # get hash
+                    id = features.get('hash')
+                    if id is None:
                         continue
-                    X_features.extend(html2seq_single)
+                    X_features = [id]
+                    # get the label (y)
+                    label = features.get(dataset_y_label)
+                    if type(label) == pd.core.series.Series:
+                        label = label.iloc[0]
+                    X_features.extend([label])
+                    # get the selected features
+                    for key in features.get('features'):
+                        if key in running_features:
+                            data = features.get('features').get(key)
+                            X_features.extend(data)
 
-                    # exports also the single html2seq features file
-                    html_features = [features.get('hash')]
-                    html_features.extend([features.get(dataset_y_label)])
-                    html_features.extend(html2seq_single)
-                    matrix_html2seq.append(html_features)
+                    if configuration[0] == 'all+html2seq':
+                        # exports also the HTML2Seq features
+                        html2seq_single = features.get('html2seq')
+                        if html2seq_single is None:
+                            print(id)
+                            continue
+                        X_features.extend(html2seq_single)
 
-                matrix.append(X_features)
+                        # exports also the single html2seq features file
+                        html_features = [id]
+                        html_features.extend([label])
+                        html_features.extend(html2seq_single)
+                        matrix_html2seq.append(html_features)
 
+                    tot_valid_features += 1
+                    matrix.append(X_features)
+
+            print(tot_valid_features, len(matrix))
             assert (tot_valid_features == len(matrix))
             # saving the file
             name = 'features.' + configuration[0] + '.' + str(len(matrix)) + '.pkl'
@@ -88,7 +96,7 @@ if __name__ == '__main__':
     try:
 
         # experiment folder, dataset, name of the features complex file
-        features_split('exp010/', 'microsoft', 'features.complex.all.100.pkl')
+        features_split('exp010/', 'c3', 'features.complex.all.5691.pkl')
 
     except:
         raise

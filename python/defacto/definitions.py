@@ -157,10 +157,9 @@ CONFIG_FEATURES_ALL_HTML2SEQ = ['all+html2seq', ['basic_text', 'domain', 'suffix
 CONFIG_FEATURES = [CONFIG_FEATURES_BASIC, CONFIG_FEATURES_BASIC_GI, CONFIG_FEATURES_ALL, CONFIG_FEATURES_ALL_HTML2SEQ]
 
 
-CONFIGS_HIGH_DIMEN = [(MultinomialNB(), dict(alpha=[1.0, 0.7, 0.5, 0.0]), SEARCH_METHOD_GRID),
-                     (BernoulliNB(), dict(alpha=[1.0, 0.7, 0.5, 0.0]), SEARCH_METHOD_GRID),
-                      (LinearSVC(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2],
-                                         penalty=['l1', 'l2'], multi_class=['ovr', 'crammer_singer']), SEARCH_METHOD_GRID),
+CONFIGS_HIGH_DIMEN = [(MultinomialNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
+                     (BernoulliNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
+                      (LinearSVC(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2], multi_class=['ovr', 'crammer_singer']), SEARCH_METHOD_GRID),
                       #(KMeans(), dict(init=["k-means++", "random"], n_init=[5, 10], tol=[1e0, 1e-1, 1e-2],
                       #      algorithm=['auto', 'elkan'], n_clusters=[2, 3, 5, 7, 10, 15]),
                       # SEARCH_METHOD_RANDOMIZED_GRID),

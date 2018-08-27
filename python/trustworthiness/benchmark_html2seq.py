@@ -3,7 +3,7 @@ from sklearn.decomposition import PCA, TruncatedSVD
 from sklearn.exceptions import UndefinedMetricWarning
 from sklearn.externals import joblib
 import os
-
+import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 import plotly.plotly as py
@@ -107,13 +107,13 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 #X_tr_pca = pca.fit_transform(X_train)
                 #X_te_pca = pca.transform(X_test)
                 cls, params, search_method = CONFIGS_HIGH_DIMEN[2]
-                svc_5, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train, X_test,
+                svc_5, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train_tfidf, X_test_tfidf,
                                                           y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, svc_5,
                                                           file_log, subfolder, exp_folder, ds_folder)
-                svc_3, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train, X_test,
+                svc_3, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train_tfidf, X_test_tfidf,
                                                           y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, svc_3,
                                                           file_log, subfolder, exp_folder, ds_folder)
-                svc_2, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train, X_test,
+                svc_2, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train_tfidf, X_test_tfidf,
                                                           y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, svc_2,
                                                           file_log, subfolder, exp_folder, ds_folder)
 
@@ -182,8 +182,8 @@ if __name__ == '__main__':
         config.logger.info('html2seq feature benchmark')
         #(features_seq, y5, y3, y2), le = get_html2sec_features(exp, ds)
 
-        ds = 'microsoft/'
-        K1 = '882'
+        ds = 'c3/'
+        K1 = '2977'
         exp = 'exp010/'
 
         features_html2seq_file = OUTPUT_FOLDER + exp + ds + 'features/' + 'features.html2seq.' + K1 + '.pkl'
