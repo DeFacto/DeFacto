@@ -161,15 +161,14 @@ CONFIG_FEATURES = [CONFIG_FEATURES_BASIC, CONFIG_FEATURES_BASIC_GI, CONFIG_FEATU
 
 CONFIGS_HIGH_DIMEN_CLASSIFICATION = [(MultinomialNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
                                      (BernoulliNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
-                                     (MLPClassifier(), dict(hidden_layer_sizes=[(50,), (100,), (200,)], activation=['logistic', 'tanh', 'relu'],
-                                             solver=['lbfgs', 'sgd', 'adam'], alpha=[1e0, 1e-1, 1e-2, 1e-3],
-                                             early_stopping=[True]), SEARCH_METHOD_RANDOMIZED_GRID),
+                                     (MLPClassifier(early_stopping=True, solver='lbfgs'),
+                                      dict(activation=['logistic', 'tanh'], alpha=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]),
+                                      SEARCH_METHOD_RANDOMIZED_GRID),
                                      (LinearSVC(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2], multi_class=['ovr', 'crammer_singer']), SEARCH_METHOD_GRID),
                                      ]
 
-CONFIGS_HIGH_DIMEN_REGRESSION = [(MLPRegressor(), dict(hidden_layer_sizes=[(50,), (100,), (200,)], activation=['logistic', 'tanh', 'relu'],
-                                             solver=['lbfgs', 'sgd', 'adam'], alpha=[1e0, 1e-1, 1e-2, 1e-3],
-                                             early_stopping=[True]), SEARCH_METHOD_RANDOMIZED_GRID),
+CONFIGS_HIGH_DIMEN_REGRESSION = [(MLPRegressor(early_stopping=True, solver='lbfgs'), dict(activation=['logistic', 'tanh'],
+                                             alpha=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]), SEARCH_METHOD_RANDOMIZED_GRID),
                       (LinearSVR(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2, 1e-3], tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4], epsilon=[0, 0.1]), SEARCH_METHOD_RANDOMIZED_GRID),
                       ]
 

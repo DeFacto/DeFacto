@@ -193,13 +193,14 @@ def mlp_param_selection(X, y, nfolds):
     grid_search.fit(X, y)
     return grid_search.best_params_
 
-def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y2_test, exp_folder, ds_folder, subfolder, perc_f):
+def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y2_test, exp_folder, ds_folder, perc_f):
 
     config.logger.info('benchmark_text()')
 
     try:
 
-        path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder + str(perc_f)
+        subfolder = 'all/best_k/' + str(perc_f) + '/'
+        path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark' + subfolder
 
         #input_layer_neurons = len(X) + 1
         #output_layer_neurons = 1
@@ -252,19 +253,19 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
             with open(path + exp_type + '/log/results.txt', "w") as file_log_classification:
                 file_log_classification.write(HEADER)
                 if exp_type == EXP_2_CLASSES_LABEL:
-                    X_train = X_train_best2
-                    X_test = X_test_best2
-                    y_train = y2_train
-                    y_test = y2_test
+                    _X_train = X_train_best2
+                    _X_test = X_test_best2
+                    _y_train = y2_train
+                    _y_test = y2_test
                     y_axis = y_axis_2
                     x_axis = x_axis_2
                     graph_file = 'graph.2-class.png'
                     threshold = THRESHOLD_LABEL_2class
                 elif exp_type == EXP_3_CLASSES_LABEL:
-                    X_train = X_train_best3
-                    X_test = X_test_best3
-                    y_train = y3_train
-                    y_test = y3_test
+                    _X_train = X_train_best3
+                    _X_test = X_test_best3
+                    _y_train = y3_train
+                    _y_test = y3_test
                     y_axis = y_axis_3
                     x_axis = x_axis_3
                     graph_file = 'graph.3-class.png'
@@ -275,7 +276,7 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
                 for estimator, hyperparam, grid_method in CONFIGS_CLASSIFICATION:
                     out = []
                     out, best_estimator = train_test_export_save_per_exp_type(estimator, estimator.__class__.__name__, hyperparam, grid_method,
-                                                              X_train, X_test, y_train, y_test, exp_type, 0,
+                                                              _X_train, _X_test, _y_train, _y_test, exp_type, 0,
                                                               out, file_log_classification, subfolder, exp_folder, ds_folder)
                     best_estimators.append((estimator.__class__.__name__, best_estimator))
                     i += 1
@@ -288,7 +289,7 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
                 out = []
                 out, best_estimator = train_test_export_save_per_exp_type(estimator_ensamble, estimator_ensamble.__class__.__name__,
                                                                           hyperparam_ensamble, SEARCH_METHOD_GRID,
-                                                          X_train, X_test, y_train, y_test, exp_type, 0,
+                                                          _X_train, _X_test, _y_train, _y_test, exp_type, 0,
                                                           out, file_log_classification, subfolder, exp_folder, ds_folder)
                 y_axis.extend(np.array(out)[:, 2])
                 x_axis.append(best_estimator.__class__.__name__.replace('Classifier', ''))
@@ -308,7 +309,7 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
                     out = []
                     cls_label = estimator.__class__.__name__ + '_' + EXP_5_CLASSES_LABEL
                     out, best_estimator = train_test_export_save_per_exp_type(estimator, cls_label, hyperparam, grid_method,
-                                                        X_train_best5, X_test_best5, y_train_5, y_test_5, EXP_5_CLASSES_LABEL, 0,
+                                                        X_train_best5, X_test_best5, y5_train, y5_test, EXP_5_CLASSES_LABEL, 0,
                                                         out, file_log_regression, subfolder, exp_folder, ds_folder)
 
     except Exception as e:
@@ -333,9 +334,10 @@ if __name__ == '__main__':
         #    {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.all+html2seq.' + K1 + '.pkl'},
         #]
 
+        # TODO: update the 3 HTML2Seq models (out of the best from benchmark_html2seq)
         # benchmarking text features + html2seq (with best HTML2seq model)
         config.logger.debug('02. TEXT + HTML2Seq features combined (out of best configurations)')
-        X, y5, y3, y2 = get_text_features(exp, ds, features_file, html2seq=True)
+        X, y5, y3, y2 = get_web_features(exp, ds, features_file, html2seq=True)
         X_train, X_test, y5_train, y5_test = train_test_split(X, y5, test_size=TEST_SIZE, random_state=RANDOM_STATE)
         y3_train, y2_train, y3_test, y2_test = [], [], [], []
         config.logger.debug('converting y: 3-class and 2-class experiments...')
@@ -345,8 +347,10 @@ if __name__ == '__main__':
         for y_test in y5_test:
             y2_test.append(likert2bin(y_test))
             y3_test.append(likert2tri(y_test))
+
+        config.logger.info('benchmark starts...')
         for best_k_features in BEST_FEATURES_PERCENT:
-            benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y2_test, exp, ds, 'best_k/', best_k_features)
+            benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y2_test, exp, ds, best_k_features)
         config.logger.info('done!')
 
 

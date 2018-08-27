@@ -246,7 +246,8 @@ def get_html2sec_features(folder):
         config.logger.error(repr(e))
         raise
 
-def get_text_features(exp_folder, ds_folder, features_file, html2seq = False):
+# TODO: update this function, no need to process the HTML anymore, since it's already embeeded in the file!
+def get_web_features(exp_folder, ds_folder, features_file, html2seq = False):
     try:
         assert (exp_folder is not None and exp_folder != '')
         assert (ds_folder is not None and ds_folder != '')
