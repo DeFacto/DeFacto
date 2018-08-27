@@ -71,7 +71,7 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 # NN.MLP REG
                 # ================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN_REGRESSION[0]
-                mlpr_5, _ = train_test_export_save_per_exp_type(cls, 'mlpr', params, search_method, X_train_tfidf, X_test_tfidf, y_train_5,
+                mlpr_5, _ = train_test_export_save_per_exp_type(cls, 'svm', params, search_method, X_train_tfidf, X_test_tfidf, y_train_5,
                                                               y_test_5, EXP_5_CLASSES_LABEL, maxpad, mlpr_5, file_log, subfolder, exp_folder, ds_folder)
                 # ================
                 # SVR
@@ -108,12 +108,12 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
 
                 file_log.flush()
                 # ================
-                # NN.MLPClassifier
+                # SVC.svm
                 # ================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN_CLASSIFICATION[2]
-                mlp_3, _ = train_test_export_save_per_exp_type(cls, 'mlp', params, search_method, X_train_tfidf, X_test_tfidf, y_train_3, y_test_3,
+                mlp_3, _ = train_test_export_save_per_exp_type(cls, 'svm', params, search_method, X_train_tfidf, X_test_tfidf, y_train_3, y_test_3,
                                                                EXP_3_CLASSES_LABEL, maxpad, mlp_3, file_log, subfolder, exp_folder, ds_folder)
-                mlp_2, _ = train_test_export_save_per_exp_type(cls, 'mlp', params, search_method, X_train_tfidf, X_test_tfidf, y_train_2, y_test_2,
+                mlp_2, _ = train_test_export_save_per_exp_type(cls, 'svm', params, search_method, X_train_tfidf, X_test_tfidf, y_train_2, y_test_2,
                                                                EXP_2_CLASSES_LABEL, maxpad, mlp_2, file_log, subfolder, exp_folder, ds_folder)
 
                 file_log.flush()
@@ -177,7 +177,7 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
         title = 'HTML2Seq: performance varying window size'
         x_title = 'Padding window size (log scale)'
         y_title = 'F1-measure (average)'
-        export_chart_scatter(pads, ['NB', 'BNB', 'GAU', 'NN.MLP'],
+        export_chart_scatter(pads, ['NB', 'BNB', 'SVC', 'SVM'],
                              [np.array(nb_3)[:, 2], np.array(bnb_3)[:, 2], np.array(svc_3)[:, 2], np.array(mlp_3)[:, 2]],
                              [np.array(nb_2)[:, 2], np.array(bnb_2)[:, 2], np.array(svc_2)[:, 2], np.array(mlp_2)[:, 2]],
                              'benchmark_html2seq', exp_folder, ds_folder, title, x_title, y_title)
