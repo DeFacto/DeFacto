@@ -10,8 +10,9 @@ from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier,
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.linear_model import LogisticRegression, Ridge, PassiveAggressiveClassifier, SGDClassifier
 from sklearn.naive_bayes import BernoulliNB, MultinomialNB, GaussianNB
+from sklearn.neural_network import MLPClassifier, MLPRegressor
 from sklearn.pipeline import Pipeline
-from sklearn.svm import SVR, LinearSVC
+from sklearn.svm import SVR, LinearSVC, LinearSVR
 from sklearn.tree import DecisionTreeClassifier
 import numpy as np
 
@@ -76,7 +77,7 @@ SUMMARIZATION_LEN = 100
 # sampling parameters
 CROSS_VALIDATION_K_FOLDS = 10
 
-TEST_SIZE = 0.2
+TEST_SIZE = 0.25
 
 RANDOM_STATE = 53
 
@@ -98,7 +99,7 @@ BEST_PAD_WINDOW = 2900
 BEST_PAD_EXPERIMENT_TYPE = EXP_5_CLASSES_LABEL
 BEST_PAD_ALGORITHM = 'nb'
 
-THRESHOLD_LABEL_2class = 0.70
+THRESHOLD_LABEL_2class = 0.68
 THRESHOLD_LABEL_3class = 0.45
 
 # classifiers x hyper-parameters x search method
@@ -120,6 +121,7 @@ gb_param["criterion"] = ['friedman_mse', 'mse', 'mae']
 dt_param = trees_param_basic.copy()
 dt_param["criterion"] = ['gini', 'entropy']
 
+BEST_FEATURES_PERCENT = [1.0, 0.85, 0.70, 0.55, 0.40, 0.25, 0.10]
 
 CONFIG_FEATURES_BASIC = ['basic',
                          ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http', 'outbound_links_https',
@@ -157,23 +159,28 @@ CONFIG_FEATURES_ALL_HTML2SEQ = ['all+html2seq', ['basic_text', 'domain', 'suffix
 CONFIG_FEATURES = [CONFIG_FEATURES_BASIC, CONFIG_FEATURES_BASIC_GI, CONFIG_FEATURES_ALL, CONFIG_FEATURES_ALL_HTML2SEQ]
 
 
-CONFIGS_HIGH_DIMEN = [(MultinomialNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
-                     (BernoulliNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
-                      (GaussianNB(), None, None),
-                      (LinearSVC(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2], multi_class=['ovr', 'crammer_singer']), SEARCH_METHOD_GRID),
-                      #(KMeans(), dict(init=["k-means++", "random"], n_init=[5, 10], tol=[1e0, 1e-1, 1e-2],
-                      #      algorithm=['auto', 'elkan'], n_clusters=[2, 3, 5, 7, 10, 15]),
-                      # SEARCH_METHOD_RANDOMIZED_GRID),
+CONFIGS_HIGH_DIMEN_CLASSIFICATION = [(MultinomialNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
+                                     (BernoulliNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
+                                     (MLPClassifier(), dict(hidden_layer_sizes=[(50,), (100,), (200,)], activation=['logistic', 'tanh', 'relu'],
+                                             solver=['lbfgs', 'sgd', 'adam'], alpha=[1e0, 1e-1, 1e-2, 1e-3],
+                                             early_stopping=[True]), SEARCH_METHOD_RANDOMIZED_GRID),
+                                     (LinearSVC(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2], multi_class=['ovr', 'crammer_singer']), SEARCH_METHOD_GRID),
+                                     ]
+
+CONFIGS_HIGH_DIMEN_REGRESSION = [(MLPRegressor(), dict(hidden_layer_sizes=[(50,), (100,), (200,)], activation=['logistic', 'tanh', 'relu'],
+                                             solver=['lbfgs', 'sgd', 'adam'], alpha=[1e0, 1e-1, 1e-2, 1e-3],
+                                             early_stopping=[True]), SEARCH_METHOD_RANDOMIZED_GRID),
+                      (LinearSVR(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2, 1e-3], tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4], epsilon=[0, 0.1]), SEARCH_METHOD_RANDOMIZED_GRID),
                       ]
 
-CONFIGS_REGRESSION = [(LogisticRegression(n_jobs=-1),
+CONFIGS_REGRESSION = [(LogisticRegression(),
                        dict(alpha=[1e0, 1e-1, 1e-2, 1e-3], solver=["newton-cg", "lbfgs", "liblinear", "sag", "saga"],
-                            multi_class=["ovr", "multinomial"], tol=[1e0, 1e-1, 1e-2, 1e-3], penalty=["l1", "l2"],
+                            multi_class=["ovr", "multinomial"], tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4], penalty=["l1", "l2"],
                             C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]),
                        SEARCH_METHOD_RANDOMIZED_GRID),
                       (Ridge(), dict(alpha=[1e0, 1e-1, 1e-2, 1e-3],
                                      solver=['auto', 'svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag', 'saga'],
-                                     tol=[1e0, 1e-1, 1e-2, 1e-3]),
+                                     tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]),
                        SEARCH_METHOD_RANDOMIZED_GRID),
                       (SVR(), dict(epsilon=[1e0, 1e-1, 1e-2, 1e-3], kernel=["linear", "poly", "rbf", "sigmoid"],
                                    tol=[1e0, 1e-1, 1e-2, 1e-3], C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]), SEARCH_METHOD_RANDOMIZED_GRID)
@@ -181,23 +188,16 @@ CONFIGS_REGRESSION = [(LogisticRegression(n_jobs=-1),
 
 CONFIGS_CLASSIFICATION = [
     (DecisionTreeClassifier(), dt_param, SEARCH_METHOD_RANDOMIZED_GRID),
-    #(GradientBoostingClassifier(), gb_param, SEARCH_METHOD_RANDOMIZED_GRID),
-    #(RandomForestClassifier(n_jobs=-1), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
-    #(ExtraTreesClassifier(n_jobs=-1), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
-    #(BaggingClassifier(), {"n_estimators": [10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000],
-    #                       "base_estimator__max_depth": [1, 2, 3, 4, 5],
-    #                       "max_samples": [0.05, 0.1, 0.2, 0.5]}, SEARCH_METHOD_RANDOMIZED_GRID),
-    #(AdaBoostClassifier(), {"n_estimators": [10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000],
-    #                        "algorithm": ["SAMME", "SAMME.R"]}, SEARCH_METHOD_RANDOMIZED_GRID),
-    #(PassiveAggressiveClassifier(n_jobs=-1), {"tol": [1e0, 1e-1, 1e-2, 1e-3],
-    #                                          "C": [0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0],
-    #                                          "loss": ["hinge", "squared_hinge"]}, SEARCH_METHOD_GRID),
-    #(SGDClassifier(n_jobs=-1), {"loss": ["hinge", "log", "modified_huber", "squared_hinge", "perceptron"],
-    #                            "penality": ["none", "l2", "l1", "elasticnet"],
-    #                            "alpha": [1e0, 1e-1, 1e-2, 1e-3],
-    #                            "tol": [1e0, 1e-1, 1e-2, 1e-3],
-    #                            "learning_rate": ["constant", "invscaling", "optimal"]},
-    #                            SEARCH_METHOD_RANDOMIZED_GRID),
+    (GradientBoostingClassifier(), gb_param, SEARCH_METHOD_RANDOMIZED_GRID),
+    (RandomForestClassifier(), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
+    (ExtraTreesClassifier(), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
+    (BaggingClassifier(), dict(n_estimators=[10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000], base_estimator__max_depth=[1, 2, 3, 4, 5],
+          max_samples=[0.05, 0.1, 0.2, 0.5]), SEARCH_METHOD_RANDOMIZED_GRID),
+    (AdaBoostClassifier(), dict(n_estimators=[10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000], algorithm=["SAMME", "SAMME.R"]), SEARCH_METHOD_RANDOMIZED_GRID),
+    (PassiveAggressiveClassifier(), dict(tol=[1e0, 1e-1, 1e-2, 1e-3], C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0], loss=["hinge", "squared_hinge"]), SEARCH_METHOD_RANDOMIZED_GRID),
+    (SGDClassifier(n_jobs=-1), dict(loss=["hinge", "log", "modified_huber", "squared_hinge", "perceptron"],
+                                    penality=["none", "l2", "l1", "elasticnet"], alpha=[1e0, 1e-1, 1e-2, 1e-3],
+                                    tol=[1e0, 1e-1, 1e-2, 1e-3], learning_rate=["constant", "invscaling", "optimal"]), SEARCH_METHOD_RANDOMIZED_GRID),
     (BernoulliNB(), {"alpha": [1e0, 1e-1, 1e-2, 1e-3]}, SEARCH_METHOD_GRID),
-    ##MLPClassifier(hidden_layer_sizes=(hidden_nodes,hidden_nodes,hidden_nodes), solver='adam', alpha=1e-05)
-        ]
+    (MultinomialNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID)]
+    #MLPClassifier(hidden_layer_sizes=(hidden_nodes,hidden_nodes,hidden_nodes), solver='adam', alpha=1e-05)

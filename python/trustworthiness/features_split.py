@@ -96,7 +96,8 @@ if __name__ == '__main__':
     try:
 
         # experiment folder, dataset, name of the features complex file
-        features_split('exp010/', 'c3', 'features.complex.all.5691.pkl')
+        # features_split('exp010/', 'c3', 'features.complex.all.5691.pkl')
+        features_split('exp010/', 'microsoft', 'features.complex.all.994.pkl')
 
     except:
         raise

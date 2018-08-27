@@ -11,8 +11,9 @@ from sklearn.metrics import precision_recall_fscore_support, explained_variance_
 from defacto.definitions import OUTPUT_FOLDER, TEST_SIZE, \
     HEADER, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL, LINE_TEMPLATE, \
     LABELS_2_CLASSES, LABELS_5_CLASSES, CROSS_VALIDATION_K_FOLDS, SEARCH_METHOD_RANDOMIZED_GRID, SEARCH_METHOD_GRID, \
-    CONFIGS_CLASSIFICATION, CONFIGS_REGRESSION, CONFIGS_HIGH_DIMEN, LABELS_3_CLASSES, THRESHOLD_LABEL_2class, \
-    THRESHOLD_LABEL_3class, RANDOM_STATE
+    CONFIGS_CLASSIFICATION, CONFIGS_REGRESSION, CONFIGS_HIGH_DIMEN_CLASSIFICATION, LABELS_3_CLASSES, \
+    THRESHOLD_LABEL_2class, \
+    THRESHOLD_LABEL_3class, RANDOM_STATE, BEST_FEATURES_PERCENT
 from trustworthiness.benchmark_utils import train_test_export_save_per_exp_type
 from trustworthiness.feature_extractor import *
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_validate, KFold, RandomizedSearchCV
@@ -202,7 +203,7 @@ def feature_selection():
     except:
         raise
 
-def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size):
+def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size, perc_f):
 
     config.logger.info('benchmark_text()')
 
@@ -210,9 +211,8 @@ def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size):
         y_train_3 = [], y_test_3 = []
         y_train_2 = [], y_test_2 = []
 
-        out_models_folder = OUTPUT_FOLDER + exp_folder + ds_folder + 'models/' + subfolder
-        if not os.path.exists(out_models_folder):
-            os.makedirs(out_models_folder)
+        path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder
+
 
         #input_layer_neurons = len(X) + 1
         #output_layer_neurons = 1
@@ -237,9 +237,9 @@ def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size):
 
         config.logger.debug('OK. feature selection')
         # feature selection
-        X_best_5 = SelectPercentile(f_regression, 0.5).fit_transform(X, y5)
-        X_best_3 = SelectPercentile(chi2, 0.5).fit_transform(X, y3)
-        X_best_2 = SelectPercentile(chi2, 0.5).fit_transform(X, y2)
+        X_best_5 = SelectPercentile(f_regression, perc_f).fit_transform(X, y5)
+        X_best_3 = SelectPercentile(chi2, perc_f).fit_transform(X, y3)
+        X_best_2 = SelectPercentile(chi2, perc_f).fit_transform(X, y2)
 
         scaler.fit(X_train)
         X_train = scaler.transform(X_train)
@@ -255,13 +255,15 @@ def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size):
         x_axis_label = 'Classifiers'
         y_axis_label = 'F1-measure'
 
+
+
         # --------------------------------------------------------------------------------------------------------------
         # classification experiment
         # --------------------------------------------------------------------------------------------------------------
         config.logger.info('starting experiments classification (2-classes and 3-classes)')
         i = 1
         for exp_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL):
-            with open(out_models_folder + exp_type + '/perf.classification.log', "w") as file_log_classification:
+            with open(path + exp_type + '/log/results.txt', "w") as file_log_classification:
                 file_log_classification.write(HEADER)
                 if exp_type == EXP_2_CLASSES_LABEL:
                     y_train = y_train_2
@@ -310,7 +312,7 @@ def benchmark(X, y5, exp_folder, ds_folder, subfolder, random_state, test_size):
             # --------------------------------------------------------------------------------------------------------------
             config.logger.info('starting experiments regression (5-classes)')
 
-            with open(out_models_folder + exp_type + '/perf.regression.log', "w") as file_log_regression:
+            with open(path + exp_type + '/log/results.txt', "w") as file_log_regression:
                 file_log_regression.write(HEADER)
                 for estimator, hyperparam, grid_method in CONFIGS_REGRESSION:
                     out = []
@@ -330,41 +332,23 @@ if __name__ == '__main__':
         ds = 'microsoft/'
         K1 ='882'
         exp ='exp010/'
+        features_file = 'features.all+html2seq.2977.pkl'
 
+        verify_and_create_experiment_folders(exp, ds)
 
-        EXP_CONFIGS = [
-            {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.basic.' + K1 + '.pkl'},
-            {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.basic_gi.' + K1 + '.pkl'},
-            {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.all.' + K1 + '.pkl'},
-            {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.all+html2seq.' + K1 + '.pkl'},
-            {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.html2seq.' + K1 + '.pkl'},
-        ]
+        #EXP_CONFIGS = [
+        #    {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.basic.' + K1 + '.pkl'},
+        #    {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.basic_gi.' + K1 + '.pkl'},
+        #    {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.all.' + K1 + '.pkl'},
+        #    {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.all+html2seq.' + K1 + '.pkl'},
+        #]
 
-
-        exit(0)
-
-        # benchmarking text features and text features + html2seq (with best HTML2seq model)
-
-        for conf in EXP_CONFIGS:
-            config.logger.debug('')
-            config.logger.debug('------------------------------------------------------------------')
-            config.logger.debug('01. TEXT FEATURES (only)')
-            config.logger.debug('------------------------------------------------------------------')
-            config.logger.debug('')
-
-            features_tex, y5, y3, y2 = get_text_features(conf['EXP_FOLDER'], conf['DS_FOLDER'], conf['FEATURES_FILE'], html2seq=False)
-
-            benchmark(features_tex, y5, conf['EXP_FOLDER'], conf['DS_FOLDER'], 'text/', RANDOM_STATE, TEST_SIZE)
-
-            config.logger.debug('')
-            config.logger.debug('------------------------------------------------------------------')
-            config.logger.debug('02. TEXT + HTML2Seq features combined (out of best configurations)')
-            config.logger.debug('------------------------------------------------------------------')
-            config.logger.debug('')
-
-            features_combined, y5, y3, y2 = get_text_features(conf['EXP_FOLDER'], conf['DS_FOLDER'], conf['FEATURES_FILE'], html2seq=True)
-
-            benchmark(features_combined, y5, conf['EXP_FOLDER'], conf['DS_FOLDER'], 'text+html/', RANDOM_STATE, TEST_SIZE)
+        # benchmarking text features + html2seq (with best HTML2seq model)
+        config.logger.debug('02. TEXT + HTML2Seq features combined (out of best configurations)')
+        features_combined, y5, y3, y2 = get_text_features(exp, ds, features_file, html2seq=True)
+        for best_k_features in BEST_FEATURES_PERCENT:
+            benchmark(features_combined, y5, exp, ds, 'best_k/', RANDOM_STATE, TEST_SIZE, best_k_features)
+        config.logger.info('done!')
 
 
     except Exception as e:

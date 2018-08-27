@@ -11,7 +11,8 @@ from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 import os
 from config import DeFactoConfig
 from defacto.definitions import BENCHMARK_FILE_NAME_TEMPLATE, EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL, \
-    EXP_5_CLASSES_LABEL, CROSS_VALIDATION_K_FOLDS, OUTPUT_FOLDER, LABELS_2_CLASSES, LABELS_3_CLASSES, LINE_TEMPLATE
+    EXP_5_CLASSES_LABEL, CROSS_VALIDATION_K_FOLDS, OUTPUT_FOLDER, LABELS_2_CLASSES, LABELS_3_CLASSES, LINE_TEMPLATE, \
+    BEST_FEATURES_PERCENT
 
 config = DeFactoConfig()
 
@@ -27,37 +28,26 @@ def verify_and_create_experiment_folders(out_exp_folder, dataset):
         if not os.path.exists(path):
             os.makedirs(path)
 
+        # creating experiment folders
+        path = OUTPUT_FOLDER + out_exp_folder + dataset + '/'
+        folders_best_k = ['benchmark/all/best_k/']
+        folder_html2seq = ['benchmark/html2seq/']
 
-        folders_text = ['benchmark/text/2-classes/cls/', 'benchmark/text/3-classes/cls/', 'benchmark/text/5-classes/cls/',
-                      'benchmark/text/2-classes/log/', 'benchmark/text/3-classes/log/', 'benchmark/text/5-classes/log/',
-                      'benchmark/text/2-classes/graph/', 'benchmark/text/3-classes/graph/', 'benchmark/text/5-classes/graph/']
+        for k in BEST_FEATURES_PERCENT:
+            if not os.path.exists(path + folders_best_k + str(k)):
+                os.makedirs(path + folders_best_k + str(k))
+                for exp_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_5_CLASSES_LABEL):
+                    os.makedirs(path + folders_best_k + str(k) + '/' + exp_type + '/cls/')
+                    os.makedirs(path + folders_best_k + str(k) + '/' + exp_type + '/graph/')
+                    os.makedirs(path + folders_best_k + str(k) + '/' + exp_type + '/log/')
 
-        folders_html = ['benchmark/html/2-classes/cls/', 'benchmark/html/3-classes/cls/', 'benchmark/html/5-classes/cls/',
-                      'benchmark/html/2-classes/log/', 'benchmark/html/3-classes/log/', 'benchmark/html/5-classes/log/',
-                      'benchmark/html/2-classes/graph/', 'benchmark/html/3-classes/graph/', 'benchmark/html/5-classes/graph/']
+        for exp_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_5_CLASSES_LABEL):
+            os.makedirs(path + folder_html2seq + exp_type + '/cls/')
+            os.makedirs(path + folder_html2seq + exp_type + '/graph/')
+            os.makedirs(path + folder_html2seq + exp_type + '/log/')
 
-        folders_text_html = ['benchmark/text_html/2-classes/cls/', 'benchmark/text_html/3-classes/cls/', 'benchmark/text_html/5-classes/cls/',
-                      'benchmark/text_html/2-classes/log/', 'benchmark/text_html/3-classes/log/', 'benchmark/text_html/5-classes/log/',
-                      'benchmark/text_html/2-classes/graph/', 'benchmark/text_html/3-classes/graph/', 'benchmark/text_html/5-classes/graph/']
-
-        folders_text_html = ['benchmark/html2seq/2-classes/cls/',
-                             'benchmark/html2seq/3-classes/cls/',
-                             'benchmark/html2seq/5-classes/cls/',
-                             'benchmark/html2seq/2-classes/log/',
-                             'benchmark/html2seq/3-classes/log/',
-                             'benchmark/html2seq/5-classes/log/',
-                             'benchmark/html2seq/2-classes/graph/',
-                             'benchmark/html2seq/3-classes/graph/',
-                             'benchmark/html2seq/5-classes/graph/']
-
-        subfolders = ['features/ok/', 'features/error/', 'features/html/']
-
-        subfolders.extend(folders_text)
-        subfolders.extend(folders_html)
-        subfolders.extend(folders_text_html)
-        subfolders.extend(folders_text_html)
-
-        for subfolder in subfolders:
+        others = ['features/ok/', 'features/error/', 'features/html/']
+        for subfolder in others:
             if not os.path.exists(path + subfolder):
                 os.makedirs(path + subfolder)
 
@@ -258,40 +248,30 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         elif experiment_type == EXP_5_CLASSES_LABEL:
             scoring = ['r2', 'neg_mean_squared_error', 'neg_mean_absolute_error', 'explained_variance']
             refit = 'r2'
-
         else:
             raise Exception('not supported! ' + experiment_type)
 
         if search_method == 'grid':
             clf = GridSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1, refit=refit)
         elif search_method == 'random':
-            #TODO: why this does not work????!!! add scoring and refit on k-means for HTML2seq !
-            #clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, refit=refit)
-            clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, n_jobs=-1)
-        elif search_method is None:
-            clf = estimator
+            clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, refit=refit, n_jobs=-1)
         else:
             raise Exception('not supported! ' + search_method)
 
         config.logger.debug('fitting the model')
-        print(set(y_train))
-        print(set(y_test))
+        #print(set(y_train))
+        #print(set(y_test))
         clf.fit(X_train, y_train)
 
         _path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder + experiment_type + '/cls/'
         if not os.path.exists(_path):
             os.mkdir(_path)
 
-        if search_method is not None:
-            config.logger.info('done. best training set parameters: ')
-            config.logger.info(clf.best_params_)
-            config.logger.info(clf.best_score_)
-            predicted = clf.best_estimator_.predict(X_test)
-            joblib.dump(clf.best_estimator_, _path + file)
-        else:
-            config.logger.info('done.')
-            predicted = clf.predict(X_test)
-            joblib.dump(clf, _path + file)
+        config.logger.info('done. best training set parameters: ')
+        config.logger.info(clf.best_params_)
+        config.logger.info(clf.best_score_)
+        predicted = clf.best_estimator_.predict(X_test)
+        joblib.dump(clf.best_estimator_, _path + file)
 
         config.logger.info(experiment_type)
         #if hasattr(clf.best_estimator_, 'labels_'):
@@ -340,11 +320,10 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         # saving the best parameters
         best_parameters_file_name = file.replace('.pkl', '.best_params.txt')
         with open(_path + best_parameters_file_name, "w") as best:
-            if search_method is not None:
-                best.write(' -- best params \n')
-                best.write(str(clf.best_params_) + '\n')
-                best.write(' -- best score \n')
-                best.write(str(clf.best_score_) + '\n')
+            best.write(' -- best params \n')
+            best.write(str(clf.best_params_) + '\n')
+            best.write(' -- best score \n')
+            best.write(str(clf.best_score_) + '\n')
             best.write(' - test performance \n')
             best.write(test_perf + '\n')
 
