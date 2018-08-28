@@ -4,11 +4,13 @@ Module: Web Credibility
 Author: Diego Esteves
 Date: 15-Aug-2018
 """
+from sklearn import decomposition
 from sklearn.cluster import KMeans, AgglomerativeClustering, AffinityPropagation
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, ExtraTreesClassifier, \
     BaggingClassifier, AdaBoostClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.linear_model import LogisticRegression, Ridge, PassiveAggressiveClassifier, SGDClassifier
+from sklearn.linear_model import LogisticRegression, Ridge, PassiveAggressiveClassifier, SGDClassifier, BayesianRidge, \
+    RidgeClassifier
 from sklearn.naive_bayes import BernoulliNB, MultinomialNB, GaussianNB
 from sklearn.neural_network import MLPClassifier, MLPRegressor
 from sklearn.pipeline import Pipeline
@@ -93,6 +95,7 @@ LABELS_5_CLASSES = {1: 'non-credible', 2: 'low', 3: 'neutral', 4: 'likely', 5: '
 LABELS_3_CLASSES = {0: 'low', 1: 'medium', 2: 'high'}
 LABELS_2_CLASSES = {0: 'low', 1: 'high'}
 HEADER = 'cls\texperiment_type\tpadding\tklass\tprecision\trecall\tf-measure\tsupport\trate\n'
+HEADER_REGRESSION = 'cls\texperiment_type\tpadding\tklass\tr2\trmse\tmae\tevar\n'
 
 # best model's info (used in the combined evaluation)
 BEST_PAD_WINDOW = 2900
@@ -161,42 +164,58 @@ CONFIG_FEATURES = [CONFIG_FEATURES_BASIC, CONFIG_FEATURES_BASIC_GI, CONFIG_FEATU
 
 CONFIGS_HIGH_DIMEN_CLASSIFICATION = [(MultinomialNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
                                      (BernoulliNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
-                                     (SVC(probability=True), dict(kernel=['linear','rbf','sigmoid'], decision_function_shape=['ovo', 'ovr'], C=[1e0, 1e-1, 1e-2, 1e-3], tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4] ), SEARCH_METHOD_GRID),#(MLPClassifier(early_stopping=True, solver='lbfgs'),
-                                     # dict(activation=['logistic', 'tanh'], alpha=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]),
-                                     # SEARCH_METHOD_RANDOMIZED_GRID),
-                                     (LinearSVC(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2], multi_class=['ovr', 'crammer_singer']), SEARCH_METHOD_GRID),
+                                     (RidgeClassifier(), dict(alpha=[1e0, 1e-1],
+                                                    solver=['auto', 'lsqr'],
+                                                    tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]),
+                                      SEARCH_METHOD_RANDOMIZED_GRID),
+                                     (LinearSVC(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2], multi_class=['ovr', 'crammer_singer']), SEARCH_METHOD_RANDOMIZED_GRID),
                                      ]
-
-CONFIGS_HIGH_DIMEN_REGRESSION = [#(MLPRegressor(early_stopping=True, solver='lbfgs'), dict(activation=['logistic', 'tanh'],
-                                  #           alpha=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]), SEARCH_METHOD_RANDOMIZED_GRID),
-                      (LinearSVR(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2, 1e-3], tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4], epsilon=[0, 0.1]), SEARCH_METHOD_RANDOMIZED_GRID),
-    (SVR(), dict(kernel=['linear','rbf','sigmoid'], C=[1e0, 1e-1, 1e-2, 1e-3], epsilon=[1e-1, 1e-2, 1e-3],tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]), SEARCH_METHOD_RANDOMIZED_GRID)]
-
-CONFIGS_REGRESSION = [(LogisticRegression(),
-                       dict(alpha=[1e0, 1e-1, 1e-2, 1e-3], solver=["newton-cg", "lbfgs", "liblinear", "sag", "saga"],
-                            multi_class=["ovr", "multinomial"], tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4], penalty=["l1", "l2"],
-                            C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]),
-                       SEARCH_METHOD_RANDOMIZED_GRID),
-                      (Ridge(), dict(alpha=[1e0, 1e-1, 1e-2, 1e-3],
-                                     solver=['auto', 'svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag', 'saga'],
-                                     tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]),
-                       SEARCH_METHOD_RANDOMIZED_GRID),
-                      (SVR(), dict(epsilon=[1e0, 1e-1, 1e-2, 1e-3], kernel=["linear", "poly", "rbf", "sigmoid"],
-                                   tol=[1e0, 1e-1, 1e-2, 1e-3], C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]), SEARCH_METHOD_RANDOMIZED_GRID)
-                      ]
 
 CONFIGS_CLASSIFICATION = [
     (DecisionTreeClassifier(), dt_param, SEARCH_METHOD_RANDOMIZED_GRID),
     (GradientBoostingClassifier(), gb_param, SEARCH_METHOD_RANDOMIZED_GRID),
     (RandomForestClassifier(), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
     (ExtraTreesClassifier(), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
-    (BaggingClassifier(), dict(n_estimators=[10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000], base_estimator__max_depth=[1, 2, 3, 4, 5],
+    (BaggingClassifier(), dict(n_estimators=[10, 25, 50, 100, 200, 400], base_estimator__max_depth=[1, 2, 3, 4, 5],
           max_samples=[0.05, 0.1, 0.2, 0.5]), SEARCH_METHOD_RANDOMIZED_GRID),
-    (AdaBoostClassifier(), dict(n_estimators=[10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000], algorithm=["SAMME", "SAMME.R"]), SEARCH_METHOD_RANDOMIZED_GRID),
-    (PassiveAggressiveClassifier(), dict(tol=[1e0, 1e-1, 1e-2, 1e-3], C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0], loss=["hinge", "squared_hinge"]), SEARCH_METHOD_RANDOMIZED_GRID),
+    (AdaBoostClassifier(), dict(n_estimators=[10, 25, 50, 100, 200, 400], algorithm=["SAMME", "SAMME.R"]), SEARCH_METHOD_RANDOMIZED_GRID),
+    (PassiveAggressiveClassifier(), dict(tol=[1e0, 1e-1, 1e-2, 1e-3], C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0], loss=["hinge", "squared_hinge"]), SEARCH_METHOD_RANDOMIZED_GRID),
     (SGDClassifier(n_jobs=-1), dict(loss=["hinge", "log", "modified_huber", "squared_hinge", "perceptron"],
                                     penality=["none", "l2", "l1", "elasticnet"], alpha=[1e0, 1e-1, 1e-2, 1e-3],
                                     tol=[1e0, 1e-1, 1e-2, 1e-3], learning_rate=["constant", "invscaling", "optimal"]), SEARCH_METHOD_RANDOMIZED_GRID),
     (BernoulliNB(), {"alpha": [1e0, 1e-1, 1e-2, 1e-3]}, SEARCH_METHOD_GRID),
     (MultinomialNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID)]
     #MLPClassifier(hidden_layer_sizes=(hidden_nodes,hidden_nodes,hidden_nodes), solver='adam', alpha=1e-05)
+
+'''
+(Pipeline(steps=[('pca', decomposition.PCA()), ('cls', LinearSVR())]),
+     dict(pca__n_components=N_COMPONENTS,
+          cls__C=[1e0, 1e-1],), #, 1e-2, 1e-3
+          #cls__epsilon=[1e-1, 1e-2, 1e-3],
+          #cls__tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]),
+    SEARCH_METHOD_RANDOMIZED_GRID),
+    '''
+N_COMPONENTS = [10, 20, 40, 60, 80]
+CONFIGS_HIGH_DIMEN_REGRESSION = [
+    (LinearSVR(),
+     dict(C=[1e0, 1e-1, 1e-2],
+          epsilon=[1e-1, 1e-2, 1e-3],
+          tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]),
+    SEARCH_METHOD_GRID),
+    (Ridge(), dict(alpha=[1e0, 1e-1, 1e-2, 1e-3],
+                   solver=['sag'],
+                   tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]),
+     SEARCH_METHOD_GRID),]
+
+
+CONFIGS_REGRESSION = [(LogisticRegression(),
+                       dict(alpha=[1e0, 1e-1, 1e-2, 1e-3], solver=["newton-cg", "lbfgs", "liblinear", "sag", "saga"],
+                            multi_class=["ovr", "multinomial"], tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4], penalty=["l1", "l2"],
+                            C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]),
+                       SEARCH_METHOD_RANDOMIZED_GRID),
+                      (Ridge(), dict(alpha=[1e0, 1e-1],
+                                     solver=['auto', 'svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag', 'saga']),
+                       SEARCH_METHOD_RANDOMIZED_GRID),
+                      (SVR(), dict(epsilon=[1e0, 1e-1, 1e-2, 1e-3], kernel=["linear", "sigmoid"], tol=[1e0, 1e-1, 1e-2, 1e-3],
+                                   C=[1e0, 1e-1, 1e-2, 1e-3]), SEARCH_METHOD_RANDOMIZED_GRID)
+                      ]

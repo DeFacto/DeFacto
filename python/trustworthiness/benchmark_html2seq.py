@@ -4,15 +4,17 @@ from sklearn.exceptions import UndefinedMetricWarning
 from sklearn.externals import joblib
 import os
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.model_selection import train_test_split
 import plotly.plotly as py
+from sklearn.preprocessing import StandardScaler
+
 from trustworthiness.benchmark_utils import train_test_export_save_per_exp_type, export_chart_scatter
 from trustworthiness.benchmark_utils import append_annotation_style
 from config import DeFactoConfig
 from defacto.definitions import OUTPUT_FOLDER, HEADER, CONFIGS_HIGH_DIMEN_CLASSIFICATION, EXP_5_CLASSES_LABEL, \
     EXP_3_CLASSES_LABEL, \
-    EXP_2_CLASSES_LABEL, TEST_SIZE, RANDOM_STATE, CONFIGS_HIGH_DIMEN_REGRESSION
+    EXP_2_CLASSES_LABEL, TEST_SIZE, RANDOM_STATE, CONFIGS_HIGH_DIMEN_REGRESSION, ENC_TAGS, HEADER_REGRESSION
 from trustworthiness.feature_extractor import likert2bin, likert2tri
 import numpy as np
 import math
@@ -27,40 +29,50 @@ warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
 def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, test_size, pads):
     try:
         config.logger.info('benchmark_html_sequence()')
-
-
         maxsent = -1
         for e in X:
             maxsent = len(e) if len(e) > maxsent else maxsent
         config.logger.debug('max_sent: ' + str(maxsent))
 
-
         subfolder = 'html2seq/'
         path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/' + subfolder
         #logger = get_logger('defacto.trust.benchmark.html2seq', path)
 
-        with open(path + 'results.txt', "w") as file_log:
-            file_log.write(HEADER)
-            nb_2, bnb_2, svc_2, mlp_2 = [], [], [], []
-            nb_3, bnb_3, svc_3, mlp_3 = [], [], [], []
+        scaler = StandardScaler()
+
+
+        config.logger.info('regression benchmark...')
+        with open(path + 'results_regression.txt', "w") as file_log:
+            file_log.write(HEADER_REGRESSION)
             mlpr_5, svr_5 = [], []
 
             for maxpad in pads:
                 config.logger.debug('padding ' + str(maxpad))
                 XX = pad_sequences(X, maxlen=maxpad, dtype='int', padding='pre', truncating='pre', value=0)
-                X_train, X_test, y_train_5, y_test_5 = train_test_split(XX, y5, test_size=test_size, random_state=random_state)
-                X_train, X_test, y_train_3, y_test_3 = train_test_split(XX, y3, test_size=test_size, random_state=random_state)
-                X_train, X_test, y_train_2, y_test_2 = train_test_split(XX, y2, test_size=test_size, random_state=random_state)
+                X_train_5, X_test_5, y_train_5, y_test_5 = train_test_split(XX, y5, test_size=test_size, random_state=random_state)
+                X_train_3, X_test_3, y_train_3, y_test_3 = train_test_split(XX, y3, test_size=test_size, random_state=random_state)
+                X_train_2, X_test_2, y_train_2, y_test_2 = train_test_split(XX, y2, test_size=test_size, random_state=random_state)
 
-                config.logger.debug(X_train.shape)
-                config.logger.debug(X_test.shape)
+                assert np.all(X_train_5 == X_train_3)
+                assert np.all(X_test_5 == X_test_2)
+                X_train = X_train_5
+                X_test = X_test_5
 
-                ## no need to perform pre-processing nor tokenization here
+                #c = CountVectorizer(vocabulary=joblib.load(ENC_TAGS))
+                #X_train = c.fit_transform(X_train)
+                #X_test = c.transform(X_test)
+
                 config.logger.info('vectorizing...')
-                tfidf = TfidfVectorizer(preprocessor=lambda x: x, tokenizer=lambda x: x) #ngram_range=
-                X_train_tfidf = tfidf.fit_transform(X_train)
-                X_test_tfidf = tfidf.transform(X_test)
+                tfidf = TfidfVectorizer(preprocessor=lambda x: str(x), tokenizer=lambda x: str(x), ngram_range=(1, 3))
+                X_train = tfidf.fit_transform(X_train)
+                X_test = tfidf.transform(X_test)
                 config.logger.info('TF-IDF ok.')
+
+
+                #config.logger.debug('scaling..')
+                #scaler.fit(X_train)
+                #X_train = scaler.transform(X_train)
+                #X_test = scaler.transform(X_test)
 
                 '''
                 -------------------------------------------------------------------------------------------------------------------
@@ -68,18 +80,48 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 -------------------------------------------------------------------------------------------------------------------
                 '''
                 # ================
-                # NN.MLP REG
+                # svm.SVR
                 # ================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN_REGRESSION[0]
-                mlpr_5, _ = train_test_export_save_per_exp_type(cls, 'svm', params, search_method, X_train_tfidf, X_test_tfidf, y_train_5,
+                mlpr_5, _ = train_test_export_save_per_exp_type(cls, 'linsvr', params, search_method, X_train, X_test, y_train_5,
                                                               y_test_5, EXP_5_CLASSES_LABEL, maxpad, mlpr_5, file_log, subfolder, exp_folder, ds_folder)
+                file_log.flush()
                 # ================
                 # SVR
                 # ================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN_REGRESSION[1]
-                svr_5, _ = train_test_export_save_per_exp_type(cls, 'svr', params, search_method, X_train_tfidf, X_test_tfidf, y_train_5,
+                svr_5, _ = train_test_export_save_per_exp_type(cls, 'ridge', params, search_method, X_train, X_test, y_train_5,
                                                               y_test_5, EXP_5_CLASSES_LABEL, maxpad, svr_5, file_log, subfolder, exp_folder, ds_folder)
+                file_log.flush()
 
+        config.logger.info('classification benchmark...')
+        with open(path + 'results_classification.txt', "w") as file_log:
+            file_log.write(HEADER)
+            nb_2, bnb_2, svc_2, mlp_2 = [], [], [], []
+            nb_3, bnb_3, svc_3, mlp_3 = [], [], [], []
+
+            for maxpad in pads:
+                config.logger.debug('padding ' + str(maxpad))
+                XX = pad_sequences(X, maxlen=maxpad, dtype='int', padding='pre', truncating='pre', value=0)
+                X_train_5, X_test_5, y_train_5, y_test_5 = train_test_split(XX, y5, test_size=test_size, random_state=random_state)
+                X_train_3, X_test_3, y_train_3, y_test_3 = train_test_split(XX, y3, test_size=test_size, random_state=random_state)
+                X_train_2, X_test_2, y_train_2, y_test_2 = train_test_split(XX, y2, test_size=test_size, random_state=random_state)
+
+                assert np.all(X_train_5 == X_train_3)
+                assert np.all(X_test_5 == X_test_2)
+                X_train = X_train_5
+                X_test = X_test_5
+
+                config.logger.info('vectorizing...')
+                tfidf = TfidfVectorizer(preprocessor=lambda x: str(x), tokenizer=lambda x: str(x), ngram_range=(1, 3))
+                X_train = tfidf.fit_transform(X_train)
+                X_test = tfidf.transform(X_test)
+                config.logger.info('TF-IDF ok.')
+
+
+                '''
+                try CountVectorizer(ngram_range=(1, 3), min_df=0.1, max_df=0.8) later...
+                '''
 
                 '''
                 -------------------------------------------------------------------------------------------------------------------
@@ -91,9 +133,9 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 # NB
                 # ================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN_CLASSIFICATION[0]
-                nb_3, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train_tfidf, X_test_tfidf, y_train_3, y_test_3,
+                nb_3, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_3, y_test_3,
                                                               EXP_3_CLASSES_LABEL, maxpad, nb_3, file_log, subfolder, exp_folder, ds_folder)
-                nb_2, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train_tfidf, X_test_tfidf, y_train_2, y_test_2,
+                nb_2, _ = train_test_export_save_per_exp_type(cls, 'nb', params, search_method, X_train, X_test, y_train_2, y_test_2,
                                                               EXP_2_CLASSES_LABEL, maxpad, nb_2, file_log, subfolder, exp_folder, ds_folder)
 
                 file_log.flush()
@@ -101,9 +143,9 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 # BernoulliNB
                 # ================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN_CLASSIFICATION[1]
-                bnb_3, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train_tfidf, X_test_tfidf, y_train_3, y_test_3,
+                bnb_3, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train, X_test, y_train_3, y_test_3,
                                                                EXP_3_CLASSES_LABEL, maxpad, bnb_3, file_log, subfolder, exp_folder, ds_folder)
-                bnb_2, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train_tfidf, X_test_tfidf, y_train_2, y_test_2,
+                bnb_2, _ = train_test_export_save_per_exp_type(cls, 'bnb', params, search_method, X_train, X_test, y_train_2, y_test_2,
                                                                EXP_2_CLASSES_LABEL, maxpad, bnb_2, file_log, subfolder, exp_folder, ds_folder)
 
                 file_log.flush()
@@ -111,9 +153,9 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 # SVC.svm
                 # ================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN_CLASSIFICATION[2]
-                mlp_3, _ = train_test_export_save_per_exp_type(cls, 'svm', params, search_method, X_train_tfidf, X_test_tfidf, y_train_3, y_test_3,
+                mlp_3, _ = train_test_export_save_per_exp_type(cls, 'ridge', params, search_method, X_train, X_test, y_train_3, y_test_3,
                                                                EXP_3_CLASSES_LABEL, maxpad, mlp_3, file_log, subfolder, exp_folder, ds_folder)
-                mlp_2, _ = train_test_export_save_per_exp_type(cls, 'svm', params, search_method, X_train_tfidf, X_test_tfidf, y_train_2, y_test_2,
+                mlp_2, _ = train_test_export_save_per_exp_type(cls, 'ridge', params, search_method, X_train, X_test, y_train_2, y_test_2,
                                                                EXP_2_CLASSES_LABEL, maxpad, mlp_2, file_log, subfolder, exp_folder, ds_folder)
 
                 file_log.flush()
@@ -131,27 +173,13 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 # SVC
                 # ================
                 cls, params, search_method = CONFIGS_HIGH_DIMEN_CLASSIFICATION[3]
-                svc_3, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train_tfidf, X_test_tfidf, y_train_3, y_test_3,
+                svc_3, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train, X_test, y_train_3, y_test_3,
                                                                EXP_3_CLASSES_LABEL, maxpad, svc_3, file_log, subfolder, exp_folder, ds_folder)
-                svc_2, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train_tfidf, X_test_tfidf, y_train_2, y_test_2,
+                svc_2, _ = train_test_export_save_per_exp_type(cls, 'svc', params, search_method, X_train, X_test, y_train_2, y_test_2,
                                                                EXP_2_CLASSES_LABEL, maxpad, svc_2, file_log, subfolder, exp_folder, ds_folder)
 
                 file_log.flush()
-                '''
-                # ==========================================================================================================
-                # AgglomerativeClustering
-                # ==========================================================================================================
-                cls, params, search_method = CONFIGS_HIGH_DIMEN_CLASSIFICATION[4]
-                agg_5 = train_test_export_save_per_exp_type(cls, 'agg', params, search_method, X_train, X_test,
-                                                            y_train_5, y_test_5, EXP_5_CLASSES_LABEL, maxpad, agg_5,
-                                                            file_log, subfolder, exp_folder, ds_folder)
-                agg_3 = train_test_export_save_per_exp_type(cls, 'agg', params, search_method, X_train, X_test,
-                                                            y_train_3, y_test_3, EXP_3_CLASSES_LABEL, maxpad, agg_3,
-                                                            file_log, subfolder, exp_folder, ds_folder)
-                agg_2 = train_test_export_save_per_exp_type(cls, 'agg', params, search_method, X_train, X_test,
-                                                            y_train_2, y_test_2, EXP_2_CLASSES_LABEL, maxpad, agg_2,
-                                                            file_log, subfolder, exp_folder, ds_folder)
-                '''
+
                 # ==========================================================================================================
                 # LSTM
                 # ==========================================================================================================
@@ -174,6 +202,7 @@ def benchmark_html_sequence(X, y5, y3, y2, exp_folder, ds_folder, random_state, 
                 #   print('Expected:', y[0, i], 'Predicted', yhat[0, i])
                 '''
 
+        config.logger.info('exporting graphs (classification)')
         title = 'HTML2Seq: performance varying window size'
         x_title = 'Padding window size (log scale)'
         y_title = 'F1-measure (average)'
@@ -201,16 +230,16 @@ if __name__ == '__main__':
         config.logger.info('html2seq feature benchmark')
         #(features_seq, y5, y3, y2), le = get_html2sec_features(exp, ds)
 
-        #ds = 'microsoft/'
-        ds = 'c3/'
+        ds = 'microsoft/'
+        #ds = 'c3/'
 
-        #K1 = '899'
-        K1 = '2977'
+        K1 = '911'
+        #K1 = '2977'
 
         exp = 'exp010/'
 
         features_html2seq_file = OUTPUT_FOLDER + exp + ds + 'features/' + 'features.html2seq.' + K1 + '.pkl'
-        X_html2seq_f = joblib.load(features_html2seq_file)
+
         X_html2seq = []
         y5_html2seq = []
         y3_html2seq = []
@@ -222,15 +251,27 @@ if __name__ == '__main__':
         else:
             raise Exception('not supported! ' + ds)
 
-        for x in X_html2seq_f:
-            hash = x[0]
-            y = x[1]
-            x = np.array(x)
-            html2seq = np.delete(x, np.s_[0:2], axis=0)
-            X_html2seq.append(html2seq)
-            y5_html2seq.append(y)
-            y3_html2seq.append(likert2tri(int(y)))
-            y2_html2seq.append(likert2bin(int(y)))
+        if (not os.path.exists(features_html2seq_file.replace('.pkl', '') + '.temp.X.pkl')) and \
+            (not os.path.exists(features_html2seq_file.replace('.pkl', '') + '.temp.y.pkl')):
+            config.logger.info('loading file...')
+            X_html2seq_f = joblib.load(features_html2seq_file)
+            config.logger.info('ok')
+            for x in X_html2seq_f:
+                #hash = x[0]
+                y = x[1]
+                y5_html2seq.append(y)
+                y3_html2seq.append(likert2tri(int(y)))
+                y2_html2seq.append(likert2bin(int(y)))
+                x = np.array(x)
+                html2seq = np.delete(x, np.s_[0:2], axis=0)
+                X_html2seq.append(html2seq)
+
+            joblib.dump(X_html2seq, features_html2seq_file.replace('.pkl', '') + '.temp.X.pkl')
+            joblib.dump((y5_html2seq, y3_html2seq, y2_html2seq), features_html2seq_file.replace('.pkl', '') + '.temp.y.pkl')
+
+        else:
+            X_html2seq = joblib.load(features_html2seq_file.replace('.pkl', '') + '.temp.X.pkl')
+            y5_html2seq, y3_html2seq, y2_html2seq = joblib.load(features_html2seq_file.replace('.pkl', '') + '.temp.y.pkl')
 
         benchmark_html_sequence(X_html2seq, y5_html2seq, y3_html2seq, y2_html2seq, exp, ds, RANDOM_STATE, TEST_SIZE, PADS)
 

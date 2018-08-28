@@ -12,7 +12,7 @@ import os
 from config import DeFactoConfig
 from defacto.definitions import BENCHMARK_FILE_NAME_TEMPLATE, EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL, \
     EXP_5_CLASSES_LABEL, CROSS_VALIDATION_K_FOLDS, OUTPUT_FOLDER, LABELS_2_CLASSES, LABELS_3_CLASSES, LINE_TEMPLATE, \
-    BEST_FEATURES_PERCENT
+    BEST_FEATURES_PERCENT, RANDOM_STATE
 
 config = DeFactoConfig()
 
@@ -225,7 +225,6 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
                                         X_train, X_test, y_train, y_test, experiment_type, padding,
                                         out_chart, file_log, subfolder, exp_folder, ds_folder):
     try:
-        config.logger.info('----------------------------------------------------------------------')
         config.logger.info(estimator_label)
         config.logger.info(experiment_type)
 
@@ -254,7 +253,8 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         if search_method == 'grid':
             clf = GridSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1, refit=refit)
         elif search_method == 'random':
-            clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, refit=refit, n_jobs=-1)
+            clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1,
+                                     refit=refit, random_state=RANDOM_STATE)
         else:
             raise Exception('not supported! ' + search_method)
 
@@ -327,7 +327,7 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
             best.write(' - test performance \n')
             best.write(test_perf + '\n')
 
-        config.logger.info('----------------------------------------------------')
+        config.logger.info('----------------------------------------------------------------------')
         file_log.flush()
         return out_chart, clf.best_estimator_
 
