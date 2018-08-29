@@ -140,14 +140,14 @@ dt_param["criterion"] = ['gini', 'entropy']
 
 BEST_FEATURES_PERCENT = [100, 85, 70, 55, 40, 25, 10, 5, 3, 1]
 
-CONFIG_FEATURES_BASIC = ['basic',
+CONFIG_FEATURES_BASIC = ['split.basic',
                          ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http', 'outbound_links_https',
                        'outbound_links_ftp', 'outbound_links_ftps', 'outbound_domains_http', 'outbound_domains_https',
                        'outbound_domains_ftp', 'outbound_domains_ftps', 'text_categ_title', 'text_categ_body',
                        'readability_metrics', 'css', 'open_page_rank',
                        'sent_probs_title', 'sent_probs_body']]
 
-CONFIG_FEATURES_BASIC_GI = ['basic_gi',
+CONFIG_FEATURES_BASIC_GI = ['split.basic_gi',
                             ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http',
                         'outbound_links_https',
                         'outbound_links_ftp', 'outbound_links_ftps', 'outbound_domains_http',
@@ -157,7 +157,7 @@ CONFIG_FEATURES_BASIC_GI = ['basic_gi',
                         'sent_probs_title', 'sent_probs_body', 'general_inquirer_body', 'general_inquirer_title']]
 
 
-CONFIG_FEATURES_ALL = ['all', ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http', 'outbound_links_https',
+CONFIG_FEATURES_ALL = ['split.all', ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http', 'outbound_links_https',
               'outbound_links_ftp', 'outbound_links_ftps', 'outbound_domains_http', 'outbound_domains_https',
               'outbound_domains_ftp', 'outbound_domains_ftps', 'text_categ_title', 'text_categ_body',
               'text_categ_summary_lex', 'text_categ_summary_lsa', 'readability_metrics', 'spam_title',
@@ -165,7 +165,7 @@ CONFIG_FEATURES_ALL = ['all', ['basic_text', 'domain', 'suffix', 'source', 'outb
                                  'general_inquirer_body', 'general_inquirer_title', 'vader_body', 'vader_title', 'who_is',
                                  'sent_probs_title', 'sent_probs_body', 'archive']]
 
-CONFIG_FEATURES_ALL_HTML2SEQ = ['all+html2seq', ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http', 'outbound_links_https',
+CONFIG_FEATURES_ALL_HTML2SEQ = ['split.all+html2seq', ['basic_text', 'domain', 'suffix', 'source', 'outbound_links_http', 'outbound_links_https',
               'outbound_links_ftp', 'outbound_links_ftps', 'outbound_domains_http', 'outbound_domains_https',
               'outbound_domains_ftp', 'outbound_domains_ftps', 'text_categ_title', 'text_categ_body',
               'text_categ_summary_lex', 'text_categ_summary_lsa', 'readability_metrics', 'spam_title',

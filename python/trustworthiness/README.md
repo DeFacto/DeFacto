@@ -38,13 +38,15 @@ preprocessing/
     - dataset: dataset
     - outputs: (K=number of ok/ files, where K<=X)
         - /out/[expX]/[dataset]/features/
-            1. features.basic.K.pkl
-            2. features.basic_gi.K.pkl
-            3. features.all.K.pkl
-            4. features.all+html2seq.K.pkl
-            5. features.html2seq.K.pkl
-            6. features.all+html2seq_pad.K.pkl (linguistic features + padded HTML sequence based on best model HTML)
-
+            1. features.split.basic.K.pkl
+            2. features.split.basic_gi.K.pkl
+            3. features.split.all.K.pkl (*)
+            4. features.split.all+html2seq.K.pkl
+            5. features.split.html2seq.K.pkl (*)
+            6. features.split.all+html2seq_pad.K.pkl (*) 
+                >> linguistic features + padded HTML sequence based on best model HTML
+    
+    (*) currently the most relevant ones, others are useful for facilitating further experiments.
 
 2.3 ``features_core.py`` implements all the features
 #### 3. Run

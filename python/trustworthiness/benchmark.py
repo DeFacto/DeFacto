@@ -321,7 +321,7 @@ if __name__ == '__main__':
     try:
 
         ds = 'microsoft/'
-        Xl ='994'
+        K ='911'
         exp ='exp010/'
 
 
@@ -329,7 +329,7 @@ if __name__ == '__main__':
 
         # benchmarking text features + html2seq (with best HTML2seq model)
         config.logger.debug('02. TEXT + HTML2Seq features combined (out of best configurations)')
-        X, y5, y3, y2 = get_web_features(exp, ds, Xl, html2seq=True)
+        X, y5 = get_web_features(exp, ds, K, html2seq=True)
         X_train, X_test, y5_train, y5_test = train_test_split(X, y5, test_size=TEST_SIZE, random_state=RANDOM_STATE)
         y3_train, y2_train, y3_test, y2_test = [], [], [], []
         config.logger.debug('converting y: 3-class and 2-class experiments...')

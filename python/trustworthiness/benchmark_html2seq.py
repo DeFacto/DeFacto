@@ -238,7 +238,7 @@ if __name__ == '__main__':
 
         exp = 'exp010/'
 
-        features_html2seq_file = OUTPUT_FOLDER + exp + ds + 'features/' + 'features.html2seq.' + K1 + '.pkl'
+        features_html2seq_file = OUTPUT_FOLDER + exp + ds + 'features/' + 'features.split.html2seq.' + K1 + '.pkl'
 
         X_html2seq = []
         y5_html2seq = []

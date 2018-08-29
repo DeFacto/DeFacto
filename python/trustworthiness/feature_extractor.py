@@ -257,17 +257,12 @@ def get_web_features(exp_folder, ds_folder, features_file_K, html2seq = False):
         #y3 = []
         y5 = []
 
-
-
-        features_file = 'features.complex.all.' + features_file_K + '.pkl'
-
-
         if html2seq is True:
-            features_file = 'features.all+html2seq_pad.' + features_file_K + '.pkl'
+            features_file = 'features.split.all+html2seq_pad.' + features_file_K + '.pkl'
             X = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'features/' + features_file)
             clf_html2seq, best_k = get_best_html2seq_model(ds_folder, exp_folder)
         else:
-            features_file = 'features.all.' + features_file_K + '.pkl'
+            features_file = 'features.split.all.' + features_file_K + '.pkl'
             X = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'features/' + features_file)
 
         config.logger.debug('extracting features for: ' + features_file)
@@ -280,17 +275,12 @@ def get_web_features(exp_folder, ds_folder, features_file_K, html2seq = False):
 
         for feat in X:
             if html2seq is True:
-                hash = get_md5_from_string(feat[0])
-                file_name = ds_folder.replace('/','') + '_dataset_features_%s.pkl' % (hash)
 
-                x = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'html2seq/' + file_name)
-                if MICROSOFT_BEST_MODEL_2_KLASS <= len(x):
-                    x2 = le.transform(x[0:MICROSOFT_BEST_MODEL_2_KLASS])
-                else:
-                    x2 = le.transform(x)
-                    x2 = np.pad(x2, (0, MICROSOFT_BEST_MODEL_2_KLASS - len(x2)), 'constant')
-                pred_klass = clf_html2seq.predict([x2])[0]
-                pred_prob = clf_html2seq.predict_proba([x2])
+                standard = feat[0]
+                html2seq_pad = feat[1]
+
+                pred_klass = clf_html2seq.predict(html2seq_pad)[0]
+                pred_prob = clf_html2seq.predict_proba(html2seq_pad)
 
                 feat.extend([pred_klass])
                 feat.extend(pred_prob)
