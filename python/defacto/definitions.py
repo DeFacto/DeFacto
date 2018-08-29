@@ -214,7 +214,7 @@ CONFIGS_REGRESSION = [(LogisticRegression(),
                             C=[0.1, 0.5, 1.0, 3.0, 5.0, 10.0, 50.0, 100.0]),
                        SEARCH_METHOD_RANDOMIZED_GRID),
                       (Ridge(), dict(alpha=[1e0, 1e-1],
-                                     solver=['auto', 'svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag', 'saga']),
+                                     solver=['sag']),
                        SEARCH_METHOD_RANDOMIZED_GRID),
                       (SVR(), dict(epsilon=[1e0, 1e-1, 1e-2, 1e-3], kernel=["linear", "sigmoid"], tol=[1e0, 1e-1, 1e-2, 1e-3],
                                    C=[1e0, 1e-1, 1e-2, 1e-3]), SEARCH_METHOD_RANDOMIZED_GRID)
