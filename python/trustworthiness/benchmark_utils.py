@@ -12,7 +12,9 @@ import os
 from config import DeFactoConfig
 from defacto.definitions import BENCHMARK_FILE_NAME_TEMPLATE, EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL, \
     EXP_5_CLASSES_LABEL, CROSS_VALIDATION_K_FOLDS, OUTPUT_FOLDER, LABELS_2_CLASSES, LABELS_3_CLASSES, LINE_TEMPLATE, \
-    BEST_FEATURES_PERCENT, RANDOM_STATE
+    BEST_FEATURES_PERCENT, RANDOM_STATE, MICROSOFT_BEST_MODEL_2_KLASS, MICROSOFT_BEST_MODEL_3_KLASS, \
+    MICROSOFT_BEST_MODEL_5_KLASS, C3_BEST_MODEL_2_KLASS, C3_BEST_MODEL_3_KLASS, C3_BEST_MODEL_5_KLASS, C3_BEST_MODEL, \
+    MICROSOFT_BEST_MODEL, MICROSOFT_BEST_K, C3_BEST_K
 
 config = DeFactoConfig()
 
@@ -22,6 +24,60 @@ SERIES_COLORS = ['rgb(205, 12, 24)', 'rgb(22, 96, 167)', 'rgb(128, 128, 128)', '
 
 BAR_COLOR = 'rgb(128,128,128)'
 
+def get_best_html2seq_model(dataset, exp):
+    try:
+
+        assert dataset in ('microsoft', 'c3')
+
+        filename = ''
+        best_k = ''
+
+        if dataset == 'microsoft':
+            filename = MICROSOFT_BEST_MODEL
+            best_k = MICROSOFT_BEST_K
+        elif dataset == 'c3':
+            filename = C3_BEST_MODEL
+            best_k = C3_BEST_K
+
+        cls_path = '%s%s/%s/benchmark/html2seq/2-classes/cls/%s' % (OUTPUT_FOLDER, exp, dataset, filename)
+        cls = joblib.load(cls_path)
+        return cls, best_k
+    except:
+        raise
+
+def get_best_html2seq_model_by_exp_type(dataset, exp, experiment_type):
+    try:
+        assert experiment_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_5_CLASSES_LABEL)
+        assert dataset in ('microsoft', 'c3')
+
+        filename = ''
+
+        if dataset == 'microsoft':
+            if experiment_type == EXP_2_CLASSES_LABEL:
+                filename = MICROSOFT_BEST_MODEL_2_KLASS
+            elif experiment_type == EXP_3_CLASSES_LABEL:
+                filename = MICROSOFT_BEST_MODEL_3_KLASS
+            elif experiment_type == EXP_5_CLASSES_LABEL:
+                filename = MICROSOFT_BEST_MODEL_5_KLASS
+            else:
+                raise Exception('err')
+        elif dataset == 'c3':
+            if experiment_type == EXP_2_CLASSES_LABEL:
+                filename = C3_BEST_MODEL_2_KLASS
+            elif experiment_type == EXP_3_CLASSES_LABEL:
+                filename = C3_BEST_MODEL_3_KLASS
+            elif experiment_type == EXP_5_CLASSES_LABEL:
+                filename = C3_BEST_MODEL_5_KLASS
+            else:
+                raise Exception('err')
+
+        cls_path = '%s%s/%s/benchmark/html2seq/%s/%s' % (OUTPUT_FOLDER, exp, dataset, experiment_type, filename)
+        cls = joblib.load(cls_path)
+        return cls
+    except:
+        raise
+
+
 def verify_and_create_experiment_folders(out_exp_folder, dataset):
     try:
         path = OUTPUT_FOLDER + out_exp_folder + dataset + '/'
@@ -29,9 +85,9 @@ def verify_and_create_experiment_folders(out_exp_folder, dataset):
             os.makedirs(path)
 
         # creating experiment folders
-        path = OUTPUT_FOLDER + out_exp_folder + dataset + '/'
-        folders_best_k = ['benchmark/all/best_k/']
-        folder_html2seq = ['benchmark/html2seq/']
+        path = OUTPUT_FOLDER + out_exp_folder + dataset
+        folders_best_k = 'benchmark/all/best_k/'
+        folder_html2seq = 'benchmark/html2seq/'
 
         for k in BEST_FEATURES_PERCENT:
             if not os.path.exists(path + folders_best_k + str(k)):
@@ -42,9 +98,14 @@ def verify_and_create_experiment_folders(out_exp_folder, dataset):
                     os.makedirs(path + folders_best_k + str(k) + '/' + exp_type + '/log/')
 
         for exp_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_5_CLASSES_LABEL):
-            os.makedirs(path + folder_html2seq + exp_type + '/cls/')
-            os.makedirs(path + folder_html2seq + exp_type + '/graph/')
-            os.makedirs(path + folder_html2seq + exp_type + '/log/')
+            if not os.path.exists(path + folder_html2seq + exp_type + '/cls/'):
+                os.makedirs(path + folder_html2seq + exp_type + '/cls/')
+
+            if not os.path.exists(path + folder_html2seq + exp_type + '/graph/'):
+                os.makedirs(path + folder_html2seq + exp_type + '/graph/')
+
+            if not os.path.exists(path + folder_html2seq + exp_type + '/log/'):
+                os.makedirs(path + folder_html2seq + exp_type + '/log/')
 
         others = ['features/ok/', 'features/error/', 'features/html/']
         for subfolder in others:

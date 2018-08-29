@@ -1,10 +1,13 @@
+import numpy
 import os
+
+from keras.preprocessing.sequence import pad_sequences
 from sklearn.externals import joblib
 from defacto.definitions import OUTPUT_FOLDER, ENC_WEB_DOMAIN, ENC_WEB_DOMAIN_SUFFIX, CONFIG_FEATURES_BASIC, \
-    CONFIG_FEATURES
+    CONFIG_FEATURES, MICROSOFT_BEST_K, C3_BEST_K
 import pandas as pd
 
-def features_split(out_exp_folder, dataset, complex_features_file):
+def features_split(out_exp_folder, dataset, complex_features_file, best_pad = None):
     '''
     generates the following features files:
     - text.basic
@@ -32,8 +35,9 @@ def features_split(out_exp_folder, dataset, complex_features_file):
 
         for configuration in CONFIG_FEATURES:
             running_features = configuration[1]
-            matrix_html2seq = []
+            matrix_just_html2seq = []
             matrix = []
+            matrix_all_and_html2sec_pad = []
             tot_valid_features = 0
             for features in complex_features:
                 if features is None:
@@ -61,13 +65,25 @@ def features_split(out_exp_folder, dataset, complex_features_file):
                         if html2seq_single is None:
                             print(id)
                             continue
+
+                        if best_pad is not None:
+                            new = []
+                            new = X_features.copy()
+                            if best_pad <= len(html2seq_single):
+                                new.extend(list(html2seq_single[0:best_pad]))
+                            else:
+                                padded = numpy.pad(html2seq_single, (0, best_pad - len(html2seq_single)), 'constant')
+                                new.extend(list(padded))
+                            matrix_all_and_html2sec_pad.append(new)
+
                         X_features.extend(html2seq_single)
 
                         # exports also the single html2seq features file
-                        html_features = [id]
-                        html_features.extend([label])
-                        html_features.extend(html2seq_single)
-                        matrix_html2seq.append(html_features)
+                        just_html_features = [id]
+                        just_html_features.extend([label])
+                        just_html_features.extend(html2seq_single)
+                        matrix_just_html2seq.append(just_html_features)
+
 
                     tot_valid_features += 1
                     matrix.append(X_features)
@@ -81,9 +97,14 @@ def features_split(out_exp_folder, dataset, complex_features_file):
             print('full features exported: ' + _path + name)
 
             if configuration[0] == 'all+html2seq':
-                name = 'features.html2seq.' + str(len(matrix)) + '.pkl'
                 _path = OUTPUT_FOLDER + out_exp_folder + dataset + '/features/'
-                joblib.dump(matrix_html2seq, _path + name)
+
+                name = 'features.html2seq.' + str(len(matrix)) + '.pkl'
+                joblib.dump(matrix_just_html2seq, _path + name)
+                print('full features exported: ' + _path + name)
+
+                name = 'features.all+html2seq_pad.' + str(len(matrix)) + '.pkl'
+                joblib.dump(matrix_all_and_html2sec_pad, _path + name)
                 print('full features exported: ' + _path + name)
 
 
@@ -96,8 +117,8 @@ if __name__ == '__main__':
     try:
 
         # experiment folder, dataset, name of the features complex file
-        # features_split('exp010/', 'c3', 'features.complex.all.5691.pkl')
-        features_split('exp010/', 'microsoft', 'features.complex.all.994.pkl')
+        features_split('exp010/', 'c3', 'features.complex.all.5691.pkl', best_pad=int(C3_BEST_K))
+        #features_split('exp010/', 'microsoft', 'features.complex.all.994.pkl', best_pad=int(MICROSOFT_BEST_K))
 
     except:
         raise

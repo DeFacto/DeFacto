@@ -98,9 +98,23 @@ HEADER = 'cls\texperiment_type\tpadding\tklass\tprecision\trecall\tf-measure\tsu
 HEADER_REGRESSION = 'cls\texperiment_type\tpadding\tklass\tr2\trmse\tmae\tevar\n'
 
 # best model's info (used in the combined evaluation)
-BEST_PAD_WINDOW = 2900
+MICROSOFT_BEST_MODEL_2_KLASS = 'cls_bnb_1000_2-classes.pkl' #'bnb1000'
+MICROSOFT_BEST_MODEL_3_KLASS = 'cls_bnb_100_3-classes.pkl' #'bnb100'
+MICROSOFT_BEST_MODEL_5_KLASS =  'cls_linsvr_250_5-classes.pkl'#'linsvr250'
+
+MICROSOFT_BEST_MODEL = 'cls_bnb_1000_2-classes.pkl'
+MICROSOFT_BEST_K = '1000'
+
+C3_BEST_MODEL_2_KLASS = 'cls_bnb_100_2-classes.pkl' #'bnb100'
+C3_BEST_MODEL_3_KLASS = 'cls_bnb_2800_3-classes.pkl' #'bnb2800'
+C3_BEST_MODEL_5_KLASS =  'cls_linsvr_2300_5-classes.pkl' #'linsvr2300'
+
+C3_BEST_MODEL = 'cls_bnb_100_2-classes.pkl'
+C3_BEST_K = '100'
+
 BEST_PAD_EXPERIMENT_TYPE = EXP_5_CLASSES_LABEL
 BEST_PAD_ALGORITHM = 'nb'
+
 
 THRESHOLD_LABEL_2class = 0.68
 THRESHOLD_LABEL_3class = 0.45

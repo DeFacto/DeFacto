@@ -321,23 +321,15 @@ if __name__ == '__main__':
     try:
 
         ds = 'microsoft/'
-        K1 ='882'
+        Xl ='994'
         exp ='exp010/'
-        features_file = 'features.all+html2seq.2977.pkl'
+
 
         verify_and_create_experiment_folders(exp, ds)
 
-        #EXP_CONFIGS = [
-        #    {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.basic.' + K1 + '.pkl'},
-        #    {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.basic_gi.' + K1 + '.pkl'},
-        #    {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.all.' + K1 + '.pkl'},
-        #    {'EXP_FOLDER': exp, 'DS_FOLDER': ds, 'FEATURES_FILE': 'features.all+html2seq.' + K1 + '.pkl'},
-        #]
-
-        # TODO: update the 3 HTML2Seq models (out of the best from benchmark_html2seq)
         # benchmarking text features + html2seq (with best HTML2seq model)
         config.logger.debug('02. TEXT + HTML2Seq features combined (out of best configurations)')
-        X, y5, y3, y2 = get_web_features(exp, ds, features_file, html2seq=True)
+        X, y5, y3, y2 = get_web_features(exp, ds, Xl, html2seq=True)
         X_train, X_test, y5_train, y5_test = train_test_split(X, y5, test_size=TEST_SIZE, random_state=RANDOM_STATE)
         y3_train, y2_train, y3_test, y2_test = [], [], [], []
         config.logger.debug('converting y: 3-class and 2-class experiments...')
