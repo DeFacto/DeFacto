@@ -284,7 +284,7 @@ def get_web_features(exp_folder, ds_folder, features_file_K, html2seq = False):
                 pred_prob = clf_html2seq.predict_proba(html2seq_pad)
 
                 feat[0].extend(pred_klass)
-                feat[0].extend(pred_prob)
+                feat[0].extend(pred_prob[0])
 
             #y2.append(likert2bin(feat[1]))
             #y3.append(likert2tri(feat[1]))
@@ -296,7 +296,7 @@ def get_web_features(exp_folder, ds_folder, features_file_K, html2seq = False):
         for x in X[:,0]:
             X_clean.append(x[2:len(x)])
         #X_clean = np.delete(X, np.s_[0:2], axis=1)
-        config.logger.debug('OK -> ' + str(X_clean.shape))
+        #config.logger.debug('OK -> ' + str(X_clean.shape))
         return X_clean, y5#, y3, y2
 
 
