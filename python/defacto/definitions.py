@@ -98,12 +98,12 @@ HEADER_CLASSIFICATION = 'cls\texperiment_type\tpadding\tklass\tprecision\trecall
 HEADER_REGRESSION = 'cls\texperiment_type\tpadding\tklass\tr2\trmse\tmae\tevar\n'
 
 # best model's info (used in the combined evaluation)
-MICROSOFT_BEST_MODEL_2_KLASS = 'cls_bnb_1000_2-classes.pkl' #'bnb1000'
+MICROSOFT_BEST_MODEL_2_KLASS = 'cls_bnb_100_2-classes.pkl' #'bnb100'
 MICROSOFT_BEST_MODEL_3_KLASS = 'cls_bnb_100_3-classes.pkl' #'bnb100'
 MICROSOFT_BEST_MODEL_5_KLASS =  'cls_linsvr_250_5-classes.pkl'#'linsvr250'
 
-MICROSOFT_BEST_MODEL = 'cls_bnb_1000_2-classes.pkl'
-MICROSOFT_BEST_K = '1000'
+MICROSOFT_BEST_MODEL = MICROSOFT_BEST_MODEL_2_KLASS
+MICROSOFT_BEST_K = '100'
 
 C3_BEST_MODEL_2_KLASS = 'cls_bnb_100_2-classes.pkl' #'bnb100'
 C3_BEST_MODEL_3_KLASS = 'cls_bnb_2800_3-classes.pkl' #'bnb2800'

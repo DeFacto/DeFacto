@@ -17,7 +17,7 @@ import warnings
 from defacto.definitions import BENCHMARK_FILE_NAME_TEMPLATE, \
     DATASET_3C_SCORES_PATH, DATASET_3C_SITES_PATH, MAX_WEBSITES_PROCESS, \
     OUTPUT_FOLDER, DATASET_MICROSOFT_PATH, BEST_PAD_ALGORITHM, MICROSOFT_BEST_MODEL_2_KLASS, \
-    BEST_PAD_EXPERIMENT_TYPE
+    BEST_PAD_EXPERIMENT_TYPE, MICROSOFT_BEST_K
 from trustworthiness.benchmark_utils import verify_and_create_experiment_folders, get_best_html2seq_model_by_exp_type, \
     get_best_html2seq_model
 from trustworthiness.features_core import FeaturesCore
@@ -261,6 +261,8 @@ def get_web_features(exp_folder, ds_folder, features_file_K, html2seq = False):
             features_file = 'features.split.all+html2seq_pad.' + features_file_K + '.pkl'
             X = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'features/' + features_file)
             clf_html2seq, best_k = get_best_html2seq_model(ds_folder, exp_folder)
+            path = OUTPUT_FOLDER + exp_folder + ds_folder + 'benchmark/html2seq/tfidf.vectorizer.' + best_k + '.pkl'
+            vec = joblib.load(path)
         else:
             features_file = 'features.split.all.' + features_file_K + '.pkl'
             X = joblib.load(OUTPUT_FOLDER + exp_folder + ds_folder + 'features/' + features_file)
@@ -276,22 +278,24 @@ def get_web_features(exp_folder, ds_folder, features_file_K, html2seq = False):
         for feat in X:
             if html2seq is True:
 
-                standard = feat[0]
-                html2seq_pad = feat[1]
-
-                pred_klass = clf_html2seq.predict(html2seq_pad)[0]
+                #standard = feat[0]
+                html2seq_pad = vec.transform([str(feat[1][1:int(best_k)])])
+                pred_klass = clf_html2seq.predict(html2seq_pad)
                 pred_prob = clf_html2seq.predict_proba(html2seq_pad)
 
-                feat.extend([pred_klass])
-                feat.extend(pred_prob)
+                feat[0].extend(pred_klass)
+                feat[0].extend(pred_prob)
 
             #y2.append(likert2bin(feat[1]))
             #y3.append(likert2tri(feat[1]))
-            y5.append(feat[1])
+            y5.append(feat[0][1])
 
         X = np.array(X)
+        X_clean = []
         # excluding hash and y data
-        X_clean = np.delete(X, np.s_[0:2], axis=1)
+        for x in X[:,0]:
+            X_clean.append(x[2:len(x)])
+        #X_clean = np.delete(X, np.s_[0:2], axis=1)
         config.logger.debug('OK -> ' + str(X_clean.shape))
         return X_clean, y5#, y3, y2
 
