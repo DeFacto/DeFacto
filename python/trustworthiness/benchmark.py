@@ -9,7 +9,7 @@ from sklearn.decomposition import PCA
 from sklearn.metrics import precision_recall_fscore_support, explained_variance_score, r2_score
 
 from defacto.definitions import OUTPUT_FOLDER, TEST_SIZE, \
-    HEADER, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL, LINE_TEMPLATE, \
+    HEADER_CLASSIFICATION, EXP_5_CLASSES_LABEL, EXP_3_CLASSES_LABEL, EXP_2_CLASSES_LABEL, LINE_TEMPLATE, \
     LABELS_2_CLASSES, LABELS_5_CLASSES, CROSS_VALIDATION_K_FOLDS, SEARCH_METHOD_RANDOMIZED_GRID, SEARCH_METHOD_GRID, \
     CONFIGS_CLASSIFICATION, CONFIGS_REGRESSION, CONFIGS_HIGH_DIMEN_CLASSIFICATION, LABELS_3_CLASSES, \
     THRESHOLD_LABEL_2class, \
@@ -251,7 +251,7 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
         i = 1
         for exp_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL):
             with open(path + exp_type + '/log/results.txt', "w") as file_log_classification:
-                file_log_classification.write(HEADER)
+                file_log_classification.write(HEADER_CLASSIFICATION)
                 if exp_type == EXP_2_CLASSES_LABEL:
                     _X_train = X_train_best2
                     _X_test = X_test_best2
@@ -304,7 +304,7 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
             config.logger.info('starting experiments regression (5-classes)')
 
             with open(path + exp_type + '/log/results.txt', "w") as file_log_regression:
-                file_log_regression.write(HEADER)
+                file_log_regression.write(HEADER_CLASSIFICATION)
                 for estimator, hyperparam, grid_method in CONFIGS_REGRESSION:
                     out = []
                     cls_label = estimator.__class__.__name__ + '_' + EXP_5_CLASSES_LABEL

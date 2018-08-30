@@ -24,22 +24,23 @@ SERIES_COLORS = ['rgb(205, 12, 24)', 'rgb(22, 96, 167)', 'rgb(128, 128, 128)', '
 
 BAR_COLOR = 'rgb(128,128,128)'
 
-def get_best_html2seq_model(dataset, exp):
+def get_best_html2seq_model(ds_folder, exp):
     try:
 
-        assert dataset in ('microsoft', 'c3')
+        assert ds_folder in ('microsoft/', 'c3/')
 
         filename = ''
         best_k = ''
 
-        if dataset == 'microsoft':
+        if ds_folder == 'microsoft/':
             filename = MICROSOFT_BEST_MODEL
             best_k = MICROSOFT_BEST_K
-        elif dataset == 'c3':
+        elif ds_folder == 'c3/':
             filename = C3_BEST_MODEL
             best_k = C3_BEST_K
 
-        cls_path = '%s%s/%s/benchmark/html2seq/2-classes/cls/%s' % (OUTPUT_FOLDER, exp, dataset, filename)
+        cls_path = '%s%s/%sbenchmark/html2seq/2-classes/cls/%s' % (OUTPUT_FOLDER, exp, ds_folder, filename)
+        config.logger.debug('loading ' + cls_path)
         cls = joblib.load(cls_path)
         return cls, best_k
     except:
@@ -208,7 +209,7 @@ def export_chart_scatter(x, y_labels, y_3_f1, y_2_f1, filename, exp_folder, ds_f
                 line=dict(
                     color=(SERIES_COLORS[i]),
                     width=line_width,
-                    dash='dot'))
+                    dash='dash'))
             data_3.append(s)
             i += 1
 

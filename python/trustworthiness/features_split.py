@@ -67,11 +67,14 @@ def features_split(out_exp_folder, dataset, complex_features_file, best_pad = No
                             continue
 
                         if best_pad is not None:
+                            new = []
                             if best_pad <= len(html2seq_single):
                                 padded = (list(html2seq_single[0:best_pad]))
                             else:
                                 padded = numpy.pad(html2seq_single, (0, best_pad - len(html2seq_single)), 'constant')
-                            matrix_all_and_html2sec_pad.append([X_features.copy(), padded])
+                            new.append(X_features.copy())
+                            new.append(padded)
+                            matrix_all_and_html2sec_pad.append(new)
 
                         X_features.extend(html2seq_single)
 
@@ -93,7 +96,7 @@ def features_split(out_exp_folder, dataset, complex_features_file, best_pad = No
             joblib.dump(matrix, _path + name)
             print('full features exported: ' + _path + name)
 
-            if configuration[0] == 'all+html2seq':
+            if configuration[0] == 'split.all+html2seq':
                 _path = OUTPUT_FOLDER + out_exp_folder + dataset + '/features/'
 
                 name = 'features.split.html2seq.' + str(len(matrix)) + '.pkl'
@@ -116,6 +119,7 @@ if __name__ == '__main__':
 
         # experiment folder, dataset, name of the features complex file
         features_split('exp010/', 'c3', 'features.complex.all.5691.pkl', best_pad=int(C3_BEST_K))
+
         features_split('exp010/', 'microsoft', 'features.complex.all.994.pkl', best_pad=int(MICROSOFT_BEST_K))
 
     except:

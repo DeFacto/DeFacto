@@ -94,7 +94,7 @@ EXP_5_CLASSES_LABEL = '5-classes'
 LABELS_5_CLASSES = {1: 'non-credible', 2: 'low', 3: 'neutral', 4: 'likely', 5: 'credible'}
 LABELS_3_CLASSES = {0: 'low', 1: 'medium', 2: 'high'}
 LABELS_2_CLASSES = {0: 'low', 1: 'high'}
-HEADER = 'cls\texperiment_type\tpadding\tklass\tprecision\trecall\tf-measure\tsupport\trate\n'
+HEADER_CLASSIFICATION = 'cls\texperiment_type\tpadding\tklass\tprecision\trecall\tf-measure\tsupport\trate\n'
 HEADER_REGRESSION = 'cls\texperiment_type\tpadding\tklass\tr2\trmse\tmae\tevar\n'
 
 # best model's info (used in the combined evaluation)
@@ -127,7 +127,7 @@ trees_param_basic = {"max_features": ['auto', 'sqrt'],
                      "min_samples_leaf": [1, 2, 4]}
 
 trees_param = trees_param_basic.copy()
-trees_param["n_estimators"] = [10, 25, 50, 100, 200, 400, 600, 1000, 1500, 2000]
+trees_param["n_estimators"] = [10, 25, 50, 100, 200, 400]
 
 trees_param_bootstrap = trees_param.copy()
 trees_param_bootstrap["bootstrap"] = [True, False]
@@ -179,10 +179,10 @@ CONFIG_FEATURES = [CONFIG_FEATURES_BASIC, CONFIG_FEATURES_BASIC_GI, CONFIG_FEATU
 CONFIGS_HIGH_DIMEN_CLASSIFICATION = [(MultinomialNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
                                      (BernoulliNB(), dict(alpha=[1.0, 0.7, 0.5, 0.1]), SEARCH_METHOD_GRID),
                                      (RidgeClassifier(), dict(alpha=[1e0, 1e-1],
-                                                    solver=['auto', 'lsqr'],
+                                                    solver=['sag'],
                                                     tol=[1e0, 1e-1, 1e-2, 1e-3, 1e-4]),
                                       SEARCH_METHOD_RANDOMIZED_GRID),
-                                     (LinearSVC(), dict(loss=['hinge', 'squared_hinge'], C=[1e0, 1e-1, 1e-2], multi_class=['ovr', 'crammer_singer']), SEARCH_METHOD_RANDOMIZED_GRID),
+                                     (RandomForestClassifier(), trees_param_bootstrap, SEARCH_METHOD_RANDOMIZED_GRID),
                                      ]
 
 CONFIGS_CLASSIFICATION = [
@@ -210,6 +210,7 @@ CONFIGS_CLASSIFICATION = [
     SEARCH_METHOD_RANDOMIZED_GRID),
     '''
 N_COMPONENTS = [10, 20, 40, 60, 80]
+
 CONFIGS_HIGH_DIMEN_REGRESSION = [
     (LinearSVR(),
      dict(C=[1e0, 1e-1, 1e-2],
