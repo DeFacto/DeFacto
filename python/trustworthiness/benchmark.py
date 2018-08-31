@@ -13,8 +13,8 @@ from defacto.definitions import OUTPUT_FOLDER, TEST_SIZE, \
     LABELS_2_CLASSES, LABELS_5_CLASSES, CROSS_VALIDATION_K_FOLDS, SEARCH_METHOD_RANDOMIZED_GRID, SEARCH_METHOD_GRID, \
     CONFIGS_CLASSIFICATION, CONFIGS_REGRESSION, CONFIGS_HIGH_DIMEN_CLASSIFICATION, LABELS_3_CLASSES, \
     THRESHOLD_LABEL_2class, \
-    THRESHOLD_LABEL_3class, RANDOM_STATE, BEST_FEATURES_PERCENT
-from trustworthiness.benchmark_utils import train_test_export_save_per_exp_type
+    THRESHOLD_LABEL_3class, RANDOM_STATE, BEST_FEATURES_PERCENT, CONFIGS_HIGH_DIMEN_REGRESSION
+from trustworthiness.benchmark_utils import train_test_export_save_per_exp_type, BAR_COLOR, append_annotation_style
 from trustworthiness.feature_extractor import *
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_validate, KFold, RandomizedSearchCV
 from itertools import product
@@ -38,7 +38,7 @@ __status__ = "Dev"
 
 np.random.seed(7)
 config = DeFactoConfig()
-scaler = StandardScaler()
+
 
 def matplotlib_to_plotly(cmap, pl_entries):
     h = 1.0 / (pl_entries - 1)
@@ -106,7 +106,7 @@ def k_means(XX, y):
     #py.iplot(fig)
 
 
-def export_chart_bar(x, y, filename, exp_folder, title, x_title, y_title, annotation_threshold):
+def export_chart_bar(x, y, filename, ds, exp_folder, k, exp_type, title, x_title, y_title, annotation_threshold):
     try:
         trace0 = go.Bar(
             x=x,
@@ -130,16 +130,14 @@ def export_chart_bar(x, y, filename, exp_folder, title, x_title, y_title, annota
         annotations = []
         for i in range(0, len(x)):
             if y[i] >= annotation_threshold:
-                annotations.append(__append_annotation_style(x[i], y[i]))
+                annotations.append(append_annotation_style(x[i], y[i]))
 
         layout['annotations'] = annotations
         fig = go.Figure(data=data, layout=layout)
 
-        _path = OUTPUT_FOLDER + exp_folder + 'graphs/'
-        if not os.path.exists(_path):
-            os.mkdir(_path)
-
-        py.image.save_as(fig, filename=_path + filename)
+        path = OUTPUT_FOLDER + exp_folder + ds + 'benchmark/all/best_k/' + str(k) + '/' + exp_type + '/graph/'
+        py.image.save_as(fig, filename=path + filename)
+        config.logger.debug('sucess: ' + path + filename)
 
     except Exception as e:
         raise e
@@ -213,6 +211,9 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
         # just to double check...
         #assert np.all(X_train_5 == X_train_3)
         #assert np.all(X_train_5 == X_train_2)
+        scaler = StandardScaler()
+        X_train = scaler.fit_transform(X_train)
+        X_test = scaler.transform(X_test)
 
         config.logger.debug('OK. feature selection')
         # feature selection
@@ -230,9 +231,7 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
         X_test_best2 = best2.transform(X_test)
 
 
-        #scaler.fit(X_train)
-        #X_train = scaler.transform(X_train)
-        #X_test = scaler.transform(X_test)
+
         best_estimators = []
 
         x_axis_2 = []
@@ -245,12 +244,29 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
         y_axis_label = 'F1-measure'
 
         # --------------------------------------------------------------------------------------------------------------
+        # regression experiment
+        # --------------------------------------------------------------------------------------------------------------
+        config.logger.info('starting experiments regression (5-classes)')
+
+        with open(path + EXP_5_CLASSES_LABEL + '/log/results.txt', "w") as file_log_regression:
+            file_log_regression.write(HEADER_CLASSIFICATION)
+            for estimator, hyperparam, grid_method in CONFIGS_REGRESSION:
+                out = []
+                label = estimator.__class__.__name__ + '.' + str(perc_f) + '.' + EXP_5_CLASSES_LABEL
+                out, best_estimator = train_test_export_save_per_exp_type(estimator, label, hyperparam, grid_method,
+                                                                          X_train_best5, X_test_best5, y5_train,
+                                                                          y5_test, EXP_5_CLASSES_LABEL, 0,
+                                                                          out, file_log_regression, subfolder,
+                                                                          exp_folder, ds_folder)
+            file_log_regression.flush()
+
+        # --------------------------------------------------------------------------------------------------------------
         # classification experiment
         # --------------------------------------------------------------------------------------------------------------
         config.logger.info('starting experiments classification (2-classes and 3-classes)')
         i = 1
         for exp_type in (EXP_2_CLASSES_LABEL, EXP_3_CLASSES_LABEL):
-            with open(path + exp_type + '/log/results.' + str(perc_f) + '.txt', "w") as file_log_classification:
+            with open(path + exp_type + '/log/results.txt', "w") as file_log_classification:
                 file_log_classification.write(HEADER_CLASSIFICATION)
                 if exp_type == EXP_2_CLASSES_LABEL:
                     _X_train = X_train_best2
@@ -284,34 +300,23 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
                     y_axis.extend(np.array(out)[:, 2])
                     x_axis.append(best_estimator.__class__.__name__.replace('Classifier', ''))
 
-                estimator_ensamble = VotingClassifier(estimators=best_estimators)
-                hyperparam_ensamble = dict(voting=['hard', 'soft'], flatten_transform=[True, False])
+                #estimator_ensamble = VotingClassifier(estimators=best_estimators)
+                #hyperparam_ensamble = dict(voting=['hard', 'soft'], flatten_transform=[True, False])
 
-                out = []
-                out, best_estimator = train_test_export_save_per_exp_type(estimator_ensamble, estimator_ensamble.__class__.__name__,
-                                                                          hyperparam_ensamble, SEARCH_METHOD_GRID,
-                                                          _X_train, _X_test, _y_train, _y_test, exp_type, 0,
-                                                          out, file_log_classification, subfolder, exp_folder, ds_folder)
-                y_axis.extend(np.array(out)[:, 2])
-                x_axis.append(best_estimator.__class__.__name__.replace('Classifier', ''))
+                #out = []
+                #out, best_estimator = train_test_export_save_per_exp_type(estimator_ensamble, estimator_ensamble.__class__.__name__,
+                #                                                          hyperparam_ensamble, SEARCH_METHOD_GRID,
+                #                                          _X_train, _X_test, _y_train, _y_test, exp_type, 0,
+                #                                          out, file_log_classification, subfolder, exp_folder, ds_folder)
+                #y_axis.extend(np.array(out)[:, 2])
+                #x_axis.append(best_estimator.__class__.__name__.replace('Classifier', ''))
 
                 config.logger.info('experiments classification done! exporting charts...')
-                export_chart_bar(x_axis, y_axis, graph_file, exp_folder, title, x_axis_label, y_axis_label, threshold)
+                export_chart_bar(x_axis, y_axis, graph_file, ds_folder, exp_folder, perc_f, exp_type, title, x_axis_label, y_axis_label, threshold)
                 config.logger.info('charts exported!')
+                file_log_classification.flush()
 
-            # --------------------------------------------------------------------------------------------------------------
-            # regression experiment
-            # --------------------------------------------------------------------------------------------------------------
-            config.logger.info('starting experiments regression (5-classes)')
 
-            with open(path + exp_type + '/log/results.' + str(perc_f) + '.txt', "w") as file_log_regression:
-                file_log_regression.write(HEADER_CLASSIFICATION)
-                for estimator, hyperparam, grid_method in CONFIGS_REGRESSION:
-                    out = []
-                    label = estimator.__class__.__name__ + '.' + str(perc_f) + '.' + EXP_5_CLASSES_LABEL
-                    out, best_estimator = train_test_export_save_per_exp_type(estimator, label, hyperparam, grid_method,
-                                                        X_train_best5, X_test_best5, y5_train, y5_test, EXP_5_CLASSES_LABEL, 0,
-                                                        out, file_log_regression, subfolder, exp_folder, ds_folder)
 
     except Exception as e:
         config.logger.error(repr(e))

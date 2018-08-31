@@ -317,8 +317,10 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         elif search_method == 'random':
             clf = RandomizedSearchCV(estimator, hyperparameters, cv=CROSS_VALIDATION_K_FOLDS, scoring=scoring, n_jobs=-1,
                                      refit=refit, random_state=RANDOM_STATE)
+        elif search_method is None:
+            clf = estimator
         else:
-            raise Exception('not supported! ' + search_method)
+            raise Exception('error!')
 
         config.logger.debug('fitting the model')
         #print(set(y_train))
@@ -329,11 +331,15 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         if not os.path.exists(_path):
             os.mkdir(_path)
 
-        config.logger.info('done. best training set parameters: ')
-        config.logger.info(clf.best_params_)
-        config.logger.info(clf.best_score_)
-        predicted = clf.best_estimator_.predict(X_test)
-        joblib.dump(clf.best_estimator_, _path + file)
+        if search_method is not None:
+            config.logger.info('done. best training set parameters: ')
+            config.logger.info(clf.best_params_)
+            config.logger.info(clf.best_score_)
+            predicted = clf.best_estimator_.predict(X_test)
+            joblib.dump(clf.best_estimator_, _path + file)
+        else:
+            predicted = clf.predict(X_test)
+            joblib.dump(clf, _path + file)
 
         config.logger.info(experiment_type)
         #if hasattr(clf.best_estimator_, 'labels_'):
@@ -379,19 +385,24 @@ def train_test_export_save_per_exp_type(estimator, estimator_label, hyperparamet
         else:
             raise Exception('not supported! ' + experiment_type)
 
-        # saving the best parameters
-        best_parameters_file_name = file.replace('.pkl', '.best_params.txt')
-        with open(_path + best_parameters_file_name, "w") as best:
-            best.write(' -- best params \n')
-            best.write(str(clf.best_params_) + '\n')
-            best.write(' -- best score \n')
-            best.write(str(clf.best_score_) + '\n')
-            best.write(' - test performance \n')
-            best.write(test_perf + '\n')
+
+        if search_method is not None:
+            # saving the best parameters
+            best_parameters_file_name = file.replace('.pkl', '.best_params.txt')
+            with open(_path + best_parameters_file_name, "w") as best:
+                best.write(' -- best params \n')
+                best.write(str(clf.best_params_) + '\n')
+                best.write(' -- best score \n')
+                best.write(str(clf.best_score_) + '\n')
+                best.write(' - test performance \n')
+                best.write(test_perf + '\n')
 
         config.logger.info('----------------------------------------------------------------------')
         file_log.flush()
-        return out_chart, clf.best_estimator_
+        if search_method is not None:
+            return out_chart, clf.best_estimator_
+        else:
+            return out_chart, clf
 
 
         '''
