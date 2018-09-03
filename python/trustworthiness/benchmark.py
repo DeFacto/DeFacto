@@ -193,7 +193,7 @@ def mlp_param_selection(X, y, nfolds):
 
 def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y2_test, exp_folder, ds_folder, perc_f):
 
-    config.logger.info('benchmark_text()')
+    config.logger.info('benchmark_text: ' + str(perc_f))
 
     try:
 
@@ -223,6 +223,10 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
 
         X_train_best5 = best5.fit_transform(X_train, y5_train)
         X_test_best5 = best5.transform(X_test)
+        #feature_names = ['a', 'b', 'c', 'd', 'e']
+        #best_scores = best5.scores_
+        #best_features_ordered = [feature_names[i] for i in np.argsort(best5.scores_)[::-1]]
+
 
         X_train_best3 = best3.fit_transform(X_train, y3_train)
         X_test_best3 = best3.transform(X_test)
@@ -326,16 +330,19 @@ def benchmark(X_train, X_test, y5_train, y5_test, y3_train, y3_test, y2_train, y
 if __name__ == '__main__':
     try:
 
-        ds = 'microsoft/'
-        K ='911'
-        exp ='exp010/'
+        #ds = 'microsoft/'
+        #K ='911'
+        exp ='exp011/'
+
+        ds = 'c3/'
+        K = '2977'
 
 
         verify_and_create_experiment_folders(exp, ds)
 
         # benchmarking text features + html2seq (with best HTML2seq model)
         config.logger.debug('02. TEXT + HTML2Seq features combined (out of best configurations)')
-        X, y5 = get_web_features(exp, ds, K, html2seq=True)
+        X, y5 = get_web_features(exp, ds, K, html2seq=False)
         X_train, X_test, y5_train, y5_test = train_test_split(X, y5, test_size=TEST_SIZE, random_state=RANDOM_STATE)
         y3_train, y2_train, y3_test, y2_test = [], [], [], []
         config.logger.debug('converting y: 3-class and 2-class experiments...')

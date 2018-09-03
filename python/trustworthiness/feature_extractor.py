@@ -288,16 +288,21 @@ def get_web_features(exp_folder, ds_folder, features_file_K, html2seq = False):
 
             #y2.append(likert2bin(feat[1]))
             #y3.append(likert2tri(feat[1]))
-            y5.append(feat[0][1])
+                y5.append(feat[0][1])
+            else:
+                y5.append(feat[1])
 
         X = np.array(X)
         X_clean = []
+
         # excluding hash and y data
-        for x in X[:,0]:
-            X_clean.append(x[2:len(x)])
-        #X_clean = np.delete(X, np.s_[0:2], axis=1)
-        #config.logger.debug('OK -> ' + str(X_clean.shape))
-        return X_clean, y5#, y3, y2
+        if html2seq is True:
+            for x in X[:,0]:
+                X_clean.append(x[2:len(x)])
+        else:
+            X_clean = np.delete(X, np.s_[0:2], axis=1)
+
+        return X_clean, y5 #, y3, y2
 
 
     except Exception as e:
@@ -456,8 +461,8 @@ if __name__ == '__main__':
     '''
 
     params = [
-        {'EXP_FOLDER': 'exp010/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': True},
-        #{'EXP_FOLDER': 'exp010/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': False},
+        {'EXP_FOLDER': 'exp011/', 'DATASET': 'microsoft', 'EXPORT_HTML': True, 'REPROCESS': True},
+        {'EXP_FOLDER': 'exp011/', 'DATASET': 'c3', 'EXPORT_HTML': True, 'REPROCESS': True},
     ]
 
     for p in params:
