@@ -15,3 +15,9 @@ target/
 /bin
 log/
 /data/database/
+
+python/data/
+python/dev/
+
+__pycache__/
+
