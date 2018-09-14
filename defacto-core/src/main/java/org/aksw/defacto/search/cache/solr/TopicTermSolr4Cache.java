@@ -33,8 +33,6 @@ public class TopicTermSolr4Cache implements Cache<TopicTerm> {
 	
 	public TopicTermSolr4Cache(){
 
-		Defacto.init();
-
 		server = new HttpSolrServer(Defacto.DEFACTO_CONFIG.getStringSetting("crawl", "solr_topicterms"));
 		server.setRequestWriter(new BinaryRequestWriter());
 	}
