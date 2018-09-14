@@ -1,2 +1,0 @@
-#!/bin/sh
-curl -H "Content-Type:application/json" "http://52.173.249.140:8983/solr/webpages/update/json/docs?commit=true" --data-binary @temp.json

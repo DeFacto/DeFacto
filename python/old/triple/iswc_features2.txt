@@ -1,1 +1,0 @@
-['http://swc2017.aksw.org/task2/dataset/s-1084198010', 7, 0]

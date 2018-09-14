@@ -1,6 +1,0 @@
-https://blog.kjamistan.com/comparing-scikit-learn-text-classifiers-on-a-fake-news-dataset/
-https://github.com/kjam/random_hackery
-
-
--- this should be helpful for future information (relation) extraction improvements
-https://iepy.readthedocs.io/en/latest/index.html

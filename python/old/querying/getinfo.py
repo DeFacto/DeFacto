@@ -1,4 +1,0 @@
-verbalisations = []
-isDomiciledIn
-hasLatestOrganizationFoundedDate
-hasHeadquartersPhoneNumber

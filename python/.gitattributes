@@ -1,3 +1,0 @@
-/data/datasets/*.* filter=lfs diff=lfs merge=lfs -text
-/data/models/*.* filter=lfs diff=lfs merge=lfs -text
-/data/log/*.* filter=lfs diff=lfs merge=lfs -text

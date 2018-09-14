@@ -1,2 +1,0 @@
-https://github.com/liaoziyang/OpenIE-Spider
-scrapy runspider -a rel=was+born -a args1=donald+trump  openie_spider.py -o result2.json
