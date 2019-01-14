@@ -9,6 +9,12 @@
     </parent>
     <artifactId>defacto-core</artifactId>
     <name>defacto-core</name>
+    
+    
+    <properties>
+       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
     <dependencies>
         <dependency>
             <groupId>net.sourceforge.owlapi</groupId>
@@ -48,7 +54,7 @@
         <dependency>
             <groupId>org.semanticweb.yars</groupId>
             <artifactId>nxparser</artifactId>
-            <version>1.2.3</version>
+            <version>1.2.10</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -150,7 +156,7 @@
         <dependency>
             <groupId>info.bliki.wiki</groupId>
             <artifactId>bliki-core</artifactId>
-            <version>3.0.17</version>
+            <version>3.0.19</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-lang</artifactId>
@@ -185,7 +191,7 @@
         <dependency>
             <groupId>org.dllearner</groupId>
             <artifactId>components-core</artifactId>
-            <version>1.0-20131210.161252-449</version>
+            <version>1.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-compress</artifactId>
