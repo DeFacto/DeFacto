@@ -30,8 +30,8 @@ github:
 
 google:
   client:
-    clientId: 1029725630392-90p773mn4q86juc6l11fcsuq02baiham.apps.googleusercontent.com
-    clientSecret: 1029
+    clientId: dummy
+    clientSecret: dummy
     accessTokenUri: https://www.googleapis.com/oauth2/v3/token
     userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
     authenticationScheme: query
