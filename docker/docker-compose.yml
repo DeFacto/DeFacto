@@ -27,4 +27,4 @@ services:
     Defacto:
       image: defacto_git:latest
       ports:
-          - "4442:4441"  #HOST:CONTAINER
+          - "4441:4441"  #HOST:CONTAINER
