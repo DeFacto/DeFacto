@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+    db:
+      image: mysql:5.7
+      environment:
+                - MYSQL_DATABASE=dbpedia_metrics
+                - MYSQL_ROOT_PASSWORD=root
+      volumes:
+            - ./db:/var/lib/mysql
+      ports:
+            - "3306:3306"
+
+    phpmyadmin:
+     image: phpmyadmin/phpmyadmin
+     environment:
+            PMA_ARBITRARY: 1
+            MYSQL_ROOT_PASSWORD: root
+     ports:
+            # port forward
+            - "8004:80"
+     links:
+            # for mysql container
+            - "db:db"
+            
+    Defacto:
+      image: defacto_git:latest
+      ports:
+          - "4442:4441"  #HOST:CONTAINER
