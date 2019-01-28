@@ -12,6 +12,9 @@ DeFacto is a framework for validating statements by finding confirming sources f
 
 Found a :bug: bug? [Please open an issue](https://github.com/SmartDataAnalytics/DeFacto/issues/new)
 
+#### Docker Image 
+- [Guidelines for demo using Docker](https://github.com/DeFacto/DeFacto/tree/master/docker)
+
 #### Changelog
 - [v2.1](https://github.com/AKSW/DeFacto/releases/tag/v2.1)
 	- HTTP service support
