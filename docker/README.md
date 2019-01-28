@@ -15,3 +15,4 @@ After building docker image, you can also run ```docker-compose```:
 docker-compose up
 ```
 
+For demo: login to: ```localhost:4441```
