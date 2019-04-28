@@ -7,7 +7,7 @@ docker build --build-arg google_api_key_client_id_variable=```paste here client 
 ```
 To run defacto docker image:
 ```
-docker run -p 4441:4441 defacto_git .
+docker run -p 4441:4441 defacto_git
 ```
 
 After building docker image, you can also run ```docker-compose```:
